@@ -31,7 +31,7 @@ void EINT0_IRQHandler(void)
         printf("PA.6 EINT0 occurred.\n");
     }
 
-    /* To check if PD.2 external interrupt occurred */
+    /* To check if PB.5 external interrupt occurred */
     if(GPIO_GET_INT_FLAG(PB, BIT5)) {
         GPIO_CLR_INT_FLAG(PB, BIT5);
         printf("PB.5 EINT0 occurred.\n");
@@ -51,7 +51,7 @@ void EINT0_IRQHandler(void)
 void EINT1_IRQHandler(void)
 {
 
-    /* To check if PB.0 external interrupt occurred */
+    /* To check if PA.7 external interrupt occurred */
     if(GPIO_GET_INT_FLAG(PA, BIT7)) {
         GPIO_CLR_INT_FLAG(PA, BIT7);
         printf("PA.7 EINT1 occurred.\n");
@@ -97,7 +97,7 @@ void SYS_Init(void)
     /* Set PB multi-function pin for EINT0(PB.5) */
     SYS->GPB_MFPL = SYS->GPB_MFPL & (~SYS_GPB_MFPL_PB5MFP_Msk) | SYS_GPB_MFPL_PB5MFP_INT0;
 
-    /* Set PB multi-function pin for EINT1(PA.7) */
+    /* Set PA multi-function pin for EINT1(PA.7) */
     SYS->GPA_MFPL = SYS->GPA_MFPL & (~SYS_GPA_MFPL_PA7MFP_Msk) | SYS_GPA_MFPL_PA7MFP_INT1;
 
 }
@@ -139,7 +139,7 @@ int main(void)
     /*-----------------------------------------------------------------------------------------------------*/
     printf("EINT0(PA.6 and PB.5) and EINT1(PA.7) are used to test interrupt\n");
 
-    /* Configure PA.0 as EINT0 pin and enable interrupt by falling edge trigger */
+    /* Configure PA.6 as EINT0 pin and enable interrupt by falling edge trigger */
     GPIO_SetMode(PA, BIT6, GPIO_MODE_INPUT);
     GPIO_EnableInt(PA, 6, GPIO_INT_FALLING);
 
@@ -148,7 +148,7 @@ int main(void)
     GPIO_EnableInt(PB, 5, GPIO_INT_RISING);
     NVIC_EnableIRQ(EINT0_IRQn);
 
-    /* Configure PB.0 as EINT1 pin and enable interrupt by falling and rising edge trigger */
+    /* Configure PA.7 as EINT1 pin and enable interrupt by falling and rising edge trigger */
     GPIO_SetMode(PA, BIT7, GPIO_MODE_INPUT);
     GPIO_EnableInt(PA, 7, GPIO_INT_BOTH_EDGE);
     NVIC_EnableIRQ(EINT1_IRQn);
