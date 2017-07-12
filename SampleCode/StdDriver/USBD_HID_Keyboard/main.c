@@ -84,8 +84,8 @@ void HID_UpdateKbData(void)
     if(g_u8EP2Ready) {
         buf = (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP2));
 
-        /* If GPB15 = 0, just report it is key 'a' */
-        key = (PB->PIN & (1 << 15)) ? 0 : 1;
+        /* If GPB15 = 1, just report it is key 'a' */
+        key = (PB->PIN & (1 << 15)) ? 1 : 0;
 
         if(key == 0) {
             for(i = 0; i < 8; i++) {
@@ -119,7 +119,7 @@ int32_t main(void)
     printf("+--------------------------------------------------------+\n");
     printf("|          NuMicro USB HID Keyboard Sample Code          |\n");
     printf("+--------------------------------------------------------+\n");
-    printf("If PB.15 = 0, just report it is key 'a'.\n");
+    printf("If PB.15 = 1, just report it is key 'a'.\n");
 
     USBD_Open(&gsInfo, HID_ClassRequest, NULL);
 

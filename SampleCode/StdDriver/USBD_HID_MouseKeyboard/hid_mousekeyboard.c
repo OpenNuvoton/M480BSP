@@ -282,8 +282,8 @@ void HID_UpdateKbData(void)
     if(g_u8EP3Ready) {
         buf = (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP3));
 
-        /* If GPB15 = 0, just report it is key 'a' */
-        key = (PB->PIN & (1 << 15)) ? 0 : 1;
+        /* If GPB15 = 1, just report it is key 'a' */
+        key = (PB->PIN & (1 << 15)) ? 1 : 0;
 
         if(key == 0) {
             for(i = 0; i < 8; i++) {

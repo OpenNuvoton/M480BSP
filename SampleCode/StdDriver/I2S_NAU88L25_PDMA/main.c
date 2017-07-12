@@ -19,6 +19,30 @@ uint32_t PcmRxBuff[2][BUFF_LEN] = {0};
 uint32_t PcmTxBuff[2][BUFF_LEN] = {0};
 uint32_t volatile u32BuffPos = 0;
 DMA_DESC_T DMA_TXDESC[2], DMA_RXDESC[2];
+extern volatile uint8_t u8CopyData;
+
+volatile uint8_t u8TxIdx=0, u8RxIdx=0;
+volatile uint8_t u8CopyData = 0;
+
+void PDMA_IRQHandler(void)
+{
+    uint32_t u32Status = PDMA_GET_INT_STATUS();
+
+    if (u32Status & 0x2) {
+        if (PDMA_GET_TD_STS() & 0x4) {          /* channel 2 done */
+            /* Copy RX data to TX buffer */
+            u8CopyData = 1;
+            u8RxIdx ^= 1;
+            PDMA_CLR_TD_FLAG(PDMA_TDSTS_TDIF2_Msk);
+        }
+
+        if (PDMA_GET_TD_STS() & 0x2) {          /* channel 1 done */
+            u8TxIdx ^= 1;
+            PDMA_CLR_TD_FLAG(PDMA_TDSTS_TDIF1_Msk);
+        }
+    } else
+        printf("unknown interrupt, status=0x%x!!\n", u32Status);
+}
 
 uint8_t I2cWrite_MultiByteforNAU88L25(uint8_t chipadd,uint16_t subaddr, const uint8_t *p,uint32_t len)
 {
@@ -315,7 +339,11 @@ int32_t main (void)
     I2S_ENABLE_TXDMA(I2S0);
     I2S_ENABLE_TX(I2S0);
 
-    while(1);
+    while(1) {
+        if (u8CopyData) {
+            memcpy(&PcmTxBuff[u8TxIdx^1], &PcmRxBuff[u8RxIdx], BUFF_LEN*4);
+        }
+    }
 }
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
