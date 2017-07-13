@@ -31,10 +31,6 @@ __initial_sp
 Heap_Size       EQU     0x00000100
 	ENDIF
 
-    IF :LNOT: :DEF: Heap_Size
-Heap_Size       EQU     0x00000100
-    ENDIF
-
                 AREA    HEAP, NOINIT, READWRITE, ALIGN=3
 __heap_base
 Heap_Mem        SPACE   Heap_Size
