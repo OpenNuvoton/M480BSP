@@ -88,8 +88,8 @@ void SystemInit (void)
                    (3UL << 11*2)  );               /* set CP11 Full Access */
 #endif
 
-    /* Disable Flash Access Cycle Auto-tuning, set access cycle for CPU @ 192MHz */
-    FMC->CYCCTL = FMC_CYCCTL_FADIS_Msk | (8 << FMC_CYCCTL_CYCLE_Pos);
+    /* Set access cycle for CPU @ 192MHz */
+    FMC->CYCCTL = (FMC->CYCCTL & ~FMC_CYCCTL_CYCLE_Msk) | (8 << FMC_CYCCTL_CYCLE_Pos);
     /* Configure power down bias, must set 1 before entering power down mode.
        So set it at the very beginning */
     CLK->LDOCTL |= CLK_LDOCTL_PDBIASEN_Msk;

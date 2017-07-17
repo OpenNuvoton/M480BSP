@@ -5213,9 +5213,6 @@ typedef struct {
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[3:0]   |CYCLE     |Flash Access Cycle Control (Write Protect)
-     * |        |          |This register is updated automatically by hardware while FCYCDIS (FMC_ISPSTS[4]) is 0, and updated by software while auto-tuning function disabled ( FADIS (FMC_CYCTL[8]) is 1)
-     * |        |          |0000 = CPU access with zero wait cycle ; flash access cycle is 1;.
-     * |        |          |The HCLK working frequency range is <27MHz; Cache is disabled by hardware.
      * |        |          |0001 = CPU access with one wait cycle if cache miss; flash access cycle is 1;.
      * |        |          |The HCLK working frequency range range is<27MHz
      * |        |          |0010 = CPU access with two wait cycles if cache miss; flash access cycle is 2;.
@@ -5232,11 +5229,6 @@ typedef struct {
      * |        |          | The optimized HCLK working frequency range is 162~192MHz
      * |        |          |1000 = CPU access with eight wait cycles if cache miss; flash access cycle is 8;.
      * |        |          |The optimized HCLK working frequency range is >192MHz
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[8]     |FADIS     |Flash Access Cycle Auto-tuning Disabled Control (Write Protect)
-     * |        |          |Set this bit to disable flash access cycle auto-tuning function
-     * |        |          |0 = Flash access cycle auto-tuning is enabled.
-     * |        |          |1 = Flash access cycle auto-tuning is disabled.
      * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
      * @var FMC_T::KPKEY0
      * Offset: 0x50  KPROM KEY0 Data Register
@@ -5542,9 +5534,6 @@ typedef struct {
 
 #define FMC_CYCCTL_CYCLE_Pos             (0)                                               /*!< FMC_T::CYCCTL: CYCLE Position          */
 #define FMC_CYCCTL_CYCLE_Msk             (0xful << FMC_CYCCTL_CYCLE_Pos)                   /*!< FMC_T::CYCCTL: CYCLE Mask              */
-
-#define FMC_CYCCTL_FADIS_Pos             (8)                                               /*!< FMC_T::CYCCTL: FADIS Position          */
-#define FMC_CYCCTL_FADIS_Msk             (0x1ul << FMC_CYCCTL_FADIS_Pos)                   /*!< FMC_T::CYCCTL: FADIS Mask              */
 
 #define FMC_KPKEY0_KPKEY0_Pos            (0)                                               /*!< FMC_T::KPKEY0: KPKEY0 Position         */
 #define FMC_KPKEY0_KPKEY0_Msk            (0xfffffffful << FMC_KPKEY0_KPKEY0_Pos)           /*!< FMC_T::KPKEY0: KPKEY0 Mask             */
