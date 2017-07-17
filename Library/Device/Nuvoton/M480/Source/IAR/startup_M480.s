@@ -139,8 +139,6 @@ __vector_table_0x1c
         DCD     Default_Handler           ; 91:
         DCD     EHCI_IRQHandler           ; 92: EHCI
         DCD     USBOTG20_IRQHandler       ; 93:
-        DCD     SWDC_IRQHandler           ; 94:
-        DCD     ETMC_IRQHandler           ; 95:
 __Vectors_End
 
 __Vectors       EQU   __vector_table
@@ -306,8 +304,6 @@ SysTick_Handler
         PUBWEAK  SDH1_IRQHandler
         PUBWEAK  EHCI_IRQHandler
         PUBWEAK  USBOTG20_IRQHandler
-        PUBWEAK  SWDC_IRQHandler
-        PUBWEAK  ETMC_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 
 BOD_IRQHandler
@@ -395,8 +391,6 @@ EINT7_IRQHandler
 SDH1_IRQHandler
 EHCI_IRQHandler
 USBOTG20_IRQHandler
-SWDC_IRQHandler
-ETMC_IRQHandler
 Default_Handler
         B Default_Handler
 

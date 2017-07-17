@@ -160,9 +160,6 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
                 DCD     Default_Handler           ; 91:
                 DCD     EHCI_IRQHandler           ; 92: EHCI
                 DCD     USBOTG20_IRQHandler       ; 93:
-                DCD     SWDC_IRQHandler           ; 94:
-                DCD     ETMC_IRQHandler           ; 95:
-
 
 
 __Vectors_End
@@ -329,7 +326,7 @@ Default_Handler PROC
                 EXPORT  BPWM0_IRQHandler          [WEAK]
                 EXPORT  BPWM1_IRQHandler          [WEAK]
                 EXPORT  SPIM_IRQHandler           [WEAK]
-                EXPORT  ISC2_IRQHandler           [WEAK]
+                EXPORT  I2C2_IRQHandler           [WEAK]
                 EXPORT  QEI0_IRQHandler           [WEAK]
                 EXPORT  QEI1_IRQHandler           [WEAK]
                 EXPORT  ECAP0_IRQHandler          [WEAK]
@@ -339,8 +336,6 @@ Default_Handler PROC
                 EXPORT  SDH1_IRQHandler           [WEAK]
                 EXPORT  EHCI_IRQHandler           [WEAK]
                 EXPORT  USBOTG20_IRQHandler       [WEAK]
-                EXPORT  SWDC_IRQHandler           [WEAK]
-                EXPORT  ETMC_IRQHandler           [WEAK]
 
 Default__IRQHandler
 BOD_IRQHandler
@@ -428,9 +423,7 @@ EINT7_IRQHandler
 SDH1_IRQHandler
 EHCI_IRQHandler
 USBOTG20_IRQHandler
-SWDC_IRQHandler
-ETMC_IRQHandler
-ISC2_IRQHandler
+
 
 
                 B       .
