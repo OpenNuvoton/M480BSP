@@ -22,7 +22,7 @@ volatile uint8_t g_u8DataLenS;
 volatile uint8_t g_u8SlvPWRDNWK = 0, g_u8SlvI2CWK = 0;
 volatile uint32_t g_u32WKfromAddr;
 
-enum UI2C_SLAVE_EVENT s_Event;
+volatile enum UI2C_SLAVE_EVENT s_Event;
 
 typedef void (*UI2C_FUNC)(uint32_t u32Status);
 

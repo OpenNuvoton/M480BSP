@@ -29,8 +29,8 @@ volatile uint32_t slave_buff_addr;
 volatile uint16_t g_u16SlvRcvAddr;
 
 
-enum UI2C_MASTER_EVENT m_Event;
-enum UI2C_SLAVE_EVENT s_Event;
+volatile enum UI2C_MASTER_EVENT m_Event;
+volatile enum UI2C_SLAVE_EVENT s_Event;
 
 typedef void (*UI2C_FUNC)(uint32_t u32Status);
 

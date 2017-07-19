@@ -18,7 +18,7 @@ uint8_t g_au8TxData[3];
 volatile uint8_t g_u8RxData;
 volatile uint8_t g_u8DataLenM;
 volatile uint8_t g_u8EndFlagM = 0;
-enum UI2C_MASTER_EVENT m_Event;
+volatile enum UI2C_MASTER_EVENT m_Event;
 
 typedef void (*UI2C_FUNC)(uint32_t u32Status);
 
