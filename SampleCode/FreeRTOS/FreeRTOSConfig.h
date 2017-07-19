@@ -143,7 +143,7 @@ to exclude the API function. */
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS
 /* __BVIC_PRIO_BITS will be specified when CMSIS is being used. */
-#define configPRIO_BITS             4        /* Assembly code compile error. Because applied U Suffix to __NVIC_PRIO_BITS(m480.h).*/
+#define configPRIO_BITS             4        /* Assembly code compile error. Because applied U Suffix to __NVIC_PRIO_BITS(M480.h).*/
 #else
 #define configPRIO_BITS             4        /* 15 priority levels */
 #endif

@@ -23,7 +23,7 @@
  */
 #include "lwip/def.h"
 #include "lwip/pbuf.h"
-#include "m480.h"
+#include "M480.h"
 #ifndef  __M480_EMAC_H__
 #define  __M480_EMAC_H__
 

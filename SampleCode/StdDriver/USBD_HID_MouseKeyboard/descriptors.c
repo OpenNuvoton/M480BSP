@@ -8,7 +8,7 @@
  * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 /*!<Includes */
-#include "m480.h"
+#include "M480.h"
 #include "hid_mousekeyboard.h"
 
 /*!<USB HID Report Descriptor */

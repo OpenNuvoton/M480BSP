@@ -12,7 +12,7 @@
  * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
-#include "m480.h"
+#include "M480.h"
 
 typedef void (FUNC_PTR)(void);
 
