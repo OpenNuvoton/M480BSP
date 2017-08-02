@@ -332,7 +332,7 @@ extern "C"
  *       The clock of EPWM counter is divided by (u32Prescaler + 1).
  * \hideinitializer
  */
-#define EPWM_SET_PRESCALER(epwm, u32ChannelNum, u32Prescaler) (epwm)->CLKPSC[(u32ChannelNum) >> 1] = (u32Prescaler)
+#define EPWM_SET_PRESCALER(epwm, u32ChannelNum, u32Prescaler) ((epwm)->CLKPSC[(u32ChannelNum) >> 1] = (u32Prescaler))
 
 /**
  * @brief This macro get the prescaler of the selected channel
@@ -524,8 +524,8 @@ extern "C"
  * \hideinitializer
  */
 #define EPWM_SET_DEADZONE_CLK_SRC(epwm, u32ChannelNum, u32AfterPrescaler) \
-    ((epwm)->DTCTL[(u32ChannelNum) >> 1]) = ((epwm)->DTCTL[(u32ChannelNum) >> 1] & ~EPWM_DTCTL0_1_DTCKSEL_Msk) | \
-    ((u32AfterPrescaler) << EPWM_DTCTL0_1_DTCKSEL_Pos))
+    ((epwm)->DTCTL[(u32ChannelNum) >> 1] = (((epwm)->DTCTL[(u32ChannelNum) >> 1] & ~EPWM_DTCTL0_1_DTCKSEL_Msk) | \
+    ((u32AfterPrescaler) << EPWM_DTCTL0_1_DTCKSEL_Pos)))
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* Define EPWM functions prototype                                                                          */
