@@ -112,7 +112,7 @@ extern "C"
   * @details This macro will enable the noise filter of input capture and set noise filter clock divide.
   * \hideinitializer
   */
-#define ECAP_NOISE_FILTER_ENABLE(ecap, u32ClkSel) ((ecap)->CTL0 = ((ecap)->CTL0 & ~(ECAP_CTL0_CAPNFDIS_Msk|ECAP_CTL0_NFCLKSEL_Msk))|(u32ClkSel));
+#define ECAP_NOISE_FILTER_ENABLE(ecap, u32ClkSel) ((ecap)->CTL0 = ((ecap)->CTL0 & ~(ECAP_CTL0_CAPNFDIS_Msk|ECAP_CTL0_NFCLKSEL_Msk))|(u32ClkSel))
 
 /**
   * @brief This macro is used to enable input channel unit
@@ -151,7 +151,7 @@ extern "C"
   *                  - \ref ECAP_CAP_INPUT_SRC_FROM_IC
   *                  - \ref ECAP_CAP_INPUT_SRC_FROM_CH
   * @return None
-  * @details This macro will select the input source from ICx, CPOx, CHx, ADCMPO or OPDO.
+  * @details This macro will select the input source from ICx, CHx.
   * \hideinitializer
   */
 #define ECAP_SEL_INPUT_SRC(ecap, u32Index, u32Src) ((ecap)->CTL0 = ((ecap)->CTL0 & ~(ECAP_CTL0_CAPSEL0_Msk<<((u32Index)<<1)))|(((u32Src)<<ECAP_CTL0_CAPSEL0_Pos)<<((u32Index)<<1)))
