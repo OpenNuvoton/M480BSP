@@ -507,8 +507,8 @@ uint32_t EMAC_RecvPkt(uint8_t *pu8Data, uint32_t *pu32Size)
   * @brief Receive an Ethernet packet and the time stamp while it's received
   * @param[out] pu8Data Pointer to a buffer to store received packet (4 byte CRC removed)
   * @param[out] pu32Size Received packet size (without 4 byte CRC).
-  * @param[out] pu32Sec Second value while packet sent
-  * @param[out] pu32Nsec Nano second value while packet sent
+  * @param[out] pu32Sec Second value while packet received
+  * @param[out] pu32Nsec Nano second value while packet received
   * @return Packet receive success or not
   * @retval 0 No packet available for receive
   * @retval 1 A packet is received
@@ -868,6 +868,46 @@ void EMAC_UpdateTime(uint32_t u32Neg, uint32_t u32Sec, uint32_t u32Nsec)
     }
     EMAC->TSCTL |= EMAC_TSCTL_TSUPDATE_Msk;
 
+}
+
+/**
+  * @brief  Check Ethernet link status
+  * @param  None
+  * @return Current link status
+  * @retval \ref EMAC_LINK_DOWN
+  * @retval \ref EMAC_LINK_100F
+  * @retval \ref EMAC_LINK_100H
+  * @retval \ref EMAC_LINK_10F
+  * @retval \ref EMAC_LINK_10H
+  * @note   This API should be called regularly to sync EMAC setting with real connection status
+  */
+uint32_t EMAC_CheckLinkStatus(void)
+{
+    uint32_t reg, ret = EMAC_LINK_DOWN;
+
+    /* Check link valid again */
+    if(EMAC_MdioRead(PHY_STATUS_REG, EMAC_PHY_ADDR) & PHY_STATUS_LINK_VALID) {
+        /* Check link partner capability */
+        reg = EMAC_MdioRead(PHY_ANLPA_REG, EMAC_PHY_ADDR) ;
+        if (reg & PHY_ANLPA_DR100_TX_FULL) {
+            EMAC->CTL |= EMAC_CTL_OPMODE_Msk;
+            EMAC->CTL |= EMAC_CTL_FUDUP_Msk;
+            ret = EMAC_LINK_100F;
+        } else if (reg & PHY_ANLPA_DR100_TX_HALF) {
+            EMAC->CTL |= EMAC_CTL_OPMODE_Msk;
+            EMAC->CTL &= ~EMAC_CTL_FUDUP_Msk;
+            ret = EMAC_LINK_100H;
+        } else if (reg & PHY_ANLPA_DR10_TX_FULL) {
+            EMAC->CTL &= ~EMAC_CTL_OPMODE_Msk;
+            EMAC->CTL |= EMAC_CTL_FUDUP_Msk;
+            ret = EMAC_LINK_10F;
+        } else {
+            EMAC->CTL &= ~EMAC_CTL_OPMODE_Msk;
+            EMAC->CTL &= ~EMAC_CTL_FUDUP_Msk;
+            ret = EMAC_LINK_10H;
+        }
+    }
+    return ret;
 }
 
 

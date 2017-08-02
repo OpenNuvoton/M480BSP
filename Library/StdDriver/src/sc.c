@@ -224,7 +224,7 @@ void SC_StopAllTimer(SC_T *sc)
 /**
   * @brief This function configure and start a smartcard timer of specified smartcard module
   * @param[in] sc Base address of smartcard module
-  * @param[in] u32TimerNum Timer(s) to start. Valid values are 0, 1, 2.
+  * @param[in] u32TimerNum Timer to start. Valid values are 0, 1, 2.
   * @param[in] u32Mode Timer operating mode, valid values are:
   *             - \ref SC_TMR_MODE_0
   *             - \ref SC_TMR_MODE_1
@@ -272,7 +272,7 @@ void SC_StartTimer(SC_T *sc, uint32_t u32TimerNum, uint32_t u32Mode, uint32_t u3
 /**
   * @brief This function stop a smartcard timer of specified smartcard module
   * @param[in] sc Base address of smartcard module
-  * @param[in] u32TimerNum Timer(s) to stop. Valid values are 0, 1, 2.
+  * @param[in] u32TimerNum Timer to stop. Valid values are 0, 1, 2.
   * @return None
   * @note This function stop the timer within smartcard module, \b not timer module
   */
@@ -293,7 +293,7 @@ void SC_StopTimer(SC_T *sc, uint32_t u32TimerNum)
 /**
   * @brief  This function gets smartcard clock frequency.
   * @param[in] sc Base address of smartcard module
-  * @return Smartcard frequency in kHZ
+  * @return Smartcard frequency in kHz
   */
 uint32_t SC_GetInterfaceClock(SC_T *sc)
 {

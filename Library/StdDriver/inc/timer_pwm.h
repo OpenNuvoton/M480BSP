@@ -87,47 +87,47 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Load Mode Constant Definitions                                                                         */
 /*---------------------------------------------------------------------------------------------------------*/
-#define TPWM_LOAD_MODE_PERIOD                   (0UL)                       /*!< Timer PWM period load mode \hideinitializer \hideinitializer */
-#define TPWM_LOAD_MODE_IMMEDIATE                (TIMER_PWMCTL_IMMLDEN_Msk)  /*!< Timer PWM immediately load mode \hideinitializer \hideinitializer */
-#define TPWM_LOAD_MODE_CENTER                   (TIMER_PWMCTL_CTRLD_Msk)    /*!< Timer PWM center load mode \hideinitializer \hideinitializer */
+#define TPWM_LOAD_MODE_PERIOD                   (0UL)                       /*!< Timer PWM period load mode \hideinitializer */
+#define TPWM_LOAD_MODE_IMMEDIATE                (TIMER_PWMCTL_IMMLDEN_Msk)  /*!< Timer PWM immediately load mode \hideinitializer */
+#define TPWM_LOAD_MODE_CENTER                   (TIMER_PWMCTL_CTRLD_Msk)    /*!< Timer PWM center load mode \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Brake Pin De-bounce Clock Source Select Constant Definitions                                           */
 /*---------------------------------------------------------------------------------------------------------*/
-#define TPWM_BKP_DBCLK_PCLK_DIV_1               (0UL)    /*!< De-bounce clock is PCLK divide by 1 \hideinitializer \hideinitializer */
-#define TPWM_BKP_DBCLK_PCLK_DIV_2               (1UL)    /*!< De-bounce clock is PCLK divide by 2 \hideinitializer \hideinitializer */
-#define TPWM_BKP_DBCLK_PCLK_DIV_4               (2UL)    /*!< De-bounce clock is PCLK divide by 4 \hideinitializer \hideinitializer */
-#define TPWM_BKP_DBCLK_PCLK_DIV_8               (3UL)    /*!< De-bounce clock is PCLK divide by 8 \hideinitializer \hideinitializer */
-#define TPWM_BKP_DBCLK_PCLK_DIV_16              (4UL)    /*!< De-bounce clock is PCLK divide by 16 \hideinitializer \hideinitializer */
-#define TPWM_BKP_DBCLK_PCLK_DIV_32              (5UL)    /*!< De-bounce clock is PCLK divide by 32 \hideinitializer \hideinitializer */
-#define TPWM_BKP_DBCLK_PCLK_DIV_64              (6UL)    /*!< De-bounce clock is PCLK divide by 64 \hideinitializer \hideinitializer */
-#define TPWM_BKP_DBCLK_PCLK_DIV_128             (7UL)    /*!< De-bounce clock is PCLK divide by 128 \hideinitializer \hideinitializer */
+#define TPWM_BKP_DBCLK_PCLK_DIV_1               (0UL)    /*!< De-bounce clock is PCLK divide by 1 \hideinitializer */
+#define TPWM_BKP_DBCLK_PCLK_DIV_2               (1UL)    /*!< De-bounce clock is PCLK divide by 2 \hideinitializer */
+#define TPWM_BKP_DBCLK_PCLK_DIV_4               (2UL)    /*!< De-bounce clock is PCLK divide by 4 \hideinitializer */
+#define TPWM_BKP_DBCLK_PCLK_DIV_8               (3UL)    /*!< De-bounce clock is PCLK divide by 8 \hideinitializer */
+#define TPWM_BKP_DBCLK_PCLK_DIV_16              (4UL)    /*!< De-bounce clock is PCLK divide by 16 \hideinitializer */
+#define TPWM_BKP_DBCLK_PCLK_DIV_32              (5UL)    /*!< De-bounce clock is PCLK divide by 32 \hideinitializer */
+#define TPWM_BKP_DBCLK_PCLK_DIV_64              (6UL)    /*!< De-bounce clock is PCLK divide by 64 \hideinitializer */
+#define TPWM_BKP_DBCLK_PCLK_DIV_128             (7UL)    /*!< De-bounce clock is PCLK divide by 128 \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Brake Pin Source Select Constant Definitions                                                           */
 /*---------------------------------------------------------------------------------------------------------*/
-#define TPWM_TM_BRAKE0                          (0UL)    /*!< Brake pin source comes from TM_BRAKE0 \hideinitializer \hideinitializer */
-#define TPWM_TM_BRAKE1                          (1UL)    /*!< Brake pin source comes from TM_BRAKE1 \hideinitializer \hideinitializer */
-#define TPWM_TM_BRAKE2                          (2UL)    /*!< Brake pin source comes from TM_BRAKE2 \hideinitializer \hideinitializer */
-#define TPWM_TM_BRAKE3                          (3UL)    /*!< Brake pin source comes from TM_BRAKE3 \hideinitializer \hideinitializer */
+#define TPWM_TM_BRAKE0                          (0UL)    /*!< Brake pin source comes from TM_BRAKE0 \hideinitializer */
+#define TPWM_TM_BRAKE1                          (1UL)    /*!< Brake pin source comes from TM_BRAKE1 \hideinitializer */
+#define TPWM_TM_BRAKE2                          (2UL)    /*!< Brake pin source comes from TM_BRAKE2 \hideinitializer */
+#define TPWM_TM_BRAKE3                          (3UL)    /*!< Brake pin source comes from TM_BRAKE3 \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Counter Clock Source Select Constant Definitions                                                       */
 /*---------------------------------------------------------------------------------------------------------*/
-#define TPWM_CNTR_CLKSRC_TMR_CLK             (0UL)    /*!< Timer PWM Clock source selects to TMR_CLK \hideinitializer \hideinitializer */
-#define TPWM_CNTR_CLKSRC_TIMER0_INT          (1UL)    /*!< Timer PWM Clock source selects to TIMER0 interrupt event \hideinitializer \hideinitializer */
-#define TPWM_CNTR_CLKSRC_TIMER1_INT          (2UL)    /*!< Timer PWM Clock source selects to TIMER1 interrupt event \hideinitializer \hideinitializer */
-#define TPWM_CNTR_CLKSRC_TIMER2_INT          (3UL)    /*!< Timer PWM Clock source selects to TIMER2 interrupt event \hideinitializer \hideinitializer */
-#define TPWM_CNTR_CLKSRC_TIMER3_INT          (4UL)    /*!< Timer PWM Clock source selects to TIMER3 interrupt event \hideinitializer \hideinitializer */
+#define TPWM_CNTR_CLKSRC_TMR_CLK             (0UL)    /*!< Timer PWM Clock source selects to TMR_CLK \hideinitializer */
+#define TPWM_CNTR_CLKSRC_TIMER0_INT          (1UL)    /*!< Timer PWM Clock source selects to TIMER0 interrupt event \hideinitializer */
+#define TPWM_CNTR_CLKSRC_TIMER1_INT          (2UL)    /*!< Timer PWM Clock source selects to TIMER1 interrupt event \hideinitializer */
+#define TPWM_CNTR_CLKSRC_TIMER2_INT          (3UL)    /*!< Timer PWM Clock source selects to TIMER2 interrupt event \hideinitializer */
+#define TPWM_CNTR_CLKSRC_TIMER3_INT          (4UL)    /*!< Timer PWM Clock source selects to TIMER3 interrupt event \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Counter Synchronous Mode Constant Definitions                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
-#define TPWM_CNTR_SYNC_DISABLE               (0UL)    /*!< Disable TIMER PWM synchronous function \hideinitializer \hideinitializer */
-#define TPWM_CNTR_SYNC_START_BY_TIMER0       ((0<<TIMER_PWMSCTL_SYNCSRC_Pos) | (1<<TIMER_PWMSCTL_SYNCMODE_Pos))  /*!< PWM counter synchronous start by TIMER0 PWM \hideinitializer \hideinitializer */
-#define TPWM_CNTR_SYNC_CLEAR_BY_TIMER0       ((0<<TIMER_PWMSCTL_SYNCSRC_Pos) | (3<<TIMER_PWMSCTL_SYNCMODE_Pos))  /*!< PWM counter synchronous clear by TIMER0 PWM \hideinitializer \hideinitializer */
-#define TPWM_CNTR_SYNC_START_BY_TIMER2       ((1<<TIMER_PWMSCTL_SYNCSRC_Pos) | (1<<TIMER_PWMSCTL_SYNCMODE_Pos))  /*!< PWM counter synchronous start by TIMER2 PWM \hideinitializer \hideinitializer */
-#define TPWM_CNTR_SYNC_CLEAR_BY_TIMER2       ((1<<TIMER_PWMSCTL_SYNCSRC_Pos) | (3<<TIMER_PWMSCTL_SYNCMODE_Pos))  /*!< PWM counter synchronous clear by TIMER2 PWM \hideinitializer \hideinitializer */
+#define TPWM_CNTR_SYNC_DISABLE               (0UL)    /*!< Disable TIMER PWM synchronous function \hideinitializer */
+#define TPWM_CNTR_SYNC_START_BY_TIMER0       ((0<<TIMER_PWMSCTL_SYNCSRC_Pos) | (1<<TIMER_PWMSCTL_SYNCMODE_Pos))  /*!< PWM counter synchronous start by TIMER0 PWM \hideinitializer */
+#define TPWM_CNTR_SYNC_CLEAR_BY_TIMER0       ((0<<TIMER_PWMSCTL_SYNCSRC_Pos) | (3<<TIMER_PWMSCTL_SYNCMODE_Pos))  /*!< PWM counter synchronous clear by TIMER0 PWM \hideinitializer */
+#define TPWM_CNTR_SYNC_START_BY_TIMER2       ((1<<TIMER_PWMSCTL_SYNCSRC_Pos) | (1<<TIMER_PWMSCTL_SYNCMODE_Pos))  /*!< PWM counter synchronous start by TIMER2 PWM \hideinitializer */
+#define TPWM_CNTR_SYNC_CLEAR_BY_TIMER2       ((1<<TIMER_PWMSCTL_SYNCSRC_Pos) | (3<<TIMER_PWMSCTL_SYNCMODE_Pos))  /*!< PWM counter synchronous clear by TIMER2 PWM \hideinitializer */
 
 /*@}*/ /* end of group M480_TIMER_PWM_EXPORTED_CONSTANTS */
 

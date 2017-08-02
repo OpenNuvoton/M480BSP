@@ -30,6 +30,11 @@ extern "C"
 #define EMAC_RX_DESC_SIZE 4UL    /*!<  Number of Rx Descriptors, should be 2 at least \hideinitializer */
 #define EMAC_TX_DESC_SIZE 4UL    /*!<  Number of Tx Descriptors, should be 2 at least \hideinitializer */
 
+#define EMAC_LINK_DOWN    0UL    /*!<  Ethernet link is down \hideinitializer */
+#define EMAC_LINK_100F    1UL    /*!<  Ethernet link is 100Mbps full duplex \hideinitializer */
+#define EMAC_LINK_100H    2UL    /*!<  Ethernet link is 100Mbps half duplex \hideinitializer */
+#define EMAC_LINK_10F     3UL    /*!<  Ethernet link is 10Mbps full duplex \hideinitializer */
+#define EMAC_LINK_10H     4UL    /*!<  Ethernet link is 10Mbps half duplex \hideinitializer */
 
 /*@}*/ /* end of group M480_EMAC_EXPORTED_CONSTANTS */
 
@@ -81,7 +86,6 @@ extern "C"
   */
 #define EMAC_ENABLE_MAGIC_PKT_WAKEUP() (EMAC->CTL |= EMAC_CTL_WOLEN_Msk)
 
-
 /**
   * @brief  Disable EMAC Magic Packet Wakeup function
   * @param  None
@@ -89,16 +93,6 @@ extern "C"
   * \hideinitializer
   */
 #define EMAC_DISABLE_MAGIC_PKT_WAKEUP() (EMAC->CTL &= ~EMAC_CTL_WOLEN_Msk)
-
-/**
-  * @brief  Enable EMAC MII interface
-  * @param  None
-  * @return None
-  * @details After calling \ref EMAC_Open, EMAC use RMII interface by default, but can switch to
-  *          MII interface by calling this macro
-  * \hideinitializer
-  */
-#define EMAC_ENABLE_MII_INTF() (EMAC->CTL &= ~(EMAC_CTL_RMIIEN_Msk | EMAC_CTL_RMIIRXCTL_Msk))
 
 /**
   * @brief  Enable EMAC to receive broadcast packets
@@ -173,7 +167,7 @@ void EMAC_UpdateTime(uint32_t u32Neg, uint32_t u32Sec, uint32_t u32Nsec);
 void EMAC_EnableAlarm(uint32_t u32Sec, uint32_t u32Nsec);
 void EMAC_DisableAlarm(void);
 
-
+uint32_t EMAC_CheckLinkStatus(void);
 
 /*@}*/ /* end of group M480_EMAC_EXPORTED_FUNCTIONS */
 
