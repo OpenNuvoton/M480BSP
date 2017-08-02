@@ -41,8 +41,8 @@ extern "C"
 #define QEI_CTL_NFCLKSEL_DIV2   (0x1<<QEI_CTL_NFCLKSEL_Pos) /*!< The sampling frequency of the noise filter is QEI_CLK/2 \hideinitializer */
 #define QEI_CTL_NFCLKSEL_DIV4   (0x2<<QEI_CTL_NFCLKSEL_Pos) /*!< The sampling frequency of the noise filter is QEI_CLK/4 \hideinitializer */
 #define QEI_CTL_NFCLKSEL_DIV16  (0x3<<QEI_CTL_NFCLKSEL_Pos) /*!< The sampling frequency of the noise filter is QEI_CLK/16 \hideinitializer */
-#define QEI_CTL_NFCLKSEL_DIV32  (0x4<<QEI_CTL_NFCLKSEL_Pos) /*!< The sampling frequency of the noise filter is QEI_CLK/16 \hideinitializer */
-#define QEI_CTL_NFCLKSEL_DIV64  (0x5<<QEI_CTL_NFCLKSEL_Pos) /*!< The sampling frequency of the noise filter is QEI_CLK/16 \hideinitializer */
+#define QEI_CTL_NFCLKSEL_DIV32  (0x4<<QEI_CTL_NFCLKSEL_Pos) /*!< The sampling frequency of the noise filter is QEI_CLK/32 \hideinitializer */
+#define QEI_CTL_NFCLKSEL_DIV64  (0x5<<QEI_CTL_NFCLKSEL_Pos) /*!< The sampling frequency of the noise filter is QEI_CLK/64 \hideinitializer */
 
 
 
@@ -183,7 +183,7 @@ extern "C"
   *                         - \ref QEI_CTL_CMPIEN_Msk   : Compare-match interrupt
   *                         - \ref QEI_CTL_IDXIEN_Msk   : Index detected interrupt
   * @return     None
-  * @details    This macro disable specified QEI interrupt.
+  * @details    This macro enable specified QEI interrupt.
   * \hideinitializer
   */
 #define QEI_ENABLE_INT(qei, u32IntSel)      ((qei)->CTL |= (u32IntSel))
@@ -306,7 +306,7 @@ extern "C"
   * @param[in]  qei         The pointer of the specified QEI module.
   * @param[in]  u32Value    The counter compare value.
   * @return     None
-  * @details    This macro set QEI pulse counter compare value.
+  * @details    This macro set QEI pulse counter value.
   * \hideinitializer
   */
 #define QEI_SET_CNT_VALUE(qei, u32Value)      ((qei)->CNT = (u32Value))
@@ -321,7 +321,7 @@ extern "C"
   *                         - \ref QEI_CTL_HOLDTMR2_Msk     : Hold QEI_CNT by Timer2
   *                         - \ref QEI_CTL_HOLDTMR3_Msk     : Hold QEI_CNT by Timer3
   * @return     None
-  * @details    This macro set QEI counter hold mode.
+  * @details    This macro enable QEI counter hold mode.
   * \hideinitializer
   */
 #define QEI_ENABLE_HOLD_TRG_SRC(qei, u32Type)      ((qei)->CTL |= (u32Type))
@@ -336,7 +336,7 @@ extern "C"
   *                         - \ref QEI_CTL_HOLDTMR2_Msk     : Hold QEI_CNT by Timer2
   *                         - \ref QEI_CTL_HOLDTMR3_Msk     : Hold QEI_CNT by Timer3
   * @return     None
-  * @details    This macro set QEI counter hold mode.
+  * @details    This macro disable QEI counter hold mode.
   * \hideinitializer
   */
 #define QEI_DISABLE_HOLD_TRG_SRC(qei, u32Type)      ((qei)->CTL &= ~(u32Type))

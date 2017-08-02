@@ -212,28 +212,28 @@ extern "C"
 #define PDMA_CLR_ABORT_FLAG(u32Mask) ((uint32_t)(PDMA->ABTSTS = (u32Mask)))
 
 /**
- * @brief       Get Scatter-Gather Table Empty Interrupt Status
+ * @brief       Get Alignment Interrupt Status
  *
  * @param[in]   None
  *
  * @return      None
  *
- * @details     Get the scatter-gather table empty Interrupt status.
+ * @details     Get Alignment Interrupt status.
  * \hideinitializer
  */
-#define PDMA_GET_EMPTY_STS() ((uint32_t)(PDMA->SCATSTS))
+#define PDMA_GET_ALIGN_STS() ((uint32_t)(PDMA->ALIGN))
 
 /**
- * @brief       Clear Scatter-Gather Table Empty Interrupt Status
+ * @brief       Clear Alignment Interrupt Status
  *
  * @param[in]   u32Mask     The channel mask
  *
  * @return      None
  *
- * @details     Clear the scatter-gather table empty Interrupt status.
+ * @details     Clear the Alignment Interrupt status.
  * \hideinitializer
  */
-#define PDMA_CLR_EMPTY_FLAG(u32Mask) ((uint32_t)(PDMA->SCATSTS = (u32Mask)))
+#define PDMA_CLR_ALIGN_FLAG(u32Mask) ((uint32_t)(PDMA->ALIGN = (u32Mask)))
 
 /**
  * @brief       Clear Timeout Interrupt Status

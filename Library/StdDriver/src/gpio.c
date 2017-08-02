@@ -79,7 +79,7 @@ void GPIO_EnableInt(GPIO_T *port, uint32_t u32Pin, uint32_t u32IntAttribs)
  *
  * @return      None
  *
- * @details     This function is used to enable specified GPIO pin interrupt.
+ * @details     This function is used to disable specified GPIO pin interrupt.
  */
 void GPIO_DisableInt(GPIO_T *port, uint32_t u32Pin)
 {
