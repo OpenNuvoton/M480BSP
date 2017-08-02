@@ -111,7 +111,7 @@ int main(void)
     /* Init UART0 for printf */
     UART0_Init();
 
-    printf("\nConnet PB.7 (EPWM1 brake pin 0) to PD.0.\n");
+    printf("\nConnect PB.7 (EPWM1 brake pin 0) to PD.0.\n");
     printf("It will generate brake interrupt and EPWM0 channel 0 output stop toggling.\n");
 
     GPIO_SetMode(PD, BIT0, GPIO_MODE_OUTPUT);

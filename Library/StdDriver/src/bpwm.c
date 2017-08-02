@@ -641,7 +641,7 @@ void BPWM_DisableLoadMode(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t u32Load
 }
 
 /**
- * @brief Enable BPWM SYNC input pin inverse function
+ * @brief Set BPWM clock source
  * @param[in] bpwm The pointer of the specified BPWM module
  *                - BPWM0 : BPWM Group 0
  *                - BPWM1 : BPWM Group 1
@@ -653,7 +653,7 @@ void BPWM_DisableLoadMode(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t u32Load
  *              - \ref BPWM_CLKSRC_TIMER2
  *              - \ref BPWM_CLKSRC_TIMER3
  * @return None
- * @details This function is used to enable BPWM SYNC input pin inverse function.
+ * @details This function is used to set BPWM clock source.
  * @note All channels share channel 0's setting.
  */
 void BPWM_SetClockSource(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t u32ClkSrcSel)

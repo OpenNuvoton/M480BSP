@@ -80,10 +80,10 @@ extern "C"
 #define EPWM_TRG_ADC_CH_4_FREE_CMP_UP                    (14U)    /*!< EPWM trigger ADC while counter of channel 4 matches up count to free comparator point \hideinitializer */
 #define EPWM_TRG_ADC_CH_4_FREE_CMP_DOWN                  (15U)    /*!< EPWM trigger ADC while counter of channel 4 matches down count to free comparator point \hideinitializer */
 
-#define EPWM_TRIGGER_DAC_ZERO                            (0x1U)           /*!< EPWM trigger ADC while counter down count to 0  \hideinitializer */
-#define EPWM_TRIGGER_DAC_PERIOD                          (0x100U)         /*!< EPWM trigger ADC while counter matches (PERIOD + 1) \hideinitializer */
-#define EPWM_TRIGGER_DAC_COMPARE_UP                      (0x10000U)       /*!< EPWM trigger ADC while counter up count to CMPDAT \hideinitializer */
-#define EPWM_TRIGGER_DAC_COMPARE_DOWN                    (0x1000000U)     /*!< EPWM trigger ADC while counter down count to CMPDAT \hideinitializer */
+#define EPWM_TRIGGER_DAC_ZERO                            (0x1U)           /*!< EPWM trigger DAC while counter down count to 0  \hideinitializer */
+#define EPWM_TRIGGER_DAC_PERIOD                          (0x100U)         /*!< EPWM trigger DAC while counter matches (PERIOD + 1) \hideinitializer */
+#define EPWM_TRIGGER_DAC_COMPARE_UP                      (0x10000U)       /*!< EPWM trigger DAC while counter up count to CMPDAT \hideinitializer */
+#define EPWM_TRIGGER_DAC_COMPARE_DOWN                    (0x1000000U)     /*!< EPWM trigger DAC while counter down count to CMPDAT \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Fail brake Control Constant Definitions                                                                */
