@@ -40,8 +40,8 @@ extern "C"
 
 /*--- define type of SD card or MMC */
 #define SDH_TYPE_UNKNOWN     0ul /*!< Unknown card type  \hideinitializer */
-#define SDH_TYPE_SD_HIGH     1ul /*!< SD card  \hideinitializer */
-#define SDH_TYPE_SD_LOW      2ul /*!< SDHC card  \hideinitializer */
+#define SDH_TYPE_SD_HIGH     1ul /*!< SDHC card  \hideinitializer */
+#define SDH_TYPE_SD_LOW      2ul /*!< SD card  \hideinitializer */
 #define SDH_TYPE_MMC         3ul /*!< MMC card  \hideinitializer */
 #define SDH_TYPE_EMMC        4ul /*!< eMMC card  \hideinitializer */
 

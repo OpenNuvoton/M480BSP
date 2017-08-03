@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V1.00
- * @brief    Use USB Host core driver and HID driver. This sample demonstrates how to submit HID class request and how to read data from interrupt pipe. This sample supports dynamic device plug/un-plug and multiple HID devices.
- *
+ * @brief    This sample demonstrates OTG HNP.
+ *           This sample needs two M480 boards. One is as Host, the other is as Device.
  *
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/

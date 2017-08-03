@@ -138,7 +138,7 @@ extern S_HSUSBD_CMD_T gUsbCmd;
 #define HSUSBD_GET_ADDR()                 ((uint32_t)(HSUSBD->FADDR)) /*!<Get USB address  \hideinitializer */
 #define HSUSBD_ENABLE_USB_INT(intr)       (HSUSBD->GINTEN = (intr)) /*!<Enable USB Interrupt  \hideinitializer */
 #define HSUSBD_ENABLE_BUS_INT(intr)       (HSUSBD->BUSINTEN = (intr)) /*!<Enable BUS Interrupt  \hideinitializer */
-#define HSUSBD_GET_BUS_INT_FLAG()         (HSUSBD->BUSINTSTS)        /*!<Clear Bus interrupt flag  \hideinitializer */
+#define HSUSBD_GET_BUS_INT_FLAG()         (HSUSBD->BUSINTSTS)        /*!<Get Bus interrupt flag  \hideinitializer */
 #define HSUSBD_CLR_BUS_INT_FLAG(flag)     (HSUSBD->BUSINTSTS = (flag)) /*!<Clear Bus interrupt flag  \hideinitializer */
 #define HSUSBD_ENABLE_CEP_INT(intr)       (HSUSBD->CEPINTEN = (intr)) /*!<Enable CEP Interrupt  \hideinitializer */
 #define HSUSBD_CLR_CEP_INT_FLAG(flag)     (HSUSBD->CEPINTSTS = (flag)) /*!<Clear CEP interrupt flag  \hideinitializer */
