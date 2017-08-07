@@ -112,6 +112,8 @@ extern "C"
 /** @addtogroup M480_USBH_EXPORTED_STRUCT Data structure
   @{
 */
+struct udev_t;
+typedef void (CONN_FUNC)(struct udev_t *udev, int param);
 
 struct usbhid_dev;
 typedef void (HID_IR_FUNC)(struct usbhid_dev *hdev, uint16_t ep_addr, int status, uint8_t *rdata, uint32_t data_len);    /*!< interrupt in callback function \hideinitializer */
@@ -134,9 +136,9 @@ typedef int (UAC_CB_FUNC)(struct uac_dev_t *dev, uint8_t *data, int len);    /*!
 /*  USB Core Library APIs                                           */
 /*                                                                  */
 /*------------------------------------------------------------------*/
-struct udev_t;
 extern void usbh_core_init(void);
 extern int  usbh_pooling_hubs(void);
+extern void usbh_install_conn_callback(CONN_FUNC *conn_func, CONN_FUNC *disconn_func);
 extern void usbh_suspend(void);
 extern void usbh_resume(void);
 extern struct udev_t * usbh_find_device(char *hub_id, int port);

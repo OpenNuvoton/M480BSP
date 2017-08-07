@@ -28,6 +28,7 @@ int    _IsInUsbInterrupt = 0;
 
 static UDEV_DRV_T *  _drivers[MAX_UDEV_DRIVER];
 
+static CONN_FUNC  *g_conn_func, *g_disconn_func;
 
 /// @endcond HIDDEN_SYMBOLS
 
@@ -46,6 +47,9 @@ void  usbh_core_init()
     _ehci = HSUSBH;
 
     memset(_drivers, 0, sizeof(_drivers));
+
+    g_conn_func = NULL;
+    g_disconn_func = NULL;
 
     usbh_hub_init();
 
@@ -66,6 +70,19 @@ void  usbh_core_init()
     ehci_driver.init();
     ENABLE_EHCI_IRQ();
 #endif
+}
+
+/**
+  * @brief    Install device connect and disconnect callback function.
+  *
+  * @param[in]  conn_func       Device connect callback function.
+  * @param[in]  conn_func       Device disconnect callback function.
+  * @return      None.
+  */
+void usbh_install_conn_callback(CONN_FUNC *conn_func, CONN_FUNC *disconn_func)
+{
+    g_conn_func = conn_func;
+    g_disconn_func = disconn_func;
 }
 
 int  usbh_reset_device(UDEV_T *udev)
@@ -899,6 +916,10 @@ int  connect_device(UDEV_T *udev)
         USB_debug("Parse configuration %d failed!\n", conf->bConfigurationValue);
         return ret;
     }
+
+    if (g_conn_func)
+        g_conn_func(udev, 0);
+
     return ret;
 }
 
@@ -907,6 +928,9 @@ void disconnect_device(UDEV_T *udev)
     IFACE_T      *iface;
 
     USB_debug("disconnect device...\n");
+
+    if (g_disconn_func)
+        g_disconn_func(udev, 0);
 
     usbh_quit_xfer(udev, &(udev->ep0));    /* Quit control transfer if hw_pipe is not NULL.  */
 
