@@ -362,9 +362,9 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>TEST_OTG  CONFIG_OTG</Define>
+              <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\Library\USB_Host\Inc;..\..\..\..\Library\USB_Host\Inc\usb_hid</IncludePath>
+              <IncludePath>..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\Library\UsbHostLib\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -379,7 +379,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>Stack_Size=0x4000 Heap_Size=0x1000</Define>
+              <Define>Stack_Size=0x800 Heap_Size=0x1000</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -470,97 +470,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Lib_USBH_Core</GroupName>
+          <GroupName>UsbHostLib</GroupName>
           <Files>
             <File>
-              <FileName>urb.c</FileName>
+              <FileName>ehci.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\urb.c</FilePath>
+              <FilePath>..\..\..\..\Library\UsbHostLib\src_core\ehci.c</FilePath>
             </File>
             <File>
-              <FileName>usb.c</FileName>
+              <FileName>ehci_iso.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\usb.c</FilePath>
-            </File>
-            <File>
-              <FileName>hcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\hcd.c</FilePath>
+              <FilePath>..\..\..\..\Library\UsbHostLib\src_core\ehci_iso.c</FilePath>
             </File>
             <File>
               <FileName>hub.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\hub.c</FilePath>
+              <FilePath>..\..\..\..\Library\UsbHostLib\src_core\hub.c</FilePath>
             </File>
             <File>
-              <FileName>usb_main.c</FileName>
+              <FileName>mem_alloc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\usb_main.c</FilePath>
+              <FilePath>..\..\..\..\Library\UsbHostLib\src_core\mem_alloc.c</FilePath>
             </File>
             <File>
-              <FileName>config.c</FileName>
+              <FileName>ohci.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\config.c</FilePath>
+              <FilePath>..\..\..\..\Library\UsbHostLib\src_core\ohci.c</FilePath>
             </File>
             <File>
-              <FileName>driver.c</FileName>
+              <FileName>usb_core.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\driver.c</FilePath>
-            </File>
-            <File>
-              <FileName>endpoint.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\endpoint.c</FilePath>
-            </File>
-            <File>
-              <FileName>message.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\message.c</FilePath>
-            </File>
-            <File>
-              <FileName>generic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\generic.c</FilePath>
-            </File>
-            <File>
-              <FileName>linux_bus_driver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\linux_bus_driver.c</FilePath>
-            </File>
-            <File>
-              <FileName>linux_fake.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\linux_fake.c</FilePath>
-            </File>
-            <File>
-              <FileName>support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\support.c</FilePath>
-            </File>
-            <File>
-              <FileName>ehci-hcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\host\ehci-hcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>ohci-hcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\host\ohci-hcd.c</FilePath>
+              <FilePath>..\..\..\..\Library\UsbHostLib\src_core\usb_core.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>Lib_USBH_HID</GroupName>
+          <GroupName>UsbHostLib_HID</GroupName>
           <Files>
             <File>
               <FileName>hid_core.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_hid\hid_core.c</FilePath>
+              <FilePath>..\..\..\..\Library\UsbHostLib\src_hid\hid_core.c</FilePath>
             </File>
             <File>
               <FileName>hid_driver.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_hid\hid_driver.c</FilePath>
+              <FilePath>..\..\..\..\Library\UsbHostLib\src_hid\hid_driver.c</FilePath>
             </File>
           </Files>
         </Group>

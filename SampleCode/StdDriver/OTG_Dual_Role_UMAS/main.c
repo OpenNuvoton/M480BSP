@@ -356,17 +356,16 @@ void SYS_Init(void)
     /* Select UART module clock source as HXT and UART module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
 
-    /* Enable USBH module clock */
-    CLK_EnableModuleClock(USBH_MODULE);
-
     /* USB Host desired input clock is 48 MHz. Set as PLL divided by 4 (192/4 = 48) */
     CLK->CLKDIV0 = (CLK->CLKDIV0 & ~CLK_CLKDIV0_USBDIV_Msk) | CLK_CLKDIV0_USB(4);
 
-    /* Enable USBD and OTG clock */
-    CLK->APBCLK0 |= CLK_APBCLK0_USBDCKEN_Msk | CLK_APBCLK0_OTGCKEN_Msk;
+    /* Enable USBH module clock */
+    CLK_EnableModuleClock(USBH_MODULE);
+    CLK_EnableModuleClock(USBD_MODULE);
+    CLK_EnableModuleClock(OTG_MODULE);
 
     /* Set OTG as ID dependent role */
-    SYS->USBPHY = SYS_USBPHY_HSUSBEN_Msk | (0x2 << SYS_USBPHY_HSUSBROLE_Pos) | SYS_USBPHY_USBEN_Msk | SYS_USBPHY_SBO_Msk | (0x2 << SYS_USBPHY_USBROLE_Pos);
+    SYS->USBPHY = SYS_USBPHY_HSUSBEN_Msk | (0x1 << SYS_USBPHY_HSUSBROLE_Pos) | SYS_USBPHY_USBEN_Msk | SYS_USBPHY_SBO_Msk | (0x2 << SYS_USBPHY_USBROLE_Pos);
     delay_us(20);
     SYS->USBPHY |= SYS_USBPHY_HSUSBACT_Msk;
 
@@ -400,16 +399,6 @@ void SYS_Init(void)
 
     /* Lock protected registers */
     SYS_LockReg();
-}
-
-void UART0_Init(void)
-{
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init UART                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
-
-    /* Configure UART0 and set UART0 baud rate */
-    UART_Open(UART0, 115200);
 }
 
 int USBH_Process()
@@ -881,7 +870,7 @@ int USBH_Process()
 int32_t main(void)
 {
     SYS_Init();                        /* Init System, IP clock and multi-function I/O */
-    UART0_Init();                      /* Initialize UART0 */
+    UART_Open(UART0, 115200);          /* Configure UART0 and set UART0 baud rate */
     enable_sys_tick(100);
 
     printf("\n\n");

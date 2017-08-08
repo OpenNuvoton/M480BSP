@@ -401,16 +401,6 @@ void SYS_Init(void)
     SYS_LockReg();
 }
 
-void UART0_Init(void)
-{
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init UART                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
-
-    /* Configure UART0 and set UART0 baud rate */
-    UART_Open(UART0, 115200);
-}
-
 int USBH_Process()
 {
     char        *ptr, *ptr2;
@@ -880,7 +870,7 @@ int USBH_Process()
 int32_t main(void)
 {
     SYS_Init();                        /* Init System, IP clock and multi-function I/O */
-    UART0_Init();                      /* Initialize UART0 */
+    UART_Open(UART0, 115200);          /* Initialize UART0 */
     enable_sys_tick(100);
 
     printf("\n\n");

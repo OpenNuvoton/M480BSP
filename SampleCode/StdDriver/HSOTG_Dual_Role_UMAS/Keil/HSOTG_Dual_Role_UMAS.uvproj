@@ -364,7 +364,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\Library\USB_Host\Inc;..\..\..\..\Library\USB_Host\Inc\usb_umas;..\..\..\..\ThirdParty\FATFS\src</IncludePath>
+              <IncludePath>..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\Library\UsbHostLib\inc;..\..\..\..\ThirdParty\FATFS\src</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -379,7 +379,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>Stack_Size=0x4000 Heap_Size=0x1000</Define>
+              <Define>Stack_Size=0x800 Heap_Size=0x1000</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -485,112 +485,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>USBH_Core_Lib</GroupName>
+          <GroupName>UsbHostLib</GroupName>
           <Files>
             <File>
-              <FileName>config.c</FileName>
+              <FileName>ehci.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\config.c</FilePath>
+              <FilePath>..\..\..\..\Library\UsbHostLib\src_core\ehci.c</FilePath>
             </File>
             <File>
-              <FileName>driver.c</FileName>
+              <FileName>ehci_iso.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\driver.c</FilePath>
-            </File>
-            <File>
-              <FileName>endpoint.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\endpoint.c</FilePath>
-            </File>
-            <File>
-              <FileName>generic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\generic.c</FilePath>
-            </File>
-            <File>
-              <FileName>hcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\hcd.c</FilePath>
+              <FilePath>..\..\..\..\Library\UsbHostLib\src_core\ehci_iso.c</FilePath>
             </File>
             <File>
               <FileName>hub.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\hub.c</FilePath>
+              <FilePath>..\..\..\..\Library\UsbHostLib\src_core\hub.c</FilePath>
             </File>
             <File>
-              <FileName>linux_bus_driver.c</FileName>
+              <FileName>mem_alloc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\linux_bus_driver.c</FilePath>
+              <FilePath>..\..\..\..\Library\UsbHostLib\src_core\mem_alloc.c</FilePath>
             </File>
             <File>
-              <FileName>linux_fake.c</FileName>
+              <FileName>ohci.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\linux_fake.c</FilePath>
+              <FilePath>..\..\..\..\Library\UsbHostLib\src_core\ohci.c</FilePath>
             </File>
             <File>
-              <FileName>message.c</FileName>
+              <FileName>usb_core.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\message.c</FilePath>
-            </File>
-            <File>
-              <FileName>support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\support.c</FilePath>
-            </File>
-            <File>
-              <FileName>urb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\urb.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\usb.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\usb_main.c</FilePath>
-            </File>
-            <File>
-              <FileName>ehci-hcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\host\ehci-hcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>ohci-hcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_core\host\ohci-hcd.c</FilePath>
+              <FilePath>..\..\..\..\Library\UsbHostLib\src_core\usb_core.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>USBH_MASS_Lib</GroupName>
+          <GroupName>UsbHostLib_MSC</GroupName>
           <Files>
             <File>
-              <FileName>UmasDebug.c</FileName>
+              <FileName>msc_driver.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_umas\UmasDebug.c</FilePath>
+              <FilePath>..\..\..\..\Library\UsbHostLib\src_msc\msc_driver.c</FilePath>
             </File>
             <File>
-              <FileName>UmasDriver.c</FileName>
+              <FileName>msc_xfer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_umas\UmasDriver.c</FilePath>
-            </File>
-            <File>
-              <FileName>UmasProtocol.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_umas\UmasProtocol.c</FilePath>
-            </File>
-            <File>
-              <FileName>UmasScsiGlue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_umas\UmasScsiGlue.c</FilePath>
-            </File>
-            <File>
-              <FileName>UmasTransport.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\USB_Host\src_umas\UmasTransport.c</FilePath>
+              <FilePath>..\..\..\..\Library\UsbHostLib\src_msc\msc_xfer.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -172,7 +172,7 @@
         </option>
         <option>
           <name>CCDefines</name>
-          <state>CONFIG_OTG</state>
+          <state></state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -305,8 +305,7 @@
           <state>$PROJ_DIR$\..\..\..\..\Library\CMSIS\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\StdDriver\inc</state>
           <state>$PROJ_DIR$\..\..\..\..\ThirdParty\FATFS\src</state>
-          <state>$PROJ_DIR$\..\..\..\..\Library\USB_Host\Inc</state>
-          <state>$PROJ_DIR$\..\..\..\..\Library\USB_Host\Inc\usb_umas</state>
+          <state>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\inc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -707,7 +706,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>OTG_Dual_Role_UMAS.icf</state>
+          <state>$PROJ_DIR$\OTG_Dual_Role_UMAS.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -973,69 +972,33 @@
     </file>
   </group>
   <group>
-    <name>USBH_Core_Lib</name>
+    <name>UsbHostLib</name>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\config.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\src_core\ehci.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\driver.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\src_core\ehci_iso.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\host\ehci-hcd.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\src_core\hub.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\endpoint.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\src_core\mem_alloc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\generic.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\src_core\ohci.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\hcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\hub.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\linux_bus_driver.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\linux_fake.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\message.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\host\ohci-hcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\support.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\urb.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\usb.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\usb_main.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\src_core\usb_core.c</name>
     </file>
   </group>
   <group>
-    <name>USBH_MASS_Lib</name>
+    <name>UsbHostLib_MSC</name>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_umas\UmasDebug.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\src_msc\msc_driver.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_umas\UmasDriver.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_umas\UmasProtocol.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_umas\UmasScsiGlue.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_umas\UmasTransport.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\src_msc\msc_xfer.c</name>
     </file>
   </group>
   <group>

@@ -172,7 +172,7 @@
         </option>
         <option>
           <name>CCDefines</name>
-          <state>TEST_OTG</state>
+          <state></state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -304,8 +304,7 @@
           <state>$PROJ_DIR$\..\..\..\..\Library\CMSIS\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\M480\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\StdDriver\inc</state>
-          <state>$PROJ_DIR$\..\..\..\..\Library\USB_Host\Inc</state>
-          <state>$PROJ_DIR$\..\..\..\..\Library\USB_Host\Inc\usb_hid</state>
+          <state>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\inc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -706,7 +705,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>.\hsotg_hnp.icf</state>
+          <state>$PROJ_DIR$\hsotg_hnp.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -948,63 +947,6 @@
     </file>
   </group>
   <group>
-    <name>Lib_USBH_Core</name>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\driver.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\host\ehci-hcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\endpoint.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\generic.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\hcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\hub.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\linux_bus_driver.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\linux_fake.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\message.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\host\ohci-hcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\support.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\urb.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\usb.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_core\usb_main.c</name>
-    </file>
-  </group>
-  <group>
-    <name>Lib_USBH_HID</name>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_hid\hid_core.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\USB_Host\src_hid\hid_driver.c</name>
-    </file>
-  </group>
-  <group>
     <name>Library</name>
     <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\clk.c</name>
@@ -1020,6 +962,36 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\uart.c</name>
+    </file>
+  </group>
+  <group>
+    <name>UsbHostLib</name>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\src_core\ehci.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\src_core\ehci_iso.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\src_core\hub.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\src_core\mem_alloc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\src_core\ohci.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\src_core\usb_core.c</name>
+    </file>
+  </group>
+  <group>
+    <name>UsbHostLib_HID</name>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\src_hid\hid_core.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\Library\UsbHostLib\src_hid\hid_driver.c</name>
     </file>
   </group>
   <group>

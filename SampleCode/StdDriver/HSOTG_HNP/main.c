@@ -11,18 +11,21 @@
 
 #include "M480.h"
 
+#include "usb.h"
+#include "hub.h"
 #include "usbh_lib.h"
 #include "usbh_hid.h"
-#include "usb.h"
 #include "hid_mouse.h"
 
 #ifdef __ICCARM__
 #pragma data_alignment=32
 uint8_t  g_buff_pool[1024];
 #else
-__align(32) uint32_t   g_buff_pool[1024];
+__align(32) uint8_t   g_buff_pool[1024];
 #endif
 
+HID_DEV_T   *g_hid_list[CONFIG_HID_MAX_DEV];
+UDEV_T *gOTG_Dev_pet;
 
 uint8_t volatile gStartHNP = 0;
 uint8_t volatile otg_role_change=0;
@@ -48,6 +51,62 @@ void enable_sys_tick(int ticks_per_second)
 uint32_t get_ticks()
 {
     return g_tick_cnt;
+}
+
+/*
+ *  USB device connect callback function.
+ *  User invokes usbh_pooling_hubs() to let USB core able to scan and handle events of
+ *  HSUSBH port, USBH port, and USB hub device ports. Once a new device connected, it
+ *  will be detected and enumerated in the call to usbh_pooling_hubs(). This callback
+ *  will be invoked from USB core once a newly connected device was successfully enumerated.
+ */
+void  connect_func(struct udev_t *udev, int param)
+{
+    struct hub_dev_t *parent;
+    int    i;
+
+    gOTG_Dev_pet = udev;
+    parent = udev->parent;
+
+    printf("Device [0x%x,0x%x] was connected.\n",
+           udev->descriptor.idVendor, udev->descriptor.idProduct);
+    printf("    Speed:    %s-speed\n", (udev->speed == SPEED_HIGH) ? "high" : ((udev->speed == SPEED_FULL) ? "full" : "low"));
+    printf("    Location: ");
+
+    if (parent == NULL) {
+        if (udev->port_num == 1)
+            printf("USB 2.0 port\n");
+        else
+            printf("USB 1.1 port\n");
+    } else {
+        if (parent->pos_id[0] == '1')
+            printf("USB 2.0 port");
+        else
+            printf("USB 1.1 port");
+
+        for (i = 1; parent->pos_id[i] != 0; i++) {
+            printf(" => Hub port %c", parent->pos_id[i]);
+        }
+
+        printf(" => Hub port %d\n", udev->port_num);
+
+        printf("\n");
+    }
+    printf("\n");
+}
+
+
+/*
+ *  USB device disconnect callback function.
+ *  User invokes usbh_pooling_hubs() to let USB core able to scan and handle events of
+ *  HSUSBH port, USBH port, and USB hub device ports. Once a device was disconnected, it
+ *  will be detected and removed in the call to usbh_pooling_hubs(). This callback
+ *  will be invoked from USB core prior to remove that device.
+ */
+void  disconnect_func(struct udev_t *udev, int param)
+{
+    printf("Device [0x%x,0x%x] was disconnected.\n",
+           udev->descriptor.idVendor, udev->descriptor.idProduct);
 }
 
 /*
@@ -87,8 +146,39 @@ void  dump_buff_hex(uint8_t *pucBuff, int nBytes)
 }
 
 
-void  int_read_callback(HID_DEV_T *hdev, uint16_t ep_addr, uint8_t *rdata, uint32_t data_len)
+int  is_a_new_hid_device(HID_DEV_T *hdev)
 {
+    int    i;
+    for (i = 0; i < CONFIG_HID_MAX_DEV; i++) {
+        if ((g_hid_list[i] != NULL) && (g_hid_list[i] == hdev) &&
+                (g_hid_list[i]->uid == hdev->uid))
+            return 0;
+    }
+    return 1;
+}
+
+void update_hid_device_list(HID_DEV_T *hdev)
+{
+    int  i = 0;
+    memset(g_hid_list, 0, sizeof(g_hid_list));
+    while ((i < CONFIG_HID_MAX_DEV) && (hdev != NULL)) {
+        g_hid_list[i++] = hdev;
+        hdev = hdev->next;
+    }
+}
+
+void  int_read_callback(HID_DEV_T *hdev, uint16_t ep_addr, int status, uint8_t *rdata, uint32_t data_len)
+{
+    /*
+     *  USB host HID driver notify user the transfer status via <status> parameter. If the
+     *  If <status> is 0, the USB transfer is fine. If <status> is not zero, this interrupt in
+     *  transfer failed and HID driver will stop this pipe. It can be caused by USB transfer error
+     *  or device disconnected.
+     */
+    if (status < 0) {
+        printf("Interrupt in transfer failed! status: %d\n", status);
+        return;
+    }
     printf("Device [0x%x,0x%x] ep 0x%x, %d bytes received =>\n",
            hdev->idVendor, hdev->idProduct, ep_addr, data_len);
     dump_buff_hex(rdata, data_len);
@@ -140,8 +230,8 @@ int  init_hid_device(HID_DEV_T *hdev)
 
     printf("\nUSBH_HidStartIntReadPipe...\n");
     ret = usbh_hid_start_int_read(hdev, 0, int_read_callback);
-    if ((ret != HID_RET_OK) && (ret != HID_RET_EP_USED))
-        printf("usbh_hid_start_int_read failed!\n");
+    if (ret != HID_RET_OK)
+        printf("usbh_hid_start_int_read failed! %d\n", ret);
     else
         printf("Interrupt in transfer started...\n");
 
@@ -171,7 +261,7 @@ void SYS_Init(void)
 
     /* Select IP clock source */
     CLK->CLKDIV0 = (CLK->CLKDIV0 & ~CLK_CLKDIV0_USBDIV_Msk) | CLK_CLKDIV0_USB(4);
-    CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
+    CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
 
     /* Enable IP clock */
     CLK_EnableModuleClock(USBH_MODULE);
@@ -205,18 +295,14 @@ void SYS_Init(void)
                      SYS_GPA_MFPH_PA14MFP_USB_D_P | SYS_GPA_MFPH_PA15MFP_USB_OTG_ID;
 }
 
-void UART0_Init(void)
-{
-    UART_Open(UART0, 115200);
-}
-
-extern struct usb_device *gOTG_Dev_pet;
 void OTG_SetFeature(uint32_t value)
 {
+    uint32_t  read_len;
     /* 0x3 - b_hnp_enable, 0x4 - a_hnp_support */
     /* set feature */
-    usb_control_msg(gOTG_Dev_pet, usb_sndctrlpipe(gOTG_Dev_pet, 0),
-                    USB_REQ_SET_FEATURE, 0, value, 0, NULL, 0, 50000);
+    usbh_ctrl_xfer(gOTG_Dev_pet, REQ_TYPE_OUT | REQ_TYPE_STD_DEV | REQ_TYPE_TO_DEV,
+                         USB_REQ_SET_FEATURE, value, 0, 0,
+                         NULL, &read_len, 300);
 }
 
 /**
@@ -302,10 +388,10 @@ void USBOTG20_IRQHandler(void)
  *----------------------------------------------------------------------------*/
 int32_t main(void)
 {
-    HID_DEV_T    *hdev;
+    HID_DEV_T    *hdev, *hdev_list;
 
     SYS_Init();                        /* Init System, IP clock and multi-function I/O */
-    UART0_Init();                      /* Initialize UART0 */
+    UART_Open(UART0, 115200);          /* Initialize UART0 */
     enable_sys_tick(100);
 
     printf("\n\n");
@@ -325,7 +411,9 @@ int32_t main(void)
                      HSOTG_INTEN_SRPDETIEN_Msk | HSOTG_INTEN_IDCHGIEN_Msk | HSOTG_INTEN_ROLECHGIEN_Msk);
 
     usbh_core_init();
+    usbh_install_conn_callback(connect_func, disconnect_func);
     usbh_hid_init();
+    memset(g_hid_list, 0, sizeof(g_hid_list));
 
     while (1) {
         if(HSOTG_GET_STATUS(HSOTG_STATUS_IDSTS_Msk)) { /* B-device */
@@ -357,10 +445,15 @@ int32_t main(void)
             usbh_pooling_hubs();
             while (1) {
                 if (usbh_pooling_hubs()) {
-                    hdev = usbh_hid_get_device_list();
-                    if (hdev == NULL)
-                        continue;
-                    init_hid_device(hdev);
+                    hdev_list = usbh_hid_get_device_list();
+                    hdev = hdev_list;
+                    while (hdev != NULL) {
+                        if (is_a_new_hid_device(hdev)) {
+                            init_hid_device(hdev);
+                        }
+                        hdev = hdev->next;
+                    }
+                    update_hid_device_list(hdev_list);
                 }
 
                 if (intcount > 3) {
@@ -397,10 +490,15 @@ int32_t main(void)
             gStartHNP = intcount = 0;
             while (1) {
                 if (usbh_pooling_hubs()) {
-                    hdev = usbh_hid_get_device_list();
-                    if (hdev == NULL)
-                        continue;
-                    init_hid_device(hdev);
+                    hdev_list = usbh_hid_get_device_list();
+                    hdev = hdev_list;
+                    while (hdev != NULL) {
+                        if (is_a_new_hid_device(hdev)) {
+                            init_hid_device(hdev);
+                        }
+                        hdev = hdev->next;
+                    }
+                    update_hid_device_list(hdev_list);
                 }
 
                 if (intcount > 5) {
