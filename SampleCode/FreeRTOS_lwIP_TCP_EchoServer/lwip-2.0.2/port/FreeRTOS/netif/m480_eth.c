@@ -173,7 +173,7 @@ static void init_rx_desc(void)
         rx_desc[i].status1 = OWNERSHIP_EMAC;
         rx_desc[i].buf = &rx_buf[i][0];
         rx_desc[i].status2 = 0;
-        rx_desc[i].next = &rx_desc[(i + 1) % TX_DESCRIPTOR_NUM];
+        rx_desc[i].next = &rx_desc[(i + 1) % RX_DESCRIPTOR_NUM];
 #ifdef    TIME_STAMPING
         rx_desc[i].backup1 = (u32_t)rx_desc[i].buf;
         rx_desc[i].backup2 = (u32_t)rx_desc[i].next;
