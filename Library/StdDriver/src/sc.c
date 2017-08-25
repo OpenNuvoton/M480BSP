@@ -88,11 +88,11 @@ void SC_Close(SC_T *sc)
 /**
   * @brief This function initialized smartcard module
   * @param[in] sc Base address of smartcard module
-  * @param[in] u32CD Card detect polarity, select the CD pin state which indicates card insert. Could be
+  * @param[in] u32CD Card detect polarity, select the CD pin state which indicates card absent. Could be
   *                 -\ref SC_PIN_STATE_HIGH
   *                 -\ref SC_PIN_STATE_LOW
   *                 -\ref SC_PIN_STATE_IGNORE, no card detect pin, always assumes card present
-  * @param[in] u32PWR Power on polarity, select the PWR pin state which could set smartcard VCC to high level. Could be
+  * @param[in] u32PWR Power off polarity, select the PWR pin state which could set smartcard VCC to high level. Could be
   *                 -\ref SC_PIN_STATE_HIGH
   *                 -\ref SC_PIN_STATE_LOW
   * @return None
