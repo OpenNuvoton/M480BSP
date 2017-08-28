@@ -13,15 +13,15 @@ static uint32_t u32CardStateIgnore[SC_INTERFACE_NUM] = {0UL, 0UL, 0UL};
 
 /** @endcond HIDDEN_SYMBOLS */
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_SC_Driver SC Driver
+/** @addtogroup SC_Driver SC Driver
   @{
 */
 
-/** @addtogroup M480_SC_EXPORTED_FUNCTIONS SC Exported Functions
+/** @addtogroup SC_EXPORTED_FUNCTIONS SC Exported Functions
   @{
 */
 
@@ -328,10 +328,10 @@ uint32_t SC_GetInterfaceClock(SC_T *sc)
     return u32Clk;
 }
 
-/*@}*/ /* end of group M480_SC_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group SC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_SC_Driver */
+/*@}*/ /* end of group SC_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

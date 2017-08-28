@@ -14,7 +14,7 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
@@ -199,7 +199,7 @@ void WDT_Open(uint32_t u32TimeoutInterval, uint32_t u32ResetDelay, uint32_t u32E
 
 /*@}*/ /* end of group WDT_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

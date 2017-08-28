@@ -14,15 +14,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_SC_Driver SC Driver
+/** @addtogroup SC_Driver SC Driver
   @{
 */
 
-/** @addtogroup M480_SC_EXPORTED_CONSTANTS SC Exported Constants
+/** @addtogroup SC_EXPORTED_CONSTANTS SC Exported Constants
   @{
 */
 #define SC_INTERFACE_NUM        3                /*!< Smartcard interface numbers \hideinitializer */
@@ -44,10 +44,10 @@ extern "C"
 #define SC_TMR_MODE_F                   (0xF << SC_TMRCTL0_OPMODE_Pos)     /*!<Timer Operation Mode 15, down count, reload after detect start bit                      \hideinitializer */
 
 
-/*@}*/ /* end of group M480_SC_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group SC_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_SC_EXPORTED_FUNCTIONS SC Exported Functions
+/** @addtogroup SC_EXPORTED_FUNCTIONS SC Exported Functions
   @{
 */
 
@@ -246,11 +246,11 @@ void SC_StopTimer(SC_T *sc, uint32_t u32TimerNum);
 uint32_t SC_GetInterfaceClock(SC_T *sc);
 
 
-/*@}*/ /* end of group M480_SC_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group SC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_SC_Driver */
+/*@}*/ /* end of group SC_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

@@ -7,7 +7,7 @@
 *****************************************************************************/
 #include "NuMicro.h"
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
@@ -135,6 +135,6 @@ void EADC_SetExtendSampleTime(EADC_T *eadc, uint32_t u32ModuleNum, uint32_t u32E
 
 /*@}*/ /* end of group EADC_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

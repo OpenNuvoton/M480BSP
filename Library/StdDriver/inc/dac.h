@@ -14,16 +14,16 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_DAC_Driver DAC Driver
+/** @addtogroup DAC_Driver DAC Driver
   @{
 */
 
 
-/** @addtogroup M480_DAC_EXPORTED_CONSTANTS DAC Exported Constants
+/** @addtogroup DAC_EXPORTED_CONSTANTS DAC Exported Constants
   @{
 */
 
@@ -53,7 +53,7 @@ extern "C"
 /*@}*/ /* end of group DAC_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_DAC_EXPORTED_FUNCTIONS DAC Exported Functions
+/** @addtogroup DAC_EXPORTED_FUNCTIONS DAC Exported Functions
   @{
 */
 
@@ -253,11 +253,11 @@ void DAC_Open(DAC_T *dac, uint32_t u32Ch, uint32_t u32TrgSrc);
 void DAC_Close(DAC_T *dac, uint32_t u32Ch);
 uint32_t DAC_SetDelayTime(DAC_T *dac, uint32_t u32Delay);
 
-/*@}*/ /* end of group M480_DAC_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group DAC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_DAC_Driver */
+/*@}*/ /* end of group DAC_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

@@ -13,16 +13,16 @@
 #include <string.h>
 #include "NuMicro.h"
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_SDH_Driver SDH Driver
+/** @addtogroup SDH_Driver SDH Driver
   @{
 */
 
 
-/** @addtogroup M480_SDH_EXPORTED_FUNCTIONS SDH Exported Functions
+/** @addtogroup SDH_EXPORTED_FUNCTIONS SDH Exported Functions
   @{
 */
 #define SDH_BLOCK_SIZE   512ul
@@ -1010,11 +1010,11 @@ uint32_t SDH_Write(SDH_T *sdh, uint8_t *pu8BufAddr, uint32_t u32StartSec, uint32
     return Successful;
 }
 
-/*@}*/ /* end of group M480_SDH_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group SDH_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_SDH_Driver */
+/*@}*/ /* end of group SDH_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
 

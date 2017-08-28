@@ -14,15 +14,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_USCI_SPI_Driver USCI_SPI Driver
+/** @addtogroup USCI_SPI_Driver USCI_SPI Driver
   @{
 */
 
-/** @addtogroup M480_USCI_SPI_EXPORTED_CONSTANTS USCI_SPI Exported Constants
+/** @addtogroup USCI_SPI_EXPORTED_CONSTANTS USCI_SPI Exported Constants
   @{
 */
 
@@ -395,11 +395,11 @@ void USPI_EnableWakeup(USPI_T *uspi);
 void USPI_DisableWakeup(USPI_T *uspi);
 
 
-/*@}*/ /* end of group M480_USCI_SPI_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group USCI_SPI_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_USCI_SPI_Driver */
+/*@}*/ /* end of group USCI_SPI_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

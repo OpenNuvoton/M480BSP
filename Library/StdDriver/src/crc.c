@@ -7,15 +7,15 @@
 *****************************************************************************/
 #include "NuMicro.h"
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_CRC_Driver CRC Driver
+/** @addtogroup CRC_Driver CRC Driver
   @{
 */
 
-/** @addtogroup M480_CRC_EXPORTED_FUNCTIONS CRC Exported Functions
+/** @addtogroup CRC_EXPORTED_FUNCTIONS CRC Exported Functions
   @{
 */
 
@@ -84,10 +84,10 @@ uint32_t CRC_GetChecksum(void)
     return ret;
 }
 
-/*@}*/ /* end of group M480_CRC_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group CRC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_CRC_Driver */
+/*@}*/ /* end of group CRC_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

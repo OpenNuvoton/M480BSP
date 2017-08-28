@@ -22,16 +22,16 @@
 
 /** @endcond HIDDEN_SYMBOLS */
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_CRYPTO_Driver CRYPTO Driver
+/** @addtogroup CRYPTO_Driver CRYPTO Driver
   @{
 */
 
 
-/** @addtogroup M480_CRYPTO_EXPORTED_FUNCTIONS CRYPTO Exported Functions
+/** @addtogroup CRYPTO_EXPORTED_FUNCTIONS CRYPTO Exported Functions
   @{
 */
 
@@ -1631,11 +1631,11 @@ int32_t  ECC_VerifySignature(E_ECC_CURVE ecc_curve, char *message,
     return ret;
 }
 
-/*@}*/ /* end of group M480_CRYPTO_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group CRYPTO_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_CRYPTO_Driver */
+/*@}*/ /* end of group CRYPTO_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2017 Nuvoton Technology Corp. ***/
 

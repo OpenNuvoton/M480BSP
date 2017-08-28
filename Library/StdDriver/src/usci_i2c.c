@@ -7,16 +7,16 @@
 *****************************************************************************/
 #include "NuMicro.h"
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_USCI_I2C_Driver USCI_I2C Driver
+/** @addtogroup USCI_I2C_Driver USCI_I2C Driver
   @{
 */
 
 
-/** @addtogroup M480_USCI_I2C_EXPORTED_FUNCTIONS USCI_I2C Exported Functions
+/** @addtogroup USCI_I2C_EXPORTED_FUNCTIONS USCI_I2C Exported Functions
   @{
 */
 
@@ -555,10 +555,10 @@ void UI2C_DisableWakeup(UI2C_T *ui2c)
     ui2c->WKCTL &= ~UI2C_WKCTL_WKEN_Msk;
 }
 
-/*@}*/ /* end of group M480_USCI_I2C_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group USCI_I2C_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_USCI_I2C_Driver */
+/*@}*/ /* end of group USCI_I2C_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

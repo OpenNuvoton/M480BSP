@@ -20,15 +20,15 @@
 #include "uac.h"
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_USBH_Library USB Host Library
+/** @addtogroup USBH_Library USB Host Library
   @{
 */
 
-/** @addtogroup M480_USBH_EXPORTED_FUNCTIONS USB Host Exported Functions
+/** @addtogroup USBH_EXPORTED_FUNCTIONS USB Host Exported Functions
   @{
 */
 
@@ -984,11 +984,11 @@ int usbh_uac_open(UAC_DEV_T *uac)
     return 0;
 }
 
-/*@}*/ /* end of group M480_USBH_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group USBH_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_USBH_Library */
+/*@}*/ /* end of group USBH_Library */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
 

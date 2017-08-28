@@ -14,15 +14,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_CRC_Driver CRC Driver
+/** @addtogroup CRC_Driver CRC Driver
   @{
 */
 
-/** @addtogroup M480_CRC_EXPORTED_CONSTANTS CRC Exported Constants
+/** @addtogroup CRC_EXPORTED_CONSTANTS CRC Exported Constants
   @{
 */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -48,10 +48,10 @@ extern "C"
 #define CRC_CPU_WDATA_16    (1UL << CRC_CTL_DATLEN_Pos) /*!<CRC CPU Write Data length is 16-bit \hideinitializer */
 #define CRC_CPU_WDATA_32    (2UL << CRC_CTL_DATLEN_Pos) /*!<CRC CPU Write Data length is 32-bit \hideinitializer */
 
-/*@}*/ /* end of group M480_CRC_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group CRC_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_CRC_EXPORTED_FUNCTIONS CRC Exported Functions
+/** @addtogroup CRC_EXPORTED_FUNCTIONS CRC Exported Functions
   @{
 */
 
@@ -97,11 +97,11 @@ extern "C"
 void CRC_Open(uint32_t u32Mode, uint32_t u32Attribute, uint32_t u32Seed, uint32_t u32DataLen);
 uint32_t CRC_GetChecksum(void);
 
-/*@}*/ /* end of group M480_CRC_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group CRC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_CRC_Driver */
+/*@}*/ /* end of group CRC_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

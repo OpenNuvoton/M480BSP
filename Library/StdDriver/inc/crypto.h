@@ -13,16 +13,16 @@ extern "C"
 {
 #endif
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_CRYPTO_Driver CRYPTO Driver
+/** @addtogroup CRYPTO_Driver CRYPTO Driver
   @{
 */
 
 
-/** @addtogroup M480_CRYPTO_EXPORTED_CONSTANTS CRYPTO Exported Constants
+/** @addtogroup CRYPTO_EXPORTED_CONSTANTS CRYPTO Exported Constants
   @{
 */
 
@@ -108,10 +108,10 @@ typedef enum {                          /*!< ECC curve                \hideiniti
 E_ECC_CURVE;                            /*!< ECC curve                \hideinitializer */
 
 
-/*@}*/ /* end of group M480_CRYPTO_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group CRYPTO_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_CRYPTO_EXPORTED_FUNCTIONS CRYPTO Exported Functions
+/** @addtogroup CRYPTO_EXPORTED_FUNCTIONS CRYPTO Exported Functions
   @{
 */
 
@@ -322,11 +322,11 @@ int32_t  ECC_GenerateSignature(E_ECC_CURVE ecc_curve, char *message, char *d, ch
 int32_t  ECC_VerifySignature(E_ECC_CURVE ecc_curve, char *message, char *public_k1, char *public_k2, char *R, char *S);
 
 
-/*@}*/ /* end of group M480_CRYPTO_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group CRYPTO_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_CRYPTO_Driver */
+/*@}*/ /* end of group CRYPTO_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

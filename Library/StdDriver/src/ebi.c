@@ -7,16 +7,16 @@
 *****************************************************************************/
 #include "NuMicro.h"
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_EBI_Driver EBI Driver
+/** @addtogroup EBI_Driver EBI Driver
   @{
 */
 
 
-/** @addtogroup M480_EBI_EXPORTED_FUNCTIONS EBI Exported Functions
+/** @addtogroup EBI_EXPORTED_FUNCTIONS EBI Exported Functions
   @{
 */
 
@@ -181,10 +181,10 @@ void EBI_SetBusTiming(uint32_t u32Bank, uint32_t u32TimingConfig, uint32_t u32Mc
     *pu32EBITCTL = u32TimingConfig;
 }
 
-/*@}*/ /* end of group M480_EBI_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group EBI_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_EBI_Driver */
+/*@}*/ /* end of group EBI_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

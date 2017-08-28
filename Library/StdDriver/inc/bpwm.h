@@ -14,15 +14,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_BPWM_Driver BPWM Driver
+/** @addtogroup BPWM_Driver BPWM Driver
   @{
 */
 
-/** @addtogroup M480_BPWM_EXPORTED_CONSTANTS BPWM Exported Constants
+/** @addtogroup BPWM_EXPORTED_CONSTANTS BPWM Exported Constants
   @{
 */
 #define BPWM_CHANNEL_NUM                          (6)        /*!< BPWM channel number \hideinitializer */
@@ -92,10 +92,10 @@ extern "C"
 #define BPWM_CLKSRC_TIMER2                        (3UL)    /*!< BPWM Clock source selects to TIMER2 overflow \hideinitializer */
 #define BPWM_CLKSRC_TIMER3                        (4UL)    /*!< BPWM Clock source selects to TIMER3 overflow \hideinitializer */
 
-/*@}*/ /* end of group M480_BPWM_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group BPWM_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_BPWM_EXPORTED_FUNCTIONS BPWM Exported Functions
+/** @addtogroup BPWM_EXPORTED_FUNCTIONS BPWM Exported Functions
   @{
 */
 
@@ -304,11 +304,11 @@ uint32_t BPWM_GetWrapAroundFlag(BPWM_T *bpwm, uint32_t u32ChannelNum);
 void BPWM_ClearWrapAroundFlag(BPWM_T *bpwm, uint32_t u32ChannelNum);
 
 
-/*@}*/ /* end of group M480_BPWM_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group BPWM_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_BPWM_Driver */
+/*@}*/ /* end of group BPWM_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

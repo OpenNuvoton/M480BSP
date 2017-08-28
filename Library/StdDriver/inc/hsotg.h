@@ -15,16 +15,16 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_HSOTG_Driver HSOTG Driver
+/** @addtogroup HSOTG_Driver HSOTG Driver
   @{
 */
 
 
-/** @addtogroup M480_HSOTG_EXPORTED_CONSTANTS HSOTG Exported Constants
+/** @addtogroup HSOTG_EXPORTED_CONSTANTS HSOTG Exported Constants
   @{
 */
 
@@ -39,10 +39,10 @@ extern "C"
 #define HSOTG_VBUS_ST_VALID_LOW        (1UL) /*!< USB VBUS power switch valid status is low. \hideinitializer */
 
 
-/*@}*/ /* end of group M480_HSOTG_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group HSOTG_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_HSOTG_EXPORTED_FUNCTIONS HSOTG Exported Functions
+/** @addtogroup HSOTG_EXPORTED_FUNCTIONS HSOTG Exported Functions
   @{
 */
 
@@ -251,11 +251,11 @@ extern "C"
 
 
 
-/*@}*/ /* end of group M480_HSOTG_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group HSOTG_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_HSOTG_Driver */
+/*@}*/ /* end of group HSOTG_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 
 #ifdef __cplusplus

@@ -18,15 +18,15 @@ extern "C"
 {
 #endif
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_USBH_Library USB Host Library
+/** @addtogroup USBH_Library USB Host Library
   @{
 */
 
-/** @addtogroup M480_USBH_EXPORTED_CONSTANTS USB Host Exported Constants
+/** @addtogroup USBH_EXPORTED_CONSTANTS USB Host Exported Constants
   @{
 */
 
@@ -106,10 +106,10 @@ extern "C"
 #define UAC_RET_IS_STREAMING        -2015  /*!< Audio pipe is on streaming.                     */
 
 
-/*@}*/ /* end of group M480_USBH_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group USBH_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_USBH_EXPORTED_STRUCT Data structure
+/** @addtogroup USBH_EXPORTED_STRUCT Data structure
   @{
 */
 struct udev_t;
@@ -122,12 +122,12 @@ typedef void (HID_IW_FUNC)(struct usbhid_dev *hdev, uint16_t ep_addr, int status
 struct uac_dev_t;
 typedef int (UAC_CB_FUNC)(struct uac_dev_t *dev, uint8_t *data, int len);    /*!< audio in callback function \hideinitializer */
 
-/*@}*/ /* end of group M480_USBH_EXPORTED_STRUCT */
+/*@}*/ /* end of group USBH_EXPORTED_STRUCT */
 
 
 
 
-/** @addtogroup M480_USBH_EXPORTED_FUNCTIONS USB Host Exported Functions
+/** @addtogroup USBH_EXPORTED_FUNCTIONS USB Host Exported Functions
   @{
 */
 
@@ -206,11 +206,11 @@ extern uint32_t  usbh_memory_used(void);
 /// @endcond HIDDEN_SYMBOLS
 
 
-/*@}*/ /* end of group M480_USBH_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group USBH_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_USBH_Library */
+/*@}*/ /* end of group USBH_Library */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

@@ -14,15 +14,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_HSUSBD_Driver HSUSBD Driver
+/** @addtogroup HSUSBD_Driver HSUSBD Driver
   @{
 */
 
-/** @addtogroup M480_HSUSBD_EXPORTED_CONSTANTS HSUSBD Exported Constants
+/** @addtogroup HSUSBD_EXPORTED_CONSTANTS HSUSBD Exported Constants
   @{
 */
 /** @cond HIDDEN_SYMBOLS */
@@ -75,9 +75,9 @@ extern "C"
 #define HSUSBD_EP_CFG_DIR_IN               ((uint32_t)0x00000008ul)      /*!<IN endpoint  \hideinitializer */
 
 
-/*@}*/ /* end of group M480_HSUSBD_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group HSUSBD_EXPORTED_CONSTANTS */
 
-/** @addtogroup M480_HSUSBD_EXPORTED_STRUCT HSUSBD Exported Struct
+/** @addtogroup HSUSBD_EXPORTED_STRUCT HSUSBD Exported Struct
   @{
 */
 
@@ -110,7 +110,7 @@ typedef struct s_hsusbd_info {
 } S_HSUSBD_INFO_T; /*!<USB Information Structure */
 
 
-/*@}*/ /* end of group M480_HSUSBD_EXPORTED_STRUCT */
+/*@}*/ /* end of group HSUSBD_EXPORTED_STRUCT */
 
 /** @cond HIDDEN_SYMBOLS */
 extern uint32_t g_u32HsEpStallLock;
@@ -124,7 +124,7 @@ extern S_HSUSBD_INFO_T gsHSInfo;
 extern S_HSUSBD_CMD_T gUsbCmd;
 /** @endcond HIDDEN_SYMBOLS */
 
-/** @addtogroup M480_HSUSBD_EXPORTED_FUNCTIONS HSUSBD Exported Functions
+/** @addtogroup HSUSBD_EXPORTED_FUNCTIONS HSUSBD Exported Functions
   @{
 */
 
@@ -362,11 +362,11 @@ void HSUSBD_SetVendorRequest(HSUSBD_VENDOR_REQ pfnVendorReq);
 
 
 
-/*@}*/ /* end of group M480_HSUSBD_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group HSUSBD_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_HSUSBD_Driver */
+/*@}*/ /* end of group HSUSBD_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

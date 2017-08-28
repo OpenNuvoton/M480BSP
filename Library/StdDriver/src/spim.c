@@ -14,15 +14,15 @@
 #include "NuMicro.h"
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_SPIM_Driver SPIM Driver
+/** @addtogroup SPIM_Driver SPIM Driver
   @{
 */
 
-/** @addtogroup M480_SPIM_EXPORTED_FUNCTIONS SPIM Exported Functions
+/** @addtogroup SPIM_EXPORTED_FUNCTIONS SPIM Exported Functions
   @{
 */
 
@@ -1186,10 +1186,10 @@ void SPIM_ExitDirectMapMode(void)
 }
 
 
-/*@}*/ /* end of group M480_SPIM_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group SPIM_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_SPIM_Driver */
+/*@}*/ /* end of group SPIM_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2017 Nuvoton Technology Corp. ***/

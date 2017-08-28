@@ -29,15 +29,15 @@ static volatile uint32_t g_u32hiHour, g_u32loHour, g_u32hiMin, g_u32loMin, g_u32
 
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_RTC_Driver RTC Driver
+/** @addtogroup RTC_Driver RTC Driver
   @{
 */
 
-/** @addtogroup M480_RTC_EXPORTED_FUNCTIONS RTC Exported Functions
+/** @addtogroup RTC_EXPORTED_FUNCTIONS RTC Exported Functions
   @{
 */
 
@@ -956,10 +956,10 @@ void RTC_DynamicTamperConfig(uint32_t u32ChangeRate, uint32_t u32SeedReload, uin
     RTC->TAMPCTL = u32Reg;
 }
 
-/*@}*/ /* end of group M480_RTC_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group RTC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_RTC_Driver */
+/*@}*/ /* end of group RTC_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

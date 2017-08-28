@@ -16,16 +16,16 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_SDH_Driver SDH Driver
+/** @addtogroup SDH_Driver SDH Driver
   @{
 */
 
 
-/** @addtogroup M480_SDH_EXPORTED_CONSTANTS SDH Exported Constants
+/** @addtogroup SDH_EXPORTED_CONSTANTS SDH Exported Constants
   @{
 */
 
@@ -66,9 +66,9 @@ extern "C"
 #define CardDetect_From_GPIO  (1ul << 8)   /*!< Card detection pin is GPIO \hideinitializer */
 #define CardDetect_From_DAT3  (1ul << 9)   /*!< Card detection pin is DAT3 \hideinitializer */
 
-/*@}*/ /* end of group M480_SDH_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group SDH_EXPORTED_CONSTANTS */
 
-/** @addtogroup M480_SDH_EXPORTED_TYPEDEF SDH Exported Type Defines
+/** @addtogroup SDH_EXPORTED_TYPEDEF SDH Exported Type Defines
   @{
 */
 typedef struct SDH_info_t {
@@ -80,13 +80,13 @@ typedef struct SDH_info_t {
     int             sectorSize;     /*!< Sector size in bytes */
 } SDH_INFO_T;                       /*!< Structure holds SD card info */
 
-/*@}*/ /* end of group M480_SDH_EXPORTED_TYPEDEF */
+/*@}*/ /* end of group SDH_EXPORTED_TYPEDEF */
 
 /** @cond HIDDEN_SYMBOLS */
 extern SDH_INFO_T SD0, SD1;
 /** @endcond HIDDEN_SYMBOLS */
 
-/** @addtogroup M480_SDH_EXPORTED_FUNCTIONS SDH Exported Functions
+/** @addtogroup SDH_EXPORTED_FUNCTIONS SDH Exported Functions
   @{
 */
 
@@ -183,11 +183,11 @@ void SDH_Open_Disk(SDH_T *sdh, unsigned int u32CardDetSrc);
 void SDH_Close_Disk(SDH_T *sdh);
 
 
-/*@}*/ /* end of group M480_SDH_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group SDH_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_SDH_Driver */
+/*@}*/ /* end of group SDH_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

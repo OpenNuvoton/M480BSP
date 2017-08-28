@@ -14,15 +14,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_CLK_Driver CLK Driver
+/** @addtogroup CLK_Driver CLK Driver
   @{
 */
 
-/** @addtogroup M480_CLK_EXPORTED_CONSTANTS CLK Exported Constants
+/** @addtogroup CLK_EXPORTED_CONSTANTS CLK Exported Constants
   @{
 */
 
@@ -438,9 +438,9 @@ extern "C"
 #define CLK_DISABLE_RTCWK(void)       (CLK->PMUCTL &= ~CLK_PMUCTL_RTCWKEN_Msk)    /*!< Disable RTC Wake-up at Standby or Deep Power-down mode \hideinitializer */
 #define CLK_ENABLE_RTCWK(void)        (CLK->PMUCTL |= CLK_PMUCTL_RTCWKEN_Msk)     /*!< Enable RTC Wake-up at Standby or Deep Power-down mode \hideinitializer */
 
-/*@}*/ /* end of group M480_CLK_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group CLK_EXPORTED_CONSTANTS */
 
-/** @addtogroup M480_CLK_EXPORTED_FUNCTIONS CLK Exported Functions
+/** @addtogroup CLK_EXPORTED_FUNCTIONS CLK Exported Functions
   @{
 */
 
@@ -597,11 +597,11 @@ uint32_t CLK_GetPMUWKSrc(void);
 void CLK_EnableSPDWKPin(uint32_t u32Port, uint32_t u32Pin, uint32_t u32TriggerType, uint32_t u32DebounceEn);
 void CLK_SetUSBModuleClock(uint32_t u32ModuleIdx, uint32_t u32ClkSrc, uint32_t u32ClkDiv);
 
-/*@}*/ /* end of group M480_CLK_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group CLK_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_CLK_Driver */
+/*@}*/ /* end of group CLK_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

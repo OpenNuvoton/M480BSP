@@ -14,15 +14,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_EMAC_Driver EMAC Driver
+/** @addtogroup EMAC_Driver EMAC Driver
   @{
 */
 
-/** @addtogroup M480_EMAC_EXPORTED_CONSTANTS EMAC Exported Constants
+/** @addtogroup EMAC_EXPORTED_CONSTANTS EMAC Exported Constants
   @{
 */
 
@@ -36,10 +36,10 @@ extern "C"
 #define EMAC_LINK_10F     3UL    /*!<  Ethernet link is 10Mbps full duplex \hideinitializer */
 #define EMAC_LINK_10H     4UL    /*!<  Ethernet link is 10Mbps half duplex \hideinitializer */
 
-/*@}*/ /* end of group M480_EMAC_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group EMAC_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_EMAC_EXPORTED_FUNCTIONS EMAC Exported Functions
+/** @addtogroup EMAC_EXPORTED_FUNCTIONS EMAC Exported Functions
   @{
 */
 
@@ -169,11 +169,11 @@ void EMAC_DisableAlarm(void);
 
 uint32_t EMAC_CheckLinkStatus(void);
 
-/*@}*/ /* end of group M480_EMAC_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group EMAC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_EMAC_Driver */
+/*@}*/ /* end of group EMAC_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

@@ -13,15 +13,15 @@ extern "C"
 {
 #endif
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_I2S_Driver I2S Driver
+/** @addtogroup I2S_Driver I2S Driver
   @{
 */
 
-/** @addtogroup M480_I2S_EXPORTED_CONSTANTS I2S Exported Constants
+/** @addtogroup I2S_EXPORTED_CONSTANTS I2S Exported Constants
   @{
 */
 #define I2S_DATABIT_8           (0U << I2S_CTL0_DATWIDTH_Pos)       /*!< I2S data width is 8-bit  \hideinitializer */
@@ -108,9 +108,9 @@ extern "C"
 #define I2S_RIGHT               (0U)                                  /*!< Select right channel  \hideinitializer */
 #define I2S_LEFT                (1U)                                  /*!< Select left channel  \hideinitializer */
 
-/*@}*/ /* end of group M480_I2S_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group I2S_EXPORTED_CONSTANTS */
 
-/** @addtogroup M480_I2S_EXPORTED_FUNCTIONS I2S Exported Functions
+/** @addtogroup I2S_EXPORTED_FUNCTIONS I2S Exported Functions
   @{
 */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -334,12 +334,12 @@ void I2S_SetFIFO(I2S_T *i2s, uint32_t u32TxThreshold, uint32_t u32RxThreshold);
 void I2S_ConfigureTDM(I2S_T *i2s, uint32_t u32ChannelWidth, uint32_t u32ChannelNum, uint32_t u32SyncWidth);
 uint32_t I2S_Open(I2S_T *i2s, uint32_t u32MasterSlave, uint32_t u32SampleRate, uint32_t u32WordWidth, uint32_t u32MonoData, uint32_t u32DataFormat);
 
-/*@}*/ /* end of group M480_I2S_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group I2S_EXPORTED_FUNCTIONS */
 
 
-/*@}*/ /* end of group M480_I2S_Driver */
+/*@}*/ /* end of group I2S_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 #ifdef __cplusplus
 }
 #endif

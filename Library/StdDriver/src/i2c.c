@@ -7,16 +7,16 @@
  *****************************************************************************/
 #include "NuMicro.h"
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_I2C_Driver I2C Driver
+/** @addtogroup I2C_Driver I2C Driver
   @{
 */
 
 
-/** @addtogroup M480_I2C_EXPORTED_FUNCTIONS I2C Exported Functions
+/** @addtogroup I2C_EXPORTED_FUNCTIONS I2C Exported Functions
   @{
 */
 
@@ -626,10 +626,10 @@ void I2C_SMBusClockLoTimeout(I2C_T *i2c, uint32_t ms, uint32_t u32Pclk)
     }
 }
 
-/*@}*/ /* end of group M480_I2C_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group I2C_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_I2C_Driver */
+/*@}*/ /* end of group I2C_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

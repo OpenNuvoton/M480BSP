@@ -14,16 +14,16 @@ extern "C"
 {
 #endif
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_USBD_Driver USBD Driver
+/** @addtogroup USBD_Driver USBD Driver
   @{
 */
 
 
-/** @addtogroup M480_USBD_EXPORTED_FUNCTIONS USBD Exported Functions
+/** @addtogroup USBD_EXPORTED_FUNCTIONS USBD Exported Functions
   @{
 */
 
@@ -631,11 +631,11 @@ void USBD_LockEpStall(uint32_t u32EpBitmap)
 }
 
 
-/*@}*/ /* end of group M480_USBD_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group USBD_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_USBD_Driver */
+/*@}*/ /* end of group USBD_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

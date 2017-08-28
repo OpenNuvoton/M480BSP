@@ -13,7 +13,7 @@
 
 static uint32_t u32ChSelect[PDMA_CH_MAX];
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 

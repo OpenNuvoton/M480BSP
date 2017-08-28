@@ -7,15 +7,15 @@
 #include "NuMicro.h"
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_TIMER_Driver TIMER Driver
+/** @addtogroup TIMER_Driver TIMER Driver
   @{
 */
 
-/** @addtogroup M480_TIMER_EXPORTED_FUNCTIONS TIMER Exported Functions
+/** @addtogroup TIMER_EXPORTED_FUNCTIONS TIMER Exported Functions
   @{
 */
 
@@ -343,9 +343,9 @@ void TIMER_SetTriggerTarget(TIMER_T *timer, uint32_t u32Mask)
     timer->TRGCTL = (timer->TRGCTL & ~(TIMER_TRGCTL_TRGEPWM_Msk | TIMER_TRGCTL_TRGDAC_Msk | TIMER_TRGCTL_TRGEADC_Msk | TIMER_TRGCTL_TRGPDMA_Msk)) | u32Mask;
 }
 
-/*@}*/ /* end of group M480_TIMER_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group TIMER_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_TIMER_Driver */
+/*@}*/ /* end of group TIMER_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 

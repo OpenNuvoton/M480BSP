@@ -15,15 +15,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_UART_Driver UART Driver
+/** @addtogroup UART_Driver UART Driver
   @{
 */
 
-/** @addtogroup M480_UART_EXPORTED_CONSTANTS UART Exported Constants
+/** @addtogroup UART_EXPORTED_CONSTANTS UART Exported Constants
   @{
 */
 
@@ -112,10 +112,10 @@ extern "C"
 #define UART_BAUD_MODE2     (UART_BAUD_BAUDM1_Msk | UART_BAUD_BAUDM0_Msk) /*!< Set UART Baudrate Mode is Mode2 \hideinitializer */
 
 
-/*@}*/ /* end of group M480_UART_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group UART_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_UART_EXPORTED_FUNCTIONS UART Exported Functions
+/** @addtogroup UART_EXPORTED_FUNCTIONS UART Exported Functions
   @{
 */
 
@@ -464,11 +464,11 @@ uint32_t UART_Write(UART_T* uart, uint8_t pu8TxBuf[], uint32_t u32WriteBytes);
 
 
 
-/*@}*/ /* end of group M480_UART_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group UART_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_UART_Driver */
+/*@}*/ /* end of group UART_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

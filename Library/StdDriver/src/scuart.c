@@ -8,16 +8,16 @@
 
 static uint32_t SCUART_GetClock(SC_T *sc);
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_SCUART_Driver SCUART Driver
+/** @addtogroup SCUART_Driver SCUART Driver
   @{
 */
 
 
-/** @addtogroup M480_SCUART_EXPORTED_FUNCTIONS SCUART Exported Functions
+/** @addtogroup SCUART_EXPORTED_FUNCTIONS SCUART Exported Functions
   @{
 */
 
@@ -209,10 +209,10 @@ void SCUART_Write(SC_T* sc,uint8_t pu8TxBuf[], uint32_t u32WriteBytes)
 }
 
 
-/*@}*/ /* end of group M480_SCUART_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group SCUART_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_SCUART_Driver */
+/*@}*/ /* end of group SCUART_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

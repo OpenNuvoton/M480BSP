@@ -7,16 +7,16 @@
 *****************************************************************************/
 #include "NuMicro.h"
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_BPWM_Driver BPWM Driver
+/** @addtogroup BPWM_Driver BPWM Driver
   @{
 */
 
 
-/** @addtogroup M480_BPWM_EXPORTED_FUNCTIONS BPWM Exported Functions
+/** @addtogroup BPWM_EXPORTED_FUNCTIONS BPWM Exported Functions
   @{
 */
 
@@ -694,10 +694,10 @@ void BPWM_ClearWrapAroundFlag(BPWM_T *bpwm, uint32_t u32ChannelNum)
 }
 
 
-/*@}*/ /* end of group M480_BPWM_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group BPWM_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_BPWM_Driver */
+/*@}*/ /* end of group BPWM_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

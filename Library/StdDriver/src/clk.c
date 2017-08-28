@@ -8,15 +8,15 @@
 
 #include "NuMicro.h"
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_CLK_Driver CLK Driver
+/** @addtogroup CLK_Driver CLK Driver
   @{
 */
 
-/** @addtogroup M480_CLK_EXPORTED_FUNCTIONS CLK Exported Functions
+/** @addtogroup CLK_EXPORTED_FUNCTIONS CLK Exported Functions
   @{
 */
 
@@ -993,10 +993,10 @@ void CLK_EnableSPDWKPin(uint32_t u32Port, uint32_t u32Pin, uint32_t u32TriggerTy
     outpw((uint32_t *)u32tmpAddr, u32tmpVal);
 }
 
-/*@}*/ /* end of group M480_CLK_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group CLK_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_CLK_Driver */
+/*@}*/ /* end of group CLK_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

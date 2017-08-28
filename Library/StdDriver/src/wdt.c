@@ -8,7 +8,7 @@
 #include "NuMicro.h"
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
@@ -63,6 +63,6 @@ void WDT_Open(uint32_t u32TimeoutInterval,
 
 /*@}*/ /* end of group WDT_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

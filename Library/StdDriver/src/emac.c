@@ -10,11 +10,11 @@
 #include "NuMicro.h"
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_EMAC_Driver EMAC Driver
+/** @addtogroup EMAC_Driver EMAC Driver
   @{
 */
 
@@ -22,7 +22,7 @@
 /* Below are structure, definitions, static variables used locally by EMAC driver and does not want to parse by doxygen unless HIDDEN_SYMBOLS is defined */
 /** @cond HIDDEN_SYMBOLS */
 
-/** @addtogroup M480_EMAC_EXPORTED_CONSTANTS EMAC Exported Constants
+/** @addtogroup EMAC_EXPORTED_CONSTANTS EMAC Exported Constants
   @{
 */
 
@@ -92,9 +92,9 @@
 #define EMAC_TXFD_SQE    0x0400UL  /*!<  SQE error  */
 #define EMAC_TXFD_TTSAS  0x0800UL  /*!<  Time Stamp available */
 
-/*@}*/ /* end of group M480_EMAC_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group EMAC_EXPORTED_CONSTANTS */
 
-/** @addtogroup M480_EMAC_EXPORTED_TYPEDEF EMAC Exported Type Defines
+/** @addtogroup EMAC_EXPORTED_TYPEDEF EMAC Exported Type Defines
   @{
 */
 
@@ -113,7 +113,7 @@ typedef struct {
     uint8_t au8Buf[1520];
 } EMAC_FRAME_T;
 
-/*@}*/ /* end of group M480_EMAC_EXPORTED_TYPEDEF */
+/*@}*/ /* end of group EMAC_EXPORTED_TYPEDEF */
 
 /* local variables */
 static volatile EMAC_DESCRIPTOR_T rx_desc[EMAC_RX_DESC_SIZE];
@@ -133,7 +133,7 @@ static void EMAC_RxDescInit(void);
 static uint32_t EMAC_Subsec2Nsec(uint32_t subsec);
 static uint32_t EMAC_Nsec2Subsec(uint32_t nsec);
 
-/** @addtogroup M480_EMAC_EXPORTED_FUNCTIONS EMAC Exported Functions
+/** @addtogroup EMAC_EXPORTED_FUNCTIONS EMAC Exported Functions
   @{
 */
 
@@ -340,14 +340,14 @@ static uint32_t EMAC_Nsec2Subsec(uint32_t nsec)
 }
 
 
-/*@}*/ /* end of group M480_EMAC_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group EMAC_EXPORTED_FUNCTIONS */
 
 
 
 /** @endcond HIDDEN_SYMBOLS */
 
 
-/** @addtogroup M480_EMAC_EXPORTED_FUNCTIONS EMAC Exported Functions
+/** @addtogroup EMAC_EXPORTED_FUNCTIONS EMAC Exported Functions
   @{
 */
 
@@ -911,10 +911,10 @@ uint32_t EMAC_CheckLinkStatus(void)
 }
 
 
-/*@}*/ /* end of group M480_EMAC_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group EMAC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_EMAC_Driver */
+/*@}*/ /* end of group EMAC_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

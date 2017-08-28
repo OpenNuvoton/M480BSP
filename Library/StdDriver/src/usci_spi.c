@@ -7,11 +7,11 @@
 *****************************************************************************/
 #include "NuMicro.h"
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_USCI_SPI_Driver USCI_SPI Driver
+/** @addtogroup USCI_SPI_Driver USCI_SPI Driver
   @{
 */
 

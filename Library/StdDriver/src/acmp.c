@@ -8,16 +8,16 @@
 #include "NuMicro.h"
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_ACMP_Driver ACMP Driver
+/** @addtogroup ACMP_Driver ACMP Driver
   @{
 */
 
 
-/** @addtogroup M480_ACMP_EXPORTED_FUNCTIONS ACMP Exported Functions
+/** @addtogroup ACMP_EXPORTED_FUNCTIONS ACMP Exported Functions
   @{
 */
 
@@ -64,11 +64,11 @@ void ACMP_Close(ACMP_T *acmp, uint32_t u32ChNum)
 
 
 
-/*@}*/ /* end of group M480_ACMP_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group ACMP_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_ACMP_Driver */
+/*@}*/ /* end of group ACMP_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
 

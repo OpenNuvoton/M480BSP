@@ -15,16 +15,16 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_OTG_Driver OTG Driver
+/** @addtogroup OTG_Driver OTG Driver
   @{
 */
 
 
-/** @addtogroup M480_OTG_EXPORTED_CONSTANTS OTG Exported Constants
+/** @addtogroup OTG_EXPORTED_CONSTANTS OTG Exported Constants
   @{
 */
 
@@ -39,10 +39,10 @@ extern "C"
 #define OTG_VBUS_ST_VALID_LOW        (1UL) /*!< USB VBUS power switch valid status is low. \hideinitializer */
 
 
-/*@}*/ /* end of group M480_OTG_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group OTG_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_OTG_EXPORTED_FUNCTIONS OTG Exported Functions
+/** @addtogroup OTG_EXPORTED_FUNCTIONS OTG Exported Functions
   @{
 */
 
@@ -251,11 +251,11 @@ extern "C"
 
 
 
-/*@}*/ /* end of group M480_OTG_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group OTG_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_OTG_Driver */
+/*@}*/ /* end of group OTG_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 
 #ifdef __cplusplus

@@ -8,16 +8,16 @@
 #include <stdio.h>
 #include "NuMicro.h"
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_HSUSBD_Driver HSUSBD Driver
+/** @addtogroup HSUSBD_Driver HSUSBD Driver
   @{
 */
 
 
-/** @addtogroup M480_HSUSBD_EXPORTED_FUNCTIONS HSUSBD Exported Functions
+/** @addtogroup HSUSBD_EXPORTED_FUNCTIONS HSUSBD Exported Functions
   @{
 */
 /*--------------------------------------------------------------------------*/
@@ -610,10 +610,10 @@ void HSUSBD_SetVendorRequest(HSUSBD_VENDOR_REQ pfnVendorReq)
 }
 
 
-/*@}*/ /* end of group M480_HSUSBD_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group HSUSBD_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_HSUSBD_Driver */
+/*@}*/ /* end of group HSUSBD_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

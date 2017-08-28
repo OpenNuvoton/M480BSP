@@ -7,15 +7,15 @@
 *****************************************************************************/
 #include "NuMicro.h"
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_CAN_Driver CAN Driver
+/** @addtogroup CAN_Driver CAN Driver
   @{
 */
 
-/** @addtogroup M480_CAN_EXPORTED_FUNCTIONS CAN Exported Functions
+/** @addtogroup CAN_EXPORTED_FUNCTIONS CAN Exported Functions
   @{
 */
 
@@ -1116,11 +1116,11 @@ void CAN_CLR_INT_PENDING_BIT(CAN_T *tCAN, uint8_t u32MsgNum)
 }
 
 
-/*@}*/ /* end of group M480_CAN_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group CAN_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_CAN_Driver */
+/*@}*/ /* end of group CAN_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
 

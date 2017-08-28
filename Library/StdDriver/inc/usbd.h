@@ -14,15 +14,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_USBD_Driver USBD Driver
+/** @addtogroup USBD_Driver USBD Driver
   @{
 */
 
-/** @addtogroup M480_USBD_EXPORTED_STRUCT USBD Exported Struct
+/** @addtogroup USBD_EXPORTED_STRUCT USBD Exported Struct
   @{
 */
 typedef struct s_usbd_info {
@@ -38,12 +38,12 @@ typedef struct s_usbd_info {
 
 extern const S_USBD_INFO_T gsInfo;
 
-/*@}*/ /* end of group M480_USBD_EXPORTED_STRUCT */
+/*@}*/ /* end of group USBD_EXPORTED_STRUCT */
 
 
 
 
-/** @addtogroup M480_USBD_EXPORTED_CONSTANTS USBD Exported Constants
+/** @addtogroup USBD_EXPORTED_CONSTANTS USBD Exported Constants
   @{
 */
 #define USBD_BUF_BASE   (USBD_BASE+0x100ul)  /*!< USBD buffer base address \hideinitializer */
@@ -177,10 +177,10 @@ extern const S_USBD_INFO_T gsInfo;
 
 
 
-/*@}*/ /* end of group M480_USBD_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group USBD_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_USBD_EXPORTED_FUNCTIONS USBD Exported Functions
+/** @addtogroup USBD_EXPORTED_FUNCTIONS USBD Exported Functions
   @{
 */
 /**
@@ -670,11 +670,11 @@ void USBD_SetVendorRequest(VENDOR_REQ pfnVendorReq);
 void USBD_SetConfigCallback(SET_CONFIG_CB pfnSetConfigCallback);
 void USBD_LockEpStall(uint32_t u32EpBitmap);
 
-/*@}*/ /* end of group M480_USBD_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group USBD_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_USBD_Driver */
+/*@}*/ /* end of group USBD_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

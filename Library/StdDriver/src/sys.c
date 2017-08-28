@@ -16,16 +16,16 @@ extern "C"
 {
 #endif
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_SYS_Driver SYS Driver
+/** @addtogroup SYS_Driver SYS Driver
   @{
 */
 
 
-/** @addtogroup M480_SYS_EXPORTED_FUNCTIONS SYS Exported Functions
+/** @addtogroup SYS_EXPORTED_FUNCTIONS SYS Exported Functions
   @{
 */
 
@@ -232,11 +232,11 @@ void SYS_DisableBOD(void)
 
 
 
-/*@}*/ /* end of group M480_SYS_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group SYS_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_SYS_Driver */
+/*@}*/ /* end of group SYS_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

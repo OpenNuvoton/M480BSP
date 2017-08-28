@@ -15,15 +15,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_USCI_UART_Driver USCI_UART Driver
+/** @addtogroup USCI_UART_Driver USCI_UART Driver
   @{
 */
 
-/** @addtogroup M480_USCI_UART_EXPORTED_CONSTANTS USCI_UART Exported Constants
+/** @addtogroup USCI_UART_EXPORTED_CONSTANTS USCI_UART Exported Constants
   @{
 */
 
@@ -57,10 +57,10 @@ extern "C"
 #define UUART_RXEND_INT_MASK    (0x080ul) /*!< RX end interrupt mask \hideinitializer */
 
 
-/*@}*/ /* end of group M480_USCI_UART_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group USCI_UART_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_USCI_UART_EXPORTED_FUNCTIONS USCI_UART Exported Functions
+/** @addtogroup USCI_UART_EXPORTED_FUNCTIONS USCI_UART Exported Functions
   @{
 */
 
@@ -423,11 +423,11 @@ void UUART_EnableFlowCtrl(UUART_T* uuart);
 void UUART_DisableFlowCtrl(UUART_T* uuart);
 
 
-/*@}*/ /* end of group M480_USCI_UART_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group USCI_UART_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_USCI_UART_Driver */
+/*@}*/ /* end of group USCI_UART_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

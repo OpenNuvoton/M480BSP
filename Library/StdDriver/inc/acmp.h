@@ -15,17 +15,17 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
 
-/** @addtogroup M480_ACMP_Driver ACMP Driver
+/** @addtogroup ACMP_Driver ACMP Driver
   @{
 */
 
 
-/** @addtogroup M480_ACMP_EXPORTED_CONSTANTS ACMP Exported Constants
+/** @addtogroup ACMP_EXPORTED_CONSTANTS ACMP Exported Constants
   @{
 */
 
@@ -65,10 +65,10 @@ extern "C"
 #define ACMP_VREF_CRVSSEL_INTVREF    (1UL << ACMP_VREF_CRVSSEL_Pos)  /*!< ACMP_VREF setting for selecting internal reference voltage as the CRV source voltage \hideinitializer */
 
 
-/*@}*/ /* end of group M480_ACMP_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group ACMP_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_ACMP_EXPORTED_FUNCTIONS ACMP Exported Functions
+/** @addtogroup ACMP_EXPORTED_FUNCTIONS ACMP Exported Functions
   @{
 */
 
@@ -398,11 +398,11 @@ void ACMP_Close(ACMP_T *acmp, uint32_t u32ChNum);
 
 
 
-/*@}*/ /* end of group M480_ACMP_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group ACMP_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_ACMP_Driver */
+/*@}*/ /* end of group ACMP_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

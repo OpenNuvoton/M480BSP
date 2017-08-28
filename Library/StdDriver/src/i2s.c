@@ -9,15 +9,15 @@
 #include <stdio.h>
 #include "NuMicro.h"
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_I2S_Driver I2S Driver
+/** @addtogroup I2S_Driver I2S Driver
   @{
 */
 
-/** @addtogroup M480_I2S_EXPORTED_FUNCTIONS I2S Exported Functions
+/** @addtogroup I2S_EXPORTED_FUNCTIONS I2S Exported Functions
   @{
 */
 
@@ -231,10 +231,10 @@ void I2S_ConfigureTDM(I2S_T *i2s, uint32_t u32ChannelWidth, uint32_t u32ChannelN
                  (u32SyncWidth << I2S_CTL0_PCMSYNC_Pos));
 }
 
-/*@}*/ /* end of group M480_I2S_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group I2S_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_I2S_Driver */
+/*@}*/ /* end of group I2S_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

@@ -15,15 +15,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_SYS_Driver SYS Driver
+/** @addtogroup SYS_Driver SYS Driver
   @{
 */
 
-/** @addtogroup M480_SYS_EXPORTED_CONSTANTS SYS Exported Constants
+/** @addtogroup SYS_EXPORTED_CONSTANTS SYS Exported Constants
   @{
 */
 
@@ -1180,10 +1180,10 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPH_MFPH_PH11MFP_UART0_RXD        (0x08UL<<SYS_GPH_MFPH_PH11MFP_Pos) /*!< Data receiver input pin for UART0. \hideinitializer */
 #define SYS_GPH_MFPH_PH11MFP_EPWM0_CH5        (0x0BUL<<SYS_GPH_MFPH_PH11MFP_Pos) /*!< EPWM0 channel5 output/capture input. \hideinitializer */
 
-/*@}*/ /* end of group M480_SYS_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group SYS_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_SYS_EXPORTED_FUNCTIONS SYS Exported Functions
+/** @addtogroup SYS_EXPORTED_FUNCTIONS SYS Exported Functions
   @{
 */
 
@@ -1472,11 +1472,11 @@ void SYS_EnableBOD(int32_t i32Mode, uint32_t u32BODLevel);
 void SYS_DisableBOD(void);
 
 
-/*@}*/ /* end of group M480_SYS_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group SYS_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_SYS_Driver */
+/*@}*/ /* end of group SYS_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 
 #ifdef __cplusplus

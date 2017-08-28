@@ -14,15 +14,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_TIMER_Driver TIMER Driver
+/** @addtogroup TIMER_Driver TIMER Driver
   @{
 */
 
-/** @addtogroup M480_TIMER_EXPORTED_CONSTANTS TIMER Exported Constants
+/** @addtogroup TIMER_EXPORTED_CONSTANTS TIMER Exported Constants
   @{
 */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -54,10 +54,10 @@ extern "C"
 #define TIMER_TRG_TO_DAC                        (TIMER_TRGCTL_TRGDAC_Msk)         /*!< Each timer event to start DAC conversion \hideinitializer */
 #define TIMER_TRG_TO_PDMA                       (TIMER_TRGCTL_TRGPDMA_Msk)        /*!< Each timer event to trigger PDMA transfer \hideinitializer */
 
-/*@}*/ /* end of group M480_TIMER_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group TIMER_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_TIMER_EXPORTED_FUNCTIONS TIMER Exported Functions
+/** @addtogroup TIMER_EXPORTED_FUNCTIONS TIMER Exported Functions
   @{
 */
 
@@ -491,11 +491,11 @@ void TIMER_DisableFreqCounter(TIMER_T *timer);
 void TIMER_SetTriggerSource(TIMER_T *timer, uint32_t u32Src);
 void TIMER_SetTriggerTarget(TIMER_T *timer, uint32_t u32Mask);
 
-/*@}*/ /* end of group M480_TIMER_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group TIMER_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_TIMER_Driver */
+/*@}*/ /* end of group TIMER_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

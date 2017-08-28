@@ -10,16 +10,16 @@
 *****************************************************************************/
 #include "NuMicro.h"
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_SPI_Driver SPI Driver
+/** @addtogroup SPI_Driver SPI Driver
   @{
 */
 
 
-/** @addtogroup M480_SPI_EXPORTED_FUNCTIONS SPI Exported Functions
+/** @addtogroup SPI_EXPORTED_FUNCTIONS SPI Exported Functions
   @{
 */
 static uint32_t SPII2S_GetSourceClockFreq(SPI_T *i2s);
@@ -1230,10 +1230,10 @@ void SPII2S_SetFIFO(SPI_T *i2s, uint32_t u32TxThreshold, uint32_t u32RxThreshold
                    (u32RxThreshold << SPI_FIFOCTL_RXTH_Pos);
 }
 
-/*@}*/ /* end of group M480_SPI_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group SPI_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_SPI_Driver */
+/*@}*/ /* end of group SPI_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

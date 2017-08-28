@@ -7,15 +7,15 @@
 *****************************************************************************/
 #include "NuMicro.h"
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_DAC_Driver DAC Driver
+/** @addtogroup DAC_Driver DAC Driver
   @{
 */
 
-/** @addtogroup M480_DAC_EXPORTED_FUNCTIONS DAC Exported Functions
+/** @addtogroup DAC_EXPORTED_FUNCTIONS DAC Exported Functions
   @{
 */
 
@@ -80,10 +80,10 @@ uint32_t DAC_SetDelayTime(DAC_T *dac, uint32_t u32Delay)
 
 
 
-/*@}*/ /* end of group M480_DAC_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group DAC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_DAC_Driver */
+/*@}*/ /* end of group DAC_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

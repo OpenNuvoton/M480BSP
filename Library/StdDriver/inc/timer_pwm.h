@@ -15,14 +15,14 @@ extern "C"
 
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
-/** @addtogroup M480_TIMER_PWM_Driver TIMER PWM Driver
+/** @addtogroup TIMER_PWM_Driver TIMER PWM Driver
   @{
 */
 
-/** @addtogroup M480_TIMER_PWM_EXPORTED_CONSTANTS TIMER PWM Exported Constants
+/** @addtogroup TIMER_PWM_EXPORTED_CONSTANTS TIMER PWM Exported Constants
   @{
 */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -129,10 +129,10 @@ extern "C"
 #define TPWM_CNTR_SYNC_START_BY_TIMER2       ((1<<TIMER_PWMSCTL_SYNCSRC_Pos) | (1<<TIMER_PWMSCTL_SYNCMODE_Pos))  /*!< PWM counter synchronous start by TIMER2 PWM \hideinitializer */
 #define TPWM_CNTR_SYNC_CLEAR_BY_TIMER2       ((1<<TIMER_PWMSCTL_SYNCSRC_Pos) | (3<<TIMER_PWMSCTL_SYNCMODE_Pos))  /*!< PWM counter synchronous clear by TIMER2 PWM \hideinitializer */
 
-/*@}*/ /* end of group M480_TIMER_PWM_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group TIMER_PWM_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_TIMER_PWM_EXPORTED_FUNCTIONS TIMER PWM Exported Functions
+/** @addtogroup TIMER_PWM_EXPORTED_FUNCTIONS TIMER PWM Exported Functions
   @{
 */
 
@@ -731,11 +731,11 @@ void TPWM_EnableBrakePinInverse(TIMER_T *timer);
 void TPWM_DisableBrakePinInverse(TIMER_T *timer);
 void TPWM_SetBrakePinSource(TIMER_T *timer, uint32_t u32BrakePinNum);
 
-/*@}*/ /* end of group M480_TIMER_PWM_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group TIMER_PWM_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_TIMER_PWM_Driver */
+/*@}*/ /* end of group TIMER_PWM_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

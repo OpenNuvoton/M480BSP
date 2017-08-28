@@ -14,15 +14,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_SPI_Driver SPI Driver
+/** @addtogroup SPI_Driver SPI Driver
   @{
 */
 
-/** @addtogroup M480_SPI_EXPORTED_CONSTANTS SPI Exported Constants
+/** @addtogroup SPI_EXPORTED_CONSTANTS SPI Exported Constants
   @{
 */
 
@@ -109,10 +109,10 @@ extern "C"
 #define SPII2S_RIGHT_ZC_INT_MASK            (0x20U)                          /*!< Right channel zero cross interrupt mask \hideinitializer */
 #define SPII2S_LEFT_ZC_INT_MASK             (0x40U)                          /*!< Left channel zero cross interrupt mask \hideinitializer */
 
-/*@}*/ /* end of group M480_SPI_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group SPI_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_SPI_EXPORTED_FUNCTIONS SPI Exported Functions
+/** @addtogroup SPI_EXPORTED_FUNCTIONS SPI Exported Functions
   @{
 */
 
@@ -621,11 +621,11 @@ void SPII2S_DisableMCLK(SPI_T *i2s);
 void SPII2S_SetFIFO(SPI_T *i2s, uint32_t u32TxThreshold, uint32_t u32RxThreshold);
 
 
-/*@}*/ /* end of group M480_SPI_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group SPI_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_SPI_Driver */
+/*@}*/ /* end of group SPI_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

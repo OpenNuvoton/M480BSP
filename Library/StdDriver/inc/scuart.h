@@ -14,15 +14,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_SCUART_Driver SCUART Driver
+/** @addtogroup SCUART_Driver SCUART Driver
   @{
 */
 
-/** @addtogroup M480_SCUART_EXPORTED_CONSTANTS SCUART Exported Constants
+/** @addtogroup SCUART_EXPORTED_CONSTANTS SCUART Exported Constants
   @{
 */
 #define SCUART_CHAR_LEN_5     (0x3ul << SC_UARTCTL_WLS_Pos)     /*!< Set SCUART word length to 5 bits \hideinitializer */
@@ -38,10 +38,10 @@ extern "C"
 #define SCUART_STOP_BIT_2     (0UL)                             /*!< Set SCUART transfer with two stop bits \hideinitializer */
 
 
-/*@}*/ /* end of group M480_SCUART_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group SCUART_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_SCUART_EXPORTED_FUNCTIONS SCUART Exported Functions
+/** @addtogroup SCUART_EXPORTED_FUNCTIONS SCUART Exported Functions
   @{
 */
 
@@ -251,11 +251,11 @@ uint32_t SCUART_SetLineConfig(SC_T* sc, uint32_t u32Baudrate, uint32_t u32DataWi
 void SCUART_SetTimeoutCnt(SC_T* sc, uint32_t u32TOC);
 void SCUART_Write(SC_T* sc,uint8_t pu8TxBuf[], uint32_t u32WriteBytes);
 
-/*@}*/ /* end of group M480_SCUART_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group SCUART_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_SCUART_Driver */
+/*@}*/ /* end of group SCUART_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

@@ -7,15 +7,15 @@
 #include "NuMicro.h"
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_TIMER_PWM_Driver TIMER PWM Driver
+/** @addtogroup TIMER_PWM_Driver TIMER PWM Driver
   @{
 */
 
-/** @addtogroup M480_TIMER_PWM_EXPORTED_FUNCTIONS TIMER PWM Exported Functions
+/** @addtogroup TIMER_PWM_EXPORTED_FUNCTIONS TIMER PWM Exported Functions
   @{
 */
 
@@ -425,10 +425,10 @@ void TPWM_SetBrakePinSource(TIMER_T *timer, uint32_t u32BrakePinNum)
 }
 
 
-/*@}*/ /* end of group M480_TIMER_PWM_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group TIMER_PWM_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_TIMER_PWM_Driver */
+/*@}*/ /* end of group TIMER_PWM_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2017 Nuvoton Technology Corp. ***/

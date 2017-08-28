@@ -14,15 +14,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_EBI_Driver EBI Driver
+/** @addtogroup EBI_Driver EBI Driver
   @{
 */
 
-/** @addtogroup M480_EBI_EXPORTED_CONSTANTS EBI Exported Constants
+/** @addtogroup EBI_EXPORTED_CONSTANTS EBI Exported Constants
   @{
 */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -79,7 +79,7 @@ extern "C"
 /*@}*/ /* end of group EBI_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_EBI_EXPORTED_FUNCTIONS EBI Exported Functions
+/** @addtogroup EBI_EXPORTED_FUNCTIONS EBI Exported Functions
   @{
 */
 
@@ -336,11 +336,11 @@ void EBI_Open(uint32_t u32Bank, uint32_t u32DataWidth, uint32_t u32TimingClass, 
 void EBI_Close(uint32_t u32Bank);
 void EBI_SetBusTiming(uint32_t u32Bank, uint32_t u32TimingConfig, uint32_t u32MclkDiv);
 
-/*@}*/ /* end of group M480_EBI_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group EBI_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_EBI_Driver */
+/*@}*/ /* end of group EBI_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

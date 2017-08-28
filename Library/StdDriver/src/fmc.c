@@ -11,16 +11,16 @@
 #include "NuMicro.h"
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_FMC_Driver FMC Driver
+/** @addtogroup FMC_Driver FMC Driver
   @{
 */
 
 
-/** @addtogroup M480_FMC_EXPORTED_FUNCTIONS FMC Exported Functions
+/** @addtogroup FMC_EXPORTED_FUNCTIONS FMC Exported Functions
   @{
 */
 
@@ -745,11 +745,11 @@ int32_t  FMC_SKey_Compare(uint32_t key[3])
 }
 
 
-/*@}*/ /* end of group M480_FMC_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group FMC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_FMC_Driver */
+/*@}*/ /* end of group FMC_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
 

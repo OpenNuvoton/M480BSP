@@ -9,15 +9,15 @@
 #include <stdio.h>
 #include "NuMicro.h"
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_USCI_UART_Driver USCI_UART Driver
+/** @addtogroup USCI_UART_Driver USCI_UART Driver
   @{
 */
 
-/** @addtogroup M480_USCI_UART_EXPORTED_FUNCTIONS USCI_UART Exported Functions
+/** @addtogroup USCI_UART_EXPORTED_FUNCTIONS USCI_UART Exported Functions
   @{
 */
 
@@ -593,11 +593,11 @@ void UUART_DisableFlowCtrl(UUART_T* uuart)
 
 
 
-/*@}*/ /* end of group M480_USCI_UART_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group USCI_UART_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_USCI_UART_Driver */
+/*@}*/ /* end of group USCI_UART_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
 

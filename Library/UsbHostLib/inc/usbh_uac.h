@@ -17,15 +17,15 @@
 #include "usbh_lib.h"
 #include "..\src_uac\uac.h"
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_USBH_Library USB Host Library
+/** @addtogroup USBH_Library USB Host Library
   @{
 */
 
-/** @addtogroup M480_USBH_EXPORTED_CONSTANTS USB Host Exported Constants
+/** @addtogroup USBH_EXPORTED_CONSTANTS USB Host Exported Constants
   @{
 */
 
@@ -67,11 +67,11 @@
 #define UAC_CH_SIDE_RIGHT            11     /*!< Select Side Right (SR) channel.      \hideinitializer */
 #define UAC_CH_TOP                   12     /*!< Select Top (T) channel.              \hideinitializer */
 
-/*@}*/ /* end of group M480_USBH_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group USBH_EXPORTED_CONSTANTS */
 
 
 
-/** @addtogroup M480_USBH_EXPORTED_STRUCTURES USB Host Exported Structures
+/** @addtogroup USBH_EXPORTED_STRUCTURES USB Host Exported Structures
   @{
 */
 
@@ -119,7 +119,7 @@ typedef struct uac_dev_t {
 } UAC_DEV_T;                                /*! audio class device structure              */
 
 
-/*@}*/ /* end of group M480_USBH_EXPORTED_STRUCTURES */
+/*@}*/ /* end of group USBH_EXPORTED_STRUCTURES */
 
 
 /// @cond HIDDEN_SYMBOLS
@@ -136,9 +136,9 @@ extern int usbh_uac_find_max_alt(IFACE_T *iface, uint8_t dir, uint8_t attr, uint
 extern "C" {
 #endif
 
-/*@}*/ /* end of group M480_USBH_Library */
+/*@}*/ /* end of group USBH_Library */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 
 #ifdef __cplusplus

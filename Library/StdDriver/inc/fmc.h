@@ -13,16 +13,16 @@ extern "C"
 {
 #endif
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_FMC_Driver FMC Driver
+/** @addtogroup FMC_Driver FMC Driver
   @{
 */
 
 
-/** @addtogroup M480_FMC_EXPORTED_CONSTANTS FMC Exported Constants
+/** @addtogroup FMC_EXPORTED_CONSTANTS FMC Exported Constants
   @{
 */
 
@@ -82,10 +82,10 @@ extern "C"
 #define READ_ALLONE_CMD_FAIL    0xFFFFFFFFUL    /*!< Check-all-one command failed.        \hideinitializer */
 
 
-/*@}*/ /* end of group M480_FMC_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group FMC_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_FMC_EXPORTED_FUNCTIONS FMC Exported Functions
+/** @addtogroup FMC_EXPORTED_FUNCTIONS FMC Exported Functions
   @{
 */
 
@@ -144,11 +144,11 @@ extern int32_t  FMC_SKey_Setup(uint32_t key[3], uint32_t kpmax, uint32_t kemax, 
 extern int32_t  FMC_SKey_Compare(uint32_t key[3]);
 
 
-/*@}*/ /* end of group M480_FMC_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group FMC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_FMC_Driver */
+/*@}*/ /* end of group FMC_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

@@ -14,15 +14,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_RTC_Driver RTC Driver
+/** @addtogroup RTC_Driver RTC Driver
   @{
 */
 
-/** @addtogroup M480_RTC_EXPORTED_CONSTANTS RTC Exported Constants
+/** @addtogroup RTC_EXPORTED_CONSTANTS RTC Exported Constants
   @{
 */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -102,10 +102,10 @@ extern "C"
 #define REF_PREVIOUS_PATTERN  0x1 /*!< The new reference pattern is repeated previous random value when the reference pattern run out \hideinitializer */
 #define REF_SEED              0x3 /*!< The new reference pattern is repeated from SEED (RTC_TAMPSEED[31:0]) when the reference pattern run out \hideinitializer */
 
-/*@}*/ /* end of group M480_RTC_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group RTC_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_RTC_EXPORTED_STRUCTS RTC Exported Structs
+/** @addtogroup RTC_EXPORTED_STRUCTS RTC Exported Structs
   @{
 */
 /**
@@ -123,10 +123,10 @@ typedef struct {
     uint32_t u32AmPm;           /*!< Only Time Scale select 12-hr used */
 } S_RTC_TIME_DATA_T;
 
-/*@}*/ /* end of group M480_RTC_EXPORTED_STRUCTS */
+/*@}*/ /* end of group RTC_EXPORTED_STRUCTS */
 
 
-/** @addtogroup M480_RTC_EXPORTED_FUNCTIONS RTC Exported Functions
+/** @addtogroup RTC_EXPORTED_FUNCTIONS RTC Exported Functions
   @{
 */
 
@@ -318,11 +318,11 @@ void RTC_DynamicTamperEnable(uint32_t u32PairSel, uint32_t u32DebounceEn, uint32
 void RTC_DynamicTamperDisable(uint32_t u32PairSel);
 void RTC_DynamicTamperConfig(uint32_t u32ChangeRate, uint32_t u32SeedReload, uint32_t u32RefPattern, uint32_t u32Seed);
 
-/*@}*/ /* end of group M480_RTC_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group RTC_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_RTC_Driver */
+/*@}*/ /* end of group RTC_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

@@ -14,15 +14,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_I2C_Driver I2C Driver
+/** @addtogroup I2C_Driver I2C Driver
   @{
 */
 
-/** @addtogroup M480_I2C_EXPORTED_CONSTANTS I2C Exported Constants
+/** @addtogroup I2C_EXPORTED_CONSTANTS I2C Exported Constants
   @{
 */
 
@@ -53,9 +53,9 @@ extern "C"
 #define I2C_PECTX_ENABLE            1    /*!< Enable  SMBus Packet Error Check Transmit function                          \hideinitializer */
 #define I2C_PECTX_DISABLE           0    /*!< Disable SMBus Packet Error Check Transmit function                          \hideinitializer */
 
-/*@}*/ /* end of group M480_I2C_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group I2C_EXPORTED_CONSTANTS */
 
-/** @addtogroup M480_I2C_EXPORTED_FUNCTIONS I2C Exported Functions
+/** @addtogroup I2C_EXPORTED_FUNCTIONS I2C Exported Functions
   @{
 */
 /**
@@ -474,11 +474,11 @@ void I2C_SMBusIdleTimeout(I2C_T *i2c, uint32_t us, uint32_t u32Hclk);
 void I2C_SMBusTimeout(I2C_T *i2c, uint32_t ms, uint32_t u32Pclk);
 void I2C_SMBusClockLoTimeout(I2C_T *i2c, uint32_t ms, uint32_t u32Pclk);
 
-/*@}*/ /* end of group M480_I2C_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group I2C_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_I2C_Driver */
+/*@}*/ /* end of group I2C_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }

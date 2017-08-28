@@ -14,15 +14,15 @@ extern "C"
 #endif
 
 
-/** @addtogroup M480_Device_Driver M480 Device Driver
+/** @addtogroup Standard_Driver Standard Driver
   @{
 */
 
-/** @addtogroup M480_CAN_Driver CAN Driver
+/** @addtogroup CAN_Driver CAN Driver
   @{
 */
 
-/** @addtogroup M480_CAN_EXPORTED_CONSTANTS CAN Exported Constants
+/** @addtogroup CAN_EXPORTED_CONSTANTS CAN Exported Constants
   @{
 */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -43,10 +43,10 @@ extern "C"
 #define    CAN_REMOTE_FRAME    0ul    /*!< CAN frame select remote frame \hideinitializer */
 #define    CAN_DATA_FRAME    1ul      /*!< CAN frame select data frame \hideinitializer */
 
-/*@}*/ /* end of group M480_CAN_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group CAN_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup M480_CAN_EXPORTED_STRUCTS CAN Exported Structs
+/** @addtogroup CAN_EXPORTED_STRUCTS CAN Exported Structs
   @{
 */
 /**
@@ -70,13 +70,13 @@ typedef struct {
     uint8_t   u8IdType;   /*!< ID type*/
 } STR_CANMASK_T;
 
-/*@}*/ /* end of group M480_CAN_EXPORTED_STRUCTS */
+/*@}*/ /* end of group CAN_EXPORTED_STRUCTS */
 
 /** @cond HIDDEN_SYMBOLS */
 #define MSG(id)  (id)
 /** @endcond HIDDEN_SYMBOLS */
 
-/** @addtogroup M480_CAN_EXPORTED_FUNCTIONS CAN Exported Functions
+/** @addtogroup CAN_EXPORTED_FUNCTIONS CAN Exported Functions
   @{
 */
 
@@ -163,11 +163,11 @@ int32_t CAN_SetTxMsg(CAN_T *tCAN, uint32_t u32MsgNum , STR_CANMSG_T* pCanMsg);
 int32_t CAN_TriggerTxMsg(CAN_T  *tCAN, uint32_t u32MsgNum);
 
 
-/*@}*/ /* end of group M480_CAN_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group CAN_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_CAN_Driver */
+/*@}*/ /* end of group CAN_Driver */
 
-/*@}*/ /* end of group M480_Device_Driver */
+/*@}*/ /* end of group Device_Driver */
 
 #ifdef __cplusplus
 }
