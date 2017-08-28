@@ -6,7 +6,7 @@
  * @copyright (C) 2013~2015 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 
 

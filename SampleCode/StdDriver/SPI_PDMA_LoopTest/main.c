@@ -10,7 +10,7 @@
  *
  ******************************************************************************/
 #include <stdio.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 #define PLL_CLOCK           192000000
 #define SPI_MASTER_TX_DMA_CH 0

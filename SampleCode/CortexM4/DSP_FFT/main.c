@@ -6,7 +6,7 @@
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
-#include "M480.h"
+#include "NuMicro.h"
 #include "arm_math.h"
 
 #define TEST_LENGTH_SAMPLES 2048

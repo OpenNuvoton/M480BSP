@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "M480.h"
+#include "NuMicro.h"
 
 #define SRAM_IMAGE_BASE             0x20004000   /* The execution address of multi_word_prog.bin. */
 

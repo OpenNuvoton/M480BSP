@@ -9,7 +9,7 @@
  * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 uint32_t g_au32DataArrary[4] = {0x00000000, 0xFFFFFFFF, 0x5A5A5A5A, 0xA5A5A5A5};
 

@@ -10,7 +10,7 @@
 *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 
 char sha_msg[] = "608079423f12421de616b7493ebe551cf4d65b92";      /* SHA-1 hash                                    */

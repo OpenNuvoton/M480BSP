@@ -22,7 +22,7 @@
  * Description:   M480 EMAC driver header file
  */
 #include "lwip/pbuf.h"
-#include "M480.h"
+#include "NuMicro.h"
 #ifndef  _M480_ETH_
 #define  _M480_ETH_
 

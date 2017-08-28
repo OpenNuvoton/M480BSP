@@ -7,7 +7,7 @@
  *
  ******************************************************************************/
 #include <stdio.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 #define RXBUFSIZE 1024
 

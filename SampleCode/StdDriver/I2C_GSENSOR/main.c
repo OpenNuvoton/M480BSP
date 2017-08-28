@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 #define PLL_CLOCK           192000000
 

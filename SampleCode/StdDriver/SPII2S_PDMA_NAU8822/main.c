@@ -12,7 +12,7 @@
  ******************************************************************************/
 #include <stdio.h>
 #include <string.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 // use LIN as source, undefine it if MIC is used
 #define INPUT_IS_LIN

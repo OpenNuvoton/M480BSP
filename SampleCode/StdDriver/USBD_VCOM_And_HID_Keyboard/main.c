@@ -10,7 +10,7 @@
  * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
-#include "M480.h"
+#include "NuMicro.h"
 #include "VCOM_And_hid_keyboard.h"
 
 

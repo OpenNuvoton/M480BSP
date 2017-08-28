@@ -95,7 +95,7 @@ extern uint32_t SystemCoreClock;
 #endif
 
 #ifdef __ARMCC_VERSION
-#include "M480.h"
+#include "NuMicro.h"
 #endif
 
 #define configUSE_PREEMPTION            1

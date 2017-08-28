@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "M480.h"
+#include "NuMicro.h"
 
 #define FLASH_BLOCK_SIZE            (64*1024)    /* Flash block size. Depend on the physical flash. */
 #define TEST_BLOCK_ADDR             0x20000      /* Test block address on SPI flash. */

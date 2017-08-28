@@ -83,7 +83,7 @@
 /* Standard demo include. */
 #include "partest.h"
 
-#include "M480.h"
+#include "NuMicro.h"
 
 
 /*-----------------------------------------------------------*/

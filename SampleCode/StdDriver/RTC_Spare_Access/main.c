@@ -9,7 +9,7 @@
  *
  ******************************************************************************/
 #include <stdio.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 void SYS_Init(void)
 {

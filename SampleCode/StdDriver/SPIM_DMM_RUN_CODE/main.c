@@ -8,7 +8,7 @@
 *****************************************************************************/
 #include <stdio.h>
 
-#include "M480.h"
+#include "NuMicro.h"
 
 #define USE_4_BYTES_MODE            0            /* W25Q20 does not support 4-bytes address mode. */
 

@@ -8,8 +8,8 @@
  * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
-#include  "M480.h"
-#include  "micro_printer.h"
+#include "NuMicro.h"
+#include "micro_printer.h"
 
 
 /*--------------------------------------------------------------------------*/

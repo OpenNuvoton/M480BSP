@@ -5,8 +5,8 @@
  *
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
+#include "NuMicro.h"
 
-#include  "M480.h"
 /** @addtogroup M480_Device_Driver M480 Device Driver
   @{
 */

@@ -10,7 +10,7 @@
 *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 #define SNUM        32       /* recorded number of lastest samples */
 

@@ -8,7 +8,7 @@
 *****************************************************************************/
 #include <stdio.h>
 
-#include "M480.h"
+#include "NuMicro.h"
 
 #define MULTI_WORD_PROG_LEN         512          /* The maximum length is 512. */
 

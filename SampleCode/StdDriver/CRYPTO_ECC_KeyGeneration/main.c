@@ -10,7 +10,7 @@
 *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 #define KEY_LENGTH          192          /* Select ECC P-192 curve, 192-bits key length */
 

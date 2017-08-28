@@ -11,7 +11,7 @@
 #ifndef  _USBH_HID_H_
 #define  _USBH_HID_H_
 
-#include "M480.h"
+#include "NuMicro.h"
 #include "usb.h"
 
 #ifdef __cplusplus

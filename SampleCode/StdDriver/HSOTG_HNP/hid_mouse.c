@@ -10,7 +10,7 @@
 
 /*!<Includes */
 #include <string.h>
-#include "M480.h"
+#include "NuMicro.h"
 #include "hid_mouse.h"
 
 signed char mouse_table[] = {-16, -16, -16, 0, 16, 16, 16, 0};

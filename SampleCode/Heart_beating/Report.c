@@ -16,7 +16,7 @@
  *================================================================================*
  */
 #include <stdio.h>
-#include "M480.h"
+#include "NuMicro.h"
 #include "Report.h"
 
 float HeartFreq1[10];

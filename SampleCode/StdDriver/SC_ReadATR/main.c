@@ -7,7 +7,7 @@
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
-#include "M480.h"
+#include "NuMicro.h"
 #include "sclib.h"
 
 #define SC_INTF 0  // Smartcard interface 0

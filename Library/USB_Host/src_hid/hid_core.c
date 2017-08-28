@@ -13,7 +13,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "M480.h"
+#include "NuMicro.h"
 
 #include "usb.h"
 #include "usbh_lib.h"

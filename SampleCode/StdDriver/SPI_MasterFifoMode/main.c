@@ -10,7 +10,7 @@
  *
  ******************************************************************************/
 #include <stdio.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 #define TEST_COUNT  16
 #define PLL_CLOCK   192000000

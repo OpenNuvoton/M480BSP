@@ -174,7 +174,7 @@
 #include "death.h"
 
 /* Hardware and starter kit includes. */
-#include "M480.h"
+#include "NuMicro.h"
 
 /* Priorities for the demo application tasks. */
 #define mainFLASH_TASK_PRIORITY             ( tskIDLE_PRIORITY + 1UL )

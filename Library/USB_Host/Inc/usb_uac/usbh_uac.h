@@ -1,7 +1,7 @@
 #ifndef __INCLUDED_USBHUAC_H__
 #define __INCLUDED_USBHUAC_H__
 
-#include "M480.h"
+#include "NuMicro.h"
 
 #include "usb.h"
 #include "usbh_lib.h"

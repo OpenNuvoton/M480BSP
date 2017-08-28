@@ -2,7 +2,7 @@
 #define _REPORT_H
 
 #include <stdio.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 #define REPORT_SENSORS_RAW        1
 #define REPORT_HEART_SPEED        2

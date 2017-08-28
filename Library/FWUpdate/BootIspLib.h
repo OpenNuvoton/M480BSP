@@ -11,7 +11,7 @@
 #ifndef __BLISPLIB_H__
 #define __BLISPLIB_H__
 
-#include "M480.h"
+#include "NuMicro.h"
 
 /** @addtogroup M480_Library M480 Library
   @{

@@ -32,7 +32,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "M480.h"
+#include "NuMicro.h"
 
 #include "usb.h"
 

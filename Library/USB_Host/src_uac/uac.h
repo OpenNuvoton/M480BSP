@@ -1,7 +1,7 @@
 #ifndef __INCLUDED_UAC_H__
 #define __INCLUDED_UAC_H__
 
-#include "M480.h"
+#include "NuMicro.h"
 #include "usbh_lib.h"
 
 /// @cond HIDDEN_SYMBOLS

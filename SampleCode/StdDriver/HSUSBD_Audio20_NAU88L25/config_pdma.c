@@ -9,7 +9,7 @@
  ******************************************************************************/
 /*!<Includes */
 #include <string.h>
-#include "M480.h"
+#include "NuMicro.h"
 #include "usbd_audio.h"
 
 /* DMA scatter-gather descriptor */

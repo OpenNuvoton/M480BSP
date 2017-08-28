@@ -8,7 +8,7 @@
  * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 /*!<Includes */
-#include "M480.h"
+#include "NuMicro.h"
 #include "vcom_serial.h"
 #include "massstorage.h"
 

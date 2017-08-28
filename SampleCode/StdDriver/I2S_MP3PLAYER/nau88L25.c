@@ -11,7 +11,7 @@
  ******************************************************************************/
 #include <stdio.h>
 #include <string.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 uint8_t Device_Addr0 = 0x1A;                /* NAU88L25 Device ID */
 

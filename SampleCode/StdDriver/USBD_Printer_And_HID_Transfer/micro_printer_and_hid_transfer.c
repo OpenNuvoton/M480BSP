@@ -9,8 +9,8 @@
  ******************************************************************************/
 #include <stdio.h>
 #include <string.h>
-#include  "M480.h"
-#include  "micro_printer_and_hid_transfer.h"
+#include "NuMicro.h"
+#include "micro_printer_and_hid_transfer.h"
 
 
 /*--------------------------------------------------------------------------*/

@@ -11,7 +11,7 @@
 #define __DESCRIPTORS_C__
 
 /*!<Includes */
-#include "M480.h"
+#include "NuMicro.h"
 #include "hid_mousekeyboard.h"
 
 /*!<USB HID Report Descriptor */

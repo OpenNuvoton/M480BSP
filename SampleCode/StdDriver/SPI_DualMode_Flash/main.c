@@ -8,7 +8,7 @@
  *
  ******************************************************************************/
 #include <stdio.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 #define TEST_NUMBER 1   /* page numbers */
 #define TEST_LENGTH 256 /* length */

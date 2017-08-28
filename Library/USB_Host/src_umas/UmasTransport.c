@@ -47,7 +47,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "M480.h"
+#include "NuMicro.h"
 
 #include "Umas.h"
 #include "UmasTransport.h"

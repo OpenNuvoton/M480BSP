@@ -6,7 +6,7 @@
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/
-#include "M480.h"
+#include "NuMicro.h"
 
 #define PLL_CLOCK           192000000
 

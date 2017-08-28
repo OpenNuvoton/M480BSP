@@ -10,7 +10,7 @@
 *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 typedef struct {
     char     vecotr_name[16];             /* brief description of test vector             */

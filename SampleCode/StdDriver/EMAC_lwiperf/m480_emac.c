@@ -6,7 +6,7 @@
  *
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
-#include "M480.h"
+#include "NuMicro.h"
 #include "netif/m480_emac.h"
 
 

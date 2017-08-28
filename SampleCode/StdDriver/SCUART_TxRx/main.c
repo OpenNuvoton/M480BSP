@@ -7,7 +7,7 @@
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 // This is the string we used in loopback demo
 uint8_t au8TxBuf[] = "Hello World!";

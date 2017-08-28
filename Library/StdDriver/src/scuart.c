@@ -4,7 +4,7 @@
  *
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
-#include "M480.h"
+#include "NuMicro.h"
 
 static uint32_t SCUART_GetClock(SC_T *sc);
 

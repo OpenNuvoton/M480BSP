@@ -5,7 +5,7 @@
  *
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
-#include "M480.h"
+#include "NuMicro.h"
 
 /* Below are variables used locally by SC driver and does not want to parse by doxygen unless HIDDEN_SYMBOLS is defined */
 /** @cond HIDDEN_SYMBOLS */

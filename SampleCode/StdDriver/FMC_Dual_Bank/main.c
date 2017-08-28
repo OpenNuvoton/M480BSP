@@ -9,7 +9,7 @@
 *****************************************************************************/
 #include <stdio.h>
 
-#include "M480.h"
+#include "NuMicro.h"
 
 #define APROM_BANK1_BASE            0x40000      /* APROM bank1 base address for 512KB size. */
 /* APROM bank1 address is 1/2 APROM size.   */

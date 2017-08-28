@@ -8,7 +8,7 @@
 #ifndef __SCLIB_H__
 #define __SCLIB_H__
 
-#include "M480.h"
+#include "NuMicro.h"
 
 /** @addtogroup M480_Library M480 Library
   @{

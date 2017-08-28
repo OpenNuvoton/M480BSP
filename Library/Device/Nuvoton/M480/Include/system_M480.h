@@ -41,7 +41,7 @@ extern uint32_t PllClock;            /*!< PLL Output Clock Frequency           *
  * @param  none
  * @return none
  *
- * @brief  Setup the microcontroller system.
+ * @brief  Setup the micro controller system.
  *         Initialize the System and update the SystemCoreClock variable.
  */
 extern void SystemInit (void);
@@ -62,4 +62,5 @@ extern void SystemCoreClockUpdate (void);
 #endif
 
 #endif /* __SYSTEM_M480_H__ */
+
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

@@ -10,7 +10,7 @@
  *
  ******************************************************************************/
 #include "stdio.h"
-#include "M480.h"
+#include "NuMicro.h"
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Function for System Entry to Power Down Mode and Wake up source by Wake-up pin                         */

@@ -11,7 +11,7 @@
 /*!<Includes */
 #include <stdio.h>
 #include <string.h>
-#include "M480.h"
+#include "NuMicro.h"
 #include "hid_transfer.h"
 
 void USBD_IRQHandler(void)

@@ -11,7 +11,7 @@
 #ifndef  _USBH_LIB_H_
 #define  _USBH_LIB_H_
 
-#include "M480.h"
+#include "NuMicro.h"
 
 #ifdef __cplusplus
 extern "C"

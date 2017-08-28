@@ -8,7 +8,7 @@
 *****************************************************************************/
 #include <stdio.h>
 
-#include "M480.h"
+#include "NuMicro.h"
 
 typedef void (FUNC_PTR)(void);
 

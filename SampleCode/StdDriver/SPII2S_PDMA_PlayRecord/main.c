@@ -9,7 +9,7 @@
  ******************************************************************************/
 #include <stdio.h>
 #include <string.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 #define I2S_TX_DMA_CH 1
 #define I2S_RX_DMA_CH 2

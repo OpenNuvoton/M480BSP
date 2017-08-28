@@ -10,7 +10,7 @@
 *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 /* TDES Key:  1e4678a17f2c8a33 800e15ac47891a4c a011453291c23340 */
 uint32_t au8MyTDESKey[3][2] = {

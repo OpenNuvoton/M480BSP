@@ -11,7 +11,7 @@
 #ifndef  _USBH_UAC_H_
 #define  _USBH_UAC_H_
 
-#include "M480.h"
+#include "NuMicro.h"
 
 #include "usb.h"
 #include "usbh_lib.h"

@@ -9,7 +9,7 @@
  ******************************************************************************/
 #include <stdio.h>
 #include <string.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 volatile uint32_t g_u32TxValue;
 volatile uint32_t g_u32DataCount;

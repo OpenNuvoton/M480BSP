@@ -9,7 +9,7 @@
  *
  ******************************************************************************/
 #include <stdio.h>
-#include "M480.h"
+#include "NuMicro.h"
 
 #define USPI_MASTER_TX_DMA_CH 0
 #define USPI_MASTER_RX_DMA_CH 1
