@@ -304,8 +304,6 @@
           <state>$PROJ_DIR$\..\..\..\..\Library\CMSIS\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\M480\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\StdDriver\inc</state>
-          <state>$PROJ_DIR$\..\..\..\..\Library\USB_Host\Inc</state>
-          <state>$PROJ_DIR$\..\..\..\..\Library\USB_Host\Inc\usb_umas</state>
           <state>$PROJ_DIR$\..\..\..\..\ThirdParty\FatFs\src</state>
         </option>
         <option>

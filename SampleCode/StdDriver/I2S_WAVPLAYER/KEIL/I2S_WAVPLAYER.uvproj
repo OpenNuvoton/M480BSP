@@ -364,7 +364,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\Library\USB_Host\Inc\usb_umas;..\..\..\..\Library\USB_Host\Inc;..\..\..\..\ThirdParty\FATFS\src</IncludePath>
+              <IncludePath>..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\ThirdParty\FATFS\src</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
