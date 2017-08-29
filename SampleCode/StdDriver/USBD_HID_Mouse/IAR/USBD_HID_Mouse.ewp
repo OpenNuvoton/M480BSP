@@ -586,7 +586,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>USBD_Crystal_Less_Mouse.bin</state>
+          <state>USBD_HID_Mouse.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -640,7 +640,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>USBD_Crystal_Less_Mouse.out</state>
+          <state>USBD_HID_Mouse.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>

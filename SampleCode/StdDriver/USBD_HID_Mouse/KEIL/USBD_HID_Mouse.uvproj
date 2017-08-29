@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>USBD_Crystal_Less_Mouse</TargetName>
+      <TargetName>USBD_HID_Mouse</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -45,7 +45,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>USBD_Crystal_Less_Mouse</OutputName>
+          <OutputName>USBD_HID_Mouse</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>

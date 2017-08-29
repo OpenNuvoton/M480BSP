@@ -12,7 +12,7 @@
 #include "NuMicro.h"
 #include "hid_transfer.h"
 
-
+#define CRYSTAL_LESS        1
 
 /*--------------------------------------------------------------------------*/
 void SYS_Init(void)
@@ -20,6 +20,7 @@ void SYS_Init(void)
     /* Unlock protected registers */
     SYS_UnlockReg();
 
+#ifndef CRYSTAL_LESS
     /* Enable External XTAL (4~24 MHz) */
     CLK_EnableXtalRC(CLK_PWRCTL_HXTEN_Msk);
 
@@ -28,6 +29,7 @@ void SYS_Init(void)
 
     /* Switch HCLK clock source to HXT */
     CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_HXT,CLK_CLKDIV0_HCLK(1));
+#endif
 
     /* Set core clock as PLL_CLOCK from PLL */
     CLK_SetCoreClock(FREQ_192MHZ);
@@ -45,7 +47,7 @@ void SYS_Init(void)
     CLK_EnableModuleClock(USBD_MODULE);
 
     /* Select IP clock source */
-    CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
+    CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
     /* Enable IP clock */
     CLK_EnableModuleClock(UART0_MODULE);
@@ -87,10 +89,36 @@ int32_t main (void)
 
     /* Endpoint configuration */
     HID_Init();
-    NVIC_EnableIRQ(USBD_IRQn);
     USBD_Start();
 
+#ifdef CRYSTAL_LESS
+    /* Waiting for SOF before USB clock auto trim */
+    USBD->INTSTS = USBD_INTSTS_SOFIF_Msk;
+    while((USBD->INTSTS & USBD_INTSTS_SOFIF_Msk) == 0);
+    /* Enable USB clock trim function */
+    SYS->IRCTCTL = 0x01;
+    SYS->IRCTCTL |= SYS_IRCTCTL_REFCKSEL_Msk;
+#endif
+
+    NVIC_EnableIRQ(USBD_IRQn);
+
     while(1) {
+
+#ifdef CRYSTAL_LESS
+        /* Re-start auto trim when any error found */
+        if (SYS->IRCTISTS & (SYS_IRCTISTS_CLKERRIF_Msk | SYS_IRCTISTS_TFAILIF_Msk)) {
+            SYS->IRCTISTS = SYS_IRCTISTS_CLKERRIF_Msk | SYS_IRCTISTS_TFAILIF_Msk;
+
+            /* Waiting for SOF before USB clock auto trim */
+            USBD->INTSTS = USBD_INTSTS_SOFIF_Msk;
+            while((USBD->INTSTS & USBD_INTSTS_SOFIF_Msk) == 0);
+
+            /* Re-enable Auto Trim */
+            SYS->IRCTCTL = 0x01;
+            SYS->IRCTCTL |= SYS_IRCTCTL_REFCKSEL_Msk;
+            //printf("USB trim fail. Just retry. SYS->IRCTISTS = 0x%x, SYS->IRCTCTL = 0x%x\n", SYS->IRCTISTS, SYS->IRCTCTL);
+        }
+#endif
     }
 }
 
