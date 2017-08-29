@@ -315,7 +315,7 @@ int32_t main(void)
     CheckPowerSource();
 
     printf("+----------------------------------------------------------------+\n");
-    printf("|    M480 DPD Power-down Mode and Wake-up Sample Code.           |\n");
+    printf("|    DPD Power-down Mode and Wake-up Sample Code.                |\n");
     printf("|    Please Select Wake up source.                               |\n");
     printf("+----------------------------------------------------------------+\n");
     printf("|[1] DPD Wake-up Pin(PC.0) trigger type is rising edge.          |\n");

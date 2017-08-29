@@ -422,7 +422,7 @@ int32_t main(void)
         printf("System waken-up from SPD1 mode done!\n");
 
     printf("+-----------------------------------------------------------------+\n");
-    printf("|    M480 SPD Power-down Mode and Wake-up Sample Code             |\n");
+    printf("|    SPD Power-down Mode and Wake-up Sample Code                  |\n");
     printf("|    Please Select Power Down Mode and Wake up source.            |\n");
     printf("+-----------------------------------------------------------------+\n");
     printf("|[1] SPD0 GPIO Wake-up pin(PA.0) and using rising edge wake up.   |\n");

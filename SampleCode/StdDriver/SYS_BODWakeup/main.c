@@ -125,7 +125,7 @@ int32_t main(void)
 
     printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
     printf("+------------------------------------------------+\n");
-    printf("|    M480 Power-down and Wake-up Sample Code     |\n");
+    printf("|        Power-down and Wake-up Sample Code      |\n");
     printf("+------------------------------------------------+\n");
 
     /* Unlock protected registers before setting Brown-out detector function and Power-down mode */

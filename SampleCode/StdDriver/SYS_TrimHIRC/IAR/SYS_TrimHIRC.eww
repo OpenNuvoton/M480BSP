@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\SYS_TrimIRC.ewp</path>
+    <path>$WS_DIR$\SYS_TrimHIRC.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

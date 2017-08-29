@@ -133,7 +133,7 @@ int32_t main(void)
 
     printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
     printf("+-------------------------------------------------------------+\n");
-    printf("|               M480 Clock Detector Sample Code               |\n");
+    printf("|                 Clock Detector Sample Code                  |\n");
     printf("+-------------------------------------------------------------+\n");
     printf("| 1. HXT clock fail interrupt will happen if HXT is stopped.  |\n");
     printf("|    HCLK clock source will be switched from HXT to HIRC.     |\n");

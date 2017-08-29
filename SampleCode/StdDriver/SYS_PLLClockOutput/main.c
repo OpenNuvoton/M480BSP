@@ -205,7 +205,7 @@ int32_t main(void)
 
     printf("\n\nCPU @ %dHz\n", SystemCoreClock);
     printf("+---------------------------------------+\n");
-    printf("|     M480 System Driver Sample Code    |\n");
+    printf("|      System Driver Sample Code        |\n");
     printf("+---------------------------------------+\n");
 
     if(M32(FLAG_ADDR) == SIGNATURE) {

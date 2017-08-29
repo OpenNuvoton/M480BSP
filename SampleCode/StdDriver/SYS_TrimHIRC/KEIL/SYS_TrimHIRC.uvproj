@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>SYS_TrimIRC</TargetName>
+      <TargetName>SYS_TrimHIRC</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -45,7 +45,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>SYS_TrimIRC</OutputName>
+          <OutputName>SYS_TrimHIRC</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
