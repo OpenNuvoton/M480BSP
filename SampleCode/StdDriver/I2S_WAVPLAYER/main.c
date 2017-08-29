@@ -16,7 +16,6 @@
 #include "NuMicro.h"
 
 #include "config.h"
-#include "usbh_lib.h"
 #include "diskio.h"
 #include "ff.h"
 
