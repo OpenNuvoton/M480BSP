@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\I2S_NAU88L25.ewp</path>
+    <path>$WS_DIR$\I2S_Codec.ewp</path>
   </project>
   <batchBuild>
     <batchDefinition>

@@ -1,22 +1,15 @@
 /******************************************************************************
  * @file     main.c
- * @brief    Demonstrate how to implement a composite device.(USB micro printer device and HID Transfer).
- *           Transfer data between USB device and PC through USB HID interface.
- *           A windows tool is also included in this sample code to connect with a USB device.
- * @version  2.0.0
- * @date     22, Aug, 2016
+ * @version  V1.00
+ * @brief
+ *           Show how to implement a USB mouse device.
+ *           The mouse cursor will move automatically when this mouse device connecting to PC by USB.
  *
- * @note
- *           Windows tool: User need to input the specific PID for the USB HID device connected to PC.
- *                         PID format with hexadecimal.
- *
- *           -> PID is 0xAABB in this sample.
- *
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
-#include "micro_printer_and_hid_transfer.h"
+#include "hid_mouse.h"
 
 #define CRYSTAL_LESS        1
 
@@ -70,35 +63,63 @@ void SYS_Init(void)
 
 }
 
+
 void UART0_Init(void)
 {
+    /*---------------------------------------------------------------------------------------------------------*/
+    /* Init UART                                                                                               */
+    /*---------------------------------------------------------------------------------------------------------*/
 
     /* Configure UART0 and set UART0 Baudrate */
     UART_Open(UART0, 115200);
 }
 
+void GPIO_Init(void)
+{
+    /* Enable PC0~5 interrupt for wakeup */
+
+    PC->MODE = 0x0fff; /* PC0~5 be Quasi mode */
+    PC->INTSRC |= 0x3f;
+    PC->INTEN |= 0x3f | (0x3f << 16);
+    PC->DBEN |= 0x3f;      // Enable key debounce
+    GPIO->DBCTL = 0x16; // Debounce time is about 6ms
+    NVIC_EnableIRQ(GPC_IRQn);
+}
+
+void GPC_IRQHandler(void)
+{
+    PC->INTSRC = 0x3f;
+}
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Main Function                                                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
-int32_t main (void)
+int32_t main(void)
 {
-    uint8_t Str[9];
+
+    /* Unlock protected registers */
+    SYS_UnlockReg();
 
     SYS_Init();
+
     UART0_Init();
 
-    printf("+-------------------------------------------------------+\n");
-    printf("|          NnMicro USB composite device Sample Code     |\n");
-    printf("|          USB Micro Printer + HID Transfer             |\n");
-    printf("+-------------------------------------------------------+\n");
+    GPIO_Init();
 
-    USBD_Open(&gsInfo, PTR_ClassRequest, NULL);
+    printf("\n");
+    printf("+-----------------------------------------------------+\n");
+    printf("|          NuMicro USB HID Mouse Sample Code          |\n");
+    printf("+-----------------------------------------------------+\n");
+
+    /* This sample code is used to simulate a mouse with suspend and remote wakeup supported.
+       User can use PC0~PC5 key to control the moviement of mouse.
+    */
+
+    USBD_Open(&gsInfo, HID_ClassRequest, NULL);
 
     /* Endpoint configuration */
-    PTR_Init();
+    HID_Init();
     USBD_Start();
-
 
 #if CRYSTAL_LESS
     /* Waiting for SOF before USB clock auto trim */
@@ -110,8 +131,6 @@ int32_t main (void)
 #endif
 
     NVIC_EnableIRQ(USBD_IRQn);
-
-    PE->MODE = 0x5000;   //??
 
     while(1) {
 
@@ -130,9 +149,11 @@ int32_t main (void)
             //printf("USB trim fail. Just retry. SYS->IRCTISTS = 0x%x, SYS->IRCTCTL = 0x%x\n", SYS->IRCTISTS, SYS->IRCTCTL);
         }
 #endif
-        CLK_SysTickDelay(2000);   // delay
-        if(++Str[1] > 0x39)
-            Str[1] = 0x30;      // increase 1 to 10 than reset to 0
-        PE->DOUT ^= 0x40;
+        HID_UpdateMouseData();
     }
 }
+
+
+
+/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
+

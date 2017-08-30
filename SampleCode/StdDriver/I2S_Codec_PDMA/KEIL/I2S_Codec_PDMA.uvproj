@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>USBD_Audio_NAU88L25</TargetName>
+      <TargetName>I2S_Codec_PDMA</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -35,8 +35,8 @@
           <BinPath></BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath>?ST\STM32F10x\</RegisterFilePath>
-          <DBRegisterFilePath>?ST\STM32F10x\</DBRegisterFilePath>
+          <RegisterFilePath></RegisterFilePath>
+          <DBRegisterFilePath></DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -45,7 +45,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>USBD_Audio_NAU88L25</OutputName>
+          <OutputName>I2S_Codec_PDMA</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -83,7 +83,7 @@
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
           </AfterMake>
-          <SelectedForBatchBuild>0</SelectedForBatchBuild>
+          <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString></SVCSIdString>
         </TargetCommonOption>
         <CommonProperty>
@@ -208,8 +208,8 @@
             <AdsLsun>1</AdsLsun>
             <AdsLven>1</AdsLven>
             <AdsLsxf>1</AdsLsxf>
-            <RvctClst>1</RvctClst>
-            <GenPPlst>1</GenPPlst>
+            <RvctClst>0</RvctClst>
+            <GenPPlst>0</GenPPlst>
             <AdsCpuType>"Cortex-M4"</AdsCpuType>
             <RvctDeviceName></RvctDeviceName>
             <mOS>0</mOS>
@@ -364,14 +364,14 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\;..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\StdDriver\inc</IncludePath>
+              <IncludePath>..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\Device\Nuvoton\\M480\Include;..\..\..\..\Library\StdDriver\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
             <interw>1</interw>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <thumb>0</thumb>
+            <thumb>1</thumb>
             <SplitLS>0</SplitLS>
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
@@ -405,7 +405,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>CMSIS files</GroupName>
+          <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>system_M480.c</FileName>
@@ -420,52 +420,22 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Source files</GroupName>
+          <GroupName>Source</GroupName>
           <Files>
-            <File>
-              <FileName>descriptors.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\descriptors.c</FilePath>
-            </File>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\main.c</FilePath>
             </File>
-            <File>
-              <FileName>usbd_audio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\usbd_audio.c</FilePath>
-            </File>
-            <File>
-              <FileName>config_pdma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\config_pdma.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>Library files</GroupName>
+          <GroupName>Library</GroupName>
           <Files>
-            <File>
-              <FileName>clk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\StdDriver\src\clk.c</FilePath>
-            </File>
             <File>
               <FileName>sys.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\Library\StdDriver\src\sys.c</FilePath>
-            </File>
-            <File>
-              <FileName>usbd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\StdDriver\src\usbd.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\StdDriver\src\i2c.c</FilePath>
             </File>
             <File>
               <FileName>i2s.c</FileName>
@@ -473,19 +443,29 @@
               <FilePath>..\..\..\..\Library\StdDriver\src\i2s.c</FilePath>
             </File>
             <File>
-              <FileName>retarget.c</FileName>
+              <FileName>i2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\StdDriver\src\retarget.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\i2c.c</FilePath>
             </File>
             <File>
-              <FileName>timer.c</FileName>
+              <FileName>clk.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\StdDriver\src\timer.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\clk.c</FilePath>
             </File>
             <File>
               <FileName>uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\Library\StdDriver\src\uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>retarget.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Library\StdDriver\src\retarget.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Library\StdDriver\src\gpio.c</FilePath>
             </File>
             <File>
               <FileName>pdma.c</FileName>

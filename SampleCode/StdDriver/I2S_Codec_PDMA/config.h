@@ -3,7 +3,7 @@
  * @version  V1.00
  * $Revision: 2 $
  * $Date: 14/05/29 1:14p $
- * @brief    M480 I2S Driver Sample Configuration Header File
+ * @brief    I2S Driver Sample Configuration Header File
  *
  * @note
  * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
@@ -23,8 +23,8 @@
 
 typedef struct dma_desc_t {
     uint32_t ctl;
-    uint32_t endsrc;
-    uint32_t enddest;
+    uint32_t src;
+    uint32_t dest;
     uint32_t offset;
 } DMA_DESC_T;
 

@@ -147,7 +147,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -301,9 +301,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$..\..\..\..\..\Library\CMSIS\Include</state>
-          <state>$PROJ_DIR$..\..\..\..\..\Library\Device\Nuvoton\M480\Include</state>
-          <state>$PROJ_DIR$..\..\..\..\..\Library\StdDriver\inc</state>
+          <state>$PROJ_DIR$\..\..\..\..\Library\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\M480\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\Library\StdDriver\inc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -552,7 +552,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$</state>
+          <state></state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -586,7 +586,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>I2S_NAU88L25.bin</state>
+          <state>USBD_HID_RemoteWakeup.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -640,7 +640,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>I2S_NAU88L25.out</state>
+          <state>USBD_HID_RemoteWakeup.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -936,9 +936,6 @@
       <data/>
     </settings>
   </configuration>
-  <mfc>
-    <configuration>Release</configuration>
-  </mfc>
   <group>
     <name>CMSIS</name>
     <file>
@@ -954,15 +951,6 @@
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\clk.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\gpio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\i2c.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\i2s.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\retarget.c</name>
     </file>
     <file>
@@ -971,11 +959,17 @@
     <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\uart.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\usbd.c</name>
+    </file>
   </group>
   <group>
-    <name>Source</name>
+    <name>User</name>
     <file>
-      <name>$PROJ_DIR$\..\isr.c</name>
+      <name>$PROJ_DIR$\..\descriptors.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\hid_mouse.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\main.c</name>

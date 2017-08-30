@@ -103,9 +103,6 @@ int32_t main (void)
     /* Init I2C2 to access NAU88L25 */
     I2C2_Init();
 
-    /* Reset NAU88L25 codec */
-    NAU88L25_Reset();
-
     /* Open I2S0 as slave mode */
     I2S_Open(I2S0, I2S_MODE_SLAVE, 48000, I2S_DATABIT_16, I2S_DISABLE_MONO, I2S_FORMAT_I2S);
 
@@ -114,11 +111,7 @@ int32_t main (void)
 
     /* Set MCLK and enable MCLK */
     I2S_EnableMCLK(I2S0, 12000000);
-    I2S0->CTL0 |= I2S_CTL0_ORDER_Msk;
-
-    /* Initialize NAU88L25 codec */
-    CLK_SysTickDelay(20000);
-    NAU88L25_Setup();
+    Codec_Setup();
 
     /* Configure PDMA */
     PDMA_Init();
