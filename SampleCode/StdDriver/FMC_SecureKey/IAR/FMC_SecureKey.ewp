@@ -586,7 +586,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>FMC_KPROM.bin</state>
+          <state>FMC_SecureKey.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -640,7 +640,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>FMC_KPROM.out</state>
+          <state>FMC_SecureKey.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>

@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\FMC_KPROM.ewp</path>
+    <path>$WS_DIR$\FMC_SecureKey.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

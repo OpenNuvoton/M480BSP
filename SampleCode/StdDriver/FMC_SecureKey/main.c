@@ -1,10 +1,10 @@
 /******************************************************************************
  * @file     main.c
  * @version  V1.00
- * @brief    This sample shows how to setup the secure key and how to perform secure key comparison.
+ * @brief    This sample shows how to setup the secure key (KPROM) and how to perform secure key comparison.
  *
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
 
@@ -104,7 +104,7 @@ int main()
     /*---------------------------------------------------------------------------------------------------------*/
 
     printf("+-----------------------------------------+\n");
-    printf("|   M480 FMC Secure Key Sample Demo       |\n");
+    printf("|   FMC Secure Key (KPROM) Sample Demo    |\n");
     printf("+-----------------------------------------+\n");
 
     SYS_UnlockReg();                   /* Unlock protected registers */
@@ -139,4 +139,4 @@ int main()
     while (1);
 }
 
-/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2017 Nuvoton Technology Corp. ***/

@@ -110,10 +110,22 @@ extern "C"
 #define FMC_CLR_FAIL_FLAG()         (FMC->ISPCTL |= FMC_ISPCTL_ISPFF_Msk)       /*!< Clear ISP fail flag        \hideinitializer */
 
 
-
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Functions                                                                                              */
 /*---------------------------------------------------------------------------------------------------------*/
+
+/**
+ * @brief       Get current vector mapping address.
+ * @param       None
+ * @return      The current vector mapping address.
+ * @details     To get VECMAP value which is the page address for remapping to vector page (0x0).
+ * @note
+ *              VECMAP only valid when new IAP function is enabled. (CBS = 10'b or 00'b)
+ */
+static __INLINE uint32_t FMC_GetVECMAP(void)
+{
+    return (FMC->ISPSTS & FMC_ISPSTS_VECMAP_Msk);
+}
 
 extern void FMC_Close(void);
 extern int32_t FMC_Erase(uint32_t u32PageAddr);
