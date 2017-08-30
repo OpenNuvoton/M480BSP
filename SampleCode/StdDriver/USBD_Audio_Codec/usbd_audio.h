@@ -98,11 +98,21 @@
 
 #define PDMA_I2S_TX_CH  1
 #define PDMA_I2S_RX_CH  2
+
+/* For I2C transfer */
+typedef enum {
+    E_RS_NONE,          // no re-sampling
+    E_RS_UP,            // up sampling
+    E_RS_DOWN           // down sampling
+} RESAMPLE_STATE_T;
+
+
 /*-------------------------------------------------------------*/
 extern uint32_t volatile u32BuffLen, u32RxBuffLen;
 extern uint32_t g_usbd_UsbAudioState;
 extern volatile uint8_t u8AudioPlaying;
 extern volatile uint8_t u8TxDataCntInBuffer;
+extern uint32_t g_usbd_SampleRate;
 
 void UAC_DeviceEnable(uint32_t bIsPlay);
 void UAC_DeviceDisable(uint32_t bIsPlay);
@@ -118,10 +128,10 @@ void UAC_SetInterface(uint32_t u32AltInterface);
 
 void EP2_Handler(void);
 void EP3_Handler(void);
-
-void NAU88L25_Reset(void);
-void NAU88L25_Setup(void);
 void timer_init(void);
+void AdjustCodecPll(RESAMPLE_STATE_T r);
+void Codec_Setup(void);
+void Codec_ConfigSampleRate(uint32_t u32SampleRate);
 
 typedef struct dma_desc_t {
     uint32_t ctl;

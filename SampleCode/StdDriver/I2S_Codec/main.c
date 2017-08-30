@@ -1,10 +1,10 @@
 /**************************************************************************//**
  * @file     main.c
- * @version  V1.00
- * $Revision: 3 $
- * $Date: 14/09/17 1:42p $
- * @brief    M480 Series I2S Driver Sample Code
- *           This is a I2S demo with PDMA function connected with NAU8822 codec.
+ * @version  V2.00
+ * $Revision: 13 $
+ * $Date: 14/09/17 1:41p $
+ * @brief    This is an I2S demo using NAU8822/88L25 audio codec, and used to play
+ *           back the input from line-in or MIC interface..
  *
  * @note
  * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
@@ -15,34 +15,69 @@
 #include "NuMicro.h"
 #include "config.h"
 
-uint32_t PcmRxBuff[2][BUFF_LEN] = {0};
-uint32_t PcmTxBuff[2][BUFF_LEN] = {0};
+#define NAU8822     0
+
+uint32_t PcmBuff[BUFF_LEN] = {0};
 uint32_t volatile u32BuffPos = 0;
-DMA_DESC_T DMA_TXDESC[2], DMA_RXDESC[2];
-extern volatile uint8_t u8CopyData;
 
-volatile uint8_t u8TxIdx=0, u8RxIdx=0;
-volatile uint8_t u8CopyData = 0;
+#if NAU8822
 
-void PDMA_IRQHandler(void)
+/*---------------------------------------------------------------------------------------------------------*/
+/*  Write 9-bit data to 7-bit address register of NAU8822 with I2C2                                        */
+/*---------------------------------------------------------------------------------------------------------*/
+void I2C_WriteNAU8822(uint8_t u8addr, uint16_t u16data)
 {
-    uint32_t u32Status = PDMA_GET_INT_STATUS();
 
-    if (u32Status & 0x2) {
-        if (PDMA_GET_TD_STS() & 0x4) {          /* channel 2 done */
-            /* Copy RX data to TX buffer */
-            u8CopyData = 1;
-            u8RxIdx ^= 1;
-            PDMA_CLR_TD_FLAG(PDMA_TDSTS_TDIF2_Msk);
-        }
+    I2C_START(I2C2);
+    I2C_WAIT_READY(I2C2);
 
-        if (PDMA_GET_TD_STS() & 0x2) {          /* channel 1 done */
-            u8TxIdx ^= 1;
-            PDMA_CLR_TD_FLAG(PDMA_TDSTS_TDIF1_Msk);
-        }
-    } else
-        printf("unknown interrupt, status=0x%x!!\n", u32Status);
+    I2C_SET_DATA(I2C2, 0x1A<<1);
+    I2C_SET_CONTROL_REG(I2C2, I2C_CTL_SI);
+    I2C_WAIT_READY(I2C2);
+
+    I2C_SET_DATA(I2C2, (uint8_t)((u8addr << 1) | (u16data >> 8)));
+    I2C_SET_CONTROL_REG(I2C2, I2C_CTL_SI);
+    I2C_WAIT_READY(I2C2);
+
+    I2C_SET_DATA(I2C2, (uint8_t)(u16data & 0x00FF));
+    I2C_SET_CONTROL_REG(I2C2, I2C_CTL_SI);
+    I2C_WAIT_READY(I2C2);
+
+    I2C_STOP(I2C2);
 }
+
+/*---------------------------------------------------------------------------------------------------------*/
+/*  NAU8822 Settings with I2C interface                                                                    */
+/*---------------------------------------------------------------------------------------------------------*/
+void NAU8822_Setup()
+{
+    printf("\nConfigure NAU8822 ...");
+
+    I2C_WriteNAU8822(0,  0x000);   /* Reset all registers */
+    CLK_SysTickDelay(10000);
+
+    I2C_WriteNAU8822(1,  0x02F);
+    I2C_WriteNAU8822(2,  0x1B3);   /* Enable L/R Headphone, ADC Mix/Boost, ADC */
+    I2C_WriteNAU8822(3,  0x07F);   /* Enable L/R main mixer, DAC */
+    I2C_WriteNAU8822(4,  0x010);   /* 16-bit word length, I2S format, Stereo */
+    I2C_WriteNAU8822(5,  0x000);   /* Companding control and loop back mode (all disable) */
+    I2C_WriteNAU8822(6,  0x1AD);   /* Divide by 6, 16K */
+    I2C_WriteNAU8822(7,  0x006);   /* 16K for internal filter coefficients */
+    I2C_WriteNAU8822(10, 0x008);   /* DAC soft mute is disabled, DAC oversampling rate is 128x */
+    I2C_WriteNAU8822(14, 0x108);   /* ADC HP filter is disabled, ADC oversampling rate is 128x */
+    I2C_WriteNAU8822(15, 0x1EF);   /* ADC left digital volume control */
+    I2C_WriteNAU8822(16, 0x1EF);   /* ADC right digital volume control */
+
+    I2C_WriteNAU8822(44, 0x000);   /* LLIN/RLIN is not connected to PGA */
+    I2C_WriteNAU8822(47, 0x050);   /* LLIN connected, and its Gain value */
+    I2C_WriteNAU8822(48, 0x050);   /* RLIN connected, and its Gain value */
+    I2C_WriteNAU8822(50, 0x001);   /* Left DAC connected to LMIX */
+    I2C_WriteNAU8822(51, 0x001);   /* Right DAC connected to RMIX */
+
+    printf("[OK]\n");
+}
+
+#else   // NAU88L25
 
 uint8_t I2cWrite_MultiByteforNAU88L25(uint8_t chipadd,uint16_t subaddr, const uint8_t *p,uint32_t len)
 {
@@ -99,7 +134,6 @@ void NAU88L25_Reset(void)
 
     printf("NAU88L25 Software Reset.\n");
 }
-
 
 void NAU88L25_Setup(void)
 {
@@ -183,13 +217,12 @@ void NAU88L25_Setup(void)
 
     printf("NAU88L25 Configured done.\n");
 }
-
+#endif
 
 void SYS_Init(void)
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init System Clock                                                                                       */
-    /*---------------------------------------------------------------------------------------------------------*/
+    /* Unlock protected registers */
+    SYS_UnlockReg();
 
     /* Enable External XTAL (4~24 MHz) */
     CLK_EnableXtalRC(CLK_PWRCTL_HXTEN_Msk);
@@ -215,9 +248,6 @@ void SYS_Init(void)
     /* Enable I2C2 module clock */
     CLK_EnableModuleClock(I2C2_MODULE);
 
-    /* Enable PDMA module clock */
-    CLK_EnableModuleClock(PDMA_MODULE);
-
     /* Select UART module clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
 
@@ -241,46 +271,6 @@ void SYS_Init(void)
     PD->SMTEN |= GPIO_SMTEN_SMTEN9_Msk;
 }
 
-// Configure PDMA to Scatter Gather mode */
-void PDMA_Init(void)
-{
-    /* Tx description */
-    DMA_TXDESC[0].ctl = ((BUFF_LEN-1)<<PDMA_DSCT_CTL_TXCNT_Pos)|PDMA_WIDTH_32|PDMA_SAR_INC|PDMA_DAR_FIX|PDMA_REQ_SINGLE|PDMA_OP_SCATTER;
-    DMA_TXDESC[0].endsrc = (uint32_t)&PcmTxBuff[0];
-    DMA_TXDESC[0].enddest = (uint32_t)&I2S0->TXFIFO;
-    DMA_TXDESC[0].offset = (uint32_t)&DMA_TXDESC[1] - (PDMA->SCATBA);
-
-    DMA_TXDESC[1].ctl = ((BUFF_LEN-1)<<PDMA_DSCT_CTL_TXCNT_Pos)|PDMA_WIDTH_32|PDMA_SAR_INC|PDMA_DAR_FIX|PDMA_REQ_SINGLE|PDMA_OP_SCATTER;
-    DMA_TXDESC[1].endsrc = (uint32_t)&PcmTxBuff[1];
-    DMA_TXDESC[1].enddest = (uint32_t)&I2S0->TXFIFO;
-    DMA_TXDESC[1].offset = (uint32_t)&DMA_TXDESC[0] - (PDMA->SCATBA);   //link to first description
-
-    /* Rx description */
-    DMA_RXDESC[0].ctl = ((BUFF_LEN-1)<<PDMA_DSCT_CTL_TXCNT_Pos)|PDMA_WIDTH_32|PDMA_SAR_FIX|PDMA_DAR_INC|PDMA_REQ_SINGLE|PDMA_OP_SCATTER;
-    DMA_RXDESC[0].endsrc = (uint32_t)&I2S0->RXFIFO;
-    DMA_RXDESC[0].enddest = (uint32_t)&PcmRxBuff[0];
-    DMA_RXDESC[0].offset = (uint32_t)&DMA_RXDESC[1] - (PDMA->SCATBA);
-
-    DMA_RXDESC[1].ctl = ((BUFF_LEN-1)<<PDMA_DSCT_CTL_TXCNT_Pos)|PDMA_WIDTH_32|PDMA_SAR_FIX|PDMA_DAR_INC|PDMA_REQ_SINGLE|PDMA_OP_SCATTER;
-    DMA_RXDESC[1].endsrc = (uint32_t)&I2S0->RXFIFO;
-    DMA_RXDESC[1].enddest = (uint32_t)&PcmRxBuff[1];
-    DMA_RXDESC[1].offset = (uint32_t)&DMA_RXDESC[0] - (PDMA->SCATBA);   //link to first description
-
-    /* Open PDMA channel 1 for I2S TX and channel 2 for I2S RX */
-    PDMA_Open(0x3 << 1);
-
-    /* Configure PDMA transfer mode */
-    PDMA_SetTransferMode(1, PDMA_I2S0_TX, 1, (uint32_t)&DMA_TXDESC[0]);
-    PDMA_SetTransferMode(2, PDMA_I2S0_RX, 1, (uint32_t)&DMA_RXDESC[0]);
-
-    /* Enable PDMA channel 1&2 interrupt */
-    PDMA_EnableInt(1, 0);
-    PDMA_EnableInt(2, 0);
-
-    NVIC_EnableIRQ(PDMA_IRQn);
-}
-
-/* Init I2C interface */
 void I2C2_Init(void)
 {
     /* Open I2C2 and set clock to 100k */
@@ -288,6 +278,7 @@ void I2C2_Init(void)
 
     /* Get I2C2 Bus Clock */
     printf("I2C clock %d Hz\n", I2C_GetBusClockFreq(I2C2));
+
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -295,53 +286,72 @@ void I2C2_Init(void)
 /*---------------------------------------------------------------------------------------------------------*/
 int32_t main (void)
 {
+    uint32_t u32startFlag = 1;
+
     /* Unlock protected registers */
     SYS_UnlockReg();
 
     /* Init System, peripheral clock and multi-function I/O */
     SYS_Init();
 
+    /* Lock protected registers */
+    SYS_LockReg();
+
     /* Init UART to 115200-8n1 for print message */
     UART_Open(UART0, 115200);
 
     printf("+------------------------------------------------------------------------+\n");
-    printf("|                   I2S Driver Sample Code with NAU88L25                 |\n");
+    printf("|                   I2S Driver Sample Code with WAU88L25                 |\n");
     printf("+------------------------------------------------------------------------+\n");
-    printf("  NOTE: This sample code needs to work with NAU88L25.\n");
+    printf("  NOTE: This sample code needs to work with WAU88L25.\n");
 
-    /* Init I2C2 to access NAU8822 */
+    /* Init I2C2 to access Codec */
     I2C2_Init();
 
+    // Plug-In DET
+    SYS->GPA_MFPL = (SYS->GPA_MFPL & ~(SYS_GPA_MFPL_PA4MFP_Msk));
+    GPIO_SetMode(PA, BIT4, GPIO_MODE_OUTPUT);
+    PA4 = 1;
+
+#if (!NAU8822)
     /* Reset NAU88L25 codec */
     NAU88L25_Reset();
+#endif
 
     /* Open I2S0 interface and set to slave mode, stereo channel, I2S format */
     I2S_Open(I2S0, I2S_MODE_SLAVE, 16000, I2S_DATABIT_16, I2S_DISABLE_MONO, I2S_FORMAT_I2S);
+    NVIC_EnableIRQ(I2S0_IRQn);
 
     // select source from HXT(12MHz)
     CLK_SetModuleClock(I2S0_MODULE, CLK_CLKSEL3_I2S0SEL_HXT, 0);
 
     /* Set MCLK and enable MCLK */
     I2S_EnableMCLK(I2S0, 12000000);
-    I2S0->CTL0 |= I2S_CTL0_ORDER_Msk;
 
+#if NAU8822
+    /* Initialize NAU8822 codec */
+    NAU8822_Setup();
+#else
+    I2S0->CTL0 |= I2S_CTL0_ORDER_Msk;
     /* Initialize NAU88L25 codec */
     CLK_SysTickDelay(20000);
     NAU88L25_Setup();
+#endif
 
-    PDMA_Init();
+    /* Enable Rx threshold level interrupt */
+    I2S_EnableInt(I2S0, I2S_IEN_RXTHIEN_Msk);
 
-    /* Enable I2S Rx function */
-    I2S_ENABLE_RXDMA(I2S0);
+    /* Enable I2S Rx function to receive data */
     I2S_ENABLE_RX(I2S0);
 
-    /* Enable I2S Tx function */
-    I2S_ENABLE_TXDMA(I2S0);
-    I2S_ENABLE_TX(I2S0);
-
     while(1) {
-        if (u8CopyData) {
-            memcpy(&PcmTxBuff[u8TxIdx^1], &PcmRxBuff[u8RxIdx], BUFF_LEN*4);
+        if (u32startFlag) {
+            /* Enable I2S Tx function to send data when data in the buffer is more than half of buffer size */
+            if (u32BuffPos >= BUFF_LEN/2) {
+                I2S_EnableInt(I2S0, I2S_IEN_TXTHIEN_Msk);
+                I2S_ENABLE_TX(I2S0);
+                u32startFlag = 0;
+            }
         }
     }
 }

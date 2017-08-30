@@ -60,7 +60,7 @@ void SYS_Init(void)
     /* Unlock protected registers */
     SYS_UnlockReg();
 
-#ifndef CRYSTAL_LESS
+#if (!CRYSTAL_LESS)
     /* Enable External XTAL (4~24 MHz) */
     CLK_EnableXtalRC(CLK_PWRCTL_HXTEN_Msk);
 
@@ -260,7 +260,7 @@ int32_t main (void)
 
     NVIC_EnableIRQ(UART0_IRQn);
 
-#ifdef CRYSTAL_LESS
+#if CRYSTAL_LESS
     /* Waiting for SOF before USB clock auto trim */
     USBD->INTSTS = USBD_INTSTS_SOFIF_Msk;
     while((USBD->INTSTS & USBD_INTSTS_SOFIF_Msk) == 0);
@@ -273,7 +273,7 @@ int32_t main (void)
 
     while(1) {
 
-#ifdef CRYSTAL_LESS
+#if CRYSTAL_LESS
         /* Re-start auto trim when any error found */
         if (SYS->IRCTISTS & (SYS_IRCTISTS_CLKERRIF_Msk | SYS_IRCTISTS_TFAILIF_Msk)) {
             SYS->IRCTISTS = SYS_IRCTISTS_CLKERRIF_Msk | SYS_IRCTISTS_TFAILIF_Msk;

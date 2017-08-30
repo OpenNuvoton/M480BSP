@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\I2S_NAU88L25_PDMA.ewp</path>
+    <path>$WS_DIR$\USBD_HID_RemoteWakeup.ewp</path>
   </project>
   <batchBuild/>
 </workspace>
