@@ -586,7 +586,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>EPWM_DMA_Capture.bin</state>
+          <state>EPWM_SyncStart.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -640,7 +640,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>EPWM_DMA_Capture.out</state>
+          <state>EPWM_SyncStart.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -952,9 +952,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\epwm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\pdma.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\retarget.c</name>

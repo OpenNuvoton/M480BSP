@@ -59,6 +59,8 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 #define EPWM_SSCTL_SSRC_EPWM0                      (0U<<EPWM_SSCTL_SSRC_Pos)    /*!< Synchronous start source comes from EPWM0 \hideinitializer */
 #define EPWM_SSCTL_SSRC_EPWM1                      (1U<<EPWM_SSCTL_SSRC_Pos)    /*!< Synchronous start source comes from EPWM0 \hideinitializer */
+#define EPWM_SSCTL_SSRC_BPWM0                      (2UL<<EPWM_SSCTL_SSRC_Pos)    /*!< Synchronous start source comes from BPWM0 \hideinitializer */
+#define EPWM_SSCTL_SSRC_BPWM1                      (3UL<<EPWM_SSCTL_SSRC_Pos)    /*!< Synchronous start source comes from BPWM1 \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Trigger Source Select Constant Definitions                                                             */
@@ -239,6 +241,8 @@ extern "C"
  * @param[in] u32SyncSrc Synchronous start source selection, valid values are:
  *              - \ref EPWM_SSCTL_SSRC_EPWM0
  *              - \ref EPWM_SSCTL_SSRC_EPWM1
+ *              - \ref EPWM_SSCTL_SSRC_BPWM0
+ *              - \ref EPWM_SSCTL_SSRC_BPWM1
  * @return None
  * @details This macro is used to enable timer synchronous start counting function of specified channel(s).
  * \hideinitializer

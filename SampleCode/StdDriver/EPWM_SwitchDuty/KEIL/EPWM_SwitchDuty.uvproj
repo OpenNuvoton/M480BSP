@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>EPWM_DMA_Capture</TargetName>
+      <TargetName>EPWM_SwitchDuty</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -44,7 +44,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>EPWM_DMA_Capture</OutputName>
+          <OutputName>EPWM_SwitchDuty</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -440,11 +440,6 @@
               <FileName>uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\Library\StdDriver\src\uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>pdma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\StdDriver\src\pdma.c</FilePath>
             </File>
             <File>
               <FileName>epwm.c</FileName>

@@ -233,7 +233,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>1111111</state>
+          <state>1001010</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -301,8 +301,8 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\M480\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\CMSIS\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\M480\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\StdDriver\inc</state>
         </option>
         <option>
@@ -323,7 +323,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>3</state>
+          <state>2</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -332,7 +332,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>3</state>
+          <state>2</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -586,7 +586,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>SPI_MasterFifoMode.bin</state>
+          <state>EPWM_SwitchDuty.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -640,7 +640,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>SPI_MasterFIFOMode.out</state>
+          <state>EPWM_SwitchDuty.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -855,7 +855,7 @@
         </option>
         <option>
           <name>IlinkOptInline</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IlinkOptExceptionsAllow</name>
@@ -951,10 +951,13 @@
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\clk.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\epwm.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\retarget.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\spi.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\sys.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\uart.c</name>

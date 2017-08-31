@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>SPI_MasterFIFOMode</TargetName>
+      <TargetName>EPWM_PDMA_Capture</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -34,8 +34,8 @@
           <BinPath></BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath>Nuvoton\M051Series\</RegisterFilePath>
-          <DBRegisterFilePath>Nuvoton\M051Series\</DBRegisterFilePath>
+          <RegisterFilePath></RegisterFilePath>
+          <DBRegisterFilePath></DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -44,7 +44,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>SPI_MasterFifoMode</OutputName>
+          <OutputName>EPWM_PDMA_Capture</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -210,12 +210,12 @@
             <RvdsVP>2</RvdsVP>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
-            <StupSel>8</StupSel>
+            <StupSel>0</StupSel>
             <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
-            <RoSelD>3</RoSelD>
-            <RwSelD>3</RwSelD>
+            <RoSelD>0</RoSelD>
+            <RwSelD>5</RwSelD>
             <CodeSel>0</CodeSel>
             <OptFeed>0</OptFeed>
             <NoZi1>0</NoZi1>
@@ -226,12 +226,12 @@
             <Ro1Chk>0</Ro1Chk>
             <Ro2Chk>0</Ro2Chk>
             <Ro3Chk>0</Ro3Chk>
-            <Ir1Chk>1</Ir1Chk>
+            <Ir1Chk>0</Ir1Chk>
             <Ir2Chk>0</Ir2Chk>
             <Ra1Chk>0</Ra1Chk>
             <Ra2Chk>0</Ra2Chk>
             <Ra3Chk>0</Ra3Chk>
-            <Im1Chk>1</Im1Chk>
+            <Im1Chk>0</Im1Chk>
             <Im2Chk>0</Im2Chk>
             <OnChipMemories>
               <Ocm1>
@@ -350,7 +350,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\StdDriver\inc</IncludePath>
+              <IncludePath>..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\StdDriver\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -417,14 +417,24 @@
           <GroupName>Library</GroupName>
           <Files>
             <File>
+              <FileName>retarget.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Library\StdDriver\src\retarget.c</FilePath>
+            </File>
+            <File>
               <FileName>clk.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\Library\StdDriver\src\clk.c</FilePath>
             </File>
             <File>
-              <FileName>retarget.c</FileName>
+              <FileName>gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\StdDriver\src\retarget.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Library\StdDriver\src\sys.c</FilePath>
             </File>
             <File>
               <FileName>uart.c</FileName>
@@ -432,9 +442,14 @@
               <FilePath>..\..\..\..\Library\StdDriver\src\uart.c</FilePath>
             </File>
             <File>
-              <FileName>spi.c</FileName>
+              <FileName>pdma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\StdDriver\src\spi.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\pdma.c</FilePath>
+            </File>
+            <File>
+              <FileName>epwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Library\StdDriver\src\epwm.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -55,6 +55,14 @@ extern "C"
 #define BPWM_OUTPUT_TOGGLE                        (3UL)      /*!< BPWM output toggle \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
+/*  Synchronous Start Function Control Constant Definitions                                                */
+/*---------------------------------------------------------------------------------------------------------*/
+#define BPWM_SSCTL_SSRC_PWM0                      (0UL<<BPWM_SSCTL_SSRC_Pos)    /*!< Synchronous start source comes from PWM0  */
+#define BPWM_SSCTL_SSRC_PWM1                      (1UL<<BPWM_SSCTL_SSRC_Pos)    /*!< Synchronous start source comes from PWM1  */
+#define BPWM_SSCTL_SSRC_BPWM0                     (2UL<<BPWM_SSCTL_SSRC_Pos)    /*!< Synchronous start source comes from BPWM0 */
+#define BPWM_SSCTL_SSRC_BPWM1                     (3UL<<BPWM_SSCTL_SSRC_Pos)    /*!< Synchronous start source comes from BPWM1 */
+
+/*---------------------------------------------------------------------------------------------------------*/
 /*  Trigger Source Select Constant Definitions                                                             */
 /*---------------------------------------------------------------------------------------------------------*/
 #define BPWM_TRIGGER_EADC_EVEN_ZERO_POINT                     (0UL)     /*!< BPWM trigger EADC while counter of even channel matches zero point \hideinitializer */
@@ -100,26 +108,41 @@ extern "C"
 */
 
 /**
- * @brief Enable timer synchronous mode of specified channel(s)
+ * @brief Enable timer synchronous start counting function of specified channel(s)
  * @param[in] bpwm The pointer of the specified BPWM module
  * @param[in] u32ChannelMask Combination of enabled channels. This parameter is not used.
+ * @param[in] u32SyncSrc Synchronous start source selection, valid values are:
+ *              - \ref BPWM_SSCTL_SSRC_PWM0
+ *              - \ref BPWM_SSCTL_SSRC_PWM1
+ *              - \ref BPWM_SSCTL_SSRC_BPWM0
+ *              - \ref BPWM_SSCTL_SSRC_BPWM1
  * @return None
- * @details This macro is used to enable timer synchronous mode of specified channel(s).
+ * @details This macro is used to enable timer synchronous start counting function of specified channel(s).
  * @note All channels share channel 0's setting.
  * \hideinitializer
  */
-#define BPWM_ENABLE_TIMER_SYNC(bpwm, u32ChannelMask) ((bpwm)->SSCTL |= BPWM_SSCTL_SSEN0_Msk)
+#define BPWM_ENABLE_TIMER_SYNC(bpwm, u32ChannelMask, u32SyncSrc) ((bpwm)->SSCTL = ((bpwm)->SSCTL & ~BPWM_SSCTL_SSRC_Msk) | (u32SyncSrc) | BPWM_SSCTL_SSEN0_Msk)
 
 /**
- * @brief Disable timer synchronous mode of specified channel(s)
+ * @brief Disable timer synchronous start counting function of specified channel(s)
  * @param[in] bpwm The pointer of the specified BPWM module
  * @param[in] u32ChannelMask Combination of enabled channels. This parameter is not used.
  * @return None
- * @details This macro is used to disable timer synchronous mode of specified channel(s).
+ * @details This macro is used to disable timer synchronous start counting function of specified channel(s).
  * @note All channels share channel 0's setting.
  * \hideinitializer
  */
 #define BPWM_DISABLE_TIMER_SYNC(bpwm, u32ChannelMask) ((bpwm)->SSCTL &= ~BPWM_SSCTL_SSEN0_Msk)
+
+/**
+ * @brief This macro enable BPWM counter synchronous start counting function.
+ * @param[in] bpwm The pointer of the specified BPWM module
+ * @return None
+ * @details This macro is used to make selected BPWM0 and BPWM1 channel(s) start counting at the same time.
+ *          To configure synchronous start counting channel(s) by BPWM_ENABLE_TIMER_SYNC() and BPWM_DISABLE_TIMER_SYNC().
+ * \hideinitializer
+ */
+#define BPWM_TRIGGER_SYNC_START(bpwm) ((bpwm)->SSTRG = BPWM_SSTRG_CNTSEN_Msk)
 
 /**
  * @brief This macro enable output inverter of specified channel(s)
@@ -188,6 +211,15 @@ extern "C"
 #define BPWM_SET_CMR(bpwm, u32ChannelNum, u32CMR) ((bpwm)->CMPDAT[(u32ChannelNum)] = (u32CMR))
 
 /**
+ * @brief This macro get the duty of the selected channel
+ * @param[in] bpwm The pointer of the specified BPWM module
+ * @param[in] u32ChannelNum BPWM channel number. Valid values are between 0~5
+ * @return None
+ * \hideinitializer
+ */
+#define BPWM_GET_CMR(bpwm, u32ChannelNum) ((bpwm)->CMPDAT[(u32ChannelNum)])
+
+/**
  * @brief This macro set the period of all channels
  * @param[in] bpwm The pointer of the specified BPWM module
  * @param[in] u32ChannelNum BPWM channel number. This parameter is not used.
@@ -198,6 +230,15 @@ extern "C"
  * \hideinitializer
  */
 #define BPWM_SET_CNR(bpwm, u32ChannelNum, u32CNR) ((bpwm)->PERIOD = (u32CNR))
+
+/**
+ * @brief This macro get the period of all channels
+ * @param[in] bpwm The pointer of the specified BPWM module
+ * @param[in] u32ChannelNum BPWM channel number. This parameter is not used.
+ * @return None
+ * \hideinitializer
+ */
+#define BPWM_GET_CNR(bpwm, u32ChannelNum) ((bpwm)->PERIOD)
 
 /**
  * @brief This macro set the BPWM aligned type
