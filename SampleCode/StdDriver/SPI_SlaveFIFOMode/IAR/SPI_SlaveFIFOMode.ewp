@@ -586,7 +586,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>SPI_MasterFifoMode.bin</state>
+          <state>SPI_SlaveFIFOMode.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -640,7 +640,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>SPI_MasterFIFOMode.out</state>
+          <state>SPI_SlaveFIFOMode.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>

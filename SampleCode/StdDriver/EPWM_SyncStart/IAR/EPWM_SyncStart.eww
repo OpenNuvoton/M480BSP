@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\EPWM_DMA_Capture.ewp</path>
+    <path>$WS_DIR$\EPWM_SyncStart.ewp</path>
   </project>
   <batchBuild/>
 </workspace>
