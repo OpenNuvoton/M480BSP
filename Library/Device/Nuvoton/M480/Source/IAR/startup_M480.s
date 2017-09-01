@@ -163,6 +163,21 @@ Reset_Handler
         LDR     R1, =0x88
         STR     R1, [R0]
 
+	#ifndef ENABLE_SPIM_CACHE
+        LDR     R0, =0x40000200            ; R0 = Clock Controller Register Base Address
+        LDR     R1, [R0,#0x4]              ; R1 = 0x40000204  (AHBCLK)
+        ORR     R1, R1, #0x4000              
+        STR     R1, [R0,#0x4]              ; CLK->AHBCLK |= CLK_AHBCLK_SPIMCKEN_Msk;
+                
+        LDR     R0, =0x40007000            ; R0 = SPIM Register Base Address
+        LDR     R1, [R0,#4]                ; R1 = SPIM->CTL1
+        ORR     R1, R1,#2                  ; R1 |= SPIM_CTL1_CACHEOFF_Msk
+        STR     R1, [R0,#4]                ; _SPIM_DISABLE_CACHE()
+        LDR     R1, [R0,#4]                ; R1 = SPIM->CTL1
+        ORR     R1, R1, #4                 ; R1 |= SPIM_CTL1_CCMEN_Msk
+        STR     R1, [R0,#4]                ; _SPIM_ENABLE_CCM()
+	#endif
+
         LDR     R0, =SystemInit
         BLX     R0
 

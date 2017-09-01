@@ -379,7 +379,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define></Define>
+              <Define>ENABLE_SPIM_CACHE</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

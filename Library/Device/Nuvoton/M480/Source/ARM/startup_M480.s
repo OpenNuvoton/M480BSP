@@ -3,7 +3,7 @@
 ; * @version  V1.00
 ; * @brief    CMSIS Cortex-M4 Core Device Startup File for M480
 ; *
-; * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+; * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
 ;*****************************************************************************/
 ;/*
 ;//-------- <<< Use Configuration Wizard in Context Menu >>> ------------------
@@ -185,6 +185,21 @@ Reset_Handler   PROC
                 LDR     R1, =0x88
                 STR     R1, [R0]
 
+	IF :LNOT: :DEF: ENABLE_SPIM_CACHE
+                LDR     R0, =0x40000200            ; R0 = Clock Controller Register Base Address
+                LDR     R1, [R0,#0x4]              ; R1 = 0x40000204  (AHBCLK)
+                ORR     R1, R1, #0x4000              
+                STR     R1, [R0,#0x4]              ; CLK->AHBCLK |= CLK_AHBCLK_SPIMCKEN_Msk;
+                
+                LDR     R0, =0x40007000            ; R0 = SPIM Register Base Address
+                LDR     R1, [R0,#4]                ; R1 = SPIM->CTL1
+                ORR     R1, R1,#2                  ; R1 |= SPIM_CTL1_CACHEOFF_Msk
+                STR     R1, [R0,#4]                ; _SPIM_DISABLE_CACHE()
+                LDR     R1, [R0,#4]                ; R1 = SPIM->CTL1
+                ORR     R1, R1, #4                 ; R1 |= SPIM_CTL1_CCMEN_Msk
+                STR     R1, [R0,#4]                ; _SPIM_ENABLE_CCM()
+	ENDIF
+
                 LDR     R0, =SystemInit
                 BLX     R0
 
@@ -200,6 +215,7 @@ Reset_Handler   PROC
 
                 LDR     R0, =__main
                 BX      R0
+ 
                 ENDP
 
 
@@ -460,4 +476,4 @@ __user_initial_stackheap PROC
 
 
                 END
-;/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
+;/*** (C) COPYRIGHT 2017 Nuvoton Technology Corp. ***/
