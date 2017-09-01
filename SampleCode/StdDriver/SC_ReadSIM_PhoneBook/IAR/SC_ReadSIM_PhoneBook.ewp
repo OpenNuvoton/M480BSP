@@ -48,11 +48,11 @@
         <option>
           <name>Output variant</name>
           <version>2</version>
-          <state>7</state>
+          <state>5</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>No specifier a, A, no specifier n, no float nor long long, no flags.</state>
+          <state>No specifier a, A, no specifier n, no float nor long long.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -147,7 +147,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -233,7 +233,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>1111111</state>
+          <state>0000000</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -304,6 +304,7 @@
           <state>$PROJ_DIR$\..\..\..\..\Library\CMSIS\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\M480\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\StdDriver\inc</state>
+          <state>$PROJ_DIR$\..\..\..\..\Library\SmartcardLib\Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -323,7 +324,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>3</state>
+          <state>2</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -332,7 +333,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>3</state>
+          <state>1</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -586,7 +587,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>pdma_scatter_gather.bin</state>
+          <state>SC_ReadSIM_PhoneBook.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -640,7 +641,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>pdma_scatter_gather.out</state>
+          <state>SC_ReadSIM_PhoneBook.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -855,7 +856,7 @@
         </option>
         <option>
           <name>IlinkOptInline</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IlinkOptExceptionsAllow</name>
@@ -951,10 +952,13 @@
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\clk.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\pdma.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\retarget.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\retarget.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\sc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\Library\SmartcardLib\SmartCardLib_IAR.a</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\sys.c</name>
