@@ -113,10 +113,13 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 /*  USBPHY constant definitions. (Write-Protection Register)                                               */
 /*---------------------------------------------------------------------------------------------------------*/
-#define SYS_USBPHY_USBROLE_STD_USBD   (0x0UL << SYS_USBPHY_USBROLE_Pos)   /*!<  Standard USB device \hideinitializer */
-#define SYS_USBPHY_USBROLE_STD_USBH   (0x1UL << SYS_USBPHY_USBROLE_Pos)   /*!<  Standard USB host \hideinitializer */
-#define SYS_USBPHY_USBROLE_ID_DEPH    (0x2UL << SYS_USBPHY_USBROLE_Pos)   /*!<  ID dependent device \hideinitializer */
-#define SYS_USBPHY_USBROLE_ON_THE_GO  (0x3UL << SYS_USBPHY_USBROLE_Pos)   /*!<  On-The-Go device \hideinitializer */
+#define SYS_USBPHY_USBROLE_STD_USBD     (0x0UL << SYS_USBPHY_USBROLE_Pos)   /*!<  Standard USB device \hideinitializer */
+#define SYS_USBPHY_USBROLE_STD_USBH     (0x1UL << SYS_USBPHY_USBROLE_Pos)   /*!<  Standard USB host \hideinitializer */
+#define SYS_USBPHY_USBROLE_ID_DEPH      (0x2UL << SYS_USBPHY_USBROLE_Pos)   /*!<  ID dependent device \hideinitializer */
+#define SYS_USBPHY_USBROLE_ON_THE_GO    (0x3UL << SYS_USBPHY_USBROLE_Pos)   /*!<  On-The-Go device \hideinitializer */
+#define SYS_USBPHY_HSUSBROLE_STD_USBD   (0x0UL << SYS_USBPHY_HSUSBROLE_Pos)   /*!<  Standard HSUSB device \hideinitializer */
+#define SYS_USBPHY_HSUSBROLE_STD_USBH   (0x1UL << SYS_USBPHY_HSUSBROLE_Pos)   /*!<  Standard HSUSB host \hideinitializer */
+#define SYS_USBPHY_HSUSBROLE_ID_DEPH    (0x2UL << SYS_USBPHY_HSUSBROLE_Pos)   /*!<  ID dependent device \hideinitializer */
 
 
 /*---------------------------------------------------------------------------------------------------------*/

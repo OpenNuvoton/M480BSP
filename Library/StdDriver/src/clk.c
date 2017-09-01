@@ -457,6 +457,8 @@ void CLK_SetHCLK(uint32_t u32ClkSrc, uint32_t u32ClkDiv)
   * |\ref UART5_MODULE   |\ref CLK_CLKSEL3_UART5SEL_LXT          |\ref CLK_CLKDIV4_UART5(x)      |
   * |\ref UART5_MODULE   |\ref CLK_CLKSEL3_UART5SEL_PLL          |\ref CLK_CLKDIV4_UART5(x)      |
   * |\ref UART5_MODULE   |\ref CLK_CLKSEL3_UART5SEL_HIRC         |\ref CLK_CLKDIV4_UART5(x)      |
+  * |\ref EADC_MODULE    | x                                     |\ref CLK_CLKDIV0_EADC(x)       |
+  * |\ref EMAC_MODULE    | x                                     |\ref CLK_CLKDIV3_EMAC(x)       |
   *
   */
 void CLK_SetModuleClock(uint32_t u32ModuleIdx, uint32_t u32ClkSrc, uint32_t u32ClkDiv)
