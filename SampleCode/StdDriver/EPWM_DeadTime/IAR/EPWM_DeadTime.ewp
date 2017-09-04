@@ -83,7 +83,7 @@
         </option>
         <option>
           <name>OGProductVersion</name>
-          <state>6.21.1.52845</state>
+          <state>5.50.0.51907</state>
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
@@ -212,7 +212,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state></state>
+          <state>Pa082</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -233,7 +233,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>0000000</state>
+          <state>1001010</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -304,7 +304,6 @@
           <state>$PROJ_DIR$\..\..\..\..\Library\CMSIS\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\M480\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\StdDriver\inc</state>
-          <state>$PROJ_DIR$\..\..\..\..\Library\SmartcardLib\Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -333,7 +332,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -387,7 +386,7 @@
         </option>
         <option>
           <name>IccCppInlineSemantics</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccCmsis</name>
@@ -587,7 +586,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>SC_ReadSimPhoneBook.bin</state>
+          <state>EPWM_DeadTime.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -641,7 +640,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>SC_ReadSimPhoneBook.out</state>
+          <state>EPWM_DeadTime.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -952,13 +951,10 @@
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\clk.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\epwm.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\retarget.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\sc.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\SmartcardLib\SmartCardLib_IAR.a</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\sys.c</name>

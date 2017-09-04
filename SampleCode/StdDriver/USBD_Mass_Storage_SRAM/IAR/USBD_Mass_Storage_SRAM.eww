@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\pdma_scatter_gather.ewp</path>
+    <path>$WS_DIR$\USBD_Mass_Storage_SRAM.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

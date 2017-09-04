@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\SC_ReadSimPhoneBook.ewp</path>
+    <path>$WS_DIR$\EPWM_DeadTime.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

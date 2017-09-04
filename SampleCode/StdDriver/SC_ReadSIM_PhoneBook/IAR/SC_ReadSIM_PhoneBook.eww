@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\USBD_Mass_Storage_Sram.ewp</path>
+    <path>$WS_DIR$\SC_ReadSIM_PhoneBook.ewp</path>
   </project>
   <batchBuild/>
 </workspace>
