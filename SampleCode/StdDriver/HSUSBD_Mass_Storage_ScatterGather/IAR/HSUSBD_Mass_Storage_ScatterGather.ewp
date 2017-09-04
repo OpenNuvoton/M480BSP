@@ -586,7 +586,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>HSUSBD_Mass_Stroage_ScatterGather.bin</state>
+          <state>HSUSBD_Mass_Storage_ScatterGather.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -640,7 +640,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>HSUSBD_Mass_Stroage_ScatterGather.out</state>
+          <state>HSUSBD_Mass_Storage_ScatterGather.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>

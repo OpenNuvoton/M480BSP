@@ -586,7 +586,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>HSUSBD_Mass_Storage_Sram.bin</state>
+          <state>HSUSBD_Mass_Storage_SRAM.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -640,7 +640,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>HSUSBD_Mass_Storage_Sram.out</state>
+          <state>HSUSBD_Mass_Storage_SRAM.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>

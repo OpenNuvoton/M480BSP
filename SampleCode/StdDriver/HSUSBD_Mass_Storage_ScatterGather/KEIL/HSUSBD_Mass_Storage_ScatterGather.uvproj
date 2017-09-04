@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>HSUSBD_Mass_Storage_Sram</TargetName>
+      <TargetName>HSUSBD_Mass_Storage_ScatterGather</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -45,7 +45,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>HSUSBD_Mass_Storage_Sram</OutputName>
+          <OutputName>HSUSBD_Mass_Storage_ScatterGather</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>

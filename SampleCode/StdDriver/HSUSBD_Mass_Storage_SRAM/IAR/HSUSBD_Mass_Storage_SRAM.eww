@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\HSUSBD_Mass_Stroage_ScatterGather.ewp</path>
+    <path>$WS_DIR$\HSUSBD_Mass_Storage_SRAM.ewp</path>
   </project>
   <batchBuild/>
 </workspace>
