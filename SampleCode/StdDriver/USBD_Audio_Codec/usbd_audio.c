@@ -655,8 +655,12 @@ void AudioStartPlay(uint32_t u32SampleRate)
     /* Configure TX PDMA SG table */
     PDMA_WriteTxSGTable();
 
-    /* Configure NAU88L25 to specific sample rate */
-    Codec_ConfigSampleRate(u32SampleRate);
+    /* Configure codec to specific sample rate */
+#if NAU8822
+    NAU8822_ConfigSampleRate(u32SampleRate);
+#else
+    NAU88L25_ConfigSampleRate(u32SampleRate);
+#endif
 
     /* Enable I2S Tx function */
     I2S_ENABLE_TXDMA(I2S0);
@@ -706,8 +710,12 @@ void AudioStartRecord(uint32_t u32SampleRate)
     /* Configure RX PDMA SG table */
     PDMA_WriteRxSGTable();
 
-    /* Configure NAU88L25 to specific sample rate */
-    Codec_ConfigSampleRate(u32SampleRate);
+    /* Configure codec to specific sample rate */
+#if NAU8822
+    NAU8822_ConfigSampleRate(u32SampleRate);
+#else
+    NAU88L25_ConfigSampleRate(u32SampleRate);
+#endif
 
     /* Enable I2S Tx function */
     I2S_ENABLE_RXDMA(I2S0);

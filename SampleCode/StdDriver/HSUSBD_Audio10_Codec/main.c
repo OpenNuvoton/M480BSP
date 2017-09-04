@@ -1,22 +1,22 @@
 /******************************************************************************
  * @file     main.c
- * @brief    Demonstrate how to implement a USB audio class device.
- *           Codec is used in this sample code to play the audio data from Host.
- *           It also supports to record data from codec to Host.
  * @version  1.0.0
- * @date     01, April, 2017
+ * @date     02, Sep, 2016
+ * @brief    This is an UAC1.0 sample and used to plays the sound send from PC
+ *           through the USB interface
  *
  * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
 #include "usbd_audio.h"
 
-
 /*--------------------------------------------------------------------------*/
 void SYS_Init(void)
 {
+    uint32_t i;
+
     /* Unlock protected registers */
     SYS_UnlockReg();
 
@@ -35,20 +35,19 @@ void SYS_Init(void)
     /* Set both PCLK0 and PCLK1 as HCLK/2 */
     CLK->PCLKDIV = CLK_PCLKDIV_PCLK0DIV2 | CLK_PCLKDIV_PCLK1DIV2;
 
-    /* Select USBD */
-    SYS->USBPHY = (SYS->USBPHY & ~SYS_USBPHY_USBROLE_Msk) | SYS_USBPHY_USBEN_Msk | SYS_USBPHY_SBO_Msk;
+    SYS->USBPHY &= ~SYS_USBPHY_HSUSBROLE_Msk;    /* select HSUSBD */
 
-    /* Select IP clock source */
-    CLK->CLKDIV0 = (CLK->CLKDIV0 & ~CLK_CLKDIV0_USBDIV_Msk) | CLK_CLKDIV0_USB(4);
-
-    /* Enable IP clock */
-    CLK_EnableModuleClock(USBD_MODULE);
+    /* Enable USB PHY */
+    SYS->USBPHY = (SYS->USBPHY & ~(SYS_USBPHY_HSUSBROLE_Msk | SYS_USBPHY_HSUSBACT_Msk)) | SYS_USBPHY_HSUSBEN_Msk;
+    for (i=0; i<0x1000; i++);      // delay > 10 us
+    SYS->USBPHY |= SYS_USBPHY_HSUSBACT_Msk;
 
     /* Select IP clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
     CLK_SetModuleClock(TMR0_MODULE, CLK_CLKSEL1_TMR0SEL_HXT, 0);
 
     /* Enable IP clock */
+    CLK_EnableModuleClock(HSUSBD_MODULE);
     CLK_EnableModuleClock(UART0_MODULE);
     CLK_EnableModuleClock(I2C2_MODULE);
     CLK_EnableModuleClock(I2S0_MODULE);
@@ -58,8 +57,6 @@ void SYS_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
     /*---------------------------------------------------------------------------------------------------------*/
-    SYS->GPA_MFPH &= ~(SYS_GPA_MFPH_PA12MFP_Msk|SYS_GPA_MFPH_PA13MFP_Msk|SYS_GPA_MFPH_PA14MFP_Msk|SYS_GPA_MFPH_PA15MFP_Msk);
-    SYS->GPA_MFPH |= (SYS_GPA_MFPH_PA12MFP_USB_VBUS|SYS_GPA_MFPH_PA13MFP_USB_D_N|SYS_GPA_MFPH_PA14MFP_USB_D_P|SYS_GPA_MFPH_PA15MFP_USB_OTG_ID);
 
     /* Init UART0 multi-function pins */
     SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
@@ -93,12 +90,22 @@ void I2C2_Init(void)
 /*---------------------------------------------------------------------------------------------------------*/
 int32_t main (void)
 {
+    /* Init System, IP clock and multi-function I/O
+       In the end of SYS_Init() will issue SYS_LockReg()
+       to lock protected register. If user want to write
+       protected register, please issue SYS_UnlockReg()
+       to unlock protected register if necessary */
     SYS_Init();
 
     /* Init UART to 115200-8n1 for print message */
     UART_Open(UART0, 115200);
 
-    printf("NuMicro USBD UAC Sample\n");
+    printf("\n");
+    printf("+---------------------------------------------------------+\n");
+    printf("|           NuMicro HSUSB UAC1.0 Sample Code              |\n");
+    printf("+---------------------------------------------------------+\n");
+    printf("HXT clock %d Hz\n", CLK_GetHXTFreq());
+    printf("CPU clock %d Hz\n", CLK_GetCPUFreq());
 
     /* Init I2C2 to access NAU88L25 */
     I2C2_Init();
@@ -132,17 +139,26 @@ int32_t main (void)
     NVIC_SetPriority(TMR0_IRQn, 3);
     NVIC_EnableIRQ(TMR0_IRQn);
 
-    USBD_Open(&gsInfo, UAC_ClassRequest, UAC_SetInterface);
+    HSUSBD_Open(&gsHSInfo, UAC_ClassRequest, UAC_SetInterface);
+
     /* Endpoint configuration */
     UAC_Init();
-    NVIC_SetPriority (USBD_IRQn, (1<<__NVIC_PRIO_BITS) - 2);
-    NVIC_EnableIRQ(USBD_IRQn);
-    USBD_Start();
+    NVIC_EnableIRQ(USBD20_IRQn);
+    HSUSBD_Start();
+    while(1) {
+        if (g_usbd_rxflag) {
+            UAC_GetPlayData();
+        } else if(u8AudioPlaying && (u8TxDataCntInBuffer < 1)) {
+            UAC_DeviceDisable(1);
+        }
 
-    while(1);
+        if ((g_usbd_UsbAudioState == UAC_START_AUDIO_RECORD) && g_usbd_txflag) {
+            UAC_SendRecData();
+        }
+    }
 }
 
 
 
-/*** (C) COPYRIGHT 2017 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
 

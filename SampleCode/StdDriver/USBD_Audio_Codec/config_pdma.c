@@ -25,8 +25,6 @@ extern volatile uint8_t u8PDMATxIdx;
 extern volatile uint8_t u8RxDataCntInBuffer;
 extern volatile uint8_t u8PDMARxIdx;
 
-extern volatile uint32_t u32BufRecIdx;
-
 /* PDMA Interrupt handler */
 void PDMA_IRQHandler(void)
 {
@@ -41,7 +39,6 @@ void PDMA_IRQHandler(void)
 
             /* Decrease number of full buffer */
             u8TxDataCntInBuffer --;
-
             /* Change to next buffer */
             u8PDMATxIdx ++;
             if(u8PDMATxIdx >= PDMA_TXBUFFER_CNT)
@@ -50,6 +47,7 @@ void PDMA_IRQHandler(void)
         if (PDMA_GET_TD_STS() & 0x4) {          /* channel 2 done, Rx */
 
             PDMA_CLR_TD_FLAG(PDMA_TDSTS_TDIF2_Msk);
+
             /* Set PCM buffer full flag */
             u8PcmRxBufFull[u8PDMARxIdx] = 1;
 
