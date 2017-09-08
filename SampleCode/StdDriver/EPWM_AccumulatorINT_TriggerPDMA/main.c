@@ -42,16 +42,16 @@ void EPWM1P1_IRQHandler(void)
  */
 void PDMA_IRQHandler(void)
 {
-    uint32_t status = PDMA_GET_INT_STATUS();
+    uint32_t status = PDMA_GET_INT_STATUS(PDMA);
 
     if(status & PDMA_INTSTS_ABTIF_Msk) {  /* abort */
-        if(PDMA_GET_ABORT_STS() & PDMA_ABTSTS_ABTIF0_Msk)
+        if(PDMA_GET_ABORT_STS(PDMA) & PDMA_ABTSTS_ABTIF0_Msk)
             g_u32IsTestOver = 2;
-        PDMA_CLR_ABORT_FLAG(PDMA_ABTSTS_ABTIF0_Msk);
+        PDMA_CLR_ABORT_FLAG(PDMA,PDMA_ABTSTS_ABTIF0_Msk);
     } else if(status & PDMA_INTSTS_TDIF_Msk) {  /* done */
-        if(PDMA_GET_TD_STS() & PDMA_TDSTS_TDIF0_Msk)
+        if(PDMA_GET_TD_STS(PDMA) & PDMA_TDSTS_TDIF0_Msk)
             g_u32IsTestOver = 1;
-        PDMA_CLR_TD_FLAG(PDMA_TDSTS_TDIF0_Msk);
+        PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF0_Msk);
     } else
         printf("unknown interrupt !!\n");
 }
@@ -193,21 +193,21 @@ int32_t main(void)
     /* Configure PDMA peripheral mode form memory to EPWM                                    */
     /*--------------------------------------------------------------------------------------*/
     /* Open Channel 0 */
-    PDMA_Open(BIT0);
+    PDMA_Open(PDMA,BIT0);
 
     /* Transfer width is half word(16 bit) and transfer count is 1 */
-    PDMA_SetTransferCnt(0, PDMA_WIDTH_16, 1);
+    PDMA_SetTransferCnt(PDMA,0, PDMA_WIDTH_16, 1);
 
     /* Set source address as g_u32Count array(increment) and destination address as EPWM1 channel 0 period register(no increment) */
-    PDMA_SetTransferAddr(0, (uint32_t)&g_u32Period[0], PDMA_SAR_INC, (uint32_t)&(EPWM1->PERIOD[0]), PDMA_DAR_FIX);
+    PDMA_SetTransferAddr(PDMA,0, (uint32_t)&g_u32Period[0], PDMA_SAR_INC, (uint32_t)&(EPWM1->PERIOD[0]), PDMA_DAR_FIX);
 
     /* Select PDMA request source as EPWM1_CH0_TX(EPWM1 channel 0 accumulator interrupt) */
-    PDMA_SetTransferMode(0, EPWM1_CH0_TX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA,0, EPWM1_CH0_TX, FALSE, 0);
 
     /* Set PDMA as single request type for EPWM */
-    PDMA_SetBurstType(0, PDMA_REQ_SINGLE, PDMA_BURST_1);
+    PDMA_SetBurstType(PDMA,0, PDMA_REQ_SINGLE, PDMA_BURST_1);
 
-    PDMA_EnableInt(0, PDMA_INT_TRANS_DONE);
+    PDMA_EnableInt(PDMA,0, PDMA_INT_TRANS_DONE);
     NVIC_EnableIRQ(PDMA_IRQn);
 
     g_u32IsTestOver = 0;
@@ -234,7 +234,7 @@ int32_t main(void)
     /* Disable PDMA NVIC */
     NVIC_DisableIRQ(PDMA_IRQn);
 
-    PDMA_Close();
+    PDMA_Close(PDMA);
 
     while(1);
 }

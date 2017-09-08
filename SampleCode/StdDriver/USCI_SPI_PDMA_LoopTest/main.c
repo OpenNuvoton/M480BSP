@@ -168,7 +168,7 @@ void SpiLoopTest_WithPDMA(void)
 
 
     /* Enable PDMA channels */
-    PDMA_Open((1 << USPI_MASTER_TX_DMA_CH) | (1 << USPI_MASTER_RX_DMA_CH) | (1 << USPI_SLAVE_RX_DMA_CH) | (1 << USPI_SLAVE_TX_DMA_CH));
+    PDMA_Open(PDMA,(1 << USPI_MASTER_TX_DMA_CH) | (1 << USPI_MASTER_RX_DMA_CH) | (1 << USPI_SLAVE_RX_DMA_CH) | (1 << USPI_SLAVE_TX_DMA_CH));
 
 
     /*=======================================================================
@@ -183,13 +183,13 @@ void SpiLoopTest_WithPDMA(void)
         Burst Type = Single Transfer
     =========================================================================*/
     /* Set transfer width (16 bits) and transfer count */
-    PDMA_SetTransferCnt(USPI_MASTER_TX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
+    PDMA_SetTransferCnt(PDMA,USPI_MASTER_TX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
     /* Set source/destination address and attributes */
-    PDMA_SetTransferAddr(USPI_MASTER_TX_DMA_CH, (uint32_t)g_au16MasterToSlaveTestPattern, PDMA_SAR_INC, (uint32_t)&UspiMaster->TXDAT, PDMA_DAR_FIX);
+    PDMA_SetTransferAddr(PDMA,USPI_MASTER_TX_DMA_CH, (uint32_t)g_au16MasterToSlaveTestPattern, PDMA_SAR_INC, (uint32_t)&UspiMaster->TXDAT, PDMA_DAR_FIX);
     /* Set request source; set basic mode. */
-    PDMA_SetTransferMode(USPI_MASTER_TX_DMA_CH, PDMA_USCI0_TX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA,USPI_MASTER_TX_DMA_CH, PDMA_USCI0_TX, FALSE, 0);
     /* Single request type. USCI_SPI only support PDMA single request type. */
-    PDMA_SetBurstType(USPI_MASTER_TX_DMA_CH, PDMA_REQ_SINGLE, 0);
+    PDMA_SetBurstType(PDMA,USPI_MASTER_TX_DMA_CH, PDMA_REQ_SINGLE, 0);
     /* Disable table interrupt */
     PDMA->DSCT[USPI_MASTER_TX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
 
@@ -205,13 +205,13 @@ void SpiLoopTest_WithPDMA(void)
         Burst Type = Single Transfer
     =========================================================================*/
     /* Set transfer width (16 bits) and transfer count */
-    PDMA_SetTransferCnt(USPI_MASTER_RX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
+    PDMA_SetTransferCnt(PDMA,USPI_MASTER_RX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
     /* Set source/destination address and attributes */
-    PDMA_SetTransferAddr(USPI_MASTER_RX_DMA_CH, (uint32_t)&UspiMaster->RXDAT, PDMA_SAR_FIX, (uint32_t)g_au16MasterRxBuffer, PDMA_DAR_INC);
+    PDMA_SetTransferAddr(PDMA,USPI_MASTER_RX_DMA_CH, (uint32_t)&UspiMaster->RXDAT, PDMA_SAR_FIX, (uint32_t)g_au16MasterRxBuffer, PDMA_DAR_INC);
     /* Set request source; set basic mode. */
-    PDMA_SetTransferMode(USPI_MASTER_RX_DMA_CH, PDMA_USCI0_RX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA,USPI_MASTER_RX_DMA_CH, PDMA_USCI0_RX, FALSE, 0);
     /* Single request type. USCI_SPI only support PDMA single request type. */
-    PDMA_SetBurstType(USPI_MASTER_RX_DMA_CH, PDMA_REQ_SINGLE, 0);
+    PDMA_SetBurstType(PDMA,USPI_MASTER_RX_DMA_CH, PDMA_REQ_SINGLE, 0);
     /* Disable table interrupt */
     PDMA->DSCT[USPI_MASTER_RX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
 
@@ -227,13 +227,13 @@ void SpiLoopTest_WithPDMA(void)
         Burst Type = Single Transfer
     =========================================================================*/
     /* Set transfer width (16 bits) and transfer count */
-    PDMA_SetTransferCnt(USPI_SLAVE_RX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
+    PDMA_SetTransferCnt(PDMA,USPI_SLAVE_RX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
     /* Set source/destination address and attributes */
-    PDMA_SetTransferAddr(USPI_SLAVE_RX_DMA_CH, (uint32_t)&UspiSlave->RXDAT, PDMA_SAR_FIX, (uint32_t)g_au16SlaveRxBuffer, PDMA_DAR_INC);
+    PDMA_SetTransferAddr(PDMA,USPI_SLAVE_RX_DMA_CH, (uint32_t)&UspiSlave->RXDAT, PDMA_SAR_FIX, (uint32_t)g_au16SlaveRxBuffer, PDMA_DAR_INC);
     /* Set request source; set basic mode. */
-    PDMA_SetTransferMode(USPI_SLAVE_RX_DMA_CH, PDMA_USCI1_RX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA,USPI_SLAVE_RX_DMA_CH, PDMA_USCI1_RX, FALSE, 0);
     /* Single request type. USCI_SPI only support PDMA single request type. */
-    PDMA_SetBurstType(USPI_SLAVE_RX_DMA_CH, PDMA_REQ_SINGLE, 0);
+    PDMA_SetBurstType(PDMA,USPI_SLAVE_RX_DMA_CH, PDMA_REQ_SINGLE, 0);
     /* Disable table interrupt */
     PDMA->DSCT[USPI_MASTER_RX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
 
@@ -249,13 +249,13 @@ void SpiLoopTest_WithPDMA(void)
         Burst Type = Single Transfer
     =========================================================================*/
     /* Set transfer width (16 bits) and transfer count */
-    PDMA_SetTransferCnt(USPI_SLAVE_TX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
+    PDMA_SetTransferCnt(PDMA,USPI_SLAVE_TX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
     /* Set source/destination address and attributes */
-    PDMA_SetTransferAddr(USPI_SLAVE_TX_DMA_CH, (uint32_t)g_au16SlaveToMasterTestPattern, PDMA_SAR_INC, (uint32_t)&UspiSlave->TXDAT, PDMA_DAR_FIX);
+    PDMA_SetTransferAddr(PDMA,USPI_SLAVE_TX_DMA_CH, (uint32_t)g_au16SlaveToMasterTestPattern, PDMA_SAR_INC, (uint32_t)&UspiSlave->TXDAT, PDMA_DAR_FIX);
     /* Set request source; set basic mode. */
-    PDMA_SetTransferMode(USPI_SLAVE_TX_DMA_CH, PDMA_USCI1_TX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA,USPI_SLAVE_TX_DMA_CH, PDMA_USCI1_TX, FALSE, 0);
     /* Single request type. USCI_SPI only support PDMA single request type. */
-    PDMA_SetBurstType(USPI_SLAVE_TX_DMA_CH, PDMA_REQ_SINGLE, 0);
+    PDMA_SetBurstType(PDMA,USPI_SLAVE_TX_DMA_CH, PDMA_REQ_SINGLE, 0);
     /* Disable table interrupt */
     PDMA->DSCT[USPI_SLAVE_TX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
 
@@ -272,14 +272,14 @@ void SpiLoopTest_WithPDMA(void)
 
         while(1) {
             /* Get interrupt status */
-            u32RegValue = PDMA_GET_INT_STATUS();
+            u32RegValue = PDMA_GET_INT_STATUS(PDMA);
             /* Check the PDMA transfer done interrupt flag */
             if(u32RegValue & PDMA_INTSTS_TDIF_Msk) {
                 /* Check the PDMA transfer done flags */
-                if((PDMA_GET_TD_STS() & ((1 << USPI_MASTER_TX_DMA_CH) | (1 << USPI_MASTER_RX_DMA_CH) | (1 << USPI_SLAVE_TX_DMA_CH) | (1 << USPI_SLAVE_RX_DMA_CH))) ==
+                if((PDMA_GET_TD_STS(PDMA) & ((1 << USPI_MASTER_TX_DMA_CH) | (1 << USPI_MASTER_RX_DMA_CH) | (1 << USPI_SLAVE_TX_DMA_CH) | (1 << USPI_SLAVE_RX_DMA_CH))) ==
                         ((1 << USPI_MASTER_TX_DMA_CH) | (1 << USPI_MASTER_RX_DMA_CH) | (1 << USPI_SLAVE_TX_DMA_CH) | (1 << USPI_SLAVE_RX_DMA_CH))) {
                     /* Clear the PDMA transfer done flags */
-                    PDMA_CLR_TD_FLAG((1 << USPI_MASTER_TX_DMA_CH) | (1 << USPI_MASTER_RX_DMA_CH) | (1 << USPI_SLAVE_TX_DMA_CH) | (1 << USPI_SLAVE_RX_DMA_CH));
+                    PDMA_CLR_TD_FLAG(PDMA,(1 << USPI_MASTER_TX_DMA_CH) | (1 << USPI_MASTER_RX_DMA_CH) | (1 << USPI_SLAVE_TX_DMA_CH) | (1 << USPI_SLAVE_RX_DMA_CH));
                     /* Disable USCI_SPI master's PDMA transfer function */
                     USPI_DISABLE_TX_PDMA(UspiMaster);
                     USPI_DISABLE_RX_PDMA(UspiMaster);
@@ -306,27 +306,27 @@ void SpiLoopTest_WithPDMA(void)
                     /* Re-trigger */
                     /* Slave PDMA TX channel configuration */
                     /* Set transfer width (16 bits) and transfer count */
-                    PDMA_SetTransferCnt(USPI_SLAVE_TX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
+                    PDMA_SetTransferCnt(PDMA,USPI_SLAVE_TX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
                     /* Set request source; set basic mode. */
-                    PDMA_SetTransferMode(USPI_SLAVE_TX_DMA_CH, PDMA_USCI1_TX, FALSE, 0);
+                    PDMA_SetTransferMode(PDMA,USPI_SLAVE_TX_DMA_CH, PDMA_USCI1_TX, FALSE, 0);
 
                     /* Slave PDMA RX channel configuration */
                     /* Set transfer width (16 bits) and transfer count */
-                    PDMA_SetTransferCnt(USPI_SLAVE_RX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
+                    PDMA_SetTransferCnt(PDMA,USPI_SLAVE_RX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
                     /* Set request source; set basic mode. */
-                    PDMA_SetTransferMode(USPI_SLAVE_RX_DMA_CH, PDMA_USCI1_RX, FALSE, 0);
+                    PDMA_SetTransferMode(PDMA,USPI_SLAVE_RX_DMA_CH, PDMA_USCI1_RX, FALSE, 0);
 
                     /* Master PDMA TX channel configuration */
                     /* Set transfer width (16 bits) and transfer count */
-                    PDMA_SetTransferCnt(USPI_MASTER_TX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
+                    PDMA_SetTransferCnt(PDMA,USPI_MASTER_TX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
                     /* Set request source; set basic mode. */
-                    PDMA_SetTransferMode(USPI_MASTER_TX_DMA_CH, PDMA_USCI0_TX, FALSE, 0);
+                    PDMA_SetTransferMode(PDMA,USPI_MASTER_TX_DMA_CH, PDMA_USCI0_TX, FALSE, 0);
 
                     /* Master PDMA RX channel configuration */
                     /* Set transfer width (16 bits) and transfer count */
-                    PDMA_SetTransferCnt(USPI_MASTER_RX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
+                    PDMA_SetTransferCnt(PDMA,USPI_MASTER_RX_DMA_CH, PDMA_WIDTH_16, TEST_COUNT);
                     /* Set request source; set basic mode. */
-                    PDMA_SetTransferMode(USPI_MASTER_RX_DMA_CH, PDMA_USCI0_RX, FALSE, 0);
+                    PDMA_SetTransferMode(PDMA,USPI_MASTER_RX_DMA_CH, PDMA_USCI0_RX, FALSE, 0);
 
                     /* Enable master's DMA transfer function */
                     USPI_TRIGGER_TX_PDMA(UspiMaster);
@@ -337,9 +337,9 @@ void SpiLoopTest_WithPDMA(void)
             /* Check the DMA transfer abort interrupt flag */
             if(u32RegValue & PDMA_INTSTS_ABTIF_Msk) {
                 /* Get the target abort flag */
-                u32Abort = PDMA_GET_ABORT_STS();
+                u32Abort = PDMA_GET_ABORT_STS(PDMA);
                 /* Clear the target abort flag */
-                PDMA_CLR_ABORT_FLAG(u32Abort);
+                PDMA_CLR_ABORT_FLAG(PDMA,u32Abort);
                 i32Err = 1;
                 break;
             }
@@ -357,7 +357,7 @@ void SpiLoopTest_WithPDMA(void)
     }
 
     /* Disable all PDMA channels */
-    PDMA_Close();
+    PDMA_Close(PDMA);
 
     if(i32Err) {
         printf(" [FAIL]\n");

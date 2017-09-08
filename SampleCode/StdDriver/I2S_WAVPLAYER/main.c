@@ -441,10 +441,10 @@ void PDMA_Init(void)
     DMA_DESC[1].enddest = (uint32_t)&I2S0->TXFIFO;
     DMA_DESC[1].offset = (uint32_t)&DMA_DESC[0] - (PDMA->SCATBA);
 
-    PDMA_Open(1 << 2);
-    PDMA_SetTransferMode(2, PDMA_I2S0_TX, 1, (uint32_t)&DMA_DESC[0]);
+    PDMA_Open(PDMA,1 << 2);
+    PDMA_SetTransferMode(PDMA,2, PDMA_I2S0_TX, 1, (uint32_t)&DMA_DESC[0]);
 
-    PDMA_EnableInt(2, 0);
+    PDMA_EnableInt(PDMA,2, 0);
     NVIC_EnableIRQ(PDMA_IRQn);
 }
 

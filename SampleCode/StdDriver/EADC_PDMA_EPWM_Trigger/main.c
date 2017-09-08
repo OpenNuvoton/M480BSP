@@ -138,31 +138,31 @@ void PDMA_Init()
 
     /* Configure PDMA peripheral mode form EADC to memory */
     /* Open Channel 2 */
-    PDMA_Open(BIT2);
+    PDMA_Open(PDMA,BIT2);
 
     /* transfer width is half word(16 bit) and transfer count is 6 */
-    PDMA_SetTransferCnt(2, PDMA_WIDTH_16, 6);
+    PDMA_SetTransferCnt(PDMA,2, PDMA_WIDTH_16, 6);
 
     /* Set source address as EADC data register(no increment) and destination address as g_i32ConversionData array(increment) */
-    PDMA_SetTransferAddr(2, (uint32_t)&EADC->DAT[g_u32SampleModuleNum], PDMA_SAR_FIX, (uint32_t)g_i32ConversionData, PDMA_DAR_INC);
+    PDMA_SetTransferAddr(PDMA,2, (uint32_t)&EADC->DAT[g_u32SampleModuleNum], PDMA_SAR_FIX, (uint32_t)g_i32ConversionData, PDMA_DAR_INC);
 
     /* Select PDMA request source as ADC RX */
-    PDMA_SetTransferMode(2, PDMA_ADC_RX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA,2, PDMA_ADC_RX, FALSE, 0);
 
     /* Set PDMA as single request type for EADC */
-    PDMA_SetBurstType(2, PDMA_REQ_SINGLE, PDMA_BURST_4);
+    PDMA_SetBurstType(PDMA,2, PDMA_REQ_SINGLE, PDMA_BURST_4);
 
-    PDMA_EnableInt(2, PDMA_INT_TRANS_DONE);
+    PDMA_EnableInt(PDMA,2, PDMA_INT_TRANS_DONE);
     NVIC_EnableIRQ(PDMA_IRQn);
 }
 
 void ReloadPDMA()
 {
     /* transfer width is half word(16 bit) and transfer count is 6 */
-    PDMA_SetTransferCnt(2, PDMA_WIDTH_16, 6);
+    PDMA_SetTransferCnt(PDMA,2, PDMA_WIDTH_16, 6);
 
     /* Select PDMA request source as ADC RX */
-    PDMA_SetTransferMode(2, PDMA_ADC_RX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA,2, PDMA_ADC_RX, FALSE, 0);
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -252,16 +252,16 @@ void EADC_FunctionTest()
 /*---------------------------------------------------------------------------------------------------------*/
 void PDMA_IRQHandler(void)
 {
-    uint32_t status = PDMA_GET_INT_STATUS();
+    uint32_t status = PDMA_GET_INT_STATUS(PDMA);
 
     if(status & PDMA_INTSTS_ABTIF_Msk) {  /* abort */
-        if(PDMA_GET_ABORT_STS() & PDMA_ABTSTS_ABTIF2_Msk)
+        if(PDMA_GET_ABORT_STS(PDMA) & PDMA_ABTSTS_ABTIF2_Msk)
             g_u32IsTestOver = 2;
-        PDMA_CLR_ABORT_FLAG(PDMA_ABTSTS_ABTIF2_Msk);
+        PDMA_CLR_ABORT_FLAG(PDMA,PDMA_ABTSTS_ABTIF2_Msk);
     } else if(status & PDMA_INTSTS_TDIF_Msk) {  /* done */
-        if(PDMA_GET_TD_STS() & PDMA_TDSTS_TDIF2_Msk)
+        if(PDMA_GET_TD_STS(PDMA) & PDMA_TDSTS_TDIF2_Msk)
             g_u32IsTestOver = 1;
-        PDMA_CLR_TD_FLAG(PDMA_TDSTS_TDIF2_Msk);
+        PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF2_Msk);
     } else
         printf("unknown interrupt !!\n");
 }

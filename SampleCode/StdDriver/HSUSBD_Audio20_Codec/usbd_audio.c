@@ -765,7 +765,7 @@ void UAC_GetPlayData(void)
     tmp = u32len >> 2;  /* byte to word */
 
     /* Ring buffer check */
-    PDMA_DisableInt(PDMA_I2S_TX_CH, 0);
+    PDMA_DisableInt(PDMA,PDMA_I2S_TX_CH, 0);
     if ((u32PlayBufPos + tmp) > u32BuffLen) {
         PcmPlayBuffLen[u32BufPlayIdx] = u32PlayBufPos;
         DMA_TXDESC[u32BufPlayIdx].ctl = (DMA_TXDESC[u32BufPlayIdx].ctl & ~PDMA_DSCT_CTL_TXCNT_Msk )|((u32PlayBufPos-1)<<PDMA_DSCT_CTL_TXCNT_Pos);
@@ -778,7 +778,7 @@ void UAC_GetPlayData(void)
         /* increase data count in buffer */
         u8TxDataCntInBuffer ++;
     }
-    PDMA_EnableInt(PDMA_I2S_TX_CH, 0);
+    PDMA_EnableInt(PDMA,PDMA_I2S_TX_CH, 0);
 
     /* active usbd DMA to read data from FIFO and then send to I2S */
     HSUSBD_SET_DMA_WRITE(ISO_OUT_EP_NUM);
@@ -841,7 +841,7 @@ void UAC_SendRecData(void)
 {
     uint32_t volatile i;
 
-    PDMA_DisableInt(PDMA_I2S_RX_CH, 0);
+    PDMA_DisableInt(PDMA,PDMA_I2S_RX_CH, 0);
     /* when record buffer full, send data to host */
     if(u8PcmRxBufFull[u32BufRecIdx]) {
         if ((u32RecBufPos + u32PacketSize) > u32RxBuffLen) {
@@ -863,7 +863,7 @@ void UAC_SendRecData(void)
         /* send zero packet when no data*/
         HSUSBD->EP[EPA].EPRSPCTL = HSUSBD_EPRSPCTL_ZEROLEN_Msk;
     }
-    PDMA_EnableInt(PDMA_I2S_RX_CH, 0);
+    PDMA_EnableInt(PDMA,PDMA_I2S_RX_CH, 0);
 }
 
 void AudioStartRecord(uint32_t u32SampleRate)

@@ -41,23 +41,23 @@ volatile static I2C_FUNC s_I2C1HandlerFn = NULL;
 /*---------------------------------------------------------------------------------------------------------*/
 void PDMA0_IRQHandler(void)
 {
-    uint32_t status = PDMA_GET_INT_STATUS();
+    uint32_t status = PDMA_GET_INT_STATUS(PDMA);
 
     if(status & PDMA_INTSTS_ABTIF_Msk)    /* abort */
     {
         /* Check if channel 1 has abort error */
-        if(PDMA_GET_ABORT_STS() & PDMA_ABTSTS_ABTIF1_Msk)
+        if(PDMA_GET_ABORT_STS(PDMA) & PDMA_ABTSTS_ABTIF1_Msk)
             g_u32IsTestOver = 2;
         /* Clear abort flag of channel 1 */
-        PDMA_CLR_ABORT_FLAG(PDMA_ABTSTS_ABTIF1_Msk);
+        PDMA_CLR_ABORT_FLAG(PDMA,PDMA_ABTSTS_ABTIF1_Msk);
     }
     else if(status & PDMA_INTSTS_TDIF_Msk)      /* done */
     {
         /* Check transmission of channel 1 has been transfer done */
-        if(PDMA_GET_TD_STS() & PDMA_TDSTS_TDIF1_Msk)
+        if(PDMA_GET_TD_STS(PDMA) & PDMA_TDSTS_TDIF1_Msk)
             g_u32IsTestOver = 1;
         /* Clear transfer done flag of channel 1 */
-        PDMA_CLR_TD_FLAG(PDMA_TDSTS_TDIF1_Msk);
+        PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF1_Msk);
     }
     else
         printf("unknown interrupt !!\n");
@@ -285,19 +285,19 @@ void I2C_Master_PDMA_Tx_Init(void)
     SYS_ResetModule(PDMA_RST);
 
     /* Open Channel 1 */
-    PDMA_Open(1 << I2C_PDMA_CH);
+    PDMA_Open(PDMA,1 << I2C_PDMA_CH);
 
     /* Transfer count is PDMA_TEST_LENGTH, transfer width is 8 bits(one byte) */
-    PDMA_SetTransferCnt(I2C_PDMA_CH, PDMA_WIDTH_8, I2C_PDMA_TX_LENGTH);
+    PDMA_SetTransferCnt(PDMA,I2C_PDMA_CH, PDMA_WIDTH_8, I2C_PDMA_TX_LENGTH);
 
     /* Set source address is g_au8MstTxData, destination address is (I2C0->DAT), Source/Destination increment size is 32 bits(one word) */
-    PDMA_SetTransferAddr(I2C_PDMA_CH, (uint32_t)g_au8MstTxData, PDMA_SAR_INC, (uint32_t)(&(I2C0->DAT)), PDMA_DAR_FIX);
+    PDMA_SetTransferAddr(PDMA,I2C_PDMA_CH, (uint32_t)g_au8MstTxData, PDMA_SAR_INC, (uint32_t)(&(I2C0->DAT)), PDMA_DAR_FIX);
 
     /* Single request type */
-    PDMA_SetBurstType(I2C_PDMA_CH, PDMA_REQ_SINGLE, 0);
+    PDMA_SetBurstType(PDMA,I2C_PDMA_CH, PDMA_REQ_SINGLE, 0);
 
     /* Set request source; set basic mode. */
-    PDMA_SetTransferMode(I2C_PDMA_CH, PDMA_I2C0_TX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA,I2C_PDMA_CH, PDMA_I2C0_TX, FALSE, 0);
 
     /* Set PDMA Basic Mode */
     PDMA->DSCT[I2C_PDMA_CH].CTL = (PDMA->DSCT[I2C_PDMA_CH].CTL & ~PDMA_DSCT_CTL_OPMODE_Msk) | PDMA_OP_BASIC;
@@ -314,19 +314,19 @@ void I2C_Master_PDMA_Rx_Init(void)
     SYS_ResetModule(PDMA_RST);
 
     /* Open Channel 1 */
-    PDMA_Open(1 << I2C_PDMA_CH);
+    PDMA_Open(PDMA,1 << I2C_PDMA_CH);
 
     /* Transfer count is I2C_PDMA_RX_LENGTH, transfer width is 8 bits(one byte) */
-    PDMA_SetTransferCnt(I2C_PDMA_CH, PDMA_WIDTH_8, I2C_PDMA_RX_LENGTH);
+    PDMA_SetTransferCnt(PDMA,I2C_PDMA_CH, PDMA_WIDTH_8, I2C_PDMA_RX_LENGTH);
 
     /* Set source address is (I2C0->DAT), destination address is g_au8MstRxData, Source/Destination increment size is 32 bits(one word) */
-    PDMA_SetTransferAddr(I2C_PDMA_CH, (uint32_t)(&(I2C0->DAT)), PDMA_SAR_FIX, (uint32_t)g_au8MstRxData, PDMA_DAR_INC);
+    PDMA_SetTransferAddr(PDMA,I2C_PDMA_CH, (uint32_t)(&(I2C0->DAT)), PDMA_SAR_FIX, (uint32_t)g_au8MstRxData, PDMA_DAR_INC);
 
     /* Single request type */
-    PDMA_SetBurstType(I2C_PDMA_CH, PDMA_REQ_SINGLE, 0);
+    PDMA_SetBurstType(PDMA,I2C_PDMA_CH, PDMA_REQ_SINGLE, 0);
 
     /* Set request source; set basic mode. */
-    PDMA_SetTransferMode(I2C_PDMA_CH, PDMA_I2C0_RX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA,I2C_PDMA_CH, PDMA_I2C0_RX, FALSE, 0);
 
     /* Set PDMA Basic Mode */
     PDMA->DSCT[I2C_PDMA_CH].CTL = (PDMA->DSCT[I2C_PDMA_CH].CTL & ~PDMA_DSCT_CTL_OPMODE_Msk) | PDMA_OP_BASIC;
@@ -514,7 +514,7 @@ int32_t main(void)
         g_au8MstTxData[i] = i;
 
     /* Enable interrupt */
-    PDMA_EnableInt(I2C_PDMA_CH, PDMA_INT_TRANS_DONE);
+    PDMA_EnableInt(PDMA,I2C_PDMA_CH, PDMA_INT_TRANS_DONE);
 
     /* Enable NVIC for PDMA */
     NVIC_EnableIRQ(PDMA_IRQn);
@@ -600,10 +600,10 @@ int32_t main(void)
         printf("I2C0 PDMA Tx/Rx data pass...\n");
 
     /* Disable PDMA channel */
-    PDMA_Close();
+    PDMA_Close(PDMA);
 
     /* Disable PDMA Interrupt */
-    PDMA_DisableInt(I2C_PDMA_CH, PDMA_INT_TRANS_DONE);
+    PDMA_DisableInt(PDMA,I2C_PDMA_CH, PDMA_INT_TRANS_DONE);
     NVIC_DisableIRQ(PDMA_IRQn);
 
     s_I2C0HandlerFn = NULL;

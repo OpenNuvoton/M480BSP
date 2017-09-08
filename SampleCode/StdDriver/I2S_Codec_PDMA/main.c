@@ -28,19 +28,19 @@ volatile uint8_t u8CopyData = 0;
 
 void PDMA_IRQHandler(void)
 {
-    uint32_t u32Status = PDMA_GET_INT_STATUS();
+    uint32_t u32Status = PDMA_GET_INT_STATUS(PDMA);
 
     if (u32Status & 0x2) {
-        if (PDMA_GET_TD_STS() & 0x4) {          /* channel 2 done */
+        if (PDMA_GET_TD_STS(PDMA) & 0x4) {          /* channel 2 done */
             /* Copy RX data to TX buffer */
             u8CopyData = 1;
             u8RxIdx ^= 1;
-            PDMA_CLR_TD_FLAG(PDMA_TDSTS_TDIF2_Msk);
+            PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF2_Msk);
         }
 
-        if (PDMA_GET_TD_STS() & 0x2) {          /* channel 1 done */
+        if (PDMA_GET_TD_STS(PDMA) & 0x2) {          /* channel 1 done */
             u8TxIdx ^= 1;
-            PDMA_CLR_TD_FLAG(PDMA_TDSTS_TDIF1_Msk);
+            PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF1_Msk);
         }
     } else
         printf("unknown interrupt, status=0x%x!!\n", u32Status);
@@ -328,15 +328,15 @@ void PDMA_Init(void)
     DMA_RXDESC[1].offset = (uint32_t)&DMA_RXDESC[0] - (PDMA->SCATBA);   //link to first description
 
     /* Open PDMA channel 1 for I2S TX and channel 2 for I2S RX */
-    PDMA_Open(0x3 << 1);
+    PDMA_Open(PDMA,0x3 << 1);
 
     /* Configure PDMA transfer mode */
-    PDMA_SetTransferMode(1, PDMA_I2S0_TX, 1, (uint32_t)&DMA_TXDESC[0]);
-    PDMA_SetTransferMode(2, PDMA_I2S0_RX, 1, (uint32_t)&DMA_RXDESC[0]);
+    PDMA_SetTransferMode(PDMA,1, PDMA_I2S0_TX, 1, (uint32_t)&DMA_TXDESC[0]);
+    PDMA_SetTransferMode(PDMA,2, PDMA_I2S0_RX, 1, (uint32_t)&DMA_RXDESC[0]);
 
     /* Enable PDMA channel 1&2 interrupt */
-    PDMA_EnableInt(1, 0);
-    PDMA_EnableInt(2, 0);
+    PDMA_EnableInt(PDMA,1, 0);
+    PDMA_EnableInt(PDMA,2, 0);
 
     NVIC_EnableIRQ(PDMA_IRQn);
 }

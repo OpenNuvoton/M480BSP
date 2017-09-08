@@ -126,7 +126,7 @@ void SpiLoopTest_WithPDMA(void)
 
 
     /* Enable PDMA channels */
-    PDMA_Open((1 << SPI_MASTER_TX_DMA_CH) | (1 << SPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH));
+    PDMA_Open(PDMA,(1 << SPI_MASTER_TX_DMA_CH) | (1 << SPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH));
 
     /*=======================================================================
       SPI master PDMA TX channel configuration:
@@ -140,13 +140,13 @@ void SpiLoopTest_WithPDMA(void)
         Burst Type = Single Transfer
     =========================================================================*/
     /* Set transfer width (32 bits) and transfer count */
-    PDMA_SetTransferCnt(SPI_MASTER_TX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
+    PDMA_SetTransferCnt(PDMA,SPI_MASTER_TX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
     /* Set source/destination address and attributes */
-    PDMA_SetTransferAddr(SPI_MASTER_TX_DMA_CH, (uint32_t)g_au32MasterToSlaveTestPattern, PDMA_SAR_INC, (uint32_t)&SPI0->TX, PDMA_DAR_FIX);
+    PDMA_SetTransferAddr(PDMA,SPI_MASTER_TX_DMA_CH, (uint32_t)g_au32MasterToSlaveTestPattern, PDMA_SAR_INC, (uint32_t)&SPI0->TX, PDMA_DAR_FIX);
     /* Set request source; set basic mode. */
-    PDMA_SetTransferMode(SPI_MASTER_TX_DMA_CH, PDMA_SPI0_TX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA,SPI_MASTER_TX_DMA_CH, PDMA_SPI0_TX, FALSE, 0);
     /* Single request type. SPI only support PDMA single request type. */
-    PDMA_SetBurstType(SPI_MASTER_TX_DMA_CH, PDMA_REQ_SINGLE, 0);
+    PDMA_SetBurstType(PDMA,SPI_MASTER_TX_DMA_CH, PDMA_REQ_SINGLE, 0);
     /* Disable table interrupt */
     PDMA->DSCT[SPI_MASTER_TX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
 
@@ -162,13 +162,13 @@ void SpiLoopTest_WithPDMA(void)
         Burst Type = Single Transfer
     =========================================================================*/
     /* Set transfer width (32 bits) and transfer count */
-    PDMA_SetTransferCnt(SPI_MASTER_RX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
+    PDMA_SetTransferCnt(PDMA,SPI_MASTER_RX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
     /* Set source/destination address and attributes */
-    PDMA_SetTransferAddr(SPI_MASTER_RX_DMA_CH, (uint32_t)&SPI0->RX, PDMA_SAR_FIX, (uint32_t)g_au32MasterRxBuffer, PDMA_DAR_INC);
+    PDMA_SetTransferAddr(PDMA,SPI_MASTER_RX_DMA_CH, (uint32_t)&SPI0->RX, PDMA_SAR_FIX, (uint32_t)g_au32MasterRxBuffer, PDMA_DAR_INC);
     /* Set request source; set basic mode. */
-    PDMA_SetTransferMode(SPI_MASTER_RX_DMA_CH, PDMA_SPI0_RX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA,SPI_MASTER_RX_DMA_CH, PDMA_SPI0_RX, FALSE, 0);
     /* Single request type. SPI only support PDMA single request type. */
-    PDMA_SetBurstType(SPI_MASTER_RX_DMA_CH, PDMA_REQ_SINGLE, 0);
+    PDMA_SetBurstType(PDMA,SPI_MASTER_RX_DMA_CH, PDMA_REQ_SINGLE, 0);
     /* Disable table interrupt */
     PDMA->DSCT[SPI_MASTER_RX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
 
@@ -184,13 +184,13 @@ void SpiLoopTest_WithPDMA(void)
         Burst Type = Single Transfer
     =========================================================================*/
     /* Set transfer width (32 bits) and transfer count */
-    PDMA_SetTransferCnt(SPI_SLAVE_RX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
+    PDMA_SetTransferCnt(PDMA,SPI_SLAVE_RX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
     /* Set source/destination address and attributes */
-    PDMA_SetTransferAddr(SPI_SLAVE_RX_DMA_CH, (uint32_t)&SPI2->RX, PDMA_SAR_FIX, (uint32_t)g_au32SlaveRxBuffer, PDMA_DAR_INC);
+    PDMA_SetTransferAddr(PDMA,SPI_SLAVE_RX_DMA_CH, (uint32_t)&SPI2->RX, PDMA_SAR_FIX, (uint32_t)g_au32SlaveRxBuffer, PDMA_DAR_INC);
     /* Set request source; set basic mode. */
-    PDMA_SetTransferMode(SPI_SLAVE_RX_DMA_CH, PDMA_SPI2_RX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA,SPI_SLAVE_RX_DMA_CH, PDMA_SPI2_RX, FALSE, 0);
     /* Single request type. SPI only support PDMA single request type. */
-    PDMA_SetBurstType(SPI_SLAVE_RX_DMA_CH, PDMA_REQ_SINGLE, 0);
+    PDMA_SetBurstType(PDMA,SPI_SLAVE_RX_DMA_CH, PDMA_REQ_SINGLE, 0);
     /* Disable table interrupt */
     PDMA->DSCT[SPI_MASTER_RX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
 
@@ -206,13 +206,13 @@ void SpiLoopTest_WithPDMA(void)
         Burst Type = Single Transfer
     =========================================================================*/
     /* Set transfer width (32 bits) and transfer count */
-    PDMA_SetTransferCnt(SPI_SLAVE_TX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
+    PDMA_SetTransferCnt(PDMA,SPI_SLAVE_TX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
     /* Set source/destination address and attributes */
-    PDMA_SetTransferAddr(SPI_SLAVE_TX_DMA_CH, (uint32_t)g_au32SlaveToMasterTestPattern, PDMA_SAR_INC, (uint32_t)&SPI2->TX, PDMA_DAR_FIX);
+    PDMA_SetTransferAddr(PDMA,SPI_SLAVE_TX_DMA_CH, (uint32_t)g_au32SlaveToMasterTestPattern, PDMA_SAR_INC, (uint32_t)&SPI2->TX, PDMA_DAR_FIX);
     /* Set request source; set basic mode. */
-    PDMA_SetTransferMode(SPI_SLAVE_TX_DMA_CH, PDMA_SPI2_TX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA,SPI_SLAVE_TX_DMA_CH, PDMA_SPI2_TX, FALSE, 0);
     /* Single request type. SPI only support PDMA single request type. */
-    PDMA_SetBurstType(SPI_SLAVE_TX_DMA_CH, PDMA_REQ_SINGLE, 0);
+    PDMA_SetBurstType(PDMA,SPI_SLAVE_TX_DMA_CH, PDMA_REQ_SINGLE, 0);
     /* Disable table interrupt */
     PDMA->DSCT[SPI_SLAVE_TX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
 
@@ -230,17 +230,17 @@ void SpiLoopTest_WithPDMA(void)
 
         while(1) {
             /* Get interrupt status */
-            u32RegValue = PDMA_GET_INT_STATUS();
+            u32RegValue = PDMA_GET_INT_STATUS(PDMA);
 
             /* Check the PDMA transfer done interrupt flag */
             if(u32RegValue & PDMA_INTSTS_TDIF_Msk) {
 
                 /* Check the PDMA transfer done flags */
-                if((PDMA_GET_TD_STS() & ((1 << SPI_MASTER_TX_DMA_CH) | (1 << SPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH))) ==
+                if((PDMA_GET_TD_STS(PDMA) & ((1 << SPI_MASTER_TX_DMA_CH) | (1 << SPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH))) ==
                         ((1 << SPI_MASTER_TX_DMA_CH) | (1 << SPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH))) {
 
                     /* Clear the PDMA transfer done flags */
-                    PDMA_CLR_TD_FLAG((1 << SPI_MASTER_TX_DMA_CH) | (1 << SPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH));
+                    PDMA_CLR_TD_FLAG(PDMA,(1 << SPI_MASTER_TX_DMA_CH) | (1 << SPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH));
 
                     /* Disable SPI master's PDMA transfer function */
                     SPI_DISABLE_TX_PDMA(SPI0);
@@ -269,27 +269,27 @@ void SpiLoopTest_WithPDMA(void)
                     /* Re-trigger */
                     /* Slave PDMA TX channel configuration */
                     /* Set transfer width (32 bits) and transfer count */
-                    PDMA_SetTransferCnt(SPI_SLAVE_TX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
+                    PDMA_SetTransferCnt(PDMA,SPI_SLAVE_TX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
                     /* Set request source; set basic mode. */
-                    PDMA_SetTransferMode(SPI_SLAVE_TX_DMA_CH, PDMA_SPI2_TX, FALSE, 0);
+                    PDMA_SetTransferMode(PDMA,SPI_SLAVE_TX_DMA_CH, PDMA_SPI2_TX, FALSE, 0);
 
                     /* Slave PDMA RX channel configuration */
                     /* Set transfer width (32 bits) and transfer count */
-                    PDMA_SetTransferCnt(SPI_SLAVE_RX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
+                    PDMA_SetTransferCnt(PDMA,SPI_SLAVE_RX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
                     /* Set request source; set basic mode. */
-                    PDMA_SetTransferMode(SPI_SLAVE_RX_DMA_CH, PDMA_SPI2_RX, FALSE, 0);
+                    PDMA_SetTransferMode(PDMA,SPI_SLAVE_RX_DMA_CH, PDMA_SPI2_RX, FALSE, 0);
 
                     /* Master PDMA TX channel configuration */
                     /* Set transfer width (32 bits) and transfer count */
-                    PDMA_SetTransferCnt(SPI_MASTER_TX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
+                    PDMA_SetTransferCnt(PDMA,SPI_MASTER_TX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
                     /* Set request source; set basic mode. */
-                    PDMA_SetTransferMode(SPI_MASTER_TX_DMA_CH, PDMA_SPI0_TX, FALSE, 0);
+                    PDMA_SetTransferMode(PDMA,SPI_MASTER_TX_DMA_CH, PDMA_SPI0_TX, FALSE, 0);
 
                     /* Master PDMA RX channel configuration */
                     /* Set transfer width (32 bits) and transfer count */
-                    PDMA_SetTransferCnt(SPI_MASTER_RX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
+                    PDMA_SetTransferCnt(PDMA,SPI_MASTER_RX_DMA_CH, PDMA_WIDTH_32, TEST_COUNT);
                     /* Set request source; set basic mode. */
-                    PDMA_SetTransferMode(SPI_MASTER_RX_DMA_CH, PDMA_SPI0_RX, FALSE, 0);
+                    PDMA_SetTransferMode(PDMA,SPI_MASTER_RX_DMA_CH, PDMA_SPI0_RX, FALSE, 0);
 
                     /* Enable master's DMA transfer function */
                     SPI_TRIGGER_TX_PDMA(SPI0);
@@ -300,9 +300,9 @@ void SpiLoopTest_WithPDMA(void)
             /* Check the DMA transfer abort interrupt flag */
             if(u32RegValue & PDMA_INTSTS_ABTIF_Msk) {
                 /* Get the target abort flag */
-                u32Abort = PDMA_GET_ABORT_STS();
+                u32Abort = PDMA_GET_ABORT_STS(PDMA);
                 /* Clear the target abort flag */
-                PDMA_CLR_ABORT_FLAG(u32Abort);
+                PDMA_CLR_ABORT_FLAG(PDMA,u32Abort);
                 i32Err = 1;
                 break;
             }
@@ -320,7 +320,7 @@ void SpiLoopTest_WithPDMA(void)
     }
 
     /* Disable all PDMA channels */
-    PDMA_Close();
+    PDMA_Close(PDMA);
 
     if(i32Err) {
         printf(" [FAIL]\n");

@@ -111,19 +111,19 @@ int32_t main(void)
     EPWM0_Init();
 
     /* Open PDMA Channel 0 */
-    PDMA_Open(0x1);
+    PDMA_Open(PDMA,0x1);
 
     /* Set transfer data width, and transfer count */
-    PDMA_SetTransferCnt(0, PDMA_WIDTH_16, array_size);
+    PDMA_SetTransferCnt(PDMA,0, PDMA_WIDTH_16, array_size);
 
     /* transfer width is one word(32 bit) */
-    PDMA_SetTransferAddr(0, (uint32_t)&sine[0], PDMA_SAR_INC, (uint32_t)&DAC0->DAT, PDMA_DAR_FIX);
+    PDMA_SetTransferAddr(PDMA,0, (uint32_t)&sine[0], PDMA_SAR_INC, (uint32_t)&DAC0->DAT, PDMA_DAR_FIX);
 
     /* Select channel 0 request source from DAC */
-    PDMA_SetTransferMode(0, PDMA_DAC0_TX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA,0, PDMA_DAC0_TX, FALSE, 0);
 
     /* Set transfer type and burst size */
-    PDMA_SetBurstType(0, PDMA_REQ_SINGLE, PDMA_BURST_128);
+    PDMA_SetBurstType(PDMA,0, PDMA_REQ_SINGLE, PDMA_BURST_128);
 
     /* Set the EPWM0 trigger DAC and enable D/A converter */
     DAC_Open(DAC0, 0, DAC_EPWM0_TRIGGER);
@@ -138,13 +138,13 @@ int32_t main(void)
     EPWM_Start(EPWM0, 0x1);
 
     while(1) {
-        if (PDMA_GET_TD_STS() == 0x1) {
+        if (PDMA_GET_TD_STS(PDMA) == 0x1) {
             /* Re-Set transfer count and basic operation mode */
-            PDMA_SetTransferCnt(0, PDMA_WIDTH_16, array_size);
-            PDMA_SetTransferMode(0, PDMA_DAC0_TX, FALSE, 0);
+            PDMA_SetTransferCnt(PDMA,0, PDMA_WIDTH_16, array_size);
+            PDMA_SetTransferMode(PDMA,0, PDMA_DAC0_TX, FALSE, 0);
 
             /* Clear PDMA channel 0 transfer done flag */
-            PDMA_CLR_TD_FLAG(0x1);
+            PDMA_CLR_TD_FLAG(PDMA,0x1);
         }
 
     }

@@ -96,7 +96,7 @@ int32_t main(void)
     }
 
     /* Enable PDMA channels */
-    PDMA_Open((1 << I2S_TX_DMA_CH) | (1 << I2S_RXData_DMA_CH));
+    PDMA_Open(PDMA,(1 << I2S_TX_DMA_CH) | (1 << I2S_RXData_DMA_CH));
 
     /* Tx(Play) description */
     g_asDescTable_TX[0].CTL = ((BUFF_LEN-1)<<PDMA_DSCT_CTL_TXCNT_Pos)|PDMA_WIDTH_32|PDMA_SAR_INC|PDMA_DAR_FIX|PDMA_REQ_SINGLE|PDMA_OP_SCATTER;
@@ -114,11 +114,11 @@ int32_t main(void)
     g_asDescTable_DataRX[0].SA = (uint32_t)&SPI2->RX;
     g_asDescTable_DataRX[0].DA = (uint32_t)&PcmRxDataBuff[0];
 
-    PDMA_SetTransferMode(1, PDMA_SPI2_TX, 1, (uint32_t)&g_asDescTable_TX[0]);
-    PDMA_SetTransferMode(2, PDMA_SPI2_RX, 1, (uint32_t)&g_asDescTable_DataRX[0]);
+    PDMA_SetTransferMode(PDMA,1, PDMA_SPI2_TX, 1, (uint32_t)&g_asDescTable_TX[0]);
+    PDMA_SetTransferMode(PDMA,2, PDMA_SPI2_RX, 1, (uint32_t)&g_asDescTable_DataRX[0]);
 
     /* Enable PDMA channel 1 interrupt */
-    PDMA_EnableInt(1, PDMA_INT_TRANS_DONE);
+    PDMA_EnableInt(PDMA,1, PDMA_INT_TRANS_DONE);
 
     NVIC_EnableIRQ(PDMA_IRQn);
 
@@ -196,18 +196,18 @@ void SYS_Init(void)
 
 void PDMA_IRQHandler(void)
 {
-    uint32_t u32Status = PDMA_GET_INT_STATUS();
+    uint32_t u32Status = PDMA_GET_INT_STATUS(PDMA);
 
     if (u32Status & 0x1) { /* abort */
-        if (PDMA_GET_ABORT_STS() & 0x4)
-            PDMA_CLR_ABORT_FLAG(PDMA_ABTSTS_ABTIF1_Msk);
+        if (PDMA_GET_ABORT_STS(PDMA) & 0x4)
+            PDMA_CLR_ABORT_FLAG(PDMA,PDMA_ABTSTS_ABTIF1_Msk);
     } else if (u32Status & 0x2) {
-        if (PDMA_GET_TD_STS() & 0x2) {          /* channel 1 done */
+        if (PDMA_GET_TD_STS(PDMA) & 0x2) {          /* channel 1 done */
             /* Reset PDMA Scatter-Gather table */
             PDMA_ResetTxSGTable(u8TxIdx);
             u8TxIdx ^= 1;
         }
-        PDMA_CLR_TD_FLAG(PDMA_TDSTS_TDIF1_Msk);
+        PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF1_Msk);
     } else
         printf("unknown interrupt, status=0x%x!!\n", u32Status);
 }

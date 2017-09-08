@@ -110,7 +110,7 @@ void StopPlay(void)
     I2S_DISABLE_TXDMA(I2S0);
     I2S_DISABLE_TX(I2S0);
 
-    PDMA_Close();
+    PDMA_Close(PDMA);
 
     // disable sound output
 //    PI3 = 1;

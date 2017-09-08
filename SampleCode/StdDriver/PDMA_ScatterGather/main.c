@@ -137,10 +137,10 @@ int main(void)
     ----------------------------------------------------------------------------------*/
 
     /* Open Channel 4 */
-    PDMA_Open(1 << 4);
+    PDMA_Open(PDMA,1 << 4);
     /* Enable Scatter Gather mode, assign the first scatter-gather descriptor table is table 1,
        and set transfer mode as memory to memory */
-    PDMA_SetTransferMode(4, PDMA_MEM, 1, (uint32_t)&DMA_DESC[0]);
+    PDMA_SetTransferMode(PDMA,4, PDMA_MEM, 1, (uint32_t)&DMA_DESC[0]);
 
     /*------------------------------------------------------------------------------------------------------
 
@@ -232,15 +232,15 @@ int main(void)
 
 
     /* Generate a software request to trigger transfer with PDMA channel 4 */
-    PDMA_Trigger(4);
+    PDMA_Trigger(PDMA,4);
 
     /* Waiting for transfer done */
-    while(PDMA_IS_CH_BUSY(4));
+    while(PDMA_IS_CH_BUSY(PDMA,4));
 
     printf("test done...\n");
 
     /* Close Channel 4 */
-    PDMA_Close();
+    PDMA_Close(PDMA);
 
     while(1);
 }

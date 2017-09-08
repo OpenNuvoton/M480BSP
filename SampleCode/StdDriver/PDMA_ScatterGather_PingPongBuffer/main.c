@@ -59,7 +59,7 @@ void PDMA_IRQHandler(void)
             g_u32IsTestOver = 1;
         }
         /* Clear transfer done flag of channel 4 */
-        PDMA_CLR_TD_FLAG(PDMA_TDSTS_TDIF4_Msk);
+        PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF4_Msk);
     }
 }
 
@@ -159,11 +159,11 @@ int main(void)
     --------------------------------------------------------------------------------------------------*/
 
     /* Open Channel 4 */
-    PDMA_Open(1 << 4);
+    PDMA_Open(PDMA,1 << 4);
 
     /* Enable Scatter Gather mode, assign the first scatter-gather descriptor table is table 1,
        and set transfer mode as memory to memory */
-    PDMA_SetTransferMode(4, PDMA_MEM, TRUE, (uint32_t)&DMA_DESC[0]);
+    PDMA_SetTransferMode(PDMA,4, PDMA_MEM, TRUE, (uint32_t)&DMA_DESC[0]);
 
 
     /* Scatter-Gather descriptor table configuration in SRAM */
@@ -248,12 +248,12 @@ int main(void)
 
 
     /* Enable transfer done interrupt */
-    PDMA_EnableInt(4, PDMA_INT_TRANS_DONE);
+    PDMA_EnableInt(PDMA,4, PDMA_INT_TRANS_DONE);
     NVIC_EnableIRQ(PDMA_IRQn);
     g_u32IsTestOver = 0;
 
     /* Start PDMA operation */
-    PDMA_Trigger(4);
+    PDMA_Trigger(PDMA,4);
 
     while(1) {
         if(g_u32IsTestOver == 1) {
@@ -261,7 +261,7 @@ int main(void)
             printf("test done...\n");
 
             /* Close PDMA channel */
-            PDMA_Close();
+            PDMA_Close(PDMA);
         }
     }
 }

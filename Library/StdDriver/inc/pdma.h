@@ -154,29 +154,31 @@ extern "C"
 /**
  * @brief       Get PDMA Interrupt Status
  *
- * @param[in]   None
+ * @param[in]   pdma      The pointer of the specified PDMA module
  *
  * @return      None
  *
  * @details     This macro gets the interrupt status.
  * \hideinitializer
  */
-#define PDMA_GET_INT_STATUS() ((uint32_t)(PDMA->INTSTS))
+#define PDMA_GET_INT_STATUS(pdma) ((uint32_t)(pdma->INTSTS))
 
 /**
  * @brief       Get Transfer Done Interrupt Status
  *
- * @param[in]   None
+ * @param[in]   pdma      The pointer of the specified PDMA module
  *
  * @return      None
  *
  * @details     Get the transfer done Interrupt status.
  * \hideinitializer
  */
-#define PDMA_GET_TD_STS() ((uint32_t)(PDMA->TDSTS))
+#define PDMA_GET_TD_STS(pdma) ((uint32_t)(pdma->TDSTS))
 
 /**
  * @brief       Clear Transfer Done Interrupt Status
+ *
+ * @param[in]   pdma      The pointer of the specified PDMA module
  *
  * @param[in]   u32Mask     The channel mask
  *
@@ -185,22 +187,24 @@ extern "C"
  * @details     Clear the transfer done Interrupt status.
  * \hideinitializer
  */
-#define PDMA_CLR_TD_FLAG(u32Mask) ((uint32_t)(PDMA->TDSTS = (u32Mask)))
+#define PDMA_CLR_TD_FLAG(pdma,u32Mask) ((uint32_t)(pdma->TDSTS = (u32Mask)))
 
 /**
  * @brief       Get Target Abort Interrupt Status
  *
- * @param[in]   None
+ * @param[in]   pdma      The pointer of the specified PDMA module
  *
  * @return      None
  *
  * @details     Get the target abort Interrupt status.
  * \hideinitializer
  */
-#define PDMA_GET_ABORT_STS() ((uint32_t)(PDMA->ABTSTS))
+#define PDMA_GET_ABORT_STS(pdma) ((uint32_t)(pdma->ABTSTS))
 
 /**
  * @brief       Clear Target Abort Interrupt Status
+ *
+ * @param[in]   pdma      The pointer of the specified PDMA module
  *
  * @param[in]   u32Mask     The channel mask
  *
@@ -209,23 +213,24 @@ extern "C"
  * @details     Clear the target abort Interrupt status.
  * \hideinitializer
  */
-#define PDMA_CLR_ABORT_FLAG(u32Mask) ((uint32_t)(PDMA->ABTSTS = (u32Mask)))
+#define PDMA_CLR_ABORT_FLAG(pdma,u32Mask) ((uint32_t)(pdma->ABTSTS = (u32Mask)))
 
 /**
  * @brief       Get Alignment Interrupt Status
  *
- * @param[in]   None
+ * @param[in]   pdma      The pointer of the specified PDMA module
  *
  * @return      None
  *
  * @details     Get Alignment Interrupt status.
  * \hideinitializer
  */
-#define PDMA_GET_ALIGN_STS() ((uint32_t)(PDMA->ALIGN))
+#define PDMA_GET_ALIGN_STS(pdma) ((uint32_t)(PDMA->ALIGN))
 
 /**
  * @brief       Clear Alignment Interrupt Status
- *
+  *
+ * @param[in]   pdma        The pointer of the specified PDMA module
  * @param[in]   u32Mask     The channel mask
  *
  * @return      None
@@ -233,11 +238,12 @@ extern "C"
  * @details     Clear the Alignment Interrupt status.
  * \hideinitializer
  */
-#define PDMA_CLR_ALIGN_FLAG(u32Mask) ((uint32_t)(PDMA->ALIGN = (u32Mask)))
+#define PDMA_CLR_ALIGN_FLAG(pdma,u32Mask) ((uint32_t)(pdma->ALIGN = (u32Mask)))
 
 /**
  * @brief       Clear Timeout Interrupt Status
- *
+  *
+ * @param[in]   pdma      The pointer of the specified PDMA module
  * @param[in]   u32Ch     The selected channel
  *
  * @return      None
@@ -245,11 +251,12 @@ extern "C"
  * @details     Clear the selected channel timeout interrupt status.
  * \hideinitializer
  */
-#define PDMA_CLR_TMOUT_FLAG(u32Ch) ((uint32_t)(PDMA->INTSTS = (1 << ((u32Ch) + 8))))
+#define PDMA_CLR_TMOUT_FLAG(pdma,u32Ch) ((uint32_t)(pdma->INTSTS = (1 << ((u32Ch) + 8))))
 
 /**
  * @brief       Check Channel Status
- *
+  *
+ * @param[in]   pdma      The pointer of the specified PDMA module
  * @param[in]   u32Ch     The selected channel
  *
  * @retval      0 Idle state
@@ -258,11 +265,12 @@ extern "C"
  * @details     Check the selected channel is busy or not.
  * \hideinitializer
  */
-#define PDMA_IS_CH_BUSY(u32Ch) ((uint32_t)(PDMA->TRGSTS & (1 << (u32Ch)))? 1 : 0)
+#define PDMA_IS_CH_BUSY(pdma,u32Ch) ((uint32_t)(pdma->TRGSTS & (1 << (u32Ch)))? 1 : 0)
 
 /**
  * @brief       Set Source Address
- *
+  *
+ * @param[in]   pdma      The pointer of the specified PDMA module
  * @param[in]   u32Ch     The selected channel
  * @param[in]   u32Addr   The selected address
  *
@@ -271,11 +279,12 @@ extern "C"
  * @details     This macro set the selected channel source address.
  * \hideinitializer
  */
-#define PDMA_SET_SRC_ADDR(u32Ch, u32Addr) ((uint32_t)(PDMA->DSCT[(u32Ch)].SA = (u32Addr)))
+#define PDMA_SET_SRC_ADDR(pdma,u32Ch, u32Addr) ((uint32_t)(pdma->DSCT[(u32Ch)].SA = (u32Addr)))
 
 /**
  * @brief       Set Destination Address
  *
+ * @param[in]   pdma      The pointer of the specified PDMA module
  * @param[in]   u32Ch     The selected channel
  * @param[in]   u32Addr   The selected address
  *
@@ -284,11 +293,12 @@ extern "C"
  * @details     This macro set the selected channel destination address.
  * \hideinitializer
  */
-#define PDMA_SET_DST_ADDR(u32Ch, u32Addr) ((uint32_t)(PDMA->DSCT[(u32Ch)].DA = (u32Addr)))
+#define PDMA_SET_DST_ADDR(pdma,u32Ch, u32Addr) ((uint32_t)(pdma->DSCT[(u32Ch)].DA = (u32Addr)))
 
 /**
  * @brief       Set Transfer Count
- *
+  *
+ * @param[in]   pdma           The pointer of the specified PDMA module
  * @param[in]   u32Ch          The selected channel
  * @param[in]   u32TransCount  Transfer Count
  *
@@ -297,11 +307,12 @@ extern "C"
  * @details     This macro set the selected channel transfer count.
  * \hideinitializer
  */
-#define PDMA_SET_TRANS_CNT(u32Ch, u32TransCount) ((uint32_t)(PDMA->DSCT[(u32Ch)].CTL=(PDMA->DSCT[(u32Ch)].CTL&~PDMA_DSCT_CTL_TXCNT_Msk)|(((u32TransCount)-1) << PDMA_DSCT_CTL_TXCNT_Pos)))
+#define PDMA_SET_TRANS_CNT(pdma,u32Ch, u32TransCount) ((uint32_t)(pdma->DSCT[(u32Ch)].CTL=(pdma->DSCT[(u32Ch)].CTL&~PDMA_DSCT_CTL_TXCNT_Msk)|(((u32TransCount)-1) << PDMA_DSCT_CTL_TXCNT_Pos)))
 
 /**
  * @brief       Set Scatter-gather descriptor Address
  *
+ * @param[in]   pdma      The pointer of the specified PDMA module
  * @param[in]   u32Ch     The selected channel
  * @param[in]   u32Addr   The descriptor address
  *
@@ -310,10 +321,12 @@ extern "C"
  * @details     This macro set the selected channel scatter-gather descriptor address.
  * \hideinitializer
  */
-#define PDMA_SET_SCATTER_DESC(u32Ch, u32Addr) ((uint32_t)(PDMA->DSCT[(u32Ch)].NEXT = (u32Addr) - (PDMA->SCATBA)))
+#define PDMA_SET_SCATTER_DESC(pdma,u32Ch, u32Addr) ((uint32_t)(pdma->DSCT[(u32Ch)].NEXT = (u32Addr) - (pdma->SCATBA)))
 
 /**
  * @brief       Stop the channel
+ *
+ * @param[in]   pdma      The pointer of the specified PDMA module
  *
  * @param[in]   u32Ch     The selected channel
  *
@@ -322,10 +335,12 @@ extern "C"
  * @details     This macro stop the selected channel.
  * \hideinitializer
  */
-#define PDMA_STOP(u32Ch) ((uint32_t)(PDMA->PAUSE = (1 << (u32Ch))))
+#define PDMA_STOP(pdma,u32Ch) ((uint32_t)(pdma->PAUSE = (1 << (u32Ch))))
 
 /**
  * @brief       Pause the channel
+ *
+ * @param[in]   pdma      The pointer of the specified PDMA module
  *
  * @param[in]   u32Ch     The selected channel
  *
@@ -334,24 +349,24 @@ extern "C"
  * @details     This macro pause the selected channel.
  * \hideinitializer
  */
-#define PDMA_PAUSE(u32Ch) ((uint32_t)(PDMA->PAUSE = (1 << (u32Ch))))
+#define PDMA_PAUSE(pdma,u32Ch) ((uint32_t)(pdma->PAUSE = (1 << (u32Ch))))
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* Define PDMA functions prototype                                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
-void PDMA_Open(uint32_t u32Mask);
-void PDMA_Close(void);
-void PDMA_SetTransferCnt(uint32_t u32Ch, uint32_t u32Width, uint32_t u32TransCount);
-void PDMA_SetTransferAddr(uint32_t u32Ch, uint32_t u32SrcAddr, uint32_t u32SrcCtrl, uint32_t u32DstAddr, uint32_t u32DstCtrl);
-void PDMA_SetTransferMode(uint32_t u32Ch, uint32_t u32Peripheral, uint32_t u32ScatterEn, uint32_t u32DescAddr);
-void PDMA_SetBurstType(uint32_t u32Ch, uint32_t u32BurstType, uint32_t u32BurstSize);
-void PDMA_EnableTimeout(uint32_t u32Mask);
-void PDMA_DisableTimeout(uint32_t u32Mask);
-void PDMA_SetTimeOut(uint32_t u32Ch, uint32_t u32OnOff, uint32_t u32TimeOutCnt);
-void PDMA_Trigger(uint32_t u32Ch);
-void PDMA_EnableInt(uint32_t u32Ch, uint32_t u32Mask);
-void PDMA_DisableInt(uint32_t u32Ch, uint32_t u32Mask);
-void PDMA_SetStride(uint32_t u32Ch, uint32_t u32DestLen, uint32_t u32SrcLen, uint32_t u32TransCount);
+void PDMA_Open(PDMA_T * pdma,uint32_t u32Mask);
+void PDMA_Close(PDMA_T * pdma);
+void PDMA_SetTransferCnt(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32Width, uint32_t u32TransCount);
+void PDMA_SetTransferAddr(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32SrcAddr, uint32_t u32SrcCtrl, uint32_t u32DstAddr, uint32_t u32DstCtrl);
+void PDMA_SetTransferMode(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32Peripheral, uint32_t u32ScatterEn, uint32_t u32DescAddr);
+void PDMA_SetBurstType(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32BurstType, uint32_t u32BurstSize);
+void PDMA_EnableTimeout(PDMA_T * pdma,uint32_t u32Mask);
+void PDMA_DisableTimeout(PDMA_T * pdma,uint32_t u32Mask);
+void PDMA_SetTimeOut(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32OnOff, uint32_t u32TimeOutCnt);
+void PDMA_Trigger(PDMA_T * pdma,uint32_t u32Ch);
+void PDMA_EnableInt(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32Mask);
+void PDMA_DisableInt(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32Mask);
+void PDMA_SetStride(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32DestLen, uint32_t u32SrcLen, uint32_t u32TransCount);
 
 
 /*@}*/ /* end of group PDMA_EXPORTED_FUNCTIONS */

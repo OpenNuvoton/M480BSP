@@ -256,26 +256,26 @@ void I2C1_Init(void)
 void PDMA_Init(void)
 {
     /* Open PDMA Channel */
-    PDMA_Open(1 << 0); // Channel 0 for I2C0 TX
-    PDMA_Open(1 << 1); // Channel 1 for I2C1 RX
+    PDMA_Open(PDMA,1 << 0); // Channel 0 for I2C0 TX
+    PDMA_Open(PDMA,1 << 1); // Channel 1 for I2C1 RX
     // Select basic mode
-    PDMA_SetTransferMode(0, PDMA_I2C0_TX, 0, 0);
-    PDMA_SetTransferMode(1, PDMA_I2C1_RX, 0, 0);
+    PDMA_SetTransferMode(PDMA,0, PDMA_I2C0_TX, 0, 0);
+    PDMA_SetTransferMode(PDMA,1, PDMA_I2C1_RX, 0, 0);
     // Set data width and transfer count
-    PDMA_SetTransferCnt(0, PDMA_WIDTH_8, PDMA_TEST_LENGTH);
-    PDMA_SetTransferCnt(1, PDMA_WIDTH_8, PDMA_TEST_LENGTH);
+    PDMA_SetTransferCnt(PDMA,0, PDMA_WIDTH_8, PDMA_TEST_LENGTH);
+    PDMA_SetTransferCnt(PDMA,1, PDMA_WIDTH_8, PDMA_TEST_LENGTH);
     //Set PDMA Transfer Address
-    PDMA_SetTransferAddr(0, ((uint32_t) (&g_u8Tx_Buffer[0])), PDMA_SAR_INC, (uint32_t)(&(I2C0->DAT)), PDMA_DAR_FIX);
-    PDMA_SetTransferAddr(1, (uint32_t)(&(I2C1->DAT)), PDMA_SAR_FIX, ((uint32_t) (&g_u8Rx_Buffer[0])), PDMA_DAR_INC);
+    PDMA_SetTransferAddr(PDMA,0, ((uint32_t) (&g_u8Tx_Buffer[0])), PDMA_SAR_INC, (uint32_t)(&(I2C0->DAT)), PDMA_DAR_FIX);
+    PDMA_SetTransferAddr(PDMA,1, (uint32_t)(&(I2C1->DAT)), PDMA_SAR_FIX, ((uint32_t) (&g_u8Rx_Buffer[0])), PDMA_DAR_INC);
     //Select Single Request
-    PDMA_SetBurstType(0, PDMA_REQ_SINGLE, 0);
-    PDMA_SetBurstType(1, PDMA_REQ_SINGLE, 0);
+    PDMA_SetBurstType(PDMA,0, PDMA_REQ_SINGLE, 0);
+    PDMA_SetBurstType(PDMA,1, PDMA_REQ_SINGLE, 0);
     //Set timeout
     //PDMA_SetTimeOut(0, 0, 0x5555);
     //PDMA_SetTimeOut(1, 0, 0x5555);
 
-    PDMA_EnableInt(0, 0);
-    PDMA_EnableInt(1, 0);
+    PDMA_EnableInt(PDMA,0, 0);
+    PDMA_EnableInt(PDMA,1, 0);
     NVIC_EnableIRQ(PDMA_IRQn);
 
 }

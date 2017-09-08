@@ -28,23 +28,23 @@ void USCI_UART_PDMATest(void);
 
 void PDMA_IRQHandler(void)
 {
-    uint32_t status = PDMA_GET_INT_STATUS();
+    uint32_t status = PDMA_GET_INT_STATUS(PDMA);
 
     if (status & 0x1) { /* abort */
         printf("target abort interrupt !!\n");
-        if (PDMA_GET_ABORT_STS() & 0x4)
+        if (PDMA_GET_ABORT_STS(PDMA) & 0x4)
             u32IsTestOver = 2;
-        PDMA_CLR_ABORT_FLAG(PDMA_GET_ABORT_STS());
+        PDMA_CLR_ABORT_FLAG(PDMA,PDMA_GET_ABORT_STS(PDMA));
     } else if (status & 0x2) { /* done */
-        if ( (PDMA_GET_TD_STS() & (1 << 0)) && (PDMA_GET_TD_STS() & (1 << 1)) ) {
+        if ( (PDMA_GET_TD_STS(PDMA) & (1 << 0)) && (PDMA_GET_TD_STS(PDMA) & (1 << 1)) ) {
             u32IsTestOver = 1;
-            PDMA_CLR_TD_FLAG(PDMA_GET_TD_STS());
+            PDMA_CLR_TD_FLAG(PDMA,PDMA_GET_TD_STS(PDMA));
         }
     } else if (status & 0x300) { /* channel 2 timeout */
         printf("timeout interrupt !!\n");
         u32IsTestOver = 3;
-        PDMA_CLR_TMOUT_FLAG(0);
-        PDMA_CLR_TMOUT_FLAG(1);
+        PDMA_CLR_TMOUT_FLAG(PDMA,0);
+        PDMA_CLR_TMOUT_FLAG(PDMA,1);
     } else
         printf("unknown interrupt !!\n");
 }
@@ -112,20 +112,20 @@ void USCI0_Init()
 void PDMA_Init(void)
 {
     /* Open PDMA Channel */
-    PDMA_Open(1 << 0); // Channel 0 for UART1 TX
-    PDMA_Open(1 << 1); // Channel 1 for UART1 RX
+    PDMA_Open(PDMA,1 << 0); // Channel 0 for UART1 TX
+    PDMA_Open(PDMA,1 << 1); // Channel 1 for UART1 RX
     // Select basic mode
-    PDMA_SetTransferMode(0, PDMA_USCI0_TX, 0, 0);
-    PDMA_SetTransferMode(1, PDMA_USCI0_RX, 0, 0);
+    PDMA_SetTransferMode(PDMA,0, PDMA_USCI0_TX, 0, 0);
+    PDMA_SetTransferMode(PDMA,1, PDMA_USCI0_RX, 0, 0);
     // Set data width and transfer count
-    PDMA_SetTransferCnt(0, PDMA_WIDTH_8, PDMA_TEST_LENGTH);
-    PDMA_SetTransferCnt(1, PDMA_WIDTH_8, PDMA_TEST_LENGTH);
+    PDMA_SetTransferCnt(PDMA,0, PDMA_WIDTH_8, PDMA_TEST_LENGTH);
+    PDMA_SetTransferCnt(PDMA,1, PDMA_WIDTH_8, PDMA_TEST_LENGTH);
     //Set PDMA Transfer Address
-    PDMA_SetTransferAddr(0, ((uint32_t) (&g_u8Tx_Buffer[0])), PDMA_SAR_INC, (uint32_t)(&(UUART0->TXDAT)), PDMA_DAR_FIX);
-    PDMA_SetTransferAddr(1, (uint32_t)(&(UUART0->RXDAT)), PDMA_SAR_FIX, ((uint32_t) (&g_u8Rx_Buffer[0])), PDMA_DAR_INC);
+    PDMA_SetTransferAddr(PDMA,0, ((uint32_t) (&g_u8Tx_Buffer[0])), PDMA_SAR_INC, (uint32_t)(&(UUART0->TXDAT)), PDMA_DAR_FIX);
+    PDMA_SetTransferAddr(PDMA,1, (uint32_t)(&(UUART0->RXDAT)), PDMA_SAR_FIX, ((uint32_t) (&g_u8Rx_Buffer[0])), PDMA_DAR_INC);
     //Select Single Request
-    PDMA_SetBurstType(0, PDMA_REQ_SINGLE, 0);
-    PDMA_SetBurstType(1, PDMA_REQ_SINGLE, 0);
+    PDMA_SetBurstType(PDMA,0, PDMA_REQ_SINGLE, 0);
+    PDMA_SetBurstType(PDMA,1, PDMA_REQ_SINGLE, 0);
     //Set timeout
     //PDMA_SetTimeOut(0, 0, 0x5555);
     //PDMA_SetTimeOut(1, 0, 0x5555);
@@ -221,9 +221,9 @@ void USCI_UART_PDMATest()
     else if (u32IsTestOver == 3)
         printf("timeout...\n");
 #else
-    while( (!(PDMA_GET_TD_STS() & (1 << 0))) || (!(PDMA_GET_TD_STS() & (1 << 1))) );
+    while( (!(PDMA_GET_TD_STS(PDMA) & (1 << 0))) || (!(PDMA_GET_TD_STS(PDMA) & (1 << 1))) );
 
-    PDMA_CLR_TD_FLAG(PDMA_TDSTS_TDIF0_Msk|PDMA_TDSTS_TDIF1_Msk);
+    PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF0_Msk|PDMA_TDSTS_TDIF1_Msk);
 #endif
 
     for (i=0; i<PDMA_TEST_LENGTH; i++) {
