@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>PDMA_Control</TargetName>
+      <TargetName>PDMA_BasicMode</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -44,7 +44,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>PDMA_Control</OutputName>
+          <OutputName>PDMA_BasicMode</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>

@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\PDMA_Control.ewp</path>
+    <path>$WS_DIR$\PDMA_BasicMode.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

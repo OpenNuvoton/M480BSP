@@ -586,7 +586,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>PDMA_Control.bin</state>
+          <state>PDMA_BasicMode.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -640,7 +640,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>PDMA_Control.out</state>
+          <state>PDMA_BasicMode.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
