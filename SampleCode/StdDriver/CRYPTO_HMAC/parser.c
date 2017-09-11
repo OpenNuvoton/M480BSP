@@ -6,7 +6,6 @@
 
 extern uint32_t  VectorDataBase, VectorDataLimit;
 
-
 static uint8_t   *file_base;
 static uint32_t   file_idx, file_size;
 
@@ -19,8 +18,8 @@ uint8_t  g_hmac_msg_pool[1024];
 #pragma data_alignment=32
 uint8_t  g_hmac_mac_pool[1024];
 #else
-__align(32)  uint8_t  g_hmac_msg_pool[1024];
-__align(32)  uint8_t  g_hmac_mac_pool[1024];
+uint8_t  g_hmac_msg_pool[1024] __attribute__((aligned (32)));
+uint8_t  g_hmac_mac_pool[1024] __attribute__((aligned (32)));
 #endif
 
 uint8_t   *g_hmac_msg;

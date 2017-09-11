@@ -21,7 +21,7 @@
 #pragma data_alignment=32
 uint8_t  au_in_buff[AUDIO_IN_BUFSIZ];
 #else
-__align(32) uint8_t  au_in_buff[AUDIO_IN_BUFSIZ];
+uint8_t  au_in_buff[AUDIO_IN_BUFSIZ] __attribute__((aligned(32)));
 #endif
 
 static volatile int  au_in_cnt, au_out_cnt;

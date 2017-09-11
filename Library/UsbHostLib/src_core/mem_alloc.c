@@ -32,7 +32,7 @@
 #pragma data_alignment=32
 static uint8_t  _mem_pool[MEM_POOL_UNIT_NUM][MEM_POOL_UNIT_SIZE];
 #else
-static __align(32) uint8_t _mem_pool[MEM_POOL_UNIT_NUM][MEM_POOL_UNIT_SIZE];
+static uint8_t _mem_pool[MEM_POOL_UNIT_NUM][MEM_POOL_UNIT_SIZE] __attribute__((aligned(32)));
 #endif
 static uint8_t  _unit_used[MEM_POOL_UNIT_NUM];
 

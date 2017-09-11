@@ -26,7 +26,7 @@ static char  _pi8LineBuff[20*1024];
 #pragma data_alignment=32
 uint8_t   _au8ShaData_pool[8192] ;
 #else
-__align(32) uint8_t   _au8ShaData_pool[8192] ;
+uint8_t   _au8ShaData_pool[8192] __attribute__((aligned (32))) ;
 #endif
 
 

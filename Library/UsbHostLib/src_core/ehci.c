@@ -34,7 +34,7 @@ extern int ehci_quit_iso_xfer(UTR_T *utr, EP_INFO_T *ep);
 #pragma data_alignment=4096
 uint32_t  _PFList[FL_SIZE];                 /* Periodic frame list (IAR)                  */
 #else
-__align(4096) uint32_t _PFList[FL_SIZE];    /* Periodic frame list (Keil)                 */
+uint32_t _PFList[FL_SIZE] __attribute__((aligned(4096)));  /* Periodic frame list         */
 #endif
 
 QH_T  * _Iqh[NUM_IQH];
@@ -96,7 +96,7 @@ void dump_ehci_asynclist(void)
         USB_debug("\n");
 
         qtd = QTD_PTR(qh->Curr_qTD);
-        while ((uint32_t)qtd != NULL) {
+        while (qtd != NULL) {
             dump_ehci_qtd(qtd);
             qtd = QTD_PTR(qtd->Next_qTD);
         }

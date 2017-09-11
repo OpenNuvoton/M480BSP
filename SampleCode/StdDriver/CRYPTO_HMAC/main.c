@@ -15,7 +15,6 @@
 
 #include "parser.c"
 
-
 static volatile int g_HMAC_done;
 
 
@@ -27,10 +26,9 @@ void CRYPTO_IRQHandler()
     }
 }
 
-
-int  do_compare(uint8_t *output, uint8_t *expect, int cmp_len)
+int do_compare(uint8_t *output, uint8_t *expect, int cmp_len)
 {
-    int   i;
+    int i;
 
     if (memcmp(expect, output, cmp_len)) {
         printf("\nMismatch!! - %d\n", cmp_len);
@@ -41,14 +39,13 @@ int  do_compare(uint8_t *output, uint8_t *expect, int cmp_len)
     return 0;
 }
 
-
-int  HMAC_test()
+int HMAC_test()
 {
-    uint32_t  au32OutputDigest[16];
+    uint32_t au32OutputDigest[16];
 
     SHA_Open(g_sha_mode, SHA_IN_OUT_SWAP, g_key_len);
 
-    SHA_SetDMATransfer((uint32_t)&g_hmac_msg[0],  g_msg_len + ((g_key_len+3)&0xfffffffc));
+    SHA_SetDMATransfer((uint32_t) &g_hmac_msg[0], g_msg_len + ((g_key_len + 3) & 0xfffffffc));
 
     printf("Start HMAC...\n");
 
@@ -82,7 +79,7 @@ void SYS_Init(void)
     CLK_WaitClockReady(CLK_STATUS_HXTSTB_Msk);
 
     /* Switch HCLK clock source to HXT */
-    CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_HXT,CLK_CLKDIV0_HCLK(1));
+    CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_HXT, CLK_CLKDIV0_HCLK(1));
 
     /* Set core clock as PLL_CLOCK from PLL */
     CLK_SetCoreClock(FREQ_192MHZ);
@@ -126,7 +123,7 @@ void UART0_Init(void)
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Main Function                                                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
-int32_t main (void)
+int32_t main(void)
 {
     SYS_Init();                        /* Init System, IP clock and multi-function I/O */
 
@@ -153,5 +150,5 @@ int32_t main (void)
 
     printf("\n\nHMAC test done.\n");
 
-    while (1);
+    while (1) ;
 }
