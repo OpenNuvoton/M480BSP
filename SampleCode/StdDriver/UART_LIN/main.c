@@ -176,7 +176,7 @@ void UART_FunctionTest()
     g_i32pointer = 0 ;
 
     /* Set UART Configuration, LIN Max Speed is 20K */
-    UART_SetLine_Config(UART1, 9600, UART_WORD_LEN_8, UART_PARITY_NONE, UART_STOP_BIT_1);
+    UART_SetLineConfig(UART1, 9600, UART_WORD_LEN_8, UART_PARITY_NONE, UART_STOP_BIT_1);
 
     /* Switch back to LIN Function */
     UART1->FUNCSEL = UART_FUNCSEL_LIN;

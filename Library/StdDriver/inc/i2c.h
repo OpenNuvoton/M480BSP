@@ -423,10 +423,10 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 /* inline functions                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
-  
-/* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */ 
-static __INLINE void I2C_STOP(I2C_T *i2c);  
-  
+
+/* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */
+__STATIC_INLINE void I2C_STOP(I2C_T *i2c);
+
 /**
  *    @brief        The macro is used to set STOP condition of I2C Bus
  *
@@ -436,7 +436,7 @@ static __INLINE void I2C_STOP(I2C_T *i2c);
  *
  *    @details      Set the I2C bus STOP condition in I2C_CTL register.
  */
-static __INLINE void I2C_STOP(I2C_T *i2c)
+__STATIC_INLINE void I2C_STOP(I2C_T *i2c)
 {
 
     (i2c)->CTL0 |= (I2C_CTL0_SI_Msk | I2C_CTL0_STO_Msk);
@@ -463,7 +463,18 @@ void I2C_EnableWakeup(I2C_T *i2c);
 void I2C_DisableWakeup(I2C_T *i2c);
 void I2C_SetData(I2C_T *i2c, uint8_t u8Data);
 void I2C_SMBusClearInterruptFlag(I2C_T *i2c, uint8_t u8SMBusIntFlag);
-
+uint8_t I2C_WriteByte(I2C_T *i2c, uint8_t u8SlaveAddr, uint8_t data);
+uint32_t I2C_WriteMultiBytes(I2C_T *i2c, uint8_t u8SlaveAddr, uint8_t data[], uint32_t u32wLen);
+uint8_t I2C_WriteByteOneReg(I2C_T *i2c, uint8_t u8SlaveAddr, uint8_t u8DataAddr, uint8_t data);
+uint32_t I2C_WriteMultiBytesOneReg(I2C_T *i2c, uint8_t u8SlaveAddr, uint8_t u8DataAddr, uint8_t data[], uint32_t u32wLen);
+uint8_t I2C_WriteByteTwoRegs(I2C_T *i2c, uint8_t u8SlaveAddr, uint16_t u16DataAddr, uint8_t data);
+uint32_t I2C_WriteMultiBytesTwoRegs(I2C_T *i2c, uint8_t u8SlaveAddr, uint16_t u16DataAddr, uint8_t data[], uint32_t u32wLen);
+uint8_t I2C_ReadByte(I2C_T *i2c, uint8_t u8SlaveAddr);
+uint32_t I2C_ReadMultiBytes(I2C_T *i2c, uint8_t u8SlaveAddr, uint8_t rdata[], uint32_t u32rLen);
+uint8_t I2C_ReadByteOneReg(I2C_T *i2c, uint8_t u8SlaveAddr, uint8_t u8DataAddr);
+uint32_t I2C_ReadMultiBytesOneReg(I2C_T *i2c, uint8_t u8SlaveAddr, uint8_t u8DataAddr, uint8_t rdata[], uint32_t u32rLen);
+uint8_t I2C_ReadByteTwoRegs(I2C_T *i2c, uint8_t u8SlaveAddr, uint16_t u16DataAddr);
+uint32_t I2C_ReadMultiBytesTwoRegs(I2C_T *i2c, uint8_t u8SlaveAddr, uint16_t u16DataAddr, uint8_t rdata[], uint32_t u32rLen);
 uint32_t I2C_SMBusGetStatus(I2C_T *i2c);
 void I2C_SMBusSetPacketByteCount(I2C_T *i2c, uint32_t u32PktSize);
 void I2C_SMBusOpen(I2C_T *i2c, uint8_t u8HostDevice);

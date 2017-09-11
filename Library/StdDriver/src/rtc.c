@@ -591,6 +591,56 @@ void RTC_SetAlarmTime(uint32_t u32Hour, uint32_t u32Minute, uint32_t u32Second, 
 }
 
 /**
+  * @brief      Set RTC Alarm Date Mask Function
+  *
+  * @param[in]  u8IsTenYMsk     1: enable 10-Year digit alarm mask; 0: disabled.
+  * @param[in]  u8IsYMsk        1: enable 1-Year digit alarm mask; 0: disabled.
+  * @param[in]  u8IsTenMMsk     1: enable 10-Mon digit alarm mask; 0: disabled.
+  * @param[in]  u8IsMMsk        1: enable 1-Mon digit alarm mask; 0: disabled.
+  * @param[in]  u8IsTenDMsk     1: enable 10-Day digit alarm mask; 0: disabled.
+  * @param[in]  u8IsDMsk        1: enable 1-Day digit alarm mask; 0: disabled.
+  *
+  * @return     None
+  *
+  * @details    This API is used to enable or disable RTC alarm date mask function.
+  */
+void RTC_SetAlarmDateMask(uint8_t u8IsTenYMsk, uint8_t u8IsYMsk, uint8_t u8IsTenMMsk, uint8_t u8IsMMsk, uint8_t u8IsTenDMsk, uint8_t u8IsDMsk)
+{
+    RTC_WaitAccessEnable();
+    RTC->CAMSK = ((uint32_t)u8IsTenYMsk << RTC_CAMSK_MTENYEAR_Pos) |
+                 ((uint32_t)u8IsYMsk    << RTC_CAMSK_MYEAR_Pos) |
+                 ((uint32_t)u8IsTenMMsk << RTC_CAMSK_MTENMON_Pos) |
+                 ((uint32_t)u8IsMMsk    << RTC_CAMSK_MMON_Pos) |
+                 ((uint32_t)u8IsTenDMsk << RTC_CAMSK_MTENDAY_Pos) |
+                 ((uint32_t)u8IsDMsk    << RTC_CAMSK_MDAY_Pos);
+}
+
+/**
+  * @brief      Set RTC Alarm Time Mask Function
+  *
+  * @param[in]  u8IsTenHMsk     1: enable 10-Hour digit alarm mask; 0: disabled.
+  * @param[in]  u8IsHMsk        1: enable 1-Hour digit alarm mask; 0: disabled.
+  * @param[in]  u8IsTenMMsk     1: enable 10-Min digit alarm mask; 0: disabled.
+  * @param[in]  u8IsMMsk        1: enable 1-Min digit alarm mask; 0: disabled.
+  * @param[in]  u8IsTenSMsk     1: enable 10-Sec digit alarm mask; 0: disabled.
+  * @param[in]  u8IsSMsk        1: enable 1-Sec digit alarm mask; 0: disabled.
+  *
+  * @return     None
+  *
+  * @details    This API is used to enable or disable RTC alarm time mask function.
+  */
+void RTC_SetAlarmTimeMask(uint8_t u8IsTenHMsk, uint8_t u8IsHMsk, uint8_t u8IsTenMMsk, uint8_t u8IsMMsk, uint8_t u8IsTenSMsk, uint8_t u8IsSMsk)
+{
+    RTC_WaitAccessEnable();
+    RTC->TAMSK = ((uint32_t)u8IsTenHMsk << RTC_TAMSK_MTENHR_Pos) |
+                 ((uint32_t)u8IsHMsk    << RTC_TAMSK_MHR_Pos) |
+                 ((uint32_t)u8IsTenMMsk << RTC_TAMSK_MTENMIN_Pos) |
+                 ((uint32_t)u8IsMMsk    << RTC_TAMSK_MMIN_Pos) |
+                 ((uint32_t)u8IsTenSMsk << RTC_TAMSK_MTENSEC_Pos) |
+                 ((uint32_t)u8IsSMsk    << RTC_TAMSK_MSEC_Pos);
+}
+
+/**
   * @brief      Get Day of the Week
   *
   * @param      None

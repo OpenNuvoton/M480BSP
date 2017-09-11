@@ -44,18 +44,6 @@ static uint8_t gu8LockCanIf[1ul][2ul] = {0ul};    /* The chip only has one CAN. 
 static uint32_t LockIF(CAN_T *tCAN);
 static uint32_t LockIF_TL(CAN_T *tCAN);
 static void ReleaseIF(CAN_T *tCAN, uint32_t u32IfNo);
-void CAN_EnterInitMode(CAN_T *tCAN, uint8_t u8Mask);
-void CAN_LeaveInitMode(CAN_T *tCAN);
-void CAN_WaitMsg(CAN_T *tCAN);
-uint32_t CAN_GetCANBitRate(CAN_T *tCAN);
-void CAN_EnterTestMode(CAN_T *tCAN, uint8_t u8TestMask);
-void CAN_LeaveTestMode(CAN_T *tCAN);
-uint32_t CAN_IsNewDataReceived(CAN_T *tCAN, uint8_t u8MsgObj);
-int32_t CAN_BasicSendMsg(CAN_T *tCAN, STR_CANMSG_T* pCanMsg);
-int32_t CAN_BasicReceiveMsg(CAN_T *tCAN, STR_CANMSG_T* pCanMsg);
-int32_t CAN_SetRxMsgObjAndMsk(CAN_T *tCAN, uint8_t u8MsgObj, uint8_t u8idType, uint32_t u32id, uint32_t u32idmask, uint8_t u8singleOrFifoLast);
-int32_t CAN_SetRxMsgObj(CAN_T *tCAN, uint8_t u8MsgObj, uint8_t u8idType, uint32_t u32id, uint8_t u8singleOrFifoLast);
-int32_t CAN_ReadMsgObj(CAN_T *tCAN, uint8_t u8MsgObj, uint8_t u8Release, STR_CANMSG_T* pCanMsg);
 static int can_update_spt(int sampl_pt, int tseg, int *tseg1, int *tseg2);
 
 /**
@@ -169,6 +157,31 @@ static void ReleaseIF(CAN_T *tCAN, uint32_t u32IfNo)
         tCAN->CON |= u32IntMask;
     }
 }
+
+static int can_update_spt(int sampl_pt, int tseg, int *tseg1, int *tseg2)
+{
+    *tseg2 = tseg + 1 - (sampl_pt * (tseg + 1)) / 1000;
+    if (*tseg2 < TSEG2_MIN) {
+        *tseg2 = TSEG2_MIN;
+    } else {
+    }
+
+    if (*tseg2 > TSEG2_MAX) {
+        *tseg2 = TSEG2_MAX;
+    } else {
+    }
+
+    *tseg1 = tseg - *tseg2;
+    if (*tseg1 > TSEG1_MAX) {
+        *tseg1 = TSEG1_MAX;
+        *tseg2 = tseg - *tseg1;
+    } else {
+    }
+
+    return 1000 * (tseg + 1 - *tseg2) / (tseg + 1);
+}
+
+/** @endcond HIDDEN_SYMBOLS */
 
 /**
   * @brief Enter initialization mode
@@ -607,30 +620,6 @@ int32_t CAN_ReadMsgObj(CAN_T *tCAN, uint8_t u8MsgObj, uint8_t u8Release, STR_CAN
     return rev;
 }
 
-static int can_update_spt(int sampl_pt, int tseg, int *tseg1, int *tseg2)
-{
-    *tseg2 = tseg + 1 - (sampl_pt * (tseg + 1)) / 1000;
-    if (*tseg2 < TSEG2_MIN) {
-        *tseg2 = TSEG2_MIN;
-    } else {
-    }
-
-    if (*tseg2 > TSEG2_MAX) {
-        *tseg2 = TSEG2_MAX;
-    } else {
-    }
-
-    *tseg1 = tseg - *tseg2;
-    if (*tseg1 > TSEG1_MAX) {
-        *tseg1 = TSEG1_MAX;
-        *tseg2 = tseg - *tseg1;
-    } else {
-    }
-
-    return 1000 * (tseg + 1 - *tseg2) / (tseg + 1);
-}
-
-/** @endcond HIDDEN_SYMBOLS */
 
 /**
   * @brief Set bus baud-rate.

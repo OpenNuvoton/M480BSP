@@ -161,7 +161,18 @@ int32_t CAN_SetRxMsg(CAN_T *tCAN, uint32_t u32MsgNum , uint32_t u32IDType, uint3
 int32_t CAN_SetRxMsgAndMsk(CAN_T *tCAN, uint32_t u32MsgNum , uint32_t u32IDType, uint32_t u32ID, uint32_t u32IDMask);
 int32_t CAN_SetTxMsg(CAN_T *tCAN, uint32_t u32MsgNum , STR_CANMSG_T* pCanMsg);
 int32_t CAN_TriggerTxMsg(CAN_T  *tCAN, uint32_t u32MsgNum);
-
+int32_t CAN_BasicSendMsg(CAN_T *tCAN, STR_CANMSG_T* pCanMsg);
+int32_t CAN_BasicReceiveMsg(CAN_T *tCAN, STR_CANMSG_T* pCanMsg);
+void CAN_EnterInitMode(CAN_T *tCAN, uint8_t u8Mask);
+void CAN_EnterTestMode(CAN_T *tCAN, uint8_t u8TestMask);
+void CAN_LeaveTestMode(CAN_T *tCAN);
+uint32_t CAN_GetCANBitRate(CAN_T *tCAN);
+uint32_t CAN_IsNewDataReceived(CAN_T *tCAN, uint8_t u8MsgObj);
+void CAN_LeaveInitMode(CAN_T *tCAN);
+int32_t CAN_SetRxMsgObjAndMsk(CAN_T *tCAN, uint8_t u8MsgObj, uint8_t u8idType, uint32_t u32id, uint32_t u32idmask, uint8_t u8singleOrFifoLast);
+int32_t CAN_SetRxMsgObj(CAN_T *tCAN, uint8_t u8MsgObj, uint8_t u8idType, uint32_t u32id, uint8_t u8singleOrFifoLast);
+void CAN_WaitMsg(CAN_T *tCAN);
+int32_t CAN_ReadMsgObj(CAN_T *tCAN, uint8_t u8MsgObj, uint8_t u8Release, STR_CANMSG_T* pCanMsg);
 
 /*@}*/ /* end of group CAN_EXPORTED_FUNCTIONS */
 
