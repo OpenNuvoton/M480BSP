@@ -304,8 +304,7 @@ void SDH0_IRQHandler(void)
     isr = SDH0->INTSTS;
     if (isr & SDH_INTSTS_BLKDIF_Msk) {
         // block down
-        extern uint8_t volatile _SDH_SDDataReady;
-        _SDH_SDDataReady = TRUE;
+        g_u8SDDataReadyFlag = TRUE;
         SDH0->INTSTS = SDH_INTSTS_BLKDIF_Msk;
     }
 
@@ -337,8 +336,7 @@ void SDH0_IRQHandler(void)
             //printf("***** ISR sdioIntHandler(): CRC_16 error !\n");
             // handle CRC error
         } else if (!(isr & SDH_INTSTS_CRC7_Msk)) {
-            extern uint32_t _SDH_uR3_CMD;
-            if (!_SDH_uR3_CMD) {
+            if (!g_u8R3Flag) {
                 //printf("***** ISR sdioIntHandler(): CRC_7 error !\n");
                 // handle CRC error
             }
