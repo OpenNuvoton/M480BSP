@@ -83,6 +83,8 @@ typedef struct SDH_info_t {
 /*@}*/ /* end of group SDH_EXPORTED_TYPEDEF */
 
 /** @cond HIDDEN_SYMBOLS */
+extern uint8_t g_u8R3Flag;
+extern uint8_t volatile g_u8SDDataReadyFlag;
 extern SDH_INFO_T SD0, SD1;
 /** @endcond HIDDEN_SYMBOLS */
 
@@ -179,7 +181,7 @@ uint32_t SDH_Read(SDH_T *sdh, uint8_t *pu8BufAddr, uint32_t u32StartSec, uint32_
 uint32_t SDH_Write(SDH_T *sdh, uint8_t *pu8BufAddr, uint32_t u32StartSec, uint32_t u32SecCount);
 
 uint32_t SDH_CardDetection(SDH_T *sdh);
-void SDH_Open_Disk(SDH_T *sdh, unsigned int u32CardDetSrc);
+void SDH_Open_Disk(SDH_T *sdh, uint32_t u32CardDetSrc);
 void SDH_Close_Disk(SDH_T *sdh);
 
 
