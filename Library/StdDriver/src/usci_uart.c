@@ -297,45 +297,63 @@ void UUART_EnableInt(UUART_T*  uuart, uint32_t u32Mask)
  */
 uint32_t UUART_Open(UUART_T* uuart, uint32_t u32baudrate)
 {
-    uint32_t u32PCLKFreq, u32PDSClk, u32PDSCnt, u32DSCnt, u32ClkDiv;
+    uint32_t u32PCLKFreq, u32PDSCnt, u32DSCnt, u32ClkDiv;
     uint32_t u32Tmp, u32Tmp2, u32Min, u32MinClkDiv, u32MinDSCnt;
+    uint32_t u32Div;
 
     /* Get PCLK frequency */
     if( uuart == UUART0) {
-        u32PDSClk = u32PCLKFreq = CLK_GetPCLK0Freq();
+        u32PCLKFreq = CLK_GetPCLK0Freq();
     } else {
-        u32PDSClk = u32PCLKFreq = CLK_GetPCLK1Freq();
+        u32PCLKFreq = CLK_GetPCLK1Freq();
     }
 
-    for(u32PDSCnt = 1ul; u32PDSCnt <= 0x04ul; u32PDSCnt++) { /* PDSCNT could be 0~0x3 */
-        u32PDSClk = u32PCLKFreq / u32PDSCnt;
+    u32Div = u32PCLKFreq / u32baudrate;
+    u32Tmp = (u32PCLKFreq / u32Div) - u32baudrate;
+    u32Tmp2 = u32baudrate - (u32PCLKFreq / (u32Div+1ul));
 
-        if(u32PDSClk > (80000000ul/4ul)) { /* max. PCLK freq = 80MHz */
-        } else {
-            break;
-        }
+    if(u32Tmp >= u32Tmp2) u32Div = u32Div + 1ul;
+
+    u32Tmp = 0x400ul * 0x10ul;
+    for(u32PDSCnt = 1ul; u32PDSCnt <= 0x04ul; u32PDSCnt++) {
+        if(u32Div <= (u32Tmp * u32PDSCnt)) break;
     }
+
+    if(u32PDSCnt > 0x4ul) u32PDSCnt = 0x4ul;
+
+    u32Div = u32Div / u32PDSCnt;
 
     /* Find best solution */
     u32Min = (uint32_t) - 1;
     u32MinDSCnt = 0ul;
     u32MinClkDiv = 0ul;
+    u32Tmp = 0ul;
+
     for(u32DSCnt = 6ul; u32DSCnt <= 0x10ul; u32DSCnt++) { /* DSCNT could be 0x5~0xF */
-        for(u32ClkDiv = 1ul; u32ClkDiv <= 0x400ul; u32ClkDiv++) { /* CLKDIV could be 0~0x3FF */
 
-            u32Tmp = u32PDSClk / u32DSCnt / u32ClkDiv;
+        u32ClkDiv = u32Div / u32DSCnt;
 
-            u32Tmp2 = (u32Tmp > u32baudrate) ? u32Tmp - u32baudrate : u32baudrate - u32Tmp;
+        if(u32ClkDiv > 0x400ul) {
+            u32ClkDiv = 0x400ul;
+            u32Tmp = u32Div - (u32ClkDiv * u32DSCnt);
+            u32Tmp2 = u32Tmp + 1ul;
+        } else {
+            u32Tmp = u32Div - (u32ClkDiv * u32DSCnt);
+            u32Tmp2 = ((u32ClkDiv+1ul) * u32DSCnt) - u32Div;
+        }
 
-            if(u32Tmp2 < u32Min) {
-                u32Min = u32Tmp2;
-                u32MinDSCnt = u32DSCnt;
-                u32MinClkDiv = u32ClkDiv;
+        if(u32Tmp >= u32Tmp2) {
+            u32ClkDiv = u32ClkDiv + 1ul;
+        } else u32Tmp2 = u32Tmp;
 
-                /* Break when get good results */
-                if(u32Min == 0ul) {
-                    break;
-                }
+        if(u32Tmp2 < u32Min) {
+            u32Min = u32Tmp2;
+            u32MinDSCnt = u32DSCnt;
+            u32MinClkDiv = u32ClkDiv;
+
+            /* Break when get good results */
+            if(u32Min == 0ul) {
+                break;
             }
         }
     }
@@ -421,45 +439,62 @@ uint32_t UUART_Read(UUART_T* uuart, uint8_t pu8RxBuf[], uint32_t u32ReadBytes)
  */
 uint32_t UUART_SetLine_Config(UUART_T* uuart, uint32_t u32baudrate, uint32_t u32data_width, uint32_t u32parity, uint32_t u32stop_bits)
 {
-    uint32_t u32PCLKFreq, u32PDSClk, u32PDSCnt, u32DSCnt, u32ClkDiv;
+    uint32_t u32PCLKFreq, u32PDSCnt, u32DSCnt, u32ClkDiv;
     uint32_t u32Tmp, u32Tmp2, u32Min, u32MinClkDiv, u32MinDSCnt;
+    uint32_t u32Div;
 
     /* Get PCLK frequency */
     if(uuart == UUART0) {
-        u32PDSClk = u32PCLKFreq = CLK_GetPCLK0Freq();
+        u32PCLKFreq = CLK_GetPCLK0Freq();
     } else { /* UUART1 */
-        u32PDSClk = u32PCLKFreq = CLK_GetPCLK1Freq();
+        u32PCLKFreq = CLK_GetPCLK1Freq();
     }
 
     if(u32baudrate != 0ul) {
-        for(u32PDSCnt = 1ul; u32PDSCnt <= 0x04ul; u32PDSCnt++) { /* PDSCNT could be 0~0x3 */
-            u32PDSClk = u32PCLKFreq / u32PDSCnt;
+        u32Div = u32PCLKFreq / u32baudrate;
+        u32Tmp = (u32PCLKFreq / u32Div) - u32baudrate;
+        u32Tmp2 = u32baudrate - (u32PCLKFreq / (u32Div+1ul));
 
-            if(u32PDSClk > (80000000ul/4ul)) { /* max. PCLK freq = 80MHz */
-            } else {
-                break;
-            }
+        if(u32Tmp >= u32Tmp2) u32Div = u32Div + 1ul;
+
+        u32Tmp = 0x400ul * 0x10ul;
+        for(u32PDSCnt = 1ul; u32PDSCnt <= 0x04ul; u32PDSCnt++) {
+            if(u32Div <= (u32Tmp * u32PDSCnt)) break;
         }
+
+        if(u32PDSCnt > 0x4ul) u32PDSCnt = 0x4ul;
+
+        u32Div = u32Div / u32PDSCnt;
 
         /* Find best solution */
         u32Min = (uint32_t) - 1;
         u32MinDSCnt = 0ul;
         u32MinClkDiv = 0ul;
+
         for(u32DSCnt = 6ul; u32DSCnt <= 0x10ul; u32DSCnt++) { /* DSCNT could be 0x5~0xF */
-            for(u32ClkDiv = 1ul; u32ClkDiv <= 0x400ul; u32ClkDiv++) { /* CLKDIV could be 0~0x3FF */
-                u32Tmp = u32PDSClk / u32DSCnt / u32ClkDiv;
+            u32ClkDiv = u32Div / u32DSCnt;
 
-                u32Tmp2 = (u32Tmp > u32baudrate) ? u32Tmp - u32baudrate : u32baudrate - u32Tmp;
+            if(u32ClkDiv > 0x400ul) {
+                u32ClkDiv = 0x400ul;
+                u32Tmp = u32Div - (u32ClkDiv * u32DSCnt);
+                u32Tmp2 = u32Tmp + 1ul;
+            } else {
+                u32Tmp = u32Div - (u32ClkDiv * u32DSCnt);
+                u32Tmp2 = ((u32ClkDiv+1ul) * u32DSCnt) - u32Div;
+            }
 
-                if(u32Tmp2 < u32Min) {
-                    u32Min = u32Tmp2;
-                    u32MinDSCnt = u32DSCnt;
-                    u32MinClkDiv = u32ClkDiv;
+            if(u32Tmp >= u32Tmp2) {
+                u32ClkDiv = u32ClkDiv + 1ul;
+            } else u32Tmp2 = u32Tmp;
 
-                    /* Break when get good results */
-                    if(u32Min == 0ul) {
-                        break;
-                    }
+            if(u32Tmp2 < u32Min) {
+                u32Min = u32Tmp2;
+                u32MinDSCnt = u32DSCnt;
+                u32MinClkDiv = u32ClkDiv;
+
+                /* Break when get good results */
+                if(u32Min == 0ul) {
+                    break;
                 }
             }
         }

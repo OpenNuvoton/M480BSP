@@ -271,7 +271,7 @@ typedef struct {
 #define RTC_WRITE_SPARE_REGISTER(u32RegNum, u32RegValue)    (RTC->SPR[(u32RegNum)] = (u32RegValue))
 
 /* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */
-static __INLINE void RTC_WaitAccessEnable(void);
+__STATIC_INLINE void RTC_WaitAccessEnable(void);
 
 /**
   * @brief      Wait RTC Access Enable
@@ -282,7 +282,7 @@ static __INLINE void RTC_WaitAccessEnable(void);
   *
   * @details    This function is used to enable the maximum RTC read/write accessible time.
   */
-static __INLINE void RTC_WaitAccessEnable(void)
+__STATIC_INLINE void RTC_WaitAccessEnable(void)
 {
     while((RTC->RWEN & RTC_RWEN_RTCBUSY_Msk) == RTC_RWEN_RTCBUSY_Msk) {
     }

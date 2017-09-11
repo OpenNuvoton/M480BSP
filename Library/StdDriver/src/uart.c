@@ -313,7 +313,7 @@ uint32_t UART_Read(UART_T* uart, uint8_t pu8RxBuf[], uint32_t u32ReadBytes)
  *
  *    @details      This function use to config UART line setting.
  */
-void UART_SetLine_Config(UART_T* uart, uint32_t u32baudrate, uint32_t u32data_width, uint32_t u32parity, uint32_t  u32stop_bits)
+void UART_SetLineConfig(UART_T* uart, uint32_t u32baudrate, uint32_t u32data_width, uint32_t u32parity, uint32_t  u32stop_bits)
 {
     uint32_t u32UartClkSrcSel=0ul, u32UartClkDivNum=0ul;
     uint32_t u32ClkTbl[4ul] = {__HXT, 0ul, __LXT, __HIRC};
