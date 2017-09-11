@@ -26,7 +26,7 @@ uint32_t au32MyAESIV[4] = {
 #pragma data_alignment=4
 uint8_t au8InputData[] = {
 #else
-__align(4) uint8_t au8InputData[] = {
+uint8_t au8InputData[] __attribute__((aligned (4))) = {
 #endif
     0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88,
     0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff
@@ -36,12 +36,12 @@ __align(4) uint8_t au8InputData[] = {
 #pragma data_alignment=4
 uint8_t au8OutputData[1024];
 #else
-__align(4) uint8_t au8OutputData[1024];
+uint8_t au8OutputData[1024] __attribute__((aligned (4)));
 #endif
 
 static volatile int  g_AES_done;
 
-volatile void CRYPTO_IRQHandler()
+void CRYPTO_IRQHandler()
 {
     if (AES_GET_INT_FLAG()) {
         g_AES_done = 1;
