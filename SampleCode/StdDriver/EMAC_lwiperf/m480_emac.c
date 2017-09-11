@@ -31,8 +31,8 @@ static u8_t rx_buf[RX_DESCRIPTOR_NUM][PACKET_BUFFER_SIZE];
 static u8_t tx_buf[TX_DESCRIPTOR_NUM][PACKET_BUFFER_SIZE];
 static int plugged = 0;
 
-extern void ethernetif_input(u16_t len, u8_t *buf);
-extern void ethernetif_loopback_input(struct pbuf *p);
+//extern void ethernetif_input(u16_t len, u8_t *buf);
+//extern void ethernetif_loopback_input(struct pbuf *p);
 extern uint32_t queue_try_put(struct pbuf *p);
 
 void EMAC_RX_IRQHandler(void)

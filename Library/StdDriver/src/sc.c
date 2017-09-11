@@ -88,16 +88,16 @@ void SC_Close(SC_T *sc)
 /**
   * @brief This function initialized smartcard module
   * @param[in] sc Base address of smartcard module
-  * @param[in] u32CD Card detect polarity, select the CD pin state which indicates card absent. Could be
+  * @param[in] u32CardDet Card detect polarity, select the CD pin state which indicates card absent. Could be
   *                 -\ref SC_PIN_STATE_HIGH
   *                 -\ref SC_PIN_STATE_LOW
   *                 -\ref SC_PIN_STATE_IGNORE, no card detect pin, always assumes card present
-  * @param[in] u32PWR Power off polarity, select the PWR pin state which could set smartcard VCC to high level. Could be
+  * @param[in] u32PWR Power on polarity, select the PWR pin state which could set smartcard VCC to high level. Could be
   *                 -\ref SC_PIN_STATE_HIGH
   *                 -\ref SC_PIN_STATE_LOW
   * @return None
   */
-void SC_Open(SC_T *sc, uint32_t u32CD, uint32_t u32PWR)
+void SC_Open(SC_T *sc, uint32_t u32CardDet, uint32_t u32PWR)
 {
     uint32_t u32Reg = 0UL, u32Intf;
 
@@ -109,8 +109,8 @@ void SC_Open(SC_T *sc, uint32_t u32CD, uint32_t u32PWR)
         u32Intf = 2UL;
     }
 
-    if(u32CD != SC_PIN_STATE_IGNORE) {
-        u32Reg = u32CD ? 0UL: SC_CTL_CDLV_Msk;
+    if(u32CardDet != SC_PIN_STATE_IGNORE) {
+        u32Reg = u32CardDet ? 0UL: SC_CTL_CDLV_Msk;
         u32CardStateIgnore[u32Intf] = 0UL;
     } else {
         u32CardStateIgnore[u32Intf] = 1UL;
@@ -119,7 +119,7 @@ void SC_Open(SC_T *sc, uint32_t u32CD, uint32_t u32PWR)
     while(sc->CTL & SC_CTL_SYNC_Msk) {
         ;
     }
-    sc->CTL = SC_CTL_SCEN_Msk | u32Reg;
+    sc->CTL = SC_CTL_SCEN_Msk | SC_CTL_TMRSEL_Msk | u32Reg;
 }
 
 /**

@@ -236,7 +236,7 @@ __STATIC_INLINE void  SC_SetRxRetry(SC_T *sc, uint32_t u32Count)
 uint32_t SC_IsCardInserted(SC_T *sc);
 void SC_ClearFIFO(SC_T *sc);
 void SC_Close(SC_T *sc);
-void SC_Open(SC_T *sc, uint32_t u32CD, uint32_t u32PWR);
+void SC_Open(SC_T *sc, uint32_t u32CardDet, uint32_t u32PWR);
 void SC_ResetReader(SC_T *sc);
 void SC_SetBlockGuardTime(SC_T *sc, uint32_t u32BGT);
 void SC_SetCharGuardTime(SC_T *sc, uint32_t u32CGT);

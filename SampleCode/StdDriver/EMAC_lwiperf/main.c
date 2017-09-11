@@ -42,10 +42,12 @@ static err_t netif_output(struct netif *netif, struct pbuf *p)
     return ERR_OK;
 }
 
+#if 0
 static void netif_status_callback(struct netif *netif)
 {
     printf("netif status changed %s\n", ip4addr_ntoa(netif_ip4_addr(netif)));
 }
+#endif
 
 static err_t m480_netif_init(struct netif *netif)
 {

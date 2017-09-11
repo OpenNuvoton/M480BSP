@@ -77,9 +77,9 @@ static __INLINE void HXTInit(void)
  */
 void SystemInit (void)
 {
-    /* ToDo: add code to initialize the system
-             do not use global variables because this function is called before
-             reaching pre-main. RW section maybe overwritten afterwards.          */
+    /* Add your system initialize code here.
+       Do not use global variables because this function is called before
+       reaching pre-main. RW section maybe overwritten afterwards.          */
 
 
     /* FPU settings ------------------------------------------------------------*/
