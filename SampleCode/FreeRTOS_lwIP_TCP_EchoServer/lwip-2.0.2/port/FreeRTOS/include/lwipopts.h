@@ -51,6 +51,10 @@
 #define LWIP_RAND                       xTaskGetTickCount
 //#define LWIP_DHCP                       1
 
+#ifdef __GNUC__
+#define LWIP_TIMEVAL_PRIVATE            0
+#endif
+
 #define TCPIP_THREAD_STACKSIZE          350
 #define TCPIP_THREAD_PRIO               2
 #define TCPIP_MBOX_SIZE                 10

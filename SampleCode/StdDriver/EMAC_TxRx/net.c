@@ -20,6 +20,8 @@ static uint32_t s_u32PktRdy;                // If not 0, this variable stores th
 #ifdef __ICCARM__
 #pragma data_alignment=4
 static uint8_t  s_au8DhcpRawBuffer[3020];
+#elif defined (__GNUC__)
+static uint8_t  s_au8DhcpRawBuffer[3020] __attribute__ ((aligned(4)));
 #else
 __align(4) static uint8_t  s_au8DhcpRawBuffer[3020];   // Buffer to store DHCP Tx/Rx data
 #endif

@@ -24,6 +24,9 @@ void TMR2_IRQHandler(void)
 
 void SYS_Init(void)
 {
+    /* Unlock protected registers */
+    SYS_UnlockReg();
+
     /* Enable External XTAL (4~24 MHz) */
     CLK_EnableXtalRC(CLK_PWRCTL_HXTEN_Msk);
 
@@ -57,6 +60,9 @@ void SYS_Init(void)
 
     /* Set multi-function pin for Timer2 external capture pin */
     SYS->GPH_MFPL = SYS_GPH_MFPL_PH2MFP_TM2_EXT;
+
+    /* Lock protected registers */
+    SYS_LockReg();
 }
 
 

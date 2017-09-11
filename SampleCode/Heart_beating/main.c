@@ -229,7 +229,6 @@ void TMR0_IRQHandler(void)
             if(((HeartFreq[0]-3) > HeartFreq[1]) && ((HeartFreq[2]-3) > HeartFreq[1])) {
                 HeartFreq1[0] = HeartFreq[0] + HeartFreq[1];
                 HeartFreq1[1] = (float)1200/(float)(HeartFreq1[0]);
-                HeartFreq1[1] = HeartFreq1[1];
                 if(HeartFreq1[1]<120 && HeartFreq1[1]>45) {
                     ShowCounter++;
                     if(ShowCounter<10)
@@ -241,7 +240,6 @@ void TMR0_IRQHandler(void)
             } else if(((HeartFreq[0]-3) < HeartFreq[1]) && ((HeartFreq[2]+3) > HeartFreq[1])) {
                 HeartFreq1[0] = HeartFreq[0];
                 HeartFreq1[1] = (float)1200/(float)(HeartFreq1[0]);
-                HeartFreq1[1] = HeartFreq1[1];
                 if(HeartFreq1[1]<120 && HeartFreq1[1]>45) {
                     ShowCounter++;
                     if(ShowCounter<10)
