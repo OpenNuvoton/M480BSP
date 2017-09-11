@@ -214,23 +214,23 @@ void BPWM_ForceStop(BPWM_T *bpwm, uint32_t u32ChannelMask)
 }
 
 /**
- * @brief Enable selected channel to trigger EADC
+ * @brief Enable selected channel to trigger ADC
  * @param[in] bpwm The pointer of the specified BPWM module
  *                - BPWM0 : BPWM Group 0
  *                - BPWM1 : BPWM Group 1
  * @param[in] u32ChannelNum BPWM channel number. Valid values are between 0~5
- * @param[in] u32Condition The condition to trigger EADC. Combination of following conditions:
- *                  - \ref BPWM_TRIGGER_EADC_EVEN_ZERO_POINT
- *                  - \ref BPWM_TRIGGER_EADC_EVEN_PERIOD_POINT
- *                  - \ref BPWM_TRIGGER_EADC_EVEN_ZERO_OR_PERIOD_POINT
- *                  - \ref BPWM_TRIGGER_EADC_EVEN_CMP_UP_COUNT_POINT
- *                  - \ref BPWM_TRIGGER_EADC_EVEN_CMP_DOWN_COUNT_POINT
- *                  - \ref BPWM_TRIGGER_EADC_ODD_CMP_UP_COUNT_POINT
- *                  - \ref BPWM_TRIGGER_EADC_ODD_CMP_DOWN_COUNT_POINT
+ * @param[in] u32Condition The condition to trigger ADC. Combination of following conditions:
+ *                  - \ref BPWM_TRIGGER_ADC_EVEN_ZERO_POINT
+ *                  - \ref BPWM_TRIGGER_ADC_EVEN_PERIOD_POINT
+ *                  - \ref BPWM_TRIGGER_ADC_EVEN_ZERO_OR_PERIOD_POINT
+ *                  - \ref BPWM_TRIGGER_ADC_EVEN_CMP_UP_COUNT_POINT
+ *                  - \ref BPWM_TRIGGER_ADC_EVEN_CMP_DOWN_COUNT_POINT
+ *                  - \ref BPWM_TRIGGER_ADC_ODD_CMP_UP_COUNT_POINT
+ *                  - \ref BPWM_TRIGGER_ADC_ODD_CMP_DOWN_COUNT_POINT
  * @return None
- * @details This function is used to enable selected channel to trigger EADC
+ * @details This function is used to enable selected channel to trigger ADC
  */
-void BPWM_EnableEADCTrigger(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t u32Condition)
+void BPWM_EnableADCTrigger(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t u32Condition)
 {
     if(u32ChannelNum < 4U) {
         (bpwm)->EADCTS0 &= ~((BPWM_EADCTS0_TRGSEL0_Msk) << (u32ChannelNum * 8U));
@@ -242,15 +242,15 @@ void BPWM_EnableEADCTrigger(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t u32Co
 }
 
 /**
- * @brief Disable selected channel to trigger EADC
+ * @brief Disable selected channel to trigger ADC
  * @param[in] bpwm The pointer of the specified BPWM module
  *                - BPWM0 : BPWM Group 0
  *                - BPWM1 : BPWM Group 1
  * @param[in] u32ChannelNum BPWM channel number. Valid values are between 0~3
  * @return None
- * @details This function is used to disable selected channel to trigger EADC
+ * @details This function is used to disable selected channel to trigger ADC
  */
-void BPWM_DisableEADCTrigger(BPWM_T *bpwm, uint32_t u32ChannelNum)
+void BPWM_DisableADCTrigger(BPWM_T *bpwm, uint32_t u32ChannelNum)
 {
     if(u32ChannelNum < 4U) {
         (bpwm)->EADCTS0 &= ~(BPWM_EADCTS0_TRGEN0_Msk << (u32ChannelNum * 8U));
@@ -260,31 +260,31 @@ void BPWM_DisableEADCTrigger(BPWM_T *bpwm, uint32_t u32ChannelNum)
 }
 
 /**
- * @brief Clear selected channel trigger EADC flag
+ * @brief Clear selected channel trigger ADC flag
  * @param[in] bpwm The pointer of the specified BPWM module
  *                - BPWM0 : BPWM Group 0
  *                - BPWM1 : BPWM Group 1
  * @param[in] u32ChannelNum BPWM channel number. Valid values are between 0~5
  * @param[in] u32Condition This parameter is not used
  * @return None
- * @details This function is used to clear selected channel trigger EADC flag
+ * @details This function is used to clear selected channel trigger ADC flag
  */
-void BPWM_ClearEADCTriggerFlag(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t u32Condition)
+void BPWM_ClearADCTriggerFlag(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t u32Condition)
 {
     (bpwm)->STATUS = (BPWM_STATUS_EADCTRGn_Msk << u32ChannelNum);
 }
 
 /**
- * @brief Get selected channel trigger EADC flag
+ * @brief Get selected channel trigger ADC flag
  * @param[in] bpwm The pointer of the specified BPWM module
  *                - BPWM0 : BPWM Group 0
  *                - BPWM1 : BPWM Group 1
  * @param[in] u32ChannelNum BPWM channel number. Valid values are between 0~5
- * @retval 0 The specified channel trigger EADC to start of conversion flag is not set
- * @retval 1 The specified channel trigger EADC to start of conversion flag is set
- * @details This function is used to get BPWM trigger EADC to start of conversion flag for specified channel
+ * @retval 0 The specified channel trigger ADC to start of conversion flag is not set
+ * @retval 1 The specified channel trigger ADC to start of conversion flag is set
+ * @details This function is used to get BPWM trigger ADC to start of conversion flag for specified channel
  */
-uint32_t BPWM_GetEADCTriggerFlag(BPWM_T *bpwm, uint32_t u32ChannelNum)
+uint32_t BPWM_GetADCTriggerFlag(BPWM_T *bpwm, uint32_t u32ChannelNum)
 {
     return (((bpwm)->STATUS & (BPWM_STATUS_EADCTRGn_Msk << u32ChannelNum)) ? 1UL : 0UL);
 }

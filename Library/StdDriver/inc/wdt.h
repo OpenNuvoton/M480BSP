@@ -143,9 +143,9 @@ extern "C"
 #define WDT_RESET_COUNTER()             (WDT->CTL = (WDT->CTL & ~(WDT_CTL_IF_Msk | WDT_CTL_WKF_Msk | WDT_CTL_RSTF_Msk)) | WDT_CTL_RSTCNT_Msk)
 
 /* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */
-static __INLINE void WDT_Close(void);
-static __INLINE void WDT_EnableInt(void);
-static __INLINE void WDT_DisableInt(void);
+__STATIC_INLINE void WDT_Close(void);
+__STATIC_INLINE void WDT_EnableInt(void);
+__STATIC_INLINE void WDT_DisableInt(void);
 
 /**
   * @brief      Stop WDT Counting
@@ -156,7 +156,7 @@ static __INLINE void WDT_DisableInt(void);
   *
   * @details    This function will stop WDT counting and disable WDT module.
   */
-static __INLINE void WDT_Close(void)
+__STATIC_INLINE void WDT_Close(void)
 {
     WDT->CTL = 0UL;
     return;
@@ -171,7 +171,7 @@ static __INLINE void WDT_Close(void)
   *
   * @details    This function will enable the WDT time-out interrupt function.
   */
-static __INLINE void WDT_EnableInt(void)
+__STATIC_INLINE void WDT_EnableInt(void)
 {
     WDT->CTL |= WDT_CTL_INTEN_Msk;
     return;
@@ -186,7 +186,7 @@ static __INLINE void WDT_EnableInt(void)
   *
   * @details    This function will disable the WDT time-out interrupt function.
   */
-static __INLINE void WDT_DisableInt(void)
+__STATIC_INLINE void WDT_DisableInt(void)
 {
     /* Do not touch another write 1 clear bits */
     WDT->CTL &= ~(WDT_CTL_INTEN_Msk | WDT_CTL_RSTF_Msk | WDT_CTL_IF_Msk | WDT_CTL_WKF_Msk);

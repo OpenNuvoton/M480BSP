@@ -65,13 +65,13 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Trigger Source Select Constant Definitions                                                             */
 /*---------------------------------------------------------------------------------------------------------*/
-#define BPWM_TRIGGER_EADC_EVEN_ZERO_POINT                     (0UL)     /*!< BPWM trigger EADC while counter of even channel matches zero point \hideinitializer */
-#define BPWM_TRIGGER_EADC_EVEN_PERIOD_POINT                   (1UL)     /*!< BPWM trigger EADC while counter of even channel matches period point \hideinitializer */
-#define BPWM_TRIGGER_EADC_EVEN_ZERO_OR_PERIOD_POINT           (2UL)     /*!< BPWM trigger EADC while counter of even channel matches zero or period point \hideinitializer */
-#define BPWM_TRIGGER_EADC_EVEN_CMP_UP_COUNT_POINT             (3UL)     /*!< BPWM trigger EADC while counter of even channel matches up count to comparator point \hideinitializer */
-#define BPWM_TRIGGER_EADC_EVEN_CMP_DOWN_COUNT_POINT           (4UL)     /*!< BPWM trigger EADC while counter of even channel matches down count to comparator point \hideinitializer */
-#define BPWM_TRIGGER_EADC_ODD_CMP_UP_COUNT_POINT              (8UL)     /*!< BPWM trigger EADC while counter of odd channel matches up count to comparator point \hideinitializer */
-#define BPWM_TRIGGER_EADC_ODD_CMP_DOWN_COUNT_POINT            (9UL)     /*!< BPWM trigger EADC while counter of odd channel matches down count to comparator point \hideinitializer */
+#define BPWM_TRIGGER_ADC_EVEN_ZERO_POINT                     (0UL)     /*!< BPWM trigger ADC while counter of even channel matches zero point \hideinitializer */
+#define BPWM_TRIGGER_ADC_EVEN_PERIOD_POINT                   (1UL)     /*!< BPWM trigger ADC while counter of even channel matches period point \hideinitializer */
+#define BPWM_TRIGGER_ADC_EVEN_ZERO_OR_PERIOD_POINT           (2UL)     /*!< BPWM trigger ADC while counter of even channel matches zero or period point \hideinitializer */
+#define BPWM_TRIGGER_ADC_EVEN_CMP_UP_COUNT_POINT             (3UL)     /*!< BPWM trigger ADC while counter of even channel matches up count to comparator point \hideinitializer */
+#define BPWM_TRIGGER_ADC_EVEN_CMP_DOWN_COUNT_POINT           (4UL)     /*!< BPWM trigger ADC while counter of even channel matches down count to comparator point \hideinitializer */
+#define BPWM_TRIGGER_ADC_ODD_CMP_UP_COUNT_POINT              (8UL)     /*!< BPWM trigger ADC while counter of odd channel matches up count to comparator point \hideinitializer */
+#define BPWM_TRIGGER_ADC_ODD_CMP_DOWN_COUNT_POINT            (9UL)     /*!< BPWM trigger ADC while counter of odd channel matches down count to comparator point \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Capture Control Constant Definitions                                                                   */
@@ -314,10 +314,10 @@ uint32_t BPWM_ConfigOutputChannel(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t
 void BPWM_Start(BPWM_T *bpwm, uint32_t u32ChannelMask);
 void BPWM_Stop(BPWM_T *bpwm, uint32_t u32ChannelMask);
 void BPWM_ForceStop(BPWM_T *bpwm, uint32_t u32ChannelMask);
-void BPWM_EnableEADCTrigger(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t u32Condition);
-void BPWM_DisableEADCTrigger(BPWM_T *bpwm, uint32_t u32ChannelNum);
-void BPWM_ClearEADCTriggerFlag(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t u32Condition);
-uint32_t BPWM_GetEADCTriggerFlag(BPWM_T *bpwm, uint32_t u32ChannelNum);
+void BPWM_EnableADCTrigger(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t u32Condition);
+void BPWM_DisableADCTrigger(BPWM_T *bpwm, uint32_t u32ChannelNum);
+void BPWM_ClearADCTriggerFlag(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t u32Condition);
+uint32_t BPWM_GetADCTriggerFlag(BPWM_T *bpwm, uint32_t u32ChannelNum);
 void BPWM_EnableCapture(BPWM_T *bpwm, uint32_t u32ChannelMask);
 void BPWM_DisableCapture(BPWM_T *bpwm, uint32_t u32ChannelMask);
 void BPWM_EnableOutput(BPWM_T *bpwm, uint32_t u32ChannelMask);
