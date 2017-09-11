@@ -995,6 +995,144 @@ void CLK_EnableSPDWKPin(uint32_t u32Port, uint32_t u32Pin, uint32_t u32TriggerTy
     outpw((uint32_t *)u32tmpAddr, u32tmpVal);
 }
 
+/**
+  * @brief      Get PLL clock frequency
+  * @param      None
+  * @return     PLL frequency
+  * @details    This function get PLL frequency. The frequency unit is Hz.
+  */
+uint32_t CLK_GetPLLClockFreq(void)
+{
+    uint32_t u32PllFreq = 0UL, u32PllReg;
+    uint32_t u32FIN, u32NF, u32NR, u32NO;
+    uint8_t au8NoTbl[4] = {1U, 2U, 2U, 4U};
+
+    u32PllReg = CLK->PLLCTL;
+
+    if(u32PllReg & (CLK_PLLCTL_PD_Msk | CLK_PLLCTL_OE_Msk)) {
+        u32PllFreq = 0UL;           /* PLL is in power down mode or fix low */
+    } else if((u32PllReg & CLK_PLLCTL_BP_Msk) == CLK_PLLCTL_BP_Msk) {
+        if((u32PllReg & CLK_PLLCTL_PLLSRC_HIRC) == CLK_PLLCTL_PLLSRC_HIRC) {
+            u32FIN = __HIRC;    /* PLL source clock from HIRC */
+        } else {
+            u32FIN = __HXT;     /* PLL source clock from HXT */
+        }
+
+        u32PllFreq = u32FIN;
+    } else {
+        if((u32PllReg & CLK_PLLCTL_PLLSRC_HIRC) == CLK_PLLCTL_PLLSRC_HIRC) {
+            u32FIN = __HIRC;    /* PLL source clock from HIRC */
+        } else {
+            u32FIN = __HXT;     /* PLL source clock from HXT */
+        }
+        /* PLL is output enabled in normal work mode */
+        u32NO = au8NoTbl[((u32PllReg & CLK_PLLCTL_OUTDIV_Msk) >> CLK_PLLCTL_OUTDIV_Pos)];
+        u32NF = ((u32PllReg & CLK_PLLCTL_FBDIV_Msk) >> CLK_PLLCTL_FBDIV_Pos) + 2UL;
+        u32NR = ((u32PllReg & CLK_PLLCTL_INDIV_Msk) >> CLK_PLLCTL_INDIV_Pos) + 1UL;
+
+        /* u32FIN is shifted 2 bits to avoid overflow */
+        u32PllFreq = (((u32FIN >> 2) * u32NF) / (u32NR * u32NO) << 2) * 2UL;
+    }
+
+    return u32PllFreq;
+}
+
+/**
+  * @brief      Get selected module clock source
+  * @param[in]  u32ModuleIdx is module index.
+  *             - \ref SDH0_MODULE
+  *             - \ref SDH1_MODULE
+  *             - \ref WDT_MODULE
+  *             - \ref UART0_MODULE
+  *             - \ref UART1_MODULE
+  *             - \ref CLKO_MODULE
+  *             - \ref WWDT_MODULE
+  *             - \ref TMR0_MODULE
+  *             - \ref TMR1_MODULE
+  *             - \ref TMR2_MODULE
+  *             - \ref TMR3_MODULE
+  *             - \ref EPWM0_MODULE
+  *             - \ref EPWM1_MODULE
+  *             - \ref BPWM0_MODULE
+  *             - \ref BPWM1_MODULE
+  *             - \ref SPI0_MODULE
+  *             - \ref SPI1_MODULE
+  *             - \ref SPI2_MODULE
+  *             - \ref SPI3_MODULE
+  *             - \ref SPI4_MODULE
+  *             - \ref SC0_MODULE
+  *             - \ref SC1_MODULE
+  *             - \ref SC2_MODULE
+  *             - \ref RTC_MODULE
+  *             - \ref I2S0_MODULE
+  *             - \ref UART2_MODULE
+  *             - \ref UART3_MODULE
+  *             - \ref UART4_MODULE
+  *             - \ref UART5_MODULE
+  * @return     Selected module clock source setting
+  * @details    This function get selected module clock source.
+  */
+uint32_t CLK_GetModuleClockSource(uint32_t u32ModuleIdx)
+{
+    uint32_t u32sel = 0;
+    uint32_t u32SelTbl[4] = {0x0, 0x4, 0x8, 0xC};
+
+    /* Get clock source selection setting */
+    if(u32ModuleIdx == EPWM0_MODULE)
+        return ((CLK->CLKSEL2 & CLK_CLKSEL2_EPWM0SEL_Msk) >> CLK_CLKSEL2_EPWM0SEL_Pos);
+    else if(u32ModuleIdx == EPWM1_MODULE)
+        return ((CLK->CLKSEL2 & CLK_CLKSEL2_EPWM1SEL_Msk) >> CLK_CLKSEL2_EPWM1SEL_Pos);
+    else if(u32ModuleIdx == BPWM0_MODULE)
+        return ((CLK->CLKSEL2 & CLK_CLKSEL2_BPWM0SEL_Msk) >> CLK_CLKSEL2_BPWM0SEL_Pos);
+    else if(u32ModuleIdx == BPWM1_MODULE)
+        return ((CLK->CLKSEL2 & CLK_CLKSEL2_BPWM1SEL_Msk) >> CLK_CLKSEL2_BPWM1SEL_Pos);
+    else if(MODULE_CLKSEL_Msk(u32ModuleIdx) != MODULE_NoMsk)
+    {
+        /* Get clock select control register address */
+        u32sel = (uint32_t)&CLK->CLKSEL0 + (u32SelTbl[MODULE_CLKSEL(u32ModuleIdx)]);
+        /* Get clock source selection setting */
+        return ((M32(u32sel) & (MODULE_CLKSEL_Msk(u32ModuleIdx) << MODULE_CLKSEL_Pos(u32ModuleIdx))) >> MODULE_CLKSEL_Pos(u32ModuleIdx));
+    }
+    else
+        return 0;
+}
+
+/**
+  * @brief      Get selected module clock divider number
+  * @param[in]  u32ModuleIdx is module index.
+  *             - \ref UART0_MODULE
+  *             - \ref UART1_MODULE
+  *             - \ref EADC_MODULE
+  *             - \ref SDH0_MODULE
+  *             - \ref SC0_MODULE
+  *             - \ref SC1_MODULE
+  *             - \ref SC2_MODULE
+  *             - \ref EMAC_MODULE
+  *             - \ref SDH1_MODULE
+  *             - \ref UART2_MODULE
+  *             - \ref UART3_MODULE
+  *             - \ref UART4_MODULE
+  *             - \ref UART5_MODULE
+  * @return     Selected module clock divider number setting
+  * @details    This function get selected module clock divider number.
+  */
+uint32_t CLK_GetModuleClockDivider(uint32_t u32ModuleIdx)
+{
+    uint32_t u32div = 0;
+    uint32_t u32DivTbl[4] = {0x0, 0x4, 0x8, 0x10};
+
+    if(MODULE_CLKDIV_Msk(u32ModuleIdx) != MODULE_NoMsk)
+    {
+        /* Get clock divider control register address */
+        u32div = (uint32_t)&CLK->CLKDIV0 + (u32DivTbl[MODULE_CLKDIV(u32ModuleIdx)]);
+        /* Get clock divider number setting */
+        return ((M32(u32div) & (MODULE_CLKDIV_Msk(u32ModuleIdx) << MODULE_CLKDIV_Pos(u32ModuleIdx))) >> MODULE_CLKDIV_Pos(u32ModuleIdx));
+    }
+    else
+        return 0;
+}
+
+
 /*@}*/ /* end of group CLK_EXPORTED_FUNCTIONS */
 
 /*@}*/ /* end of group CLK_Driver */

@@ -230,7 +230,20 @@ void SYS_DisableBOD(void)
     SYS->BODCTL &= ~SYS_BODCTL_BODEN_Msk;
 }
 
-
+/**
+  * @brief      Set Power Level
+  * @param[in]  u32PowerLevel is power level setting. Including :
+  *             - \ref SYS_PLCTL_PLSEL_PL0
+  *             - \ref SYS_PLCTL_PLSEL_PL1
+  * @return     None
+  * @details    This function select power level.
+  *             The register write-protection function should be disabled before using this function.
+  */
+void SYS_SetPowerLevel(uint32_t u32PowerLevel)
+{
+    /* Set power voltage level */
+    SYS->PLCTL = (SYS->PLCTL & (~SYS_PLCTL_PLSEL_Msk)) | (u32PowerLevel);
+}
 
 /*@}*/ /* end of group SYS_EXPORTED_FUNCTIONS */
 

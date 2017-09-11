@@ -189,16 +189,16 @@ uint32_t volatile u32IsTestOver = 0;
  */
 void PDMA_IRQHandler(void)
 {
-    uint32_t status = PDMA_GET_INT_STATUS();
+    uint32_t status = PDMA_GET_INT_STATUS(PDMA);
 
     if(status & PDMA_INTSTS_ABTIF_Msk) {  /* abort */
-        if(PDMA_GET_ABORT_STS() & PDMA_ABTSTS_ABTIF2_Msk)
+        if(PDMA_GET_ABORT_STS(PDMA) & PDMA_ABTSTS_ABTIF2_Msk)
             u32IsTestOver = 2;
-        PDMA_CLR_ABORT_FLAG(PDMA_ABTSTS_ABTIF2_Msk);
+        PDMA_CLR_ABORT_FLAG(PDMA, PDMA_ABTSTS_ABTIF2_Msk);
     } else if(status & PDMA_INTSTS_TDIF_Msk) {  /* done */
-        if(PDMA_GET_TD_STS() & PDMA_TDSTS_TDIF2_Msk)
+        if(PDMA_GET_TD_STS(PDMA) & PDMA_TDSTS_TDIF2_Msk)
             u32IsTestOver = 1;
-        PDMA_CLR_TD_FLAG(PDMA_TDSTS_TDIF2_Msk);
+        PDMA_CLR_TD_FLAG(PDMA, PDMA_TDSTS_TDIF2_Msk);
     } else
         printf("unknown interrupt !!\n");
 }
@@ -219,21 +219,21 @@ void AccessEBIWithPDMA(void)
     }
 
     /* Open Channel 2 */
-    PDMA_Open((1<<2));
+    PDMA_Open(PDMA, (1<<2));
 
     //burst size is 4
-    PDMA_SetBurstType(2, PDMA_REQ_BURST, PDMA_BURST_4);
+    PDMA_SetBurstType(PDMA, 2, PDMA_REQ_BURST, PDMA_BURST_4);
 
     /* transfer width is one word(32 bit) */
-    PDMA_SetTransferCnt(2, PDMA_WIDTH_32, PDMA_TEST_LENGTH);
-    PDMA_SetTransferAddr(2, (uint32_t)SrcArray, PDMA_SAR_INC, EBI_BANK0_BASE_ADDR, PDMA_DAR_INC);
-    PDMA_SetTransferMode(2, PDMA_MEM, FALSE, 0);
+    PDMA_SetTransferCnt(PDMA, 2, PDMA_WIDTH_32, PDMA_TEST_LENGTH);
+    PDMA_SetTransferAddr(PDMA, 2, (uint32_t)SrcArray, PDMA_SAR_INC, EBI_BANK0_BASE_ADDR, PDMA_DAR_INC);
+    PDMA_SetTransferMode(PDMA, 2, PDMA_MEM, FALSE, 0);
 
-    PDMA_EnableInt(2, PDMA_INT_TRANS_DONE);
+    PDMA_EnableInt(PDMA, 2, PDMA_INT_TRANS_DONE);
     NVIC_EnableIRQ(PDMA_IRQn);
 
     u32IsTestOver = 0;
-    PDMA_Trigger(2);
+    PDMA_Trigger(PDMA, 2);
     while(u32IsTestOver == 0);
     /* Transfer internal SRAM to EBI SRAM done */
 
@@ -243,12 +243,12 @@ void AccessEBIWithPDMA(void)
     }
 
     /* transfer width is one word(32 bit) */
-    PDMA_SetTransferCnt(2, PDMA_WIDTH_32, PDMA_TEST_LENGTH);
-    PDMA_SetTransferAddr(2, EBI_BANK0_BASE_ADDR, PDMA_SAR_INC, (uint32_t)SrcArray, PDMA_DAR_INC);
-    PDMA_SetTransferMode(2, PDMA_MEM, FALSE, 0);
+    PDMA_SetTransferCnt(PDMA, 2, PDMA_WIDTH_32, PDMA_TEST_LENGTH);
+    PDMA_SetTransferAddr(PDMA, 2, EBI_BANK0_BASE_ADDR, PDMA_SAR_INC, (uint32_t)SrcArray, PDMA_DAR_INC);
+    PDMA_SetTransferMode(PDMA, 2, PDMA_MEM, FALSE, 0);
 
     u32IsTestOver = 0;
-    PDMA_Trigger(2);
+    PDMA_Trigger(PDMA, 2);
     while(u32IsTestOver == 0);
     /* Transfer EBI SRAM to internal SRAM done */
     for(i=0; i<64; i++) {
@@ -267,7 +267,7 @@ void AccessEBIWithPDMA(void)
         while(1);
     }
 
-    PDMA_Close();
+    PDMA_Close(PDMA);
 }
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

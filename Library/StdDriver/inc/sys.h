@@ -1473,6 +1473,7 @@ void SYS_ResetCPU(void);
 void SYS_ResetModule(uint32_t u32ModuleIndex);
 void SYS_EnableBOD(int32_t i32Mode, uint32_t u32BODLevel);
 void SYS_DisableBOD(void);
+void SYS_SetPowerLevel(uint32_t u32PowerLevel);
 
 
 /*@}*/ /* end of group SYS_EXPORTED_FUNCTIONS */
