@@ -177,7 +177,12 @@ IRQn_Type;
 #define __NVIC_PRIO_BITS          4UL         /*!< Number of Bits used for Priority Levels          */
 #define __Vendor_SysTickConfig    0UL         /*!< Set to 1 if different SysTick Config is used     */
 #define __MPU_PRESENT             1UL         /*!< MPU present or not                               */
+#ifdef __FPU_PRESENT
+#undef __FPU_PRESENT
 #define __FPU_PRESENT             1UL         /*!< FPU present or not                               */
+#else
+#define __FPU_PRESENT             1UL         /*!< FPU present or not                               */
+#endif
 
 /*@}*/ /* end of group CMSIS_Device */
 
