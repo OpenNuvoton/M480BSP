@@ -494,55 +494,12 @@ extern "C"
  */
 #define CLK_SET_SPDDEBOUNCETIME(u32CycleSel)    (CLK->SWKDBCTL = (u32CycleSel))
 
-
-
-
-
+/*---------------------------------------------------------------------------------------------------------*/
+/* static inline functions                                                                                 */
+/*---------------------------------------------------------------------------------------------------------*/
 /* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */
-static __INLINE uint32_t CLK_GetPLLClockFreq(void);
 static __INLINE void CLK_SysTickDelay(uint32_t us);
-
-/**
-  * @brief      Get PLL clock frequency
-  * @param      None
-  * @return     PLL frequency
-  * @details    This function get PLL frequency. The frequency unit is Hz.
-  */
-__STATIC_INLINE uint32_t CLK_GetPLLClockFreq(void)
-{
-    uint32_t u32PllFreq = 0UL, u32PllReg;
-    uint32_t u32FIN, u32NF, u32NR, u32NO;
-    uint8_t au8NoTbl[4] = {1U, 2U, 2U, 4U};
-
-    u32PllReg = CLK->PLLCTL;
-
-    if(u32PllReg & (CLK_PLLCTL_PD_Msk | CLK_PLLCTL_OE_Msk)) {		
-        u32PllFreq = 0UL;           /* PLL is in power down mode or fix low */
-    } else if((u32PllReg & CLK_PLLCTL_BP_Msk) == CLK_PLLCTL_BP_Msk) {
-        if((u32PllReg & CLK_PLLCTL_PLLSRC_HIRC) == CLK_PLLCTL_PLLSRC_HIRC) {
-            u32FIN = __HIRC;    /* PLL source clock from HIRC */
-        } else {
-            u32FIN = __HXT;     /* PLL source clock from HXT */
-        }
-
-        u32PllFreq = u32FIN;
-    } else {
-        if((u32PllReg & CLK_PLLCTL_PLLSRC_HIRC) == CLK_PLLCTL_PLLSRC_HIRC) {
-            u32FIN = __HIRC;    /* PLL source clock from HIRC */
-        } else {
-            u32FIN = __HXT;     /* PLL source clock from HXT */
-        }
-        /* PLL is output enabled in normal work mode */
-        u32NO = au8NoTbl[((u32PllReg & CLK_PLLCTL_OUTDIV_Msk) >> CLK_PLLCTL_OUTDIV_Pos)];
-        u32NF = ((u32PllReg & CLK_PLLCTL_FBDIV_Msk) >> CLK_PLLCTL_FBDIV_Pos) + 2UL;
-        u32NR = ((u32PllReg & CLK_PLLCTL_INDIV_Msk) >> CLK_PLLCTL_INDIV_Pos) + 1UL;
-
-        /* u32FIN is shifted 2 bits to avoid overflow */
-        u32PllFreq = (((u32FIN >> 2) * u32NF) / (u32NR * u32NO) << 2) * 2UL;
-    }
-
-    return u32PllFreq;
-}
+static __INLINE void CLK_SysTickLongDelay(uint32_t us);
 
 /**
   * @brief      This function execute delay function.
@@ -565,6 +522,47 @@ __STATIC_INLINE void CLK_SysTickDelay(uint32_t us)
 
     /* Disable SysTick counter */
     SysTick->CTRL = 0UL;
+}
+
+/**
+  * @brief      This function execute long delay function.
+  * @param[in]  us  Delay time.
+  * @return     None
+  * @details    Use the SysTick to generate the long delay time and the UNIT is in us.
+  *             The SysTick clock source is from HCLK, i.e the same as system core clock.
+  *             User can use SystemCoreClockUpdate() to calculate CyclesPerUs automatically before using this function.
+  */
+__STATIC_INLINE void CLK_SysTickLongDelay(uint32_t us)
+{
+    uint32_t delay;
+
+    /* It should <= 349525us for each delay loop */
+    delay = 349525UL;
+
+    do
+    {
+        if(us > delay)
+        {
+            us -= delay;
+        }
+        else
+        {
+            delay = us;
+            us = 0UL;
+        }
+
+        SysTick->LOAD = delay * CyclesPerUs;
+        SysTick->VAL  = (0x0UL);
+        SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;
+
+        /* Waiting for down-count to zero */
+        while((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0UL);
+
+        /* Disable SysTick counter */
+        SysTick->CTRL = 0UL;
+
+    }while(us > 0UL);
+
 }
 
 
@@ -595,7 +593,9 @@ void CLK_SetPowerDownMode(uint32_t u32PDMode);
 void CLK_EnableDPDWKPin(uint32_t u32TriggerType);
 uint32_t CLK_GetPMUWKSrc(void);
 void CLK_EnableSPDWKPin(uint32_t u32Port, uint32_t u32Pin, uint32_t u32TriggerType, uint32_t u32DebounceEn);
-void CLK_SetUSBModuleClock(uint32_t u32ModuleIdx, uint32_t u32ClkSrc, uint32_t u32ClkDiv);
+uint32_t CLK_GetPLLClockFreq(void);
+uint32_t CLK_GetModuleClockSource(uint32_t u32ModuleIdx);
+uint32_t CLK_GetModuleClockDivider(uint32_t u32ModuleIdx);
 
 /*@}*/ /* end of group CLK_EXPORTED_FUNCTIONS */
 
