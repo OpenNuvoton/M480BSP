@@ -22,7 +22,7 @@ char S[] = "02ba6465a234903744ab02bc8521405b73cf5fc00e1a9f41";    /* Expected an
 
 void CRYPTO_IRQHandler()
 {
-    ECC_DriverISR();
+    ECC_Complete(CRPT);
 }
 
 
@@ -114,13 +114,13 @@ int32_t main (void)
     SYS_UnlockReg();                   /* Unlock register lock protect */
 
     NVIC_EnableIRQ(CRPT_IRQn);
-    ECC_ENABLE_INT();
+    ECC_ENABLE_INT(CRPT);
 
     printf("+---------------------------------------------+\n");
     printf("|   Crypto ECC Public Key Verification Demo    |\n");
     printf("+---------------------------------------------+\n");
 
-    if (ECC_VerifySignature(CURVE_P_192, sha_msg, Qx, Qy, R, S) < 0) {
+    if (ECC_VerifySignature(CRPT, CURVE_P_192, sha_msg, Qx, Qy, R, S) < 0) {
         printf("ECC signature verification failed!!\n");
         while (1);
     }

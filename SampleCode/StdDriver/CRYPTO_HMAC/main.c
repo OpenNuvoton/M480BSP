@@ -20,9 +20,9 @@ static volatile int g_HMAC_done;
 
 void CRYPTO_IRQHandler()
 {
-    if (SHA_GET_INT_FLAG()) {
+    if (SHA_GET_INT_FLAG(CRPT)) {
         g_HMAC_done = 1;
-        SHA_CLR_INT_FLAG();
+        SHA_CLR_INT_FLAG(CRPT);
     }
 }
 
@@ -39,21 +39,21 @@ int do_compare(uint8_t *output, uint8_t *expect, int cmp_len)
     return 0;
 }
 
-int HMAC_test()
+int HMAC_test() 
 {
     uint32_t au32OutputDigest[16];
 
-    SHA_Open(g_sha_mode, SHA_IN_OUT_SWAP, g_key_len);
+    SHA_Open(CRPT, g_sha_mode, SHA_IN_OUT_SWAP, g_key_len);
 
-    SHA_SetDMATransfer((uint32_t) &g_hmac_msg[0], g_msg_len + ((g_key_len + 3) & 0xfffffffc));
+    SHA_SetDMATransfer(CRPT, (uint32_t) &g_hmac_msg[0], g_msg_len + ((g_key_len + 3) & 0xfffffffc));
 
     printf("Start HMAC...\n");
 
     g_HMAC_done = 0;
-    SHA_Start(CRYPTO_DMA_ONE_SHOT);
+    SHA_Start(CRPT, CRYPTO_DMA_ONE_SHOT);
     while (!g_HMAC_done) ;
 
-    SHA_Read(au32OutputDigest);
+    SHA_Read(CRPT, au32OutputDigest);
 
     /*--------------------------------------------*/
     /*  Compare                                   */
@@ -110,7 +110,7 @@ void SYS_Init(void)
     SYS_LockReg();
 }
 
-void UART0_Init(void)
+void UART0_Init(void) 
 {
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init UART                                                                                               */
@@ -123,7 +123,7 @@ void UART0_Init(void)
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Main Function                                                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
-int32_t main(void)
+int32_t main(void) 
 {
     SYS_Init();                        /* Init System, IP clock and multi-function I/O */
 
@@ -136,7 +136,7 @@ int32_t main(void)
     printf("+-----------------------------------+\n");
 
     NVIC_EnableIRQ(CRPT_IRQn);
-    SHA_ENABLE_INT();
+    SHA_ENABLE_INT(CRPT);
 
     open_test_file();
 

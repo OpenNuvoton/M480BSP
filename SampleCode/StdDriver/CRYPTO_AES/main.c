@@ -43,9 +43,9 @@ static volatile int  g_AES_done;
 
 void CRYPTO_IRQHandler()
 {
-    if (AES_GET_INT_FLAG()) {
+    if (AES_GET_INT_FLAG(CRPT)) {
         g_AES_done = 1;
-        AES_CLR_INT_FLAG();
+        AES_CLR_INT_FLAG(CRPT);
     }
 }
 
@@ -142,18 +142,18 @@ int32_t main (void)
     printf("+---------------------------------------+\n");
 
     NVIC_EnableIRQ(CRPT_IRQn);
-    AES_ENABLE_INT();
+    AES_ENABLE_INT(CRPT);
 
     /*---------------------------------------
      *  AES-128 ECB mode encrypt
      *---------------------------------------*/
-    AES_Open(0, 1, AES_MODE_ECB, AES_KEY_SIZE_128, AES_IN_OUT_SWAP);
-    AES_SetKey(0, au32MyAESKey, AES_KEY_SIZE_128);
-    AES_SetInitVect(0, au32MyAESIV);
-    AES_SetDMATransfer(0, (uint32_t)au8InputData, (uint32_t)au8OutputData, sizeof(au8InputData));
+    AES_Open(CRPT, 0, 1, AES_MODE_ECB, AES_KEY_SIZE_128, AES_IN_OUT_SWAP);
+    AES_SetKey(CRPT, 0, au32MyAESKey, AES_KEY_SIZE_128);
+    AES_SetInitVect(CRPT, 0, au32MyAESIV);
+    AES_SetDMATransfer(CRPT, 0, (uint32_t)au8InputData, (uint32_t)au8OutputData, sizeof(au8InputData));
 
     g_AES_done = 0;
-    AES_Start(0, CRYPTO_DMA_ONE_SHOT);
+    AES_Start(CRPT, 0, CRYPTO_DMA_ONE_SHOT);
     while (!g_AES_done);
 
     printf("AES encrypt done.\n\n");
@@ -162,13 +162,13 @@ int32_t main (void)
     /*---------------------------------------
      *  AES-128 ECB mode decrypt
      *---------------------------------------*/
-    AES_Open(0, 0, AES_MODE_ECB, AES_KEY_SIZE_128, AES_IN_OUT_SWAP);
-    AES_SetKey(0, au32MyAESKey, AES_KEY_SIZE_128);
-    AES_SetInitVect(0, au32MyAESIV);
-    AES_SetDMATransfer(0, (uint32_t)au8OutputData, (uint32_t)au8InputData, sizeof(au8InputData));
+    AES_Open(CRPT, 0, 0, AES_MODE_ECB, AES_KEY_SIZE_128, AES_IN_OUT_SWAP);
+    AES_SetKey(CRPT, 0, au32MyAESKey, AES_KEY_SIZE_128);
+    AES_SetInitVect(CRPT, 0, au32MyAESIV);
+    AES_SetDMATransfer(CRPT, 0, (uint32_t)au8OutputData, (uint32_t)au8InputData, sizeof(au8InputData));
 
     g_AES_done = 0;
-    AES_Start(0, CRYPTO_DMA_ONE_SHOT);
+    AES_Start(CRPT, 0, CRYPTO_DMA_ONE_SHOT);
     while (!g_AES_done);
 
     printf("AES decrypt done.\n\n");

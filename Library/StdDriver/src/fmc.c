@@ -217,72 +217,6 @@ int32_t FMC_Read_64(uint32_t u32addr, uint32_t * u32data0, uint32_t * u32data1)
 
 
 /**
-  * @brief    Read company ID.
-  * @retval   The company ID.
-  */
-uint32_t FMC_ReadCID(void)
-{
-    FMC->ISPCMD = FMC_ISPCMD_READ_CID;
-    FMC->ISPADDR = 0x0UL;
-    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
-
-    while (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) { }
-
-    return FMC->ISPDAT;
-}
-
-
-/**
-  * @brief    Read product ID.
-  * @retval   The product ID.
-  */
-uint32_t FMC_ReadPID(void)
-{
-    FMC->ISPCMD = FMC_ISPCMD_READ_PID;
-    FMC->ISPADDR = 0x04UL;
-    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
-
-    while (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) { }
-
-    return FMC->ISPDAT;
-}
-
-
-/**
-  * @brief    This function reads one of the four UCID.
-  * @param[in]   u32Index  Index of the UCID to read. u32Index must be 0, 1, 2, or 3.
-  * @retval   The UCID.
-  */
-uint32_t FMC_ReadUCID(uint32_t u32Index)
-{
-    FMC->ISPCMD = FMC_ISPCMD_READ_UID;
-    FMC->ISPADDR = (0x04UL * u32Index) + 0x10UL;
-    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
-
-    while (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) { }
-
-    return FMC->ISPDAT;
-}
-
-
-/**
-  * @brief    This function reads one of the three UID.
-  * @param[in]  u32Index Index of the UID to read. u32Index must be 0, 1, or 2.
-  * @retval   The UID.
-  */
-uint32_t FMC_ReadUID(uint32_t u32Index)
-{
-    FMC->ISPCMD = FMC_ISPCMD_READ_UID;
-    FMC->ISPADDR = 0x04UL * u32Index;
-    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
-
-    while (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) { }
-
-    return FMC->ISPDAT;
-}
-
-
-/**
   * @brief    Get the base address of Data Flash if enabled.
   * @retval   The base address of Data Flash
   */
@@ -291,21 +225,27 @@ uint32_t FMC_ReadDataFlashBaseAddr(void)
     return FMC->DFBA;
 }
 
-
 /**
-  * @brief    This function will force re-map assigned flash page to CPU address 0x0.
-  * @param[in]  u32PageAddr Address of the page to be mapped to CPU address 0x0.
-  * @return  None
+  * @brief      Set boot source from LDROM or APROM after next software reset
+  * @param[in]  i32BootSrc
+  *                1: Boot from LDROM
+  *                0: Boot from APROM
+  * @return    None
+  * @details   This function is used to switch APROM boot or LDROM boot. User need to call
+  *            FMC_SetBootSource to select boot source first, then use CPU reset or
+  *            System Reset Request to reset system.
   */
-void FMC_SetVectorPageAddr(uint32_t u32PageAddr)
+void FMC_SetBootSource(int32_t i32BootSrc)
 {
-    FMC->ISPCMD = FMC_ISPCMD_VECMAP;
-    FMC->ISPADDR = u32PageAddr;
-    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
-
-    while (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) { }
+    if(i32BootSrc)
+    {
+        FMC->ISPCTL |= FMC_ISPCTL_BS_Msk; /* Boot from LDROM */
+    }
+    else
+    {
+        FMC->ISPCTL &= ~FMC_ISPCTL_BS_Msk;/* Boot from APROM */
+    }
 }
-
 
 /**
   * @brief Execute ISP FMC_ISPCMD_PROGRAM to program a word to flash.
@@ -332,7 +272,7 @@ void FMC_Write(uint32_t u32Addr, uint32_t u32Data)
   * @return   0   Success
   * @return   -1  Failed
   */
-int32_t FMC_Write_64(uint32_t u32addr, uint32_t u32data0, uint32_t u32data1)
+int32_t FMC_Write8Bytes(uint32_t u32addr, uint32_t u32data0, uint32_t u32data1)
 {
     int32_t  ret = 0;
 
@@ -349,6 +289,90 @@ int32_t FMC_Write_64(uint32_t u32addr, uint32_t u32data0, uint32_t u32data1)
         ret = -1;
     }
     return ret;
+}
+
+
+/**
+  * @brief   Program Multi-Word data into specified address of flash.
+  * @param[in]  u32Addr    Start flash address in APROM where the data chunk to be programmed into.
+  *                        This address must be 8-bytes aligned to flash address.
+  * @param[in]  pu32Buf    Buffer that carry the data chunk.
+  * @param[in]  u32Len     Length of the data chunk in bytes.
+  * @retval   >=0  Number of data bytes were programmed.
+  * @return   -1   Invalid address. 
+  */
+int32_t FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len)
+{
+	int   i, idx, retval = 0;
+	
+	if ((u32Addr >= FMC_APROM_END) || ((u32Addr % 8) != 0)) {
+        return -1;
+    }
+	
+	u32Len = u32Len - (u32Len % 8);         /* u32Len must be multiple of 8. */ 
+	
+	idx = 0;
+	
+    while (u32Len >= 8) 
+    {
+        FMC->ISPADDR = u32Addr;
+        FMC->MPDAT0  = pu32Buf[idx++];
+        FMC->MPDAT1  = pu32Buf[idx++];
+        FMC->MPDAT2  = pu32Buf[idx++];
+        FMC->MPDAT3  = pu32Buf[idx++];
+        FMC->ISPCMD  = FMC_ISPCMD_PROGRAM_MUL;
+        FMC->ISPTRG  = FMC_ISPTRG_ISPGO_Msk;
+    
+        for (i = 16; i < FMC_MULTI_WORD_PROG_LEN; ) 
+        {
+            while (FMC->MPSTS & (FMC_MPSTS_D0_Msk | FMC_MPSTS_D1_Msk))
+                ;
+            retval += 8;
+            u32Len -= 8;
+            if (u32Len < 8) {
+                return retval;
+            }
+  
+            if (!(FMC->MPSTS & FMC_MPSTS_MPBUSY_Msk)) {
+                /* printf("    [WARNING] busy cleared after D0D1 cleared!\n"); */
+                i += 8;
+                break;
+            }
+    
+            FMC->MPDAT0 = pu32Buf[idx++];
+            FMC->MPDAT1 = pu32Buf[idx++];
+    
+            if (i == FMC_MULTI_WORD_PROG_LEN/4)
+                break;           // done
+    
+            while (FMC->MPSTS & (FMC_MPSTS_D2_Msk | FMC_MPSTS_D3_Msk))
+                ;
+            retval += 8;
+            u32Len -= 8;
+            if (u32Len < 8) {
+                return retval;
+            }
+    
+            if (!(FMC->MPSTS & FMC_MPSTS_MPBUSY_Msk)) {
+                /* printf("    [WARNING] busy cleared after D2D3 cleared!\n"); */
+                i += 8;
+                break;
+            }
+    
+            FMC->MPDAT2 = pu32Buf[idx++];
+            FMC->MPDAT3 = pu32Buf[idx++];
+        }
+    
+        if (i != FMC_MULTI_WORD_PROG_LEN) {
+            /* printf("    [WARNING] Multi-word program interrupted at 0x%x !!\n", i); */
+            return retval;
+        }
+    
+        while (FMC->MPSTS & FMC_MPSTS_MPBUSY_Msk) ;
+        
+        u32Addr += FMC_MULTI_WORD_PROG_LEN;
+    }
+    return retval;
 }
 
 
@@ -638,7 +662,7 @@ uint32_t  FMC_CheckAllOne(uint32_t u32addr, uint32_t u32count)
   * @retval   -7    KPMAX function failed.
   * @retval   -8    KEMAX function failed.
   */
-int32_t  FMC_SKey_Setup(uint32_t key[3], uint32_t kpmax, uint32_t kemax,
+int32_t  FMC_SetSPKey(uint32_t key[3], uint32_t kpmax, uint32_t kemax,
                         const int32_t lock_CONFIG, const int32_t lock_SPROM)
 {
     uint32_t  lock_ctrl = 0UL;
@@ -708,18 +732,18 @@ int32_t  FMC_SKey_Setup(uint32_t key[3], uint32_t kpmax, uint32_t kemax,
   * @retval   -2    Key mismatched.
   * @retval   -3    No security key lock. Key comparison is not required.
   */
-int32_t  FMC_SKey_Compare(uint32_t key[3])
+int32_t  FMC_CompareSPKey(uint32_t key[3])
 {
     uint32_t  u32KeySts;
     int32_t   ret = 0;
 
     if (FMC->KPKEYSTS & FMC_KPKEYSTS_FORBID_Msk) {
-        /* FMC_SKey_Compare - FORBID!  */
+        /* FMC_CompareSPKey - FORBID!  */
         ret = -1;
     }
 
     if (!(FMC->KPKEYSTS & FMC_KPKEYSTS_KEYLOCK_Msk)) {
-        /* FMC_SKey_Compare - key is not locked!  */
+        /* FMC_CompareSPKey - key is not locked!  */
         ret = -3;
     }
 

@@ -137,7 +137,7 @@ char  my_z[580];                         /* temporary buffer used to keep output
 
 void CRYPTO_IRQHandler()
 {
-    ECC_DriverISR();
+    ECC_Complete(CRPT);
 }
 
 
@@ -238,12 +238,12 @@ int32_t main (void)
     printf("+---------------------------------------------+\n");
 
     NVIC_EnableIRQ(CRPT_IRQn);
-    ECC_ENABLE_INT();
+    ECC_ENABLE_INT(CRPT);
 
     for (p = 0; p < sizeof(pattern)/sizeof(ECDH_VECTOR_T); p++) {
         printf("Run ECC CDH pattern %s => ", pattern[p].vecotr_name);
 
-        if (ECC_GenerateSecretZ(pattern[p].curve, (char *)pattern[p].d, (char *)pattern[p].Qx, (char *)pattern[p].Qy, my_z) < 0) {
+        if (ECC_GenerateSecretZ(CRPT, pattern[p].curve, (char *)pattern[p].d, (char *)pattern[p].Qx, (char *)pattern[p].Qy, my_z) < 0) {
             printf("ECC CDH secret Z generation failed!!\n");
             while (1);
         }

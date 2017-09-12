@@ -111,7 +111,7 @@ E_ECC_CURVE;                            /*!< ECC curve                \hideiniti
 /*@}*/ /* end of group CRYPTO_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup CRYPTO_EXPORTED_FUNCTIONS CRYPTO Exported Functions
+/** @addtogroup M480_CRYPTO_EXPORTED_MACROS CRYPTO Exported Macros
   @{
 */
 
@@ -121,205 +121,234 @@ E_ECC_CURVE;                            /*!< ECC curve                \hideiniti
 
 /**
   * @brief This macro enables PRNG interrupt.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define PRNG_ENABLE_INT()       (CRPT->INTEN |= CRPT_INTEN_PRNGIEN_Msk)
+#define PRNG_ENABLE_INT(crpt)       ((crpt)->INTEN |= CRPT_INTEN_PRNGIEN_Msk)
 
 /**
   * @brief This macro disables PRNG interrupt.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define PRNG_DISABLE_INT()      (CRPT->INTEN &= ~CRPT_INTEN_PRNGIEN_Msk)
+#define PRNG_DISABLE_INT(crpt)      ((crpt)->INTEN &= ~CRPT_INTEN_PRNGIEN_Msk)
 
 /**
   * @brief This macro gets PRNG interrupt flag.
+  * @param crpt     Specified cripto module
   * @return PRNG interrupt flag.
   * \hideinitializer
   */
-#define PRNG_GET_INT_FLAG()     (CRPT->INTSTS & CRPT_INTSTS_PRNGIF_Msk)
+#define PRNG_GET_INT_FLAG(crpt)     ((crpt)->INTSTS & CRPT_INTSTS_PRNGIF_Msk)
 
 /**
   * @brief This macro clears PRNG interrupt flag.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define PRNG_CLR_INT_FLAG()     (CRPT->INTSTS = CRPT_INTSTS_PRNGIF_Msk)
+#define PRNG_CLR_INT_FLAG(crpt)     ((crpt)->INTSTS = CRPT_INTSTS_PRNGIF_Msk)
 
 /**
   * @brief This macro enables AES interrupt.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define AES_ENABLE_INT()        (CRPT->INTEN |= (CRPT_INTEN_AESIEN_Msk|CRPT_INTEN_AESEIEN_Msk))
+#define AES_ENABLE_INT(crpt)        ((crpt)->INTEN |= (CRPT_INTEN_AESIEN_Msk|CRPT_INTEN_AESEIEN_Msk))
 
 /**
   * @brief This macro disables AES interrupt.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define AES_DISABLE_INT()       (CRPT->INTEN &= ~(CRPT_INTEN_AESIEN_Msk|CRPT_INTEN_AESEIEN_Msk))
+#define AES_DISABLE_INT(crpt)       ((crpt)->INTEN &= ~(CRPT_INTEN_AESIEN_Msk|CRPT_INTEN_AESEIEN_Msk))
 
 /**
   * @brief This macro gets AES interrupt flag.
+  * @param crpt     Specified cripto module
   * @return AES interrupt flag.
   * \hideinitializer
   */
-#define AES_GET_INT_FLAG()      (CRPT->INTSTS & (CRPT_INTSTS_AESIF_Msk|CRPT_INTSTS_AESEIF_Msk))
+#define AES_GET_INT_FLAG(crpt)      ((crpt)->INTSTS & (CRPT_INTSTS_AESIF_Msk|CRPT_INTSTS_AESEIF_Msk))
 
 /**
   * @brief This macro clears AES interrupt flag.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define AES_CLR_INT_FLAG()      (CRPT->INTSTS = (CRPT_INTSTS_AESIF_Msk|CRPT_INTSTS_AESEIF_Msk))
+#define AES_CLR_INT_FLAG(crpt)      ((crpt)->INTSTS = (CRPT_INTSTS_AESIF_Msk|CRPT_INTSTS_AESEIF_Msk))
 
 /**
   * @brief This macro enables AES key protection.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define AES_ENABLE_KEY_PROTECT()  (CRPT->AES_CTL |= CRPT_AES_CTL_KEYPRT_Msk)
+#define AES_ENABLE_KEY_PROTECT(crpt)  ((crpt)->AES_CTL |= CRPT_AES_CTL_KEYPRT_Msk)
 
 /**
   * @brief This macro disables AES key protection.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define AES_DISABLE_KEY_PROTECT() (CRPT->AES_CTL = (CRPT->AES_CTL & ~CRPT_AES_CTL_KEYPRT_Msk) | (0x16UL<<CRPT_AES_CTL_KEYUNPRT_Pos)); \
-                                  (CRPT->AES_CTL &= ~CRPT_AES_CTL_KEYPRT_Msk)
+#define AES_DISABLE_KEY_PROTECT(crpt) ((crpt)->AES_CTL = ((crpt)->AES_CTL & ~CRPT_AES_CTL_KEYPRT_Msk) | (0x16UL<<CRPT_AES_CTL_KEYUNPRT_Pos)); \
+                                      ((crpt)->AES_CTL &= ~CRPT_AES_CTL_KEYPRT_Msk)
 
 /**
   * @brief This macro enables TDES interrupt.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define TDES_ENABLE_INT()       (CRPT->INTEN |= (CRPT_INTEN_TDESIEN_Msk|CRPT_INTEN_TDESEIEN_Msk))
+#define TDES_ENABLE_INT(crpt)       ((crpt)->INTEN |= (CRPT_INTEN_TDESIEN_Msk|CRPT_INTEN_TDESEIEN_Msk))
 
 /**
   * @brief This macro disables TDES interrupt.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define TDES_DISABLE_INT()      (CRPT->INTEN &= ~(CRPT_INTEN_TDESIEN_Msk|CRPT_INTEN_TDESEIEN_Msk))
+#define TDES_DISABLE_INT(crpt)      ((crpt)->INTEN &= ~(CRPT_INTEN_TDESIEN_Msk|CRPT_INTEN_TDESEIEN_Msk))
 
 /**
   * @brief This macro gets TDES interrupt flag.
+  * @param crpt     Specified cripto module
   * @return TDES interrupt flag.
   * \hideinitializer
   */
-#define TDES_GET_INT_FLAG()     (CRPT->INTSTS & (CRPT_INTSTS_TDESIF_Msk|CRPT_INTSTS_TDESEIF_Msk))
+#define TDES_GET_INT_FLAG(crpt)     ((crpt)->INTSTS & (CRPT_INTSTS_TDESIF_Msk|CRPT_INTSTS_TDESEIF_Msk))
 
 /**
   * @brief This macro clears TDES interrupt flag.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define TDES_CLR_INT_FLAG()     (CRPT->INTSTS = (CRPT_INTSTS_TDESIF_Msk|CRPT_INTSTS_TDESEIF_Msk))
+#define TDES_CLR_INT_FLAG(crpt)     ((crpt)->INTSTS = (CRPT_INTSTS_TDESIF_Msk|CRPT_INTSTS_TDESEIF_Msk))
 
 /**
   * @brief This macro enables TDES key protection.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define TDES_ENABLE_KEY_PROTECT()  (CRPT->TDES_CTL |= CRPT_TDES_CTL_KEYPRT_Msk)
+#define TDES_ENABLE_KEY_PROTECT(crpt)  ((crpt)->TDES_CTL |= CRPT_TDES_CTL_KEYPRT_Msk)
 
 /**
   * @brief This macro disables TDES key protection.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define TDES_DISABLE_KEY_PROTECT() (CRPT->TDES_CTL = (CRPT->TDES_CTL & ~CRPT_TDES_CTL_KEYPRT_Msk) | (0x16UL<<CRPT_TDES_CTL_KEYUNPRT_Pos)); \
-                                   (CRPT->TDES_CTL &= ~CRPT_TDES_CTL_KEYPRT_Msk)
+#define TDES_DISABLE_KEY_PROTECT(crpt) ((crpt)->TDES_CTL = ((crpt)->TDES_CTL & ~CRPT_TDES_CTL_KEYPRT_Msk) | (0x16UL<<CRPT_TDES_CTL_KEYUNPRT_Pos)); \
+                                       ((crpt)->TDES_CTL &= ~CRPT_TDES_CTL_KEYPRT_Msk)
 
 /**
   * @brief This macro enables SHA interrupt.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define SHA_ENABLE_INT()        (CRPT->INTEN |= (CRPT_INTEN_HMACIEN_Msk|CRPT_INTEN_HMACEIEN_Msk))
+#define SHA_ENABLE_INT(crpt)        ((crpt)->INTEN |= (CRPT_INTEN_HMACIEN_Msk|CRPT_INTEN_HMACEIEN_Msk))
 
 /**
   * @brief This macro disables SHA interrupt.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define SHA_DISABLE_INT()       (CRPT->INTEN &= ~(CRPT_INTEN_HMACIEN_Msk|CRPT_INTEN_HMACEIEN_Msk))
+#define SHA_DISABLE_INT(crpt)       ((crpt)->INTEN &= ~(CRPT_INTEN_HMACIEN_Msk|CRPT_INTEN_HMACEIEN_Msk))
 
 /**
   * @brief This macro gets SHA interrupt flag.
+  * @param crpt     Specified cripto module
   * @return SHA interrupt flag.
   * \hideinitializer
   */
-#define SHA_GET_INT_FLAG()      (CRPT->INTSTS & (CRPT_INTSTS_HMACIF_Msk|CRPT_INTSTS_HMACEIF_Msk))
+#define SHA_GET_INT_FLAG(crpt)      ((crpt)->INTSTS & (CRPT_INTSTS_HMACIF_Msk|CRPT_INTSTS_HMACEIF_Msk))
 
 /**
   * @brief This macro clears SHA interrupt flag.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define SHA_CLR_INT_FLAG()      (CRPT->INTSTS = (CRPT_INTSTS_HMACIF_Msk|CRPT_INTSTS_HMACEIF_Msk))
+#define SHA_CLR_INT_FLAG(crpt)      ((crpt)->INTSTS = (CRPT_INTSTS_HMACIF_Msk|CRPT_INTSTS_HMACEIF_Msk))
 
 /**
   * @brief This macro enables ECC interrupt.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define ECC_ENABLE_INT()        (CRPT->INTEN |= (CRPT_INTEN_ECCIEN_Msk|CRPT_INTEN_ECCEIEN_Msk))
+#define ECC_ENABLE_INT(crpt)        ((crpt)->INTEN |= (CRPT_INTEN_ECCIEN_Msk|CRPT_INTEN_ECCEIEN_Msk))
 
 /**
   * @brief This macro disables ECC interrupt.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define ECC_DISABLE_INT()       (CRPT->INTEN &= ~(CRPT_INTEN_ECCIEN_Msk|CRPT_INTEN_ECCEIEN_Msk))
+#define ECC_DISABLE_INT(crpt)       ((crpt)->INTEN &= ~(CRPT_INTEN_ECCIEN_Msk|CRPT_INTEN_ECCEIEN_Msk))
 
 /**
   * @brief This macro gets ECC interrupt flag.
+  * @param crpt     Specified cripto module
   * @return ECC interrupt flag.
   * \hideinitializer
   */
-#define ECC_GET_INT_FLAG()      (CRPT->INTSTS & (CRPT_INTSTS_ECCIF_Msk|CRPT_INTSTS_ECCEIF_Msk))
+#define ECC_GET_INT_FLAG(crpt)      ((crpt)->INTSTS & (CRPT_INTSTS_ECCIF_Msk|CRPT_INTSTS_ECCEIF_Msk))
 
 /**
   * @brief This macro clears ECC interrupt flag.
+  * @param crpt     Specified cripto module
   * @return None
   * \hideinitializer
   */
-#define ECC_CLR_INT_FLAG()      (CRPT->INTSTS = (CRPT_INTSTS_ECCIF_Msk|CRPT_INTSTS_ECCEIF_Msk))
+#define ECC_CLR_INT_FLAG(crpt)      ((crpt)->INTSTS = (CRPT_INTSTS_ECCIF_Msk|CRPT_INTSTS_ECCEIF_Msk))
 
 
+/*@}*/ /* end of group M480_CRYPTO_EXPORTED_MACROS */
 
+
+/** @addtogroup CRYPTO_EXPORTED_FUNCTIONS CRYPTO Exported Functions
+  @{
+*/
 
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Functions                                                                                      */
 /*---------------------------------------------------------------------------------------------------------*/
 
-void PRNG_Open(uint32_t u32KeySize, uint32_t u32SeedReload, uint32_t u32Seed);
-void PRNG_Start(void);
-void PRNG_Read(uint32_t u32RandKey[]);
-void AES_Open(uint32_t u32Channel, uint32_t u32EncDec, uint32_t u32OpMode, uint32_t u32KeySize, uint32_t u32SwapType);
-void AES_Start(int32_t u32Channel, uint32_t u32DMAMode);
-void AES_SetKey(uint32_t u32Channel, uint32_t au32Keys[], uint32_t u32KeySize);
-void AES_SetInitVect(uint32_t u32Channel, uint32_t au32IV[]);
-void AES_SetDMATransfer(uint32_t u32Channel, uint32_t u32SrcAddr, uint32_t u32DstAddr, uint32_t u32TransCnt);
-void TDES_Open(uint32_t u32Channel, uint32_t u32EncDec, int32_t Is3DES, int32_t Is3Key, uint32_t u32OpMode, uint32_t u32SwapType);
-void TDES_Start(int32_t u32Channel, uint32_t u32DMAMode);
-void TDES_SetKey(uint32_t u32Channel, uint32_t au32Keys[3][2]);
-void TDES_SetInitVect(uint32_t u32Channel, uint32_t u32IVH, uint32_t u32IVL);
-void TDES_SetDMATransfer(uint32_t u32Channel, uint32_t u32SrcAddr, uint32_t u32DstAddr, uint32_t u32TransCnt);
-void SHA_Open(uint32_t u32OpMode, uint32_t u32SwapType, uint32_t hmac_key_len);
-void SHA_Start(uint32_t u32DMAMode);
-void SHA_SetDMATransfer(uint32_t u32SrcAddr, uint32_t u32TransCnt);
-void SHA_Read(uint32_t u32Digest[]);
-void ECC_DriverISR(void);
-int  ECC_IsPrivateKeyValid(E_ECC_CURVE ecc_curve,  char private_k[]);
-int32_t  ECC_GeneratePublicKey(E_ECC_CURVE ecc_curve, char *private_k, char public_k1[], char public_k2[]);
-int32_t  ECC_GenerateSecretZ(E_ECC_CURVE ecc_curve, char *private_k, char public_k1[], char public_k2[], char secret_z[]);
-int32_t  ECC_GenerateSignature(E_ECC_CURVE ecc_curve, char *message, char *d, char *k, char *R, char *S);
-int32_t  ECC_VerifySignature(E_ECC_CURVE ecc_curve, char *message, char *public_k1, char *public_k2, char *R, char *S);
+void PRNG_Open(CRPT_T *crpt, uint32_t u32KeySize, uint32_t u32SeedReload, uint32_t u32Seed);
+void PRNG_Start(CRPT_T *crpt);
+void PRNG_Read(CRPT_T *crpt, uint32_t u32RandKey[]);
+void AES_Open(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32EncDec, uint32_t u32OpMode, uint32_t u32KeySize, uint32_t u32SwapType);
+void AES_Start(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32DMAMode);
+void AES_SetKey(CRPT_T *crpt, uint32_t u32Channel, uint32_t au32Keys[], uint32_t u32KeySize);
+void AES_SetInitVect(CRPT_T *crpt, uint32_t u32Channel, uint32_t au32IV[]);
+void AES_SetDMATransfer(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32SrcAddr, uint32_t u32DstAddr, uint32_t u32TransCnt);
+void TDES_Open(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32EncDec, int32_t Is3DES, int32_t Is3Key, uint32_t u32OpMode, uint32_t u32SwapType);
+void TDES_Start(CRPT_T *crpt, int32_t u32Channel, uint32_t u32DMAMode);
+void TDES_SetKey(CRPT_T *crpt, uint32_t u32Channel, uint32_t au32Keys[3][2]);
+void TDES_SetInitVect(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32IVH, uint32_t u32IVL);
+void TDES_SetDMATransfer(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32SrcAddr, uint32_t u32DstAddr, uint32_t u32TransCnt);
+void SHA_Open(CRPT_T *crpt, uint32_t u32OpMode, uint32_t u32SwapType, uint32_t hmac_key_len);
+void SHA_Start(CRPT_T *crpt, uint32_t u32DMAMode);
+void SHA_SetDMATransfer(CRPT_T *crpt, uint32_t u32SrcAddr, uint32_t u32TransCnt);
+void SHA_Read(CRPT_T *crpt, uint32_t u32Digest[]);
+void ECC_Complete(CRPT_T *crpt);
+int  ECC_IsPrivateKeyValid(CRPT_T *crpt, E_ECC_CURVE ecc_curve,  char private_k[]);
+int32_t  ECC_GeneratePublicKey(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *private_k, char public_k1[], char public_k2[]);
+int32_t  ECC_GenerateSecretZ(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *private_k, char public_k1[], char public_k2[], char secret_z[]);
+int32_t  ECC_GenerateSignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message, char *d, char *k, char *R, char *S);
+int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message, char *public_k1, char *public_k2, char *R, char *S);
 
 
 /*@}*/ /* end of group CRYPTO_EXPORTED_FUNCTIONS */

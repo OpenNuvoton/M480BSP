@@ -26,7 +26,7 @@ void adc_trng_gen_key(char *key, int key_len);
 
 void CRYPTO_IRQHandler()
 {
-    ECC_DriverISR();
+    ECC_Complete(CRPT);
 }
 
 
@@ -126,9 +126,9 @@ int32_t main (void)
     printf("+---------------------------------------------+\n");
 
     NVIC_EnableIRQ(CRPT_IRQn);
-    ECC_ENABLE_INT();
+    ECC_ENABLE_INT(CRPT);
 
-    if (ECC_GeneratePublicKey(CURVE_P_192, d, key1, key2) < 0) {
+    if (ECC_GeneratePublicKey(CRPT, CURVE_P_192, d, key1, key2) < 0) {
         printf("ECC key generation failed!!\n");
         while (1);
     }
@@ -165,14 +165,14 @@ int32_t main (void)
     for (i = 0; i < 192; i++) {
         adc_trng_gen_key(d, 192-i);
 
-        if (ECC_IsPrivateKeyValid(CURVE_P_192, d)) {
+        if (ECC_IsPrivateKeyValid(CRPT, CURVE_P_192, d)) {
             break;
         }
     }
 
     printf("Select private key: [%s]\n", d);
 
-    if (ECC_GeneratePublicKey(CURVE_P_192, d, key1, key2) < 0) {
+    if (ECC_GeneratePublicKey(CRPT, CURVE_P_192, d, key1, key2) < 0) {
         printf("ECC key generation failed!!\n");
         while (1);
     }
@@ -188,14 +188,14 @@ int32_t main (void)
     for (i = 0; i < 256; i++) {
         adc_trng_gen_key(d, 256-i);
 
-        if (ECC_IsPrivateKeyValid(CURVE_P_256, d)) {
+        if (ECC_IsPrivateKeyValid(CRPT, CURVE_P_256, d)) {
             break;
         }
     }
 
     printf("Select private key: [%s]\n", d);
 
-    if (ECC_GeneratePublicKey(CURVE_P_256, d, key1, key2) < 0) {
+    if (ECC_GeneratePublicKey(CRPT, CURVE_P_256, d, key1, key2) < 0) {
         printf("ECC key generation failed!!\n");
         while (1);
     }
