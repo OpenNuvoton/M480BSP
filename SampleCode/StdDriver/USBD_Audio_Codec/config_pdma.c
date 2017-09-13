@@ -16,13 +16,11 @@
 DMA_DESC_T DMA_TXDESC[PDMA_TXBUFFER_CNT];
 DMA_DESC_T DMA_RXDESC[PDMA_RXBUFFER_CNT];
 
-extern uint32_t PcmPlayBuffLen[PDMA_TXBUFFER_CNT];
 extern uint32_t PcmPlayBuff[PDMA_TXBUFFER_CNT][BUFF_LEN];
 extern uint8_t PcmRecBuff[PDMA_RXBUFFER_CNT][BUFF_LEN];
 extern uint8_t u8PcmRxBufFull[PDMA_RXBUFFER_CNT];
 extern volatile uint8_t u8TxDataCntInBuffer;
 extern volatile uint8_t u8PDMATxIdx;
-extern volatile uint8_t u8RxDataCntInBuffer;
 extern volatile uint8_t u8PDMARxIdx;
 
 /* PDMA Interrupt handler */

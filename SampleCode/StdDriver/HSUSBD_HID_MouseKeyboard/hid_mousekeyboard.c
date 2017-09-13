@@ -66,7 +66,7 @@ void USBD20_IRQHandler(void)
 
             if (HSUSBD->DMACTL & HSUSBD_DMACTL_DMARD_Msk) {
                 if (g_hsusbd_ShortPacket == 1) {
-                    HSUSBD->EP[EPA].EPRSPCTL = HSUSBD->EP[EPA].EPRSPCTL & 0x10 | HSUSBD_EP_RSPCTL_SHORTTXEN;    // packet end
+                    HSUSBD->EP[EPA].EPRSPCTL = (HSUSBD->EP[EPA].EPRSPCTL & 0x10) | HSUSBD_EP_RSPCTL_SHORTTXEN;    // packet end
                     g_hsusbd_ShortPacket = 0;
                 }
             }

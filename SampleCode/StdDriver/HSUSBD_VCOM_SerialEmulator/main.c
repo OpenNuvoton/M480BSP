@@ -36,10 +36,10 @@ volatile uint8_t comTbuf[TXBUFSIZE];
 uint8_t gRxBuf[64] = {0};
 uint8_t gUsbRxBuf[64] = {0};
 #else
-__align(4) volatile uint8_t comRbuf[RXBUFSIZE];
-__align(4) volatile uint8_t comTbuf[TXBUFSIZE];
-__align(4) uint8_t gRxBuf[64] = {0};
-__align(4) uint8_t gUsbRxBuf[64] = {0};
+volatile uint8_t comRbuf[RXBUFSIZE] __attribute__((aligned(4)));
+volatile uint8_t comTbuf[TXBUFSIZE]__attribute__((aligned(4)));
+uint8_t gRxBuf[64] __attribute__((aligned(4))) = {0};
+uint8_t gUsbRxBuf[64] __attribute__((aligned(4))) = {0};
 #endif
 
 

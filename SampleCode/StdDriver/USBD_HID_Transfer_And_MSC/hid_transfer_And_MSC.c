@@ -390,6 +390,7 @@ void HID_ClassRequest(void)
 #define SECTOR_SIZE      4096
 #define START_SECTOR     0x10
 
+#ifdef __ICCARM__
 typedef __packed struct {
     uint8_t u8Cmd;
     uint8_t u8Size;
@@ -398,6 +399,17 @@ typedef __packed struct {
     uint32_t u32Signature;
     uint32_t u32Checksum;
 } CMD_T;
+
+#else
+typedef struct __attribute__((__packed__)) {
+    uint8_t u8Cmd;
+    uint8_t u8Size;
+    uint32_t u32Arg1;
+    uint32_t u32Arg2;
+    uint32_t u32Signature;
+    uint32_t u32Checksum;
+} CMD_T;
+#endif
 
 CMD_T gCmd;
 
@@ -1011,6 +1023,9 @@ void MSC_ProcessCmd(void)
                 if ((g_sCBW.au8Data[2] & 0x03) == 0x2) {
                     g_u8Remove = 1;
                 }
+                g_u8BulkState = BULK_IN;
+                MSC_AckCmd();
+                return;
             }
             case UFI_VERIFY_10: {
                 g_u8BulkState = BULK_IN;

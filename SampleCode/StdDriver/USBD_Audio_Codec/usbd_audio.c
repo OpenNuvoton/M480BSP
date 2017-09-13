@@ -56,11 +56,11 @@ uint32_t PcmPlayBuffLen[PDMA_TXBUFFER_CNT] = {0};
 uint8_t PcmRecBuff[PDMA_RXBUFFER_CNT][BUFF_LEN] = {0};
 uint8_t u8PcmRxBufFull[PDMA_RXBUFFER_CNT] = {0};
 #else
-__align(4) uint32_t PcmPlayBuff[PDMA_TXBUFFER_CNT][BUFF_LEN] = {0};
-__align(4) uint32_t PcmPlayBuffLen[PDMA_TXBUFFER_CNT] = {0};
+uint32_t PcmPlayBuff[PDMA_TXBUFFER_CNT][BUFF_LEN] __attribute__((aligned(4))) = {0};
+uint32_t PcmPlayBuffLen[PDMA_TXBUFFER_CNT] __attribute__((aligned(4))) = {0};
 
-__align(4) uint8_t PcmRecBuff[PDMA_RXBUFFER_CNT][BUFF_LEN] = {0};
-__align(4) uint8_t u8PcmRxBufFull[PDMA_RXBUFFER_CNT] = {0};
+uint8_t PcmRecBuff[PDMA_RXBUFFER_CNT][BUFF_LEN] __attribute__((aligned(4))) = {0};
+uint8_t u8PcmRxBufFull[PDMA_RXBUFFER_CNT] __attribute__((aligned(4))) = {0};
 #endif
 
 volatile uint32_t u32BufPlayIdx = 0;

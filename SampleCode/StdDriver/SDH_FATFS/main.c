@@ -29,7 +29,7 @@ char Lfname[512];
 #pragma data_alignment=4
 uint8_t Buff_Pool[BUFF_SIZE] ;       /* Working buffer */
 #else
-__align(4) uint8_t Buff_Pool[BUFF_SIZE] ;       /* Working buffer */
+uint8_t Buff_Pool[BUFF_SIZE] __attribute__((aligned(4)));       /* Working buffer */
 #endif
 uint8_t  *Buff;
 uint32_t volatile gSec = 0;

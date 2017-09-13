@@ -43,7 +43,7 @@ typedef struct {
 #pragma data_alignment=4
 uint8_t SCATTER_DATA_BUFFER[16*1024];
 #else
-__align(4) uint8_t SCATTER_DATA_BUFFER[16*1024];
+uint8_t SCATTER_DATA_BUFFER[16*1024] __attribute__((aligned(4)));
 #endif
 
 SCATTER_GATHER scater_gather_array[8];
@@ -156,7 +156,7 @@ void USBD20_IRQHandler(void)
 
             if (HSUSBD->DMACTL & HSUSBD_DMACTL_DMARD_Msk) {
                 if (g_hsusbd_ShortPacket == 1) {
-                    HSUSBD->EP[EPA].EPRSPCTL = HSUSBD->EP[EPA].EPRSPCTL & 0x10 | HSUSBD_EP_RSPCTL_SHORTTXEN;    // packet end
+                    HSUSBD->EP[EPA].EPRSPCTL = (HSUSBD->EP[EPA].EPRSPCTL & 0x10) | HSUSBD_EP_RSPCTL_SHORTTXEN;    // packet end
                     g_hsusbd_ShortPacket = 0;
                 }
             }

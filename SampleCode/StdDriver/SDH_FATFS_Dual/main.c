@@ -29,7 +29,7 @@ char Lfname[512];
 #pragma data_alignment=4
 uint8_t Buff_Pool[BUFF_SIZE] ;       /* Working buffer */
 #else
-__align(4) uint8_t Buff_Pool[BUFF_SIZE] ;       /* Working buffer */
+uint8_t Buff_Pool[BUFF_SIZE] __attribute__((aligned(4)));       /* Working buffer */
 #endif
 uint8_t  *Buff;
 uint32_t volatile gSec = 0;
@@ -351,7 +351,7 @@ void SDH1_IRQHandler(void)
     isr = SDH1->INTSTS;
     if (isr & SDH_INTSTS_BLKDIF_Msk) {
         // block down
-        g_u8SDDataReadyFlag = TRUE;
+    	g_u8SDDataReadyFlag = TRUE;
         SDH1->INTSTS = SDH_INTSTS_BLKDIF_Msk;
     }
 

@@ -21,7 +21,7 @@
 #pragma data_alignment=4
 uint8_t gu8DeviceDescriptor[] = {
 #else
-__align(4) uint8_t gu8DeviceDescriptor[] = {
+uint8_t gu8DeviceDescriptor[] __attribute__((aligned(4))) = {
 #endif
     LEN_DEVICE,     /* bLength */
     DESC_DEVICE,    /* bDescriptorType */
@@ -48,7 +48,7 @@ __align(4) uint8_t gu8DeviceDescriptor[] = {
 #pragma data_alignment=4
 uint8_t gu8QualifierDescriptor[] = {
 #else
-__align(4) uint8_t gu8QualifierDescriptor[] = {
+uint8_t gu8QualifierDescriptor[] __attribute__((aligned(4))) = {
 #endif
     LEN_QUALIFIER,  /* bLength */
     DESC_QUALIFIER, /* bDescriptorType */
@@ -66,7 +66,7 @@ __align(4) uint8_t gu8QualifierDescriptor[] = {
 #pragma data_alignment=4
 uint8_t gu8ConfigDescriptor[] = {
 #else
-__align(4) uint8_t gu8ConfigDescriptor[] = {
+uint8_t gu8ConfigDescriptor[] __attribute__((aligned(4))) = {
 #endif
     LEN_CONFIG,     /* bLength */
     DESC_CONFIG,    /* bDescriptorType */
@@ -115,9 +115,9 @@ __align(4) uint8_t gu8ConfigDescriptor[] = {
 #pragma data_alignment=4
 uint8_t gu8OtherConfigDescriptorHS[] = {
 #else
-__align(4) uint8_t gu8OtherConfigDescriptorHS[] = {
+uint8_t gu8OtherConfigDescriptorHS[] __attribute__((aligned(4))) = {
 #endif
-    LEN_CONFIG,     /* bLength */
+    LEN_CONFIG,         /* bLength */
     DESC_OTHERSPEED,    /* bDescriptorType */
     /* wTotalLength */
     (LEN_CONFIG+LEN_INTERFACE+LEN_ENDPOINT*2), 0x00,
@@ -165,7 +165,7 @@ __align(4) uint8_t gu8OtherConfigDescriptorHS[] = {
 #pragma data_alignment=4
 uint8_t gu8ConfigDescriptorFS[] = {
 #else
-__align(4) uint8_t gu8ConfigDescriptorFS[] = {
+uint8_t gu8ConfigDescriptorFS[] __attribute__((aligned(4))) = {
 #endif
     LEN_CONFIG,     /* bLength */
     DESC_CONFIG,    /* bDescriptorType */
@@ -185,7 +185,7 @@ __align(4) uint8_t gu8ConfigDescriptorFS[] = {
     0x02,           /* bNumEndpoints */
     0x08,           /* bInterfaceClass */
     0x05,           /* bInterfaceSubClass */
-    0x50    ,       /* bInterfaceProtocol */
+    0x50,           /* bInterfaceProtocol */
     0x00,           /* iInterface */
 
     /* EP Descriptor: bulk in. */
@@ -214,7 +214,7 @@ __align(4) uint8_t gu8ConfigDescriptorFS[] = {
 #pragma data_alignment=4
 uint8_t gu8OtherConfigDescriptorFS[] = {
 #else
-__align(4) uint8_t gu8OtherConfigDescriptorFS[] = {
+uint8_t gu8OtherConfigDescriptorFS[] __attribute__((aligned(4))) = {
 #endif
     LEN_CONFIG,     /* bLength */
     DESC_OTHERSPEED,    /* bDescriptorType */
@@ -241,21 +241,21 @@ __align(4) uint8_t gu8OtherConfigDescriptorFS[] = {
     LEN_ENDPOINT,   /* bLength */
     DESC_ENDPOINT,  /* bDescriptorType */
     (BULK_IN_EP_NUM | EP_INPUT),    /* bEndpointAddress */
-    EP_BULK,            /* bmAttributes */
+    EP_BULK,        /* bmAttributes */
     /* wMaxPacketSize */
     EPA_MAX_PKT_SIZE & 0x00FF,
     (EPA_MAX_PKT_SIZE & 0xFF00) >> 8,
-    0x00,       /* bInterval */
+    0x00,           /* bInterval */
 
     /* EP Descriptor: bulk out. */
     LEN_ENDPOINT,   /* bLength */
     DESC_ENDPOINT,  /* bDescriptorType */
     (BULK_OUT_EP_NUM | EP_OUTPUT),  /* bEndpointAddress */
-    EP_BULK,            /* bmAttributes */
+    EP_BULK,        /* bmAttributes */
     /* wMaxPacketSize */
     EPB_MAX_PKT_SIZE & 0x00FF,
     (EPB_MAX_PKT_SIZE & 0xFF00) >> 8,
-    0x00,       /* bInterval */
+    0x00        /* bInterval */
 };
 
 
@@ -264,7 +264,7 @@ __align(4) uint8_t gu8OtherConfigDescriptorFS[] = {
 #pragma data_alignment=4
 uint8_t gu8StringLang[4] = {
 #else
-__align(4) uint8_t gu8StringLang[4] = {
+uint8_t gu8StringLang[4] __attribute__((aligned(4))) = {
 #endif
     4,              /* bLength */
     DESC_STRING,    /* bDescriptorType */
@@ -276,7 +276,7 @@ __align(4) uint8_t gu8StringLang[4] = {
 #pragma data_alignment=4
 uint8_t gu8VendorStringDesc[] = {
 #else
-__align(4) uint8_t gu8VendorStringDesc[] = {
+uint8_t gu8VendorStringDesc[] __attribute__((aligned(4))) = {
 #endif
     16,
     DESC_STRING,
@@ -288,7 +288,7 @@ __align(4) uint8_t gu8VendorStringDesc[] = {
 #pragma data_alignment=4
 uint8_t gu8ProductStringDesc[] = {
 #else
-__align(4) uint8_t gu8ProductStringDesc[] = {
+uint8_t gu8ProductStringDesc[] __attribute__((aligned(4))) = {
 #endif
     22,             /* bLength          */
     DESC_STRING,    /* bDescriptorType  */
@@ -299,7 +299,7 @@ __align(4) uint8_t gu8ProductStringDesc[] = {
 #pragma data_alignment=4
 uint8_t gu8StringSerial[] =
 #else
-__align(4) uint8_t gu8StringSerial[] =
+uint8_t gu8StringSerial[] __attribute__((aligned(4))) =
 #endif
 {
     26,             // bLength

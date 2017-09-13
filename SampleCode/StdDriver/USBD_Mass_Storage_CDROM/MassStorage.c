@@ -949,6 +949,9 @@ void MSC_ProcessCmd(void)
                 if ((g_sCBW.au8Data[2] & 0x03) == 0x2) {
                     g_u8Remove = 1;
                 }
+                g_u8BulkState = BULK_IN;
+                MSC_AckCmd();
+                return;
             }
             case UFI_VERIFY_10: {
                 g_u8BulkState = BULK_IN;

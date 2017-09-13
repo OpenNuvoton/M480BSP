@@ -14,8 +14,6 @@
 
 #include "config.h"
 
-extern volatile uint32_t u32BuffPos;
-extern signed int aPCMBuffer[2][PCM_BUFFER_SIZE];
 extern volatile uint8_t aPCMBuffer_Full[2];
 volatile uint8_t u8PCMBuffer_Playing=0;
 
