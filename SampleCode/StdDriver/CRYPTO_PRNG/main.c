@@ -20,9 +20,9 @@ static volatile int  g_PRNG_done;
 
 void CRYPTO_IRQHandler()
 {
-    if (PRNG_GET_INT_FLAG()) {
+    if (PRNG_GET_INT_FLAG(CRPT)) {
         g_PRNG_done = 1;
-        PRNG_CLR_INT_FLAG();
+        PRNG_CLR_INT_FLAG(CRPT);
     }
 }
 
@@ -98,7 +98,7 @@ int32_t main (void)
     printf("+-----------------------------------+\n");
 
     NVIC_EnableIRQ(CRPT_IRQn);
-    PRNG_ENABLE_INT();
+    PRNG_ENABLE_INT(CRPT);
 
     for (u32KeySize = PRNG_KEY_SIZE_64; u32KeySize <= PRNG_KEY_SIZE_256; u32KeySize++) {
         printf("\n\nPRNG Key size = %s\n\n",(u32KeySize == PRNG_KEY_SIZE_64) ? "64" :
@@ -106,16 +106,16 @@ int32_t main (void)
                (u32KeySize == PRNG_KEY_SIZE_192) ? "192" :
                (u32KeySize == PRNG_KEY_SIZE_256) ? "256" : "unknown");
 
-        //PRNG_Open(u32KeySize, 0, 0);        // start PRNG with default seed
-        PRNG_Open(u32KeySize, 1, 0x55);     // start PRNG with seed 0x55
+        //PRNG_Open(CRPT, u32KeySize, 0, 0);        // start PRNG with default seed
+        PRNG_Open(CRPT, u32KeySize, 1, 0x55);     // start PRNG with seed 0x55
 
         for (i = 0; i < GENERATE_COUNT; i++) {
             g_PRNG_done = 0;
-            PRNG_Start();
+            PRNG_Start(CRPT);
             while (!g_PRNG_done);
 
             memset(au32PrngData, 0, sizeof(au32PrngData));
-            PRNG_Read(au32PrngData);
+            PRNG_Read(CRPT, au32PrngData);
 
             printf("PRNG DATA ==>\n");
             printf("    0x%08x  0x%08x  0x%08x  0x%08x\n", au32PrngData[0], au32PrngData[1], au32PrngData[2], au32PrngData[3]);

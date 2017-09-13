@@ -27,9 +27,9 @@ static volatile int g_SHA_done;
 
 void CRYPTO_IRQHandler()
 {
-    if (SHA_GET_INT_FLAG()) {
+    if (SHA_GET_INT_FLAG(CRPT)) {
         g_SHA_done = 1;
-        SHA_CLR_INT_FLAG();
+        SHA_CLR_INT_FLAG(CRPT);
     }
 }
 
@@ -52,17 +52,17 @@ int  run_sha()
 {
     uint32_t  au32OutputDigest[8];
 
-    SHA_Open(SHA_MODE_SHA1, SHA_IN_SWAP, 0);
+    SHA_Open(CRPT, SHA_MODE_SHA1, SHA_IN_SWAP, 0);
 
-    SHA_SetDMATransfer((uint32_t)&_au8ShaData[0],  _i32DataLen/8);
+    SHA_SetDMATransfer(CRPT, (uint32_t)&_au8ShaData[0],  _i32DataLen/8);
 
     printf("Key len= %d bits\n", _i32DataLen);
 
     g_SHA_done = 0;
-    SHA_Start(CRYPTO_DMA_ONE_SHOT);
+    SHA_Start(CRPT, CRYPTO_DMA_ONE_SHOT);
     while (!g_SHA_done) ;
 
-    SHA_Read(au32OutputDigest);
+    SHA_Read(CRPT, au32OutputDigest);
 
     /*--------------------------------------------*/
     /*  Compare                                   */
@@ -141,7 +141,7 @@ int main(void)
     printf("+-----------------------------------+\n");
 
     NVIC_EnableIRQ(CRPT_IRQn);
-    SHA_ENABLE_INT();
+    SHA_ENABLE_INT(CRPT);
 
     open_test_vector();
 

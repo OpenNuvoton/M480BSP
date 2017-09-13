@@ -25,7 +25,7 @@ char sig_R[168], sig_S[168];             /* temporary buffer used to keep digita
 
 void CRYPTO_IRQHandler()
 {
-    ECC_DriverISR();
+    ECC_Complete(CRPT);
 }
 
 
@@ -118,13 +118,13 @@ int32_t main (void)
     SYS_UnlockReg();                   /* Unlock register lock protect */
 
     NVIC_EnableIRQ(CRPT_IRQn);
-    ECC_ENABLE_INT();
+    ECC_ENABLE_INT(CRPT);
 
     printf("+---------------------------------------------+\n");
     printf("|   Crypto ECC Public Key Generation Demo     |\n");
     printf("+---------------------------------------------+\n");
 
-    if (ECC_GenerateSignature(CURVE_P_192, sha_msg, d, k, sig_R, sig_S) < 0) {
+    if (ECC_GenerateSignature(CRPT, CURVE_P_192, sha_msg, d, k, sig_R, sig_S) < 0) {
         printf("ECC signature generation failed!!\n");
         while (1);
     }

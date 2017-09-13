@@ -44,9 +44,9 @@ static volatile int  g_TDES_done;
 
 void CRYPTO_IRQHandler()
 {
-    if (TDES_GET_INT_FLAG()) {
+    if (TDES_GET_INT_FLAG(CRPT)) {
         g_TDES_done = 1;
-        TDES_CLR_INT_FLAG();
+        TDES_CLR_INT_FLAG(CRPT);
     }
 }
 
@@ -142,18 +142,18 @@ int32_t main (void)
     printf("+--------------------------------------------+\n");
 
     NVIC_EnableIRQ(CRPT_IRQn);
-    TDES_ENABLE_INT();
+    TDES_ENABLE_INT(CRPT);
 
     /*---------------------------------------
      *  TDES CBC mode encrypt
      *---------------------------------------*/
-    TDES_Open(0, 1, 1, 1, DES_MODE_CBC, TDES_IN_OUT_WHL_SWAP);  /* 3DES with 3 keys in CBC mode */
-    TDES_SetKey(0, au8MyTDESKey);
-    TDES_SetInitVect(0, au32MyTDESIV[0], au32MyTDESIV[1]);
-    TDES_SetDMATransfer(0, (uint32_t)au8InputData, (uint32_t)au8OutputData, sizeof(au8InputData));
+    TDES_Open(CRPT, 0, 1, 1, 1, DES_MODE_CBC, TDES_IN_OUT_WHL_SWAP);  /* 3DES with 3 keys in CBC mode */
+    TDES_SetKey(CRPT, 0, au8MyTDESKey);
+    TDES_SetInitVect(CRPT, 0, au32MyTDESIV[0], au32MyTDESIV[1]);
+    TDES_SetDMATransfer(CRPT, 0, (uint32_t)au8InputData, (uint32_t)au8OutputData, sizeof(au8InputData));
 
     g_TDES_done = 0;
-    TDES_Start(0, CRYPTO_DMA_ONE_SHOT);
+    TDES_Start(CRPT, 0, CRYPTO_DMA_ONE_SHOT);
     while (!g_TDES_done);
 
     printf("TDES encrypt done.\n\n");
@@ -162,13 +162,13 @@ int32_t main (void)
     /*---------------------------------------
      *  TDES CBC mode decrypt
      *---------------------------------------*/
-    TDES_Open(0, 0, 1, 1, DES_MODE_CBC, TDES_IN_OUT_WHL_SWAP);
-    TDES_SetKey(0, au8MyTDESKey);
-    TDES_SetInitVect(0, au32MyTDESIV[0], au32MyTDESIV[1]);
-    TDES_SetDMATransfer(0, (uint32_t)au8OutputData, (uint32_t)au8InputData, sizeof(au8InputData));
+    TDES_Open(CRPT, 0, 0, 1, 1, DES_MODE_CBC, TDES_IN_OUT_WHL_SWAP);
+    TDES_SetKey(CRPT, 0, au8MyTDESKey);
+    TDES_SetInitVect(CRPT, 0, au32MyTDESIV[0], au32MyTDESIV[1]);
+    TDES_SetDMATransfer(CRPT, 0, (uint32_t)au8OutputData, (uint32_t)au8InputData, sizeof(au8InputData));
 
     g_TDES_done = 0;
-    TDES_Start(0, CRYPTO_DMA_ONE_SHOT);
+    TDES_Start(CRPT, 0, CRYPTO_DMA_ONE_SHOT);
     while (!g_TDES_done);
 
     printf("TDES decrypt done.\n\n");

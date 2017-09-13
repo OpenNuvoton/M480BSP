@@ -112,7 +112,7 @@ int main()
     FMC_Open();                        /* Enable FMC ISP function */
 
     /* Setup a new key */
-    if (FMC_SKey_Setup(good_key, KPMAX_VAL, KEMAX_VAL, 0, 0) < 0) {
+    if (FMC_SetSPKey(good_key, KPMAX_VAL, KEMAX_VAL, 0, 0) < 0) {
         printf("Failed to setup key!\n");   /* error message */
         while (1);                     /* Failed to setup security key. Program aborted. */
     }
@@ -120,15 +120,15 @@ int main()
     printf("The security key status after key setup:\n");
     dump_key_status();                 /* Dump FMC security key status. */
 
-    FMC_SKey_Compare(bad_key);         /* Enter a wrong key for key comparison. */
+    FMC_CompareSPKey(bad_key);         /* Enter a wrong key for key comparison. */
     printf("The security key status after enter a wrong key:\n");
     dump_key_status();                 /* Dump FMC security key status. */
 
-    FMC_SKey_Compare(bad_key);         /* Enter a wrong key for key comparison. */
+    FMC_CompareSPKey(bad_key);         /* Enter a wrong key for key comparison. */
     printf("The security key status after enter a wrong key second time:\n");
     dump_key_status();                 /* Dump FMC security key status. */
 
-    FMC_SKey_Compare(good_key);        /* Enter the right key for key comparison. */
+    FMC_CompareSPKey(good_key);        /* Enter the right key for key comparison. */
     printf("The security key status after enter a good key.\n");
     dump_key_status();                 /* Dump FMC security key status. */
 

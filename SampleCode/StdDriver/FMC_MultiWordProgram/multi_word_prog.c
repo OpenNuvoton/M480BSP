@@ -10,7 +10,7 @@
 
 #include "NuMicro.h"
 
-#define MULTI_WORD_PROG_LEN         512          /* The maximum length is 512. */
+#define USE_DRIVER_API
 
 
 uint32_t    page_buff[FMC_FLASH_PAGE_SIZE/4];
@@ -80,7 +80,7 @@ int  multi_word_program(uint32_t start_addr)
     FMC->ISPCMD  = FMC_ISPCMD_PROGRAM_MUL;
     FMC->ISPTRG  = FMC_ISPTRG_ISPGO_Msk;
 
-    for (i = 4; i < MULTI_WORD_PROG_LEN/4; ) {
+    for (i = 4; i < FMC_MULTI_WORD_PROG_LEN/4; ) {
         while (FMC->MPSTS & (FMC_MPSTS_D0_Msk | FMC_MPSTS_D1_Msk))
             ;
 
@@ -93,7 +93,7 @@ int  multi_word_program(uint32_t start_addr)
         FMC->MPDAT0 = page_buff[i++];
         FMC->MPDAT1 = page_buff[i++];
 
-        if (i == MULTI_WORD_PROG_LEN/4)
+        if (i == FMC_MULTI_WORD_PROG_LEN/4)
             return 0;           // done
 
         while (FMC->MPSTS & (FMC_MPSTS_D2_Msk | FMC_MPSTS_D3_Msk))
@@ -109,7 +109,7 @@ int  multi_word_program(uint32_t start_addr)
         FMC->MPDAT3 = page_buff[i++];
     }
 
-    if (i != MULTI_WORD_PROG_LEN/4) {
+    if (i != FMC_MULTI_WORD_PROG_LEN/4) {
         printf("    [WARNING] Multi-word program interrupted at 0x%x !!\n", i);
         return -1;
     }
@@ -150,16 +150,25 @@ int main()
             goto err_out;
         }
 
-        printf("    Program...");
+        printf("    Program...\n");
 
-        for (maddr = addr; maddr < addr + FMC_FLASH_PAGE_SIZE; maddr += MULTI_WORD_PROG_LEN) {
+        for (maddr = addr; maddr < addr + FMC_FLASH_PAGE_SIZE; maddr += FMC_MULTI_WORD_PROG_LEN) {
             /* Prepare test pattern */
-            for (i = 0; i < MULTI_WORD_PROG_LEN; i+=4)
+            for (i = 0; i < FMC_MULTI_WORD_PROG_LEN; i+=4)
                 page_buff[i/4] = maddr + i;
 
+#ifdef USE_DRIVER_API
+            i = FMC_WriteMultiple(maddr, page_buff, FMC_MULTI_WORD_PROG_LEN);
+            if (i <= 0) {
+            	printf("FMC_WriteMultiple failed: %d\n", i);
+            	goto err_out;
+            }
+            printf("programmed length = %d\n", i);
+#else
             /* execute multi-word program */
             if (multi_word_program(maddr) < 0)
                 goto err_out;
+#endif                
         }
         printf("    [OK]\n");
 

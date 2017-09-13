@@ -46,6 +46,7 @@ extern "C"
 
 #define FMC_FLASH_PAGE_SIZE     0x1000UL        /*!< Flash Page Size (4K bytes)  \hideinitializer */
 #define FMC_PAGE_ADDR_MASK      0xFFFFF000UL    /*!< Flash page address mask     \hideinitializer */
+#define FMC_MULTI_WORD_PROG_LEN 512             /*!< The maximum length of a multi-word program.  */
 
 #define FMC_APROM_SIZE          FMC_APROM_END   /*!< APROM Size                  \hideinitializer */
 #define FMC_BANK_SIZE           (FMC_APROM_SIZE/2UL) /*!< APROM Bank Size             \hideinitializer */
@@ -61,7 +62,7 @@ extern "C"
 #define FMC_ISPCMD_READ_UID     0x04UL          /*!< ISP Command: Read Unique ID          \hideinitializer */
 #define FMC_ISPCMD_READ_ALL1    0x08UL          /*!< ISP Command: Read all-one result     \hideinitializer */
 #define FMC_ISPCMD_READ_CID     0x0BUL          /*!< ISP Command: Read Company ID         \hideinitializer */
-#define FMC_ISPCMD_READ_PID     0x0CUL          /*!< ISP Command: Read Product ID         \hideinitializer */
+#define FMC_ISPCMD_READ_DID     0x0CUL          /*!< ISP Command: Read Device ID          \hideinitializer */
 #define FMC_ISPCMD_READ_CKS     0x0DUL          /*!< ISP Command: Read checksum           \hideinitializer */
 #define FMC_ISPCMD_PROGRAM      0x21UL          /*!< ISP Command: Write flash word        \hideinitializer */
 #define FMC_ISPCMD_PAGE_ERASE   0x22UL          /*!< ISP Command: Page Erase Flash        \hideinitializer */
@@ -85,7 +86,7 @@ extern "C"
 /*@}*/ /* end of group FMC_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup FMC_EXPORTED_FUNCTIONS FMC Exported Functions
+/** @addtogroup FMC_EXPORTED_MACROS FMC Exported Macros
   @{
 */
 
@@ -109,10 +110,23 @@ extern "C"
 #define FMC_GET_FAIL_FLAG()         ((FMC->ISPCTL & FMC_ISPCTL_ISPFF_Msk) ? 1UL : 0UL)  /*!< Get ISP fail flag  \hideinitializer */
 #define FMC_CLR_FAIL_FLAG()         (FMC->ISPCTL |= FMC_ISPCTL_ISPFF_Msk)       /*!< Clear ISP fail flag        \hideinitializer */
 
+/*@}*/ /* end of group FMC_EXPORTED_MACROS */
+
+
+/** @addtogroup FMC_EXPORTED_FUNCTIONS FMC Exported Functions
+  @{
+*/
 
 /*---------------------------------------------------------------------------------------------------------*/
-/*  Functions                                                                                              */
+/* inline functions                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
+
+__STATIC_INLINE uint32_t FMC_ReadCID(void);
+__STATIC_INLINE uint32_t FMC_ReadPID(void);
+__STATIC_INLINE uint32_t FMC_ReadUID(uint8_t u8Index);
+__STATIC_INLINE uint32_t FMC_ReadUCID(uint32_t u32Index);
+__STATIC_INLINE void FMC_SetVectorPageAddr(uint32_t u32PageAddr);
+__STATIC_INLINE uint32_t FMC_GetVECMAP(void);
 
 /**
  * @brief       Get current vector mapping address.
@@ -122,10 +136,111 @@ extern "C"
  * @note
  *              VECMAP only valid when new IAP function is enabled. (CBS = 10'b or 00'b)
  */
-static __INLINE uint32_t FMC_GetVECMAP(void)
+__STATIC_INLINE uint32_t FMC_GetVECMAP(void)
 {
     return (FMC->ISPSTS & FMC_ISPSTS_VECMAP_Msk);
 }
+
+/**
+  * @brief    Read company ID
+  * @param    None
+  * @return   The company ID (32-bit)
+  * @details  The company ID of Nuvoton is fixed to be 0xDA
+  */
+__STATIC_INLINE uint32_t FMC_ReadCID(void)
+{
+    FMC->ISPCMD = FMC_ISPCMD_READ_CID;           /* Set ISP Command Code */
+    FMC->ISPADDR = 0x0u;                         /* Must keep 0x0 when read CID */
+    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;          /* Trigger to start ISP procedure */
+#if ISBEN
+    __ISB();
+#endif                                           /* To make sure ISP/CPU be Synchronized */
+    while(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk){}  /* Waiting for ISP Done */
+
+    return FMC->ISPDAT;
+}
+
+/**
+  * @brief    Read product ID
+  * @param    None
+  * @return   The product ID (32-bit)
+  * @details  This function is used to read product ID.
+  */
+__STATIC_INLINE uint32_t FMC_ReadPID(void)
+{
+    FMC->ISPCMD = FMC_ISPCMD_READ_DID;          /* Set ISP Command Code */
+    FMC->ISPADDR = 0x04u;                       /* Must keep 0x4 when read PID */
+    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;         /* Trigger to start ISP procedure */
+#if ISBEN
+    __ISB();
+#endif                                          /* To make sure ISP/CPU be Synchronized */
+    while(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk){} /* Waiting for ISP Done */
+
+    return FMC->ISPDAT;
+}
+
+/**
+ * @brief       Read Unique ID
+ * @param[in]   u8Index  UID index. 0 = UID[31:0], 1 = UID[63:32], 2 = UID[95:64]
+ * @return      The 32-bit unique ID data of specified UID index.
+ * @details     To read out 96-bit Unique ID.
+ */
+__STATIC_INLINE uint32_t FMC_ReadUID(uint8_t u8Index)
+{
+    FMC->ISPCMD = FMC_ISPCMD_READ_UID;
+    FMC->ISPADDR = ((uint32_t)u8Index << 2u);
+    FMC->ISPDAT = 0u;
+    FMC->ISPTRG = 0x1u;
+#if ISBEN
+    __ISB();
+#endif
+    while(FMC->ISPTRG){}
+
+    return FMC->ISPDAT;
+}
+
+/**
+  * @brief      To read UCID
+  * @param[in]  u32Index    Index of the UCID to read. u32Index must be 0, 1, 2, or 3.
+  * @return     The UCID of specified index
+  * @details    This function is used to read unique chip ID (UCID).
+  */
+__STATIC_INLINE uint32_t FMC_ReadUCID(uint32_t u32Index)
+{
+    FMC->ISPCMD = FMC_ISPCMD_READ_UID;            /* Set ISP Command Code */
+    FMC->ISPADDR = (0x04u * u32Index) + 0x10u;    /* The UCID is at offset 0x10 with word alignment. */
+    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;           /* Trigger to start ISP procedure */
+#if ISBEN
+    __ISB();
+#endif                                            /* To make sure ISP/CPU be Synchronized */
+    while(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk){}   /* Waiting for ISP Done */
+
+    return FMC->ISPDAT;
+}
+
+/**
+ * @brief       Set vector mapping address
+ * @param[in]   u32PageAddr  The page address to remap to address 0x0. The address must be page alignment.
+ * @return      To set VECMAP to remap specified page address to 0x0.
+ * @details     This function is used to set VECMAP to map specified page to vector page (0x0).
+ * @note
+ *              VECMAP only valid when new IAP function is enabled. (CBS = 10'b or 00'b)
+ */
+__STATIC_INLINE void FMC_SetVectorPageAddr(uint32_t u32PageAddr)
+{
+    FMC->ISPCMD = FMC_ISPCMD_VECMAP;  /* Set ISP Command Code */
+    FMC->ISPADDR = u32PageAddr;       /* The address of specified page which will be map to address 0x0. It must be page alignment. */
+    FMC->ISPTRG = 0x1u;               /* Trigger to start ISP procedure */
+#if ISBEN
+    __ISB();
+#endif                                /* To make sure ISP/CPU be Synchronized */
+    while(FMC->ISPTRG){}              /* Waiting for ISP Done */
+}
+
+
+/*---------------------------------------------------------------------------------------------------------*/
+/*  Functions                                                                                              */
+/*---------------------------------------------------------------------------------------------------------*/
 
 extern void FMC_Close(void);
 extern int32_t FMC_Erase(uint32_t u32PageAddr);
@@ -136,24 +251,21 @@ extern int32_t FMC_GetBootSource(void);
 extern void FMC_Open(void);
 extern uint32_t FMC_Read(uint32_t u32Addr);
 extern int32_t FMC_Read_64(uint32_t u32addr, uint32_t * u32data0, uint32_t * u32data1);
-extern uint32_t FMC_ReadCID(void);
-extern uint32_t FMC_ReadPID(void);
-extern uint32_t FMC_ReadUCID(uint32_t u32Index);
-extern uint32_t FMC_ReadUID(uint32_t u32Index);
 extern uint32_t FMC_ReadDataFlashBaseAddr(void);
-extern void FMC_SetVectorPageAddr(uint32_t u32PageAddr);
+extern void FMC_SetBootSource(int32_t i32BootSrc);
 extern void FMC_Write(uint32_t u32Addr, uint32_t u32Data);
-extern int32_t  FMC_Write_64(uint32_t u32addr, uint32_t u32data0, uint32_t u32data1);
+extern int32_t  FMC_Write8Bytes(uint32_t u32addr, uint32_t u32data0, uint32_t u32data1);
+extern int32_t  FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len);
 extern int32_t  FMC_Write_OTP(uint32_t otp_num, uint32_t low_word, uint32_t high_word);
 extern int32_t  FMC_Read_OTP(uint32_t otp_num, uint32_t *low_word, uint32_t *high_word);
 extern int32_t  FMC_Lock_OTP(uint32_t otp_num);
 extern int32_t  FMC_Is_OTP_Locked(uint32_t otp_num);
-extern int32_t FMC_ReadConfig(uint32_t u32Config[], uint32_t u32Count);
-extern int32_t FMC_WriteConfig(uint32_t u32Config[], uint32_t u32Count);
+extern int32_t  FMC_ReadConfig(uint32_t u32Config[], uint32_t u32Count);
+extern int32_t  FMC_WriteConfig(uint32_t u32Config[], uint32_t u32Count);
 extern uint32_t FMC_GetChkSum(uint32_t u32addr, uint32_t u32count);
 extern uint32_t FMC_CheckAllOne(uint32_t u32addr, uint32_t u32count);
-extern int32_t  FMC_SKey_Setup(uint32_t key[3], uint32_t kpmax, uint32_t kemax, const int32_t lock_CONFIG, const int32_t lock_SPROM);
-extern int32_t  FMC_SKey_Compare(uint32_t key[3]);
+extern int32_t  FMC_SetSPKey(uint32_t key[3], uint32_t kpmax, uint32_t kemax, const int32_t lock_CONFIG, const int32_t lock_SPROM);
+extern int32_t  FMC_CompareSPKey(uint32_t key[3]);
 
 
 /*@}*/ /* end of group FMC_EXPORTED_FUNCTIONS */
