@@ -69,8 +69,8 @@ char        Lfname[512];                    /* Console input buffer             
 BYTE        Buff_Pool1[BUFF_SIZE] ;         /* Working buffer 1                           */
 BYTE        Buff_Pool2[BUFF_SIZE] ;         /* Working buffer 2                           */
 #else
-__align(32) BYTE Buff_Pool1[BUFF_SIZE] ;    /* Working buffer 1                           */
-__align(32) BYTE Buff_Pool2[BUFF_SIZE] ;    /* Working buffer 2                           */
+BYTE Buff_Pool1[BUFF_SIZE] __attribute__((aligned(32)));    /* Working buffer 1                           */
+BYTE Buff_Pool2[BUFF_SIZE] __attribute__((aligned(32)));    /* Working buffer 2                           */
 #endif
 
 BYTE  *Buff1;
@@ -401,7 +401,7 @@ void SYS_Init(void)
     SYS_LockReg();
 }
 
-int USBH_Process()
+void USBH_Process()
 {
     char        *ptr, *ptr2;
     long        p1, p2, p3;
@@ -423,7 +423,7 @@ int USBH_Process()
 
         if(!bIsAdevice) {
             printf("break-A (OTG_STATUS: 0x%x)\n", OTG->STATUS);
-            return 0;
+            return;
         }
 
         usbh_pooling_hubs();

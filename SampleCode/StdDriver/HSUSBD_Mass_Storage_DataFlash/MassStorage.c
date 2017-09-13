@@ -143,7 +143,7 @@ void USBD20_IRQHandler(void)
 
             if (HSUSBD->DMACTL & HSUSBD_DMACTL_DMARD_Msk) {
                 if (g_hsusbd_ShortPacket == 1) {
-                    HSUSBD->EP[EPA].EPRSPCTL = HSUSBD->EP[EPA].EPRSPCTL & 0x10 | HSUSBD_EP_RSPCTL_SHORTTXEN;    // packet end
+                    HSUSBD->EP[EPA].EPRSPCTL = (HSUSBD->EP[EPA].EPRSPCTL & 0x10) | HSUSBD_EP_RSPCTL_SHORTTXEN;    // packet end
                     g_hsusbd_ShortPacket = 0;
                 }
             }
@@ -850,6 +850,9 @@ void MSC_ProcessCmd(void)
                 if ((g_sCBW.au8Data[2] & 0x03) == 0x2) {
                     g_u8Remove = 1;
                 }
+                g_sCSW.dCSWDataResidue = 0;
+                g_sCSW.bCSWStatus = 0;
+                break;
             }
             case UFI_VERIFY_10: {
                 g_sCSW.dCSWDataResidue = 0;
@@ -920,6 +923,7 @@ void MSC_ProcessCmd(void)
                 g_u8Prevent = 1;
                 g_sCSW.bCSWStatus = 0x01;
                 g_sCSW.dCSWDataResidue = 0;
+                break;
             }
             default: {
                 /* Unsupported command */
@@ -949,7 +953,7 @@ void MSC_ProcessCmd(void)
             break;
         } else {
             if ((HSUSBD_GetEpStall(EPA) == 0) && (!(HSUSBD->EP[EPA].EPINTSTS & HSUSBD_EPINTSTS_BUFEMPTYIF_Msk)))
-                HSUSBD->EP[EPA].EPRSPCTL = HSUSBD->EP[EPA].EPRSPCTL & 0x10 | HSUSBD_EP_RSPCTL_SHORTTXEN;
+                HSUSBD->EP[EPA].EPRSPCTL = (HSUSBD->EP[EPA].EPRSPCTL & 0x10) | HSUSBD_EP_RSPCTL_SHORTTXEN;
         }
     }
 }

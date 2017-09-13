@@ -493,19 +493,9 @@
               <FilePath>..\..\..\..\Library\StdDriver\src\retarget.c</FilePath>
             </File>
             <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\StdDriver\src\gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>pdma.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\Library\StdDriver\src\pdma.c</FilePath>
-            </File>
-            <File>
-              <FileName>ebi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\StdDriver\src\ebi.c</FilePath>
             </File>
             <File>
               <FileName>sdh.c</FileName>

@@ -378,6 +378,7 @@ void VCOM_LineCoding(uint8_t port)
 #define SECTOR_SIZE      4096
 #define START_SECTOR     0x10
 
+#ifdef __ICCARM__
 typedef __packed struct {
     uint8_t u8Cmd;
     uint8_t u8Size;
@@ -386,6 +387,17 @@ typedef __packed struct {
     uint32_t u32Signature;
     uint32_t u32Checksum;
 } CMD_T;
+
+#else
+typedef struct __attribute__((__packed__)) {
+    uint8_t u8Cmd;
+    uint8_t u8Size;
+    uint32_t u32Arg1;
+    uint32_t u32Arg2;
+    uint32_t u32Signature;
+    uint32_t u32Checksum;
+} CMD_T;
+#endif
 
 CMD_T gCmd;
 

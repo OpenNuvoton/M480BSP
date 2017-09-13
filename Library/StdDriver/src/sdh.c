@@ -39,11 +39,11 @@ uint8_t volatile g_u8SDDataReadyFlag = FALSE;
 static uint32_t _SDH_uR7_CMD = 0ul;
 static uint32_t _SDH_ReferenceClock;
 
-#if defined (__CC_ARM)
-static uint8_t _SDH_ucSDHCBuffer[512] __attribute__((aligned(4)));
-#elif defined ( __ICCARM__ ) /*!< IAR Compiler */
+#ifdef __ICCARM__
 #pragma data_alignment = 4
 static uint8_t _SDH_ucSDHCBuffer[512];
+#else
+static uint8_t _SDH_ucSDHCBuffer[512] __attribute__((aligned(4)));
 #endif
 
 int SDH_ok = 0;

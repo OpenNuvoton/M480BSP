@@ -23,11 +23,9 @@ FATFS FatFs[_VOLUMES];               /* File system object for logical drive */
 #pragma data_alignment=32
 BYTE Buff[16] ;                   /* Working buffer */
 DMA_DESC_T DMA_DESC[2];
-#endif
-
-#ifdef __ARMCC_VERSION
-__align(32) BYTE Buff[16] ;       /* Working buffer */
-__align(32) DMA_DESC_T DMA_DESC[2];
+#else
+BYTE Buff[16] __attribute__((aligned(32)));       /* Working buffer */
+DMA_DESC_T DMA_DESC[2] __attribute__((aligned(32)));
 #endif
 
 uint8_t bAudioPlaying = 0;

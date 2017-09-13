@@ -17,10 +17,6 @@ uint32_t g_usbd_SampleRate = AUDIO_RATE;
 uint32_t g_usbd_Class;
 
 /*--------------------------------------------------------------------------*/
-static volatile uint8_t bPlayVolumeLAdjust = FALSE;
-static volatile uint8_t bPlayVolumeRAdjust = FALSE;
-
-/*--------------------------------------------------------------------------*/
 /* Global variables for Audio class */
 uint8_t  g_usbd_PlayMute = 0x00;
 uint8_t  g_usbd_RecMute = 0x00;
@@ -82,20 +78,20 @@ const uint8_t Speedx[] = {
 #endif
 };
 #else
-__align(4) uint32_t PcmPlayBuff[PDMA_TXBUFFER_CNT][BUFF_LEN] = {0};
-__align(4) uint32_t PcmPlayBuffLen[PDMA_TXBUFFER_CNT] = {0};
+uint32_t PcmPlayBuff[PDMA_TXBUFFER_CNT][BUFF_LEN] __attribute__((aligned(4))) = {0};
+uint32_t PcmPlayBuffLen[PDMA_TXBUFFER_CNT] __attribute__((aligned(4))) = {0};
 
-__align(4) uint32_t PcmRecBuff[PDMA_RXBUFFER_CNT][BUFF_LEN] = {0};
-__align(4) uint8_t u8PcmRxBufFull[PDMA_RXBUFFER_CNT] = {0};
+uint32_t PcmRecBuff[PDMA_RXBUFFER_CNT][BUFF_LEN] __attribute__((aligned(4))) = {0};
+uint8_t u8PcmRxBufFull[PDMA_RXBUFFER_CNT] __attribute__((aligned(4))) = {0};
 
-__align(4) const uint8_t Volx[8] = {
+const uint8_t Volx[8] __attribute__((aligned(4))) = {
     0x01,0x00,
     0x00,0x81,  // min
     0x00,0x00,  // max
     0x00,0x01   // res
 };
 
-__align(4) const uint8_t Speedx[] = {
+const uint8_t Speedx[] __attribute__((aligned(4))) = {
 #if NAU8822
     0x02, 0x00,                         //number of sample rate triplets
     0x80, 0xBB, 0x00, 0x00, //48k Max
