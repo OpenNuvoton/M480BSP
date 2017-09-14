@@ -33,8 +33,8 @@ char Lfname[512];
 BYTE Buff_Pool[BUFF_SIZE] ;       /* Working buffer */
 BYTE Buff_Pool2[BUFF_SIZE] ;      /* Working buffer 2 */
 #else
-__align(32) BYTE Buff_Pool[BUFF_SIZE] ;       /* Working buffer */
-__align(32) BYTE Buff_Pool2[BUFF_SIZE] ;      /* Working buffer 2 */
+BYTE Buff_Pool[BUFF_SIZE] __attribute__((aligned(32)));       /* Working buffer */
+BYTE Buff_Pool2[BUFF_SIZE] __attribute__((aligned(32)));      /* Working buffer 2 */
 #endif
 
 BYTE  *Buff;
@@ -46,8 +46,8 @@ BYTE  *Buff2;
 uint8_t  buff1[BUFF_SIZE] ;       /* Working buffer */
 uint8_t  buff2[BUFF_SIZE] ;       /* Working buffer */
 #else
-__align(4) uint8_t  buff1[BUFF_SIZE] ;       /* Working buffer */
-__align(4) uint8_t  buff2[BUFF_SIZE] ;       /* Working buffer */
+uint8_t  buff1[BUFF_SIZE] __attribute__((aligned(4)));       /* Working buffer */
+uint8_t  buff2[BUFF_SIZE] __attribute__((aligned(4)));       /* Working buffer */
 #endif
 
 

@@ -68,6 +68,7 @@ void SysTick_Handler(void)
             break;
         }
         db_state = DB_STATE_ERASE;           /* Next state is to erase flash            */
+        break;
 
     case DB_STATE_ERASE:
         printf("Erase 0x%x [%d]\n", db_addr, g_tick_cnt);

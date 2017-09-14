@@ -73,8 +73,7 @@ typedef struct {
     __packed uint8_t  PortPwrCtrlMask[16];
 }  DESC_HUB_T;
 #else
-typedef struct __attribute__((__packed__))
-{
+typedef struct __attribute__((__packed__)) {
     uint8_t  bDescLength;
     uint8_t  bDescriptorType;
     uint8_t  bNbrPorts;
@@ -83,8 +82,7 @@ typedef struct __attribute__((__packed__))
     uint8_t  bHubContrCurrent;
     uint8_t  bDeviceRemovble;
     uint8_t  PortPwrCtrlMask[16];
-}
-DESC_HUB_T;
+}  DESC_HUB_T;
 #endif
 
 /*

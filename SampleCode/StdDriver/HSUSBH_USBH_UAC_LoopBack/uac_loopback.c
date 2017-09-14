@@ -31,7 +31,7 @@ volatile int8_t   g_bMicIsMono = 0;
 #pragma data_alignment=32
 uint8_t g_u8PcmBuf[PCM_BUF_LEN];
 #else
-__align(32) uint8_t g_u8PcmBuf[PCM_BUF_LEN];
+uint8_t g_u8PcmBuf[PCM_BUF_LEN] __attribute__((aligned(4)));
 #endif
 volatile uint32_t g_UacRecPos = 0;          /* UAC record pointer of PCM buffer       */
 volatile uint32_t g_UacPlayPos = 0;         /* UAC playback pointer of PCM buffer     */
