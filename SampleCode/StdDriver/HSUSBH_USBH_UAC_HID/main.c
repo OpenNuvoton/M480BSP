@@ -22,14 +22,14 @@
 #pragma data_alignment=32
 uint8_t  au_in_buff[AUDIO_IN_BUFSIZ];
 #else
-__align(32) uint8_t  au_in_buff[AUDIO_IN_BUFSIZ];
+uint8_t  au_in_buff[AUDIO_IN_BUFSIZ] __attribute__((aligned(32)));
 #endif
 
 #ifdef __ICCARM__
 #pragma data_alignment=32
 uint8_t  g_buff_pool[1024];
 #else
-__align(32) uint32_t   g_buff_pool[1024];
+uint32_t   g_buff_pool[1024] __attribute__((aligned(32)));
 #endif
 
 HID_DEV_T   *g_hid_list[CONFIG_HID_MAX_DEV];

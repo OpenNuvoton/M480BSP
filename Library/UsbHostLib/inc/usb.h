@@ -34,15 +34,13 @@ typedef struct {
     __packed uint16_t wLength;
 } DEV_REQ_T;
 #else
-typedef struct __attribute__((__packed__))
-{
+typedef struct __attribute__((__packed__)) {
     uint8_t  bmRequestType;
     uint8_t  bRequest;
     uint16_t wValue;
     uint16_t wIndex;
     uint16_t wLength;
-}
-DEV_REQ_T;
+} DEV_REQ_T;
 #endif
 
 /*
@@ -102,12 +100,10 @@ typedef struct {
     __packed uint8_t  bDescriptorType;
 } DESC_HDR_T;
 #else
-typedef struct __attribute__((__packed__))
-{
+typedef struct __attribute__((__packed__)) {
     uint8_t  bLength;
     uint8_t  bDescriptorType;
-}
-DESC_HDR_T;
+} DESC_HDR_T;
 #endif
 
 /*----------------------------------------------------------------------------------*/
@@ -134,8 +130,7 @@ typedef struct  {                       /*!< device descriptor structure        
 /*----------------------------------------------------------------------------------*/
 /*  USB device descriptor                                                           */
 /*----------------------------------------------------------------------------------*/
-typedef struct __attribute__((__packed__))        /*!< device descriptor structure  */
-{
+typedef struct __attribute__((__packed__))  {     /*!< device descriptor structure  */
     uint8_t  bLength;                   /*!< Length of device descriptor            */
     uint8_t  bDescriptorType;           /*!< Device descriptor type                 */
     uint16_t bcdUSB;                    /*!< USB version number                     */
@@ -150,8 +145,7 @@ typedef struct __attribute__((__packed__))        /*!< device descriptor structu
     uint8_t  iProduct;                  /*!< Product description string ID          */
     uint8_t  iSerialNumber;             /*!< Serial number description string ID    */
     uint8_t  bNumConfigurations;        /*!< Total number of configurations         */
-}
-DESC_DEV_T;                           /*!< device descriptor structure            */
+} DESC_DEV_T;                           /*!< device descriptor structure            */
 #endif
 
 /*

@@ -24,7 +24,7 @@
 #pragma data_alignment=4
 uint8_t  g_buff[BUFFER_SIZE];
 #else
-__align(4) uint8_t  g_buff[BUFFER_SIZE];
+uint8_t  g_buff[BUFFER_SIZE] __attribute__((aligned(4)));
 #endif
 
 

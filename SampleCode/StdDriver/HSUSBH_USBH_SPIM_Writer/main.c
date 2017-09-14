@@ -19,6 +19,7 @@
 
 
 #define BUFF_SIZE                 2048      /* Working buffer size                        */
+#define SPIM_FLASH_MAX_SIZE       0x8000000 /* Assumed maximum flash size 128 MB          */
 #define SPIM_FLASH_PAGE_SIZE      0x10000   /* SPIM flash page size, depend on flash      */
 #define IS_4BYTES_ADDR            0         /* W25Q20 does not support 4-bytes address mode. */
 
@@ -32,8 +33,8 @@ uint8_t   idBuf[3];
 uint8_t  Buff1[BUFF_SIZE] ;                 /* Working buffer                             */
 uint8_t  Buff2[BUFF_SIZE] ;                 /* Working buffer                             */
 #else
-__align(32) uint8_t  Buff1[BUFF_SIZE] ;     /* Working buffer                             */
-__align(32) uint8_t  Buff2[BUFF_SIZE] ;     /* Working buffer                             */
+uint8_t  Buff1[BUFF_SIZE] __attribute__((aligned(32)));     /* Working buffer                             */
+uint8_t  Buff2[BUFF_SIZE] __attribute__((aligned(32)));     /* Working buffer                             */
 #endif
 
 char      Line[128];                        /* Console input buffer                       */
@@ -408,7 +409,7 @@ int  write_file_to_flash(char *cmdline)
     /*
      *  Erase SPIM flash page and program...
      */
-    for (page_addr = faddr; ; page_addr += SPIM_FLASH_PAGE_SIZE) {
+    for (page_addr = faddr; page_addr < SPIM_FLASH_MAX_SIZE; page_addr += SPIM_FLASH_PAGE_SIZE) {
         /* Erase SPIM flash */
         printf("Erase flash page 0x%x...\n", page_addr);
         SPIM_EraseBlock(page_addr, IS_4BYTES_ADDR, OPCODE_BE_64K, 1, 1);
@@ -456,6 +457,7 @@ int  write_file_to_flash(char *cmdline)
         }
         printf("OK\n");
     }
+    return 0;
 }
 
 /*
@@ -499,7 +501,7 @@ int  compare_file_with_flash(char *cmdline)
     /*
      *  Compare ...
      */
-    for (page_addr = faddr; ; page_addr += SPIM_FLASH_PAGE_SIZE) {
+    for (page_addr = faddr; page_addr < SPIM_FLASH_MAX_SIZE; page_addr += SPIM_FLASH_PAGE_SIZE) {
         printf("Comparing...");
         for (addr = page_addr; addr < page_addr+SPIM_FLASH_PAGE_SIZE; addr += BUFF_SIZE) {
             memset(Buff1, 0xff, BUFF_SIZE); /* fill 0xff to clear buffer                  */
@@ -525,6 +527,7 @@ int  compare_file_with_flash(char *cmdline)
         }
         printf("OK\n");
     }
+    return 0;
 }
 
 /*
@@ -607,7 +610,12 @@ int  go_to_flash(char *cmdline)
 
     SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;   /* disable SYSTICK (prevent interrupt)   */
 
+#ifdef __GNUC__                        /* for GNU C compiler */
+   asm volatile("msr msp, r0");
+   asm volatile("bx  lr");
+#else
     __set_SP(inpw(SPIM_DMM_MAP_ADDR + faddr));
+#endif
 
     func();                                      /* branch to SPIM                        */
 
