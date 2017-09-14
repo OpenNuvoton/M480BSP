@@ -19,7 +19,7 @@
 <stringAttribute key="com.nuvoton.debug.gdbjtag.nulink.gdbServerLog" value=""/>
 <stringAttribute key="com.nuvoton.debug.gdbjtag.nulink.gdbServerOther" value="-f ../scripts/interface/nulink.cfg -f ../scripts/target/numicroM4.cfg"/>
 <intAttribute key="com.nuvoton.debug.gdbjtag.nulink.gdbServerTelnetPortNumber" value="4444"/>
-<stringAttribute key="com.nuvoton.debug.gdbjtag.nulink.imageFileName" value="${workspace_loc:\SYS_DPDMode_Wakeup\Release\SYS_DPDMode_Wakeup.hex}"/>
+<stringAttribute key="com.nuvoton.debug.gdbjtag.nulink.imageFileName" value=""/>
 <stringAttribute key="com.nuvoton.debug.gdbjtag.nulink.imageOffset" value=""/>
 <stringAttribute key="com.nuvoton.debug.gdbjtag.nulink.initialARLOCK" value="5A"/>
 <stringAttribute key="com.nuvoton.debug.gdbjtag.nulink.initialConfig0" value="FFFFFFFF"/>
@@ -32,8 +32,8 @@
 <stringAttribute key="com.nuvoton.debug.gdbjtag.nulink.otherInitCommands" value=""/>
 <stringAttribute key="com.nuvoton.debug.gdbjtag.nulink.otherRunCommands" value=""/>
 <stringAttribute key="com.nuvoton.debug.gdbjtag.nulink.secondResetType" value="init"/>
-<booleanAttribute key="com.nuvoton.debug.gdbjtag.nulink.useFileForImage" value="true"/>
-<booleanAttribute key="com.nuvoton.debug.gdbjtag.nulink.useProjBinaryForImage" value="false"/>
+<booleanAttribute key="com.nuvoton.debug.gdbjtag.nulink.useFileForImage" value="false"/>
+<booleanAttribute key="com.nuvoton.debug.gdbjtag.nulink.useProjBinaryForImage" value="true"/>
 <booleanAttribute key="com.nuvoton.debug.gdbjtag.nulink.writeConifg" value="false"/>
 <booleanAttribute key="com.nuvoton.debug.gdbjtag.nulink.writeLock" value="false"/>
 <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.imageFileName" value=""/>
@@ -63,7 +63,7 @@
 <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="Release\SYS_DPDMode_Wakeup.elf"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="SYS_DPDMode_Wakeup"/>
 <booleanAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_AUTO_ATTR" value="true"/>
-<stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="ilg.gnuarmeclipse.managedbuild.cross.config.elf.release.457882025"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="ilg.gnuarmeclipse.managedbuild.cross.config.elf.release.103779300"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/SYS_DPDMode_Wakeup"/>
 </listAttribute>

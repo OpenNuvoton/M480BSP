@@ -54,20 +54,10 @@
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/main.c</locationURI>
 		</link>
-		<link>
-			<name>Library/Library/gpio.c</name>
-			<type>1</type>
-			<location>C:/BSP Library/BSP/M480/Temp_BSP/Library/StdDriver/src/gpio.c</location>
-		</link>
-		<link>
-			<name>Library/Library/rtc.c</name>
-			<type>1</type>
-			<locationURI>PARENT-5-PROJECT_LOC/Library/StdDriver/src/rtc.c</locationURI>
-		</link>
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>1505119848957</id>
+			<id>1505354115351</id>
 			<name>CMSIS/CMSIS</name>
 			<type>9</type>
 			<matcher>
@@ -76,7 +66,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505119926090</id>
+			<id>1505354199280</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -85,7 +75,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505119926101</id>
+			<id>1505354199296</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -94,7 +84,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505119926111</id>
+			<id>1505354199303</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -103,7 +93,25 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505119926121</id>
+			<id>1505354199311</id>
+			<name>Library/Library</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-gpio.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1505354199319</id>
+			<name>Library/Library</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-rtc.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1505354199327</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
