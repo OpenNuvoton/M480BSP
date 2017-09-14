@@ -45,6 +45,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>User</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>CMSIS/CMSIS</name>
 			<type>2</type>
 			<locationURI>PARENT-4-PROJECT_LOC/Library/Device/Nuvoton/M480/Source</locationURI>

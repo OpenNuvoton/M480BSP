@@ -87,7 +87,7 @@
 		<link>
 			<name>uIP/uIP</name>
 			<type>2</type>
-			<location>C:/work_zone/bsp/m480bsp/ThirdParty/uip-0.9/uip</location>
+			<locationURI>PARENT-5-PROJECT_LOC/ThirdParty/uip-0.9/uip</locationURI>
 		</link>
 	</linkedResources>
 	<filteredResources>

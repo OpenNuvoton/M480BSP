@@ -66,7 +66,7 @@
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="smartcard"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.paths.1475361101" name="Library search path (-L)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.linker.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SC_ReadSIM_PhoneBook/Linbrary/SmartcardLib}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SC_ReadSIM_PhoneBook/Library/SmartcardLib}&quot;"/>
 								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.linker.input.1758948680" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -90,7 +90,7 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<folderInfo id="ilg.gnuarmeclipse.managedbuild.cross.config.elf.release.1896879447.119699048" name="/" resourcePath="Linbrary/SmartcardLib">
+					<folderInfo id="ilg.gnuarmeclipse.managedbuild.cross.config.elf.release.1896879447.119699048" name="/" resourcePath="Library/SmartcardLib">
 						<toolChain id="ilg.gnuarmeclipse.managedbuild.cross.toolchain.elf.release.325895843" name="Cross ARM GCC" superClass="ilg.gnuarmeclipse.managedbuild.cross.toolchain.elf.release" unusedChildren="">
 							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.optimization.level.1936653031.426175461" name="Optimization Level" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.optimization.level.1936653031"/>
 							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.optimization.messagelength.1673007282.985096884" name="Message length (-fmessage-length=0)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.optimization.messagelength.1673007282"/>
@@ -116,6 +116,7 @@
 							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.addtools.printsize.988090989.1498724103" name="Print size" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.addtools.printsize.988090989"/>
 							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.arm.target.fpu.abi.1022000778.1756757907" name="Float ABI" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.arm.target.fpu.abi.1022000778"/>
 							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.arm.target.fpu.unit.1937306205.364736697" name="FPU Type" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.arm.target.fpu.unit.1937306205"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="ilg.gnuarmeclipse.managedbuild.cross.targetPlatform" isAbstract="false" osList="all" superClass="ilg.gnuarmeclipse.managedbuild.cross.targetPlatform"/>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.731876629" name="Cross ARM GNU Assembler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.1870903101">
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input.531266428" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.input"/>
 							</tool>
