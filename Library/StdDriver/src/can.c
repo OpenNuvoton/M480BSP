@@ -186,7 +186,7 @@ static int can_update_spt(int sampl_pt, int tseg, int *tseg1, int *tseg2)
 /**
   * @brief Enter initialization mode
   * @param[in] tCAN The pointer to CAN module base address.
-  * @param[in] Following values can be used.
+  * @param[in] u8Mask Following values can be used.
   *            \ref CAN_CON_DAR_Msk Disable automatic retransmission.
   *            \ref CAN_CON_EIE_Msk Enable error interrupt.
   *            \ref CAN_CON_SIE_Msk Enable status interrupt.
@@ -273,7 +273,7 @@ uint32_t CAN_GetCANBitRate(CAN_T *tCAN)
   *                       \ref CAN_TEST_BASIC_Msk Enable basic mode of test mode
   *                       \ref CAN_TEST_SILENT_Msk Enable silent mode of test mode
   *                       \ref CAN_TEST_LBACK_Msk Enable Loop Back Mode of test mode
-  *                       \ref CAN_TEST_TX0_Msk / \ref CAN_TEST_TX1_Msk Control CAN_TX pin bit field
+  *                       \ref CAN_TEST_Tx_Msk Control CAN_TX pin bit field
   * @return None
   * @details Switch the CAN into test mode. There are four test mode (BASIC/SILENT/LOOPBACK/
   *          LOOPBACK combined SILENT/CONTROL_TX_PIN)could be selected. After setting test mode,user
@@ -437,6 +437,7 @@ int32_t CAN_BasicReceiveMsg(CAN_T *tCAN, STR_CANMSG_T* pCanMsg)
 
 /**
   * @brief Set Rx message object, include ID mask.
+  * @param[in] tCAN The pointer to CAN module base address.
   * @param[in] u8MsgObj Specifies the Message object number, from 0 to 31.
   * @param[in] u8idType Specifies the identifier type of the frames that will be transmitted
   *                     This parameter can be one of the following values:
@@ -497,6 +498,7 @@ int32_t CAN_SetRxMsgObjAndMsk(CAN_T *tCAN, uint8_t u8MsgObj, uint8_t u8idType, u
 
 /**
   * @brief Set Rx message object
+  * @param[in] tCAN The pointer to CAN module base address.
   * @param[in] u8MsgObj Specifies the Message object number, from 0 to 31.
   * @param[in] u8idType Specifies the identifier type of the frames that will be transmitted
   *                     This parameter can be one of the following values:
@@ -554,6 +556,7 @@ int32_t CAN_SetRxMsgObj(CAN_T *tCAN, uint8_t u8MsgObj, uint8_t u8idType, uint32_
 
 /**
   * @brief Gets the message
+  * @param[in] tCAN The pointer to CAN module base address.
   * @param[in] u8MsgObj Specifies the Message object number, from 0 to 31.
   * @param[in] u8Release Specifies the message release indicator.
   *                      This parameter can be one of the following values:
