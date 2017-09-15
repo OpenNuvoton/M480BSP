@@ -304,6 +304,8 @@ void PDMA_EnableTimeout(PDMA_T * pdma,uint32_t u32Mask)
 /**
  * @brief       Disable timeout function
  *
+ * @param[in]   pdma            The pointer of the specified PDMA module
+ *
  * @param[in]   u32Mask         Channel enable bits.
  *
  * @return      None
