@@ -356,7 +356,6 @@ static uint32_t EMAC_Nsec2Subsec(uint32_t nsec)
   * @brief  Initialize EMAC interface, including descriptors, MAC address, and PHY.
   * @param[in]  pu8MacAddr  Pointer to uint8_t array holds MAC address
   * @return None
-  * @note This API sets EMAC to work in RMII mode, but could configure to MII mode later with \ref EMAC_ENABLE_MII_INTF macro
   * @note This API configures EMAC to receive all broadcast and multicast packets, but could configure to other settings with
   *       \ref EMAC_ENABLE_RECV_BCASTPKT, \ref EMAC_DISABLE_RECV_BCASTPKT, \ref EMAC_ENABLE_RECV_MCASTPKT, and \ref EMAC_DISABLE_RECV_MCASTPKT
   * @note Receive(RX) and transmit(TX) are not enabled yet, application must call \ref EMAC_ENABLE_RX and \ref EMAC_ENABLE_TX to
@@ -873,12 +872,12 @@ void EMAC_UpdateTime(uint32_t u32Neg, uint32_t u32Sec, uint32_t u32Nsec)
 /**
   * @brief  Check Ethernet link status
   * @param  None
-  * @return Current link status
-  * @retval \ref EMAC_LINK_DOWN
-  * @retval \ref EMAC_LINK_100F
-  * @retval \ref EMAC_LINK_100H
-  * @retval \ref EMAC_LINK_10F
-  * @retval \ref EMAC_LINK_10H
+  * @return Current link status, could be one of following value.
+  * - \ref EMAC_LINK_DOWN
+  * - \ref EMAC_LINK_100F
+  * - \ref EMAC_LINK_100H
+  * - \ref EMAC_LINK_10F
+  * - \ref EMAC_LINK_10H
   * @note   This API should be called regularly to sync EMAC setting with real connection status
   */
 uint32_t EMAC_CheckLinkStatus(void)
