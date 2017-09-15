@@ -41,30 +41,6 @@ void SYS_Init(void)
     /* Enable IP clock */
     CLK_EnableModuleClock(HSUSBD_MODULE);
 
-    /* Select IP clock source */
-    CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
-
-    /* Enable IP clock */
-    CLK_EnableModuleClock(UART0_MODULE);
-
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init I/O Multi-function                                                                                 */
-    /*---------------------------------------------------------------------------------------------------------*/
-
-    /* Init UART0 multi-function pins */
-    SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
-    SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
-
-}
-
-void UART0_Init(void)
-{
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init UART                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
-
-    /* Configure UART0 and set UART0 baud rate */
-    UART_Open(UART0, 115200);
 }
 
 
@@ -77,13 +53,6 @@ void USBD20_IRQHandler(void)
 int main()
 {
     SYS_Init();                        /* Init System, IP clock and multi-function I/O */
-
-    UART0_Init();                      /* Initialize UART0 */
-
-    printf("\n\n");
-    printf("+------------------------------------------+\n");
-    printf("|     M480 Secure Boot IAP Sample Code     |\n");
-    printf("+------------------------------------------+\n");
 
     HSUSBD_ISP();
 
