@@ -545,7 +545,7 @@ extern const S_USBD_INFO_T gsInfo;
   * @details    This function will copy the number of data specified by size and src parameters to the address specified by dest parameter.
   *
   */
-static __INLINE void USBD_MemCopy(uint8_t dest[], uint8_t src[], uint32_t size)
+__STATIC_INLINE void USBD_MemCopy(uint8_t dest[], uint8_t src[], uint32_t size)
 {
     uint32_t volatile i=0ul;
 
@@ -566,7 +566,7 @@ static __INLINE void USBD_MemCopy(uint8_t dest[], uint8_t src[], uint32_t size)
   * @details     Set USB endpoint stall state. Endpoint will respond STALL token automatically.
   *
   */
-static __INLINE void USBD_SetStall(uint8_t epnum)
+__STATIC_INLINE void USBD_SetStall(uint8_t epnum)
 {
     uint32_t u32CfgAddr;
     uint32_t u32Cfg;
@@ -595,7 +595,7 @@ static __INLINE void USBD_SetStall(uint8_t epnum)
   *
   * @details     Clear USB endpoint stall state. Endpoint will respond ACK/NAK token.
   */
-static __INLINE void USBD_ClearStall(uint8_t epnum)
+__STATIC_INLINE void USBD_ClearStall(uint8_t epnum)
 {
     uint32_t u32CfgAddr;
     uint32_t u32Cfg;
@@ -626,7 +626,7 @@ static __INLINE void USBD_ClearStall(uint8_t epnum)
   * @details     Get USB endpoint stall state.
   *
   */
-static __INLINE uint32_t USBD_GetStall(uint8_t epnum)
+__STATIC_INLINE uint32_t USBD_GetStall(uint8_t epnum)
 {
     uint32_t u32CfgAddr;
     uint32_t u32Cfg;

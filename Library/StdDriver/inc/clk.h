@@ -498,8 +498,8 @@ extern "C"
 /* static inline functions                                                                                 */
 /*---------------------------------------------------------------------------------------------------------*/
 /* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */
-static __INLINE void CLK_SysTickDelay(uint32_t us);
-static __INLINE void CLK_SysTickLongDelay(uint32_t us);
+__STATIC_INLINE void CLK_SysTickDelay(uint32_t us);
+__STATIC_INLINE void CLK_SysTickLongDelay(uint32_t us);
 
 /**
   * @brief      This function execute delay function.

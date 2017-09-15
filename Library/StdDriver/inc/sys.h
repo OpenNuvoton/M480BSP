@@ -1437,8 +1437,8 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 /* static inline functions                                                                                 */
 /*---------------------------------------------------------------------------------------------------------*/
 /* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */
-static __INLINE void SYS_UnlockReg(void);
-static __INLINE void SYS_LockReg(void);
+__STATIC_INLINE void SYS_UnlockReg(void);
+__STATIC_INLINE void SYS_LockReg(void);
 
 /**
   * @brief      Disable register write-protection function

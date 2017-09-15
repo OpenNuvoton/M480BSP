@@ -162,7 +162,7 @@ extern S_HSUSBD_CMD_T gUsbCmd;
   * @param[in]  u32Size Copy size.
   * @retval None.
   */
-static __INLINE void HSUSBD_MemCopy(uint8_t u8Dst[], uint8_t u8Src[], uint32_t u32Size)
+__STATIC_INLINE void HSUSBD_MemCopy(uint8_t u8Dst[], uint8_t u8Src[], uint32_t u32Size)
 {
     uint32_t i = 0ul;
 
@@ -178,7 +178,7 @@ static __INLINE void HSUSBD_MemCopy(uint8_t u8Dst[], uint8_t u8Src[], uint32_t u
   * @param  None
   * @retval None.
   */
-static __INLINE void HSUSBD_ResetDMA(void)
+__STATIC_INLINE void HSUSBD_ResetDMA(void)
 {
     HSUSBD->DMACNT = 0ul;
     HSUSBD->DMACTL = 0x80ul;
@@ -191,7 +191,7 @@ static __INLINE void HSUSBD_ResetDMA(void)
   * @param[in]  u32Len     Buffer length
   * @retval None.
   */
-static __INLINE void HSUSBD_SetEpBufAddr(uint32_t u32Ep, uint32_t u32Base, uint32_t u32Len)
+__STATIC_INLINE void HSUSBD_SetEpBufAddr(uint32_t u32Ep, uint32_t u32Base, uint32_t u32Len)
 {
     if (u32Ep == CEP) {
         HSUSBD->CEPBUFST = u32Base;
@@ -210,7 +210,7 @@ static __INLINE void HSUSBD_SetEpBufAddr(uint32_t u32Ep, uint32_t u32Base, uint3
   * @param[in]  u32EpDir   Endpoint direction
   * @retval None.
   */
-static __INLINE void HSUSBD_ConfigEp(uint32_t u32Ep, uint32_t u32EpNum, uint32_t u32EpType, uint32_t u32EpDir)
+__STATIC_INLINE void HSUSBD_ConfigEp(uint32_t u32Ep, uint32_t u32EpNum, uint32_t u32EpType, uint32_t u32EpDir)
 {
     if (u32EpType == HSUSBD_EP_CFG_TYPE_BULK)
     {
@@ -234,7 +234,7 @@ static __INLINE void HSUSBD_ConfigEp(uint32_t u32Ep, uint32_t u32EpNum, uint32_t
   * @return      None
   * @details     Set USB endpoint stall state for the specified endpoint ID. Endpoint will respond STALL token automatically.
   */
-static __INLINE void HSUSBD_SetEpStall(uint32_t u32Ep)
+__STATIC_INLINE void HSUSBD_SetEpStall(uint32_t u32Ep)
 {
     if (u32Ep == CEP)
     {
@@ -254,7 +254,7 @@ static __INLINE void HSUSBD_SetEpStall(uint32_t u32Ep)
  *
  * @details     Set USB endpoint stall state, endpoint will return STALL token.
  */
-static __INLINE void HSUSBD_SetStall(uint32_t u32EpNum)
+__STATIC_INLINE void HSUSBD_SetStall(uint32_t u32EpNum)
 {
     uint32_t i;
 
@@ -280,7 +280,7 @@ static __INLINE void HSUSBD_SetStall(uint32_t u32EpNum)
   * @return      None
   * @details     Clear USB endpoint stall state for the specified endpoint ID. Endpoint will respond ACK/NAK token.
   */
-static __INLINE void  HSUSBD_ClearEpStall(uint32_t u32Ep)
+__STATIC_INLINE void  HSUSBD_ClearEpStall(uint32_t u32Ep)
 {
     HSUSBD->EP[u32Ep].EPRSPCTL = HSUSBD_EP_RSPCTL_TOGGLE;
 }
@@ -293,7 +293,7 @@ static __INLINE void  HSUSBD_ClearEpStall(uint32_t u32Ep)
  *
  * @details     Clear USB endpoint stall state, endpoint will return ACK/NAK token.
  */
-static __INLINE void HSUSBD_ClearStall(uint32_t u32EpNum)
+__STATIC_INLINE void HSUSBD_ClearStall(uint32_t u32EpNum)
 {
     uint32_t i;
 
@@ -313,7 +313,7 @@ static __INLINE void HSUSBD_ClearStall(uint32_t u32EpNum)
   * @retval      Others USB endpoint is stalled.
   * @details     Get USB endpoint stall state of the specified endpoint ID.
   */
-static __INLINE uint32_t HSUSBD_GetEpStall(uint32_t u32Ep)
+__STATIC_INLINE uint32_t HSUSBD_GetEpStall(uint32_t u32Ep)
 {
     return (HSUSBD->EP[u32Ep].EPRSPCTL & HSUSBD_EP_RSPCTL_HALT);
 }
@@ -327,7 +327,7 @@ static __INLINE uint32_t HSUSBD_GetEpStall(uint32_t u32Ep)
  *
  * @details     Get USB endpoint stall state.
  */
-static __INLINE uint32_t HSUSBD_GetStall(uint32_t u32EpNum)
+__STATIC_INLINE uint32_t HSUSBD_GetStall(uint32_t u32EpNum)
 {
     uint32_t i;
     uint32_t val = 0ul;
