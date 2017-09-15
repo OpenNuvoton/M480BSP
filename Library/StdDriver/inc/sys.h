@@ -121,6 +121,12 @@ extern "C"
 #define SYS_USBPHY_HSUSBROLE_STD_USBH   (0x1UL << SYS_USBPHY_HSUSBROLE_Pos)   /*!<  Standard HSUSB host \hideinitializer */
 #define SYS_USBPHY_HSUSBROLE_ID_DEPH    (0x2UL << SYS_USBPHY_HSUSBROLE_Pos)   /*!<  ID dependent device \hideinitializer */
 
+/*---------------------------------------------------------------------------------------------------------*/
+/*  PLCTL constant definitions. (Write-Protection Register)                                                */
+/*---------------------------------------------------------------------------------------------------------*/
+#define SYS_PLCTL_PLSEL_PL0     (0x0UL<<SYS_PLCTL_PLSEL_Pos)   /*!< Set power level to power level 0 */
+#define SYS_PLCTL_PLSEL_PL1     (0x1UL<<SYS_PLCTL_PLSEL_Pos)   /*!< Set power level to power level 1 */
+
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Multi-Function constant definitions.                                                                   */
