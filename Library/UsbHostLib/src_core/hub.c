@@ -577,10 +577,10 @@ void usbh_hub_init(void)
 /// @endcond HIDDEN_SYMBOLS
 
 /**
-  * @brief    Let USB stack polls all roothubs and downstream hubs. If there's any hub port
+  * @brief    Let USB stack polls all root hubs and downstream hubs. If there's any hub port
   *           change found, USB stack will manage the hub events in this function call.
   *           In this function, USB stack enumerates newly connected devices and remove staff
-  *           of disconnedted devices. User's application should periodically invoke this
+  *           of disconnected devices. User's application should periodically invoke this
   *           function.
   * @return   There's hub port change or not.
   * @retval   0   No any hub port status changes found.

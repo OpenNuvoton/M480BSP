@@ -3,7 +3,7 @@
  * @version  V1.10
  * $Revision: 11 $
  * $Date: 14/10/03 1:54p $
- * @brief   USB EHCI isochornous transfer driver.
+ * @brief   USB EHCI isochronous transfer driver.
  *
  * @note
  * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
@@ -402,31 +402,31 @@ int ehci_iso_xfer(UTR_T *utr)
     if (ep->bInterval < 2) {                /* transfer interval is 1 micro-frame         */
         trans_mask = 0xFF;
         itd_cnt = 1;                        /* required 1 iTD for one UTR                 */
-        interval = 1;                       /* iTD frame interval of this ednpoint        */
+        interval = 1;                       /* iTD frame interval of this endpoint        */
     } else if (ep->bInterval < 4) {         /* transfer interval is 2 micro-frames        */
         trans_mask = 0x55;
         itd_cnt = 2;                        /* required 2 iTDs for one UTR                */
-        interval = 1;                       /* iTD frame interval of this ednpoint        */
+        interval = 1;                       /* iTD frame interval of this endpoint        */
     } else if (ep->bInterval < 8) {         /* transfer interval is 4 micro-frames        */
         trans_mask = 0x44;
         itd_cnt = 4;                        /* required 4 iTDs for one UTR                */
-        interval = 1;                       /* iTD frame interval of this ednpoint        */
+        interval = 1;                       /* iTD frame interval of this endpoint        */
     } else if (ep->bInterval < 16) {        /* transfer interval is 8 micro-frames        */
         trans_mask = 0x08;                  /* there's 1 transfer in one iTD              */
         itd_cnt = 8;                        /* required 8 iTDs for one UTR                */
-        interval = 1;                       /* iTD frame interval of this ednpoint        */
+        interval = 1;                       /* iTD frame interval of this endpoint        */
     } else if (ep->bInterval < 32) {        /* transfer interval is 16 micro-frames       */
         trans_mask = 0x10;                  /* there's 1 transfer in one iTD              */
         itd_cnt = 8;                        /* required 8 iTDs for one UTR                */
-        interval = 2;                       /* iTD frame interval of this ednpoint        */
+        interval = 2;                       /* iTD frame interval of this endpoint        */
     } else if (ep->bInterval < 64) {        /* transfer interval is 32 micro-frames       */
         trans_mask = 0x02;                  /* there's 1 transfer in one iTD              */
         itd_cnt = 8;                        /* required 8 iTDs for one UTR                */
-        interval = 4;                       /* iTD frame interval of this ednpoint        */
+        interval = 4;                       /* iTD frame interval of this endpoint        */
     } else  {                               /* transfer interval is 64 micro-frames       */
         trans_mask = 0x04;                  /* there's 1 transfer in one iTD              */
         itd_cnt = 8;                        /* required 8 iTDs for one UTR                */
-        interval = 8;                       /* iTD frame interval of this ednpoint        */
+        interval = 8;                       /* iTD frame interval of this endpoint        */
     }
 
     for (i = 0; i < itd_cnt; i++) {         /* allocate all iTDs required by UTR          */
@@ -690,7 +690,7 @@ malloc_failed:
 }
 
 /*
- *  If it's an isochronous endpoint, quit current trasnfer via UTR or hardware EP.
+ *  If it's an isochronous endpoint, quit current transfer via UTR or hardware EP.
  */
 int ehci_quit_iso_xfer(UTR_T *utr, EP_INFO_T *ep)
 {
@@ -743,7 +743,7 @@ int ehci_quit_iso_xfer(UTR_T *utr, EP_INFO_T *ep)
             }
 
             if (p == NULL) {                /* link list out of control!                  */
-                USB_error("ehci_quit_iso_xfer - An iTD lost refernece to periodic frame list! 0x%x -> %d\n", (int)itd, frnidx);
+                USB_error("ehci_quit_iso_xfer - An iTD lost reference to periodic frame list! 0x%x -> %d\n", (int)itd, frnidx);
             } else {                        /* remove iTD from list                       */
                 p->Next_Link = itd->Next_Link;
             }

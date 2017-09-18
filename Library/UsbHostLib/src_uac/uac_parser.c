@@ -131,7 +131,7 @@ static int  uac_set_microphone_feature_unit(UAC_DEV_T *uac)
     bptr = uac->udev->cfd_buff;
     config = (DESC_CONF_T *)bptr;
 
-    /* step over configuration descritpor */
+    /* step over configuration descriptor */
     bptr += config->bLength;
     size = config->wTotalLength - config->bLength;
 
@@ -148,7 +148,7 @@ static int  uac_set_microphone_feature_unit(UAC_DEV_T *uac)
         }
 
         if (hdr->bLength == 0)
-            return UAC_RET_PARSER;          /* prevent infinit loop                       */
+            return UAC_RET_PARSER;          /* prevent infinite loop                       */
 
         bptr += hdr->bLength;
         size -= hdr->bLength;
@@ -162,7 +162,7 @@ static int  uac_set_microphone_feature_unit(UAC_DEV_T *uac)
  *  @param[in]  iface  Audio control interface
  *  @return   Success or failed.
  *  @retval   0        Success
- *  @retval   Otheriwse  Error occurred
+ *  @retval   Otherwise  Error occurred
  */
 int uac_parse_control_interface(UAC_DEV_T *uac, IFACE_T *iface)
 {
@@ -182,7 +182,7 @@ int uac_parse_control_interface(UAC_DEV_T *uac, IFACE_T *iface)
     bptr = uac->udev->cfd_buff;
     config = (DESC_CONF_T *)bptr;
 
-    /* step over configuration descritpor */
+    /* step over configuration descriptor */
     bptr += config->bLength;
     size = config->wTotalLength - config->bLength;
 
@@ -197,7 +197,7 @@ int uac_parse_control_interface(UAC_DEV_T *uac, IFACE_T *iface)
             break;
 
         if (ifd->bLength == 0)
-            return UAC_RET_PARSER;          /* prevent infinit loop                       */
+            return UAC_RET_PARSER;          /* prevent infinite loop                       */
 
         bptr += ifd->bLength;
         size -= ifd->bLength;
@@ -227,7 +227,7 @@ int uac_parse_control_interface(UAC_DEV_T *uac, IFACE_T *iface)
         }
 
         if (ifd->bLength == 0)
-            return UAC_RET_PARSER;          /* prevent infinit loop                       */
+            return UAC_RET_PARSER;          /* prevent infinite loop                       */
 
         bptr += ifd->bLength;
         size -= ifd->bLength;
@@ -256,7 +256,7 @@ static int  uac_parse_as_interface(AS_IF_T *asif, uint8_t *bptr)
             }
         }
         if (i >= aif->ifd->bNumEndpoints) {
-            UAC_ERRMSG("Ednpoint 0x%x parsing error!\n", ((DESC_EP_T *)bptr)->bEndpointAddress);
+            UAC_ERRMSG("Endpoint 0x%x parsing error!\n", ((DESC_EP_T *)bptr)->bEndpointAddress);
             return UAC_RET_PARSER;
         }
         return 0;
@@ -342,7 +342,7 @@ static void * uac_find_terminal(UAC_DEV_T *uac, uint8_t bTerminalID)
     bptr = uac->udev->cfd_buff;
     config = (DESC_CONF_T *)bptr;
 
-    /* step over configuration descritpor */
+    /* step over configuration descriptor */
     bptr += config->bLength;
     size = config->wTotalLength - config->bLength;
 
@@ -358,7 +358,7 @@ static void * uac_find_terminal(UAC_DEV_T *uac, uint8_t bTerminalID)
             return (void *)hdr;
 
         if (hdr->bLength == 0)
-            return NULL;                    /* prevent infinit loop                       */
+            return NULL;                    /* prevent infinite loop                       */
 
         bptr += hdr->bLength;
         size -= hdr->bLength;
@@ -377,7 +377,7 @@ static void * uac_find_feature_unit(UAC_DEV_T *uac, uint8_t bUnitID)
     bptr = uac->udev->cfd_buff;
     config = (DESC_CONF_T *)bptr;
 
-    /* step over configuration descritpor */
+    /* step over configuration descriptor */
     bptr += config->bLength;
     size = config->wTotalLength - config->bLength;
 
@@ -392,7 +392,7 @@ static void * uac_find_feature_unit(UAC_DEV_T *uac, uint8_t bUnitID)
             return (void *)hdr;
 
         if (hdr->bLength == 0)
-            return NULL;                    /* prevent infinit loop                       */
+            return NULL;                    /* prevent infinite loop                       */
 
         bptr += hdr->bLength;
         size -= hdr->bLength;
@@ -408,7 +408,7 @@ static void * uac_find_feature_unit(UAC_DEV_T *uac, uint8_t bUnitID)
  *  @param[in]  bAlternateSetting   Selected alternative interface
  *  @return   Success or failed.
  *  @retval   0        Success
- *  @retval   Otheriwse  Error occurred
+ *  @retval   Otherwise  Error occurred
  */
 int uac_parse_streaming_interface(UAC_DEV_T *uac, IFACE_T *iface, uint8_t bAlternateSetting)
 {
@@ -429,7 +429,7 @@ int uac_parse_streaming_interface(UAC_DEV_T *uac, IFACE_T *iface, uint8_t bAlter
     bptr = uac->udev->cfd_buff;
     config = (DESC_CONF_T *)bptr;
 
-    /* step over configuration descritpor */
+    /* step over configuration descriptor */
     bptr += config->bLength;
     size = config->wTotalLength - config->bLength;
 
@@ -445,7 +445,7 @@ int uac_parse_streaming_interface(UAC_DEV_T *uac, IFACE_T *iface, uint8_t bAlter
             break;
 
         if (ifd->bLength == 0)
-            return UAC_RET_PARSER;          /* prevent infinit loop                       */
+            return UAC_RET_PARSER;          /* prevent infinite loop                       */
 
         bptr += ifd->bLength;
         size -= ifd->bLength;
@@ -485,7 +485,7 @@ int uac_parse_streaming_interface(UAC_DEV_T *uac, IFACE_T *iface, uint8_t bAlter
         }
 
         if (ifd->bLength == 0)
-            return UAC_RET_PARSER;          /* prevent infinit loop                       */
+            return UAC_RET_PARSER;          /* prevent infinite loop                       */
 
         bptr += ifd->bLength;
         size -= ifd->bLength;
@@ -521,7 +521,7 @@ int uac_parse_streaming_interface(UAC_DEV_T *uac, IFACE_T *iface, uint8_t bAlter
         }
         memcpy(&uac->asif_out, &asif, sizeof(asif));
     } else {
-        UAC_ERRMSG("Interface cannot find iso enpoints!\n");
+        UAC_ERRMSG("Interface cannot find iso endpoints!\n");
         return UAC_RET_PARSER;
     }
 

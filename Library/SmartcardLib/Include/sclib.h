@@ -10,15 +10,15 @@
 
 #include "NuMicro.h"
 
-/** @addtogroup M480_Library M480 Library
+/** @addtogroup LIBRARY Library
   @{
 */
 
-/** @addtogroup M480_SCLIB Smartcard Library
+/** @addtogroup SCLIB Smartcard Library
   @{
 */
 
-/** @addtogroup M480_SCLIB_EXPORTED_CONSTANTS Smartcard Library Exported Constants
+/** @addtogroup SCLIB_EXPORTED_CONSTANTS Smartcard Library Exported Constants
   @{
 */
 
@@ -77,9 +77,9 @@ extern "C"
 #define SCLIB_ERR_DEACTIVE                      0x0000F001UL  /*!< Smartcard is deactivate         \hideinitializer */
 #define SCLIB_ERR_CARDBUSY                      0x0000F002UL  /*!< Smartcard is busy, previous transmission is not complete yet \hideinitializer */
 
-/*@}*/ /* end of group M480_SCLIB_EXPORTED_CONSTANTS */
+/*@}*/ /* end of group SCLIB_EXPORTED_CONSTANTS */
 
-/** @addtogroup M480_SCLIB_EXPORTED_STRUCTS Smartcard Library Exported Structs
+/** @addtogroup SCLIB_EXPORTED_STRUCTS Smartcard Library Exported Structs
   @{
 */
 
@@ -92,9 +92,9 @@ typedef struct {
     uint8_t ATR_Buf[SCLIB_MAX_ATR_LEN]; /*!< Buffer holds ATR answered by smartcard.                            */
 } SCLIB_CARD_INFO_T;
 
-/*@}*/ /* end of group M480_SCLIB_EXPORTED_STRUCTS */
+/*@}*/ /* end of group SCLIB_EXPORTED_STRUCTS */
 
-/** @addtogroup M480_SCLIB_EXPORTED_FUNCTIONS Smartcard Library Exported Functions
+/** @addtogroup SCLIB_EXPORTED_FUNCTIONS Smartcard Library Exported Functions
   @{
 */
 
@@ -264,10 +264,10 @@ uint32_t SCLIB_CheckErrorEvent(uint32_t num);
 
 #endif /* __SCLIB_H__ */
 
-/*@}*/ /* end of group M480_SCLIB_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group SCLIB_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_SCLIB */
+/*@}*/ /* end of group SCLIB */
 
-/*@}*/ /* end of group M480_Library */
+/*@}*/ /* end of group LIBRARY */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

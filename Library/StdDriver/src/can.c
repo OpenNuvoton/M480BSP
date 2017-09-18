@@ -444,6 +444,7 @@ int32_t CAN_BasicReceiveMsg(CAN_T *tCAN, STR_CANMSG_T* pCanMsg)
   *                     \ref CAN_STD_ID (standard ID, 11-bit)
   *                     \ref CAN_EXT_ID (extended ID, 29-bit)
   * @param[in] u32id Specifies the identifier used for acceptance filtering.
+  * @param[in] u32idmask Specifies the identifier mask used for acceptance filtering.
   * @param[in] u8singleOrFifoLast Specifies the end-of-buffer indicator.
   *                               This parameter can be one of the following values:
   *                               TRUE: for a single receive object or a FIFO receive object that is the last one of the FIFO.

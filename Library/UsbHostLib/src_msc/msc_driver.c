@@ -219,154 +219,6 @@ static int  msc_test_unit_ready(MSC_T *msc)
     return ret;
 }
 
-/**
-  * @brief       Read a number of contiguous sectors from mass storage device.
-  *
-  * @param[in]   drv_no    FATFS drive volume number.
-  * @param[in]   sec_no    Sector number of the start secotr.
-  * @param[in]   sec_cnt   Number of sectors to be read.
-  * @param[out]  buff      Memory buffer to store data read from disk.
-  *
-  * @retval      0       Success
-  * @retval      - \ref UMAS_ERR_DRIVE_NOT_FOUND   There's no mass storage device mounted to this volume.
-  * @retval      - \ref UMAS_ERR_IO      Failed to read disk.
-  */
-int  usbh_umas_read(int drv_no, uint32_t sec_no, int sec_cnt, uint8_t *buff)
-{
-    MSC_T   *msc;
-    struct bulk_cb_wrap  *cmd_blk;         /* MSC Bulk-only command block   */
-    int   ret;
-
-    //msc_debug_msg("usbh_umas_read - %d, %d\n", sec_no, sec_cnt);
-
-    msc = find_msc_by_drive(drv_no);
-    if (msc == NULL)
-        return UMAS_ERR_DRIVE_NOT_FOUND;
-
-    cmd_blk = &msc->cmd_blk;
-
-    //msc_debug_msg("read sector 0x%x\n", sector_no);
-    memset(cmd_blk, 0, sizeof(*cmd_blk));
-
-    cmd_blk->Flags   = 0x80;
-    cmd_blk->Length  = 10;
-    cmd_blk->CDB[0]  = READ_10;
-    cmd_blk->CDB[1]  = msc->lun << 5;
-    cmd_blk->CDB[2]  = (sec_no >> 24) & 0xFF;
-    cmd_blk->CDB[3]  = (sec_no >> 16) & 0xFF;
-    cmd_blk->CDB[4]  = (sec_no >> 8) & 0xFF;
-    cmd_blk->CDB[5]  = sec_no & 0xFF;
-    cmd_blk->CDB[7]  = (sec_cnt >> 8) & 0xFF;
-    cmd_blk->CDB[8]  = sec_cnt & 0xFF;
-
-    ret = run_scsi_command(msc, buff, sec_cnt * 512, 1, 1000);
-    if (ret < 0) {
-        msc_debug_msg("usbh_umas_read failed! [%d]\n", ret);
-        return UMAS_ERR_IO;
-    }
-    return 0;
-}
-
-/**
-  * @brief       Write a number of contiguous sectors to mass storage device.
-  *
-  * @param[in]   drv_no    FATFS drive volume number.
-  * @param[in]   sec_no    Sector number of the start secotr.
-  * @param[in]   sec_cnt   Number of sectors to be written.
-  * @param[in]   buff      Memory buffer hold the data to be written..
-  *
-  * @retval      0       Success
-  * @retval      - \ref UMAS_ERR_DRIVE_NOT_FOUND   There's no mass storage device mounted to this volume.
-  * @retval      - \ref UMAS_ERR_IO      Failed to write disk.
-  */
-int  usbh_umas_write(int drv_no, uint32_t sec_no, int sec_cnt, uint8_t *buff)
-{
-    MSC_T   *msc;
-    struct bulk_cb_wrap  *cmd_blk;         /* MSC Bulk-only command block   */
-    int   ret;
-
-    //msc_debug_msg("usbh_umas_write - %d, %d\n", sec_no, sec_cnt);
-
-    msc = find_msc_by_drive(drv_no);
-    if (msc == NULL)
-        return UMAS_ERR_DRIVE_NOT_FOUND;
-
-    cmd_blk = &msc->cmd_blk;
-    memset((uint8_t *)&(msc->cmd_blk), 0, sizeof(msc->cmd_blk));
-
-    cmd_blk->Flags   = 0;
-    cmd_blk->Length  = 10;
-    cmd_blk->CDB[0]  = WRITE_10;
-    cmd_blk->CDB[1]  = msc->lun << 5;
-    cmd_blk->CDB[2]  = (sec_no >> 24) & 0xFF;
-    cmd_blk->CDB[3]  = (sec_no >> 16) & 0xFF;
-    cmd_blk->CDB[4]  = (sec_no >> 8) & 0xFF;
-    cmd_blk->CDB[5]  = sec_no & 0xFF;
-    cmd_blk->CDB[7]  = (sec_cnt >> 8) & 0xFF;
-    cmd_blk->CDB[8]  = sec_cnt & 0xFF;
-
-    ret = run_scsi_command(msc, buff, sec_cnt * 512, 0, 1000);
-    if (ret < 0) {
-        msc_debug_msg("usbh_umas_write failed!\n");
-        return UMAS_ERR_IO;
-    }
-    return 0;
-}
-
-/**
-  * @brief       Get information from USB disk volume.
-  *
-  * @param[in]   drv_no    FATFS drive volume number.
-  * @param[in]   cmd       FATFS disk ioctl command.
-  * @param[out]  buff      Memory buffer to store information.
-  *
-  * @retval      - \ref UMAS_OK              Mass storage device is ready.
-  * @retval      - \ref UMAS_ERR_DRIVE_NOT_FOUND   There's no mass storage device mounted to this volume.
-  * @retval      - \ref UMAS_ERR_IVALID_PARM       Failed to write disk.
-  */
-int  usbh_umas_ioctl(int drv_no, int cmd, void *buff)
-{
-    MSC_T   *msc;
-
-    msc = find_msc_by_drive(drv_no);
-    if (msc == NULL)
-        return UMAS_ERR_DRIVE_NOT_FOUND;
-
-    switch (cmd) {
-    case CTRL_SYNC:
-        return RES_OK;
-
-    case GET_SECTOR_COUNT:
-        *(uint32_t *)buff = msc->uTotalSectorN;
-        return RES_OK;
-
-    case GET_SECTOR_SIZE:
-        *(uint32_t *)buff = msc->nSectorSize;
-        return RES_OK;
-
-    case GET_BLOCK_SIZE:
-        *(uint32_t *)buff = msc->nSectorSize;
-        return RES_OK;
-
-        //case CTRL_ERASE_SECTOR:
-        //    return RES_OK;
-    }
-    return UMAS_ERR_IVALID_PARM;
-}
-
-/**
- *  @brief    Get USB disk status of specified drive.
- *  @param[in] drv_no    USB disk drive number.
- *  @retval    0          Disk is ready.
- *  @retval    Otherwise  Disk not found or not ready.
- */
-int  usbh_umas_disk_status(int drv_no)
-{
-    if (find_msc_by_drive(drv_no) == NULL)
-        return STA_NODISK;
-    return 0;
-}
-
 static int  umass_init_device(MSC_T *msc)
 {
     MSC_T     *try_msc = msc;
@@ -395,7 +247,7 @@ static int  umass_init_device(MSC_T *msc)
                 goto disk_found;
             }
 
-            delay_us(100000);       /* dealy 100ms, retry later       */
+            delay_us(100000);       /* delay 100ms, retry later       */
         }
 
         continue;
@@ -475,7 +327,7 @@ static int msc_probe(IFACE_T *iface)
 
     ifd = aif->ifd;
 
-    /* Is this interface mass stroage class? */
+    /* Is this interface mass storage class? */
     if (ifd->bInterfaceClass != USB_CLASS_MASS_STORAGE)
         return USBH_ERR_NOT_MATCHED;
 
@@ -484,7 +336,7 @@ static int msc_probe(IFACE_T *iface)
             (ifd->bInterfaceSubClass != MSC_SCLASS_RBC))
         return USBH_ERR_NOT_SUPPORTED;
 
-    /* Is bulk-only protocl? */
+    /* Is bulk-only protocol? */
     if (ifd->bInterfaceProtocol != MSC_SPROTO_BULK) {
         msc_debug_msg("Not bulk-only MSC device!\n");
         return USBH_ERR_NOT_SUPPORTED;
@@ -571,6 +423,154 @@ int  usbh_umas_init(void)
     return usbh_register_driver(&msc_driver);
 }
 
+/**
+ *  @brief    Get USB disk status of specified drive.
+ *  @param[in] drv_no    USB disk drive number.
+ *  @retval    0          Disk is ready.
+ *  @retval    Otherwise  Disk not found or not ready.
+ */
+int  usbh_umas_disk_status(int drv_no)
+{
+    if (find_msc_by_drive(drv_no) == NULL)
+        return STA_NODISK;
+    return 0;
+}
+
+
+/**
+  * @brief       Read a number of contiguous sectors from mass storage device.
+  *
+  * @param[in]   drv_no    FATFS drive volume number.
+  * @param[in]   sec_no    Sector number of the start sector.
+  * @param[in]   sec_cnt   Number of sectors to be read.
+  * @param[out]  buff      Memory buffer to store data read from disk.
+  *
+  * @retval      0       Success
+  * @retval      - \ref UMAS_ERR_DRIVE_NOT_FOUND   There's no mass storage device mounted to this volume.
+  * @retval      - \ref UMAS_ERR_IO      Failed to read disk.
+  */
+int  usbh_umas_read(int drv_no, uint32_t sec_no, int sec_cnt, uint8_t *buff)
+{
+    MSC_T   *msc;
+    struct bulk_cb_wrap  *cmd_blk;         /* MSC Bulk-only command block   */
+    int   ret;
+
+    //msc_debug_msg("usbh_umas_read - %d, %d\n", sec_no, sec_cnt);
+
+    msc = find_msc_by_drive(drv_no);
+    if (msc == NULL)
+        return UMAS_ERR_DRIVE_NOT_FOUND;
+
+    cmd_blk = &msc->cmd_blk;
+
+    //msc_debug_msg("read sector 0x%x\n", sector_no);
+    memset(cmd_blk, 0, sizeof(*cmd_blk));
+
+    cmd_blk->Flags   = 0x80;
+    cmd_blk->Length  = 10;
+    cmd_blk->CDB[0]  = READ_10;
+    cmd_blk->CDB[1]  = msc->lun << 5;
+    cmd_blk->CDB[2]  = (sec_no >> 24) & 0xFF;
+    cmd_blk->CDB[3]  = (sec_no >> 16) & 0xFF;
+    cmd_blk->CDB[4]  = (sec_no >> 8) & 0xFF;
+    cmd_blk->CDB[5]  = sec_no & 0xFF;
+    cmd_blk->CDB[7]  = (sec_cnt >> 8) & 0xFF;
+    cmd_blk->CDB[8]  = sec_cnt & 0xFF;
+
+    ret = run_scsi_command(msc, buff, sec_cnt * 512, 1, 1000);
+    if (ret < 0) {
+        msc_debug_msg("usbh_umas_read failed! [%d]\n", ret);
+        return UMAS_ERR_IO;
+    }
+    return 0;
+}
+
+/**
+  * @brief       Write a number of contiguous sectors to mass storage device.
+  *
+  * @param[in]   drv_no    FATFS drive volume number.
+  * @param[in]   sec_no    Sector number of the start sector.
+  * @param[in]   sec_cnt   Number of sectors to be written.
+  * @param[in]   buff      Memory buffer hold the data to be written..
+  *
+  * @retval      0       Success
+  * @retval      - \ref UMAS_ERR_DRIVE_NOT_FOUND   There's no mass storage device mounted to this volume.
+  * @retval      - \ref UMAS_ERR_IO      Failed to write disk.
+  */
+int  usbh_umas_write(int drv_no, uint32_t sec_no, int sec_cnt, uint8_t *buff)
+{
+    MSC_T   *msc;
+    struct bulk_cb_wrap  *cmd_blk;         /* MSC Bulk-only command block   */
+    int   ret;
+
+    //msc_debug_msg("usbh_umas_write - %d, %d\n", sec_no, sec_cnt);
+
+    msc = find_msc_by_drive(drv_no);
+    if (msc == NULL)
+        return UMAS_ERR_DRIVE_NOT_FOUND;
+
+    cmd_blk = &msc->cmd_blk;
+    memset((uint8_t *)&(msc->cmd_blk), 0, sizeof(msc->cmd_blk));
+
+    cmd_blk->Flags   = 0;
+    cmd_blk->Length  = 10;
+    cmd_blk->CDB[0]  = WRITE_10;
+    cmd_blk->CDB[1]  = msc->lun << 5;
+    cmd_blk->CDB[2]  = (sec_no >> 24) & 0xFF;
+    cmd_blk->CDB[3]  = (sec_no >> 16) & 0xFF;
+    cmd_blk->CDB[4]  = (sec_no >> 8) & 0xFF;
+    cmd_blk->CDB[5]  = sec_no & 0xFF;
+    cmd_blk->CDB[7]  = (sec_cnt >> 8) & 0xFF;
+    cmd_blk->CDB[8]  = sec_cnt & 0xFF;
+
+    ret = run_scsi_command(msc, buff, sec_cnt * 512, 0, 1000);
+    if (ret < 0) {
+        msc_debug_msg("usbh_umas_write failed!\n");
+        return UMAS_ERR_IO;
+    }
+    return 0;
+}
+
+/**
+  * @brief       Get information from USB disk volume.
+  *
+  * @param[in]   drv_no    FATFS drive volume number.
+  * @param[in]   cmd       FATFS disk ioctl command.
+  * @param[out]  buff      Memory buffer to store information.
+  *
+  * @retval      - \ref UMAS_OK              Mass storage device is ready.
+  * @retval      - \ref UMAS_ERR_DRIVE_NOT_FOUND   There's no mass storage device mounted to this volume.
+  * @retval      - \ref UMAS_ERR_IVALID_PARM       Failed to write disk.
+  */
+int  usbh_umas_ioctl(int drv_no, int cmd, void *buff)
+{
+    MSC_T   *msc;
+
+    msc = find_msc_by_drive(drv_no);
+    if (msc == NULL)
+        return UMAS_ERR_DRIVE_NOT_FOUND;
+
+    switch (cmd) {
+    case CTRL_SYNC:
+        return RES_OK;
+
+    case GET_SECTOR_COUNT:
+        *(uint32_t *)buff = msc->uTotalSectorN;
+        return RES_OK;
+
+    case GET_SECTOR_SIZE:
+        *(uint32_t *)buff = msc->nSectorSize;
+        return RES_OK;
+
+    case GET_BLOCK_SIZE:
+        *(uint32_t *)buff = msc->nSectorSize;
+        return RES_OK;
+
+        //case CTRL_ERASE_SECTOR:
+        //    return RES_OK;
+    }
+    return UMAS_ERR_IVALID_PARM;
+}
 
 /*** (C) COPYRIGHT 2017 Nuvoton Technology Corp. ***/
 

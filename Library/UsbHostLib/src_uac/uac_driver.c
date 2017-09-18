@@ -5,7 +5,7 @@
  * $Date: 15/06/12 10:12a $
  * @brief    M480 MCU USB Host Audio Class driver
  *
- * @note     Support mono and stero audio input and output.
+ * @note     Support mono and stereo audio input and output.
  * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
@@ -20,7 +20,7 @@
 #include "uac.h"
 
 
-/** @addtogroup Standard_Driver Standard Driver
+/** @addtogroup LIBRARY Library
   @{
 */
 
@@ -130,7 +130,7 @@ static int  uac_probe(IFACE_T *iface)
                 return UAC_RET_IO_ERR;
             }
         } else {
-            UAC_ERRMSG("Cannot find audio stream ednpoints!\n");
+            UAC_ERRMSG("Cannot find audio stream endpoints!\n");
             return UAC_RET_DEV_NOT_FOUND;
         }
 
@@ -245,7 +245,7 @@ UAC_DEV_T * usbh_uac_get_device_list(void)
 
 /*@}*/ /* end of group USBH_Library */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group LIBRARY */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
 

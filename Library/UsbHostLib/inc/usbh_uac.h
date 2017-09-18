@@ -17,7 +17,7 @@
 #include "usbh_lib.h"
 #include "..\src_uac\uac.h"
 
-/** @addtogroup Standard_Driver Standard Driver
+/** @addtogroup LIBRARY Library
   @{
 */
 
@@ -138,7 +138,7 @@ extern "C" {
 
 /*@}*/ /* end of group USBH_Library */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group LIBRARY */
 
 
 #ifdef __cplusplus

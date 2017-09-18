@@ -25,7 +25,7 @@ extern "C"
 /// @endcond HIDDEN_SYMBOLS
 
 
-/** @addtogroup Standard_Driver Standard Driver
+/** @addtogroup LIBRARY Library
   @{
 */
 
@@ -88,7 +88,7 @@ typedef struct usbhid_dev {
 
 /*@}*/ /* end of group USBH_Library */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Library */
 
 #ifdef __cplusplus
 }

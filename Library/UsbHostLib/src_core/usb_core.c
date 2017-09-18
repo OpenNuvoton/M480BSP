@@ -76,7 +76,7 @@ void  usbh_core_init()
   * @brief    Install device connect and disconnect callback function.
   *
   * @param[in]  conn_func       Device connect callback function.
-  * @param[in]  conn_func       Device disconnect callback function.
+  * @param[in]  disconn_func    Device disconnect callback function.
   * @return      None.
   */
 void usbh_install_conn_callback(CONN_FUNC *conn_func, CONN_FUNC *disconn_func)
@@ -217,8 +217,8 @@ int  usbh_register_driver(UDEV_DRV_T *udrv)
   * @param[in]  bRequest        Specific request
   * @param[in]  wValue          Word-sized field that varies according to request
   * @param[in]  wIndex          Word-sized field that varies according to request
-  * @param[in]  wLength         Number of bytes to transfer if there is a Data staget
-  * @param[in]  buff            Data buffer used in data staget
+  * @param[in]  wLength         Number of bytes to transfer if there is a Data stage
+  * @param[in]  buff            Data buffer used in data stage
   * @param[in]  data_len        Length of data to be transmitted/received
   * @param[out] xfer_len        Transmitted/received length of data
   * @param[in]  timeout         Time-out limit (in 10ms - timer tick) of this transfer
@@ -279,7 +279,7 @@ int usbh_ctrl_xfer(UDEV_T *udev, uint8_t bmRequestType, uint8_t bRequest, uint16
 
 
 /**
-  * @brief    Execute a bulk transfer request. This function will return immediatedly after
+  * @brief    Execute a bulk transfer request. This function will return immediately after
   *           issued the bulk transfer. USB stack will later call back utr->func() once the bulk
   *           transfer was done or aborted.
   * @param[in]  utr    The bulk transfer request.
@@ -292,7 +292,7 @@ int usbh_bulk_xfer(UTR_T *utr)
 }
 
 /**
-  * @brief    Execute an interrupt transfer request. This function will return immediatedly after
+  * @brief    Execute an interrupt transfer request. This function will return immediately after
   *           issued the interrupt transfer. USB stack will later call back utr->func() once the
   *           interrupt transfer was done or aborted.
   * @param[in]  utr    The interrupt transfer request.
@@ -305,7 +305,7 @@ int usbh_int_xfer(UTR_T *utr)
 }
 
 /**
-  * @brief    Execute an isochronous transfer request. This function will return immediatedly after
+  * @brief    Execute an isochronous transfer request. This function will return immediately after
   *           issued the isochronous transfer. USB stack will later call back utr->func() once the
   *           isochronous transfer was done or aborted.
   * @param[in]  utr    The isochronous transfer request.
@@ -388,7 +388,7 @@ void usbh_dump_interface_descriptor(DESC_IF_T *if_desc)
 
 void usbh_dump_endpoint_descriptor(DESC_EP_T *ep_desc)
 {
-    USB_debug("\n        [Endoint Descriptor]\n");
+    USB_debug("\n        [Endpoint Descriptor]\n");
     USB_debug("        ----------------------------------------------\n");
     USB_debug("          Length              = %2d\n",  ep_desc->bLength);
     USB_debug("          DescriptorType      = %02x\n", ep_desc->bDescriptorType);
@@ -761,7 +761,7 @@ static int  usbh_parse_interface(UDEV_T *udev, uint8_t *desc_buff, int len)
             desc_buff += ret;
             parsed_len += ret;
             len -= ret;
-            USB_vdebug("EP parse remaning %d\n", len);
+            USB_vdebug("EP parse remaining %d\n", len);
         }
     }
 
@@ -842,7 +842,7 @@ static int  usbh_parse_configuration(UDEV_T *udev, uint8_t *desc_buff)
 
         desc_buff += ret;
         len -= ret;
-        USB_vdebug("IFACE parse remaning %d\n", len);
+        USB_vdebug("IFACE parse remaining %d\n", len);
     }
 
     if (len > 0) {

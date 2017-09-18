@@ -281,7 +281,7 @@ uint32_t ed_make_info(UDEV_T *udev, EP_INFO_T *ep)
 {
     uint32_t  info;
 
-    if (ep == NULL) {                           /* is acontrol endpoint                   */
+    if (ep == NULL) {                           /* is a control endpoint                   */
         /* control endpoint direction is from TD  */
         if (udev->descriptor.bMaxPacketSize0 == 0) { /* is 0 if device descriptor still not obtained. */
             if (udev->speed == SPEED_LOW)       /* give a default maximum packet size     */
@@ -296,7 +296,7 @@ uint32_t ed_make_info(UDEV_T *udev, EP_INFO_T *ep)
     } else {                                    /* Other endpoint direction is from endpoint descriptor */
         info = (ep->wMaxPacketSize << 16);      /* Maximum Packet Size from endpoint      */
 
-        info |= ((ep->bEndpointAddress & 0xf) << ED_CTRL_EN_Pos);   /* Enpoint Number     */
+        info |= ((ep->bEndpointAddress & 0xf) << ED_CTRL_EN_Pos);   /* Endpoint Number     */
 
         if ((ep->bEndpointAddress & EP_ADDR_DIR_MASK) == EP_ADDR_DIR_IN)
             info |= ED_DIR_IN;
@@ -726,7 +726,7 @@ static int ohci_iso_xfer(UTR_T *utr)
         td->PSW[0] = 0xE000 | (buff_addr & 0xFFF);
 
         td->ed = ed;
-        utr->td_cnt++;                      /* increase TD count, for recalim counter     */
+        utr->td_cnt++;                      /* increase TD count, for reclaim counter     */
 
         /* chain to end of TD list */
         if (td_list == NULL)

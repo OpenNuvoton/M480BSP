@@ -13,11 +13,11 @@
 
 #include "NuMicro.h"
 
-/** @addtogroup M480_Library M480 Library
+/** @addtogroup LIBRARY Library
   @{
 */
 
-/** @addtogroup M480_BLISPLIB Firmware Update Library
+/** @addtogroup BLISPLIB Firmware Update Library
   @{
 */
 
@@ -26,7 +26,7 @@ extern "C"
 {
 #endif
 
-/** @addtogroup M480_BLISPLIB_EXPORTED_FUNCTIONS Firmware Update Library Exported Functions
+/** @addtogroup BLISPLIB_EXPORTED_FUNCTIONS Firmware Update Library Exported Functions
   @{
 */
 
@@ -65,11 +65,11 @@ void HSUSBD_ISP(void);
 
 #endif /* __BLISPLIB_H__ */
 
-/*@}*/ /* end of group M480_BLISPLIB_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group BLISPLIB_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group M480_BLISPLIB */
+/*@}*/ /* end of group BLISPLIB */
 
-/*@}*/ /* end of group M480_Library */
+/*@}*/ /* end of group LIBRARY */
 
 /*** (C) COPYRIGHT 2017 Nuvoton Technology Corp. ***/
 

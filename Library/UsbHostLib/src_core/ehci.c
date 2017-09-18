@@ -277,14 +277,14 @@ static int  ehci_init(void)
     _ehci->UCFGR = 0x1;                          /* enable port routing to EHCI           */
     _ehci->UIENR = HSUSBH_UIENR_USBIEN_Msk | HSUSBH_UIENR_UERRIEN_Msk | HSUSBH_UIENR_HSERREN_Msk | HSUSBH_UIENR_IAAEN_Msk;
 
-    delay_us(1000);                              /* dealy 1 ms                            */
+    delay_us(1000);                              /* delay 1 ms                            */
 
     _ehci->UPSCR[0] = HSUSBH_UPSCR_PP_Msk;      /* enable port 1 port power               */
     _ehci->UPSCR[1] = HSUSBH_UPSCR_PP_Msk | HSUSBH_UPSCR_PO_Msk;     /* set port 2 owner to OHCI              */
 
     init_periodic_frame_list();
 
-    delay_us(10*1000);                          /* dealy 10 ms                            */
+    delay_us(10*1000);                          /* delay 10 ms                            */
 
     return 0;
 }
@@ -398,7 +398,7 @@ static void  write_qh(UDEV_T *udev, EP_INFO_T *ep, QH_T *qh)
             chrst |= QH_CTRL_EP_FLAG;           /* non-high-speed control endpoint        */
     } else {                                    /* not a control endpoint                 */
         chrst = QH_NAK_RL | (ep->wMaxPacketSize << 16);
-        chrst |= ((ep->bEndpointAddress & 0xf) << 8);      /* Enpoint Address             */
+        chrst |= ((ep->bEndpointAddress & 0xf) << 8);      /* Endpoint Address             */
     }
 
     if (udev->speed == SPEED_LOW)
@@ -640,7 +640,7 @@ static int ehci_bulk_xfer(UTR_T *utr)
         buff += xfer_len;                   /* advanced buffer pointer                    */
         data_len -= xfer_len;
 
-        if (data_len == 0) {                /* is this the lastest qTD?                   */
+        if (data_len == 0) {                /* is this the latest qTD?                   */
             qtd->Token |= QTD_IOC;          /* ask to raise an interrupt on the last qTD  */
             qtd->Next_qTD = (uint32_t)_ghost_qtd;     /* qTD list end                     */
         }
@@ -944,7 +944,7 @@ void iaad_remove_qh()
             free_ehci_qTD(qtd);
         }
 
-        if (qh->qtd_list != NULL) {         /* still have incompleted qTDs?               */
+        if (qh->qtd_list != NULL) {         /* still have incomplete qTDs?               */
             utr = qh->qtd_list->utr;
             while (qh->qtd_list) {
                 qtd = qh->qtd_list;

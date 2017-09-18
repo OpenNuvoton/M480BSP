@@ -18,7 +18,7 @@ extern "C"
 {
 #endif
 
-/** @addtogroup Standard_Driver Standard Driver
+/** @addtogroup LIBRARY Library
   @{
 */
 
@@ -109,7 +109,7 @@ extern "C"
 /*@}*/ /* end of group USBH_EXPORTED_CONSTANTS */
 
 
-/** @addtogroup USBH_EXPORTED_STRUCT Data structure
+/** @addtogroup USBH_EXPORTED_TYPEDEF USB Host Typedef
   @{
 */
 struct udev_t;
@@ -210,7 +210,7 @@ extern uint32_t  usbh_memory_used(void);
 
 /*@}*/ /* end of group USBH_Library */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group LIBRARY */
 
 #ifdef __cplusplus
 }
