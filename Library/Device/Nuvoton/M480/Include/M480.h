@@ -98,8 +98,8 @@ typedef enum IRQn {
     GPD_IRQn                      = 19,       /*!< GPIO Port D Interrupt                            */
     GPE_IRQn                      = 20,       /*!< GPIO Port E Interrupt                            */
     GPF_IRQn                      = 21,       /*!< GPIO Port F Interrupt                            */
-    SPI0_IRQn                     = 22,       /*!< SPI0 Interrupt                                   */
-    SPI1_IRQn                     = 23,       /*!< SPI1 Interrupt                                   */
+    QSPI0_IRQn                    = 22,       /*!< QSPI0 Interrupt                                   */
+    SPI0_IRQn                     = 23,       /*!< SPI0 Interrupt                                   */
     BRAKE0_IRQn                   = 24,       /*!< BRAKE0 Interrupt                                 */
     EPWM0P0_IRQn                  = 25,       /*!< EPWM0P0 Interrupt                                */
     EPWM0P1_IRQn                  = 26,       /*!< EPWM0P1 Interrupt                                */
@@ -125,8 +125,8 @@ typedef enum IRQn {
     ADC3_IRQn                     = 47,       /*!< ADC3 Interrupt                                   */
     UART2_IRQn                    = 48,       /*!< UART2 Interrupt                                  */
     UART3_IRQn                    = 49,       /*!< UART3 Interrupt                                  */
-    SPI2_IRQn                     = 51,       /*!< SPI2 Interrupt                                   */
-    SPI3_IRQn                     = 52,       /*!< SPI3 Interrupt                                   */
+    SPI1_IRQn                     = 51,       /*!< SPI1 Interrupt                                   */
+    SPI2_IRQn                     = 52,       /*!< SPI2 Interrupt                                   */
     USBD_IRQn                     = 53,       /*!< USB device Interrupt                             */
     USBH_IRQn                     = 54,       /*!< USB host Interrupt                               */
     USBOTG_IRQn                   = 55,       /*!< USB OTG Interrupt                                */
@@ -135,7 +135,7 @@ typedef enum IRQn {
     SC0_IRQn                      = 58,       /*!< Smart Card 0 Interrupt                           */
     SC1_IRQn                      = 59,       /*!< Smart Card 1 Interrupt                           */
     SC2_IRQn                      = 60,       /*!< Smart Card 2 Interrupt                           */
-    SPI4_IRQn                     = 62,       /*!< SPI4 Interrupt                                   */
+    SPI3_IRQn                     = 62,       /*!< SPI3 Interrupt                                   */
     EMAC_TX_IRQn                  = 66,       /*!< Ethernet MAC TX Interrupt                        */
     EMAC_RX_IRQn                  = 67,       /*!< Ethernet MAC RX Interrupt                        */
     SDH0_IRQn                     = 64,       /*!< Secure Digital Host Controller 0 Interrupt       */
@@ -287,9 +287,9 @@ IRQn_Type;
 #define TIMER1_BASE           (APBPERIPH_BASE + 0x10100UL)
 #define EPWM0_BASE            (APBPERIPH_BASE + 0x18000UL)
 #define BPWM0_BASE            (APBPERIPH_BASE + 0x1A000UL)
-#define SPI0_BASE             (APBPERIPH_BASE + 0x20000UL)
-#define SPI2_BASE             (APBPERIPH_BASE + 0x22000UL)
-#define SPI4_BASE             (APBPERIPH_BASE + 0x24000UL)
+#define QSPI0_BASE            (APBPERIPH_BASE + 0x20000UL)
+#define SPI1_BASE             (APBPERIPH_BASE + 0x22000UL)
+#define SPI3_BASE             (APBPERIPH_BASE + 0x24000UL)
 #define UART0_BASE            (APBPERIPH_BASE + 0x30000UL)
 #define UART2_BASE            (APBPERIPH_BASE + 0x32000UL)
 #define UART4_BASE            (APBPERIPH_BASE + 0x34000UL)
@@ -312,8 +312,8 @@ IRQn_Type;
 #define TIMER3_BASE           (APBPERIPH_BASE + 0x11100UL)
 #define EPWM1_BASE            (APBPERIPH_BASE + 0x19000UL)
 #define BPWM1_BASE            (APBPERIPH_BASE + 0x1B000UL)
-#define SPI1_BASE             (APBPERIPH_BASE + 0x21000UL)
-#define SPI3_BASE             (APBPERIPH_BASE + 0x23000UL)
+#define SPI0_BASE             (APBPERIPH_BASE + 0x21000UL)
+#define SPI2_BASE             (APBPERIPH_BASE + 0x23000UL)
 #define UART1_BASE            (APBPERIPH_BASE + 0x31000UL)
 #define UART3_BASE            (APBPERIPH_BASE + 0x33000UL)
 #define UART5_BASE            (APBPERIPH_BASE + 0x35000UL)
@@ -394,11 +394,11 @@ IRQn_Type;
 #define ECAP1                ((ECAP_T *)  ECAP1_BASE)
 #define QEI0                 ((QEI_T *)   QEI0_BASE)
 #define QEI1                 ((QEI_T *)   QEI1_BASE)
+#define QSPI0                ((SPI_T *)   QSPI0_BASE)
 #define SPI0                 ((SPI_T *)   SPI0_BASE)
 #define SPI1                 ((SPI_T *)   SPI1_BASE)
 #define SPI2                 ((SPI_T *)   SPI2_BASE)
 #define SPI3                 ((SPI_T *)   SPI3_BASE)
-#define SPI4                 ((SPI_T *)   SPI4_BASE)
 #define UART0                ((UART_T *)  UART0_BASE)
 #define UART1                ((UART_T *)  UART1_BASE)
 #define UART2                ((UART_T *)  UART2_BASE)
@@ -417,13 +417,13 @@ IRQn_Type;
 #define SPIM                 ((volatile SPIM_T *)  SPIM_BASE)
 #define DAC0                 ((DAC_T *)   DAC0_BASE)
 #define DAC1                 ((DAC_T *)   DAC1_BASE)
-#define USPI0               ((USPI_T *) USCI0_BASE)                     /*!< USPI0 Configuration Struct                       */
-#define USPI1               ((USPI_T *) USCI1_BASE)                     /*!< USPI1 Configuration Struct                       */
-#define OPA                   ((OPA_T *) OPA_BASE)
-#define UI2C0               ((UI2C_T *) USCI0_BASE)                     /*!< UI2C0 Configuration Struct                       */
-#define UI2C1               ((UI2C_T *) USCI1_BASE)                     /*!< UI2C1 Configuration Struct                       */
-#define UUART0              ((UUART_T *) USCI0_BASE)                    /*!< UUART0 Configuration Struct                      */
-#define UUART1              ((UUART_T *) USCI1_BASE)                    /*!< UUART1 Configuration Struct                      */
+#define USPI0                ((USPI_T *) USCI0_BASE)                     /*!< USPI0 Configuration Struct                       */
+#define USPI1                ((USPI_T *) USCI1_BASE)                     /*!< USPI1 Configuration Struct                       */
+#define OPA                  ((OPA_T *) OPA_BASE)
+#define UI2C0                ((UI2C_T *) USCI0_BASE)                     /*!< UI2C0 Configuration Struct                       */
+#define UI2C1                ((UI2C_T *) USCI1_BASE)                     /*!< UI2C1 Configuration Struct                       */
+#define UUART0               ((UUART_T *) USCI0_BASE)                    /*!< UUART0 Configuration Struct                      */
+#define UUART1               ((UUART_T *) USCI1_BASE)                    /*!< UUART1 Configuration Struct                      */
 
 /*@}*/ /* end of group ERIPHERAL_DECLARATION */
 

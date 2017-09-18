@@ -261,13 +261,13 @@ void SYS_Init(void)
     /* Select UART module clock source as HXT and UART module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
 
-    /* Select PCLK0 as the clock source of SPI2 */
-    CLK_SetModuleClock(SPI2_MODULE, CLK_CLKSEL2_SPI2SEL_PCLK0, MODULE_NoMsk);
+    /* Select PCLK0 as the clock source of SPI1 */
+    CLK_SetModuleClock(SPI1_MODULE, CLK_CLKSEL2_SPI1SEL_PCLK0, MODULE_NoMsk);
 
     /* Enable peripheral clock */
     CLK_EnableModuleClock(UART0_MODULE);
     CLK_EnableModuleClock(I2C2_MODULE);
-    CLK_EnableModuleClock(SPI2_MODULE);
+    CLK_EnableModuleClock(SPI1_MODULE);
     CLK_EnableModuleClock(PDMA_MODULE);
 
     /* Update System Core Clock */
@@ -284,14 +284,14 @@ void SYS_Init(void)
     SYS->GPD_MFPH &= ~(SYS_GPD_MFPH_PD8MFP_Msk | SYS_GPD_MFPH_PD9MFP_Msk);
     SYS->GPD_MFPH |= (SYS_GPD_MFPH_PD8MFP_I2C2_SDA | SYS_GPD_MFPH_PD9MFP_I2C2_SCL);
 
-    /* Configure SPI2 related multi-function pins. */
-    /* GPH[7:4] : SPI2_CLK (I2S1_BCLK), SPI2_MISO (I2S1_DI), SPI2_MOSI (I2S1_DO), SPI2_SS (I2S1_LRCLK). */
+    /* Configure SPI1 related multi-function pins. */
+    /* GPH[7:4] : SPI1_CLK (I2S1_BCLK), SPI1_MISO (I2S1_DI), SPI1_MOSI (I2S1_DO), SPI1_SS (I2S1_LRCLK). */
     SYS->GPH_MFPL &= ~(SYS_GPH_MFPL_PH4MFP_Msk | SYS_GPH_MFPL_PH5MFP_Msk | SYS_GPH_MFPL_PH6MFP_Msk | SYS_GPH_MFPL_PH7MFP_Msk);
-    SYS->GPH_MFPL |= (SYS_GPH_MFPL_PH4MFP_SPI2_MISO | SYS_GPH_MFPL_PH5MFP_SPI2_MOSI | SYS_GPH_MFPL_PH6MFP_SPI2_CLK | SYS_GPH_MFPL_PH7MFP_SPI2_SS);
+    SYS->GPH_MFPL |= (SYS_GPH_MFPL_PH4MFP_SPI1_MISO | SYS_GPH_MFPL_PH5MFP_SPI1_MOSI | SYS_GPH_MFPL_PH6MFP_SPI1_CLK | SYS_GPH_MFPL_PH7MFP_SPI1_SS);
     PH->SMTEN |= GPIO_SMTEN_SMTEN6_Msk;
 
-    /* GPH[3] : SPI2_MCLK */
-    SYS->GPH_MFPL = (SYS->GPH_MFPL & (~SYS_GPH_MFPL_PH3MFP_Msk)) | SYS_GPH_MFPL_PH3MFP_SPI2_I2SMCLK;
+    /* GPH[3] : SPI1_MCLK */
+    SYS->GPH_MFPL = (SYS->GPH_MFPL & (~SYS_GPH_MFPL_PH3MFP_Msk)) | SYS_GPH_MFPL_PH3MFP_SPI1_I2SMCLK;
 }
 
 // Configure PDMA to Scatter Gather mode */
@@ -300,22 +300,22 @@ void PDMA_Init(void)
     /* Tx description */
     g_asDescTable_TX[0].CTL = ((BUFF_LEN-1)<<PDMA_DSCT_CTL_TXCNT_Pos)|PDMA_WIDTH_32|PDMA_SAR_INC|PDMA_DAR_FIX|PDMA_REQ_SINGLE|PDMA_OP_SCATTER;
     g_asDescTable_TX[0].SA = (uint32_t)&PcmTxBuff[0];
-    g_asDescTable_TX[0].DA = (uint32_t)&SPI2->TX;
+    g_asDescTable_TX[0].DA = (uint32_t)&SPI1->TX;
     g_asDescTable_TX[0].FIRST = (uint32_t)&g_asDescTable_TX[1] - (PDMA->SCATBA);
 
     g_asDescTable_TX[1].CTL = ((BUFF_LEN-1)<<PDMA_DSCT_CTL_TXCNT_Pos)|PDMA_WIDTH_32|PDMA_SAR_INC|PDMA_DAR_FIX|PDMA_REQ_SINGLE|PDMA_OP_SCATTER;
     g_asDescTable_TX[1].SA = (uint32_t)&PcmTxBuff[1];
-    g_asDescTable_TX[1].DA = (uint32_t)&SPI2->TX;
+    g_asDescTable_TX[1].DA = (uint32_t)&SPI1->TX;
     g_asDescTable_TX[1].FIRST = (uint32_t)&g_asDescTable_TX[0] - (PDMA->SCATBA);   //link to first description
 
     /* Rx description */
     g_asDescTable_RX[0].CTL = ((BUFF_LEN-1)<<PDMA_DSCT_CTL_TXCNT_Pos)|PDMA_WIDTH_32|PDMA_SAR_FIX|PDMA_DAR_INC|PDMA_REQ_SINGLE|PDMA_OP_SCATTER;
-    g_asDescTable_RX[0].SA = (uint32_t)&SPI2->RX;
+    g_asDescTable_RX[0].SA = (uint32_t)&SPI1->RX;
     g_asDescTable_RX[0].DA = (uint32_t)&PcmRxBuff[0];
     g_asDescTable_RX[0].FIRST = (uint32_t)&g_asDescTable_RX[1] - (PDMA->SCATBA);
 
     g_asDescTable_RX[1].CTL = ((BUFF_LEN-1)<<PDMA_DSCT_CTL_TXCNT_Pos)|PDMA_WIDTH_32|PDMA_SAR_FIX|PDMA_DAR_INC|PDMA_REQ_SINGLE|PDMA_OP_SCATTER;
-    g_asDescTable_RX[1].SA = (uint32_t)&SPI2->RX;
+    g_asDescTable_RX[1].SA = (uint32_t)&SPI1->RX;
     g_asDescTable_RX[1].DA = (uint32_t)&PcmRxBuff[1];
     g_asDescTable_RX[1].FIRST = (uint32_t)&g_asDescTable_RX[0] - (PDMA->SCATBA);   //link to first description
 
@@ -323,8 +323,8 @@ void PDMA_Init(void)
     PDMA_Open(PDMA,0x3 << 1);
 
     /* Configure PDMA transfer mode */
-    PDMA_SetTransferMode(PDMA,1, PDMA_SPI2_TX, 1, (uint32_t)&g_asDescTable_TX[0]);
-    PDMA_SetTransferMode(PDMA,2, PDMA_SPI2_RX, 1, (uint32_t)&g_asDescTable_RX[0]);
+    PDMA_SetTransferMode(PDMA,1, PDMA_SPI1_TX, 1, (uint32_t)&g_asDescTable_TX[0]);
+    PDMA_SetTransferMode(PDMA,2, PDMA_SPI1_RX, 1, (uint32_t)&g_asDescTable_RX[0]);
 
     /* Enable PDMA channel 1&2 interrupt */
     PDMA_EnableInt(PDMA,1, 0);
@@ -371,10 +371,10 @@ int32_t main (void)
     NAU88L25_Reset();
 #endif
 
-    SPII2S_Open(SPI2, SPII2S_MODE_SLAVE, 16000, SPII2S_DATABIT_16, SPII2S_STEREO, SPII2S_FORMAT_I2S);
+    SPII2S_Open(SPI1, SPII2S_MODE_SLAVE, 16000, SPII2S_DATABIT_16, SPII2S_STEREO, SPII2S_FORMAT_I2S);
 
     // select source from HXT(12MHz)
-    CLK_SetModuleClock(SPI2_MODULE, CLK_CLKSEL2_SPI2SEL_HXT, 0);
+    CLK_SetModuleClock(SPI1_MODULE, CLK_CLKSEL2_SPI1SEL_HXT, 0);
 
 #if NAU8822
     /* Initialize NAU8822 codec */
@@ -387,17 +387,17 @@ int32_t main (void)
 #endif
 
     /* Set MCLK and enable MCLK */
-    SPII2S_EnableMCLK(SPI2, 12000000);
+    SPII2S_EnableMCLK(SPI1, 12000000);
 
     PDMA_Init();
 
     /* Enable I2S Rx function */
-    SPII2S_ENABLE_RXDMA(SPI2);
-    SPII2S_ENABLE_RX(SPI2);
+    SPII2S_ENABLE_RXDMA(SPI1);
+    SPII2S_ENABLE_RX(SPI1);
 
     /* Enable I2S Tx function */
-    SPII2S_ENABLE_TXDMA(SPI2);
-    SPII2S_ENABLE_TX(SPI2);
+    SPII2S_ENABLE_TXDMA(SPI1);
+    SPII2S_ENABLE_TX(SPI1);
 
     while(1);
 }

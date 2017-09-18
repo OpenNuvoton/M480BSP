@@ -87,8 +87,8 @@ __Vectors:
 	.long	GPD_IRQHandler        /* 19: GPD                        */
 	.long	GPE_IRQHandler        /* 20: GPE                        */
 	.long	GPF_IRQHandler        /* 21: GPF                        */
-	.long	SPI0_IRQHandler       /* 22: SPI0                       */
-	.long	SPI1_IRQHandler       /* 23: SPI1                       */
+	.long	QSPI0_IRQHandler      /* 22: QSPI0                      */
+	.long	SPI0_IRQHandler       /* 23: SPI0                       */
 	.long	BRAKE0_IRQHandler     /* 24: BRAKE0                     */
 	.long	EPWM0P0_IRQHandler    /* 25: EPWM0P0                    */
 	.long	EPWM0P1_IRQHandler    /* 26: EPWM0P1                    */
@@ -116,8 +116,8 @@ __Vectors:
 	.long	UART2_IRQHandler      /* 48: UART2                      */
 	.long	UART3_IRQHandler      /* 49: UART3                      */
 	.long	0                     /* 50: Reserved                   */
-	.long	SPI2_IRQHandler       /* 51: SPI2                       */
-	.long	SPI3_IRQHandler       /* 52: SPI3                       */
+	.long	SPI1_IRQHandler       /* 51: SPI1                       */
+	.long	SPI2_IRQHandler       /* 52: SPI2                       */
 	.long	USBD_IRQHandler       /* 53: USBD                       */
 	.long	OHCI_IRQHandler       /* 54: OHCI                       */
 	.long	USBOTG_IRQHandler     /* 55: OTG                        */
@@ -127,7 +127,7 @@ __Vectors:
 	.long	SC1_IRQHandler        /* 59: SC1                        */
 	.long	SC2_IRQHandler        /* 60: SC2                        */
 	.long	0                     /* 61: Reserved                   */
-	.long	SPI4_IRQHandler       /* 62: SPI4                       */
+	.long	SPI3_IRQHandler       /* 62: SPI3                       */
 	.long	0                     /* 63: Reserved                   */
 	.long	SDH0_IRQHandler       /* 64: SDH0                       */
 	.long	USBD20_IRQHandler     /* 65: HSUSBD                     */
@@ -381,8 +381,8 @@ Default_Handler:
 	def_irq_handler	GPD_IRQHandler
 	def_irq_handler	GPE_IRQHandler
 	def_irq_handler	GPF_IRQHandler
+	def_irq_handler	QSPI0_IRQHandler
 	def_irq_handler	SPI0_IRQHandler
-	def_irq_handler	SPI1_IRQHandler
 	def_irq_handler	BRAKE0_IRQHandler
 	def_irq_handler	EPWM0P0_IRQHandler
 	def_irq_handler	EPWM0P1_IRQHandler
@@ -408,8 +408,8 @@ Default_Handler:
 	def_irq_handler	ADC03_IRQHandler
 	def_irq_handler	UART2_IRQHandler
 	def_irq_handler	UART3_IRQHandler
+	def_irq_handler	SPI1_IRQHandler
 	def_irq_handler	SPI2_IRQHandler
-	def_irq_handler	SPI3_IRQHandler
 	def_irq_handler	USBD_IRQHandler
 	def_irq_handler	OHCI_IRQHandler
 	def_irq_handler	USBOTG_IRQHandler
@@ -418,7 +418,7 @@ Default_Handler:
 	def_irq_handler	SC0_IRQHandler
 	def_irq_handler	SC1_IRQHandler
 	def_irq_handler	SC2_IRQHandler
-	def_irq_handler	SPI4_IRQHandler
+	def_irq_handler	SPI3_IRQHandler
 	def_irq_handler	SDH0_IRQHandler
 	def_irq_handler	USBD20_IRQHandler
 	def_irq_handler	EMAC_TX_IRQHandler

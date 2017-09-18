@@ -155,6 +155,8 @@ void PDMA_SetTransferAddr(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32SrcAddr, uin
  *                - \ref PDMA_USCI0_RX
  *                - \ref PDMA_USCI1_TX
  *                - \ref PDMA_USCI1_RX
+ *                - \ref PDMA_QSPI0_TX
+ *                - \ref PDMA_QSPI0_RX
  *                - \ref PDMA_SPI0_TX
  *                - \ref PDMA_SPI0_RX
  *                - \ref PDMA_SPI1_TX
@@ -163,8 +165,6 @@ void PDMA_SetTransferAddr(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32SrcAddr, uin
  *                - \ref PDMA_SPI2_RX
  *                - \ref PDMA_SPI3_TX
  *                - \ref PDMA_SPI3_RX
- *                - \ref PDMA_SPI4_TX
- *                - \ref PDMA_SPI4_RX
  *                - \ref PDMA_EPWM0_P1_RX
  *                - \ref PDMA_EPWM0_P2_RX
  *                - \ref PDMA_EPWM0_P3_RX

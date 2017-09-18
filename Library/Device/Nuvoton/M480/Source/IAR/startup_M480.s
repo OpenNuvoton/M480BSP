@@ -67,8 +67,8 @@ __vector_table_0x1c
         DCD     GPD_IRQHandler            ; 19: GPIO Port D
         DCD     GPE_IRQHandler            ; 20: GPIO Port E
         DCD     GPF_IRQHandler            ; 21: GPIO Port F
-        DCD     SPI0_IRQHandler           ; 22: SPI0
-        DCD     SPI1_IRQHandler           ; 23: SPI1
+        DCD     QSPI0_IRQHandler          ; 22: QSPI0
+        DCD     SPI0_IRQHandler           ; 23: SPI0
         DCD     BRAKE0_IRQHandler         ; 24:
         DCD     PWM0P0_IRQHandler         ; 25:
         DCD     PWM0P1_IRQHandler         ; 26:
@@ -96,8 +96,8 @@ __vector_table_0x1c
         DCD     UART2_IRQHandler          ; 48: UART2
         DCD     UART3_IRQHandler          ; 49: UART3
         DCD     Default_Handler           ; 50: Reserved
-        DCD     SPI2_IRQHandler           ; 51: SPI2
-        DCD     SPI3_IRQHandler           ; 52: SPI3
+        DCD     SPI1_IRQHandler           ; 51: SPI1
+        DCD     SPI2_IRQHandler           ; 52: SPI2
         DCD     USBD_IRQHandler           ; 53: USB device
         DCD     OHCI_IRQHandler           ; 54: OHCI
         DCD     USBOTG_IRQHandler         ; 55: USB OTG
@@ -107,7 +107,7 @@ __vector_table_0x1c
         DCD     SC1_IRQHandler            ; 59:
         DCD     SC2_IRQHandler            ; 60:
         DCD     Default_Handler           ; 61:
-        DCD     SPI4_IRQHandler           ; 62: SPI4
+        DCD     SPI3_IRQHandler           ; 62: SPI3
         DCD     Default_Handler           ; 63:
         DCD     SDH0_IRQHandler           ; 64: SDH0
         DCD     USBD20_IRQHandler         ; 65: USBD20
@@ -255,8 +255,8 @@ SysTick_Handler
         PUBWEAK  GPD_IRQHandler
         PUBWEAK  GPE_IRQHandler
         PUBWEAK  GPF_IRQHandler
+        PUBWEAK  QSPI0_IRQHandler
         PUBWEAK  SPI0_IRQHandler
-        PUBWEAK  SPI1_IRQHandler
         PUBWEAK  BRAKE0_IRQHandler
         PUBWEAK  PWM0P0_IRQHandler
         PUBWEAK  PWM0P1_IRQHandler
@@ -282,8 +282,8 @@ SysTick_Handler
         PUBWEAK  ADC03_IRQHandler
         PUBWEAK  UART2_IRQHandler
         PUBWEAK  UART3_IRQHandler
+        PUBWEAK  SPI1_IRQHandler
         PUBWEAK  SPI2_IRQHandler
-        PUBWEAK  SPI3_IRQHandler
         PUBWEAK  USBD_IRQHandler
         PUBWEAK  OHCI_IRQHandler
         PUBWEAK  USBOTG_IRQHandler
@@ -292,7 +292,7 @@ SysTick_Handler
         PUBWEAK  SC0_IRQHandler
         PUBWEAK  SC1_IRQHandler
         PUBWEAK  SC2_IRQHandler
-        PUBWEAK  SPI4_IRQHandler
+        PUBWEAK  SPI3_IRQHandler
         PUBWEAK  SDH0_IRQHandler
         PUBWEAK  USBD20_IRQHandler
         PUBWEAK  EMAC_TX_IRQHandler
@@ -342,8 +342,8 @@ GPC_IRQHandler
 GPD_IRQHandler
 GPE_IRQHandler
 GPF_IRQHandler
+QSPI0_IRQHandler
 SPI0_IRQHandler
-SPI1_IRQHandler
 BRAKE0_IRQHandler
 PWM0P0_IRQHandler
 PWM0P1_IRQHandler
@@ -369,8 +369,8 @@ ADC02_IRQHandler
 ADC03_IRQHandler
 UART2_IRQHandler
 UART3_IRQHandler
+SPI1_IRQHandler
 SPI2_IRQHandler
-SPI3_IRQHandler
 USBD_IRQHandler
 OHCI_IRQHandler
 USBOTG_IRQHandler
@@ -379,7 +379,7 @@ CAN1_IRQHandler
 SC0_IRQHandler
 SC1_IRQHandler
 SC2_IRQHandler
-SPI4_IRQHandler
+SPI3_IRQHandler
 SDH0_IRQHandler
 USBD20_IRQHandler
 EMAC_TX_IRQHandler

@@ -400,30 +400,30 @@ void CLK_SetHCLK(uint32_t u32ClkSrc, uint32_t u32ClkDiv)
   * |\ref EPWM0_MODULE   |\ref CLK_CLKSEL2_EPWM0SEL_PCLK0        | x                             |
   * |\ref EPWM1_MODULE   |\ref CLK_CLKSEL2_EPWM1SEL_PLL          | x                             |
   * |\ref EPWM1_MODULE   |\ref CLK_CLKSEL2_EPWM1SEL_PCLK1        | x                             |
+  * |\ref QSPI0_MODULE    |\ref CLK_CLKSEL2_QSPI0SEL_HXT         | x                             |
+  * |\ref QSPI0_MODULE    |\ref CLK_CLKSEL2_QSPI0SEL_PLL         | x                             |
+  * |\ref QSPI0_MODULE    |\ref CLK_CLKSEL2_QSPI0SEL_HIRC        | x                             |
+  * |\ref QSPI0_MODULE    |\ref CLK_CLKSEL2_QSPI0SEL_PCLK0       | x                             |
   * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_HXT           | x                             |
   * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_PLL           | x                             |
   * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_HIRC          | x                             |
-  * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_PCLK0         | x                             |
+  * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_PCLK1         | x                             |
   * |\ref SPI1_MODULE    |\ref CLK_CLKSEL2_SPI1SEL_HXT           | x                             |
   * |\ref SPI1_MODULE    |\ref CLK_CLKSEL2_SPI1SEL_PLL           | x                             |
   * |\ref SPI1_MODULE    |\ref CLK_CLKSEL2_SPI1SEL_HIRC          | x                             |
-  * |\ref SPI1_MODULE    |\ref CLK_CLKSEL2_SPI1SEL_PCLK1         | x                             |
-  * |\ref SPI2_MODULE    |\ref CLK_CLKSEL2_SPI2SEL_HXT           | x                             |
-  * |\ref SPI2_MODULE    |\ref CLK_CLKSEL2_SPI2SEL_PLL           | x                             |
-  * |\ref SPI2_MODULE    |\ref CLK_CLKSEL2_SPI2SEL_HIRC          | x                             |
-  * |\ref SPI2_MODULE    |\ref CLK_CLKSEL2_SPI2SEL_PCLK0         | x                             |
+  * |\ref SPI1_MODULE    |\ref CLK_CLKSEL2_SPI1SEL_PCLK0         | x                             |
   * |\ref BPWM0_MODULE   |\ref CLK_CLKSEL2_BPWM0SEL_PLL          | x                             |
   * |\ref BPWM0_MODULE   |\ref CLK_CLKSEL2_BPWM0SEL_PCLK0        | x                             |
   * |\ref BPWM1_MODULE   |\ref CLK_CLKSEL2_BPWM1SEL_PLL          | x                             |
   * |\ref BPWM1_MODULE   |\ref CLK_CLKSEL2_BPWM1SEL_PCLK1        | x                             |
+  * |\ref SPI2_MODULE    |\ref CLK_CLKSEL2_SPI2SEL_HXT           | x                             |
+  * |\ref SPI2_MODULE    |\ref CLK_CLKSEL2_SPI2SEL_PLL           | x                             |
+  * |\ref SPI2_MODULE    |\ref CLK_CLKSEL2_SPI2SEL_HIRC          | x                             |
+  * |\ref SPI2_MODULE    |\ref CLK_CLKSEL2_SPI2SEL_PCLK1         | x                             |
   * |\ref SPI3_MODULE    |\ref CLK_CLKSEL2_SPI3SEL_HXT           | x                             |
   * |\ref SPI3_MODULE    |\ref CLK_CLKSEL2_SPI3SEL_PLL           | x                             |
   * |\ref SPI3_MODULE    |\ref CLK_CLKSEL2_SPI3SEL_HIRC          | x                             |
-  * |\ref SPI3_MODULE    |\ref CLK_CLKSEL2_SPI3SEL_PCLK1         | x                             |
-  * |\ref SPI4_MODULE    |\ref CLK_CLKSEL2_SPI4SEL_HXT           | x                             |
-  * |\ref SPI4_MODULE    |\ref CLK_CLKSEL2_SPI4SEL_PLL           | x                             |
-  * |\ref SPI4_MODULE    |\ref CLK_CLKSEL2_SPI4SEL_HIRC          | x                             |
-  * |\ref SPI4_MODULE    |\ref CLK_CLKSEL2_SPI4SEL_PCLK0         | x                             |
+  * |\ref SPI3_MODULE    |\ref CLK_CLKSEL2_SPI3SEL_PCLK0         | x                             |
   * |\ref SC0_MODULE     |\ref CLK_CLKSEL3_SC0SEL_HXT            |\ref CLK_CLKDIV1_SC0(x)        |
   * |\ref SC0_MODULE     |\ref CLK_CLKSEL3_SC0SEL_PLL            |\ref CLK_CLKDIV1_SC0(x)        |
   * |\ref SC0_MODULE     |\ref CLK_CLKSEL3_SC0SEL_HIRC           |\ref CLK_CLKDIV1_SC0(x)        |
@@ -563,10 +563,10 @@ void CLK_DisableXtalRC(uint32_t u32ClkMask)
   *             - \ref I2C0_MODULE
   *             - \ref I2C1_MODULE
   *             - \ref I2C2_MODULE
+  *             - \ref QSPI0_MODULE
   *             - \ref SPI0_MODULE
   *             - \ref SPI1_MODULE
   *             - \ref SPI2_MODULE
-  *             - \ref SPI3_MODULE
   *             - \ref UART0_MODULE
   *             - \ref UART1_MODULE
   *             - \ref UART2_MODULE
@@ -583,7 +583,7 @@ void CLK_DisableXtalRC(uint32_t u32ClkMask)
   *             - \ref SC0_MODULE
   *             - \ref SC1_MODULE
   *             - \ref SC2_MODULE
-  *             - \ref SPI4_MODULE
+  *             - \ref SPI3_MODULE
   *             - \ref USCI0_MODULE
   *             - \ref USCI1_MODULE
   *             - \ref DAC_MODULE
@@ -636,10 +636,10 @@ void CLK_EnableModuleClock(uint32_t u32ModuleIdx)
   *             - \ref I2C0_MODULE
   *             - \ref I2C1_MODULE
   *             - \ref I2C2_MODULE
+  *             - \ref QSPI0_MODULE
   *             - \ref SPI0_MODULE
   *             - \ref SPI1_MODULE
   *             - \ref SPI2_MODULE
-  *             - \ref SPI3_MODULE
   *             - \ref UART0_MODULE
   *             - \ref UART1_MODULE
   *             - \ref UART2_MODULE
@@ -656,7 +656,7 @@ void CLK_EnableModuleClock(uint32_t u32ModuleIdx)
   *             - \ref SC0_MODULE
   *             - \ref SC1_MODULE
   *             - \ref SC2_MODULE
-  *             - \ref SPI4_MODULE
+  *             - \ref SPI3_MODULE
   *             - \ref USCI0_MODULE
   *             - \ref USCI1_MODULE
   *             - \ref DAC_MODULE
@@ -1055,11 +1055,11 @@ uint32_t CLK_GetPLLClockFreq(void)
   *             - \ref EPWM1_MODULE
   *             - \ref BPWM0_MODULE
   *             - \ref BPWM1_MODULE
+  *             - \ref QSPI0_MODULE
   *             - \ref SPI0_MODULE
   *             - \ref SPI1_MODULE
   *             - \ref SPI2_MODULE
   *             - \ref SPI3_MODULE
-  *             - \ref SPI4_MODULE
   *             - \ref SC0_MODULE
   *             - \ref SC1_MODULE
   *             - \ref SC2_MODULE

@@ -13,7 +13,7 @@
 #define TEST_NUMBER 1   /* page numbers */
 #define TEST_LENGTH 256 /* length */
 
-#define SPI_FLASH_PORT  SPI2
+#define SPI_FLASH_PORT  QSPI0
 
 uint8_t SrcArray[TEST_LENGTH];
 uint8_t DestArray[TEST_LENGTH];
@@ -77,7 +77,7 @@ void SpiFlash_ChipErase(void)
     // /CS: de-active
     SPI_SET_SS_HIGH(SPI_FLASH_PORT);
 
-    SPI_ClearRxFIFO(SPI0);
+    SPI_ClearRxFIFO(QSPI0);
 }
 
 uint8_t SpiFlash_ReadStatusReg(void)
@@ -250,13 +250,13 @@ void SYS_Init(void)
     /* Select HXT as the clock source of UART0 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
 
-    /* Select PCLK0 as the clock source of SPI0 */
-    CLK_SetModuleClock(SPI0_MODULE, CLK_CLKSEL2_SPI0SEL_PCLK0, MODULE_NoMsk);
+    /* Select PCLK0 as the clock source of QSPI0 */
+    CLK_SetModuleClock(QSPI0_MODULE, CLK_CLKSEL2_QSPI0SEL_PCLK0, MODULE_NoMsk);
 
     /* Enable UART peripheral clock */
     CLK_EnableModuleClock(UART0_MODULE);
-    /* Enable SPI0 peripheral clock */
-    CLK_EnableModuleClock(SPI0_MODULE);
+    /* Enable QSPI0 peripheral clock */
+    CLK_EnableModuleClock(QSPI0_MODULE);
 
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
@@ -266,10 +266,10 @@ void SYS_Init(void)
     SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
     SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
 
-    /* Setup SPI0 multi-function pins */
-    SYS->GPA_MFPL = SYS_GPA_MFPL_PA0MFP_SPI0_MOSI0 | SYS_GPA_MFPL_PA1MFP_SPI0_MISO0 | SYS_GPA_MFPL_PA2MFP_SPI0_CLK | SYS_GPA_MFPL_PA3MFP_SPI0_SS;
+    /* Setup QSPI0 multi-function pins */
+    SYS->GPA_MFPL = SYS_GPA_MFPL_PA0MFP_QSPI0_MOSI0 | SYS_GPA_MFPL_PA1MFP_QSPI0_MISO0 | SYS_GPA_MFPL_PA2MFP_QSPI0_CLK | SYS_GPA_MFPL_PA3MFP_QSPI0_SS;
 
-    /* Enable SPI0 clock pin (PA2) schmitt trigger */
+    /* Enable QSPI0 clock pin (PA2) schmitt trigger */
     PA->SMTEN |= GPIO_SMTEN_SMTEN4_Msk;
 
     /* Update System Core Clock */

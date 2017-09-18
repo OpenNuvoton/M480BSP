@@ -88,8 +88,8 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
                 DCD     GPD_IRQHandler            ; 19: GPIO Port D
                 DCD     GPE_IRQHandler            ; 20: GPIO Port E
                 DCD     GPF_IRQHandler            ; 21: GPIO Port F
-                DCD     SPI0_IRQHandler           ; 22: SPI0
-                DCD     SPI1_IRQHandler           ; 23: SPI1
+                DCD     QSPI0_IRQHandler          ; 22: QSPI0
+                DCD     SPI0_IRQHandler           ; 23: SPI0
                 DCD     BRAKE0_IRQHandler         ; 24:
                 DCD     EPWM0P0_IRQHandler        ; 25:
                 DCD     EPWM0P1_IRQHandler        ; 26:
@@ -117,8 +117,8 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
                 DCD     UART2_IRQHandler          ; 48: UART2
                 DCD     UART3_IRQHandler          ; 49: UART3
                 DCD     Default_Handler           ; 50: Reserved
-                DCD     SPI2_IRQHandler           ; 51: SPI2
-                DCD     SPI3_IRQHandler           ; 52: SPI3
+                DCD     SPI1_IRQHandler           ; 51: SPI1
+                DCD     SPI2_IRQHandler           ; 52: SPI2
                 DCD     USBD_IRQHandler           ; 53: USB device
                 DCD     OHCI_IRQHandler           ; 54: OHCI
                 DCD     USBOTG_IRQHandler         ; 55: USB OTG
@@ -128,7 +128,7 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
                 DCD     SC1_IRQHandler            ; 59:
                 DCD     SC2_IRQHandler            ; 60:
                 DCD     Default_Handler           ; 61:
-                DCD     SPI4_IRQHandler           ; 62: SPI4
+                DCD     SPI3_IRQHandler           ; 62: SPI3
                 DCD     Default_Handler           ; 63:
                 DCD     SDH0_IRQHandler           ; 64: SDH0
                 DCD     USBD20_IRQHandler         ; 65: USBD20
@@ -288,8 +288,8 @@ Default_Handler PROC
                 EXPORT  GPD_IRQHandler            [WEAK]
                 EXPORT  GPE_IRQHandler            [WEAK]
                 EXPORT  GPF_IRQHandler            [WEAK]
+                EXPORT  QSPI0_IRQHandler          [WEAK]
                 EXPORT  SPI0_IRQHandler           [WEAK]
-                EXPORT  SPI1_IRQHandler           [WEAK]
                 EXPORT  BRAKE0_IRQHandler         [WEAK]
                 EXPORT  EPWM0P0_IRQHandler        [WEAK]
                 EXPORT  EPWM0P1_IRQHandler        [WEAK]
@@ -315,8 +315,8 @@ Default_Handler PROC
                 EXPORT  ADC03_IRQHandler          [WEAK]
                 EXPORT  UART2_IRQHandler          [WEAK]
                 EXPORT  UART3_IRQHandler          [WEAK]
+                EXPORT  SPI1_IRQHandler           [WEAK]
                 EXPORT  SPI2_IRQHandler           [WEAK]
-                EXPORT  SPI3_IRQHandler           [WEAK]
                 EXPORT  USBD_IRQHandler           [WEAK]
                 EXPORT  OHCI_IRQHandler           [WEAK]
                 EXPORT  USBOTG_IRQHandler         [WEAK]
@@ -325,7 +325,7 @@ Default_Handler PROC
                 EXPORT  SC0_IRQHandler            [WEAK]
                 EXPORT  SC1_IRQHandler            [WEAK]
                 EXPORT  SC2_IRQHandler            [WEAK]
-                EXPORT  SPI4_IRQHandler           [WEAK]
+                EXPORT  SPI3_IRQHandler           [WEAK]
                 EXPORT  SDH0_IRQHandler           [WEAK]
                 EXPORT  USBD20_IRQHandler         [WEAK]
                 EXPORT  EMAC_TX_IRQHandler        [WEAK]
@@ -375,8 +375,8 @@ GPC_IRQHandler
 GPD_IRQHandler
 GPE_IRQHandler
 GPF_IRQHandler
+QSPI0_IRQHandler
 SPI0_IRQHandler
-SPI1_IRQHandler
 BRAKE0_IRQHandler
 EPWM0P0_IRQHandler
 EPWM0P1_IRQHandler
@@ -402,8 +402,8 @@ ADC02_IRQHandler
 ADC03_IRQHandler
 UART2_IRQHandler
 UART3_IRQHandler
+SPI1_IRQHandler
 SPI2_IRQHandler
-SPI3_IRQHandler
 USBD_IRQHandler
 OHCI_IRQHandler
 USBOTG_IRQHandler
@@ -412,7 +412,7 @@ CAN1_IRQHandler
 SC0_IRQHandler
 SC1_IRQHandler
 SC2_IRQHandler
-SPI4_IRQHandler
+SPI3_IRQHandler
 SDH0_IRQHandler
 USBD20_IRQHandler
 EMAC_TX_IRQHandler

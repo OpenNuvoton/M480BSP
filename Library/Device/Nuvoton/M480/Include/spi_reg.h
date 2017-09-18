@@ -81,7 +81,7 @@ typedef struct {
      * |        |          |In receive-only mode, SPI Master will generate SPI bus clock continuously for receiving data bit from SPI slave device and assert the BUSY status.
      * |        |          |0 = Receive-only mode Disabled.
      * |        |          |1 = Receive-only mode Enabled.
-     * |[16]    |TWOBIT    |2-bit Transfer Mode Enable Bit (Only Supported in SPI0)
+     * |[16]    |TWOBIT    |2-bit Transfer Mode Enable Bit (Only Supported in QSPI0)
      * |        |          |0 = 2-Bit Transfer mode Disabled.
      * |        |          |1 = 2-Bit Transfer mode Enabled.
      * |        |          |Note: When 2-Bit Transfer mode is enabled, the first serial transmitted bit data is from the first FIFO buffer data, and the 2nd serial transmitted bit data is from the second FIFO buffer data
@@ -102,10 +102,10 @@ typedef struct {
      * |        |          |This bit is used to select the data input/output direction in half-duplex transfer and Dual/Quad transfer
      * |        |          |0 = SPI data is input direction.
      * |        |          |1 = SPI data is output direction.
-     * |[21]    |DUALIOEN  |Dual I/O Mode Enable Bit (Only Supported in SPI0)
+     * |[21]    |DUALIOEN  |Dual I/O Mode Enable Bit (Only Supported in QSPI0)
      * |        |          |0 = Dual I/O mode Disabled.
      * |        |          |1 = Dual I/O mode Enabled.
-     * |[22]    |QUADIOEN  |Quad I/O Mode Enable Bit (Only Supported in SPI0)
+     * |[22]    |QUADIOEN  |Quad I/O Mode Enable Bit (Only Supported in QSPI0)
      * |        |          |0 = Quad I/O mode Disabled.
      * |        |          |1 = Quad I/O mode Enabled.
      * @var SPI_T::CLKDIV
@@ -140,15 +140,15 @@ typedef struct {
      * |        |          |0 = Automatic slave selection function Disabled
      * |        |          |Slave selection signal will be asserted/de-asserted according to SS (SPIx_SSCTL[0]).
      * |        |          |1 = Automatic slave selection function Enabled.
-     * |[4]     |SLV3WIRE  |Slave 3-wire Mode Enable Bit (Only Supported in SPI0)
-     * |        |          |Slave 3-wire mode is only available in SPI0
-     * |        |          |In Slave 3-wire mode, the SPI controller can work with 3-wire interface including SPI0_CLK, SPI0_MISO and SPI0_MOSI pins.
+     * |[4]     |SLV3WIRE  |Slave 3-wire Mode Enable Bit (Only Supported in QSPI0)
+     * |        |          |Slave 3-wire mode is only available in QSPI0
+     * |        |          |In Slave 3-wire mode, the SPI controller can work with 3-wire interface including QSPI0_CLK, QSPI0_MISO and QSPI0_MOSI pins.
      * |        |          |0 = 4-wire bi-direction interface.
      * |        |          |1 = 3-wire bi-direction interface.
-     * |[5]     |SLVTOIEN  |Slave Mode Time-out Interrupt Enable Bit (Only Supported in SPI0)
+     * |[5]     |SLVTOIEN  |Slave Mode Time-out Interrupt Enable Bit (Only Supported in QSPI0)
      * |        |          |0 = Slave mode time-out interrupt Disabled.
      * |        |          |1 = Slave mode time-out interrupt Enabled.
-     * |[6]     |SLVTORST  |Slave Mode Time-out Reset Control (Only Supported in SPI0)
+     * |[6]     |SLVTORST  |Slave Mode Time-out Reset Control (Only Supported in QSPI0)
      * |        |          |0 = When Slave mode time-out event occurs, the TX and RX control circuit will not be reset.
      * |        |          |1 = When Slave mode time-out event occurs, the TX and RX control circuit will be reset by hardware.
      * |[8]     |SLVBEIEN  |Slave Mode Bit Count Error Interrupt Enable Bit
@@ -163,7 +163,7 @@ typedef struct {
      * |[13]    |SSINAIEN  |Slave Select Inactive Interrupt Enable Bit
      * |        |          |0 = Slave select inactive interrupt Disabled.
      * |        |          |1 = Slave select inactive interrupt Enabled.
-     * |[31:16] |SLVTOCNT  |Slave Mode Time-out Period (Only Supported in SPI0)
+     * |[31:16] |SLVTOCNT  |Slave Mode Time-out Period (Only Supported in QSPI0)
      * |        |          |In Slave mode, these bits indicate the time-out period when there is bus clock input during slave select active
      * |        |          |The clock source of the time-out counter is Slave peripheral clock
      * |        |          |If the value is 0, it indicates the slave mode time-out function is disabled.
@@ -277,7 +277,7 @@ typedef struct {
      * |        |          |1 = The slave select line status is 1.
      * |        |          |Note: This bit is only available in Slave mode
      * |        |          |If SSACTPOL (SPIx_SSCTL[2]) is set 0, and the SSLINE is 1, the SPI slave select is in inactive status.
-     * |[5]     |SLVTOIF   |Slave Time-out Interrupt Flag (Only Supported in SPI0)
+     * |[5]     |SLVTOIF   |Slave Time-out Interrupt Flag (Only Supported in QSPI0)
      * |        |          |When the slave select is active and the value of SLVTOCNT is not 0, as the bus clock is detected, the slave time-out counter in SPI controller logic will be started
      * |        |          |When the value of time-out counter is greater than or equal to the value of SLVTOCNT (SPI_SSCTL[31:16]) before one transaction is done, the slave time-out interrupt event will be asserted.
      * |        |          |0 = Slave time-out is not active.

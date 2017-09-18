@@ -2,7 +2,7 @@
  * @file     main.c
  * @version  V0.10
  * @brief
- *           Configure SPI2 as I2S Slave mode and demonstrate how I2S works in Slave mode.
+ *           Configure SPI1 as I2S Slave mode and demonstrate how I2S works in Slave mode.
  *           This sample code needs to work with SPII2S_Master.
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  *
@@ -42,7 +42,7 @@ int32_t main(void)
     printf("      Stereo mode\n");
     printf("      I2S format\n");
     printf("      TX value: 0xAA00AA01, 0xAA02AA03, ..., 0xAAFEAAFF, wraparound\n");
-    printf("  The I/O connection for I2S1 (SPI2):\n");
+    printf("  The I/O connection for I2S1 (SPI1):\n");
     printf("      I2S1_LRCLK (PH7)\n      I2S1_BCLK(PH6)\n");
     printf("      I2S1_DI (PH4)\n      I2S1_DO (PH5)\n\n");
     printf("  NOTE: Connect with a I2S master.\n");
@@ -54,7 +54,7 @@ int32_t main(void)
 
     /* Slave mode, 16-bit word width, stereo mode, I2S format. Set TX FIFO threshold to 2 and RX FIFO threshold to 1. */
     /* I2S peripheral clock rate is equal to PCLK1 clock rate. */
-    SPII2S_Open(SPI2, SPII2S_MODE_SLAVE, 0, SPII2S_DATABIT_16, SPII2S_STEREO, SPII2S_FORMAT_I2S);
+    SPII2S_Open(SPI1, SPII2S_MODE_SLAVE, 0, SPII2S_DATABIT_16, SPII2S_STEREO, SPII2S_FORMAT_I2S);
 
     /* Initiate data counter */
     g_u32DataCount = 0;
@@ -63,16 +63,16 @@ int32_t main(void)
     u32RxValue1 = 0;
     u32RxValue2 = 0;
     /* Enable TX threshold level interrupt */
-    SPII2S_EnableInt(SPI2, SPII2S_FIFO_TXTH_INT_MASK);
-    NVIC_EnableIRQ(SPI2_IRQn);
+    SPII2S_EnableInt(SPI1, SPII2S_FIFO_TXTH_INT_MASK);
+    NVIC_EnableIRQ(SPI1_IRQn);
 
     printf("Start I2S ...\nTX value: 0x%X\n", g_u32TxValue);
 
     while(1) {
         /* Check RX FIFO empty flag */
-        if((SPI2->I2SSTS & SPI_I2SSTS_RXEMPTY_Msk) == 0) {
+        if((SPI1->I2SSTS & SPI_I2SSTS_RXEMPTY_Msk) == 0) {
             /* Read RX FIFO */
-            u32RxValue2 = SPII2S_READ_RX_FIFO(SPI2);
+            u32RxValue2 = SPII2S_READ_RX_FIFO(SPI1);
             if(u32RxValue1 != u32RxValue2) {
                 u32RxValue1 = u32RxValue2;
                 /* If received value changes, print the current TX value and the new received value. */
@@ -111,12 +111,12 @@ void SYS_Init(void)
     /* Select UART module clock source as HXT and UART module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
 
-    /* Select PCLK0 as the clock source of SPI2 */
-    CLK_SetModuleClock(SPI2_MODULE, CLK_CLKSEL2_SPI2SEL_PCLK0, MODULE_NoMsk);
+    /* Select PCLK0 as the clock source of SPI1 */
+    CLK_SetModuleClock(SPI1_MODULE, CLK_CLKSEL2_SPI1SEL_PCLK0, MODULE_NoMsk);
 
     /* Enable peripheral clock */
     CLK_EnableModuleClock(UART0_MODULE);
-    CLK_EnableModuleClock(SPI2_MODULE);
+    CLK_EnableModuleClock(SPI1_MODULE);
     CLK_EnableModuleClock(PDMA_MODULE);
 
     /* Update System Core Clock */
@@ -130,18 +130,18 @@ void SYS_Init(void)
     SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
     SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
 
-    /* Configure SPI2 related multi-function pins. */
-    /* GPH[7:4] : SPI2_CLK (I2S1_BCLK), SPI2_MISO (I2S1_DI), SPI2_MOSI (I2S1_DO), SPI2_SS (I2S1_LRCLK). */
+    /* Configure SPI1 related multi-function pins. */
+    /* GPH[7:4] : SPI1_CLK (I2S1_BCLK), SPI1_MISO (I2S1_DI), SPI1_MOSI (I2S1_DO), SPI1_SS (I2S1_LRCLK). */
     SYS->GPH_MFPL &= ~(SYS_GPH_MFPL_PH4MFP_Msk | SYS_GPH_MFPL_PH5MFP_Msk | SYS_GPH_MFPL_PH6MFP_Msk | SYS_GPH_MFPL_PH7MFP_Msk);
-    SYS->GPH_MFPL |= (SYS_GPH_MFPL_PH4MFP_SPI2_MISO | SYS_GPH_MFPL_PH5MFP_SPI2_MOSI | SYS_GPH_MFPL_PH6MFP_SPI2_CLK | SYS_GPH_MFPL_PH7MFP_SPI2_SS);
+    SYS->GPH_MFPL |= (SYS_GPH_MFPL_PH4MFP_SPI1_MISO | SYS_GPH_MFPL_PH5MFP_SPI1_MOSI | SYS_GPH_MFPL_PH6MFP_SPI1_CLK | SYS_GPH_MFPL_PH7MFP_SPI1_SS);
     PH->SMTEN |= GPIO_SMTEN_SMTEN6_Msk;
 }
 
-void SPI2_IRQHandler()
+void SPI1_IRQHandler()
 {
     /* Write 2 TX values to TX FIFO */
-    SPII2S_WRITE_TX_FIFO(SPI2, g_u32TxValue);
-    SPII2S_WRITE_TX_FIFO(SPI2, g_u32TxValue);
+    SPII2S_WRITE_TX_FIFO(SPI1, g_u32TxValue);
+    SPII2S_WRITE_TX_FIFO(SPI1, g_u32TxValue);
     g_u32DataCount += 2;
 }
 

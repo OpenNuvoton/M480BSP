@@ -180,18 +180,18 @@ typedef struct {
      * |[10]    |I2C2CKEN  |I2C2 Clock Enable Bit
      * |        |          |0 = I2C2 clock Disabled.
      * |        |          |1 = I2C2 clock Enabled.
-     * |[12]    |SPI0CKEN  |SPI0 Clock Enable Bit
+     * |[12]    |QSPI0CKEN  |QSPI0 Clock Enable Bit
+     * |        |          |0 = QSPI0 clock Disabled.
+     * |        |          |1 = QSPI0 clock Enabled.
+     * |[13]    |SPI0CKEN  |SPI0 Clock Enable Bit
      * |        |          |0 = SPI0 clock Disabled.
      * |        |          |1 = SPI0 clock Enabled.
-     * |[13]    |SPI1CKEN  |SPI1 Clock Enable Bit
+     * |[14]    |SPI1CKEN  |SPI1 Clock Enable Bit
      * |        |          |0 = SPI1 clock Disabled.
      * |        |          |1 = SPI1 clock Enabled.
-     * |[14]    |SPI2CKEN  |SPI2 Clock Enable Bit
+     * |[15]    |SPI2CKEN  |SPI2 Clock Enable Bit
      * |        |          |0 = SPI2 clock Disabled.
      * |        |          |1 = SPI2 clock Enabled.
-     * |[15]    |SPI3CKEN  |SPI3 Clock Enable Bit
-     * |        |          |0 = SPI3 clock Disabled.
-     * |        |          |1 = SPI3 clock Enabled.
      * |[16]    |UART0CKEN |UART0 Clock Enable Bit
      * |        |          |0 = UART0 clock Disabled.
      * |        |          |1 = UART0 clock Enabled.
@@ -245,9 +245,9 @@ typedef struct {
      * |[2]     |SC2CKEN   |SC2 Clock Enable Bit
      * |        |          |0 = SC2 clock Disabled.
      * |        |          |1 = SC2 clock Enabled.
-     * |[6]     |SPI4CKEN  |SPI4 Clock Enable Bit
-     * |        |          |0 = SPI4 clock Disabled.
-     * |        |          |1 = SPI4 clock Enabled.
+     * |[6]     |SPI3CKEN  |SPI3 Clock Enable Bit
+     * |        |          |0 = SPI3 clock Disabled.
+     * |        |          |1 = SPI3 clock Enabled.
      * |[8]     |USCI0CKEN |USCI0 Clock Enable Bit
      * |        |          |0 = USCI0 clock Disabled.
      * |        |          |1 = USCI0 clock Enabled.
@@ -395,17 +395,17 @@ typedef struct {
      * |        |          |The peripheral clock source of EPWM1 is defined by EPWM1SEL.
      * |        |          |0 = Clock source from PLL.
      * |        |          |1 = Clock source from PCLK1.
-     * |[3:2]   |SPI0SEL   |SPI0 Clock Source Selection
+     * |[3:2]   |QSPI0SEL   |QSPI0 Clock Source Selection
      * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
      * |        |          |01 = Clock source from PLL.
      * |        |          |10 = Clock source from PCLK0.
      * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |[5:4]   |SPI1SEL   |SPI1 Clock Source Selection
+     * |[5:4]   |SPI0SEL   |SPI0 Clock Source Selection
      * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
      * |        |          |01 = Clock source from PLL.
      * |        |          |10 = Clock source from PCLK1.
      * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |[7:6]   |SPI2SEL   |SPI2 Clock Source Selection
+     * |[7:6]   |SPI1SEL   |SPI1 Clock Source Selection
      * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
      * |        |          |01 = Clock source from PLL.
      * |        |          |10 = Clock source from PCLK0.
@@ -418,12 +418,12 @@ typedef struct {
      * |        |          |The peripheral clock source of BPWM1 is defined by BPWM1SEL.
      * |        |          |0 = Clock source from PLL.
      * |        |          |1 = Clock source from PCLK1.
-     * |[11:10] |SPI3SEL   |SPI3 Clock Source Selection
+     * |[11:10] |SPI2SEL   |SPI2 Clock Source Selection
      * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
      * |        |          |01 = Clock source from PLL.
      * |        |          |10 = Clock source from PCLK1.
      * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |[13:12] |SPI4SEL   |SPI4 Clock Source Selection
+     * |[13:12] |SPI3SEL   |SPI3 Clock Source Selection
      * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
      * |        |          |01 = Clock source from PLL.
      * |        |          |10 = Clock source from PCLK0.
@@ -1133,17 +1133,17 @@ typedef struct {
 #define CLK_APBCLK0_I2C2CKEN_Pos         (10)                                              /*!< CLK_T::APBCLK0: I2C2CKEN Position      */
 #define CLK_APBCLK0_I2C2CKEN_Msk         (0x1ul << CLK_APBCLK0_I2C2CKEN_Pos)               /*!< CLK_T::APBCLK0: I2C2CKEN Mask          */
 
-#define CLK_APBCLK0_SPI0CKEN_Pos         (12)                                              /*!< CLK_T::APBCLK0: SPI0CKEN Position      */
+#define CLK_APBCLK0_QSPI0CKEN_Pos         (12)                                              /*!< CLK_T::APBCLK0: QSPI0CKEN Position      */
+#define CLK_APBCLK0_QSPI0CKEN_Msk         (0x1ul << CLK_APBCLK0_QSPI0CKEN_Pos)               /*!< CLK_T::APBCLK0: QSPI0CKEN Mask          */
+
+#define CLK_APBCLK0_SPI0CKEN_Pos         (13)                                              /*!< CLK_T::APBCLK0: SPI0CKEN Position      */
 #define CLK_APBCLK0_SPI0CKEN_Msk         (0x1ul << CLK_APBCLK0_SPI0CKEN_Pos)               /*!< CLK_T::APBCLK0: SPI0CKEN Mask          */
 
-#define CLK_APBCLK0_SPI1CKEN_Pos         (13)                                              /*!< CLK_T::APBCLK0: SPI1CKEN Position      */
+#define CLK_APBCLK0_SPI1CKEN_Pos         (14)                                              /*!< CLK_T::APBCLK0: SPI1CKEN Position      */
 #define CLK_APBCLK0_SPI1CKEN_Msk         (0x1ul << CLK_APBCLK0_SPI1CKEN_Pos)               /*!< CLK_T::APBCLK0: SPI1CKEN Mask          */
 
-#define CLK_APBCLK0_SPI2CKEN_Pos         (14)                                              /*!< CLK_T::APBCLK0: SPI2CKEN Position      */
+#define CLK_APBCLK0_SPI2CKEN_Pos         (15)                                              /*!< CLK_T::APBCLK0: SPI2CKEN Position      */
 #define CLK_APBCLK0_SPI2CKEN_Msk         (0x1ul << CLK_APBCLK0_SPI2CKEN_Pos)               /*!< CLK_T::APBCLK0: SPI2CKEN Mask          */
-
-#define CLK_APBCLK0_SPI3CKEN_Pos         (15)                                              /*!< CLK_T::APBCLK0: SPI3CKEN Position      */
-#define CLK_APBCLK0_SPI3CKEN_Msk         (0x1ul << CLK_APBCLK0_SPI3CKEN_Pos)               /*!< CLK_T::APBCLK0: SPI3CKEN Mask          */
 
 #define CLK_APBCLK0_UART0CKEN_Pos        (16)                                              /*!< CLK_T::APBCLK0: UART0CKEN Position     */
 #define CLK_APBCLK0_UART0CKEN_Msk        (0x1ul << CLK_APBCLK0_UART0CKEN_Pos)              /*!< CLK_T::APBCLK0: UART0CKEN Mask         */
@@ -1193,8 +1193,8 @@ typedef struct {
 #define CLK_APBCLK1_SC2CKEN_Pos          (2)                                               /*!< CLK_T::APBCLK1: SC2CKEN Position       */
 #define CLK_APBCLK1_SC2CKEN_Msk          (0x1ul << CLK_APBCLK1_SC2CKEN_Pos)                /*!< CLK_T::APBCLK1: SC2CKEN Mask           */
 
-#define CLK_APBCLK1_SPI4CKEN_Pos         (6)                                               /*!< CLK_T::APBCLK1: SPI4CKEN Position      */
-#define CLK_APBCLK1_SPI4CKEN_Msk         (0x1ul << CLK_APBCLK1_SPI4CKEN_Pos)               /*!< CLK_T::APBCLK1: SPI4CKEN Mask          */
+#define CLK_APBCLK1_SPI3CKEN_Pos         (6)                                               /*!< CLK_T::APBCLK1: SPI3CKEN Position      */
+#define CLK_APBCLK1_SPI3CKEN_Msk         (0x1ul << CLK_APBCLK1_SPI3CKEN_Pos)               /*!< CLK_T::APBCLK1: SPI3CKEN Mask          */
 
 #define CLK_APBCLK1_USCI0CKEN_Pos        (8)                                               /*!< CLK_T::APBCLK1: USCI0CKEN Position     */
 #define CLK_APBCLK1_USCI0CKEN_Msk        (0x1ul << CLK_APBCLK1_USCI0CKEN_Pos)              /*!< CLK_T::APBCLK1: USCI0CKEN Mask         */
@@ -1285,14 +1285,14 @@ typedef struct {
 #define CLK_CLKSEL2_EPWM1SEL_Pos         (1)                                               /*!< CLK_T::CLKSEL2: EPWM1SEL Position      */
 #define CLK_CLKSEL2_EPWM1SEL_Msk         (0x1ul << CLK_CLKSEL2_EPWM1SEL_Pos)               /*!< CLK_T::CLKSEL2: EPWM1SEL Mask          */
 
-#define CLK_CLKSEL2_SPI0SEL_Pos          (2)                                               /*!< CLK_T::CLKSEL2: SPI0SEL Position       */
+#define CLK_CLKSEL2_QSPI0SEL_Pos          (2)                                               /*!< CLK_T::CLKSEL2: QSPI0SEL Position       */
+#define CLK_CLKSEL2_QSPI0SEL_Msk          (0x3ul << CLK_CLKSEL2_QSPI0SEL_Pos)                /*!< CLK_T::CLKSEL2: QSPI0SEL Mask           */
+
+#define CLK_CLKSEL2_SPI0SEL_Pos          (4)                                               /*!< CLK_T::CLKSEL2: SPI0SEL Position       */
 #define CLK_CLKSEL2_SPI0SEL_Msk          (0x3ul << CLK_CLKSEL2_SPI0SEL_Pos)                /*!< CLK_T::CLKSEL2: SPI0SEL Mask           */
 
-#define CLK_CLKSEL2_SPI1SEL_Pos          (4)                                               /*!< CLK_T::CLKSEL2: SPI1SEL Position       */
+#define CLK_CLKSEL2_SPI1SEL_Pos          (6)                                               /*!< CLK_T::CLKSEL2: SPI1SEL Position       */
 #define CLK_CLKSEL2_SPI1SEL_Msk          (0x3ul << CLK_CLKSEL2_SPI1SEL_Pos)                /*!< CLK_T::CLKSEL2: SPI1SEL Mask           */
-
-#define CLK_CLKSEL2_SPI2SEL_Pos          (6)                                               /*!< CLK_T::CLKSEL2: SPI2SEL Position       */
-#define CLK_CLKSEL2_SPI2SEL_Msk          (0x3ul << CLK_CLKSEL2_SPI2SEL_Pos)                /*!< CLK_T::CLKSEL2: SPI2SEL Mask           */
 
 #define CLK_CLKSEL2_BPWM0SEL_Pos         (8)                                               /*!< CLK_T::CLKSEL2: BPWM0SEL Position      */
 #define CLK_CLKSEL2_BPWM0SEL_Msk         (0x1ul << CLK_CLKSEL2_BPWM0SEL_Pos)               /*!< CLK_T::CLKSEL2: BPWM0SEL Mask          */
@@ -1300,11 +1300,11 @@ typedef struct {
 #define CLK_CLKSEL2_BPWM1SEL_Pos         (9)                                               /*!< CLK_T::CLKSEL2: BPWM1SEL Position      */
 #define CLK_CLKSEL2_BPWM1SEL_Msk         (0x1ul << CLK_CLKSEL2_BPWM1SEL_Pos)               /*!< CLK_T::CLKSEL2: BPWM1SEL Mask          */
 
-#define CLK_CLKSEL2_SPI3SEL_Pos          (10)                                              /*!< CLK_T::CLKSEL2: SPI3SEL Position       */
-#define CLK_CLKSEL2_SPI3SEL_Msk          (0x3ul << CLK_CLKSEL2_SPI3SEL_Pos)                /*!< CLK_T::CLKSEL2: SPI3SEL Mask           */
+#define CLK_CLKSEL2_SPI2SEL_Pos          (10)                                              /*!< CLK_T::CLKSEL2: SPI2SEL Position       */
+#define CLK_CLKSEL2_SPI2SEL_Msk          (0x3ul << CLK_CLKSEL2_SPI2SEL_Pos)                /*!< CLK_T::CLKSEL2: SPI2SEL Mask           */
 
-#define CLK_CLKSEL2_SPI4SEL_Pos          (12)                                              /*!< CLK_T::CLKSEL2: SPI4SEL Position       */
-#define CLK_CLKSEL2_SPI4SEL_Msk          (0x3ul << CLK_CLKSEL2_SPI4SEL_Pos)                /*!< CLK_T::CLKSEL2: SPI4SEL Mask           */
+#define CLK_CLKSEL2_SPI3SEL_Pos          (12)                                              /*!< CLK_T::CLKSEL2: SPI3SEL Position       */
+#define CLK_CLKSEL2_SPI3SEL_Msk          (0x3ul << CLK_CLKSEL2_SPI3SEL_Pos)                /*!< CLK_T::CLKSEL2: SPI3SEL Mask           */
 
 #define CLK_CLKSEL3_SC0SEL_Pos           (0)                                               /*!< CLK_T::CLKSEL3: SC0SEL Position        */
 #define CLK_CLKSEL3_SC0SEL_Msk           (0x3ul << CLK_CLKSEL3_SC0SEL_Pos)                 /*!< CLK_T::CLKSEL3: SC0SEL Mask            */

@@ -188,18 +188,18 @@ typedef struct {
      * |[10]    |I2C2RST   |I2C2 Controller Reset
      * |        |          |0 = I2C2 controller normal operation.
      * |        |          |1 = I2C2 controller reset.
-     * |[12]    |SPI0RST   |SPI0 Controller Reset
+     * |[12]    |QSPI0RST   |QSPI0 Controller Reset
+     * |        |          |0 = QSPI0 controller normal operation.
+     * |        |          |1 = QSPI0 controller reset.
+     * |[13]    |SPI0RST   |SPI0 Controller Reset
      * |        |          |0 = SPI0 controller normal operation.
      * |        |          |1 = SPI0 controller reset.
-     * |[13]    |SPI1RST   |SPI1 Controller Reset
+     * |[14]    |SPI1RST   |SPI1 Controller Reset
      * |        |          |0 = SPI1 controller normal operation.
      * |        |          |1 = SPI1 controller reset.
-     * |[14]    |SPI2RST   |SPI2 Controller Reset
+     * |[15]    |SPI2RST   |SPI2 Controller Reset
      * |        |          |0 = SPI2 controller normal operation.
      * |        |          |1 = SPI2 controller reset.
-     * |[15]    |SPI3RST   |SPI3 Controller Reset
-     * |        |          |0 = SPI3 controller normal operation.
-     * |        |          |1 = SPI3 controller reset.
      * |[16]    |UART0RST  |UART0 Controller Reset
      * |        |          |0 = UART0 controller normal operation.
      * |        |          |1 = UART0 controller reset.
@@ -247,9 +247,9 @@ typedef struct {
      * |[2]     |SC2RST    |SC2 Controller Reset
      * |        |          |0 = SC2 controller normal operation.
      * |        |          |1 = SC2 controller reset.
-     * |[6]     |SPI4RST   |SPI4 Controller Reset
-     * |        |          |0 = SPI4 controller normal operation.
-     * |        |          |1 = SPI4 controller reset.
+     * |[6]     |SPI3RST   |SPI3 Controller Reset
+     * |        |          |0 = SPI3 controller normal operation.
+     * |        |          |1 = SPI3 controller reset.
      * |[8]     |USCI0RST  |USCI0 Controller Reset
      * |        |          |0 = USCI0 controller normal operation.
      * |        |          |1 = USCI0 controller reset.
@@ -2170,17 +2170,17 @@ typedef struct {
 #define SYS_IPRST1_I2C2RST_Pos           (10)                                              /*!< SYS_T::IPRST1: I2C2RST Position        */
 #define SYS_IPRST1_I2C2RST_Msk           (0x1ul << SYS_IPRST1_I2C2RST_Pos)                 /*!< SYS_T::IPRST1: I2C2RST Mask            */
 
-#define SYS_IPRST1_SPI0RST_Pos           (12)                                              /*!< SYS_T::IPRST1: SPI0RST Position        */
+#define SYS_IPRST1_QSPI0RST_Pos           (12)                                              /*!< SYS_T::IPRST1: QSPI0RST Position        */
+#define SYS_IPRST1_QSPI0RST_Msk           (0x1ul << SYS_IPRST1_QSPI0RST_Pos)                 /*!< SYS_T::IPRST1: QSPI0RST Mask            */
+
+#define SYS_IPRST1_SPI0RST_Pos           (13)                                              /*!< SYS_T::IPRST1: SPI0RST Position        */
 #define SYS_IPRST1_SPI0RST_Msk           (0x1ul << SYS_IPRST1_SPI0RST_Pos)                 /*!< SYS_T::IPRST1: SPI0RST Mask            */
 
-#define SYS_IPRST1_SPI1RST_Pos           (13)                                              /*!< SYS_T::IPRST1: SPI1RST Position        */
+#define SYS_IPRST1_SPI1RST_Pos           (14)                                              /*!< SYS_T::IPRST1: SPI1RST Position        */
 #define SYS_IPRST1_SPI1RST_Msk           (0x1ul << SYS_IPRST1_SPI1RST_Pos)                 /*!< SYS_T::IPRST1: SPI1RST Mask            */
 
-#define SYS_IPRST1_SPI2RST_Pos           (14)                                              /*!< SYS_T::IPRST1: SPI2RST Position        */
+#define SYS_IPRST1_SPI2RST_Pos           (15)                                              /*!< SYS_T::IPRST1: SPI2RST Position        */
 #define SYS_IPRST1_SPI2RST_Msk           (0x1ul << SYS_IPRST1_SPI2RST_Pos)                 /*!< SYS_T::IPRST1: SPI2RST Mask            */
-
-#define SYS_IPRST1_SPI3RST_Pos           (15)                                              /*!< SYS_T::IPRST1: SPI3RST Position        */
-#define SYS_IPRST1_SPI3RST_Msk           (0x1ul << SYS_IPRST1_SPI3RST_Pos)                 /*!< SYS_T::IPRST1: SPI3RST Mask            */
 
 #define SYS_IPRST1_UART0RST_Pos          (16)                                              /*!< SYS_T::IPRST1: UART0RST Position       */
 #define SYS_IPRST1_UART0RST_Msk          (0x1ul << SYS_IPRST1_UART0RST_Pos)                /*!< SYS_T::IPRST1: UART0RST Mask           */
@@ -2224,8 +2224,8 @@ typedef struct {
 #define SYS_IPRST2_SC2RST_Pos            (2)                                               /*!< SYS_T::IPRST2: SC2RST Position         */
 #define SYS_IPRST2_SC2RST_Msk            (0x1ul << SYS_IPRST2_SC2RST_Pos)                  /*!< SYS_T::IPRST2: SC2RST Mask             */
 
-#define SYS_IPRST2_SPI4RST_Pos           (6)                                               /*!< SYS_T::IPRST2: SPI4RST Position        */
-#define SYS_IPRST2_SPI4RST_Msk           (0x1ul << SYS_IPRST2_SPI4RST_Pos)                 /*!< SYS_T::IPRST2: SPI4RST Mask            */
+#define SYS_IPRST2_SPI3RST_Pos           (6)                                               /*!< SYS_T::IPRST2: SPI3RST Position        */
+#define SYS_IPRST2_SPI3RST_Msk           (0x1ul << SYS_IPRST2_SPI3RST_Pos)                 /*!< SYS_T::IPRST2: SPI3RST Mask            */
 
 #define SYS_IPRST2_USCI0RST_Pos          (8)                                               /*!< SYS_T::IPRST2: USCI0RST Position       */
 #define SYS_IPRST2_USCI0RST_Msk          (0x1ul << SYS_IPRST2_USCI0RST_Pos)                /*!< SYS_T::IPRST2: USCI0RST Mask           */

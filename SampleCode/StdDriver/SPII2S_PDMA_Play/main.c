@@ -72,20 +72,20 @@ int32_t main(void)
     printf("      Stereo mode\n");
     printf("      I2S format\n");
     printf("      TX 1/2 value: 0x50005000/0xA000A000, 0x50015001/0xA001A001, ... \n");
-    printf("  The I/O connection for I2S1 (SPI2):\n");
+    printf("  The I/O connection for I2S1 (SPI1):\n");
     printf("      I2S_LRCLK (PH7)\n      I2S_BCLK (PH6)\n");
     printf("      I2S_DI (PH4)\n      I2S_DO (PH5)\n\n");
     printf("      This sample code will transmit and receive %d data with PDMA transfer.\n", CHECK_BUFF_LEN);
     printf("      Connect I2S_DI and I2S_DO to check if the received values and its' sequence\n are the same with the data which stored in two transmit buffers.\n");
     printf("      After PDMA transfer is finished, the received values will be printed.\n\n");
 
-    /* Select PCLK as the clock source of SPI2 */
-    CLK_SetModuleClock(SPI2_MODULE, CLK_CLKSEL2_SPI2SEL_PCLK0, MODULE_NoMsk);
+    /* Select PCLK as the clock source of SPI1 */
+    CLK_SetModuleClock(SPI1_MODULE, CLK_CLKSEL2_SPI1SEL_PCLK0, MODULE_NoMsk);
 
     /* Enable I2S TX and RX functions */
     /* Sampling rate 16000 Hz; bit clock rate 512 kHz. */
     /* Master mode, 16-bit word width, stereo mode, I2S format. */
-    SPII2S_Open(SPI2, SPII2S_MODE_MASTER, 16000, SPII2S_DATABIT_16, SPII2S_STEREO, SPII2S_FORMAT_I2S);
+    SPII2S_Open(SPI1, SPII2S_MODE_MASTER, 16000, SPII2S_DATABIT_16, SPII2S_STEREO, SPII2S_FORMAT_I2S);
 
     /* Data initiation */
     u32InitValue = 0x50005000;
@@ -101,21 +101,21 @@ int32_t main(void)
     /* Tx(Play) description */
     g_asDescTable_TX[0].CTL = ((BUFF_LEN-1)<<PDMA_DSCT_CTL_TXCNT_Pos)|PDMA_WIDTH_32|PDMA_SAR_INC|PDMA_DAR_FIX|PDMA_REQ_SINGLE|PDMA_OP_SCATTER;
     g_asDescTable_TX[0].SA = (uint32_t)&PcmTxBuff[0];
-    g_asDescTable_TX[0].DA = (uint32_t)&SPI2->TX;
+    g_asDescTable_TX[0].DA = (uint32_t)&SPI1->TX;
     g_asDescTable_TX[0].FIRST = (uint32_t)&g_asDescTable_TX[1] - (PDMA->SCATBA);
 
     g_asDescTable_TX[1].CTL = ((BUFF_LEN-1)<<PDMA_DSCT_CTL_TXCNT_Pos)|PDMA_WIDTH_32|PDMA_SAR_INC|PDMA_DAR_FIX|PDMA_REQ_SINGLE|PDMA_OP_SCATTER;
     g_asDescTable_TX[1].SA = (uint32_t)&PcmTxBuff[1];
-    g_asDescTable_TX[1].DA = (uint32_t)&SPI2->TX;
+    g_asDescTable_TX[1].DA = (uint32_t)&SPI1->TX;
     g_asDescTable_TX[1].FIRST = (uint32_t)&g_asDescTable_TX[0] - (PDMA->SCATBA);   //link to first description
 
     /* Rx description */
     g_asDescTable_DataRX[0].CTL = ((CHECK_BUFF_LEN-1)<<PDMA_DSCT_CTL_TXCNT_Pos)|PDMA_WIDTH_32|PDMA_SAR_FIX|PDMA_DAR_INC|PDMA_REQ_SINGLE|PDMA_OP_BASIC;
-    g_asDescTable_DataRX[0].SA = (uint32_t)&SPI2->RX;
+    g_asDescTable_DataRX[0].SA = (uint32_t)&SPI1->RX;
     g_asDescTable_DataRX[0].DA = (uint32_t)&PcmRxDataBuff[0];
 
-    PDMA_SetTransferMode(PDMA,1, PDMA_SPI2_TX, 1, (uint32_t)&g_asDescTable_TX[0]);
-    PDMA_SetTransferMode(PDMA,2, PDMA_SPI2_RX, 1, (uint32_t)&g_asDescTable_DataRX[0]);
+    PDMA_SetTransferMode(PDMA,1, PDMA_SPI1_TX, 1, (uint32_t)&g_asDescTable_TX[0]);
+    PDMA_SetTransferMode(PDMA,2, PDMA_SPI1_RX, 1, (uint32_t)&g_asDescTable_DataRX[0]);
 
     /* Enable PDMA channel 1 interrupt */
     PDMA_EnableInt(PDMA,1, PDMA_INT_TRANS_DONE);
@@ -123,15 +123,15 @@ int32_t main(void)
     NVIC_EnableIRQ(PDMA_IRQn);
 
     /* Clear RX FIFO */
-    SPII2S_CLR_RX_FIFO(SPI2);
+    SPII2S_CLR_RX_FIFO(SPI1);
 
     /* Enable RX function and TX function */
-    SPII2S_ENABLE_RX(SPI2);
-    SPII2S_ENABLE_TX(SPI2);
+    SPII2S_ENABLE_RX(SPI1);
+    SPII2S_ENABLE_TX(SPI1);
 
     /* Enable RX PDMA and TX PDMA function */
-    SPII2S_ENABLE_TXDMA(SPI2);
-    SPII2S_ENABLE_RXDMA(SPI2);
+    SPII2S_ENABLE_TXDMA(SPI1);
+    SPII2S_ENABLE_RXDMA(SPI1);
 
     /* Print the received data */
     for(u32DataCount = 0; u32DataCount < CHECK_BUFF_LEN; u32DataCount++) {
@@ -167,12 +167,12 @@ void SYS_Init(void)
     /* Select UART module clock source as HXT and UART module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
 
-    /* Select PCLK0 as the clock source of SPI2 */
-    CLK_SetModuleClock(SPI2_MODULE, CLK_CLKSEL2_SPI2SEL_PCLK0, MODULE_NoMsk);
+    /* Select PCLK0 as the clock source of SPI1 */
+    CLK_SetModuleClock(SPI1_MODULE, CLK_CLKSEL2_SPI1SEL_PCLK0, MODULE_NoMsk);
 
     /* Enable peripheral clock */
     CLK_EnableModuleClock(UART0_MODULE);
-    CLK_EnableModuleClock(SPI2_MODULE);
+    CLK_EnableModuleClock(SPI1_MODULE);
     CLK_EnableModuleClock(PDMA_MODULE);
 
     /* Update System Core Clock */
@@ -186,10 +186,10 @@ void SYS_Init(void)
     SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
     SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
 
-    /* Configure SPI2 related multi-function pins. */
-    /* GPH[7:4] : SPI2_CLK (I2S1_BCLK), SPI2_MISO (I2S1_DI), SPI2_MOSI (I2S1_DO), SPI2_SS (I2S1_LRCLK). */
+    /* Configure SPI1 related multi-function pins. */
+    /* GPH[7:4] : SPI1_CLK (I2S1_BCLK), SPI1_MISO (I2S1_DI), SPI1_MOSI (I2S1_DO), SPI1_SS (I2S1_LRCLK). */
     SYS->GPH_MFPL &= ~(SYS_GPH_MFPL_PH4MFP_Msk | SYS_GPH_MFPL_PH5MFP_Msk | SYS_GPH_MFPL_PH6MFP_Msk | SYS_GPH_MFPL_PH7MFP_Msk);
-    SYS->GPH_MFPL |= (SYS_GPH_MFPL_PH4MFP_SPI2_MISO | SYS_GPH_MFPL_PH5MFP_SPI2_MOSI | SYS_GPH_MFPL_PH6MFP_SPI2_CLK | SYS_GPH_MFPL_PH7MFP_SPI2_SS);
+    SYS->GPH_MFPL |= (SYS_GPH_MFPL_PH4MFP_SPI1_MISO | SYS_GPH_MFPL_PH5MFP_SPI1_MOSI | SYS_GPH_MFPL_PH6MFP_SPI1_CLK | SYS_GPH_MFPL_PH7MFP_SPI1_SS);
     PH->SMTEN |= GPIO_SMTEN_SMTEN6_Msk;
 
 }

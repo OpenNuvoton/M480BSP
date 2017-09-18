@@ -131,20 +131,20 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 /*  CLKSEL2 constant definitions.                                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
+#define CLK_CLKSEL2_QSPI0SEL_HXT          (0x0UL << CLK_CLKSEL2_QSPI0SEL_Pos)         /*!< Select QSPI0 clock source from high speed crystal \hideinitializer */
+#define CLK_CLKSEL2_QSPI0SEL_PLL          (0x1UL << CLK_CLKSEL2_QSPI0SEL_Pos)         /*!< Select QSPI0 clock source from PLL \hideinitializer */
+#define CLK_CLKSEL2_QSPI0SEL_HIRC         (0x3UL << CLK_CLKSEL2_QSPI0SEL_Pos)         /*!< Select QSPI0 clock source from high speed oscillator \hideinitializer */
+#define CLK_CLKSEL2_QSPI0SEL_PCLK0        (0x2UL << CLK_CLKSEL2_QSPI0SEL_Pos)         /*!< Select QSPI0 clock source from PCLK0 \hideinitializer */
+
 #define CLK_CLKSEL2_SPI0SEL_HXT          (0x0UL << CLK_CLKSEL2_SPI0SEL_Pos)         /*!< Select SPI0 clock source from high speed crystal \hideinitializer */
 #define CLK_CLKSEL2_SPI0SEL_PLL          (0x1UL << CLK_CLKSEL2_SPI0SEL_Pos)         /*!< Select SPI0 clock source from PLL \hideinitializer */
 #define CLK_CLKSEL2_SPI0SEL_HIRC         (0x3UL << CLK_CLKSEL2_SPI0SEL_Pos)         /*!< Select SPI0 clock source from high speed oscillator \hideinitializer */
-#define CLK_CLKSEL2_SPI0SEL_PCLK0        (0x2UL << CLK_CLKSEL2_SPI0SEL_Pos)         /*!< Select SPI0 clock source from PCLK0 \hideinitializer */
+#define CLK_CLKSEL2_SPI0SEL_PCLK1        (0x2UL << CLK_CLKSEL2_SPI0SEL_Pos)         /*!< Select SPI0 clock source from PCLK1 \hideinitializer */
 
 #define CLK_CLKSEL2_SPI1SEL_HXT          (0x0UL << CLK_CLKSEL2_SPI1SEL_Pos)         /*!< Select SPI1 clock source from high speed crystal \hideinitializer */
 #define CLK_CLKSEL2_SPI1SEL_PLL          (0x1UL << CLK_CLKSEL2_SPI1SEL_Pos)         /*!< Select SPI1 clock source from PLL \hideinitializer */
 #define CLK_CLKSEL2_SPI1SEL_HIRC         (0x3UL << CLK_CLKSEL2_SPI1SEL_Pos)         /*!< Select SPI1 clock source from high speed oscillator \hideinitializer */
-#define CLK_CLKSEL2_SPI1SEL_PCLK1        (0x2UL << CLK_CLKSEL2_SPI1SEL_Pos)         /*!< Select SPI1 clock source from PCLK1 \hideinitializer */
-
-#define CLK_CLKSEL2_SPI2SEL_HXT          (0x0UL << CLK_CLKSEL2_SPI2SEL_Pos)         /*!< Select SPI2 clock source from high speed crystal \hideinitializer */
-#define CLK_CLKSEL2_SPI2SEL_PLL          (0x1UL << CLK_CLKSEL2_SPI2SEL_Pos)         /*!< Select SPI2 clock source from PLL \hideinitializer */
-#define CLK_CLKSEL2_SPI2SEL_HIRC         (0x3UL << CLK_CLKSEL2_SPI2SEL_Pos)         /*!< Select SPI2 clock source from high speed oscillator \hideinitializer */
-#define CLK_CLKSEL2_SPI2SEL_PCLK0        (0x2UL << CLK_CLKSEL2_SPI2SEL_Pos)         /*!< Select SPI2 clock source from PCLK0 \hideinitializer */
+#define CLK_CLKSEL2_SPI1SEL_PCLK0        (0x2UL << CLK_CLKSEL2_SPI1SEL_Pos)         /*!< Select SPI1 clock source from PCLK0 \hideinitializer */
 
 #define CLK_CLKSEL2_EPWM0SEL_PLL         (0x0UL << CLK_CLKSEL2_EPWM0SEL_Pos)        /*!< Select EPWM0 clock source from PLL \hideinitializer */
 #define CLK_CLKSEL2_EPWM0SEL_PCLK0       (0x1UL << CLK_CLKSEL2_EPWM0SEL_Pos)        /*!< Select EPWM0 clock source from PCLK0 \hideinitializer */
@@ -158,15 +158,15 @@ extern "C"
 #define CLK_CLKSEL2_BPWM1SEL_PLL         (0x0UL << CLK_CLKSEL2_BPWM1SEL_Pos)        /*!< Select BPWM1 clock source from PLL \hideinitializer */
 #define CLK_CLKSEL2_BPWM1SEL_PCLK1       (0x1UL << CLK_CLKSEL2_BPWM1SEL_Pos)        /*!< Select BPWM1 clock source from PCLK1 \hideinitializer */
 
+#define CLK_CLKSEL2_SPI2SEL_HXT          (0x0UL << CLK_CLKSEL2_SPI2SEL_Pos)         /*!< Select SPI2 clock source from high speed crystal \hideinitializer */
+#define CLK_CLKSEL2_SPI2SEL_PLL          (0x1UL << CLK_CLKSEL2_SPI2SEL_Pos)         /*!< Select SPI2 clock source from PLL \hideinitializer */
+#define CLK_CLKSEL2_SPI2SEL_HIRC         (0x3UL << CLK_CLKSEL2_SPI2SEL_Pos)         /*!< Select SPI2 clock source from high speed oscillator \hideinitializer */
+#define CLK_CLKSEL2_SPI2SEL_PCLK1        (0x2UL << CLK_CLKSEL2_SPI2SEL_Pos)         /*!< Select SPI2 clock source from PCLK1 \hideinitializer */
+
 #define CLK_CLKSEL2_SPI3SEL_HXT          (0x0UL << CLK_CLKSEL2_SPI3SEL_Pos)         /*!< Select SPI3 clock source from high speed crystal \hideinitializer */
 #define CLK_CLKSEL2_SPI3SEL_PLL          (0x1UL << CLK_CLKSEL2_SPI3SEL_Pos)         /*!< Select SPI3 clock source from PLL \hideinitializer */
 #define CLK_CLKSEL2_SPI3SEL_HIRC         (0x3UL << CLK_CLKSEL2_SPI3SEL_Pos)         /*!< Select SPI3 clock source from high speed oscillator \hideinitializer */
-#define CLK_CLKSEL2_SPI3SEL_PCLK1        (0x2UL << CLK_CLKSEL2_SPI3SEL_Pos)         /*!< Select SPI3 clock source from PCLK1 \hideinitializer */
-
-#define CLK_CLKSEL2_SPI4SEL_HXT          (0x0UL << CLK_CLKSEL2_SPI4SEL_Pos)         /*!< Select SPI4 clock source from high speed crystal \hideinitializer */
-#define CLK_CLKSEL2_SPI4SEL_PLL          (0x1UL << CLK_CLKSEL2_SPI4SEL_Pos)         /*!< Select SPI4 clock source from PLL \hideinitializer */
-#define CLK_CLKSEL2_SPI4SEL_HIRC         (0x3UL << CLK_CLKSEL2_SPI4SEL_Pos)         /*!< Select SPI4 clock source from high speed oscillator \hideinitializer */
-#define CLK_CLKSEL2_SPI4SEL_PCLK0        (0x2UL << CLK_CLKSEL2_SPI4SEL_Pos)         /*!< Select SPI4 clock source from PCLK0 \hideinitializer */
+#define CLK_CLKSEL2_SPI3SEL_PCLK0        (0x2UL << CLK_CLKSEL2_SPI3SEL_Pos)         /*!< Select SPI3 clock source from PCLK0 \hideinitializer */
 
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -336,10 +336,10 @@ extern "C"
 #define I2C0_MODULE      ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(8UL<<0))  /*!< I2C0 Module \hideinitializer */
 #define I2C1_MODULE      ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(9UL<<0))  /*!< I2C1 Module \hideinitializer */
 #define I2C2_MODULE      ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(10UL<<0)) /*!< I2C2 Module \hideinitializer */
-#define SPI0_MODULE      ((1UL<<30)|(2UL<<28)         |(0x3UL<<25)       |(2UL<<20)         |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(12UL<<0)) /*!< SPI0 Module \hideinitializer */
-#define SPI1_MODULE      ((1UL<<30)|(2UL<<28)         |(0x3UL<<25)       |(4UL<<20)         |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(13UL<<0)) /*!< SPI1 Module \hideinitializer */
-#define SPI2_MODULE      ((1UL<<30)|(2UL<<28)         |(0x3UL<<25)       |(6UL<<20)         |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(14UL<<0)) /*!< SPI2 Module \hideinitializer */
-#define SPI3_MODULE      ((1UL<<30)|(2UL<<28)         |(0x3UL<<25)       |(10UL<<20)        |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(15UL<<0)) /*!< SPI3 Module \hideinitializer */
+#define QSPI0_MODULE      ((1UL<<30)|(2UL<<28)         |(0x3UL<<25)       |(2UL<<20)         |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(12UL<<0)) /*!< QSPI0 Module \hideinitializer */
+#define SPI0_MODULE      ((1UL<<30)|(2UL<<28)         |(0x3UL<<25)       |(4UL<<20)         |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(13UL<<0)) /*!< SPI0 Module \hideinitializer */
+#define SPI1_MODULE      ((1UL<<30)|(2UL<<28)         |(0x3UL<<25)       |(6UL<<20)         |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(14UL<<0)) /*!< SPI1 Module \hideinitializer */
+#define SPI2_MODULE      ((1UL<<30)|(2UL<<28)         |(0x3UL<<25)       |(10UL<<20)        |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(15UL<<0)) /*!< SPI2 Module \hideinitializer */
 #define UART0_MODULE     ((1UL<<30)|(1UL<<28)         |(0x3UL<<25)       |(24UL<<20)        |(0UL<<18)         |(0xFUL<<10)       |(8UL<<5)         |(16UL<<0)) /*!< UART0 Module \hideinitializer */
 #define UART1_MODULE     ((1UL<<30)|(1UL<<28)         |(0x3UL<<25)       |(26UL<<20)        |(0UL<<18)         |(0xFUL<<10)       |(12UL<<5)        |(17UL<<0)) /*!< UART1 Module \hideinitializer */
 #define UART2_MODULE     ((1UL<<30)|(3UL<<28)         |(0x3UL<<25)       |(24UL<<20)        |(3UL<<18)         |(0xFUL<<10)       |(0UL<<5)         |(18UL<<0)) /*!< UART2 Module \hideinitializer */
@@ -356,7 +356,7 @@ extern "C"
 #define SC0_MODULE       ((2UL<<30)|(3UL<<28)         |(0x3UL<<25)       |(0UL<<20)         |(1UL<<18)         |(0xFFUL<<10)      |(0UL<<5)         |(0UL<<0))  /*!< SC0 Module \hideinitializer */
 #define SC1_MODULE       ((2UL<<30)|(3UL<<28)         |(0x3UL<<25)       |(2UL<<20)         |(1UL<<18)         |(0xFFUL<<10)      |(8UL<<5)         |(1UL<<0))  /*!< SC1 Module \hideinitializer */
 #define SC2_MODULE       ((2UL<<30)|(3UL<<28)         |(0x3UL<<25)       |(4UL<<20)         |(1UL<<18)         |(0xFFUL<<10)      |(16UL<<5)        |(2UL<<0))  /*!< SC2 Module \hideinitializer */
-#define SPI4_MODULE      ((2UL<<30)|(2UL<<28)         |(0x3UL<<25)       |(12UL<<20)        |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(6UL<<0))  /*!< SPI4 Module \hideinitializer */
+#define SPI3_MODULE      ((2UL<<30)|(2UL<<28)         |(0x3UL<<25)       |(12UL<<20)        |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(6UL<<0))  /*!< SPI3 Module \hideinitializer */
 #define USCI0_MODULE     ((2UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(8UL<<0))  /*!< USCI0 Module \hideinitializer */
 #define USCI1_MODULE     ((2UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(9UL<<0))  /*!< USCI1 Module \hideinitializer */
 #define DAC_MODULE       ((2UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(12UL<<0)) /*!< DAC Module \hideinitializer */

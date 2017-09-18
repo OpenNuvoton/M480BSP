@@ -14,7 +14,7 @@
 #define TEST_NUMBER         1   /* page numbers */
 #define TEST_LENGTH         256 /* length */
 
-#define SPI_FLASH_PORT  SPI0
+#define SPI_FLASH_PORT  QSPI0
 
 uint8_t SrcArray[TEST_LENGTH];
 uint8_t DestArray[TEST_LENGTH];
@@ -30,7 +30,7 @@ void D2D3_SwitchToNormalMode(void)
 
 void D2D3_SwitchToQuadMode(void)
 {
-    SYS->GPA_MFPL =  (SYS->GPA_MFPL & ~(SYS_GPA_MFPL_PA4MFP_Msk | SYS_GPA_MFPL_PA5MFP_Msk)) | SYS_GPA_MFPL_PA4MFP_SPI0_MOSI1 | SYS_GPA_MFPL_PA5MFP_SPI0_MISO1;
+    SYS->GPA_MFPL =  (SYS->GPA_MFPL & ~(SYS_GPA_MFPL_PA4MFP_Msk | SYS_GPA_MFPL_PA5MFP_Msk)) | SYS_GPA_MFPL_PA4MFP_QSPI0_MOSI1 | SYS_GPA_MFPL_PA5MFP_QSPI0_MISO1;
 }
 
 uint16_t SpiFlash_ReadMidDid(void)
@@ -334,14 +334,14 @@ void SYS_Init(void)
     /* Select UART module clock source as HXT and UART module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
 
-    /* Select PCLK0 as the clock source of SPI0 */
-    CLK_SetModuleClock(SPI0_MODULE, CLK_CLKSEL2_SPI0SEL_PCLK0, MODULE_NoMsk);
+    /* Select PCLK0 as the clock source of QSPI0 */
+    CLK_SetModuleClock(QSPI0_MODULE, CLK_CLKSEL2_QSPI0SEL_PCLK0, MODULE_NoMsk);
 
     /* Enable UART peripheral clock */
     CLK_EnableModuleClock(UART0_MODULE);
 
-    /* Enable SPI0 peripheral clock */
-    CLK_EnableModuleClock(SPI0_MODULE);
+    /* Enable QSPI0 peripheral clock */
+    CLK_EnableModuleClock(QSPI0_MODULE);
 
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
@@ -351,11 +351,11 @@ void SYS_Init(void)
     SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
     SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
 
-    /* Setup SPI0 multi-function pins */
-    SYS->GPA_MFPL = SYS_GPA_MFPL_PA0MFP_SPI0_MOSI0 | SYS_GPA_MFPL_PA1MFP_SPI0_MISO0 | SYS_GPA_MFPL_PA2MFP_SPI0_CLK | SYS_GPA_MFPL_PA3MFP_SPI0_SS |
-                    SYS_GPA_MFPL_PA4MFP_SPI0_MOSI1 | SYS_GPA_MFPL_PA5MFP_SPI0_MISO1;
+    /* Setup QSPI0 multi-function pins */
+    SYS->GPA_MFPL = SYS_GPA_MFPL_PA0MFP_QSPI0_MOSI0 | SYS_GPA_MFPL_PA1MFP_QSPI0_MISO0 | SYS_GPA_MFPL_PA2MFP_QSPI0_CLK | SYS_GPA_MFPL_PA3MFP_QSPI0_SS |
+                    SYS_GPA_MFPL_PA4MFP_QSPI0_MOSI1 | SYS_GPA_MFPL_PA5MFP_QSPI0_MISO1;
 
-    /* Enable SPI0 clock pin (PA2) schmitt trigger */
+    /* Enable QSPI0 clock pin (PA2) schmitt trigger */
     PA->SMTEN |= GPIO_SMTEN_SMTEN4_Msk;
 
     /* Update System Core Clock */

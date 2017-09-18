@@ -140,10 +140,10 @@ void SYS_ResetCPU(void)
   *             - \ref I2C0_RST
   *             - \ref I2C1_RST
   *             - \ref I2C2_RST
+  *             - \ref QSPI0_RST
   *             - \ref SPI0_RST
   *             - \ref SPI1_RST
   *             - \ref SPI2_RST
-  *             - \ref SPI3_RST
   *             - \ref UART0_RST
   *             - \ref UART1_RST
   *             - \ref UART2_RST
@@ -158,7 +158,7 @@ void SYS_ResetCPU(void)
   *             - \ref SC0_RST
   *             - \ref SC1_RST
   *             - \ref SC2_RST
-  *             - \ref SPI4_RST
+  *             - \ref SPI3_RST
   *             - \ref USCI0_RST
   *             - \ref USCI1_RST
   *             - \ref DAC_RST
