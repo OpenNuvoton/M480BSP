@@ -14,7 +14,7 @@
 #include "NuMicro.h"
 
 
-#if !defined(__ICCARM__)
+#if !defined(__ICCARM__) && !defined(__GNUC__)
 extern uint32_t Image$$RO$$Base;
 #endif
 
@@ -99,7 +99,7 @@ int32_t main(void)
     /* Enable FMC ISP function */
     FMC_Open();
 
-#if defined(__ICCARM__)
+#if defined(__ICCARM__) || defined(__GNUC__)
     printf("VECMAP = 0x%x\n", FMC_GetVECMAP());
 #else
 #ifndef BootLD

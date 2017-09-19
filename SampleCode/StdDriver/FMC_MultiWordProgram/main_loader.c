@@ -82,6 +82,9 @@ void __asm __set_SP(uint32_t _sp)
 
 int main()
 {
+#ifdef __GNUC__                        /* for GNU C compiler */
+    uint32_t    u32Data;
+#endif
     FUNC_PTR    *func;                 /* function pointer */
 
     SYS_Init();                        /* Init System, IP clock and multi-function I/O */
@@ -108,7 +111,12 @@ int main()
     func = (FUNC_PTR *)*(uint32_t *)(SRAM_IMAGE_BASE+4);
 
     /* Get and set the SP (Stack Pointer Base) of multi_word_prog.bin. */
+#ifdef __GNUC__                        /* for GNU C compiler */
+    u32Data = *(uint32_t *)SRAM_IMAGE_BASE;
+    asm("msr msp, %0" : : "r" (u32Data));
+#else
     __set_SP(*(uint32_t *)SRAM_IMAGE_BASE);
+#endif
 
     /*
      *  Branch to the multi_word_prog.bin's reset handler in way of function call.

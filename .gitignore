@@ -49,11 +49,13 @@ settings/
 !SampleCode/StdDriver/FMC_IAP/IAR/Release/Exe/fmc_ld_code.bin
 !SampleCode/StdDriver/FMC_IAP/IAR/fmc_ld_code.icf
 !SampleCode/StdDriver/FMC_IAP/KEIL/fmc_ld_code.bin
+!SampleCode/StdDriver/FMC_IAP/GCC/LDROM_iap.bin
 !SampleCode/StdDriver/FMC_MultiWordProgram/IAR/Release/
 !SampleCode/StdDriver/FMC_MultiWordProgram/IAR/Release/Exe/
 !SampleCode/StdDriver/FMC_MultiWordProgram/IAR/Release/Exe/multi_word_prog.bin
 !SampleCode/StdDriver/FMC_MultiWordProgram/IAR/multi_word_prog.icf
 !SampleCode/StdDriver/FMC_MultiWordProgram/KEIL/multi_word_prog.bin
+!SampleCode/StdDriver/FMC_MultiWordProgram/GCC/multi_word_prog.bin
 !SampleCode/StdDriver/CRYPTO_HMAC/IAR/dummy.bin
 !SampleCode/StdDriver/CRYPTO_SHA/IAR/dummy.bin
 !SampleCode/StdDriver/CRYPTO_HMAC/HMAC_fips198a.rsp

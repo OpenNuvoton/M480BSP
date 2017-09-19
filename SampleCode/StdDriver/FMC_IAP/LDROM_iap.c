@@ -60,8 +60,10 @@ void UART0_Init(void)
     /*---------------------------------------------------------------------------------------------------------*/
 
     /* Configure UART0 and set UART0 baud rate */
-    UART_Open(UART0, 115200);
+    UART0->LINE = 0x3;
+    UART0->BAUD = 0x30000066;
 }
+
 
 /*
  *  Set stack base address to SP register.
@@ -75,8 +77,67 @@ __asm __set_SP(uint32_t _sp)
 #endif
 
 
+/**
+ * @brief       Routine to send a char
+ * @param[in]   ch Character to send to debug port.
+ * @returns     Send value from UART debug port
+ * @details     Send a target char to UART debug port .
+ */
+static void SendChar_ToUART(int ch)
+{
+    while (UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
+
+    UART0->DAT = ch;
+    if(ch == '\n')
+    {
+        while (UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
+        UART0->DAT = '\r';
+    }
+}
+
+/**
+ * @brief    Routine to get a char
+ * @param    None
+ * @returns  Get value from UART debug port or semihost
+ * @details  Wait UART debug port or semihost to input a char.
+ */
+static char GetChar(void)
+{
+    while(1)
+    {
+        if ((UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0)
+        {
+            return (UART0->DAT);
+        }
+    }
+}
+
+static void PutString(char *str)
+{
+	while (*str != '\0') {
+		SendChar_ToUART(*str++);
+	}
+}
+
+#ifdef __GNUC__                        /* for GNU C compiler */
+/**
+ * @brief       Hard fault handler
+ * @param[in]   stack pointer points to the dumped registers in SRAM
+ * @return      None
+ * @details     Replace while(1) at the end of this function with chip reset if WDT is not enabled for end product
+ */
+void Hard_Fault_Handler(uint32_t stack[])
+{
+    PutString("In Hard Fault Handler\n");
+    while(1);
+}
+#endif
+
 int main()
 {
+#ifdef __GNUC__                        /* for GNU C compiler */
+    uint32_t    u32Data;
+#endif
     FUNC_PTR    *func;                 /* function pointer */
 
     SYS_Init();                        /* Init System, IP clock and multi-function I/O */
@@ -87,20 +148,20 @@ int main()
     /* SAMPLE CODE                                                                                             */
     /*---------------------------------------------------------------------------------------------------------*/
 
-    printf("\n\n");
-    printf("+-------------------------------------+\n");
-    printf("|     M480 FMC IAP Sample Code        |\n");
-    printf("|          [LDROM code]               |\n");
-    printf("+-------------------------------------+\n");
+    PutString("\n\n");
+    PutString("+-------------------------------------+\n");
+    PutString("|     M480 FMC IAP Sample Code        |\n");
+    PutString("|          [LDROM code]               |\n");
+    PutString("+-------------------------------------+\n");
 
     SYS_UnlockReg();                   /* Unlock protected registers */
 
     FMC_Open();                        /* Enable FMC ISP function */
 
-    printf("\n\nPress any key to branch to APROM...\n");
-    getchar();                         /* block on waiting for any one character input from UART0 */
+    PutString("\n\nPress any key to branch to APROM...\n");
+    GetChar();                         /* block on waiting for any one character input from UART0 */
 
-    printf("\n\nChange VECMAP and branch to LDROM...\n");
+    PutString("\n\nChange VECMAP and branch to APROM...\n");
     while (!(UART0->FIFOSTS & UART_FIFOSTS_TXEMPTY_Msk));       /* wait until UART3 TX FIFO is empty */
 
     /*  NOTE!
@@ -119,7 +180,12 @@ int main()
      *  The stack base address of an executable image is located at offset 0x0.
      *  Thus, this sample get stack base address of APROM code from FMC_APROM_BASE + 0x0.
      */
+#ifdef __GNUC__                        /* for GNU C compiler */
+    u32Data = *(uint32_t *)FMC_LDROM_BASE;
+    asm("msr msp, %0" : : "r" (u32Data));
+#else
     __set_SP(*(uint32_t *)FMC_APROM_BASE);
+#endif
 
     /*
      *  Branch to the LDROM code's reset handler in way of function call.

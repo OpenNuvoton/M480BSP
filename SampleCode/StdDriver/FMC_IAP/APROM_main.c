@@ -185,7 +185,7 @@ int main()
         printf("Failed to set IAP boot mode!\n");
         goto lexit;                    /* Failed to set IAP boot mode. Program aborted. */
     }
-
+    
     /* Read BS */
     printf("  Boot Mode ............................. ");
     if (FMC_GetBootSource() == 0)      /* Get boot source */
@@ -236,8 +236,9 @@ int main()
 
         case '1':
             printf("\n\nChange VECMAP and branch to LDROM...\n");
+            printf("LDROM code SP = 0x%x\n", *(uint32_t *)(FMC_LDROM_BASE));
+            printf("LDROM code ResetHandler = 0x%x\n", *(uint32_t *)(FMC_LDROM_BASE+4));
             while (!(UART0->FIFOSTS & UART_FIFOSTS_TXEMPTY_Msk));      /* Wait for UART3 TX FIFO cleared */
-
             /*  NOTE!
              *     Before change VECMAP, user MUST disable all interrupts.
              *     The following code CANNOT locate in address 0x0 ~ 0x200.
@@ -258,7 +259,12 @@ int main()
              *  The stack base address of an executable image is located at offset 0x0.
              *  Thus, this sample get stack base address of LDROM code from FMC_LDROM_BASE + 0x0.
              */
+#ifdef __GNUC__                        /* for GNU C compiler */
+            u32Data = *(uint32_t *)FMC_LDROM_BASE;
+            asm("msr msp, %0" : : "r" (u32Data));
+#else
             __set_SP(*(uint32_t *)FMC_LDROM_BASE);
+#endif
             /*
              *  Branch to the LDROM code's reset handler in way of function call.
              */
