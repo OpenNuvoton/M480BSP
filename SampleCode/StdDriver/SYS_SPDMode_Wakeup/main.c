@@ -16,6 +16,8 @@
 #define SIGNATURE       0x125ab234
 #define FLAG_ADDR       0x20000FFC
 
+#define PLL_CLOCK           192000000
+
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Function for System Entry to Power Down Mode and Wake up source by GPIO Wake-up pin                    */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -347,17 +349,24 @@ void SYS_Init(void)
     /* Wait for HIRC, LXT clock ready */
     CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk | CLK_STATUS_LXTSTB_Msk);
 
-    /* Enable HXT clock (external XTAL 12MHz) */
+    /* Enable External XTAL (4~24 MHz) */
     CLK_EnableXtalRC(CLK_PWRCTL_HXTEN_Msk);
 
-    /* Wait for HXT clock ready */
+    /* Waiting for 12MHz clock ready */
     CLK_WaitClockReady(CLK_STATUS_HXTSTB_Msk);
 
-    /* Enable UART module clock */
+    /* Set core clock as PLL_CLOCK from PLL */
+    CLK_SetCoreClock(PLL_CLOCK);
+
+    /* Enable UART clock */
     CLK_EnableModuleClock(UART0_MODULE);
 
-    /* Select UART module clock source as HXT and UART module clock divider as 1 */
+    /* Select UART clock source from HXT */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
+
+    /* Update System Core Clock */
+    /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock. */
+    SystemCoreClockUpdate();
 
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init I/O Multi-function                                                                                 */
@@ -408,7 +417,7 @@ int32_t main(void)
     UART0_Init();
 
     printf("\n\nCPU @ %d Hz\n\n", SystemCoreClock);
-    CLK_EnableCKO(CLK_CLKSEL1_CLKOSEL_HCLK, 0, 1);
+    CLK_EnableCKO(CLK_CLKSEL1_CLKOSEL_HCLK, 3, 0);
 
     /* Get power manager wake up source */
     CheckPowerSource();
