@@ -12,10 +12,10 @@
 void ACMP01_IRQHandler(void)
 {
     /* Clear interrupt flag */
-    ACMP_CLR_INT_FLAG(ACMP, 0);
-    ACMP_CLR_INT_FLAG(ACMP, 1);
+    ACMP_CLR_INT_FLAG(ACMP01, 0);
+    ACMP_CLR_INT_FLAG(ACMP01, 1);
 
-    if(ACMP->STATUS & ACMP_STATUS_ACMPWO_Msk) {
+    if(ACMP01->STATUS & ACMP_STATUS_ACMPWO_Msk) {
         printf("The input voltage is within the window\n");
     } else {
         printf("The input voltage is not within the window\n");
@@ -85,35 +85,35 @@ int32_t main(void)
     printf("\n");
 
     /* Select VDDA as CRV source */
-    ACMP_SELECT_CRV_SRC(ACMP, ACMP_VREF_CRVSSEL_VDDA);
+    ACMP_SELECT_CRV_SRC(ACMP01, ACMP_VREF_CRVSSEL_VDDA);
     /* Select CRV level: VDDA * 9 / 24 */
-    ACMP_CRV_SEL(ACMP, 5);
+    ACMP_CRV_SEL(ACMP01, 5);
     /* Configure ACMP0. Enable ACMP0 and select CRV as the source of ACMP negative input. */
-    ACMP_Open(ACMP, 0, ACMP_CTL_NEGSEL_CRV, ACMP_CTL_HYSTERESIS_DISABLE);
+    ACMP_Open(ACMP01, 0, ACMP_CTL_NEGSEL_CRV, ACMP_CTL_HYSTERESIS_DISABLE);
     /* Configure ACMP1. Enable ACMP1 and select CRV as the source of ACMP negative input. */
-    ACMP_Open(ACMP, 1, ACMP_CTL_NEGSEL_VBG, ACMP_CTL_HYSTERESIS_DISABLE);
+    ACMP_Open(ACMP01, 1, ACMP_CTL_NEGSEL_VBG, ACMP_CTL_HYSTERESIS_DISABLE);
     /* Select P1 as ACMP1 positive input channel */
-    ACMP_SELECT_P(ACMP, 1, ACMP_CTL_POSSEL_P1);
+    ACMP_SELECT_P(ACMP01, 1, ACMP_CTL_POSSEL_P1);
     /* Enable window compare mode */
-    ACMP_ENABLE_WINDOW_COMPARE(ACMP, 0);
-    ACMP_ENABLE_WINDOW_COMPARE(ACMP, 1);
+    ACMP_ENABLE_WINDOW_COMPARE(ACMP01, 0);
+    ACMP_ENABLE_WINDOW_COMPARE(ACMP01, 1);
 
     /* Clear ACMP 0 and 1 interrupt flag */
-    ACMP_CLR_INT_FLAG(ACMP, 0);
-    ACMP_CLR_INT_FLAG(ACMP, 1);
+    ACMP_CLR_INT_FLAG(ACMP01, 0);
+    ACMP_CLR_INT_FLAG(ACMP01, 1);
 
     // Give ACMP some time to settle
     for(i = 0; i < 1000; i++);
 
-    if(ACMP->STATUS & ACMP_STATUS_ACMPWO_Msk) {
+    if(ACMP01->STATUS & ACMP_STATUS_ACMPWO_Msk) {
         printf("The input voltage in inside the window\n");
     } else {
         printf("The input voltage in outside the window\n");
     }
 
     /* Enable interrupt */
-    ACMP_ENABLE_INT(ACMP, 0);
-    ACMP_ENABLE_INT(ACMP, 1);
+    ACMP_ENABLE_INT(ACMP01, 0);
+    ACMP_ENABLE_INT(ACMP01, 1);
     /* Enable ACMP01 interrupt */
     NVIC_EnableIRQ(ACMP01_IRQn);
 

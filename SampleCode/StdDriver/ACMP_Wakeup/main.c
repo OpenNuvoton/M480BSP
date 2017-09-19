@@ -14,9 +14,9 @@ void ACMP01_IRQHandler(void)
     printf("\nACMP1 interrupt!\n");
 
     /* Clear ACMP 1 interrupt flag */
-    ACMP_CLR_INT_FLAG(ACMP, 1);
+    ACMP_CLR_INT_FLAG(ACMP01, 1);
     /* Clear wake-up interrupt flag */
-    ACMP_CLR_WAKEUP_INT_FLAG(ACMP, 1);
+    ACMP_CLR_WAKEUP_INT_FLAG(ACMP01, 1);
 }
 
 
@@ -82,23 +82,23 @@ int32_t main(void)
     printf("\n");
 
     /* Select VDDA as CRV source */
-    ACMP_SELECT_CRV_SRC(ACMP, ACMP_VREF_CRVSSEL_VDDA);
+    ACMP_SELECT_CRV_SRC(ACMP01, ACMP_VREF_CRVSSEL_VDDA);
     /* Select CRV level: VDDA * 9 / 24 */
-    ACMP_CRV_SEL(ACMP, 5);
+    ACMP_CRV_SEL(ACMP01, 5);
     /* Configure ACMP1. Enable ACMP1 and select CRV as the source of ACMP negative input. */
-    ACMP_Open(ACMP, 1, ACMP_CTL_NEGSEL_CRV, ACMP_CTL_HYSTERESIS_DISABLE);
+    ACMP_Open(ACMP01, 1, ACMP_CTL_NEGSEL_CRV, ACMP_CTL_HYSTERESIS_DISABLE);
     /* Select P1 as ACMP positive input channel */
-    ACMP_SELECT_P(ACMP, 1, ACMP_CTL_POSSEL_P1);
+    ACMP_SELECT_P(ACMP01, 1, ACMP_CTL_POSSEL_P1);
     __NOP();
     for(u32DelayCount = 0; u32DelayCount < 100; u32DelayCount++); /* For ACMP setup time */
     __NOP();
     /* Clear ACMP 0 interrupt flag */
-    ACMP_CLR_INT_FLAG(ACMP, 1);
+    ACMP_CLR_INT_FLAG(ACMP01, 1);
 
     /* Enable wake-up function */
-    ACMP_ENABLE_WAKEUP(ACMP, 1);
+    ACMP_ENABLE_WAKEUP(ACMP01, 1);
     /* Enable interrupt */
-    ACMP_ENABLE_INT(ACMP, 1);
+    ACMP_ENABLE_INT(ACMP01, 1);
     /* Enable ACMP01 interrupt */
     NVIC_EnableIRQ(ACMP01_IRQn);
 

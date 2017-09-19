@@ -87,14 +87,14 @@ void  WakeUpACMP0Function(uint32_t u32PDMode)
     printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
 
     /* Configure ACMP0. Enable ACMP0 and select band-gap voltage as the source of ACMP negative input. */
-    ACMP_Open(ACMP, 0, ACMP_CTL_NEGSEL_VBG, ACMP_CTL_HYSTERESIS_DISABLE);
+    ACMP_Open(ACMP01, 0, ACMP_CTL_NEGSEL_VBG, ACMP_CTL_HYSTERESIS_DISABLE);
     /* Enable interrupt */
-    ACMP_ENABLE_INT(ACMP, 0);
+    ACMP_ENABLE_INT(ACMP01, 0);
     /* Clear ACMP 0 interrupt flag */
-    ACMP_CLR_INT_FLAG(ACMP, 0);
+    ACMP_CLR_INT_FLAG(ACMP01, 0);
 
     /* Enable wake-up function */
-    ACMP_ENABLE_WAKEUP(ACMP, 0);
+    ACMP_ENABLE_WAKEUP(ACMP01, 0);
 
     /* Select Power-down mode */
     CLK_SetPowerDownMode(u32PDMode);
