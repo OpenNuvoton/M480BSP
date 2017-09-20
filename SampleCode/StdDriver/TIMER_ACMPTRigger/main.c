@@ -104,9 +104,9 @@ int main(void)
     TIMER_Start(TIMER0);
 
     /* Configure ACMP1. Enable ACMP1 and select band-gap voltage as the source of ACMP negative input. */
-    ACMP_Open(ACMP, 1, ACMP_CTL_NEGSEL_VBG, ACMP_CTL_HYSTERESIS_DISABLE);
+    ACMP_Open(ACMP01, 1, ACMP_CTL_NEGSEL_VBG, ACMP_CTL_HYSTERESIS_DISABLE);
     /* Select P1 as ACMP1 positive input channel */
-    ACMP_SELECT_P(ACMP, 1, ACMP_CTL_POSSEL_P1);
+    ACMP_SELECT_P(ACMP01, 1, ACMP_CTL_POSSEL_P1);
     // Enable timer interrupt
     TIMER_EnableCaptureInt(TIMER0);
     NVIC_EnableIRQ(TMR0_IRQn);

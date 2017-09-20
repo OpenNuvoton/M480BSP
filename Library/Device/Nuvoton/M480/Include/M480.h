@@ -304,7 +304,7 @@ IRQn_Type;
 /*!< APB1 peripherals */
 #define RTC_BASE              (APBPERIPH_BASE + 0x01000UL)
 #define EADC_BASE             (APBPERIPH_BASE + 0x03000UL)
-#define ACMP_BASE             (APBPERIPH_BASE + 0x05000UL)
+#define ACMP01_BASE           (APBPERIPH_BASE + 0x05000UL)
 #define USBD_BASE             (APBPERIPH_BASE + 0x80000UL)
 #define OTG_BASE              (APBPERIPH_BASE + 0x0D000UL)
 #define HSOTG_BASE            (APBPERIPH_BASE + 0x0F000UL)
@@ -375,7 +375,7 @@ IRQn_Type;
 #define WWDT                 ((WWDT_T *)  WWDT_BASE)
 #define RTC                  ((RTC_T *)   RTC_BASE)
 #define EADC                 ((EADC_T *)  EADC_BASE)
-#define ACMP                 ((ACMP_T *)  ACMP_BASE)
+#define ACMP01               ((ACMP_T *)  ACMP01_BASE)
 
 #define I2S0                 ((I2S_T *)   I2S_BASE)
 #define USBD                 ((USBD_T *)  USBD_BASE)

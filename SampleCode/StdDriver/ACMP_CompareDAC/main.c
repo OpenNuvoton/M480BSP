@@ -13,9 +13,9 @@ void ACMP01_IRQHandler(void)
     static uint32_t u32Cnt = 0;
 
     /* Clear ACMP 1 interrupt flag */
-    ACMP_CLR_INT_FLAG(ACMP, 1);
+    ACMP_CLR_INT_FLAG(ACMP01, 1);
     /* Check Comparator 0 Output Status */
-    if(ACMP_GET_OUTPUT(ACMP, 1))
+    if(ACMP_GET_OUTPUT(ACMP01, 1))
         printf("ACMP1_P voltage > Band-gap voltage (%d)\n", u32Cnt);
     else
         printf("ACMP1_P voltage <= Band-gap voltage (%d)\n", u32Cnt);
@@ -97,11 +97,11 @@ int32_t main(void)
     DAC_WRITE_DATA(DAC0, 0, 0x400);
 
     /* Configure ACMP1. Enable ACMP1 and select band-gap voltage as the source of ACMP negative input. */
-    ACMP_Open(ACMP, 1, ACMP_CTL_NEGSEL_VBG, ACMP_CTL_HYSTERESIS_DISABLE);
+    ACMP_Open(ACMP01, 1, ACMP_CTL_NEGSEL_VBG, ACMP_CTL_HYSTERESIS_DISABLE);
     /* Select P1 as ACMP positive input channel */
-    ACMP_SELECT_P(ACMP, 1, ACMP_CTL_POSSEL_P1);
+    ACMP_SELECT_P(ACMP01, 1, ACMP_CTL_POSSEL_P1);
     /* Enable interrupt */
-    ACMP_ENABLE_INT(ACMP, 1);
+    ACMP_ENABLE_INT(ACMP01, 1);
 
     /* Enable ACMP01 interrupt */
     NVIC_EnableIRQ(ACMP01_IRQn);
