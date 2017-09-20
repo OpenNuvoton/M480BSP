@@ -368,13 +368,13 @@ typedef struct {
 #define ECAP_STATUS_CAPOVF_Pos           (5)                                               /*!< ECAP_T::STATUS: CAPOVF Position        */
 #define ECAP_STATUS_CAPOVF_Msk           (0x1ul << ECAP_STATUS_CAPOVF_Pos)                 /*!< ECAP_T::STATUS: CAPOVF Mask            */
 
-#define ECAP_STATUS_CAP0_Pos             (6)                                               /*!< ECAP_T::STATUS: CAP0 Position          */
+#define ECAP_STATUS_CAP0_Pos             (8)                                               /*!< ECAP_T::STATUS: CAP0 Position          */
 #define ECAP_STATUS_CAP0_Msk             (0x1ul << ECAP_STATUS_CAP0_Pos)                   /*!< ECAP_T::STATUS: CAP0 Mask              */
 
-#define ECAP_STATUS_CAP1_Pos             (7)                                               /*!< ECAP_T::STATUS: CAP1 Position          */
+#define ECAP_STATUS_CAP1_Pos             (9)                                               /*!< ECAP_T::STATUS: CAP1 Position          */
 #define ECAP_STATUS_CAP1_Msk             (0x1ul << ECAP_STATUS_CAP1_Pos)                   /*!< ECAP_T::STATUS: CAP1 Mask              */
 
-#define ECAP_STATUS_CAP2_Pos             (8)                                               /*!< ECAP_T::STATUS: CAP2 Position          */
+#define ECAP_STATUS_CAP2_Pos             (10)                                               /*!< ECAP_T::STATUS: CAP2 Position          */
 #define ECAP_STATUS_CAP2_Msk             (0x1ul << ECAP_STATUS_CAP2_Pos)                   /*!< ECAP_T::STATUS: CAP2 Mask              */
 
 /**@}*/ /* ECAP_CONST */
