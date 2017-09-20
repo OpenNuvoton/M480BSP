@@ -21,6 +21,28 @@
     @addtogroup EPWM Pulse Width Modulation Controller(EPWM)
     Memory Mapped Structure for EPWM Controller
 @{ */
+
+typedef struct {
+    /**
+     * @var ECAPDAT_T::RCAPDAT
+     * Offset: 0x20C  EPWM Rising Capture Data Register 0~5
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |RCAPDAT   |EPWM Rising Capture Data (Read Only)
+     * |        |          |When rising capture condition happened, the EPWM counter value will be saved in this register.
+     * @var ECAPDAT_T::FCAPDAT
+     * Offset: 0x210  EPWM Falling Capture Data Register 0~5
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |FCAPDAT   |EPWM Falling Capture Data (Read Only)
+     * |        |          |When falling capture condition happened, the EPWM counter value will be saved in this register.
+     */
+    __IO uint32_t RCAPDAT; /*!< [0x20C/0x214/0x21C/0x224/0x22C/0x234] EPWM Rising Capture Data Register 0~5 */
+    __IO uint32_t FCAPDAT; /*!< [0x210/0x218/0x220/0x228/0x230/0x238] EPWM Falling Capture Data Register 0~5 */
+}ECAPDAT_T;
+
 typedef struct {
 
 
@@ -1844,90 +1866,8 @@ typedef struct {
      * |[13]    |CFLIFOV5  |Capture Falling Latch Interrupt Flag Overrun Status (Read Only)
      * |        |          |This flag indicates if falling latch happened when the corresponding CFLIF is 1.
      * |        |          |Note: This bit will be cleared automatically when user clear corresponding CFLIF.
-     * @var EPWM_T::RCAPDAT0
-     * Offset: 0x20C  EPWM Rising Capture Data Register 0
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |RCAPDAT   |EPWM Rising Capture Data Register (Read Only)
-     * |        |          |When rising capture condition happened, the EPWM counter value will be saved in this register.
-     * @var EPWM_T::FCAPDAT0
-     * Offset: 0x210  EPWM Falling Capture Data Register 0
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |FCAPDAT   |EPWM Falling Capture Data Register (Read Only)
-     * |        |          |When falling capture condition happened, the EPWM counter value will be saved in this register.
-     * @var EPWM_T::RCAPDAT1
-     * Offset: 0x214  EPWM Rising Capture Data Register 1
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |RCAPDAT   |EPWM Rising Capture Data Register (Read Only)
-     * |        |          |When rising capture condition happened, the EPWM counter value will be saved in this register.
-     * @var EPWM_T::FCAPDAT1
-     * Offset: 0x218  EPWM Falling Capture Data Register 1
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |FCAPDAT   |EPWM Falling Capture Data Register (Read Only)
-     * |        |          |When falling capture condition happened, the EPWM counter value will be saved in this register.
-     * @var EPWM_T::RCAPDAT2
-     * Offset: 0x21C  EPWM Rising Capture Data Register 2
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |RCAPDAT   |EPWM Rising Capture Data Register (Read Only)
-     * |        |          |When rising capture condition happened, the EPWM counter value will be saved in this register.
-     * @var EPWM_T::FCAPDAT2
-     * Offset: 0x220  EPWM Falling Capture Data Register 2
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |FCAPDAT   |EPWM Falling Capture Data Register (Read Only)
-     * |        |          |When falling capture condition happened, the EPWM counter value will be saved in this register.
-     * @var EPWM_T::RCAPDAT3
-     * Offset: 0x224  EPWM Rising Capture Data Register 3
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |RCAPDAT   |EPWM Rising Capture Data Register (Read Only)
-     * |        |          |When rising capture condition happened, the EPWM counter value will be saved in this register.
-     * @var EPWM_T::FCAPDAT3
-     * Offset: 0x228  EPWM Falling Capture Data Register 3
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |FCAPDAT   |EPWM Falling Capture Data Register (Read Only)
-     * |        |          |When falling capture condition happened, the EPWM counter value will be saved in this register.
-     * @var EPWM_T::RCAPDAT4
-     * Offset: 0x22C  EPWM Rising Capture Data Register 4
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |RCAPDAT   |EPWM Rising Capture Data Register (Read Only)
-     * |        |          |When rising capture condition happened, the EPWM counter value will be saved in this register.
-     * @var EPWM_T::FCAPDAT4
-     * Offset: 0x230  EPWM Falling Capture Data Register 4
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |FCAPDAT   |EPWM Falling Capture Data Register (Read Only)
-     * |        |          |When falling capture condition happened, the EPWM counter value will be saved in this register.
-     * @var EPWM_T::RCAPDAT5
-     * Offset: 0x234  EPWM Rising Capture Data Register 5
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |RCAPDAT   |EPWM Rising Capture Data Register (Read Only)
-     * |        |          |When rising capture condition happened, the EPWM counter value will be saved in this register.
-     * @var EPWM_T::FCAPDAT5
-     * Offset: 0x238  EPWM Falling Capture Data Register 5
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |FCAPDAT   |EPWM Falling Capture Data Register (Read Only)
-     * |        |          |When falling capture condition happened, the EPWM counter value will be saved in this register.
+     * @var EPWM_T::CAPDAT[6]
+     * Offset: 0x20C~0x238  EPWM Rising and Falling Capture Data Register 0~5
      * @var EPWM_T::PDMACTL
      * Offset: 0x23C  EPWM PDMA Control Register
      * ---------------------------------------------------------------------------------------------------
@@ -2214,18 +2154,7 @@ typedef struct {
     __IO uint32_t CAPINEN;               /*!< [0x0200] EPWM Capture Input Enable Register                                */
     __IO uint32_t CAPCTL;                /*!< [0x0204] EPWM Capture Control Register                                     */
     __I  uint32_t CAPSTS;                /*!< [0x0208] EPWM Capture Status Register                                      */
-    __I  uint32_t RCAPDAT0;              /*!< [0x020c] EPWM Rising Capture Data Register 0                               */
-    __I  uint32_t FCAPDAT0;              /*!< [0x0210] EPWM Falling Capture Data Register 0                              */
-    __I  uint32_t RCAPDAT1;              /*!< [0x0214] EPWM Rising Capture Data Register 1                               */
-    __I  uint32_t FCAPDAT1;              /*!< [0x0218] EPWM Falling Capture Data Register 1                              */
-    __I  uint32_t RCAPDAT2;              /*!< [0x021c] EPWM Rising Capture Data Register 2                               */
-    __I  uint32_t FCAPDAT2;              /*!< [0x0220] EPWM Falling Capture Data Register 2                              */
-    __I  uint32_t RCAPDAT3;              /*!< [0x0224] EPWM Rising Capture Data Register 3                               */
-    __I  uint32_t FCAPDAT3;              /*!< [0x0228] EPWM Falling Capture Data Register 3                              */
-    __I  uint32_t RCAPDAT4;              /*!< [0x022c] EPWM Rising Capture Data Register 4                               */
-    __I  uint32_t FCAPDAT4;              /*!< [0x0230] EPWM Falling Capture Data Register 4                              */
-    __I  uint32_t RCAPDAT5;              /*!< [0x0234] EPWM Rising Capture Data Register 5                               */
-    __I  uint32_t FCAPDAT5;              /*!< [0x0238] EPWM Falling Capture Data Register 5                              */
+    ECAPDAT_T CAPDAT[6];                  /*!< [0x020C] EPWM Rising and Falling Capture Data Register 0~5                 */
     __IO uint32_t PDMACTL;               /*!< [0x023c] EPWM PDMA Control Register                                        */
     __I  uint32_t PDMACAP[3];            /*!< [0x0240] EPWM Capture Channel 01,23,45 PDMA Register                       */
     /// @cond HIDDEN_SYMBOLS

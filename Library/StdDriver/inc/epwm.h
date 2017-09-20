@@ -296,7 +296,7 @@ extern "C"
  * @details This macro is used to get captured rising data of specified channel.
  * \hideinitializer
  */
-#define EPWM_GET_CAPTURE_RISING_DATA(epwm, u32ChannelNum) (*(__IO uint32_t *) (&((epwm)->RCAPDAT0) + ((u32ChannelNum) << 1)))
+#define EPWM_GET_CAPTURE_RISING_DATA(epwm, u32ChannelNum) ((epwm)->CAPDAT[(u32ChannelNum)].RCAPDAT)
 
 /**
  * @brief This macro get captured falling data
@@ -306,7 +306,7 @@ extern "C"
  * @details This macro is used to get captured falling data of specified channel.
  * \hideinitializer
  */
-#define EPWM_GET_CAPTURE_FALLING_DATA(epwm, u32ChannelNum) (*(__IO uint32_t *) (&((epwm)->FCAPDAT0) + ((u32ChannelNum) << 1)))
+#define EPWM_GET_CAPTURE_FALLING_DATA(epwm, u32ChannelNum) ((epwm)->CAPDAT[(u32ChannelNum)].FCAPDAT)
 
 /**
  * @brief This macro mask output logic to high or low

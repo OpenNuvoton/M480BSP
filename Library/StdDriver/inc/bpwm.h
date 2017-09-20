@@ -161,7 +161,7 @@ extern "C"
  * @return None
  * \hideinitializer
  */
-#define BPWM_GET_CAPTURE_RISING_DATA(bpwm, u32ChannelNum) (*(__IO uint32_t *) (&((bpwm)->RCAPDAT0) + 2 * (u32ChannelNum)))
+#define BPWM_GET_CAPTURE_RISING_DATA(bpwm, u32ChannelNum) ((bpwm)->CAPDAT[(u32ChannelNum)].RCAPDAT)
 
 /**
  * @brief This macro get captured falling data
@@ -170,7 +170,7 @@ extern "C"
  * @return None
  * \hideinitializer
  */
-#define BPWM_GET_CAPTURE_FALLING_DATA(bpwm, u32ChannelNum) (*(__IO uint32_t *) (&((bpwm)->FCAPDAT0) + 2 * (u32ChannelNum)))
+#define BPWM_GET_CAPTURE_FALLING_DATA(bpwm, u32ChannelNum) ((bpwm)->CAPDAT[(u32ChannelNum)].FCAPDAT)
 
 /**
  * @brief This macro mask output logic to high or low
