@@ -1866,8 +1866,6 @@ typedef struct {
      * |[13]    |CFLIFOV5  |Capture Falling Latch Interrupt Flag Overrun Status (Read Only)
      * |        |          |This flag indicates if falling latch happened when the corresponding CFLIF is 1.
      * |        |          |Note: This bit will be cleared automatically when user clear corresponding CFLIF.
-     * @var EPWM_T::CAPDAT[6]
-     * Offset: 0x20C~0x238  EPWM Rising and Falling Capture Data Register 0~5
      * @var EPWM_T::PDMACTL
      * Offset: 0x23C  EPWM PDMA Control Register
      * ---------------------------------------------------------------------------------------------------

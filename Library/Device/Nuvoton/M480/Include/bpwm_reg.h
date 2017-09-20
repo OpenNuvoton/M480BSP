@@ -985,8 +985,6 @@ typedef struct {
      * |        |          |This flag indicates if falling latch happened when the corresponding CAPFIF is 1
      * |        |          |Each bit n controls the corresponding BPWM channel n.
      * |        |          |Note: This bit will be cleared automatically when user clear corresponding CAPFIF.
-     * @var BPWM_T::CAPDAT[6]
-     * Offset: 0x20C~0x238  BPWM Rising and Falling Capture Data Register 0~5
      * @var BPWM_T::CAPIEN
      * Offset: 0x250  BPWM Capture Interrupt Enable Register
      * ---------------------------------------------------------------------------------------------------
