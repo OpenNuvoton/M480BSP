@@ -62,6 +62,7 @@ settings/
 !SampleCode/StdDriver/CRYPTO_HMAC/HMAC_NIST.rsp
 !SampleCode/StdDriver/CRYPTO_HMAC/sha_test_vector
 !SampleCode/StdDriver/SPIM_RUN_CODE/spim_code.bin
+!SampleCode/SecureBoot/HSUSBD_IAP/GCC/fwupdate_ld_iap.bin
 !ThirdParty/lwip-2.0.0/doc/contrib.txt
 !ThirdParty/lwip-2.0.0/doc/mdns.txt
 !ThirdParty/lwip-2.0.0/doc/ppp.txt
