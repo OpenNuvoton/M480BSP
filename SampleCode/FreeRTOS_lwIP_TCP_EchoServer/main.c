@@ -369,11 +369,12 @@ static void vTcpTask( void *pvParameters )
     netif_add(&netif, &ipaddr, &netmask, &gw, NULL, ethernetif_init, tcpip_input);
 
     netif_set_default(&netif);
+    netif_set_up(&netif);
+
 #ifdef USE_DHCP
     dhcp_start(&netif);
-#else
-    netif_set_up(&netif);
 #endif
+
     NVIC_SetPriority(EMAC_TX_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1);
     NVIC_EnableIRQ(EMAC_TX_IRQn);
     NVIC_SetPriority(EMAC_RX_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1);
