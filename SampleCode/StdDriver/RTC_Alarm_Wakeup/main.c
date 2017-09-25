@@ -27,8 +27,7 @@ volatile uint8_t g_u8IsRTCAlarmINT = 0;
 void RTC_IRQHandler(void)
 {
     /* To check if RTC alarm interrupt occurred */
-    if(RTC_GET_ALARM_INT_FLAG() == 1)
-    {
+    if(RTC_GET_ALARM_INT_FLAG() == 1) {
         /* Clear RTC alarm interrupt flag */
         RTC_CLEAR_ALARM_INT_FLAG();
 
@@ -185,7 +184,7 @@ int main(void)
     printf("    %d/%02d/%02d %02d:%02d:%02d\n",
            sReadRTC.u32Year, sReadRTC.u32Month, sReadRTC.u32Day, sReadRTC.u32Hour, sReadRTC.u32Minute, sReadRTC.u32Second);
 
-    while(1){
+    while(1) {
         ;
     }
 }

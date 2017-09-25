@@ -185,7 +185,7 @@ int main()
         printf("Failed to set IAP boot mode!\n");
         goto lexit;                    /* Failed to set IAP boot mode. Program aborted. */
     }
-    
+
     /* Read BS */
     printf("  Boot Mode ............................. ");
     if (FMC_GetBootSource() == 0)      /* Get boot source */

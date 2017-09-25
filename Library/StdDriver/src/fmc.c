@@ -237,12 +237,9 @@ uint32_t FMC_ReadDataFlashBaseAddr(void)
   */
 void FMC_SetBootSource(int32_t i32BootSrc)
 {
-    if(i32BootSrc)
-    {
+    if(i32BootSrc) {
         FMC->ISPCTL |= FMC_ISPCTL_BS_Msk; /* Boot from LDROM */
-    }
-    else
-    {
+    } else {
         FMC->ISPCTL &= ~FMC_ISPCTL_BS_Msk;/* Boot from APROM */
     }
 }
@@ -299,22 +296,21 @@ int32_t FMC_Write8Bytes(uint32_t u32addr, uint32_t u32data0, uint32_t u32data1)
   * @param[in]  pu32Buf    Buffer that carry the data chunk.
   * @param[in]  u32Len     Length of the data chunk in bytes.
   * @retval   >=0  Number of data bytes were programmed.
-  * @return   -1   Invalid address. 
+  * @return   -1   Invalid address.
   */
 int32_t FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len)
 {
-	int   i, idx, retval = 0;
-	
-	if ((u32Addr >= FMC_APROM_END) || ((u32Addr % 8) != 0)) {
+    int   i, idx, retval = 0;
+
+    if ((u32Addr >= FMC_APROM_END) || ((u32Addr % 8) != 0)) {
         return -1;
     }
-	
-	u32Len = u32Len - (u32Len % 8);         /* u32Len must be multiple of 8. */ 
-	
-	idx = 0;
-	
-    while (u32Len >= 8) 
-    {
+
+    u32Len = u32Len - (u32Len % 8);         /* u32Len must be multiple of 8. */
+
+    idx = 0;
+
+    while (u32Len >= 8) {
         FMC->ISPADDR = u32Addr;
         FMC->MPDAT0  = pu32Buf[idx++];
         FMC->MPDAT1  = pu32Buf[idx++];
@@ -322,9 +318,8 @@ int32_t FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len)
         FMC->MPDAT3  = pu32Buf[idx++];
         FMC->ISPCMD  = FMC_ISPCMD_PROGRAM_MUL;
         FMC->ISPTRG  = FMC_ISPTRG_ISPGO_Msk;
-    
-        for (i = 16; i < FMC_MULTI_WORD_PROG_LEN; ) 
-        {
+
+        for (i = 16; i < FMC_MULTI_WORD_PROG_LEN; ) {
             while (FMC->MPSTS & (FMC_MPSTS_D0_Msk | FMC_MPSTS_D1_Msk))
                 ;
             retval += 8;
@@ -332,19 +327,19 @@ int32_t FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len)
             if (u32Len < 8) {
                 return retval;
             }
-  
+
             if (!(FMC->MPSTS & FMC_MPSTS_MPBUSY_Msk)) {
                 /* printf("    [WARNING] busy cleared after D0D1 cleared!\n"); */
                 i += 8;
                 break;
             }
-    
+
             FMC->MPDAT0 = pu32Buf[idx++];
             FMC->MPDAT1 = pu32Buf[idx++];
-    
+
             if (i == FMC_MULTI_WORD_PROG_LEN/4)
                 break;           // done
-    
+
             while (FMC->MPSTS & (FMC_MPSTS_D2_Msk | FMC_MPSTS_D3_Msk))
                 ;
             retval += 8;
@@ -352,24 +347,24 @@ int32_t FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len)
             if (u32Len < 8) {
                 return retval;
             }
-    
+
             if (!(FMC->MPSTS & FMC_MPSTS_MPBUSY_Msk)) {
                 /* printf("    [WARNING] busy cleared after D2D3 cleared!\n"); */
                 i += 8;
                 break;
             }
-    
+
             FMC->MPDAT2 = pu32Buf[idx++];
             FMC->MPDAT3 = pu32Buf[idx++];
         }
-    
+
         if (i != FMC_MULTI_WORD_PROG_LEN) {
             /* printf("    [WARNING] Multi-word program interrupted at 0x%x !!\n", i); */
             return retval;
         }
-    
+
         while (FMC->MPSTS & FMC_MPSTS_MPBUSY_Msk) ;
-        
+
         u32Addr += FMC_MULTI_WORD_PROG_LEN;
     }
     return retval;
@@ -663,7 +658,7 @@ uint32_t  FMC_CheckAllOne(uint32_t u32addr, uint32_t u32count)
   * @retval   -8    KEMAX function failed.
   */
 int32_t  FMC_SetSPKey(uint32_t key[3], uint32_t kpmax, uint32_t kemax,
-                        const int32_t lock_CONFIG, const int32_t lock_SPROM)
+                      const int32_t lock_CONFIG, const int32_t lock_SPROM)
 {
     uint32_t  lock_ctrl = 0UL;
     uint32_t  u32KeySts;

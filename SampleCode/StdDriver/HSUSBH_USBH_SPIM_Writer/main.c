@@ -611,8 +611,8 @@ int  go_to_flash(char *cmdline)
     SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;   /* disable SYSTICK (prevent interrupt)   */
 
 #ifdef __GNUC__                        /* for GNU C compiler */
-   asm volatile("msr msp, r0");
-   asm volatile("bx  lr");
+    asm volatile("msr msp, r0");
+    asm volatile("bx  lr");
 #else
     __set_SP(inpw(SPIM_DMM_MAP_ADDR + faddr));
 #endif

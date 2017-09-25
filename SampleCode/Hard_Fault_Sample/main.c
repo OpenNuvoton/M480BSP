@@ -70,7 +70,7 @@ void SYS_Init(void)
 
     /* Enable IP clock */
     CLK->APBCLK0 |= CLK_APBCLK0_UART0CKEN_Msk; // UART0 Clock Enable
-	
+
     CLK->APBCLK0 |= CLK_APBCLK0_UART0CKEN_Msk | CLK_APBCLK0_TMR1CKEN_Msk;
 
     /* Select IP clock source */
@@ -115,9 +115,9 @@ void ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
     uint32_t exception_num;
     uint32_t r0, r1, r2, r3, r12, pc, psr;
     uint32_t *stack;
-    
+
     stack = (uint32_t *)msp;
-    
+
     /* Get information from stack */
     r0  = stack[0];
     r1  = stack[1];
@@ -130,16 +130,14 @@ void ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
 
 
     /* Check T bit of psr */
-    if((psr & (1 << 24)) == 0)
-    {
+    if((psr & (1 << 24)) == 0) {
         printf("PSR T bit is 0.\nHard fault caused by changing to ARM mode!\n");
         while(1);
     }
 
     /* Check hard fault caused by ISR */
     exception_num = psr & xPSR_ISR_Msk;
-    if(exception_num > 0)
-    {
+    if(exception_num > 0) {
         /*
         Exception number
             0 = Thread mode
@@ -212,8 +210,7 @@ int32_t main(void)
     /* Init UART0 for printf */
     UART0_Init();
 
-    while(1)
-    {
+    while(1) {
         printf("\n\n");
         printf("+----------------------------------------------------+\n");
         printf("|        Hard Fault Handler Sample Code              |\n");
@@ -224,24 +221,23 @@ int32_t main(void)
         printf("+----------------------------------------------------+\n");
         ch = getchar();
 
-        switch(ch)
-        {
-            case '0':
-                /* Write APROM will cause hard fault exception. (Memory access hard fault) */
-                M32(0) = 0;
-                break;
-            case '1':
-                /* Call function with bit0 = 0 will cause hard fault. (Change to ARM mode hard fault) */
-                func();
-                break;
-            case '2':
-                /* Generate Timer Interrupt to test hard fault in ISR */
-                NVIC_EnableIRQ(TMR1_IRQn);
-                TIMER1->CMP = 3;
-                TIMER1->CTL = TIMER_CTL_INTEN_Msk | TIMER_CTL_CNTEN_Msk | TIMER_CTL_ACTSTS_Msk | TIMER_ONESHOT_MODE;
-                break;
-            default:
-                break;
+        switch(ch) {
+        case '0':
+            /* Write APROM will cause hard fault exception. (Memory access hard fault) */
+            M32(0) = 0;
+            break;
+        case '1':
+            /* Call function with bit0 = 0 will cause hard fault. (Change to ARM mode hard fault) */
+            func();
+            break;
+        case '2':
+            /* Generate Timer Interrupt to test hard fault in ISR */
+            NVIC_EnableIRQ(TMR1_IRQn);
+            TIMER1->CMP = 3;
+            TIMER1->CTL = TIMER_CTL_INTEN_Msk | TIMER_CTL_CNTEN_Msk | TIMER_CTL_ACTSTS_Msk | TIMER_ONESHOT_MODE;
+            break;
+        default:
+            break;
         }
     }
 

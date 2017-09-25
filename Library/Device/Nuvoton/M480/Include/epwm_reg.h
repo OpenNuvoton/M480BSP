@@ -12,7 +12,7 @@
 #pragma anon_unions
 #endif
 
-/** 
+/**
    @addtogroup REGISTER Control Register
    @{
 */
@@ -41,7 +41,7 @@ typedef struct {
      */
     __IO uint32_t RCAPDAT; /*!< [0x20C/0x214/0x21C/0x224/0x22C/0x234] EPWM Rising Capture Data Register 0~5 */
     __IO uint32_t FCAPDAT; /*!< [0x210/0x218/0x220/0x228/0x230/0x238] EPWM Falling Capture Data Register 0~5 */
-}ECAPDAT_T;
+} ECAPDAT_T;
 
 typedef struct {
 

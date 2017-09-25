@@ -300,8 +300,8 @@ void OTG_SetFeature(uint32_t value)
     /* 0x3 - b_hnp_enable, 0x4 - a_hnp_support */
     /* set feature */
     usbh_ctrl_xfer(gOTG_Dev_pet, REQ_TYPE_OUT | REQ_TYPE_STD_DEV | REQ_TYPE_TO_DEV,
-                         USB_REQ_SET_FEATURE, value, 0, 0,
-                         NULL, &read_len, 300);
+                   USB_REQ_SET_FEATURE, value, 0, 0,
+                   NULL, &read_len, 300);
 }
 
 /**

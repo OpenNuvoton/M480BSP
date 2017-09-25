@@ -261,7 +261,7 @@ int32_t main(void)
 
     /* Disable EADC IP clock */
     CLK_DisableModuleClock(EADC_MODULE);
-    
+
     /* Reset EADC module */
     SYS_ResetModule(EADC_RST);
 

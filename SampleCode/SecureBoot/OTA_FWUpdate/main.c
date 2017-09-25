@@ -2,7 +2,7 @@
  * @file     main.c
  * @version  2.0.0
  * @date     20, June, 2017
- * @brief    This sample code is run at LDROM, and use it to boot from APROM or 
+ * @brief    This sample code is run at LDROM, and use it to boot from APROM or
  *           update APROM. After reset the system, the program will boot from APROM.
  *
  * @note
@@ -24,7 +24,7 @@ void SYS_Init(void)
     SYS_UnlockReg();
 
     /* Enable External XTAL (4~24 MHz) */
-    CLK->PWRCTL |= CLK_PWRCTL_HXTEN_Msk; 
+    CLK->PWRCTL |= CLK_PWRCTL_HXTEN_Msk;
 
     /* Waiting for 12MHz clock ready */
     CLK_WaitClockReady(CLK_STATUS_HXTSTB_Msk);
@@ -78,8 +78,7 @@ static void SendChar_ToUART(int ch)
     while (UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
 
     UART0->DAT = ch;
-    if(ch == '\n')
-    {
+    if(ch == '\n') {
         while (UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
         UART0->DAT = '\r';
     }
@@ -87,9 +86,9 @@ static void SendChar_ToUART(int ch)
 
 static void PutString(char *str)
 {
-	while (*str != '\0') {
-		SendChar_ToUART(*str++);
-	}
+    while (*str != '\0') {
+        SendChar_ToUART(*str++);
+    }
 }
 
 /**
@@ -100,18 +99,17 @@ static void PutString(char *str)
  * @returns     Get value from UART0 or UART_TIMEROUT
  *
  */
-uint16_t ReceiveBytes(int32_t cnt){
-  if(cnt!=0) cnt*=0x10000;
-  while(1)
-  {
-    if(cnt--==1){
-        return RECEIVE_TIMEROUT;
+uint16_t ReceiveBytes(int32_t cnt)
+{
+    if(cnt!=0) cnt*=0x10000;
+    while(1) {
+        if(cnt--==1) {
+            return RECEIVE_TIMEROUT;
+        }
+        if((UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0) {
+            return (UART0->DAT);
+        }
     }
-    if((UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0)
-    {
-      return (UART0->DAT);
-    }
-  }
 }
 
 
@@ -123,30 +121,32 @@ uint16_t ReceiveBytes(int32_t cnt){
  * @returns     AP_BOOT_ADDR0 or AP_BOOT_ADDR1
  *
  */
-uint32_t Get_Version(int item){
-  if(item==1){
-    if (FMC_Read(AP_HEAD)==1)
-      return AP_BOOT_ADDR0;
-    else
-      return AP_BOOT_ADDR1;
-  }else{
-    if (FMC_Read(AP_HEAD)==1)
-      return AP_BOOT_ADDR1;
-    else
-      return AP_BOOT_ADDR0;
-  }
+uint32_t Get_Version(int item)
+{
+    if(item==1) {
+        if (FMC_Read(AP_HEAD)==1)
+            return AP_BOOT_ADDR0;
+        else
+            return AP_BOOT_ADDR1;
+    } else {
+        if (FMC_Read(AP_HEAD)==1)
+            return AP_BOOT_ADDR1;
+        else
+            return AP_BOOT_ADDR0;
+    }
 }
 
 
 /**
  * @brief       Updated Firmware from UART0
  *
- * @param[in]   UpdateAddr AP_BOOT_ADDR0 or AP_BOOT_ADDR0 
+ * @param[in]   UpdateAddr AP_BOOT_ADDR0 or AP_BOOT_ADDR0
  *
  * @returns     None
  *
  */
-void UpdatedFirmware(uint32_t UpdateAddr){
+void UpdatedFirmware(uint32_t UpdateAddr)
+{
     uint8_t IdxBytes=0;
     uint32_t Addr = UpdateAddr;
     volatile uint32_t u32TmpPtr[1];
@@ -154,54 +154,53 @@ void UpdatedFirmware(uint32_t UpdateAddr){
     uint32_t cnt=0;
     uint16_t tmp;
     uint8_t ipage=0;
-    *u8TmpPtr=ReceiveBytes(0); 
+    *u8TmpPtr=ReceiveBytes(0);
     cnt++;
     IdxBytes=1;
     FMC_Erase(UpdateAddr);   /* Erase page */
-    while(1){
+    while(1) {
         tmp = ReceiveBytes(0x20);
-        if((tmp & RECEIVE_TIMEROUT)==0){
-          *(u8TmpPtr+IdxBytes)=(uint8_t)tmp;
-          cnt++;
-          IdxBytes++;
-        }else
-          break;
-        
-      if(IdxBytes==4)
-      {
-        IdxBytes=0;
-        if(cnt%FMC_FLASH_PAGE_SIZE==(FMC_FLASH_PAGE_SIZE-1)){
-          ipage++;
-          FMC_Erase(UpdateAddr+FMC_FLASH_PAGE_SIZE*ipage);   /* Erase page */
+        if((tmp & RECEIVE_TIMEROUT)==0) {
+            *(u8TmpPtr+IdxBytes)=(uint8_t)tmp;
+            cnt++;
+            IdxBytes++;
+        } else
+            break;
+
+        if(IdxBytes==4) {
+            IdxBytes=0;
+            if(cnt%FMC_FLASH_PAGE_SIZE==(FMC_FLASH_PAGE_SIZE-1)) {
+                ipage++;
+                FMC_Erase(UpdateAddr+FMC_FLASH_PAGE_SIZE*ipage);   /* Erase page */
+            }
+            FMC_Write(Addr, *u32TmpPtr); /* Write data */
+            Addr+=4;
+            if(cnt%10==0) PutString(".");
         }
-        FMC_Write(Addr, *u32TmpPtr); /* Write data */
-        Addr+=4;
-        if(cnt%10==0) PutString(".");
-      }
     }
-    if(cnt%FMC_FLASH_PAGE_SIZE==(FMC_FLASH_PAGE_SIZE-1)){
-      ipage++;
-      FMC_Erase(UpdateAddr+FMC_FLASH_PAGE_SIZE*ipage);   /* Erase page */
+    if(cnt%FMC_FLASH_PAGE_SIZE==(FMC_FLASH_PAGE_SIZE-1)) {
+        ipage++;
+        FMC_Erase(UpdateAddr+FMC_FLASH_PAGE_SIZE*ipage);   /* Erase page */
     }
     FMC_Write(Addr+=4, *u32TmpPtr);
-    
+
     FMC_Erase(AP_HEAD);
-    if(UpdateAddr==AP_BOOT_ADDR0)
-    {
-      FMC_Write(AP_HEAD, 1);
-      FMC_Write(AP_HEAD+4, 0);
-    }else{
-      FMC_Write(AP_HEAD, 0);
-      FMC_Write(AP_HEAD+4, 1);
+    if(UpdateAddr==AP_BOOT_ADDR0) {
+        FMC_Write(AP_HEAD, 1);
+        FMC_Write(AP_HEAD+4, 0);
+    } else {
+        FMC_Write(AP_HEAD, 0);
+        FMC_Write(AP_HEAD+4, 1);
     }
     PutString("\n.......finished\n");
 }
 
-void PutMassage(uint32_t addr){
+void PutMassage(uint32_t addr)
+{
     if(addr==AP_BOOT_ADDR0)
-      PutString("(RO_BASE 0x0):\n");
+        PutString("(RO_BASE 0x0):\n");
     else
-      PutString("(RO_BASE 0x4000):\n");
+        PutString("(RO_BASE 0x4000):\n");
 }
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Main Function                                                                                          */
@@ -209,13 +208,13 @@ void PutMassage(uint32_t addr){
 int32_t main (void)
 {
 
-/*---------------------------------------------------------------------------------------------------------*/
-/*    User needs to install "Tera Term" application. and then                                              */
-/*    set "transfer delay" to 10ms and open serial port.                                                   */
-/*    Firstly, choice 2 to update binary files , user need to prepare two binary files,                    */
-/*    set RO_BASE to AP_BOOT_ADDR0 and the other to AP_BOOT_ADDR1 , and then use                           */
-/*    Terra Term(file->Send files and enable binary check box) to send binary file to update APROM.        */
-/*---------------------------------------------------------------------------------------------------------*/
+    /*---------------------------------------------------------------------------------------------------------*/
+    /*    User needs to install "Tera Term" application. and then                                              */
+    /*    set "transfer delay" to 10ms and open serial port.                                                   */
+    /*    Firstly, choice 2 to update binary files , user need to prepare two binary files,                    */
+    /*    set RO_BASE to AP_BOOT_ADDR0 and the other to AP_BOOT_ADDR1 , and then use                           */
+    /*    Terra Term(file->Send files and enable binary check box) to send binary file to update APROM.        */
+    /*---------------------------------------------------------------------------------------------------------*/
     uint8_t ch;
     uint32_t Uaddr;
     SYS_Init();               /* Init System, IP clock and multi-function I/O */
@@ -223,21 +222,21 @@ int32_t main (void)
     SYS_UnlockReg();          /* Unlock register lock protect */
     FMC_Open();               /* Enable FMC ISP function */
     FMC_ENABLE_AP_UPDATE();   /* Enable APROM update. */
-  
+
     PutString("\n\n");
     PutString("+-----------------------------------------------------+\n");
     PutString("|     Firmware update by UART0(1:boot,2:update)       |\n");
     PutString("+-----------------------------------------------------+\n");
     ch = ReceiveBytes(0); /* block on waiting for any one character input from UART0 */
-    switch(ch){
-      case '2':
+    switch(ch) {
+    case '2':
         Uaddr=Get_Version(0);
         PutString("Update");
         PutMassage(Uaddr);
         UpdatedFirmware(Uaddr);
         break;
-      default:
-    	  break;
+    default:
+        break;
     }
     /* Set vector remap to APROM address AP_BOOT_ADDR0 or AP_BOOT_ADDR1   */
     FMC_SetVectorPageAddr(Get_Version(1));

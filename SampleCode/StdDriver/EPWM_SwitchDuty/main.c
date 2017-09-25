@@ -160,8 +160,7 @@ int32_t main(void)
     /* Start EPWM counter */
     EPWM_Start(EPWM0, EPWM_CH_0_MASK);
 
-    while(1)
-    {
+    while(1) {
         printf("\nSelect new duty: \n");
         printf("[1] 100%% \n");
         printf("[2] 75%% \n");
@@ -170,24 +169,15 @@ int32_t main(void)
         printf("[Other] Exit \n");
         u8Option = getchar();
 
-        if(u8Option == '1')
-        {
+        if(u8Option == '1') {
             u32NewDutyCycle = 100;
-        }
-        else if(u8Option == '2')
-        {
+        } else if(u8Option == '2') {
             u32NewDutyCycle = 75;
-        }
-        else if(u8Option == '3')
-        {
+        } else if(u8Option == '3') {
             u32NewDutyCycle = 25;
-        }
-        else if(u8Option == '4')
-        {
+        } else if(u8Option == '4') {
             u32NewDutyCycle = 0;
-        }
-        else
-        {
+        } else {
             printf("Exit\n");
             break;
         }

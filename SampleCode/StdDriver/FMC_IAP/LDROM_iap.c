@@ -88,8 +88,7 @@ static void SendChar_ToUART(int ch)
     while (UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
 
     UART0->DAT = ch;
-    if(ch == '\n')
-    {
+    if(ch == '\n') {
         while (UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
         UART0->DAT = '\r';
     }
@@ -103,10 +102,8 @@ static void SendChar_ToUART(int ch)
  */
 static char GetChar(void)
 {
-    while(1)
-    {
-        if ((UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0)
-        {
+    while(1) {
+        if ((UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0) {
             return (UART0->DAT);
         }
     }
@@ -114,9 +111,9 @@ static char GetChar(void)
 
 static void PutString(char *str)
 {
-	while (*str != '\0') {
-		SendChar_ToUART(*str++);
-	}
+    while (*str != '\0') {
+        SendChar_ToUART(*str++);
+    }
 }
 
 #ifdef __GNUC__                        /* for GNU C compiler */

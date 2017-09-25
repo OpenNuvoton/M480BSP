@@ -178,8 +178,7 @@ void AutoBaudRate_TxTest()
 {
     uint32_t u32Item;
 
-    do
-    {
+    do {
 
         printf("\n");
         printf("+-----------------------------------------------------------+\n");
@@ -197,24 +196,22 @@ void AutoBaudRate_TxTest()
         printf("%c\n", u32Item);
 
         /* Set different baud rate */
-        switch(u32Item)
-        {
-            case '1':
-                UART1->BAUD = UART_BAUD_MODE2 | UART_BAUD_MODE2_DIVIDER(__HXT, 38400);
-                break;
-            case '2':
-                UART1->BAUD = UART_BAUD_MODE2 | UART_BAUD_MODE2_DIVIDER(__HXT, 57600);
-                break;
-            default:
-                UART1->BAUD = UART_BAUD_MODE2 | UART_BAUD_MODE2_DIVIDER(__HXT, 115200);
-                break;
+        switch(u32Item) {
+        case '1':
+            UART1->BAUD = UART_BAUD_MODE2 | UART_BAUD_MODE2_DIVIDER(__HXT, 38400);
+            break;
+        case '2':
+            UART1->BAUD = UART_BAUD_MODE2 | UART_BAUD_MODE2_DIVIDER(__HXT, 57600);
+            break;
+        default:
+            UART1->BAUD = UART_BAUD_MODE2 | UART_BAUD_MODE2_DIVIDER(__HXT, 115200);
+            break;
         }
 
         /* Send input pattern 0x1 for auto baud rate detection bit length is 1-bit */
         UART_WRITE(UART1, 0x1);
 
-    }
-    while(u32Item != 27);
+    } while(u32Item != 27);
 
 }
 
@@ -228,32 +225,31 @@ uint32_t GetUartBaudrate(UART_T* uart)
     uint32_t u32Baud_Div;
 
     /* Get UART clock source selection and UART clock divider number */
-    switch((uint32_t)uart)
-    {
-        case UART0_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL1_UART0SEL_Msk) >> CLK_CLKSEL1_UART0SEL_Pos;
-            u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART0DIV_Msk) >> CLK_CLKDIV0_UART0DIV_Pos;
-            break;
-        case UART1_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL1_UART1SEL_Msk) >> CLK_CLKSEL1_UART1SEL_Pos;
-            u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART1DIV_Msk) >> CLK_CLKDIV0_UART1DIV_Pos;
-            break;
-        case UART2_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL3 & CLK_CLKSEL3_UART2SEL_Msk) >> CLK_CLKSEL3_UART2SEL_Pos;
-            u8UartClkDivNum = (CLK->CLKDIV4 & CLK_CLKDIV4_UART2DIV_Msk) >> CLK_CLKDIV4_UART2DIV_Pos;
-            break;
-        case UART3_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL3 & CLK_CLKSEL3_UART3SEL_Msk) >> CLK_CLKSEL3_UART3SEL_Pos;
-            u8UartClkDivNum = (CLK->CLKDIV4 & CLK_CLKDIV4_UART3DIV_Msk) >> CLK_CLKDIV4_UART3DIV_Pos;
-            break;
-        case UART4_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL3 & CLK_CLKSEL3_UART4SEL_Msk) >> CLK_CLKSEL3_UART4SEL_Pos;
-            u8UartClkDivNum = (CLK->CLKDIV4 & CLK_CLKDIV4_UART4DIV_Msk) >> CLK_CLKDIV4_UART4DIV_Pos;
-            break;
-        case UART5_BASE:
-            u8UartClkSrcSel = (CLK->CLKSEL3 & CLK_CLKSEL3_UART5SEL_Msk) >> CLK_CLKSEL3_UART5SEL_Pos;
-            u8UartClkDivNum = (CLK->CLKDIV4 & CLK_CLKDIV4_UART5DIV_Msk) >> CLK_CLKDIV4_UART5DIV_Pos;
-            break;
+    switch((uint32_t)uart) {
+    case UART0_BASE:
+        u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL1_UART0SEL_Msk) >> CLK_CLKSEL1_UART0SEL_Pos;
+        u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART0DIV_Msk) >> CLK_CLKDIV0_UART0DIV_Pos;
+        break;
+    case UART1_BASE:
+        u8UartClkSrcSel = (CLK->CLKSEL1 & CLK_CLKSEL1_UART1SEL_Msk) >> CLK_CLKSEL1_UART1SEL_Pos;
+        u8UartClkDivNum = (CLK->CLKDIV0 & CLK_CLKDIV0_UART1DIV_Msk) >> CLK_CLKDIV0_UART1DIV_Pos;
+        break;
+    case UART2_BASE:
+        u8UartClkSrcSel = (CLK->CLKSEL3 & CLK_CLKSEL3_UART2SEL_Msk) >> CLK_CLKSEL3_UART2SEL_Pos;
+        u8UartClkDivNum = (CLK->CLKDIV4 & CLK_CLKDIV4_UART2DIV_Msk) >> CLK_CLKDIV4_UART2DIV_Pos;
+        break;
+    case UART3_BASE:
+        u8UartClkSrcSel = (CLK->CLKSEL3 & CLK_CLKSEL3_UART3SEL_Msk) >> CLK_CLKSEL3_UART3SEL_Pos;
+        u8UartClkDivNum = (CLK->CLKDIV4 & CLK_CLKDIV4_UART3DIV_Msk) >> CLK_CLKDIV4_UART3DIV_Pos;
+        break;
+    case UART4_BASE:
+        u8UartClkSrcSel = (CLK->CLKSEL3 & CLK_CLKSEL3_UART4SEL_Msk) >> CLK_CLKSEL3_UART4SEL_Pos;
+        u8UartClkDivNum = (CLK->CLKDIV4 & CLK_CLKDIV4_UART4DIV_Msk) >> CLK_CLKDIV4_UART4DIV_Pos;
+        break;
+    case UART5_BASE:
+        u8UartClkSrcSel = (CLK->CLKSEL3 & CLK_CLKSEL3_UART5SEL_Msk) >> CLK_CLKSEL3_UART5SEL_Pos;
+        u8UartClkDivNum = (CLK->CLKDIV4 & CLK_CLKDIV4_UART5DIV_Msk) >> CLK_CLKDIV4_UART5DIV_Pos;
+        break;
     }
 
     /* Get PLL clock frequency if UART clock source selection is PLL */
@@ -293,14 +289,11 @@ void AutoBaudRate_RxTest()
     /* Wait until auto baud rate detect finished or time-out */
     while((UART1->ALTCTL & UART_ALTCTL_ABRIF_Msk) == 0);
 
-    if(UART1->FIFOSTS & UART_FIFOSTS_ABRDIF_Msk)
-    {
+    if(UART1->FIFOSTS & UART_FIFOSTS_ABRDIF_Msk) {
         /* Clear auto baud rate detect finished flag */
         UART1->FIFOSTS = UART_FIFOSTS_ABRDIF_Msk;
         printf("Baud rate is %dbps.\n", GetUartBaudrate(UART1));
-    }
-    else if(UART1->FIFOSTS & UART_FIFOSTS_ABRDTOIF_Msk)
-    {
+    } else if(UART1->FIFOSTS & UART_FIFOSTS_ABRDTOIF_Msk) {
         /* Clear auto baud rate detect time-out flag */
         UART1->FIFOSTS = UART_FIFOSTS_ABRDTOIF_Msk;
         printf("Time-out!\n");

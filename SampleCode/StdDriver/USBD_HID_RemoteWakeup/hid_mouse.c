@@ -244,8 +244,7 @@ void PowerDown()
         CLK->PWRCTL ^= CLK_PWRCTL_PDEN_Msk;
 
     /* Note HOST to resume USB tree if it is suspended and remote wakeup enabled */
-    if(g_usbd_RemoteWakeupEn)
-    {
+    if(g_usbd_RemoteWakeupEn) {
         /* Enable PHY before sending Resume('K') state */
         USBD->ATTR |= USBD_ATTR_PHYEN_Msk;
 
@@ -278,16 +277,14 @@ void HID_UpdateMouseData(void)
 
 
     /* Enter power down when USB suspend */
-    if(g_u8Suspend)
-    {
+    if(g_u8Suspend) {
         PowerDown();
 
         /* Waiting for key release */
         while((PC->PIN & 0x3F) != 0x3F);
     }
 
-    if(g_u8EP2Ready)
-    {
+    if(g_u8EP2Ready) {
         buf = (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP2));
 
         u32Reg = PC->PIN & 0x3F;

@@ -12,7 +12,7 @@
 #pragma anon_unions
 #endif
 
-/** 
+/**
    @addtogroup REGISTER Control Register
    @{
 */

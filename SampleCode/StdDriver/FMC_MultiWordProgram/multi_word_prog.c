@@ -160,15 +160,15 @@ int main()
 #ifdef USE_DRIVER_API
             i = FMC_WriteMultiple(maddr, page_buff, FMC_MULTI_WORD_PROG_LEN);
             if (i <= 0) {
-            	printf("FMC_WriteMultiple failed: %d\n", i);
-            	goto err_out;
+                printf("FMC_WriteMultiple failed: %d\n", i);
+                goto err_out;
             }
             printf("programmed length = %d\n", i);
 #else
             /* execute multi-word program */
             if (multi_word_program(maddr) < 0)
                 goto err_out;
-#endif                
+#endif
         }
         printf("    [OK]\n");
 

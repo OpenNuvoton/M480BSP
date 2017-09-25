@@ -39,7 +39,7 @@ int do_compare(uint8_t *output, uint8_t *expect, int cmp_len)
     return 0;
 }
 
-int HMAC_test() 
+int HMAC_test()
 {
     uint32_t au32OutputDigest[16];
 
@@ -110,7 +110,7 @@ void SYS_Init(void)
     SYS_LockReg();
 }
 
-void UART0_Init(void) 
+void UART0_Init(void)
 {
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init UART                                                                                               */
@@ -123,7 +123,7 @@ void UART0_Init(void)
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Main Function                                                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
-int32_t main(void) 
+int32_t main(void)
 {
     SYS_Init();                        /* Init System, IP clock and multi-function I/O */
 

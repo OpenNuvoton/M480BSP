@@ -1086,14 +1086,12 @@ uint32_t CLK_GetModuleClockSource(uint32_t u32ModuleIdx)
         return ((CLK->CLKSEL2 & CLK_CLKSEL2_BPWM0SEL_Msk) >> CLK_CLKSEL2_BPWM0SEL_Pos);
     else if(u32ModuleIdx == BPWM1_MODULE)
         return ((CLK->CLKSEL2 & CLK_CLKSEL2_BPWM1SEL_Msk) >> CLK_CLKSEL2_BPWM1SEL_Pos);
-    else if(MODULE_CLKSEL_Msk(u32ModuleIdx) != MODULE_NoMsk)
-    {
+    else if(MODULE_CLKSEL_Msk(u32ModuleIdx) != MODULE_NoMsk) {
         /* Get clock select control register address */
         u32sel = (uint32_t)&CLK->CLKSEL0 + (u32SelTbl[MODULE_CLKSEL(u32ModuleIdx)]);
         /* Get clock source selection setting */
         return ((M32(u32sel) & (MODULE_CLKSEL_Msk(u32ModuleIdx) << MODULE_CLKSEL_Pos(u32ModuleIdx))) >> MODULE_CLKSEL_Pos(u32ModuleIdx));
-    }
-    else
+    } else
         return 0;
 }
 
@@ -1121,14 +1119,12 @@ uint32_t CLK_GetModuleClockDivider(uint32_t u32ModuleIdx)
     uint32_t u32div = 0;
     uint32_t u32DivTbl[4] = {0x0, 0x4, 0x8, 0x10};
 
-    if(MODULE_CLKDIV_Msk(u32ModuleIdx) != MODULE_NoMsk)
-    {
+    if(MODULE_CLKDIV_Msk(u32ModuleIdx) != MODULE_NoMsk) {
         /* Get clock divider control register address */
         u32div = (uint32_t)&CLK->CLKDIV0 + (u32DivTbl[MODULE_CLKDIV(u32ModuleIdx)]);
         /* Get clock divider number setting */
         return ((M32(u32div) & (MODULE_CLKDIV_Msk(u32ModuleIdx) << MODULE_CLKDIV_Pos(u32ModuleIdx))) >> MODULE_CLKDIV_Pos(u32ModuleIdx));
-    }
-    else
+    } else
         return 0;
 }
 

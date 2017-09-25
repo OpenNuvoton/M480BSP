@@ -431,14 +431,16 @@ typedef __packed struct {
 } CMD_T;
 
 #else
-typedef struct __attribute__((__packed__)) {
+typedef struct __attribute__((__packed__))
+{
     uint8_t u8Cmd;
     uint8_t u8Size;
     uint32_t u32Arg1;
     uint32_t u32Arg2;
     uint32_t u32Signature;
     uint32_t u32Checksum;
-} CMD_T;
+}
+CMD_T;
 #endif
 
 CMD_T gCmd;

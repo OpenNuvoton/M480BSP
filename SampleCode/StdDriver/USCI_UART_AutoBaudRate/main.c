@@ -26,7 +26,7 @@ void USCI_AutoBaudRate_RxTest(void);
 
 
 void SYS_Init(void)
-{  
+{
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init System Clock                                                                                       */
     /*---------------------------------------------------------------------------------------------------------*/
@@ -62,8 +62,8 @@ void SYS_Init(void)
 
     /* Set PD multi-function pins for UART0 RXD and TXD */
     SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
-    SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);  
-    
+    SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
+
     /* Set PE multi-function pins for USCI0_DAT0(PE.3) and USCI0_DAT1(PE.4) */
     SYS->GPA_MFPH &= ~(SYS_GPA_MFPH_PA9MFP_Msk | SYS_GPA_MFPH_PA10MFP_Msk);
     SYS->GPA_MFPH |= (SYS_GPA_MFPH_PA9MFP_USCI0_DAT1 |SYS_GPA_MFPH_PA10MFP_USCI0_DAT0);
@@ -181,8 +181,7 @@ void USCI_AutoBaudRate_TxTest()
     uint32_t u32Item;
     uint8_t u8Char;
 
-    do
-    {
+    do {
 
         printf("\n");
         printf("+-----------------------------------------------------------+\n");
@@ -200,25 +199,23 @@ void USCI_AutoBaudRate_TxTest()
         printf("%c\n", u32Item);
 
         /* Set different baud rate */
-        switch(u32Item)
-        {
-            case '1':
-                UUART_Open(UUART0, 38400);
-                break;
-            case '2':
-                UUART_Open(UUART0, 57600);
-                break;
-            default:
-                UUART_Open(UUART0, 115200);
-                break;
+        switch(u32Item) {
+        case '1':
+            UUART_Open(UUART0, 38400);
+            break;
+        case '2':
+            UUART_Open(UUART0, 57600);
+            break;
+        default:
+            UUART_Open(UUART0, 115200);
+            break;
         }
 
         /* Send input pattern 0x55 for auto baud rate detection */
         u8Char = 0x55;
         UUART_Write(UUART0, &u8Char, 1);
 
-    }
-    while(u32Item != 27);
+    } while(u32Item != 27);
 
 }
 
@@ -263,14 +260,11 @@ void USCI_AutoBaudRate_RxTest()
     /* Wait until auto baud rate detect finished or time-out */
     while(UUART0->PROTCTL & UUART_PROTCTL_ABREN_Msk);
 
-    if(UUART_GET_PROT_STATUS(UUART0) & UUART_PROTSTS_ABRDETIF_Msk)
-    {
+    if(UUART_GET_PROT_STATUS(UUART0) & UUART_PROTSTS_ABRDETIF_Msk) {
         /* Clear auto baud rate detect finished flag */
         UUART_CLR_PROT_INT_FLAG(UUART0, UUART_PROTSTS_ABRDETIF_Msk);
         printf("Baud rate is %dbps.\n", GetUuartBaudrate(UUART0));
-    }
-    else if(UUART_GET_PROT_STATUS(UUART0) & UUART_PROTSTS_ABERRSTS_Msk)
-    {
+    } else if(UUART_GET_PROT_STATUS(UUART0) & UUART_PROTSTS_ABERRSTS_Msk) {
         /* Clear auto baud rate detect time-out flag */
         UUART_CLR_PROT_INT_FLAG(UUART0, UUART_PROTSTS_ABERRSTS_Msk);
         printf("Error!\n");
