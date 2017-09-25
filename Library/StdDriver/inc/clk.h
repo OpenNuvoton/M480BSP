@@ -503,7 +503,7 @@ __STATIC_INLINE void CLK_SysTickLongDelay(uint32_t us);
 
 /**
   * @brief      This function execute delay function.
-  * @param      us  Delay time. The Max value is 2^24 / CPU Clock(MHz). Ex:
+  * @param[in]  us  Delay time. The Max value is 2^24 / CPU Clock(MHz). Ex:
   *                             72MHz => 233016us, 50MHz => 335544us,
   *                             48MHz => 349525us, 28MHz => 699050us ...
   * @return     None

@@ -51,8 +51,8 @@ void SYS_ClearResetSrc(uint32_t u32Src)
 /**
   * @brief      Get Brown-out detector output status
   * @param      None
-  * @retval     0 System voltage is higher than BOD_VL setting or BOD_EN is 0.
-  * @retval     1 System voltage is lower than BOD_VL setting.
+  * @retval     0 System voltage is higher than BODVL setting or BODEN is 0.
+  * @retval     1 System voltage is lower than BODVL setting.
   * @details    This function get Brown-out detector output status.
   */
 uint32_t SYS_GetBODStatus(void)

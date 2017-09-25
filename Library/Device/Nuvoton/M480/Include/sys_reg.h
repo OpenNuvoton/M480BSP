@@ -1964,10 +1964,9 @@ typedef struct {
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[1:0]   |PLSEL     |Power Level Select(Write Protect)
-     * |        |          |00 = Set core voltage to 1.26V.
-     * |        |          |01 = Set core voltage to 1.2V.
-     * |        |          |10 = Set core voltage to 0.9V.
-     * |        |          |11 = Reserved.
+     * |        |          |00 = Power level is PL0.
+     * |        |          |01 = Power level is PL1.
+     * |        |          |Others = Reserved.
      * |[21:16] |LVSSTEP   |LDO Voltage Scaling Step(Write Protect)
      * |        |          |The LVSSTEP value is LDO voltage rising step.
      * |        |          |Core voltage scaling voltage step = (LVSSTEP + 1) * 10mV.
@@ -2170,8 +2169,8 @@ typedef struct {
 #define SYS_IPRST1_I2C2RST_Pos           (10)                                              /*!< SYS_T::IPRST1: I2C2RST Position        */
 #define SYS_IPRST1_I2C2RST_Msk           (0x1ul << SYS_IPRST1_I2C2RST_Pos)                 /*!< SYS_T::IPRST1: I2C2RST Mask            */
 
-#define SYS_IPRST1_QSPI0RST_Pos           (12)                                              /*!< SYS_T::IPRST1: QSPI0RST Position        */
-#define SYS_IPRST1_QSPI0RST_Msk           (0x1ul << SYS_IPRST1_QSPI0RST_Pos)                 /*!< SYS_T::IPRST1: QSPI0RST Mask            */
+#define SYS_IPRST1_QSPI0RST_Pos          (12)                                              /*!< SYS_T::IPRST1: QSPI0RST Position       */
+#define SYS_IPRST1_QSPI0RST_Msk          (0x1ul << SYS_IPRST1_QSPI0RST_Pos)                /*!< SYS_T::IPRST1: QSPI0RST Mask           */
 
 #define SYS_IPRST1_SPI0RST_Pos           (13)                                              /*!< SYS_T::IPRST1: SPI0RST Position        */
 #define SYS_IPRST1_SPI0RST_Msk           (0x1ul << SYS_IPRST1_SPI0RST_Pos)                 /*!< SYS_T::IPRST1: SPI0RST Mask            */

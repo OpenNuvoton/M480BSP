@@ -400,10 +400,10 @@ void CLK_SetHCLK(uint32_t u32ClkSrc, uint32_t u32ClkDiv)
   * |\ref EPWM0_MODULE   |\ref CLK_CLKSEL2_EPWM0SEL_PCLK0        | x                             |
   * |\ref EPWM1_MODULE   |\ref CLK_CLKSEL2_EPWM1SEL_PLL          | x                             |
   * |\ref EPWM1_MODULE   |\ref CLK_CLKSEL2_EPWM1SEL_PCLK1        | x                             |
-  * |\ref QSPI0_MODULE    |\ref CLK_CLKSEL2_QSPI0SEL_HXT         | x                             |
-  * |\ref QSPI0_MODULE    |\ref CLK_CLKSEL2_QSPI0SEL_PLL         | x                             |
-  * |\ref QSPI0_MODULE    |\ref CLK_CLKSEL2_QSPI0SEL_HIRC        | x                             |
-  * |\ref QSPI0_MODULE    |\ref CLK_CLKSEL2_QSPI0SEL_PCLK0       | x                             |
+  * |\ref QSPI0_MODULE   |\ref CLK_CLKSEL2_QSPI0SEL_HXT          | x                             |
+  * |\ref QSPI0_MODULE   |\ref CLK_CLKSEL2_QSPI0SEL_PLL          | x                             |
+  * |\ref QSPI0_MODULE   |\ref CLK_CLKSEL2_QSPI0SEL_HIRC         | x                             |
+  * |\ref QSPI0_MODULE   |\ref CLK_CLKSEL2_QSPI0SEL_PCLK0        | x                             |
   * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_HXT           | x                             |
   * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_PLL           | x                             |
   * |\ref SPI0_MODULE    |\ref CLK_CLKSEL2_SPI0SEL_HIRC          | x                             |
