@@ -322,54 +322,6 @@ extern "C"
   */
 #define SPI_DISABLE(spi)   ((spi)->CTL &= ~SPI_CTL_SPIEN_Msk)
 
-/**
-  * @brief  Disable SPI Dual IO function.
-  * @param[in]  spi is the base address of SPI module.
-  * @return none
-  * \hideinitializer
-  */
-#define SPI_DISABLE_DUAL_MODE(spi) ( (spi)->CTL &= ~SPI_CTL_DUALIOEN_Msk )
-
-/**
-  * @brief  Enable Dual IO function and set SPI Dual IO direction to input.
-  * @param[in]  spi is the base address of SPI module.
-  * @return none
-  * \hideinitializer
-  */
-#define SPI_ENABLE_DUAL_INPUT_MODE(spi) ( (spi)->CTL = ((spi)->CTL & ~SPI_CTL_DATDIR_Msk) | SPI_CTL_DUALIOEN_Msk )
-
-/**
-  * @brief  Enable Dual IO function and set SPI Dual IO direction to output.
-  * @param[in]  spi is the base address of SPI module.
-  * @return none
-  * \hideinitializer
-  */
-#define SPI_ENABLE_DUAL_OUTPUT_MODE(spi) ( (spi)->CTL |= SPI_CTL_DATDIR_Msk | SPI_CTL_DUALIOEN_Msk )
-
-/**
-  * @brief  Disable SPI Dual IO function.
-  * @param[in]  spi is the base address of SPI module.
-  * @return none
-  * \hideinitializer
-  */
-#define SPI_DISABLE_QUAD_MODE(spi) ( (spi)->CTL &= ~SPI_CTL_QUADIOEN_Msk )
-
-/**
-  * @brief  Set SPI Quad IO direction to input.
-  * @param[in]  spi is the base address of SPI module.
-  * @return none
-  * \hideinitializer
-  */
-#define SPI_ENABLE_QUAD_INPUT_MODE(spi) ( (spi)->CTL = ((spi)->CTL & ~SPI_CTL_DATDIR_Msk) | SPI_CTL_QUADIOEN_Msk )
-
-/**
-  * @brief  Set SPI Quad IO direction to output.
-  * @param[in]  spi is the base address of SPI module.
-  * @return none
-  * \hideinitializer
-  */
-#define SPI_ENABLE_QUAD_OUTPUT_MODE(spi) ( (spi)->CTL |= SPI_CTL_DATDIR_Msk | SPI_CTL_QUADIOEN_Msk )
-
 /* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */
 __STATIC_INLINE void SPII2S_ENABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask);
 __STATIC_INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask);

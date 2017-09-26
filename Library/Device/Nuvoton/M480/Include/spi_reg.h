@@ -81,11 +81,6 @@ typedef struct {
      * |        |          |In receive-only mode, SPI Master will generate SPI bus clock continuously for receiving data bit from SPI slave device and assert the BUSY status.
      * |        |          |0 = Receive-only mode Disabled.
      * |        |          |1 = Receive-only mode Enabled.
-     * |[16]    |TWOBIT    |2-bit Transfer Mode Enable Bit (Only Supported in QSPI0)
-     * |        |          |0 = 2-Bit Transfer mode Disabled.
-     * |        |          |1 = 2-Bit Transfer mode Enabled.
-     * |        |          |Note: When 2-Bit Transfer mode is enabled, the first serial transmitted bit data is from the first FIFO buffer data, and the 2nd serial transmitted bit data is from the second FIFO buffer data
-     * |        |          |As the same as transmitted function, the first received bit data is stored into the first FIFO buffer and the 2nd received bit data is stored into the second FIFO buffer at the same time.
      * |[17]    |UNITIEN   |Unit Transfer Interrupt Enable Bit
      * |        |          |0 = SPI unit transfer interrupt Disabled.
      * |        |          |1 = SPI unit transfer interrupt Enabled.
@@ -102,12 +97,6 @@ typedef struct {
      * |        |          |This bit is used to select the data input/output direction in half-duplex transfer and Dual/Quad transfer
      * |        |          |0 = SPI data is input direction.
      * |        |          |1 = SPI data is output direction.
-     * |[21]    |DUALIOEN  |Dual I/O Mode Enable Bit (Only Supported in QSPI0)
-     * |        |          |0 = Dual I/O mode Disabled.
-     * |        |          |1 = Dual I/O mode Enabled.
-     * |[22]    |QUADIOEN  |Quad I/O Mode Enable Bit (Only Supported in QSPI0)
-     * |        |          |0 = Quad I/O mode Disabled.
-     * |        |          |1 = Quad I/O mode Enabled.
      * @var SPI_T::CLKDIV
      * Offset: 0x04  SPI Clock Divider Register
      * ---------------------------------------------------------------------------------------------------
@@ -140,17 +129,6 @@ typedef struct {
      * |        |          |0 = Automatic slave selection function Disabled
      * |        |          |Slave selection signal will be asserted/de-asserted according to SS (SPIx_SSCTL[0]).
      * |        |          |1 = Automatic slave selection function Enabled.
-     * |[4]     |SLV3WIRE  |Slave 3-wire Mode Enable Bit (Only Supported in QSPI0)
-     * |        |          |Slave 3-wire mode is only available in QSPI0
-     * |        |          |In Slave 3-wire mode, the SPI controller can work with 3-wire interface including QSPI0_CLK, QSPI0_MISO and QSPI0_MOSI pins.
-     * |        |          |0 = 4-wire bi-direction interface.
-     * |        |          |1 = 3-wire bi-direction interface.
-     * |[5]     |SLVTOIEN  |Slave Mode Time-out Interrupt Enable Bit (Only Supported in QSPI0)
-     * |        |          |0 = Slave mode time-out interrupt Disabled.
-     * |        |          |1 = Slave mode time-out interrupt Enabled.
-     * |[6]     |SLVTORST  |Slave Mode Time-out Reset Control (Only Supported in QSPI0)
-     * |        |          |0 = When Slave mode time-out event occurs, the TX and RX control circuit will not be reset.
-     * |        |          |1 = When Slave mode time-out event occurs, the TX and RX control circuit will be reset by hardware.
      * |[8]     |SLVBEIEN  |Slave Mode Bit Count Error Interrupt Enable Bit
      * |        |          |0 = Slave mode bit count error interrupt Disabled.
      * |        |          |1 = Slave mode bit count error interrupt Enabled.
@@ -163,10 +141,6 @@ typedef struct {
      * |[13]    |SSINAIEN  |Slave Select Inactive Interrupt Enable Bit
      * |        |          |0 = Slave select inactive interrupt Disabled.
      * |        |          |1 = Slave select inactive interrupt Enabled.
-     * |[31:16] |SLVTOCNT  |Slave Mode Time-out Period (Only Supported in QSPI0)
-     * |        |          |In Slave mode, these bits indicate the time-out period when there is bus clock input during slave select active
-     * |        |          |The clock source of the time-out counter is Slave peripheral clock
-     * |        |          |If the value is 0, it indicates the slave mode time-out function is disabled.
      * @var SPI_T::PDMACTL
      * Offset: 0x0C  SPI PDMA Control Register
      * ---------------------------------------------------------------------------------------------------
@@ -277,12 +251,6 @@ typedef struct {
      * |        |          |1 = The slave select line status is 1.
      * |        |          |Note: This bit is only available in Slave mode
      * |        |          |If SSACTPOL (SPIx_SSCTL[2]) is set 0, and the SSLINE is 1, the SPI slave select is in inactive status.
-     * |[5]     |SLVTOIF   |Slave Time-out Interrupt Flag (Only Supported in QSPI0)
-     * |        |          |When the slave select is active and the value of SLVTOCNT is not 0, as the bus clock is detected, the slave time-out counter in SPI controller logic will be started
-     * |        |          |When the value of time-out counter is greater than or equal to the value of SLVTOCNT (SPI_SSCTL[31:16]) before one transaction is done, the slave time-out interrupt event will be asserted.
-     * |        |          |0 = Slave time-out is not active.
-     * |        |          |1 = Slave time-out is active.
-     * |        |          |Note: This bit will be cleared by writing 1 to it.
      * |[6]     |SLVBEIF   |Slave Mode Bit Count Error Interrupt Flag
      * |        |          |In Slave mode, when the slave select line goes to inactive state, if bit counter is mismatch with DWIDTH, this interrupt flag will be set to 1.
      * |        |          |0 = No Slave mode bit count error event.
@@ -570,9 +538,6 @@ typedef struct {
 #define SPI_CTL_RXONLY_Pos               (15)                                              /*!< SPI_T::CTL: RXONLY Position            */
 #define SPI_CTL_RXONLY_Msk               (0x1ul << SPI_CTL_RXONLY_Pos)                     /*!< SPI_T::CTL: RXONLY Mask                */
 
-#define SPI_CTL_TWOBIT_Pos               (16)                                              /*!< SPI_T::CTL: TWOBIT Position            */
-#define SPI_CTL_TWOBIT_Msk               (0x1ul << SPI_CTL_TWOBIT_Pos)                     /*!< SPI_T::CTL: TWOBIT Mask                */
-
 #define SPI_CTL_UNITIEN_Pos              (17)                                              /*!< SPI_T::CTL: UNITIEN Position           */
 #define SPI_CTL_UNITIEN_Msk              (0x1ul << SPI_CTL_UNITIEN_Pos)                    /*!< SPI_T::CTL: UNITIEN Mask               */
 
@@ -585,12 +550,6 @@ typedef struct {
 #define SPI_CTL_DATDIR_Pos               (20)                                              /*!< SPI_T::CTL: DATDIR Position            */
 #define SPI_CTL_DATDIR_Msk               (0x1ul << SPI_CTL_DATDIR_Pos)                     /*!< SPI_T::CTL: DATDIR Mask                */
 
-#define SPI_CTL_DUALIOEN_Pos             (21)                                              /*!< SPI_T::CTL: DUALIOEN Position          */
-#define SPI_CTL_DUALIOEN_Msk             (0x1ul << SPI_CTL_DUALIOEN_Pos)                   /*!< SPI_T::CTL: DUALIOEN Mask              */
-
-#define SPI_CTL_QUADIOEN_Pos             (22)                                              /*!< SPI_T::CTL: QUADIOEN Position          */
-#define SPI_CTL_QUADIOEN_Msk             (0x1ul << SPI_CTL_QUADIOEN_Pos)                   /*!< SPI_T::CTL: QUADIOEN Mask              */
-
 #define SPI_CLKDIV_DIVIDER_Pos           (0)                                               /*!< SPI_T::CLKDIV: DIVIDER Position        */
 #define SPI_CLKDIV_DIVIDER_Msk           (0x1fful << SPI_CLKDIV_DIVIDER_Pos)               /*!< SPI_T::CLKDIV: DIVIDER Mask            */
 
@@ -602,15 +561,6 @@ typedef struct {
 
 #define SPI_SSCTL_AUTOSS_Pos             (3)                                               /*!< SPI_T::SSCTL: AUTOSS Position          */
 #define SPI_SSCTL_AUTOSS_Msk             (0x1ul << SPI_SSCTL_AUTOSS_Pos)                   /*!< SPI_T::SSCTL: AUTOSS Mask              */
-
-#define SPI_SSCTL_SLV3WIRE_Pos           (4)                                               /*!< SPI_T::SSCTL: SLV3WIRE Position        */
-#define SPI_SSCTL_SLV3WIRE_Msk           (0x1ul << SPI_SSCTL_SLV3WIRE_Pos)                 /*!< SPI_T::SSCTL: SLV3WIRE Mask            */
-
-#define SPI_SSCTL_SLVTOIEN_Pos           (5)                                               /*!< SPI_T::SSCTL: SLVTOIEN Position        */
-#define SPI_SSCTL_SLVTOIEN_Msk           (0x1ul << SPI_SSCTL_SLVTOIEN_Pos)                 /*!< SPI_T::SSCTL: SLVTOIEN Mask            */
-
-#define SPI_SSCTL_SLVTORST_Pos           (6)                                               /*!< SPI_T::SSCTL: SLVTORST Position        */
-#define SPI_SSCTL_SLVTORST_Msk           (0x1ul << SPI_SSCTL_SLVTORST_Pos)                 /*!< SPI_T::SSCTL: SLVTORST Mask            */
 
 #define SPI_SSCTL_SLVBEIEN_Pos           (8)                                               /*!< SPI_T::SSCTL: SLVBEIEN Position        */
 #define SPI_SSCTL_SLVBEIEN_Msk           (0x1ul << SPI_SSCTL_SLVBEIEN_Pos)                 /*!< SPI_T::SSCTL: SLVBEIEN Mask            */
@@ -686,9 +636,6 @@ typedef struct {
 
 #define SPI_STATUS_SSLINE_Pos            (4)                                               /*!< SPI_T::STATUS: SSLINE Position         */
 #define SPI_STATUS_SSLINE_Msk            (0x1ul << SPI_STATUS_SSLINE_Pos)                  /*!< SPI_T::STATUS: SSLINE Mask             */
-
-#define SPI_STATUS_SLVTOIF_Pos           (5)                                               /*!< SPI_T::STATUS: SLVTOIF Position        */
-#define SPI_STATUS_SLVTOIF_Msk           (0x1ul << SPI_STATUS_SLVTOIF_Pos)                 /*!< SPI_T::STATUS: SLVTOIF Mask            */
 
 #define SPI_STATUS_SLVBEIF_Pos           (6)                                               /*!< SPI_T::STATUS: SLVBEIF Position        */
 #define SPI_STATUS_SLVBEIF_Msk           (0x1ul << SPI_STATUS_SLVBEIF_Pos)                 /*!< SPI_T::STATUS: SLVBEIF Mask            */

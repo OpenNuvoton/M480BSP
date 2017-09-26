@@ -219,6 +219,7 @@ IRQn_Type;
 #include "sc_reg.h"
 #include "i2s_reg.h"
 #include "spi_reg.h"
+#include "qspi_reg.h"
 #include "spim_reg.h"
 #include "i2c_reg.h"
 #include "uuart_reg.h"
@@ -394,7 +395,7 @@ IRQn_Type;
 #define ECAP1                ((ECAP_T *)  ECAP1_BASE)
 #define QEI0                 ((QEI_T *)   QEI0_BASE)
 #define QEI1                 ((QEI_T *)   QEI1_BASE)
-#define QSPI0                ((SPI_T *)   QSPI0_BASE)
+#define QSPI0                ((QSPI_T *)  QSPI0_BASE)
 #define SPI0                 ((SPI_T *)   SPI0_BASE)
 #define SPI1                 ((SPI_T *)   SPI1_BASE)
 #define SPI2                 ((SPI_T *)   SPI2_BASE)
@@ -660,6 +661,7 @@ typedef volatile unsigned long  vu32;       ///< Define 32-bit unsigned volatile
 #include "scuart.h"
 #include "sc.h"
 #include "spi.h"
+#include "qspi.h"
 #include "can.h"
 #include "rtc.h"
 #include "usci_uart.h"

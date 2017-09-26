@@ -100,9 +100,9 @@ void SPI_Init(void)
     /* Configure QSPI0 */
     /* Configure QSPI0 as a master, SPI clock rate 2MHz,
        clock idle low, 32-bit transaction, drive output on falling clock edge and latch input on rising edge. */
-    SPI_Open(QSPI0, SPI_MASTER, SPI_MODE_0, 32, 2000000);
+    QSPI_Open(QSPI0, SPI_MASTER, SPI_MODE_0, 32, 2000000);
     /* Enable the automatic hardware slave selection function. Select the QSPI0_SS pin and configure as low-active. */
-    SPI_EnableAutoSS(QSPI0, SPI_SS, SPI_SS_ACTIVE_LOW);
+    QSPI_EnableAutoSS(QSPI0, SPI_SS, SPI_SS_ACTIVE_LOW);
 
     /* Configure SPI1 */
     /* Configure SPI1 as a slave, clock idle low, 32-bit transaction, drive output on falling clock edge and latch input on rising edge. */
@@ -220,8 +220,8 @@ void SpiLoopTest_WithPDMA(void)
     SPI_TRIGGER_RX_PDMA(SPI1);
     SPI_TRIGGER_TX_PDMA(SPI1);
     /* Enable SPI master DMA function */
-    SPI_TRIGGER_TX_PDMA(QSPI0);
-    SPI_TRIGGER_RX_PDMA(QSPI0);
+    QSPI_TRIGGER_TX_PDMA(QSPI0);
+    QSPI_TRIGGER_RX_PDMA(QSPI0);
 
     i32Err = 0;
     for(u32TestCycle = 0; u32TestCycle < 10000; u32TestCycle++) {
@@ -243,8 +243,8 @@ void SpiLoopTest_WithPDMA(void)
                     PDMA_CLR_TD_FLAG(PDMA,(1 << SPI_MASTER_TX_DMA_CH) | (1 << SPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH));
 
                     /* Disable SPI master's PDMA transfer function */
-                    SPI_DISABLE_TX_PDMA(QSPI0);
-                    SPI_DISABLE_RX_PDMA(QSPI0);
+                    QSPI_DISABLE_TX_PDMA(QSPI0);
+                    QSPI_DISABLE_RX_PDMA(QSPI0);
 
                     /* Check the transfer data */
                     for(u32DataCount = 0; u32DataCount < TEST_COUNT; u32DataCount++) {
@@ -292,8 +292,8 @@ void SpiLoopTest_WithPDMA(void)
                     PDMA_SetTransferMode(PDMA,SPI_MASTER_RX_DMA_CH, PDMA_QSPI0_RX, FALSE, 0);
 
                     /* Enable master's DMA transfer function */
-                    SPI_TRIGGER_TX_PDMA(QSPI0);
-                    SPI_TRIGGER_RX_PDMA(QSPI0);
+                    QSPI_TRIGGER_TX_PDMA(QSPI0);
+                    QSPI_TRIGGER_RX_PDMA(QSPI0);
                     break;
                 }
             }
@@ -370,7 +370,7 @@ int main(void)
     printf("\n\nExit SPI driver sample code.\n");
 
     /* Close QSPI0 */
-    SPI_Close(QSPI0);
+    QSPI_Close(QSPI0);
     /* Close SPI1 */
     SPI_Close(SPI1);
     while(1);
