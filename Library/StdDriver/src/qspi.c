@@ -43,10 +43,10 @@
   * @note   In slave mode, the QSPI peripheral clock rate will be equal to APB clock rate.
   */
 uint32_t QSPI_Open(QSPI_T *qspi,
-                  uint32_t u32MasterSlave,
-                  uint32_t u32QSPIMode,
-                  uint32_t u32DataWidth,
-                  uint32_t u32BusClock)
+                   uint32_t u32MasterSlave,
+                   uint32_t u32QSPIMode,
+                   uint32_t u32DataWidth,
+                   uint32_t u32BusClock)
 {
     uint32_t u32ClkSrc = 0U, u32Div, u32HCLKFreq, u32RetValue=0U;
 
@@ -269,8 +269,8 @@ uint32_t QSPI_SetBusClock(QSPI_T *qspi, uint32_t u32BusClock)
 void QSPI_SetFIFO(QSPI_T *qspi, uint32_t u32TxThreshold, uint32_t u32RxThreshold)
 {
     qspi->FIFOCTL = (qspi->FIFOCTL & ~(QSPI_FIFOCTL_TXTH_Msk | QSPI_FIFOCTL_RXTH_Msk)) |
-                   (u32TxThreshold << QSPI_FIFOCTL_TXTH_Pos) |
-                   (u32RxThreshold << QSPI_FIFOCTL_RXTH_Pos);
+                    (u32TxThreshold << QSPI_FIFOCTL_TXTH_Pos) |
+                    (u32RxThreshold << QSPI_FIFOCTL_RXTH_Pos);
 }
 
 /**

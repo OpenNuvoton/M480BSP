@@ -346,7 +346,7 @@ typedef struct {
      * |        |          |The number of valid bits depends on the setting of DWIDTH (QSPIx_CTL[12:8]) in SPI mode.
      * |        |          |In SPI mode, if DWIDTH is set to 0x08, the bits TX[7:0] will be transmitted
      * |        |          |If DWIDTH is set to 0x00 , the QSPI controller will perform a 32-bit transfer.
-     * |        |          |If WDWIDTH is set as 0x0, 0x1, or 0x3, all bits of this field are valid 
+     * |        |          |If WDWIDTH is set as 0x0, 0x1, or 0x3, all bits of this field are valid
      * |        |          |Note: In Master mode, QSPI controller will start to transfer the QSPI bus clock after 1 APB clock and 6 peripheral clock cycles after user writes to this register.
      * @var QSPI_T::RX
      * Offset: 0x30  QSPI Data Receive Register

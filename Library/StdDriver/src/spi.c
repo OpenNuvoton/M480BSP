@@ -70,7 +70,7 @@ uint32_t SPI_Open(SPI_T *spi,
 
         if(u32BusClock >= u32HCLKFreq) {
             /* Select PCLK as the clock source of SPI */
-						if(spi == SPI0) {
+            if(spi == SPI0) {
                 CLK->CLKSEL2 = (CLK->CLKSEL2 & (~CLK_CLKSEL2_SPI0SEL_Msk)) | CLK_CLKSEL2_SPI0SEL_PCLK1;
             } else if(spi == SPI1) {
                 CLK->CLKSEL2 = (CLK->CLKSEL2 & (~CLK_CLKSEL2_SPI1SEL_Msk)) | CLK_CLKSEL2_SPI1SEL_PCLK0;
