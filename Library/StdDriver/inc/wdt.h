@@ -45,6 +45,11 @@ extern "C"
 #define WDT_RESET_DELAY_18CLK       (2UL << WDT_ALTCTL_RSTDSEL_Pos) /*!< Setting WDT reset delay period to 18 * WDT clocks \hideinitializer */
 #define WDT_RESET_DELAY_3CLK        (3UL << WDT_ALTCTL_RSTDSEL_Pos) /*!< Setting WDT reset delay period to 3 * WDT clocks \hideinitializer */
 
+/*---------------------------------------------------------------------------------------------------------*/
+/*  WDT Free Reset Counter Keyword Constant Definitions                                                    */
+/*---------------------------------------------------------------------------------------------------------*/
+#define WDT_RESET_COUNTER_KEYWORD   (0x00005AA5UL)    /*!< Fill this value to WDT_RSTCNT register to free reset WDT counter \hideinitializer */
+
 /*@}*/ /* end of group WDT_EXPORTED_CONSTANTS */
 
 
@@ -140,7 +145,7 @@ extern "C"
   *             reset system before the WDT time-out reset delay period expires.
   * \hideinitializer
   */
-#define WDT_RESET_COUNTER()             (WDT->CTL = (WDT->CTL & ~(WDT_CTL_IF_Msk | WDT_CTL_WKF_Msk | WDT_CTL_RSTF_Msk)) | WDT_CTL_RSTCNT_Msk)
+#define WDT_RESET_COUNTER()             (WDT->RSTCNT = WDT_RESET_COUNTER_KEYWORD)
 
 /* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */
 __STATIC_INLINE void WDT_Close(void);
