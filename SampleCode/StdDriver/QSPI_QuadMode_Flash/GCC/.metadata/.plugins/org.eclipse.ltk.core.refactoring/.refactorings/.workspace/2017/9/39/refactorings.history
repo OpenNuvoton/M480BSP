@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;SPI_QuadMode_Flash&apos; to &apos;QSPI_QuadMode_Flash&apos;" description="Rename resource &apos;SPI_QuadMode_Flash&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/SPI_QuadMode_Flash" name="QSPI_QuadMode_Flash" stamp="1506419407647" updateReferences="true"/>
-</session>
