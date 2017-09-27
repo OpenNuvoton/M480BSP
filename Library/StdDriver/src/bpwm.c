@@ -698,6 +698,6 @@ void BPWM_ClearWrapAroundFlag(BPWM_T *bpwm, uint32_t u32ChannelNum)
 
 /*@}*/ /* end of group BPWM_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

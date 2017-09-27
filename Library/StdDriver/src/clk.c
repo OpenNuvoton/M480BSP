@@ -1133,6 +1133,6 @@ uint32_t CLK_GetModuleClockDivider(uint32_t u32ModuleIdx)
 
 /*@}*/ /* end of group CLK_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

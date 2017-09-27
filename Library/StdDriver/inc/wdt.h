@@ -199,7 +199,7 @@ void WDT_Open(uint32_t u32TimeoutInterval, uint32_t u32ResetDelay, uint32_t u32E
 
 /*@}*/ /* end of group WDT_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

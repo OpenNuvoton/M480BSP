@@ -339,7 +339,7 @@ uint32_t I2S_Open(I2S_T *i2s, uint32_t u32MasterSlave, uint32_t u32SampleRate, u
 
 /*@}*/ /* end of group I2S_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 #ifdef __cplusplus
 }
 #endif

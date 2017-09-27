@@ -402,7 +402,7 @@ void ACMP_Close(ACMP_T *acmp, uint32_t u32ChNum);
 
 /*@}*/ /* end of group ACMP_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

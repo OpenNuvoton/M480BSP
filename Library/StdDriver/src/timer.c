@@ -347,5 +347,5 @@ void TIMER_SetTriggerTarget(TIMER_T *timer, uint32_t u32Mask)
 
 /*@}*/ /* end of group TIMER_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 

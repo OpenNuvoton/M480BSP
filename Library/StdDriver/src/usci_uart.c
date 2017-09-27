@@ -632,7 +632,7 @@ void UUART_DisableFlowCtrl(UUART_T* uuart)
 
 /*@}*/ /* end of group USCI_UART_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
 

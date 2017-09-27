@@ -257,7 +257,7 @@ uint32_t DAC_SetDelayTime(DAC_T *dac, uint32_t u32Delay);
 
 /*@}*/ /* end of group DAC_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

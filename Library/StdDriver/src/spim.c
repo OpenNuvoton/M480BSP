@@ -1190,6 +1190,6 @@ void SPIM_ExitDirectMapMode(void)
 
 /*@}*/ /* end of group SPIM_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 
 /*** (C) COPYRIGHT 2017 Nuvoton Technology Corp. ***/

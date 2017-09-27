@@ -173,7 +173,7 @@ uint32_t EMAC_CheckLinkStatus(void);
 
 /*@}*/ /* end of group EMAC_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

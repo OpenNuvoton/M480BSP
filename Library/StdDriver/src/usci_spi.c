@@ -548,6 +548,6 @@ void USPI_DisableWakeup(USPI_T *uspi)
 
 /*@}*/ /* end of group USCI_SPI_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

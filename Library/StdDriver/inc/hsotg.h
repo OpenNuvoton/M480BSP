@@ -255,7 +255,7 @@ extern "C"
 
 /*@}*/ /* end of group HSOTG_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 
 
 #ifdef __cplusplus

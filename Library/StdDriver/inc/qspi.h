@@ -345,7 +345,7 @@ uint32_t QSPI_GetStatus(QSPI_T *qspi, uint32_t u32Mask);
 
 /*@}*/ /* end of group QSPI_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 
 #ifdef __cplusplus
 }
