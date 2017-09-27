@@ -735,7 +735,7 @@ void TPWM_SetBrakePinSource(TIMER_T *timer, uint32_t u32BrakePinNum);
 
 /*@}*/ /* end of group TIMER_PWM_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

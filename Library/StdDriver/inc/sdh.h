@@ -189,7 +189,7 @@ void SDH_Close_Disk(SDH_T *sdh);
 
 /*@}*/ /* end of group SDH_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

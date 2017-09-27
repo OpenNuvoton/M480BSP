@@ -619,7 +619,7 @@ void SPIM_SetQuadEnable(int isEn, uint32_t u32NBit);
 
 /*@}*/ /* end of group SPIM_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

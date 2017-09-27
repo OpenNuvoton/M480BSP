@@ -250,7 +250,7 @@ uint32_t SC_GetInterfaceClock(SC_T *sc);
 
 /*@}*/ /* end of group SC_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 
 #ifdef __cplusplus
 }

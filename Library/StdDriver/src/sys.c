@@ -249,7 +249,7 @@ void SYS_SetPowerLevel(uint32_t u32PowerLevel)
 
 /*@}*/ /* end of group SYS_Driver */
 
-/*@}*/ /* end of group Device_Driver */
+/*@}*/ /* end of group Standard_Driver */
 
 #ifdef __cplusplus
 }
