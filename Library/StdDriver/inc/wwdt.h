@@ -67,7 +67,7 @@ extern "C"
   * @details    This macro is used to clear WWDT time-out reset system flag.
   * \hideinitializer
   */
-#define WWDT_CLEAR_RESET_FLAG()     (WWDT->STATUS = (WWDT->STATUS & ~WWDT_STATUS_WWDTIF_Msk) | WWDT_STATUS_WWDTRF_Msk)
+#define WWDT_CLEAR_RESET_FLAG()     (WWDT->STATUS = WWDT_STATUS_WWDTRF_Msk)
 
 /**
   * @brief      Clear WWDT Compared Match Interrupt Flag
@@ -79,7 +79,7 @@ extern "C"
   * @details    This macro is used to clear WWDT compared match interrupt flag.
   * \hideinitializer
   */
-#define WWDT_CLEAR_INT_FLAG()       (WWDT->STATUS = (WWDT->STATUS & ~WWDT_STATUS_WWDTRF_Msk) | WWDT_STATUS_WWDTIF_Msk)
+#define WWDT_CLEAR_INT_FLAG()       (WWDT->STATUS = WWDT_STATUS_WWDTIF_Msk)
 
 /**
   * @brief      Get WWDT Reset System Flag
