@@ -204,9 +204,9 @@ Reset_Handler   PROC
                 BLX     R0
 
                 ; Init POR
-                LDR     R2, =0x40000024
-                LDR     R1, =0x00005AA5
-                STR     R1, [R2]
+                ; LDR     R2, =0x40000024
+                ; LDR     R1, =0x00005AA5
+                ; STR     R1, [R2]
 
                 ; Lock
                 LDR     R0, =0x40000100

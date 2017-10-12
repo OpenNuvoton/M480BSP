@@ -194,14 +194,6 @@ extern "C"
 #define PF1             GPIO_PIN_DATA(5, 1 ) /*!< Specify PF.1 Pin Data Input/Output \hideinitializer */
 #define PF2             GPIO_PIN_DATA(5, 2 ) /*!< Specify PF.2 Pin Data Input/Output \hideinitializer */
 #define PF3             GPIO_PIN_DATA(5, 3 ) /*!< Specify PF.3 Pin Data Input/Output \hideinitializer */
-#define PF4             GPIO_PIN_DATA(5, 4 ) /*!< Specify PF.4 Pin Data Input/Output \hideinitializer */
-#define PF5             GPIO_PIN_DATA(5, 5 ) /*!< Specify PF.5 Pin Data Input/Output \hideinitializer */
-#define PF6             GPIO_PIN_DATA(5, 6 ) /*!< Specify PF.6 Pin Data Input/Output \hideinitializer */
-#define PF7             GPIO_PIN_DATA(5, 7 ) /*!< Specify PF.7 Pin Data Input/Output \hideinitializer */
-#define PF8             GPIO_PIN_DATA(5, 8 ) /*!< Specify PF.8 Pin Data Input/Output \hideinitializer */
-#define PF9             GPIO_PIN_DATA(5, 9 ) /*!< Specify PF.9 Pin Data Input/Output \hideinitializer */
-#define PF10            GPIO_PIN_DATA(5, 10) /*!< Specify PF.10 Pin Data Input/Output \hideinitializer */
-#define PF11            GPIO_PIN_DATA(5, 11) /*!< Specify PF.11 Pin Data Input/Output \hideinitializer */
 #define PG0             GPIO_PIN_DATA(6, 0 ) /*!< Specify PG.0 Pin Data Input/Output \hideinitializer */
 #define PG1             GPIO_PIN_DATA(6, 1 ) /*!< Specify PG.1 Pin Data Input/Output \hideinitializer */
 #define PG2             GPIO_PIN_DATA(6, 2 ) /*!< Specify PG.2 Pin Data Input/Output \hideinitializer */

@@ -317,9 +317,11 @@ Reset_Handler:
 #endif
 
 /* Init POR */
+#if 0
 	ldr	r0, =0x40000024
 	ldr	r1, =0x00005AA5
 	str	r1, [r0]
+#endif
 
 /* Lock register */
 	ldr	r0, =0x40000100
