@@ -242,23 +242,63 @@ void CheckPowerSource(void)
     CLK->PMUSTS |= CLK_PMUSTS_CLRWK_Msk;
 }
 
+/*-----------------------------------------------------------------------------------------------------------*/
+/*  Function for GPIO Setting                                                                                */
+/*-----------------------------------------------------------------------------------------------------------*/
+void GpioPinSetting(void)
+{
+    /* Set function pin to GPIO mode */
+    SYS->GPA_MFPH = 0;
+    SYS->GPA_MFPL = 0;
+    SYS->GPB_MFPH = 0;
+    SYS->GPB_MFPL = 0;
+    SYS->GPC_MFPH = 0;
+    SYS->GPC_MFPL = 0;
+    SYS->GPD_MFPH = 0;
+    SYS->GPD_MFPL = 0;
+    SYS->GPE_MFPH = 0;
+    SYS->GPE_MFPL = 0;
+    SYS->GPF_MFPH = 0;
+    SYS->GPF_MFPL = 0x000000EE; //ICE pin
+    SYS->GPG_MFPH = 0;
+    SYS->GPG_MFPL = 0;
+    SYS->GPH_MFPH = 0;
+    SYS->GPH_MFPL = 0;
+
+    /* Set all GPIOs are output mode */
+    PA->MODE = 0x55555555;
+    PB->MODE = 0x55555555;
+    PC->MODE = 0x55555555;
+    PD->MODE = 0x55555555;
+    PE->MODE = 0x55555555;
+    PF->MODE = 0x55555555;
+    PG->MODE = 0x55555555;
+    PH->MODE = 0x55555555;
+
+    /* Set all GPIOs are output high */
+    PA->DOUT = 0xFFFFFFFF;
+    PB->DOUT = 0xFFFFFFFF;
+    PC->DOUT = 0xFFFFFFFF;
+    PD->DOUT = 0xFFFFFFFF;
+    PE->DOUT = 0xFFFFFFFF;
+    PF->DOUT = 0xFFFFFFFF;
+    PG->DOUT = 0xFFFFFFFF;
+    PH->DOUT = 0xFFFFFFFF;
+}
+
 void SYS_Init(void)
 {
     /*---------------------------------------------------------------------------------------------------------*/
     /* Init System Clock                                                                                       */
     /*---------------------------------------------------------------------------------------------------------*/
+    /* Disable HXT and LXT clock */
+    CLK_DisableXtalRC(CLK_PWRCTL_HXTEN_Msk | CLK_PWRCTL_LXTEN_Msk);
 
-    /* Enable HIRC, LXT clock (Internal RC 12MHz, external XTAL 32kHz) */
-    CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk | CLK_PWRCTL_LXTEN_Msk);
+    /* Enable HIRC clock (Internal RC 12MHz) */
+    CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk);
 
-    /* Wait for HIRC, LXT clock ready */
-    CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk | CLK_STATUS_LXTSTB_Msk);
-
-    /* Enable External XTAL (4~24 MHz) */
-    CLK_EnableXtalRC(CLK_PWRCTL_HXTEN_Msk);
-
-    /* Waiting for 12MHz clock ready */
-    CLK_WaitClockReady(CLK_STATUS_HXTSTB_Msk);
+    /* Wait for HIRC clock ready */
+    CLK_WaitClockReady(CLK_STATUS_HIRCSTB_Msk);
 
     /* Set core clock as PLL_CLOCK from PLL */
     CLK_SetCoreClock(PLL_CLOCK);
@@ -266,8 +306,8 @@ void SYS_Init(void)
     /* Enable UART clock */
     CLK_EnableModuleClock(UART0_MODULE);
 
-    /* Select UART clock source from HXT */
-    CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
+    /* Select UART clock source from HIRC */
+    CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HIRC, CLK_CLKDIV0_UART0(1));
 
     /* Update System Core Clock */
     /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock. */
@@ -304,6 +344,12 @@ int32_t main(void)
 
     /* Unlock protected registers */
     SYS_UnlockReg();
+
+    /* Set IO State and all IPs clock disable for power consumption */
+    GpioPinSetting();
+
+    CLK->APBCLK1 = 0x00000000;
+    CLK->APBCLK0 = 0x00000000;
 
     /* Init System, peripheral clock and multi-function I/O */
     SYS_Init();
@@ -344,12 +390,24 @@ int32_t main(void)
         WakeUpTimerFunction(CLK_PMUCTL_PDMSEL_DPD, CLK_PMUCTL_WKTMRIS_16384);
         break;
     case '3':
+        /* Enable LXT clock for RTC */
+        CLK_EnableXtalRC(CLK_PWRCTL_LXTEN_Msk);
+        /* Wait for LXT clock ready */
+        CLK_WaitClockReady(CLK_STATUS_LXTSTB_Msk);
         WakeUpRTCTickFunction(CLK_PMUCTL_PDMSEL_DPD);
         break;
     case '4':
+        /* Enable LXT clock for RTC */
+        CLK_EnableXtalRC(CLK_PWRCTL_LXTEN_Msk);
+        /* Wait for LXT clock ready */
+        CLK_WaitClockReady(CLK_STATUS_LXTSTB_Msk);
         WakeUpRTCAlarmFunction(CLK_PMUCTL_PDMSEL_DPD);
         break;
     case '5':
+        /* Enable LXT clock for RTC */
+        CLK_EnableXtalRC(CLK_PWRCTL_LXTEN_Msk);
+        /* Wait for LXT clock ready */
+        CLK_WaitClockReady(CLK_STATUS_LXTSTB_Msk);
         WakeUpRTCTamperFunction(CLK_PMUCTL_PDMSEL_DPD);
         break;
     default:
