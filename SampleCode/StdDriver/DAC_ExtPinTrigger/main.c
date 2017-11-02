@@ -65,14 +65,14 @@ void SYS_Init(void)
 
 
     /* Set PD multi-function pins for UART0 RXD and TXD */
-    SYS->GPD_MFPL = SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD;
+    SYS->GPD_MFPL |= SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD;
 
     /* Set PB multi-function pin for DAC voltage output */
-    SYS->GPB_MFPH = SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
+    SYS->GPB_MFPH |= SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
     /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */
     GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 12));
     /* Set PA multi-function pin for DAC conversion trigger */
-    SYS->GPA_MFPL = SYS_GPA_MFPL_PA0MFP_DAC0_ST;
+    SYS->GPA_MFPL |= SYS_GPA_MFPL_PA0MFP_DAC0_ST;
     /* Lock protected registers */
     SYS_LockReg();
 

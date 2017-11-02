@@ -51,14 +51,14 @@ void SYS_Init(void)
     CLK_SetModuleClock(TMR3_MODULE, CLK_CLKSEL1_TMR3SEL_HXT, 0);
 
     /* Set GPD multi-function pins for UART0 RXD and TXD */
-    SYS->GPD_MFPL = SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD;
+    SYS->GPD_MFPL |= SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD;
 
     /* Set multi-function pins for Timer0/Timer3 toggle-output pin and Timer2 event counter pin */
-    SYS->GPG_MFPL = SYS_GPG_MFPL_PG2MFP_TM0 | SYS_GPG_MFPL_PG4MFP_TM2;
-    SYS->GPF_MFPH = SYS_GPF_MFPH_PF11MFP_TM3;
+    SYS->GPG_MFPL |= SYS_GPG_MFPL_PG2MFP_TM0 | SYS_GPG_MFPL_PG4MFP_TM2;
+    SYS->GPF_MFPH |= SYS_GPF_MFPH_PF11MFP_TM3;
 
     /* Set multi-function pin for Timer2 external capture pin */
-    SYS->GPH_MFPL = SYS_GPH_MFPL_PH2MFP_TM2_EXT;
+    SYS->GPH_MFPL |= SYS_GPH_MFPL_PH2MFP_TM2_EXT;
 
     /* Lock protected registers */
     SYS_LockReg();

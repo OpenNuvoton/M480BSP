@@ -48,11 +48,11 @@ void SYS_Init(void)
     CLK_SetModuleClock(TMR0_MODULE, CLK_CLKSEL1_TMR0SEL_PCLK0, 0);
 
     /* Set PD multi-function pins for UART0 RXD and TXD */
-    SYS->GPD_MFPL = SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD;
+    SYS->GPD_MFPL |= SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD;
 
     /* Set Timer0 PWM output pins and EPWM1 brake pin 0 (TPWM_TM_BRAKE2),
        Timers share the same brake pins with EPWM */
-    SYS->GPB_MFPL = SYS_GPB_MFPL_PB5MFP_TM0 | SYS_GPB_MFPL_PB7MFP_EPWM1_BRAKE0;
+    SYS->GPB_MFPL |= SYS_GPB_MFPL_PB5MFP_TM0 | SYS_GPB_MFPL_PB7MFP_EPWM1_BRAKE0;
 
     /* Lock protected registers */
     SYS_LockReg();

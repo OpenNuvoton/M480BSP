@@ -55,14 +55,14 @@ void SYS_Init(void)
     CLK_SetModuleClock(EPWM0_MODULE, CLK_CLKSEL2_EPWM0SEL_PCLK0, 0);
 
     /* Set PD multi-function pins for UART0 RXD and TXD */
-    SYS->GPD_MFPL = SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD;
+    SYS->GPD_MFPL |= SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD;
 
     /* Set PB multi-function pin for DAC voltage output */
-    SYS->GPB_MFPH = SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
+    SYS->GPB_MFPH |= SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
     /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */
     GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 12));
     /* Set PG multi-function pins for EPWMA Channel 0 */
-    SYS->GPG_MFPH = SYS_GPG_MFPH_PG8MFP_EPWM0_CH0;
+    SYS->GPG_MFPH |= SYS_GPG_MFPH_PG8MFP_EPWM0_CH0;
     /* Lock protected registers */
     SYS_LockReg();
 }

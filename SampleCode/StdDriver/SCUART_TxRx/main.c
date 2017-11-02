@@ -62,7 +62,7 @@ void SYS_Init(void)
     SystemCoreClockUpdate();
 
     /* Set GPD multi-function pins for UART0 RXD and TXD */
-    SYS->GPD_MFPL = SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD;
+    SYS->GPD_MFPL |= SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD;
 
     /* Set PA.0 and PA.1 pin for SC UART mode */
     /* Smartcard CLK pin is used for TX, and DAT pin is used for Rx */

@@ -48,13 +48,13 @@ void SYS_Init(void)
     SystemCoreClockUpdate();
 
     /* Set PA11 multi-function pin for ACMP0 positive input pin */
-    SYS->GPA_MFPH = SYS_GPA_MFPH_PA11MFP_ACMP0_P0;
+    SYS->GPA_MFPH |= SYS_GPA_MFPH_PA11MFP_ACMP0_P0;
 
     /* Set PB4 multi-function pin for ACMP1 positive input pin */
-    SYS->GPB_MFPL = SYS_GPB_MFPL_PB4MFP_ACMP1_P1;
+    SYS->GPB_MFPL |= SYS_GPB_MFPL_PB4MFP_ACMP1_P1;
 
     /* Set PD multi-function pins for UART0 RXD and TXD */
-    SYS->GPD_MFPL = SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD;
+    SYS->GPD_MFPL |= SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD;
 
     /* Disable digital input path of analog pin ACMP0_P0 and ACMP1_P1 to prevent leakage */
     GPIO_DISABLE_DIGITAL_PATH(PA, (1ul << 11));
