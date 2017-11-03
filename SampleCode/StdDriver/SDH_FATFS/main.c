@@ -298,8 +298,8 @@ void SDH0_IRQHandler(void)
 
         if (isr & SDH_INTSTS_CDSTS_Msk) {
             printf("\n***** card remove !\n");
-            SD1.IsCardInsert = FALSE;   // SDISR_CD_Card = 1 means card remove for GPIO mode
-            memset(&SD1, 0, sizeof(SDH_INFO_T));
+            SD0.IsCardInsert = FALSE;   // SDISR_CD_Card = 1 means card remove for GPIO mode
+            memset(&SD0, 0, sizeof(SDH_INFO_T));
         } else {
             printf("***** card insert !\n");
             SDH_Open(SDH0, CardDetect_From_GPIO);

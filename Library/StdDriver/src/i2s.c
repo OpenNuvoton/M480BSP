@@ -99,7 +99,8 @@ uint32_t I2S_Open(I2S_T *i2s, uint32_t u32MasterSlave, uint32_t u32SampleRate, u
     u32SrcClk = I2S_GetSourceClockFreq(i2s);
 
     u32BitRate = u32SampleRate * (((u32WordWidth>>4U) & 0x3U) + 1U) * 16U;
-    u16Divider = (uint16_t)((u32SrcClk/u32BitRate) >> 1U) - 1U;
+    //u16Divider = (uint16_t)((u32SrcClk/u32BitRate) >> 1U) - 1U;
+    u16Divider = (uint16_t)((((u32SrcClk * 10UL / u32BitRate) >> 1U) + 5UL) / 10UL) - 1U;
     i2s->CLKDIV = (i2s->CLKDIV & ~I2S_CLKDIV_BCLKDIV_Msk) | ((uint32_t)u16Divider << 8U);
 
     /* calculate real sample rate */
