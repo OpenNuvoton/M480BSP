@@ -1038,7 +1038,7 @@ static int ehci_rh_port_reset(int port)
         _ehci->UPSCR[port] = (_ehci->UPSCR[port] | HSUSBH_UPSCR_PRST_Msk) & ~HSUSBH_UPSCR_PE_Msk;
 
         t0 = get_ticks();
-        while (get_ticks() - t0 < 6) ;           /* wait 50 ms                            */
+        while (get_ticks() - t0 <  (reset_time/10)+1) ;     /* wait at least 50 ms        */
 
         _ehci->UPSCR[port] &= ~HSUSBH_UPSCR_PRST_Msk;
 
@@ -1055,8 +1055,8 @@ static int ehci_rh_port_reset(int port)
     return USBH_ERR_PORT_RESET;
 
 port_reset_done:
-    if ((_ehci->UPSCR[port] & HSUSBH_UPSCR_CCS_Msk) == 0) { /* check again if device disconnected */
-        _ehci->UPSCR[port] = HSUSBH_UPSCR_CSC_Msk;         /* clear CSC                          */
+    if ((_ehci->UPSCR[port] & HSUSBH_UPSCR_CCS_Msk) == 0) {  /* check again if device disconnected */
+        _ehci->UPSCR[port] = HSUSBH_UPSCR_CSC_Msk;           /* clear CSC                          */
         return USBH_ERR_DISCONNECTED;
     }
     _ehci->UPSCR[port] |= HSUSBH_UPSCR_PEC_Msk;            /* clear port enable change status    */

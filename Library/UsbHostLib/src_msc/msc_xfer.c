@@ -75,7 +75,7 @@ static int  do_scsi_command(MSC_T *msc, uint8_t *buff, uint32_t data_len, int bI
     cmd_blk->DataTransferLength = data_len;
     cmd_blk->Lun = msc->lun;
 
-    ret = msc_bulk_transfer(msc, msc->ep_bulk_out, (uint8_t *)cmd_blk, 31, 500);
+    ret = msc_bulk_transfer(msc, msc->ep_bulk_out, (uint8_t *)cmd_blk, 31, timeout_ticks);
     if (ret < 0)
         return ret;
 
@@ -83,15 +83,15 @@ static int  do_scsi_command(MSC_T *msc, uint8_t *buff, uint32_t data_len, int bI
 
     if (data_len > 0) {
         if (bIsDataIn)
-            ret = msc_bulk_transfer(msc, msc->ep_bulk_in, buff, data_len, timeout_ticks);
+            ret = msc_bulk_transfer(msc, msc->ep_bulk_in, buff, data_len, 500);
         else
-            ret = msc_bulk_transfer(msc, msc->ep_bulk_out, buff, data_len, timeout_ticks);
+            ret = msc_bulk_transfer(msc, msc->ep_bulk_out, buff, data_len, 500);
         if (ret < 0)
             return ret;
         msc_debug_msg("    [XFER] MSC DATA OK.\n");
     }
 
-    ret = msc_bulk_transfer(msc, msc->ep_bulk_in, (uint8_t *)cmd_status, 13, 2000);
+    ret = msc_bulk_transfer(msc, msc->ep_bulk_in, (uint8_t *)cmd_status, 13, timeout_ticks);
     if (ret < 0)
         return ret;
 
