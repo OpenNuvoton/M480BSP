@@ -9,6 +9,10 @@
 #include <stdio.h>
 #include "NuMicro.h"
 
+# if defined (__GNUC__)
+extern void initialise_monitor_handles(void);
+#endif
+
 /**
  *  @brief  Init system clock and I/O multi function .
  *  @param  None
@@ -27,7 +31,7 @@ void SYS_Init(void)
 
     while((CLK->STATUS & CLK_STATUS_HXTSTB_Msk) != CLK_STATUS_HXTSTB_Msk) /* Waiting for 12MHz clock ready */
 
-        CLK->CLKSEL0 = (CLK->CLKSEL0 &~ CLK_CLKSEL0_HCLKSEL_Msk) | (CLK_CLKSEL0_HCLKSEL_HXT); /* Switch HCLK clock source to XTAL */
+    CLK->CLKSEL0 = (CLK->CLKSEL0 &~ CLK_CLKSEL0_HCLKSEL_Msk) | (CLK_CLKSEL0_HCLKSEL_HXT); /* Switch HCLK clock source to XTAL */
 
     /* Enable IP clock */
 
@@ -59,6 +63,10 @@ int32_t main()
 
     /* Init System, IP clock and multi-function I/O */
     SYS_Init();
+
+# if defined (__GNUC__)
+    initialise_monitor_handles();
+#endif
 
     printf("\n Start SEMIHOST test: \n");
 
