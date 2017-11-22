@@ -863,9 +863,11 @@ int  connect_device(UDEV_T *udev)
 
     delay_us(100 * 1000);                   /* initially, give 100 ms delay               */
 
-    ret = usbh_get_device_descriptor(udev, &udev->descriptor);
-    if (ret < 0)
-        return ret;
+    usbh_get_device_descriptor(udev, &udev->descriptor);
+
+    usbh_reset_device(udev);
+    
+    delay_us(100 * 1000); 
 
     ret = usbh_set_address(udev);
     if (ret < 0)

@@ -1056,11 +1056,11 @@ static int ehci_rh_port_reset(int port)
 
 port_reset_done:
     if ((_ehci->UPSCR[port] & HSUSBH_UPSCR_CCS_Msk) == 0) {  /* check again if device disconnected */
-        _ehci->UPSCR[port] = HSUSBH_UPSCR_CSC_Msk;           /* clear CSC                          */
+        _ehci->UPSCR[port] |= HSUSBH_UPSCR_CSC_Msk;          /* clear CSC                          */
         return USBH_ERR_DISCONNECTED;
     }
-    _ehci->UPSCR[port] |= HSUSBH_UPSCR_PEC_Msk;            /* clear port enable change status    */
-    return USBH_OK;                                        /* port reset success                 */
+    _ehci->UPSCR[port] |= HSUSBH_UPSCR_PEC_Msk;              /* clear port enable change status    */
+    return USBH_OK;                                          /* port reset success                 */
 }
 
 static int ehci_rh_polling(void)
