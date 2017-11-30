@@ -179,7 +179,7 @@ void NAU88L25_ConfigSampleRate(uint32_t u32SampleRate)
         break;
 
     case 96000:
-        I2C_WriteNAU88L25(0x0003,  0x8052); //MCLK = SYSCLK_SRC/2
+        I2C_WriteNAU88L25(0x0003,  0x80A2); //MCLK = SYSCLK_SRC/2
         I2C_WriteNAU88L25(0x0004,  0x1801);
         I2C_WriteNAU88L25(0x0005,  0x3126); //MCLK = 24.576MHz
         I2C_WriteNAU88L25(0x0006,  0xF008);

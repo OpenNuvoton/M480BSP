@@ -308,7 +308,7 @@ void NAU88L25_Reset(void)
 
 void NAU88L25_Setup(void)
 {
-    I2C_WriteNAU88L25(0x0003,  0x80A2);
+    I2C_WriteNAU88L25(0x0003,  0x8053);
     I2C_WriteNAU88L25(0x0004,  0x0001);
     I2C_WriteNAU88L25(0x0005,  0x3126);
     I2C_WriteNAU88L25(0x0006,  0x0008);
