@@ -112,7 +112,7 @@ int32_t main(void)
     printf("+-----------------------------------------------------+\n");
 
     /* This sample code is used to simulate a mouse with suspend and remote wakeup supported.
-       User can use PC0~PC5 key to control the moviement of mouse.
+       User can use PC0~PC5 key to control the movement of mouse.
     */
 
     USBD_Open(&gsInfo, HID_ClassRequest, NULL);
@@ -122,7 +122,7 @@ int32_t main(void)
     USBD_Start();
 
 #if CRYSTAL_LESS
-    /* Waiting for SOF before USB clock auto trim */
+    /* Waiting for USB signal before auto trim */
     USBD->INTSTS = USBD_INTSTS_SOFIF_Msk;
     while((USBD->INTSTS & USBD_INTSTS_SOFIF_Msk) == 0);
     /* Enable USB clock trim function */
@@ -139,7 +139,7 @@ int32_t main(void)
         if (SYS->IRCTISTS & (SYS_IRCTISTS_CLKERRIF_Msk | SYS_IRCTISTS_TFAILIF_Msk)) {
             SYS->IRCTISTS = SYS_IRCTISTS_CLKERRIF_Msk | SYS_IRCTISTS_TFAILIF_Msk;
 
-            /* Waiting for SOF before USB clock auto trim */
+            /* Waiting for USB signal before auto trim */
             USBD->INTSTS = USBD_INTSTS_SOFIF_Msk;
             while((USBD->INTSTS & USBD_INTSTS_SOFIF_Msk) == 0);
 

@@ -261,7 +261,7 @@ int32_t main (void)
     NVIC_EnableIRQ(UART0_IRQn);
 
 #if CRYSTAL_LESS
-    /* Waiting for SOF before USB clock auto trim */
+    /* Waiting for USB signal before auto trim */
     USBD->INTSTS = USBD_INTSTS_SOFIF_Msk;
     while((USBD->INTSTS & USBD_INTSTS_SOFIF_Msk) == 0);
     /* Enable USB clock trim function */
@@ -278,7 +278,7 @@ int32_t main (void)
         if (SYS->IRCTISTS & (SYS_IRCTISTS_CLKERRIF_Msk | SYS_IRCTISTS_TFAILIF_Msk)) {
             SYS->IRCTISTS = SYS_IRCTISTS_CLKERRIF_Msk | SYS_IRCTISTS_TFAILIF_Msk;
 
-            /* Waiting for SOF before USB clock auto trim */
+            /* Waiting for USB signal before auto trim */
             USBD->INTSTS = USBD_INTSTS_SOFIF_Msk;
             while((USBD->INTSTS & USBD_INTSTS_SOFIF_Msk) == 0);
 

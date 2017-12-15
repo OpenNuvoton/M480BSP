@@ -1901,8 +1901,8 @@ typedef struct {
      * |        |          |0 = The trim operation is keep going if clock is inaccuracy.
      * |        |          |1 = The trim operation is stopped if clock is inaccuracy.
      * |[10]    |REFCKSEL  |Reference Clock Selection
-     * |        |          |0 = HIRC trim reference clock is from LXT (32.768 kHz).
-     * |        |          |1 = HIRC trim reference clock is from USB SOF (Start-Of-Frame) packet.
+     * |        |          |0 = HIRC trim reference from external 32.768 kHz crystal oscillator.
+     * |        |          |1 = HIRC trim reference from internal USB synchronous mode.
      * |        |          |Note: HIRC trim reference clock is 20Khz in test mode.
      * @var SYS_T::IRCTIEN
      * Offset: 0xF4  HIRC Trim Interrupt Enable Register
