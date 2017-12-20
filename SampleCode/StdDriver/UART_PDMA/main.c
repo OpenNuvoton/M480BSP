@@ -221,6 +221,9 @@ void UART_PDMATest()
     while(1) {
         PDMA_Init();
 
+        UART1->INTEN = UART_INTEN_RLSIEN_Msk; // Enable Receive Line interrupt
+        NVIC_EnableIRQ(UART1_IRQn);
+
         UART1->INTEN |= UART_INTEN_TXPDMAEN_Msk | UART_INTEN_RXPDMAEN_Msk;
 
 #ifdef ENABLE_PDMA_INTERRUPT
@@ -254,5 +257,27 @@ void UART_PDMATest()
     }
 
 }
+
+void UART1_IRQHandler(void)
+{
+    uint32_t u32DAT;
+    uint32_t u32IntSts = UART1->INTSTS;
+
+    if(u32IntSts & UART_INTSTS_HWRLSIF_Msk) {
+        if(UART1->FIFOSTS & UART_FIFOSTS_BIF_Msk)
+            printf("\n BIF \n");
+        if(UART1->FIFOSTS & UART_FIFOSTS_FEF_Msk)
+            printf("\n FEF \n");
+        if(UART1->FIFOSTS & UART_FIFOSTS_PEF_Msk)
+            printf("\n PEF \n");
+
+        u32DAT = UART1->DAT; // read out data
+        printf("\n Error Data is '0x%x' \n", u32DAT);
+        UART1->FIFOSTS = (UART_FIFOSTS_BIF_Msk | UART_FIFOSTS_FEF_Msk | UART_FIFOSTS_PEF_Msk);
+    }
+}
+
+
+
 
 
