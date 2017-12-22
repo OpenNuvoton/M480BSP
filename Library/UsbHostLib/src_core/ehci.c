@@ -654,7 +654,7 @@ static int ehci_bulk_xfer(UTR_T *utr)
 
     qtd = qh->qtd_list;
 
-    qh->Curr_qTD = 0; //(uint32_t)qtd;
+//    qh->Curr_qTD = 0; //(uint32_t)qtd;
     qh->OL_Next_qTD = (uint32_t)qtd;
 //  qh->OL_Alt_Next_qTD = QTD_LIST_END;
 
@@ -662,8 +662,11 @@ static int ehci_bulk_xfer(UTR_T *utr)
     /* Link QH and start asynchronous transfer                                            */
     /*------------------------------------------------------------------------------------*/
     if (is_new_qh) {
-//          memcpy(&(qh->OL_Bptr[0]), &(qtd->Bptr[0]), 20);
+        memcpy(&(qh->OL_Bptr[0]), &(qtd->Bptr[0]), 20);
+		qh->Curr_qTD = (uint32_t)qtd;
+
         qh->OL_Token = 0; //qtd->Token;
+        
         if (utr->ep->bToggle)
             qh->OL_Token |= QTD_DT;
 
@@ -734,7 +737,7 @@ static int ehci_int_xfer(UTR_T *utr)
 
     DISABLE_EHCI_IRQ();
 
-    qh->Curr_qTD = 0; //(uint32_t)qtd;
+    //qh->Curr_qTD = 0; //(uint32_t)qtd;
     qh->OL_Next_qTD = (uint32_t)qtd;
     //qh->OL_Alt_Next_qTD = QTD_LIST_END;
 
@@ -742,6 +745,7 @@ static int ehci_int_xfer(UTR_T *utr)
 
     if (is_new_qh) {
         memcpy(&(qh->OL_Bptr[0]), &(qtd->Bptr[0]), 20);
+        qh->Curr_qTD = (uint32_t)qtd;
         qh->OL_Token = qtd->Token;
 
         if (udev->speed == SPEED_HIGH)      /* get head node of this interval             */
