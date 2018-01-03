@@ -67,161 +67,6 @@ void  WakeUpTimerFunction(uint32_t u32PDMode, uint32_t u32Interval)
 }
 
 /*-----------------------------------------------------------------------------------------------------------*/
-/*  Function for System Entry to Power Down Mode and Wake up source by RTC Tick                              */
-/*-----------------------------------------------------------------------------------------------------------*/
-void  WakeUpRTCTickFunction(uint32_t u32PDMode)
-{
-    printf("Enter to DPD Power-Down mode......\n");
-
-    /* enable RTC peripheral clock */
-    CLK->APBCLK0 |= CLK_APBCLK0_RTCCKEN_Msk;
-    /* RTC clock source select 32KHz */
-    CLK->CLKSEL3 &= ~(CLK_CLKSEL3_RTCSEL_Msk);
-
-    /* Open RTC and start counting */
-    RTC->INIT = RTC_INIT_KEY;
-
-    if(RTC->INIT != RTC_INIT_ACTIVE_Msk) {
-        RTC->INIT = RTC_INIT_KEY;
-        while(RTC->INIT != RTC_INIT_ACTIVE_Msk);
-    }
-
-    RTC_WaitAccessEnable();
-    /* clear tick status */
-    RTC_CLEAR_TICK_INT_FLAG();
-
-    /* Enable RTC Tick interrupt */
-    RTC_EnableInt(RTC_INTEN_TICKIEN_Msk);
-    RTC_WaitAccessEnable();
-
-    /* Select Power-down mode */
-    CLK_SetPowerDownMode(u32PDMode);
-
-    RTC_SetTickPeriod(RTC_TICK_1_SEC);
-
-    /* Enable RTC wake-up */
-    CLK_ENABLE_RTCWK();
-
-    /* Enter to Power-down mode */
-    CLK_PowerDown();
-
-    /* Wait for Power-down mode wake-up reset happen */
-    while(1);
-}
-
-
-/*-----------------------------------------------------------------------------------------------------------*/
-/*  Function for System Entry to Power Down Mode and Wake up source by RTC Alarm                             */
-/*-----------------------------------------------------------------------------------------------------------*/
-void  WakeUpRTCAlarmFunction(uint32_t u32PDMode)
-{
-    S_RTC_TIME_DATA_T sWriteRTC;
-
-    /* enable RTC peripheral clock */
-    CLK->APBCLK0 |= CLK_APBCLK0_RTCCKEN_Msk;
-    /* RTC clock source select 32KHz */
-    CLK->CLKSEL3 &= ~(CLK_CLKSEL3_RTCSEL_Msk);
-
-    /* Open RTC and start counting */
-    RTC->INIT = RTC_INIT_KEY;
-
-    if(RTC->INIT != RTC_INIT_ACTIVE_Msk) {
-        RTC->INIT = RTC_INIT_KEY;
-        while(RTC->INIT != RTC_INIT_ACTIVE_Msk);
-    }
-
-    /* Open RTC */
-    sWriteRTC.u32Year       = 2016;
-    sWriteRTC.u32Month      = 5;
-    sWriteRTC.u32Day        = 11;
-    sWriteRTC.u32DayOfWeek  = 3;
-    sWriteRTC.u32Hour       = 15;
-    sWriteRTC.u32Minute     = 4;
-    sWriteRTC.u32Second     = 10;
-    sWriteRTC.u32TimeScale  = 1;
-    RTC_Open(&sWriteRTC);
-
-    /* Set RTC alarm date/time */
-    sWriteRTC.u32Year       = 2016;
-    sWriteRTC.u32Month      = 5;
-    sWriteRTC.u32Day        = 11;
-    sWriteRTC.u32DayOfWeek  = 3;
-    sWriteRTC.u32Hour       = 15;
-    sWriteRTC.u32Minute     = 4;
-    sWriteRTC.u32Second     = 15;
-    RTC_SetAlarmDateAndTime(&sWriteRTC);
-
-    printf("# Set RTC current date/time: 2016/08/16 15:04:10.\n");
-    printf("# Set RTC alarm date/time:   2016/08/16 15:04:%d.\n", sWriteRTC.u32Second);
-    printf("Enter to DPD Power-Down mode......\n");
-
-    RTC_WaitAccessEnable();
-    /* clear alarm status */
-    RTC_CLEAR_ALARM_INT_FLAG();
-
-    /* Enable RTC alarm interrupt */
-    RTC_EnableInt(RTC_INTEN_ALMIEN_Msk);
-
-    /* Select Power-down mode */
-    CLK_SetPowerDownMode(u32PDMode);
-
-    /* Enable RTC wake-up */
-    CLK_ENABLE_RTCWK();
-
-    /* Enter to Power-down mode */
-    CLK_PowerDown();
-
-    /* Wait for Power-down mode wake-up reset happen */
-    while(1);
-}
-
-/*-----------------------------------------------------------------------------------------------------------*/
-/*  Function for System Entry to Power Down Mode and Wake up source by RTC Alarm                             */
-/*-----------------------------------------------------------------------------------------------------------*/
-void  WakeUpRTCTamperFunction(uint32_t u32PDMode)
-{
-    printf("Enter to DPD Power-Down mode......\n");
-
-    /* Enable RTC peripheral clock */
-    CLK->APBCLK0 |= CLK_APBCLK0_RTCCKEN_Msk;
-    /* RTC clock source select 32KHz */
-    CLK->CLKSEL3 &= ~(CLK_CLKSEL3_RTCSEL_Msk);
-
-    /* Open RTC and start counting */
-    RTC->INIT = RTC_INIT_KEY;
-
-    if(RTC->INIT != RTC_INIT_ACTIVE_Msk) {
-        RTC->INIT = RTC_INIT_KEY;
-        while(RTC->INIT != RTC_INIT_ACTIVE_Msk);
-    }
-
-    RTC_WaitAccessEnable();
-
-    RTC_StaticTamperEnable(RTC_TAMPER0_SELECT, RTC_TAMPER_LOW_LEVEL_DETECT, RTC_TAMPER_DEBOUNCE_DISABLE);
-
-    /* Clear Tamper0 status */
-    RTC_CLEAR_TAMPER_INT_FLAG(RTC_INTSTS_TAMP0IF_Msk);
-    /* Disable Spare Register */
-    RTC->SPRCTL = (1 << 5);
-
-    RTC_WaitAccessEnable();
-
-    RTC_EnableInt(RTC_INTEN_TAMP0IEN_Msk);
-
-    /* Select Power-down mode */
-    CLK_SetPowerDownMode(u32PDMode);
-
-    /* Enable RTC wake-up */
-    CLK_ENABLE_RTCWK();
-
-    /* Enter to Power-down mode */
-    CLK_PowerDown();
-
-    /* Wait for Power-down mode wake-up reset happen */
-    while(1);
-}
-
-/*-----------------------------------------------------------------------------------------------------------*/
 /*  Function for Check Power Manager Status                                                                  */
 /*-----------------------------------------------------------------------------------------------------------*/
 void CheckPowerSource(void)
@@ -231,8 +76,6 @@ void CheckPowerSource(void)
 
     printf("Power manager Power Manager Status 0x%x\n", uRegRstsrc);
 
-    if((uRegRstsrc & CLK_PMUSTS_RTCWK_Msk) != 0)
-        printf("Wake-up source is RTC.\n");
     if((uRegRstsrc & CLK_PMUSTS_TMRWK_Msk) != 0)
         printf("Wake-up source is Wake-up Timer.\n");
     if((uRegRstsrc & CLK_PMUSTS_PINWK_Msk) != 0)
@@ -354,12 +197,6 @@ int32_t main(void)
     /* Init System, peripheral clock and multi-function I/O */
     SYS_Init();
 
-    /* ---------- Turn off RTC  -------- */
-    CLK->APBCLK0 |= CLK_APBCLK0_RTCCKEN_Msk;
-    RTC_WaitAccessEnable();
-    RTC->INTEN = 0;
-    CLK->APBCLK0 &= ~CLK_APBCLK0_RTCCKEN_Msk;
-
     /* Init UART0 for printf */
     UART0_Init();
 
@@ -375,10 +212,6 @@ int32_t main(void)
     printf("+----------------------------------------------------------------+\n");
     printf("|[1] DPD Wake-up Pin(PC.0) trigger type is rising edge.          |\n");
     printf("|[2] DPD Wake-up TIMER time-out interval is 16384 OSC10K clocks. |\n");
-    printf("|[3] DPD Wake-up by RTC Tick(1 second).                          |\n");
-    printf("|[4] DPD Wake-up by RTC Alarm.                                   |\n");
-    printf("|[5] DPD Wake-up by RTC Tamper0.                                 |\n");
-    printf("|    Tamper pin detect voltage level is low.                     |\n");
     printf("+----------------------------------------------------------------+\n");
     u8Item = getchar();
 
@@ -388,27 +221,6 @@ int32_t main(void)
         break;
     case '2':
         WakeUpTimerFunction(CLK_PMUCTL_PDMSEL_DPD, CLK_PMUCTL_WKTMRIS_16384);
-        break;
-    case '3':
-        /* Enable LXT clock for RTC */
-        CLK_EnableXtalRC(CLK_PWRCTL_LXTEN_Msk);
-        /* Wait for LXT clock ready */
-        CLK_WaitClockReady(CLK_STATUS_LXTSTB_Msk);
-        WakeUpRTCTickFunction(CLK_PMUCTL_PDMSEL_DPD);
-        break;
-    case '4':
-        /* Enable LXT clock for RTC */
-        CLK_EnableXtalRC(CLK_PWRCTL_LXTEN_Msk);
-        /* Wait for LXT clock ready */
-        CLK_WaitClockReady(CLK_STATUS_LXTSTB_Msk);
-        WakeUpRTCAlarmFunction(CLK_PMUCTL_PDMSEL_DPD);
-        break;
-    case '5':
-        /* Enable LXT clock for RTC */
-        CLK_EnableXtalRC(CLK_PWRCTL_LXTEN_Msk);
-        /* Wait for LXT clock ready */
-        CLK_WaitClockReady(CLK_STATUS_LXTSTB_Msk);
-        WakeUpRTCTamperFunction(CLK_PMUCTL_PDMSEL_DPD);
         break;
     default:
         break;
