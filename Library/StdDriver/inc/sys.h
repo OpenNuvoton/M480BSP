@@ -893,7 +893,7 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPE_MFPH_PE8MFP_EPWM0_CH0         (0x0AUL<<SYS_GPE_MFPH_PE8MFP_Pos)  /*!< EPWM0 channel0 output/capture input. \hideinitializer */
 #define SYS_GPE_MFPH_PE8MFP_EPWM0_BRAKE0      (0x0BUL<<SYS_GPE_MFPH_PE8MFP_Pos)  /*!< Brake input pin 0 of EPWM0. \hideinitializer */
 #define SYS_GPE_MFPH_PE8MFP_ECAP0_IC0         (0x0CUL<<SYS_GPE_MFPH_PE8MFP_Pos)  /*!< Input 0 of enhanced capture unit 0. \hideinitializer */
-#define SYS_GPE_MFPH_PE8MFP_TRACE_CLK         (0x0EUL<<SYS_GPE_MFPH_PE8MFP_Pos)  /*!< ETM Rx clock input pin. \hideinitializer */
+#define SYS_GPE_MFPH_PE8MFP_TRACE_DATA3       (0x0EUL<<SYS_GPE_MFPH_PE8MFP_Pos)  /*!< ETM Rx input bus bit3. \hideinitializer */
 #define SYS_GPE_MFPH_PE9MFP_GPIO              (0x00UL<<SYS_GPE_MFPH_PE9MFP_Pos)  /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPE_MFPH_PE9MFP_EBI_ADR11         (0x02UL<<SYS_GPE_MFPH_PE9MFP_Pos)  /*!< EBI address/data bus bit*. \hideinitializer */
 #define SYS_GPE_MFPH_PE9MFP_EMAC_RMII_MDIO     (0x03UL<<SYS_GPE_MFPH_PE9MFP_Pos)  /*!< RMII Management Data I/O. \hideinitializer */
@@ -904,7 +904,7 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPE_MFPH_PE9MFP_EPWM0_CH1         (0x0AUL<<SYS_GPE_MFPH_PE9MFP_Pos)  /*!< EPWM0 channel1 output/capture input. \hideinitializer */
 #define SYS_GPE_MFPH_PE9MFP_EPWM0_BRAKE1      (0x0BUL<<SYS_GPE_MFPH_PE9MFP_Pos)  /*!< Brake input pin 1 of EPWM0. \hideinitializer */
 #define SYS_GPE_MFPH_PE9MFP_ECAP0_IC1         (0x0CUL<<SYS_GPE_MFPH_PE9MFP_Pos)  /*!< Input 1 of enhanced capture unit 0. \hideinitializer */
-#define SYS_GPE_MFPH_PE9MFP_TRACE_DATA0       (0x0EUL<<SYS_GPE_MFPH_PE9MFP_Pos)  /*!< ETM Rx input bus bit0. \hideinitializer */
+#define SYS_GPE_MFPH_PE9MFP_TRACE_DATA2       (0x0EUL<<SYS_GPE_MFPH_PE9MFP_Pos)  /*!< ETM Rx input bus bit2. \hideinitializer */
 #define SYS_GPE_MFPH_PE10MFP_GPIO             (0x00UL<<SYS_GPE_MFPH_PE10MFP_Pos) /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPE_MFPH_PE10MFP_EBI_ADR12        (0x02UL<<SYS_GPE_MFPH_PE10MFP_Pos) /*!< EBI address/data bus bit*. \hideinitializer */
 #define SYS_GPE_MFPH_PE10MFP_EMAC_RMII_TXD0    (0x03UL<<SYS_GPE_MFPH_PE10MFP_Pos) /*!< RMII Transmit Data bus bit 0. \hideinitializer */
@@ -927,7 +927,7 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPE_MFPH_PE11MFP_EPWM0_CH3        (0x0AUL<<SYS_GPE_MFPH_PE11MFP_Pos) /*!< EPWM0 channel3 output/capture input. \hideinitializer */
 #define SYS_GPE_MFPH_PE11MFP_EPWM1_BRAKE1     (0x0BUL<<SYS_GPE_MFPH_PE11MFP_Pos) /*!< Brake input pin 1 of EPWM1. \hideinitializer */
 #define SYS_GPE_MFPH_PE11MFP_ECAP1_IC2        (0x0DUL<<SYS_GPE_MFPH_PE11MFP_Pos) /*!< Input 1 of enhanced capture unit 2. \hideinitializer */
-#define SYS_GPE_MFPH_PE11MFP_TRACE_DATA2      (0x0EUL<<SYS_GPE_MFPH_PE11MFP_Pos) /*!< ETM Rx input bus bit2. \hideinitializer */
+#define SYS_GPE_MFPH_PE11MFP_TRACE_DATA0      (0x0EUL<<SYS_GPE_MFPH_PE11MFP_Pos) /*!< ETM Rx input bus bit0. \hideinitializer */
 #define SYS_GPE_MFPH_PE12MFP_GPIO             (0x00UL<<SYS_GPE_MFPH_PE12MFP_Pos) /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPE_MFPH_PE12MFP_EBI_ADR14        (0x02UL<<SYS_GPE_MFPH_PE12MFP_Pos) /*!< EBI address/data bus bit*. \hideinitializer */
 #define SYS_GPE_MFPH_PE12MFP_EMAC_RMII_TXEN    (0x03UL<<SYS_GPE_MFPH_PE12MFP_Pos) /*!< RMII? Transmit Enable. \hideinitializer */
@@ -937,7 +937,7 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPE_MFPH_PE12MFP_UART1_nRTS       (0x08UL<<SYS_GPE_MFPH_PE12MFP_Pos) /*!< Request to Send output pin for UART1. \hideinitializer */
 #define SYS_GPE_MFPH_PE12MFP_EPWM0_CH4        (0x0AUL<<SYS_GPE_MFPH_PE12MFP_Pos) /*!< EPWM0 channel4 output/capture input. \hideinitializer */
 #define SYS_GPE_MFPH_PE12MFP_ECAP1_IC1        (0x0DUL<<SYS_GPE_MFPH_PE12MFP_Pos) /*!< Input 1 of enhanced capture unit 1. \hideinitializer */
-#define SYS_GPE_MFPH_PE12MFP_TRACE_DATA3      (0x0EUL<<SYS_GPE_MFPH_PE12MFP_Pos) /*!< ETM Rx input bus bit3. \hideinitializer */
+#define SYS_GPE_MFPH_PE12MFP_TRACE_CLK        (0x0EUL<<SYS_GPE_MFPH_PE12MFP_Pos) /*!< ETM Rx clock input pin. \hideinitializer */
 #define SYS_GPE_MFPH_PE13MFP_GPIO             (0x00UL<<SYS_GPE_MFPH_PE13MFP_Pos) /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPE_MFPH_PE13MFP_EBI_ADR15        (0x02UL<<SYS_GPE_MFPH_PE13MFP_Pos) /*!< EBI address/data bus bit*. \hideinitializer */
 #define SYS_GPE_MFPH_PE13MFP_EMAC_PPS         (0x03UL<<SYS_GPE_MFPH_PE13MFP_Pos) /*!< EMAC Pulse Per Second output  \hideinitializer */
