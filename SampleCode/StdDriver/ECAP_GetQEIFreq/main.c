@@ -18,9 +18,7 @@
 /*---------------------------------------------------------------------------------------------------------*/
 uint32_t u32Status;
 uint32_t u32IC0Hold;
-/*---------------------------------------------------------------------------------------------------------*/
-/*  Timer0 IRQ Handler                                                                                     */
-/*---------------------------------------------------------------------------------------------------------*/
+
 void TMR0_IRQHandler(void)
 {
     if(TIMER_GetIntFlag(TIMER0) == 1) {
@@ -31,9 +29,7 @@ void TMR0_IRQHandler(void)
         PA0 ^= 1;
     }
 }
-/*---------------------------------------------------------------------------------------------------------*/
-/*  ECAP0 IRQ Handler                                                                                      */
-/*---------------------------------------------------------------------------------------------------------*/
+
 void ECAP0_IRQHandler(void)
 {
     /* Get input Capture status */
@@ -110,12 +106,9 @@ void SYS_Init(void)
     /* Select TMR0 module clock source */
     CLK_SetModuleClock(TMR0_MODULE, CLK_CLKSEL1_TMR0SEL_HXT, NULL);
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init I/O Multi-function                                                                                 */
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Set PD multi-function pins for UART0 RXD(PD.2) and TXD(PD.3) */
-    SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
-    SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
+    /* Set GPB multi-function pins for UART0 RXD and TXD */
+    SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
+    SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
 
     /* Set PA.10 for ECAP0_IC0*/
     SYS->GPA_MFPH = (SYS->GPA_MFPL & ~SYS_GPA_MFPH_PA10MFP_Msk) |SYS_GPA_MFPH_PA10MFP_ECAP0_IC0;
@@ -128,9 +121,6 @@ void SYS_Init(void)
 
 void UART0_Init(void)
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init UART                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
 
     /* Configure UART0 and set UART0 Baudrate */
     UART_Open(UART0, 115200);
@@ -172,9 +162,7 @@ void Timer0_Init(void)
     NVIC_EnableIRQ(TMR0_IRQn);
 
 }
-/*---------------------------------------------------------------------------------------------------------*/
-/*  Main Function                                                                                          */
-/*---------------------------------------------------------------------------------------------------------*/
+
 int32_t main(void)
 {
     uint32_t u32Hz=0, u32Hz_DET=0;

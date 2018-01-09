@@ -66,7 +66,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1504847108935</id>
+			<id>1515490559700</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -75,7 +75,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1504847108953</id>
+			<id>1515490559707</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -84,25 +84,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1504847108961</id>
-			<name>Library/Library</name>
-			<type>5</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-retarget.c</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1504847108970</id>
-			<name>Library/Library</name>
-			<type>5</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-uart.c</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1504847108977</id>
+			<id>1515490559713</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -111,7 +93,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1504847108984</id>
+			<id>1515490559734</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>

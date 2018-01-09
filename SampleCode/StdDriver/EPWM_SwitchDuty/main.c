@@ -10,11 +10,6 @@
 
 #define PLL_CLOCK       192000000
 
-
-/*---------------------------------------------------------------------------------------------------------*/
-/* Global variables                                                                                        */
-/*---------------------------------------------------------------------------------------------------------*/
-
 uint32_t CalNewDutyCMR(EPWM_T *epwm, uint32_t u32ChannelNum, uint32_t u32DutyCycle, uint32_t u32CycleResolution);
 
 /**
@@ -65,13 +60,9 @@ void SYS_Init(void)
     /* Update System Core Clock */
     SystemCoreClockUpdate();
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init I/O Multi-function                                                                                 */
-    /*---------------------------------------------------------------------------------------------------------*/
-
-    /* Set PD multi-function pins for UART0 RXD(PD.2) and TXD(PD.3) */
-    SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
-    SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
+    /* Set GPB multi-function pins for UART0 RXD and TXD */
+    SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
+    SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
 
     /* Set PA.5 multi-function pin for EPWM0 channel 0 */
     SYS->GPA_MFPL = (SYS->GPA_MFPL & ~SYS_GPA_MFPL_PA5MFP_Msk) | SYS_GPA_MFPL_PA5MFP_EPWM0_CH0;
@@ -79,9 +70,7 @@ void SYS_Init(void)
 
 void UART0_Init()
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init UART                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
+
     /* Configure UART0 and set UART0 baud rate */
     UART_Open(UART0, 115200);
 }
@@ -98,7 +87,7 @@ void UART0_Init()
  *
  * @param       u32CycleResolution   Target generator duty cycle resolution. The value in general is 100.
  *
- * @return      The compatator value by new duty cycle
+ * @return      The comparator value by new duty cycle
  */
 uint32_t CalNewDutyCMR(EPWM_T *epwm, uint32_t u32ChannelNum, uint32_t u32DutyCycle, uint32_t u32CycleResolution)
 {
@@ -106,9 +95,7 @@ uint32_t CalNewDutyCMR(EPWM_T *epwm, uint32_t u32ChannelNum, uint32_t u32DutyCyc
 }
 
 
-/*---------------------------------------------------------------------------------------------------------*/
-/* MAIN function                                                                                           */
-/*---------------------------------------------------------------------------------------------------------*/
+
 int32_t main(void)
 {
     uint8_t  u8Option;

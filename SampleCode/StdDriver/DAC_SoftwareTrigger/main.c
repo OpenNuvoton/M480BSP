@@ -9,6 +9,10 @@
 #include "stdio.h"
 #include "NuMicro.h"
 
+#if defined (__GNUC__)
+extern void initialise_monitor_handles(void);
+#endif
+
 #define PLL_CLOCK           192000000
 
 const uint16_t sine[] = {2047, 2251, 2453, 2651, 2844, 3028, 3202, 3365, 3515, 3650, 3769, 3871, 3954,
@@ -55,17 +59,8 @@ void SYS_Init(void)
     /* Set PCLK0/PCLK1 to HCLK/2 */
     CLK->PCLKDIV = CLK_PCLKDIV_PCLK0DIV2 | CLK_PCLKDIV_PCLK1DIV2;
 
-    /* Enable UART module clock */
-    CLK_EnableModuleClock(UART0_MODULE);
-
-    /* Select UART module clock source as HXT and UART module clock divider as 1 */
-    CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
-
     /* Enable DAC module clock */
     CLK_EnableModuleClock(DAC_MODULE);
-
-    /* Set PD multi-function pins for UART0 RXD and TXD */
-    SYS->GPD_MFPL |= SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD;
 
     /* Set PB multi-function pins for DAC voltage output */
     SYS->GPB_MFPH |= SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
@@ -83,8 +78,10 @@ int32_t main(void)
     /* Init System, IP clock and multi-function I/O */
     SYS_Init();
 
-    /* Configure UART0 and set UART0 baud rate */
-    UART_Open(UART0, 115200);
+#if defined (__GNUC__)
+    initialise_monitor_handles();
+#endif
+
     printf("Please hit any key to start trigger DAC by software\n");
     getchar();
 

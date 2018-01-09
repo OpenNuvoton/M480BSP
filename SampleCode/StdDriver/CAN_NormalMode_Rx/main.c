@@ -121,13 +121,10 @@ void SYS_Init(void)
     CLK->CLKSEL1 &= ~CLK_CLKSEL1_UART0SEL_Msk;
     CLK->CLKSEL1 |= (0x0 << CLK_CLKSEL1_UART0SEL_Pos);// Clock source from external 12 MHz or 32 KHz crystal clock
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init I/O Multi-function                                                                                 */
-    /*---------------------------------------------------------------------------------------------------------*/
 
-    /* Set PD multi-function pins for UART0 RXD and TXD */
-    SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
-    SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
+    /* Set GPB multi-function pins for UART0 RXD and TXD */
+    SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
+    SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
 
     /* Set PA multi-function pins for CAN0 RXD(PA.4) and TXD(PA.5) */
     SYS->GPA_MFPL = (SYS->GPA_MFPL & ~(SYS_GPA_MFPL_PA4MFP_Msk | SYS_GPA_MFPL_PA5MFP_Msk)) |
@@ -144,9 +141,6 @@ void SYS_Init(void)
 
 void UART0_Init()
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init UART                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
     UART_Open(UART0, 115200);
 }
 
@@ -252,9 +246,7 @@ void SelectCANSpeed(CAN_T  *tCAN)
         printf("Set CAN bit rate is fail\n");
 }
 
-/*----------------------------------------------------------------------------*/
-/*  Test Function                                                             */
-/*----------------------------------------------------------------------------*/
+
 void CAN_ShowMsg(STR_CANMSG_T* Msg)
 {
     uint8_t i;

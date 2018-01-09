@@ -23,9 +23,7 @@ volatile uint32_t g_u32RxDataCount;
 void SYS_Init(void);
 void USCI_SPI_Init(void);
 
-/* ------------- */
-/* Main function */
-/* ------------- */
+
 int main()
 {
     uint32_t u32TxDataCount, u32RxDataCount;
@@ -123,12 +121,10 @@ void SYS_Init(void)
     /* User can use SystemCoreClockUpdate() to calculate PllClock, SystemCoreClock and CyclesPerUs automatically. */
     SystemCoreClockUpdate();
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init I/O Multi-function                                                                                 */
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Set PD multi-function pins for UART0 RXD(PD.2) and TXD(PD.3) */
-    SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
-    SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
+
+    /* Set GPB multi-function pins for UART0 RXD and TXD */
+    SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
+    SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
 
     /* Set USCI1_SPI multi-function pins */
     SYS->GPB_MFPL = SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB1MFP_Msk|SYS_GPB_MFPL_PB2MFP_Msk|SYS_GPB_MFPL_PB3MFP_Msk|SYS_GPB_MFPL_PB5MFP_Msk);
@@ -140,9 +136,7 @@ void SYS_Init(void)
 
 void USCI_SPI_Init(void)
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init USCI_SPI1                                                                                          */
-    /*---------------------------------------------------------------------------------------------------------*/
+
     /* Configure USCI_SPI1 as a slave, USCI_SPI1 clock rate = f_PCLK1,
        clock idle low, 16-bit transaction, drive output on falling clock edge and latch input on rising edge. */
     USPI_Open(USPI1, USPI_SLAVE, USPI_MODE_0, 16, NULL);

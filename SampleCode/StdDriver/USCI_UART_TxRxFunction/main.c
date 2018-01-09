@@ -57,13 +57,10 @@ void SYS_Init(void)
     CLK->APBCLK0 |= CLK_APBCLK0_UART0CKEN_Msk; // UART0 Clock Enable
     CLK->APBCLK1 |= CLK_APBCLK1_USCI0CKEN_Msk; // UUART0 Clock Enable
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init I/O Multi-function                                                                                 */
-    /*---------------------------------------------------------------------------------------------------------*/
 
-    /* Set PD multi-function pins for UART0 RXD and TXD */
-    SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
-    SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
+    /* Set GPB multi-function pins for UART0 RXD and TXD */
+    SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
+    SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
 
     /* Set PE multi-function pins for USCI0_DAT0, USCI0_DAT1, USCI0_CTL0 and USCI0_CTL1 */
     SYS->GPE_MFPL = (SYS->GPE_MFPL & (~SYS_GPE_MFPL_PE3MFP_Msk)) | (7 << SYS_GPE_MFPL_PE3MFP_Pos);
@@ -74,17 +71,12 @@ void SYS_Init(void)
 
 void UART0_Init()
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init UART                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
     UART_Open(UART0, 115200);
 }
 
 void USCI0_Init()
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init USCI                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
+
 
     /* Configure USCI0 as UART mode */
     UUART_Open(UUART0, 115200);
@@ -94,10 +86,6 @@ void USCI0_Init()
 /* USCI UART Test Sample                                                                                   */
 /* Test Item                                                                                               */
 /* It sends the received data to HyperTerminal.                                                            */
-/*---------------------------------------------------------------------------------------------------------*/
-
-/*---------------------------------------------------------------------------------------------------------*/
-/*  Main Function                                                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
 int32_t main(void)
 {
@@ -117,9 +105,7 @@ int32_t main(void)
     /* Init USCI0 for test */
     USCI0_Init();
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* SAMPLE CODE                                                                                             */
-    /*---------------------------------------------------------------------------------------------------------*/
+
 
     printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
 
@@ -181,9 +167,7 @@ void USCI_UART_TEST_HANDLE()
 
 }
 
-/*---------------------------------------------------------------------------------------------------------*/
-/*  USCI UART Function Test                                                                                */
-/*---------------------------------------------------------------------------------------------------------*/
+
 void USCI_UART_FunctionTest()
 {
     uint8_t u8InChar = 0xFF;

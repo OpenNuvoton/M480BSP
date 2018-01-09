@@ -9,6 +9,10 @@
 #include "stdio.h"
 #include "NuMicro.h"
 
+#if defined (__GNUC__)
+extern void initialise_monitor_handles(void);
+#endif
+
 const uint16_t sine[] = {2047, 2251, 2453, 2651, 2844, 3028, 3202, 3365, 3515, 3650, 3769, 3871, 3954,
                          4019, 4064, 4088, 4095, 4076, 4040, 3984, 3908, 3813, 3701, 3573, 3429, 3272,
                          3102, 2921, 2732, 2536, 2335, 2132, 1927, 1724, 1523, 1328, 1141,  962,  794,
@@ -36,12 +40,6 @@ void SYS_Init(void)
     /* Set both PCLK0 and PCLK1 as HCLK/2 */
     CLK->PCLKDIV = CLK_PCLKDIV_PCLK0DIV2 | CLK_PCLKDIV_PCLK1DIV2;
 
-    /* Enable UART module clock */
-    CLK_EnableModuleClock(UART0_MODULE);
-
-    /* Select UART module clock source as HXT and UART module clock divider as 1 */
-    CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
-
     /* Enable DAC module clock */
     CLK_EnableModuleClock(DAC_MODULE);
 
@@ -54,8 +52,6 @@ void SYS_Init(void)
     /* Select EPWM0 module clock source as PCLK0 */
     CLK_SetModuleClock(EPWM0_MODULE, CLK_CLKSEL2_EPWM0SEL_PCLK0, 0);
 
-    /* Set PD multi-function pins for UART0 RXD and TXD */
-    SYS->GPD_MFPL |= SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD;
 
     /* Set PB multi-function pin for DAC voltage output */
     SYS->GPB_MFPH |= SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
@@ -100,9 +96,9 @@ int32_t main(void)
     /* Init System, IP clock and multi-function I/O */
     SYS_Init();
 
-
-    /* Configure UART0 and set UART0 baud rate */
-    UART_Open(UART0, 115200);
+#if defined (__GNUC__)
+    initialise_monitor_handles();
+#endif
 
     printf("This sample code use PDMA and trigger DAC0 output sine wave by EPWM0 channel 0.\n");
 

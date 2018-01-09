@@ -57,7 +57,7 @@
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>1504784249667</id>
+			<id>1515489658233</id>
 			<name>CMSIS/CMSIS</name>
 			<type>9</type>
 			<matcher>
@@ -66,7 +66,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1504784291072</id>
+			<id>1515489631871</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -75,7 +75,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1504784291088</id>
+			<id>1515489631887</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -84,25 +84,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1504784291094</id>
-			<name>Library/Library</name>
-			<type>5</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-uart.c</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1504784291100</id>
-			<name>Library/Library</name>
-			<type>5</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-retarget.c</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1504784291106</id>
+			<id>1515489631903</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -111,7 +93,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1504784291112</id>
+			<id>1515489631913</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>

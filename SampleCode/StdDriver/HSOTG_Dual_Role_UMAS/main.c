@@ -142,9 +142,6 @@ void  dump_buff_hex(uint8_t *pucBuff, int nBytes)
 }
 
 
-/*--------------------------------------------------------------------------*/
-/* Monitor                                                                  */
-
 /*----------------------------------------------*/
 /* Get a value of the string                    */
 /*----------------------------------------------*/
@@ -372,12 +369,9 @@ void SYS_Init(void)
     /* Update System Core Clock */
     SystemCoreClockUpdate();
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init I/O Multi-function                                                                                 */
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init UART0 multi-function pins, RXD(PD.2) and TXD(PD.3) */
-    SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
-    SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
+    /* Set GPB multi-function pins for UART0 RXD and TXD */
+    SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
+    SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
 
     /* USB_VBUS_EN (USB 1.1 VBUS power enable pin) multi-function pin - PB.15     */
     SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB15MFP_Msk) | SYS_GPB_MFPH_PB15MFP_USB_VBUS_EN;
@@ -864,9 +858,6 @@ void USBH_Process()
     }
 }
 
-/*----------------------------------------------------------------------------
-  MAIN function
- *----------------------------------------------------------------------------*/
 int32_t main(void)
 {
     SYS_Init();                        /* Init System, IP clock and multi-function I/O */

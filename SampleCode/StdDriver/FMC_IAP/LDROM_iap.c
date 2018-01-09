@@ -42,12 +42,9 @@ void SYS_Init(void)
     /* Update System Core Clock */
     SystemCoreClockUpdate();
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init I/O Multi-function                                                                                 */
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init UART0 multi-function pins, RXD(PD.2) and TXD(PD.3) */
-    SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
-    SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
+    /* Set GPB multi-function pins for UART0 RXD and TXD */
+    SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
+    SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
 
     /* Lock protected registers */
     SYS_LockReg();
@@ -55,10 +52,6 @@ void SYS_Init(void)
 
 void UART0_Init(void)
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init UART                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
-
     /* Configure UART0 and set UART0 baud rate */
     UART0->LINE = 0x3;
     UART0->BAUD = 0x30000066;
@@ -141,9 +134,6 @@ int main()
 
     UART0_Init();                      /* Initialize UART0 */
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* SAMPLE CODE                                                                                             */
-    /*---------------------------------------------------------------------------------------------------------*/
 
     PutString("\n\n");
     PutString("+-------------------------------------+\n");

@@ -49,12 +49,9 @@ void SYS_Init(void)
     /* User can use SystemCoreClockUpdate() to calculate PllClock, SystemCoreClock and CycylesPerUs automatically. */
     SystemCoreClockUpdate();
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init I/O Multi-function                                                                                 */
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Set PD multi-function pins for UART0 RXD and TXD */
-    SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
-    SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
+    /* Set GPB multi-function pins for UART0 RXD and TXD */
+    SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
+    SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
 
     /* Set PA multi-function pins for UART1 TXD, RXD, CTS and RTS */
     SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA0MFP_Msk | SYS_GPA_MFPL_PA1MFP_Msk |
@@ -69,9 +66,6 @@ void SYS_Init(void)
 
 void UART0_Init()
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init UART                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
     /* Reset UART0 */
     SYS_ResetModule(UART0_RST);
 
@@ -81,9 +75,6 @@ void UART0_Init()
 
 void UART1_Init()
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init UART                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
     /* Reset UART1 */
     SYS_ResetModule(UART1_RST);
 
@@ -91,9 +82,6 @@ void UART1_Init()
     UART_Open(UART1, 115200);
 }
 
-/*---------------------------------------------------------------------------------------------------------*/
-/*  Main Function                                                                                          */
-/*---------------------------------------------------------------------------------------------------------*/
 int32_t main(void)
 {
 
@@ -112,9 +100,6 @@ int32_t main(void)
     /* Init UART1 */
     UART1_Init();
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* SAMPLE CODE                                                                                             */
-    /*---------------------------------------------------------------------------------------------------------*/
 
     printf("\n\nCPU @ %dHz\n", SystemCoreClock);
 

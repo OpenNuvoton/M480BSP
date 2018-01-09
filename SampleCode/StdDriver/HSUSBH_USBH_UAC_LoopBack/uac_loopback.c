@@ -18,9 +18,7 @@
 #define PCM_BUF_LEN            (192*24)     /* suggest 1K at least */
 
 
-/*--------------------------------------------------------------------------*/
 /* Global variables  */
-
 volatile uint8_t g_u8RecEn = 0;
 volatile uint8_t g_u8PlayEn = 0;
 

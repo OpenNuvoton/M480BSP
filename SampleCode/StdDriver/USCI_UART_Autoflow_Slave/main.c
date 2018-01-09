@@ -22,7 +22,6 @@ volatile int32_t g_i32pointer = 0;
 /*---------------------------------------------------------------------------------------------------------*/
 /* Define functions prototype                                                                              */
 /*---------------------------------------------------------------------------------------------------------*/
-int32_t main(void);
 void USCI_AutoFlow_FunctionRxTest(void);
 
 
@@ -53,13 +52,10 @@ void SYS_Init(void)
     CLK->CLKSEL1 &= ~CLK_CLKSEL1_UART0SEL_Msk;
     CLK->CLKSEL1 |= (0x0 << CLK_CLKSEL1_UART0SEL_Pos);
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init I/O Multi-function                                                                                 */
-    /*---------------------------------------------------------------------------------------------------------*/
 
-    /* Set PD multi-function pins for UART0 RXD and TXD */
-    SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
-    SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
+    /* Set GPB multi-function pins for UART0 RXD and TXD */
+    SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
+    SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
 
     /* Set PE multi-function pins for USCI0_DAT0, USCI0_DAT1, USCI0_CTL0 and USCI0_CTL1 */
     SYS->GPE_MFPL = (SYS->GPE_MFPL & (~SYS_GPE_MFPL_PE3MFP_Msk)) | (7 << SYS_GPE_MFPL_PE3MFP_Pos);
@@ -70,9 +66,6 @@ void SYS_Init(void)
 
 void UART0_Init()
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init UART                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
 
     /* Configure UART0 and set UART0 baud rate */
     UART_Open(UART0, 115200);
@@ -80,17 +73,10 @@ void UART0_Init()
 
 void USCI0_Init()
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init USCI                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
-
     /* Configure USCI0 as UART mode */
     UUART_Open(UUART0, 115200);
 }
 
-/*---------------------------------------------------------------------------------------------------------*/
-/*  Main Function                                                                                          */
-/*---------------------------------------------------------------------------------------------------------*/
 int32_t main(void)
 {
 
@@ -109,9 +95,6 @@ int32_t main(void)
     /* Init USCI0 for test */
     USCI0_Init();
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* SAMPLE CODE                                                                                             */
-    /*---------------------------------------------------------------------------------------------------------*/
 
     printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
 

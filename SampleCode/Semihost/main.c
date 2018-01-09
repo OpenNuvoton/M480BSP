@@ -13,6 +13,8 @@
 extern void initialise_monitor_handles(void);
 #endif
 
+#define PLL_CLOCK           192000000
+
 /**
  *  @brief  Init system clock and I/O multi function .
  *  @param  None
@@ -27,36 +29,28 @@ void SYS_Init(void)
     SYS_UnlockReg();
 
     /* Enable External XTAL (4~24 MHz) */
-    CLK->PWRCTL |= CLK_PWRCTL_HXTEN_Msk; // HXT Enabled
+    CLK_EnableXtalRC(CLK_PWRCTL_HXTEN_Msk);
 
-    while((CLK->STATUS & CLK_STATUS_HXTSTB_Msk) != CLK_STATUS_HXTSTB_Msk) /* Waiting for 12MHz clock ready */
+    /* Waiting for 12MHz clock ready */
+    CLK_WaitClockReady(CLK_STATUS_HXTSTB_Msk);
 
-    CLK->CLKSEL0 = (CLK->CLKSEL0 &~ CLK_CLKSEL0_HCLKSEL_Msk) | (CLK_CLKSEL0_HCLKSEL_HXT); /* Switch HCLK clock source to XTAL */
-
-    /* Enable IP clock */
-
-
-    /* Select IP clock source */
+    /* Set core clock as PLL_CLOCK from PLL */
+    CLK_SetCoreClock(PLL_CLOCK);
+    /* Set PCLK0/PCLK1 to HCLK/2 */
+    CLK->PCLKDIV = (CLK_PCLKDIV_PCLK0DIV2 | CLK_PCLKDIV_PCLK1DIV2);
 
 
     /* Update System Core Clock */
     /* User can use SystemCoreClockUpdate() to calculate PllClock, SystemCoreClock and CycylesPerUs automatically. */
     SystemCoreClockUpdate();
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init I/O Multi-function                                                                                 */
-    /*---------------------------------------------------------------------------------------------------------*/
 
     /* Lock protected registers */
     SYS_LockReg();
 
 }
 
-/**
- *  @brief  main function.
- *  @param  None
- *  @return None
- */
+
 int32_t main()
 {
     int8_t item;

@@ -15,11 +15,7 @@
 /*---------------------------------------------------------------------------------------------------------*/
 volatile uint32_t g_u32AdcIntFlag, g_u32COVNUMFlag = 0;
 
-/*---------------------------------------------------------------------------------------------------------*/
-/* Define functions prototype                                                                              */
-/*---------------------------------------------------------------------------------------------------------*/
-int32_t main(void);
-void EADC_FunctionTest(void);
+
 
 void SYS_Init(void)
 {
@@ -58,13 +54,10 @@ void SYS_Init(void)
     /* EADC clock source is 96MHz, set divider to 8, EADC clock is 96/8 MHz */
     CLK_SetModuleClock(EADC_MODULE, 0, CLK_CLKDIV0_EADC(8));
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init I/O Multi-function                                                                                 */
-    /*---------------------------------------------------------------------------------------------------------*/
 
-    /* Set PD multi-function pins for UART0 RXD(PD.2) and TXD(PD.3) */
-    SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
-    SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
+    /* Set GPB multi-function pins for UART0 RXD and TXD */
+    SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
+    SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
 
     /* Configure the GPB0 - GPB3 ADC analog input pins.  */
     SYS->GPB_MFPL &= ~(SYS_GPB_MFPL_PB0MFP_Msk | SYS_GPB_MFPL_PB1MFP_Msk |
@@ -82,19 +75,12 @@ void SYS_Init(void)
 
 void UART0_Init()
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init UART                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
-
     /* Configure UART0 and set UART0 baud rate */
     UART_Open(UART0, 115200);
 }
 
 void EPWM0_Init()
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init EPWM0                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
 
     /* Set EPWM0 timer clock prescaler */
     EPWM_SET_PRESCALER(EPWM0, 0, 10);
@@ -119,9 +105,6 @@ void EPWM0_Init()
 
 }
 
-/*---------------------------------------------------------------------------------------------------------*/
-/* EADC function test                                                                                      */
-/*---------------------------------------------------------------------------------------------------------*/
 void EADC_FunctionTest()
 {
     uint8_t  u8Option;
@@ -236,11 +219,6 @@ void EADC_FunctionTest()
     }
 }
 
-
-
-/*---------------------------------------------------------------------------------------------------------*/
-/* EADC interrupt handler                                                                                  */
-/*---------------------------------------------------------------------------------------------------------*/
 void ADC00_IRQHandler(void)
 {
     EADC_CLR_INT_FLAG(EADC, EADC_STATUS2_ADIF0_Msk);      /* Clear the A/D ADINT0 interrupt flag */
@@ -248,9 +226,6 @@ void ADC00_IRQHandler(void)
     g_u32COVNUMFlag++;
 }
 
-/*---------------------------------------------------------------------------------------------------------*/
-/*  Main Function                                                                                          */
-/*---------------------------------------------------------------------------------------------------------*/
 int32_t main(void)
 {
 
@@ -268,10 +243,6 @@ int32_t main(void)
 
     /* Init EPWM for EADC */
     EPWM0_Init();
-
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* SAMPLE CODE                                                                                             */
-    /*---------------------------------------------------------------------------------------------------------*/
 
     printf("\nSystem clock rate: %d Hz", SystemCoreClock);
 

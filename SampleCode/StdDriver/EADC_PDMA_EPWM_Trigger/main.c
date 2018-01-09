@@ -18,15 +18,7 @@ volatile uint32_t g_u32IsTestOver = 0;
 int16_t  g_i32ConversionData[6] = {0};
 uint32_t g_u32SampleModuleNum = 0;
 
-/*---------------------------------------------------------------------------------------------------------*/
-/* Define functions prototype                                                                              */
-/*---------------------------------------------------------------------------------------------------------*/
-int32_t main(void);
-void EADC_FunctionTest(void);
 
-/*---------------------------------------------------------------------------------------------------------*/
-/* EADC interrupt handler                                                                                  */
-/*---------------------------------------------------------------------------------------------------------*/
 void ADC00_IRQHandler(void)
 {
     g_u32AdcIntFlag = 1;
@@ -73,13 +65,10 @@ void SYS_Init(void)
     /* Enable PDMA clock source */
     CLK_EnableModuleClock(PDMA_MODULE);
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init I/O Multi-function                                                                                 */
-    /*---------------------------------------------------------------------------------------------------------*/
 
-    /* Set PD multi-function pins for UART0 RXD(PD.2) and TXD(PD.3) */
-    SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD2MFP_Msk | SYS_GPD_MFPL_PD3MFP_Msk);
-    SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD2MFP_UART0_RXD | SYS_GPD_MFPL_PD3MFP_UART0_TXD);
+    /* Set GPB multi-function pins for UART0 RXD and TXD */
+    SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
+    SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
 
     /* Configure the GPB0 - GPB3 ADC analog input pins.  */
     SYS->GPB_MFPL &= ~(SYS_GPB_MFPL_PB0MFP_Msk | SYS_GPB_MFPL_PB1MFP_Msk |
@@ -94,9 +83,7 @@ void SYS_Init(void)
 
 void UART0_Init()
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init UART                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
+
 
     /* Configure UART0 and set UART0 baud rate */
     UART_Open(UART0, 115200);
@@ -104,9 +91,6 @@ void UART0_Init()
 
 void EPWM0_Init()
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init EPWM0                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
 
     /* Set EPWM0 timer clock prescaler */
     EPWM_SET_PRESCALER(EPWM0, 0, 0);
@@ -132,9 +116,6 @@ void EPWM0_Init()
 
 void PDMA_Init()
 {
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init PDMA                                                                                               */
-    /*---------------------------------------------------------------------------------------------------------*/
 
     /* Configure PDMA peripheral mode form EADC to memory */
     /* Open Channel 2 */
@@ -165,9 +146,7 @@ void ReloadPDMA()
     PDMA_SetTransferMode(PDMA,2, PDMA_ADC_RX, FALSE, 0);
 }
 
-/*---------------------------------------------------------------------------------------------------------*/
-/* EADC function test                                                                                      */
-/*---------------------------------------------------------------------------------------------------------*/
+
 void EADC_FunctionTest()
 {
     uint8_t  u8Option;
@@ -247,9 +226,6 @@ void EADC_FunctionTest()
 }
 
 
-/*---------------------------------------------------------------------------------------------------------*/
-/* PDMA interrupt handler                                                                                  */
-/*---------------------------------------------------------------------------------------------------------*/
 void PDMA_IRQHandler(void)
 {
     uint32_t status = PDMA_GET_INT_STATUS(PDMA);
@@ -266,9 +242,7 @@ void PDMA_IRQHandler(void)
         printf("unknown interrupt !!\n");
 }
 
-/*---------------------------------------------------------------------------------------------------------*/
-/*  Main Function                                                                                          */
-/*---------------------------------------------------------------------------------------------------------*/
+
 int32_t main(void)
 {
     /* Unlock protected registers */
@@ -283,9 +257,6 @@ int32_t main(void)
     /* Init UART0 for printf */
     UART0_Init();
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* SAMPLE CODE                                                                                             */
-    /*---------------------------------------------------------------------------------------------------------*/
     /* Init EPWM for EADC */
     EPWM0_Init();
 

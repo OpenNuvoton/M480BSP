@@ -172,7 +172,7 @@
         </option>
         <option>
           <name>CCDefines</name>
-          <state></state>
+          <state>DEBUG_ENABLE_SEMIHOST</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -961,9 +961,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\timer.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\uart.c</name>
     </file>
   </group>
   <group>
