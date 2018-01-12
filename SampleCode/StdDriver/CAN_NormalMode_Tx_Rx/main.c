@@ -76,6 +76,11 @@ void CAN0_IRQHandler(void)
 
         if(CAN0->STATUS & CAN_STATUS_BOFF_Msk) {
             printf("BOFF INT\n") ;
+
+            /* Do Init to release busoff pin */
+            CAN0->CON = (CAN_CON_INIT_Msk | CAN_CON_CCE_Msk);
+            CAN0->CON &= (~(CAN_CON_INIT_Msk | CAN_CON_CCE_Msk));
+            while(CAN0->CON & CAN_CON_INIT_Msk);
         }
     } else if (u8IIDRstatus!=0) {
         printf("=> Interrupt Pointer = %d\n",CAN0->IIDR -1);
@@ -128,6 +133,11 @@ void CAN1_IRQHandler(void)
 
         if(CAN1->STATUS & CAN_STATUS_BOFF_Msk) {
             printf("BOFF INT\n") ;
+
+            /* Do Init to release busoff pin */
+            CAN1->CON = (CAN_CON_INIT_Msk | CAN_CON_CCE_Msk);
+            CAN1->CON &= (~(CAN_CON_INIT_Msk | CAN_CON_CCE_Msk));
+            while(CAN1->CON & CAN_CON_INIT_Msk);
         }
     } else if (u8IIDRstatus!=0) {
         //printf("=> Interrupt Pointer = %d\n",CAN1->IIDR -1);

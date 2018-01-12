@@ -71,6 +71,11 @@ void CAN0_IRQHandler(void)
         /**************************/
         if(CAN0->STATUS & CAN_STATUS_EWARN_Msk) {
             printf("EWARN INT\n") ;
+
+            /* Do Init to release busoff pin */
+            CAN0->CON = (CAN_CON_INIT_Msk | CAN_CON_CCE_Msk);
+            CAN0->CON &= (~(CAN_CON_INIT_Msk | CAN_CON_CCE_Msk));
+            while(CAN0->CON & CAN_CON_INIT_Msk);
         }
 
         if(CAN0->STATUS & CAN_STATUS_BOFF_Msk) {
