@@ -45,8 +45,6 @@ void PDMA_IRQHandler(void)
     /* Check channel transfer done status */
     //if (PDMA_GET_TD_STS() == PDMA_TDSTS_TDIF4_Msk)
     {
-        /* Reload PDMA Descriptor table configuration after transmission finished */
-        DMA_DESC[s_u32TableIndex].ctl = g_u32DMAConfig;
         s_u32TableIndex ^= 1;
         /* When finished a descriptor table then g_u32TransferredCount increases 1 */
         g_u32TransferredCount++;
