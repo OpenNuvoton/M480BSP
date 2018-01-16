@@ -20,7 +20,6 @@ uint32_t g_au32DestArray[1];
 uint32_t volatile g_u32IsTestOver = 0;
 uint32_t volatile g_u32TransferredCount = 0;
 uint32_t g_u32DMAConfig = 0;
-static uint32_t s_u32TableIndex = 0;
 
 typedef struct dma_desc_t {
     uint32_t ctl;
@@ -43,9 +42,8 @@ DMA_DESC_T DMA_DESC[2];
 void PDMA_IRQHandler(void)
 {
     /* Check channel transfer done status */
-    //if (PDMA_GET_TD_STS() == PDMA_TDSTS_TDIF4_Msk)
+    if (PDMA_GET_TD_STS(PDMA) == PDMA_TDSTS_TDIF4_Msk)
     {
-        s_u32TableIndex ^= 1;
         /* When finished a descriptor table then g_u32TransferredCount increases 1 */
         g_u32TransferredCount++;
 
