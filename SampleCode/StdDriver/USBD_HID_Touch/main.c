@@ -11,15 +11,12 @@
 #include "NuMicro.h"
 #include "hid_touch.h"
 
-#define CRYSTAL_LESS        1
-
 /*--------------------------------------------------------------------------*/
 void SYS_Init(void)
 {
     /* Unlock protected registers */
     SYS_UnlockReg();
 
-#if (!CRYSTAL_LESS)
     /* Enable External XTAL (4~24 MHz) */
     CLK_EnableXtalRC(CLK_PWRCTL_HXTEN_Msk);
 
@@ -28,7 +25,6 @@ void SYS_Init(void)
 
     /* Switch HCLK clock source to HXT */
     CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_HXT,CLK_CLKDIV0_HCLK(1));
-#endif
 
     /* Set core clock as PLL_CLOCK from PLL */
     CLK_SetCoreClock(FREQ_192MHZ);
@@ -97,34 +93,9 @@ int32_t main(void)
     HID_Init();
     USBD_Start();
 
-#if CRYSTAL_LESS
-    /* Waiting for USB signal before auto trim */
-    USBD->INTSTS = USBD_INTSTS_SOFIF_Msk;
-    while((USBD->INTSTS & USBD_INTSTS_SOFIF_Msk) == 0);
-    /* Enable USB clock trim function */
-    SYS->IRCTCTL = 0x01;
-    SYS->IRCTCTL |= SYS_IRCTCTL_REFCKSEL_Msk;
-#endif
-
     NVIC_EnableIRQ(USBD_IRQn);
 
     while(1) {
-
-#if CRYSTAL_LESS
-        /* Re-start auto trim when any error found */
-        if (SYS->IRCTISTS & (SYS_IRCTISTS_CLKERRIF_Msk | SYS_IRCTISTS_TFAILIF_Msk)) {
-            SYS->IRCTISTS = SYS_IRCTISTS_CLKERRIF_Msk | SYS_IRCTISTS_TFAILIF_Msk;
-
-            /* Waiting for USB signal before auto trim */
-            USBD->INTSTS = USBD_INTSTS_SOFIF_Msk;
-            while((USBD->INTSTS & USBD_INTSTS_SOFIF_Msk) == 0);
-
-            /* Re-enable Auto Trim */
-            SYS->IRCTCTL = 0x01;
-            SYS->IRCTCTL |= SYS_IRCTCTL_REFCKSEL_Msk;
-            //printf("USB trim fail. Just retry. SYS->IRCTISTS = 0x%x, SYS->IRCTCTL = 0x%x\n", SYS->IRCTISTS, SYS->IRCTCTL);
-        }
-#endif
         HID_UpdateTouchData();
     }
 }
