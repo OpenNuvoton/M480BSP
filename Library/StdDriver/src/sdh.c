@@ -546,6 +546,8 @@ uint32_t SDH_SelectCardType(SDH_T *sdh)
     if (pSD->CardType == SDH_TYPE_SD_HIGH) {
         sdh->DMASA = (uint32_t)_SDH_ucSDHCBuffer;
         sdh->BLEN = 0x07ul;  /* 64 bit */
+        sdh->DMACTL |= SDH_DMACTL_DMARST_Msk;
+        while ((sdh->DMACTL & SDH_DMACTL_DMARST_Msk) == 0x2);
 
         if ((status = SDH_SDCmdAndRsp(sdh, 55ul, pSD->RCA, 0ul)) != Successful) {
             return status;
@@ -554,8 +556,7 @@ uint32_t SDH_SelectCardType(SDH_T *sdh)
             return status;
         }
 
-//        if ((_SDH_ucSDHCBuffer[0] & 0xful) == 0x2ul) {
-        if ((_SDH_ucSDHCBuffer[0] & 0xful) == 0xful) {
+        if ((_SDH_ucSDHCBuffer[0] & 0xful) == 0x2ul) {
             status = SDH_SwitchToHighSpeed(sdh, pSD);
             if (status == Successful) {
                 /* divider */
