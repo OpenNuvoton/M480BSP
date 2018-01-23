@@ -50,6 +50,9 @@ void SYS_Init(void)
     /* Unlock protected registers */
     SYS_UnlockReg();
 
+    /* Set XT1_OUT(PF.2) and XT1_IN(PF.3) to input mode */
+    PF->MODE &= ~(GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk);
+
     /* Enable HXT clock (external XTAL 12MHz) */
     CLK_EnableXtalRC(CLK_PWRCTL_HXTEN_Msk);
 
@@ -70,7 +73,8 @@ void SYS_Init(void)
 
     /* Select timer 0 module clock source as HXT */
     CLK_SetModuleClock(TMR0_MODULE, CLK_CLKSEL1_TMR0SEL_HXT, 0);
-
+    /* Set PB.12 to input mode */
+    PB->MODE &= ~GPIO_MODE_MODE12_Msk;
     /* Set PB multi-function pins for DAC voltage output */
     SYS->GPB_MFPH |= SYS_GPB_MFPH_PB12MFP_DAC0_OUT;
     /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */

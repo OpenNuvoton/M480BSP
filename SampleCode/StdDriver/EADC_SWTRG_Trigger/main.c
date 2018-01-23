@@ -19,9 +19,8 @@ volatile uint32_t g_u32AdcIntFlag;
 void SYS_Init(void)
 {
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init System Clock                                                                                       */
-    /*---------------------------------------------------------------------------------------------------------*/
+    /* Set XT1_OUT(PF.2) and XT1_IN(PF.3) to input mode */
+    PF->MODE &= ~(GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk);
 
     /* Enable HXT clock (external XTAL 12MHz) */
     CLK_EnableXtalRC(CLK_PWRCTL_HXTEN_Msk);
@@ -51,7 +50,8 @@ void SYS_Init(void)
     /* Set GPB multi-function pins for UART0 RXD and TXD */
     SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
     SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
-
+    /* Set PB.0 ~ PB.3 to input mode */
+    PB->MODE &= ~(GPIO_MODE_MODE0_Msk | GPIO_MODE_MODE1_Msk | GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk); 
     /* Configure the GPB0 - GPB3 ADC analog input pins.  */
     SYS->GPB_MFPL &= ~(SYS_GPB_MFPL_PB0MFP_Msk | SYS_GPB_MFPL_PB1MFP_Msk |
                        SYS_GPB_MFPL_PB2MFP_Msk | SYS_GPB_MFPL_PB3MFP_Msk);

@@ -28,9 +28,8 @@ void OPA0_IRQHandler (void)
 void SYS_Init(void)
 {
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init System Clock                                                                                       */
-    /*---------------------------------------------------------------------------------------------------------*/
+    /* Set XT1_OUT(PF.2) and XT1_IN(PF.3) to input mode */
+    PF->MODE &= ~(GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk);
 
     /* Enable HXT clock (external XTAL 12MHz) */
     CLK_EnableXtalRC(CLK_PWRCTL_HXTEN_Msk);
@@ -55,7 +54,7 @@ void SYS_Init(void)
     SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
     SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
 
-    //Set I/O multi-function pins to OPA
+    //Set I/O multi-function pins to OPA and input mode
     //PB0: OP0_P
     //PB1: OP0_N
     //PB2: OP0_O
@@ -65,6 +64,9 @@ void SYS_Init(void)
     //PD10: OP2_P
     //PD11: OP2_N
     //PD12: OP2_O
+    PA->MODE &= ~(GPIO_MODE_MODE8_Msk | GPIO_MODE_MODE9_Msk | GPIO_MODE_MODE10_Msk);
+    PB->MODE &= ~(GPIO_MODE_MODE0_Msk | GPIO_MODE_MODE1_Msk | GPIO_MODE_MODE2_Msk);
+    PD->MODE &= ~(GPIO_MODE_MODE10_Msk | GPIO_MODE_MODE11_Msk | GPIO_MODE_MODE12_Msk);    
     SYS->GPB_MFPL &= ~(SYS_GPB_MFPL_PB0MFP_Msk | SYS_GPB_MFPL_PB1MFP_Msk | SYS_GPB_MFPL_PB2MFP_Msk);
     SYS->GPB_MFPL |= (SYS_GPB_MFPL_PB0MFP_OPA0_P | SYS_GPB_MFPL_PB1MFP_OPA0_N | SYS_GPB_MFPL_PB2MFP_OPA0_O);
     SYS->GPA_MFPH &= ~((SYS_GPA_MFPH_PA8MFP_Msk) | (SYS_GPA_MFPH_PA9MFP_Msk) | (SYS_GPA_MFPH_PA10MFP_Msk));

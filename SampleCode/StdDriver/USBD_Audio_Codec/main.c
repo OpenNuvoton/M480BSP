@@ -14,11 +14,13 @@
 #include "usbd_audio.h"
 
 
-/*--------------------------------------------------------------------------*/
 void SYS_Init(void)
 {
     /* Unlock protected registers */
     SYS_UnlockReg();
+
+    /* Set XT1_OUT(PF.2) and XT1_IN(PF.3) to input mode */
+    PF->MODE &= ~(GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk);
 
     /* Enable External XTAL (4~24 MHz) */
     CLK_EnableXtalRC(CLK_PWRCTL_HXTEN_Msk);
@@ -55,7 +57,8 @@ void SYS_Init(void)
     CLK_EnableModuleClock(PDMA_MODULE);
     CLK_EnableModuleClock(TMR0_MODULE);
 
-
+    /* Set PA.12 ~ PA.14 to input mode */
+    PA->MODE &= ~(GPIO_MODE_MODE12_Msk | GPIO_MODE_MODE13_Msk | GPIO_MODE_MODE14_Msk);
     SYS->GPA_MFPH &= ~(SYS_GPA_MFPH_PA12MFP_Msk|SYS_GPA_MFPH_PA13MFP_Msk|SYS_GPA_MFPH_PA14MFP_Msk|SYS_GPA_MFPH_PA15MFP_Msk);
     SYS->GPA_MFPH |= (SYS_GPA_MFPH_PA12MFP_USB_VBUS|SYS_GPA_MFPH_PA13MFP_USB_D_N|SYS_GPA_MFPH_PA14MFP_USB_D_P|SYS_GPA_MFPH_PA15MFP_USB_OTG_ID);
 

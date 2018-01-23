@@ -241,6 +241,9 @@ void SYS_Init(void)
     /* Unlock protected registers */
     SYS_UnlockReg();
 
+    /* Set XT1_OUT(PF.2) and XT1_IN(PF.3) to input mode */
+    PF->MODE &= ~(GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk);
+
     CLK_EnableXtalRC(CLK_PWRCTL_HXTEN_Msk);
 
     /* Wait for HXT clock ready */
@@ -282,7 +285,8 @@ void SYS_Init(void)
 
     /* HSUSB_VBUS_ST (USB 2.0 over-current detect pin) multi-function pin - PB.11 */
     SYS->GPB_MFPH = (SYS->GPB_MFPH & ~SYS_GPB_MFPH_PB11MFP_Msk) | SYS_GPB_MFPH_PB11MFP_HSUSB_VBUS_ST;
-
+    /* Set PA.12 ~ PA.14 to input mode */
+    PA->MODE &= ~(GPIO_MODE_MODE12_Msk | GPIO_MODE_MODE13_Msk | GPIO_MODE_MODE14_Msk);
     /* USB 1.1 port multi-function pin VBUS, D+, D-, and ID pins */
     SYS->GPA_MFPH &= ~(SYS_GPA_MFPH_PA12MFP_Msk | SYS_GPA_MFPH_PA13MFP_Msk |
                        SYS_GPA_MFPH_PA14MFP_Msk | SYS_GPA_MFPH_PA15MFP_Msk);

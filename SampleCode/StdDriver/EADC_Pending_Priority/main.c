@@ -24,9 +24,8 @@ volatile uint32_t g_u32IntSequenceIndex;
 void SYS_Init(void)
 {
 
-    /*---------------------------------------------------------------------------------------------------------*/
-    /* Init System Clock                                                                                       */
-    /*---------------------------------------------------------------------------------------------------------*/
+    /* Set XT1_OUT(PF.2) and XT1_IN(PF.3) to input mode */
+    PF->MODE &= ~(GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk);
 
     /* Enable HXT clock (external XTAL 12MHz) */
     CLK_EnableXtalRC(CLK_PWRCTL_HXTEN_Msk);
@@ -56,7 +55,9 @@ void SYS_Init(void)
     /* Set GPB multi-function pins for UART0 RXD and TXD */
     SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
     SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
-
+    /* Set PB.0, PB.6 ~ PB.9 to input mode */
+    PB->MODE &= ~(GPIO_MODE_MODE0_Msk | GPIO_MODE_MODE6_Msk | GPIO_MODE_MODE7_Msk | 
+                  GPIO_MODE_MODE8_Msk | GPIO_MODE_MODE9_Msk); 
     /* Configure the EADC analog input pins.  */
     SYS->GPB_MFPL = (SYS->GPB_MFPL & ~SYS_GPB_MFPL_PB0MFP_Msk) | SYS_GPB_MFPL_PB0MFP_EADC0_CH0;
     SYS->GPB_MFPL = (SYS->GPB_MFPL & ~SYS_GPB_MFPL_PB6MFP_Msk) | SYS_GPB_MFPL_PB6MFP_EADC0_CH6;
