@@ -389,6 +389,9 @@ void SYS_Init(void)
     /* Disable HXT clock (external RC 12MHz) */
     CLK_DisableXtalRC(CLK_PWRCTL_HXTEN_Msk);
 
+    /* Set X32_OUT(PF.4) and X32_IN(PF.5) to input mode */
+    PF->MODE &= ~(GPIO_MODE_MODE4_Msk | GPIO_MODE_MODE5_Msk);
+
     /* Enable HIRC, LXT clock (Internal RC 12MHz, external XTAL 32kHz) */
     CLK_EnableXtalRC(CLK_PWRCTL_HIRCEN_Msk | CLK_PWRCTL_LXTEN_Msk);
 

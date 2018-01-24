@@ -27,6 +27,8 @@ void ACMP01_IRQHandler(void)
 
 void SYS_Init(void)
 {
+    /* Set XT1_OUT(PF.2) and XT1_IN(PF.3) to input mode */
+    PF->MODE &= ~(GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk);
 
     /* Enable external 12MHz XTAL */
     CLK_EnableXtalRC(CLK_PWRCTL_HXTEN_Msk);
@@ -51,6 +53,8 @@ void SYS_Init(void)
 
     /* Set PA6 multi-function pin for ACMP1 window latch pin */
     SYS->GPA_MFPL |= SYS_GPA_MFPL_PA6MFP_ACMP1_WLAT;
+    /* Set PB.4 and PB.6 to input mode */
+    PB->MODE &= ~(GPIO_MODE_MODE4_Msk | GPIO_MODE_MODE6_Msk);
     /* Set PB4 multi-function pin for ACMP1 positive input pin and PB6 multi-function pin for ACMP1 output pin */
     SYS->GPB_MFPL |= SYS_GPB_MFPL_PB4MFP_ACMP1_P1 | SYS_GPB_MFPL_PB6MFP_ACMP1_O;
 

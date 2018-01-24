@@ -162,15 +162,12 @@ void SYS_Init(void)
     /* Unlock protected registers */
     SYS_UnlockReg();
 
-    // TODO: Configure system clock
+    /* Set XT1_OUT(PF.2) and XT1_IN(PF.3) to input mode */
+    PF->MODE &= ~(GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk);
 
     CLK->PWRCTL |= CLK_PWRCTL_HXTEN_Msk;
 
     CLK_WaitClockReady(CLK_STATUS_HXTSTB_Msk);
-
-    // HCLK select external 4~24 MHz high speed crystal clock
-    //CLK->CLKSEL0 &= ~CLK_CLKSEL0_HCLKSEL_Msk;
-    //CLK->CLKSEL0 |= CLK_CLKSEL0_HCLKSEL_HXT;
 
     /* Set core clock as PLL_CLOCK from PLL */
     CLK_SetCoreClock(192000000);
