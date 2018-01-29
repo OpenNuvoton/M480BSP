@@ -53,6 +53,12 @@ void USBD_IRQHandler(void)
     }
 
 //------------------------------------------------------------------
+    if(u32IntSts & USBD_INTSTS_WAKEUP)
+    {
+        /* Clear event flag */
+        USBD_CLR_INT_FLAG(USBD_INTSTS_WAKEUP);
+    }
+
     if (u32IntSts & USBD_INTSTS_USB) {
         // USB event
         if (u32IntSts & USBD_INTSTS_SETUP) {
