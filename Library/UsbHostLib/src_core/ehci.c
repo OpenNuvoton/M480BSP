@@ -21,7 +21,6 @@
 
 /// @cond HIDDEN_SYMBOLS
 
-//#define BULK_NEW_QH                       /* a little poor performance if enabled!      */
 static QH_T   *_H_qh;                       /* head of reclamation list                   */
 static qTD_T  *_ghost_qtd;                  /* used as a terminator qTD                   */
 static QH_T *qh_remove_list;
@@ -578,11 +577,7 @@ static int ehci_bulk_xfer(UTR_T *utr)
 
     udev = utr->udev;
 
-#ifdef BULK_NEW_QH
-    if (0)
-#else
     if (ep->hw_pipe != NULL)
-#endif
     {
         qh = (QH_T *)ep->hw_pipe ;
         if (qh->qtd_list) {
@@ -635,7 +630,7 @@ static int ehci_bulk_xfer(UTR_T *utr)
         qtd->Alt_Next_qTD = QTD_LIST_END; //(uint32_t)_ghost_qtd;
         write_qtd_bptr(qtd, (uint32_t)buff, xfer_len);
         append_to_qtd_list_of_QH(qh, qtd);
-        qtd->Token = (data_len << 16) | token;
+        qtd->Token = (xfer_len << 16) | token;
 
         buff += xfer_len;                   /* advanced buffer pointer                    */
         data_len -= xfer_len;
@@ -673,8 +668,6 @@ static int ehci_bulk_xfer(UTR_T *utr)
         qh->HLink = _H_qh->HLink;
         _H_qh->HLink = QH_HLNK_QH(qh);
     }
-
-    _ehci->UCALAR = (uint32_t)qh;
 
     /*  Start transfer */
     _ehci->UCMDR |= HSUSBH_UCMDR_ASEN_Msk;      /* start asynchronous transfer            */
@@ -865,11 +858,6 @@ static void scan_asynchronous_list()
                 utr->func(utr);
 
             _ehci->UCMDR |= HSUSBH_UCMDR_IAAD_Msk;   /* trigger IAA to reclaim done_list  */
-
-#ifdef BULK_NEW_QH
-            if ((qh_tmp->Chrst>>8) & 0xf)
-                move_qh_to_remove_list(qh_tmp);  /* if not endpoint 0, remove it          */
-#endif
         }
     }
 }

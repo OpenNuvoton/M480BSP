@@ -855,6 +855,7 @@ static int  usbh_parse_configuration(UDEV_T *udev, uint8_t *desc_buff)
 int  connect_device(UDEV_T *udev)
 {
     DESC_CONF_T  *conf;
+    uint32_t     read_len;
     int          ret;
 
     ENABLE_OHCI_IRQ();
@@ -917,6 +918,14 @@ int  connect_device(UDEV_T *udev)
     if (ret < 0) {
         USB_debug("Parse configuration %d failed!\n", conf->bConfigurationValue);
         return ret;
+    }
+
+    /* Enable remote wakeup                                                                   */
+    if (usbh_ctrl_xfer(udev, REQ_TYPE_OUT | REQ_TYPE_STD_DEV | REQ_TYPE_TO_DEV,
+                         USB_REQ_SET_FEATURE, 0x01, 0x0000, 0x0000,
+                         NULL, &read_len, 300) < 0)
+    {
+        USB_debug("Device not accept remote wakeup enable command.\n");
     }
 
     if (g_conn_func)
