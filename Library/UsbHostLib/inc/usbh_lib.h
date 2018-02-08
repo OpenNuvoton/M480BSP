@@ -115,6 +115,10 @@ extern "C"
 struct udev_t;
 typedef void (CONN_FUNC)(struct udev_t *udev, int param);
 
+struct line_coding_t;
+struct cdc_dev_t;
+typedef void (CDC_CB_FUNC)(struct cdc_dev_t *cdev, uint8_t *rdata, int data_len); 
+
 struct usbhid_dev;
 typedef void (HID_IR_FUNC)(struct usbhid_dev *hdev, uint16_t ep_addr, int status, uint8_t *rdata, uint32_t data_len);    /*!< interrupt in callback function \hideinitializer */
 typedef void (HID_IW_FUNC)(struct usbhid_dev *hdev, uint16_t ep_addr, int status, uint8_t *wbuff, uint32_t *data_len);   /*!< interrupt out callback function \hideinitializer */
@@ -123,7 +127,6 @@ struct uac_dev_t;
 typedef int (UAC_CB_FUNC)(struct uac_dev_t *dev, uint8_t *data, int len);    /*!< audio in callback function \hideinitializer */
 
 /*@}*/ /* end of group USBH_EXPORTED_STRUCT */
-
 
 
 
@@ -143,6 +146,21 @@ extern void usbh_suspend(void);
 extern void usbh_resume(void);
 extern struct udev_t * usbh_find_device(char *hub_id, int port);
 extern uint32_t get_ticks(void);   /* This function must be provided by user application. */
+
+/*------------------------------------------------------------------*/
+/*                                                                  */
+/*  USB Communication Device Class Library APIs                     */
+/*                                                                  */
+/*------------------------------------------------------------------*/
+extern void     usbh_cdc_init(void);
+extern struct cdc_dev_t * usbh_cdc_get_device_list(void);
+extern int32_t  usbh_cdc_get_line_coding(struct cdc_dev_t *cdev, struct line_coding_t *line_code);
+extern int32_t  usbh_cdc_set_line_coding(struct cdc_dev_t *cdev, struct line_coding_t *line_code);
+extern int32_t  usbh_cdc_set_control_line_state(struct cdc_dev_t *cdev, int active_carrier, int DTE_present);
+extern int32_t  usbh_cdc_start_polling_status(struct cdc_dev_t *cdev, CDC_CB_FUNC *func);
+extern int32_t  usbh_cdc_start_to_receive_data(struct cdc_dev_t *cdev, CDC_CB_FUNC *func);
+extern int32_t  usbh_cdc_send_data(struct cdc_dev_t *cdev, uint8_t *buff, int buff_len);
+
 
 /*------------------------------------------------------------------*/
 /*                                                                  */
