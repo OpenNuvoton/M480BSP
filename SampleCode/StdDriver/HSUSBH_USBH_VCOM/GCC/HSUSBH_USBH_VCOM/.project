@@ -67,7 +67,7 @@
 		<link>
 			<name>UsbHostLib_VCOM/UsbHostLib_VCOM</name>
 			<type>2</type>
-			<location>D:/Project/M480/Git/BSP/bsp/Library/UsbHostLib/src_cdc</location>
+			<locationURI>PARENT-5-PROJECT_LOC/Library/UsbHostLib/src_cdc</locationURI>
 		</link>
 		<link>
 			<name>User/main.c</name>
@@ -77,7 +77,7 @@
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>0</id>
+			<id>1519209467401</id>
 			<name>CMSIS/CMSIS</name>
 			<type>9</type>
 			<matcher>
@@ -86,7 +86,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>0</id>
+			<id>1519209566955</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -95,25 +95,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>0</id>
-			<name>Library/Library</name>
-			<type>5</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-sys.c</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>0</id>
-			<name>Library/Library</name>
-			<type>5</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-uart.c</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>0</id>
+			<id>1519209566964</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -122,20 +104,102 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>0</id>
-			<name>UsbHostLib/UsbHostLib</name>
-			<type>9</type>
+			<id>1519209566972</id>
+			<name>Library/Library</name>
+			<type>5</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-*.c</arguments>
+				<arguments>1.0-name-matches-false-false-sys.c</arguments>
 			</matcher>
 		</filter>
 		<filter>
-			<id>1518059066041</id>
-			<name>UsbHostLib_VCOM/UsbHostLib_VCOM</name>
-			<type>9</type>
+			<id>1519209566979</id>
+			<name>Library/Library</name>
+			<type>5</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-uart.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1519209695114</id>
+			<name>UsbHostLib/UsbHostLib</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-usb_core.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1519209695124</id>
+			<name>UsbHostLib/UsbHostLib</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-mem_alloc.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1519209695132</id>
+			<name>UsbHostLib/UsbHostLib</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-ohci.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1519209695138</id>
+			<name>UsbHostLib/UsbHostLib</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-ehci.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1519209695144</id>
+			<name>UsbHostLib/UsbHostLib</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-ehci_iso.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1519209695150</id>
+			<name>UsbHostLib/UsbHostLib</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-hub.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1519209808431</id>
+			<name>UsbHostLib_VCOM/UsbHostLib_VCOM</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-cdc_core.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1519209808438</id>
+			<name>UsbHostLib_VCOM/UsbHostLib_VCOM</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-cdc_driver.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1519209808445</id>
+			<name>UsbHostLib_VCOM/UsbHostLib_VCOM</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-cdc_parser.c</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>
