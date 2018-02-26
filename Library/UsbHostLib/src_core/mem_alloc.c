@@ -337,7 +337,7 @@ qTD_T * alloc_ehci_qTD(UTR_T *utr)
             memset(qtd, 0, sizeof(*qtd));
             qtd->Next_qTD     = QTD_LIST_END;
             qtd->Alt_Next_qTD = QTD_LIST_END;
-            qtd->Token        = QTD_STS_HALT;
+            qtd->Token        = 0x1197B7F; // QTD_STS_HALT;  visit_qtd() will not remove a qTD with this mark. It means the qTD still not ready for transfer.
             qtd->utr = utr;
             mem_debug("[ALLOC] [qTD] - 0x%x\n", (int)qtd);
             return qtd;

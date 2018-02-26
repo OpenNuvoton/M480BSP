@@ -110,18 +110,7 @@ static int  do_scsi_command(MSC_T *msc, uint8_t *buff, uint32_t data_len, int bI
 
 int  run_scsi_command(MSC_T *msc, uint8_t *buff, uint32_t data_len, int bIsDataIn, int timeout_ticks)
 {
-#if 1
     return do_scsi_command(msc, buff, data_len, bIsDataIn, timeout_ticks);
-#else
-    int  ret;
-
-    ret = do_scsi_command(msc, buff, data_len, bIsDataIn, timeout_ticks);
-    if (ret < 0) {
-        msc_debug_msg("Transfer failed [%d], retry again\n", ret);
-        return do_scsi_command(msc, buff, data_len, bIsDataIn, timeout_ticks);
-    }
-    return 0;
-#endif
 }
 
 /*** (C) COPYRIGHT 2017 Nuvoton Technology Corp. ***/

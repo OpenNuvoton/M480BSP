@@ -237,6 +237,7 @@ static int  ehci_init(void)
     _ehci->UCMDR = UCMDR_INT_THR_CTRL | HSUSBH_UCMDR_RUN_Msk;
 
     _ghost_qtd = alloc_ehci_qTD(NULL);
+    _ghost_qtd->Token = 0x11197B7F;    //QTD_STS_HALT;  visit_qtd() will not remove a qTD with this mark. It represents a qhost qTD.
 
     /*------------------------------------------------------------------------------------*/
     /*  Initialize asynchronous list                                                      */
@@ -794,11 +795,16 @@ static int ehci_quit_xfer(UTR_T *utr, EP_INFO_T *ep)
 
 static int visit_qtd(qTD_T *qtd)
 {
+	if ((qtd->Token == 0x11197B7F) || (qtd->Token == 0x1197B7F))
+	    return 0;                    /* A Dummy qTD or qTD on writing, don't touch it.    */
+
     // USB_debug("Visit qtd 0x%x - 0x%x\n", (int)qtd, qtd->Token);
 
     if ((qtd->Token & QTD_STS_ACTIVE) == 0) {
         if (qtd->Token & (QTD_STS_HALT | QTD_STS_DATA_BUFF_ERR | QTD_STS_BABBLE | QTD_STS_XactErr | QTD_STS_MISS_MF)) {
             USB_error("qTD error token=0x%x!  0x%x\n", qtd->Token, qtd->Bptr[0]);
+            if (qtd->utr->status == 0)
+            	qtd->utr->status = USBH_ERR_TRANSACTION;
         } else {
             if ((qtd->Token & QTD_PID_Msk) != QTD_PID_SETUP) {
                 qtd->utr->xfer_len += qtd->xfer_len - QTD_TODO_LEN(qtd->Token);

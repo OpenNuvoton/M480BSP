@@ -131,11 +131,10 @@ void msc_reset(MSC_T *msc)
 
     msc_debug_msg("Reset MSC device...\n");
 
-    ret = usbh_ctrl_xfer(udev, REQ_TYPE_OUT | REQ_TYPE_STD_DEV | REQ_TYPE_TO_IFACE,
-                         0xFF, 0, 0, 0, NULL, &read_len, 200);
+    ret = usbh_ctrl_xfer(udev, REQ_TYPE_OUT | REQ_TYPE_CLASS_DEV | REQ_TYPE_TO_IFACE,
+                         0xFF, 0, msc->iface->if_num, 0, NULL, &read_len, 100);
     if (ret < 0) {
         msc_debug_msg("UAMSS reset request failed!\n");
-        return;
     }
     usbh_clear_halt(udev, msc->ep_bulk_out->bEndpointAddress);
     usbh_clear_halt(udev, msc->ep_bulk_in->bEndpointAddress);
@@ -217,6 +216,30 @@ static int  msc_test_unit_ready(MSC_T *msc)
         msc_debug_msg("TEST_UNIT_READY command success.\n");
     }
     return ret;
+}
+
+/**
+ *  @brief    Reset a connected USB mass storage device.
+ *  @param[in] drv_no    USB disk drive number.
+ *  @retval    0          Succes
+ *  @retval    Otherwise  Failed
+ */
+int  usbh_umas_reset_disk(int drv_no)
+{
+    MSC_T      *msc;
+    UDEV_T     *udev;
+    
+    msc_debug_msg("usbh_umas_reset_disk ...\n");
+    
+    msc = find_msc_by_drive(drv_no);
+    if (msc == NULL)
+        return UMAS_ERR_DRIVE_NOT_FOUND;
+
+    udev = msc->iface->udev;
+    
+    usbh_reset_device(udev);
+
+    return 0;
 }
 
 static int  umass_init_device(MSC_T *msc)

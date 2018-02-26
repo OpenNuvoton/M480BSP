@@ -191,6 +191,7 @@ extern int  usbh_umas_disk_status(int drv_no);
 extern int  usbh_umas_read(int drv_no, uint32_t sec_no, int sec_cnt, uint8_t *buff);
 extern int  usbh_umas_write(int drv_no, uint32_t sec_no, int sec_cnt, uint8_t *buff);
 extern int  usbh_umas_ioctl(int drv_no, int cmd, void *buff);
+extern int  usbh_umas_reset_disk(int drv_no);
 
 /*------------------------------------------------------------------*/
 /*                                                                  */

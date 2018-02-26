@@ -85,7 +85,7 @@ void usbh_install_conn_callback(CONN_FUNC *conn_func, CONN_FUNC *disconn_func)
     g_disconn_func = disconn_func;
 }
 
-int  usbh_reset_device(UDEV_T *udev)
+static int  reset_device(UDEV_T *udev)
 {
     if (udev->parent == NULL) {
         if (udev->hc_driver)
@@ -604,6 +604,31 @@ int usbh_get_config_descriptor(UDEV_T *udev, uint8_t *desc_buff, int buff_len)
 }
 
 /**
+ *  @brief  Get string descriptor from the USB device.
+  * @param[in]  udev       The target USB device.
+ *  @param[in]  index      Index of string descriptor
+ *  @param[out] desc_buff  Data buffer to receive the string descriptor data.
+ *  @param[in]  buff_len   Valid length of <desc_buff>
+ *  @return   Success or not.
+ *  @retval   0  Success
+ *  @retval   Otherwise  Failed
+ */
+int usbh_get_string_descriptor(UDEV_T *udev, int index, uint8_t *desc_buff, int buff_len)
+{
+    uint32_t  read_len;
+    int       ret;
+
+    /*------------------------------------------------------------------------------------*/
+    /* Issue GET DESCRIPTOR command to get configuration descriptor                       */
+    /*------------------------------------------------------------------------------------*/
+    ret = usbh_ctrl_xfer(udev, REQ_TYPE_IN | REQ_TYPE_STD_DEV | REQ_TYPE_TO_DEV,
+                         USB_REQ_GET_DESCRIPTOR,
+                         ((USB_DT_STANDARD | USB_DT_STRING) << 8) | index, 0x0409, buff_len,
+                         desc_buff, &read_len, 200);
+    return ret;
+}
+
+/**
  *  @brief  Issue a standard request SET_FEATURE to clear USB device endpoint halt state.
  *  @param[in] ep_addr  Endpoint to be clear halt.
  *  @return   Success or not.
@@ -852,6 +877,20 @@ static int  usbh_parse_configuration(UDEV_T *udev, uint8_t *desc_buff)
     return len;
 }
 
+void print_usb_string(char *lead, uint8_t *str)
+{
+	int  len, i = 2;
+	
+	USB_debug("%s", lead);
+	len = str[0];
+	while (i < len) 
+	{
+		USB_debug("%c", str[i]);
+		i += 2;
+	}
+	USB_debug("\n");
+}
+
 int  connect_device(UDEV_T *udev)
 {
     DESC_CONF_T  *conf;
@@ -866,7 +905,7 @@ int  connect_device(UDEV_T *udev)
 
     usbh_get_device_descriptor(udev, &udev->descriptor);
 
-    usbh_reset_device(udev);
+    reset_device(udev);
     
     delay_us(100 * 1000); 
 
@@ -906,10 +945,131 @@ int  connect_device(UDEV_T *udev)
     dump_config_descriptor(conf);
 #endif
 
+#if 0  /* printf string descriptors, for debug only */
+	str_buff = (uint8_t *)usbh_alloc_mem(MAX_DESC_BUFF_SIZE);
+    if (udev->descriptor.iManufacturer != 0) 
+    {
+        usbh_get_string_descriptor(udev, udev->descriptor.iManufacturer, str_buff, MAX_DESC_BUFF_SIZE);  
+        print_usb_string("Manufactor: ", str_buff);	
+	}
+    if (udev->descriptor.iProduct != 0) 
+    {
+        usbh_get_string_descriptor(udev, udev->descriptor.iProduct, str_buff, MAX_DESC_BUFF_SIZE);  
+        print_usb_string("Product: ", str_buff);	
+	}
+    if (udev->descriptor.iSerialNumber != 0) 
+    {
+        usbh_get_string_descriptor(udev, udev->descriptor.iSerialNumber, str_buff, MAX_DESC_BUFF_SIZE);  
+        print_usb_string("Serial Number: ", str_buff);	
+	}
+	usbh_free_mem(str_buff, MAX_DESC_BUFF_SIZE); 
+#endif
+
     /* Always select the first configuration */
     ret = usbh_set_configuration(udev, conf->bConfigurationValue);
     if (ret < 0) {
         USB_debug("Set configuration %d failed!\n", conf->bConfigurationValue);
+        return ret;
+    }
+
+    /* Parse the configuration/interface/endpoint descriptors and find corresponding drivers. */
+    ret = usbh_parse_configuration(udev, (uint8_t *)conf);
+    if (ret < 0) {
+        USB_debug("Parse configuration %d failed!\n", conf->bConfigurationValue);
+        return ret;
+    }
+
+    /* Enable remote wakeup                                                                   */
+    if (usbh_ctrl_xfer(udev, REQ_TYPE_OUT | REQ_TYPE_STD_DEV | REQ_TYPE_TO_DEV,
+                         USB_REQ_SET_FEATURE, 0x01, 0x0000, 0x0000,
+                         NULL, &read_len, 300) < 0)
+    {
+        USB_debug("Device not accept remote wakeup enable command.\n");
+    }
+
+    if (g_conn_func)
+        g_conn_func(udev, 0);
+
+    return ret;
+}
+
+int  usbh_reset_device(UDEV_T *udev)
+{
+	IFACE_T      *iface;
+    DESC_CONF_T  *conf;
+    uint32_t     read_len;
+    int          dev_num, ret;
+
+    USB_debug("Reset device =>\n");
+
+    usbh_pooling_hubs();
+
+    /*------------------------------------------------------------------------------------*/
+    /*  Disconnect device                                                                 */
+    /*------------------------------------------------------------------------------------*/
+
+    if (g_disconn_func)
+        g_disconn_func(udev, 0);
+    
+    usbh_quit_xfer(udev, &(udev->ep0));    /* Quit control transfer if hw_pipe is not NULL.  */
+
+    /* Notified all actived interface device driver  */
+    iface = udev->iface_list;
+    while (iface != NULL) {
+        udev->iface_list = iface->next;
+        iface->driver->disconnect(iface);
+        usbh_free_mem(iface, sizeof(*iface));
+        iface = udev->iface_list;
+    }
+
+    /*------------------------------------------------------------------------------------*/
+    /*  Reset device                                                                      */
+    /*------------------------------------------------------------------------------------*/
+
+    reset_device(udev);
+    
+    delay_us(100 * 1000); 
+
+    /*------------------------------------------------------------------------------------*/
+    /*  Set address (use current address)                                                 */
+    /*------------------------------------------------------------------------------------*/
+
+	dev_num = udev->dev_num;
+	udev->dev_num = 0;
+    /* Issue SET ADDRESS command to set the same device address                           */
+    ret = usbh_ctrl_xfer(udev, REQ_TYPE_OUT | REQ_TYPE_STD_DEV | REQ_TYPE_TO_DEV,
+                         USB_REQ_SET_ADDRESS, dev_num, 0, 0,
+                         NULL, &read_len, 100);
+    udev->dev_num = dev_num;
+    if (ret < 0)
+        return ret;
+
+    delay_us(100 * 1000);                   /* after set address, give 100 ms delay       */
+
+    /*------------------------------------------------------------------------------------*/
+    /*  Get device descriptor                                                             */
+    /*------------------------------------------------------------------------------------*/
+
+    /* Get device descriptor again with new device address */
+    ret = usbh_get_device_descriptor(udev, &udev->descriptor);
+    if (ret < 0)
+        return ret;
+
+    /*------------------------------------------------------------------------------------*/
+    /*  Get configuration descriptor                                                      */
+    /*------------------------------------------------------------------------------------*/
+
+    conf = (DESC_CONF_T *)udev->cfd_buff;   /* using the previously allocated buffer      */
+
+    /* Get configuration descriptor again with new device address */
+    ret = usbh_get_config_descriptor(udev, (uint8_t *)conf, MAX_DESC_BUFF_SIZE);
+    if (ret < 0)
+        return ret;
+
+    /* Always select the first configuration */
+    ret = usbh_set_configuration(udev, udev->cur_conf);
+    if (ret < 0) {
+        USB_debug("Set configuration %d failed!\n", udev->cur_conf);
         return ret;
     }
 

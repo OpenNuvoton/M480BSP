@@ -101,7 +101,6 @@ typedef struct msc_t {
 
 
 extern int  run_scsi_command(MSC_T *msc, uint8_t *buff, uint32_t data_len, int bIsDataIn, int timeout_ticks);
-extern void msc_reset(MSC_T *msc);
 
 
 /// @endcond
