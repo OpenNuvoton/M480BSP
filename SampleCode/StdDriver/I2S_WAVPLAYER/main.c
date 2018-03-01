@@ -25,7 +25,7 @@ DMA_DESC_T DMA_DESC[2];
 
 //uint32_t PcmBuff[BUFF_LEN] = {0};
 uint32_t volatile u32BuffPos = 0;
-FATFS FatFs[_VOLUMES];      /* File system object for logical drive */
+FATFS FatFs[FF_VOLUMES];      /* File system object for logical drive */
 #ifdef __ICCARM__
 #pragma data_alignment=32
 BYTE Buff[1024] ;       /* Working buffer */

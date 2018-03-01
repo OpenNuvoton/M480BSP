@@ -254,7 +254,7 @@ static FRESULT scan_files (char* path)
     if ((res = f_opendir(&dirs, path)) == FR_OK) {
         i = strlen(path);
         while (((res = f_readdir(&dirs, &Finfo)) == FR_OK) && Finfo.fname[0]) {
-            if (_FS_RPATH && Finfo.fname[0] == '.') continue;
+            if (FF_FS_RPATH && Finfo.fname[0] == '.') continue;
 #if _USE_LFN
             fn = *Finfo.lfname ? Finfo.lfname : Finfo.fname;
 #else

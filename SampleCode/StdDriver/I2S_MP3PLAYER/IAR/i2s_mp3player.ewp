@@ -305,7 +305,7 @@
           <state>$PROJ_DIR$..\..\..\..\..\Library\CMSIS\Include</state>
           <state>$PROJ_DIR$..\..\..\..\..\Library\Device\Nuvoton\M480\Include</state>
           <state>$PROJ_DIR$..\..\..\..\..\Library\StdDriver\inc</state>
-          <state>$PROJ_DIR$..\..\..\..\..\ThirdParty\FATFS\src</state>
+          <state>$PROJ_DIR$..\..\..\..\..\ThirdParty\FATFS\source</state>
           <state>$PROJ_DIR$..\..\..\..\..\ThirdParty\libmad\inc</state>
         </option>
         <option>
@@ -951,7 +951,7 @@
   <group>
     <name>FATFS</name>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\FatFs\src\ff.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\FatFs\source\ff.c</name>
     </file>
   </group>
   <group>

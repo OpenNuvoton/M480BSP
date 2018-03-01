@@ -17,7 +17,7 @@
 #include "ff.h"
 
 uint32_t volatile u32BuffPos = 0;
-FATFS FatFs[_VOLUMES];               /* File system object for logical drive */
+FATFS FatFs[FF_VOLUMES];               /* File system object for logical drive */
 
 #ifdef __ICCARM__
 #pragma data_alignment=32

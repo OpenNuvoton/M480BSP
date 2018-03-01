@@ -52,7 +52,7 @@
 		<link>
 			<name>FATFS/FATFS</name>
 			<type>2</type>
-			<locationURI>PARENT-5-PROJECT_LOC/ThirdParty/FatFs/src</locationURI>
+			<locationURI>PARENT-5-PROJECT_LOC/ThirdParty/FatFs/source</locationURI>
 		</link>
 		<link>
 			<name>Library/Library</name>
@@ -96,7 +96,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505221538302</id>
+			<id>1519898014412</id>
 			<name>FATFS/FATFS</name>
 			<type>5</type>
 			<matcher>
@@ -105,7 +105,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505221538325</id>
+			<id>1519898014419</id>
 			<name>FATFS/FATFS</name>
 			<type>10</type>
 			<matcher>

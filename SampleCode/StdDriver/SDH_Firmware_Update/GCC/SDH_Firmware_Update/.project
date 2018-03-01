@@ -57,7 +57,7 @@
 		<link>
 			<name>ThirdParty_FatFs/ThirdParty_FatFs</name>
 			<type>2</type>
-			<locationURI>PARENT-5-PROJECT_LOC/ThirdParty/FatFs/src</locationURI>
+			<locationURI>PARENT-5-PROJECT_LOC/ThirdParty/FatFs/source</locationURI>
 		</link>
 		<link>
 			<name>User/SDGlue.c</name>
@@ -150,7 +150,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>0</id>
+			<id>1519896655097</id>
 			<name>ThirdParty_FatFs/ThirdParty_FatFs</name>
 			<type>5</type>
 			<matcher>
@@ -159,7 +159,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>0</id>
+			<id>1519896655107</id>
 			<name>ThirdParty_FatFs/ThirdParty_FatFs</name>
 			<type>10</type>
 			<matcher>

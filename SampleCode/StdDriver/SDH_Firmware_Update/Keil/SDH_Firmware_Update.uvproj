@@ -364,7 +364,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\Library\CMSIS\Include;..\..\..\..\ThirdParty\FatFs\src</IncludePath>
+              <IncludePath>..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\Library\CMSIS\Include;..\..\..\..\ThirdParty\FatFs\source</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -485,7 +485,7 @@
             <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\FATFS\src\ff.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\FatFs\source\ff.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -52,7 +52,7 @@
 		<link>
 			<name>FATFS/FATFS</name>
 			<type>2</type>
-			<locationURI>PARENT-5-PROJECT_LOC/ThirdParty/FatFs/src</locationURI>
+			<locationURI>PARENT-5-PROJECT_LOC/ThirdParty/FatFs/source</locationURI>
 		</link>
 		<link>
 			<name>Library/Library</name>

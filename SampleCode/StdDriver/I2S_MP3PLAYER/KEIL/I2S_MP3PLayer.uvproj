@@ -364,7 +364,7 @@
               <MiscControls></MiscControls>
               <Define>__WINS__ OPT_SPEED</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\ThirdParty\libmad\inc;..\..\..\..\Library\StdDriver\inc;..\..\..\..\Library\UsbHostLib\INCLUDE;..\..\..\..\Library\UsbHostLib\INCLUDE\inc_mass;..\..\..\..\ThirdParty\FATFS\src;..\..\I2S_WavMP3Player_New</IncludePath>
+              <IncludePath>..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\ThirdParty\libmad\inc;..\..\..\..\Library\StdDriver\inc;..\..\..\..\Library\UsbHostLib\INCLUDE;..\..\..\..\Library\UsbHostLib\INCLUDE\inc_mass;..\..\..\..\ThirdParty\FATFS\source;..\..\I2S_WavMP3Player_New</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -510,7 +510,7 @@
             <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\FATFS\src\ff.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\FATFS\source\ff.c</FilePath>
             </File>
           </Files>
         </Group>
