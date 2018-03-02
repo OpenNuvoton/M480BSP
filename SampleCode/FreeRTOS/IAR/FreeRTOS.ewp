@@ -305,10 +305,10 @@
           <state>$PROJ_DIR$..\..\..\..\Library\CMSIS\Include</state>
           <state>$PROJ_DIR$..\..\..\..\Library\Device\Nuvoton\M480\Include</state>
           <state>$PROJ_DIR$..\..\..\..\Library\StdDriver\inc</state>
-          <state>$PROJ_DIR$..\..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\SOURCE\include</state>
+          <state>$PROJ_DIR$..\..\..\..\ThirdParty\FreeRTOS\SOURCE\include</state>
           <state>$PROJ_DIR$..\..\</state>
-          <state>$PROJ_DIR$..\..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Demo\Common\include</state>
-          <state>$PROJ_DIR$..\..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\SOURCE\portable\IAR\ARM_CM4F</state>
+          <state>$PROJ_DIR$..\..\..\..\ThirdParty\FreeRTOS\Demo\Common\include</state>
+          <state>$PROJ_DIR$..\..\..\..\ThirdParty\FreeRTOS\SOURCE\portable\IAR\ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -958,25 +958,25 @@
   <group>
     <name>FreeRTOS files</name>
     <file>
-      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Source\portable\MemMang\heap_2.c</name>
+      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOS\Source\portable\MemMang\heap_2.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Source\list.c</name>
+      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOS\Source\list.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Source\portable\IAR\ARM_CM4F\port.c</name>
+      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOS\Source\portable\IAR\ARM_CM4F\port.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Source\portable\IAR\ARM_CM4F\portasm.s</name>
+      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOS\Source\portable\IAR\ARM_CM4F\portasm.s</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Source\queue.c</name>
+      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOS\Source\queue.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Source\tasks.c</name>
+      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOS\Source\tasks.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Source\timers.c</name>
+      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOS\Source\timers.c</name>
     </file>
   </group>
   <group>
@@ -997,7 +997,7 @@
   <group>
     <name>User</name>
     <file>
-      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Demo\Common\Minimal\flash.c</name>
+      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOS\Demo\Common\Minimal\flash.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\main.c</name>
@@ -1006,10 +1006,10 @@
       <name>$PROJ_DIR$\..\ParTest.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Demo\Common\Minimal\PollQ.c</name>
+      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOS\Demo\Common\Minimal\PollQ.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Demo\Common\Minimal\QueueSet.c</name>
+      <name>$PROJ_DIR$\..\..\..\ThirdParty\FreeRTOS\Demo\Common\Minimal\QueueSet.c</name>
     </file>
   </group>
 </project>

@@ -55,9 +55,9 @@
 			<locationURI>PARENT-5-PROJECT_LOC/Library/StdDriver/src</locationURI>
 		</link>
 		<link>
-			<name>LwIP/src</name>
+			<name>LwIP/lwIP</name>
 			<type>2</type>
-			<locationURI>PARENT-5-PROJECT_LOC/ThirdParty/lwip-2.0.2/src</locationURI>
+			<locationURI>PARENT-5-PROJECT_LOC/ThirdParty/lwIP/src</locationURI>
 		</link>
 		<link>
 			<name>User/m480_emac.c</name>
@@ -136,8 +136,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1504848454089</id>
-			<name>LwIP/src</name>
+			<id>0</id>
+			<name>LwIP/lwIP</name>
 			<type>9</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
@@ -145,8 +145,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1504848454097</id>
-			<name>LwIP/src</name>
+			<id>0</id>
+			<name>LwIP/lwIP</name>
 			<type>9</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
@@ -154,8 +154,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1504848454104</id>
-			<name>LwIP/src</name>
+			<id>0</id>
+			<name>LwIP/lwIP</name>
 			<type>9</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
@@ -163,8 +163,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1504848513521</id>
-			<name>LwIP/src/apps</name>
+			<id>0</id>
+			<name>LwIP/lwIP/apps</name>
 			<type>9</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
@@ -172,8 +172,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1504848215304</id>
-			<name>LwIP/src/core</name>
+			<id>0</id>
+			<name>LwIP/lwIP/core</name>
 			<type>9</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
@@ -181,8 +181,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1504848156939</id>
-			<name>LwIP/src/netif</name>
+			<id>0</id>
+			<name>LwIP/lwIP/netif</name>
 			<type>5</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
@@ -190,8 +190,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1504848156959</id>
-			<name>LwIP/src/netif</name>
+			<id>0</id>
+			<name>LwIP/lwIP/netif</name>
 			<type>10</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>

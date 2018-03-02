@@ -52,7 +52,7 @@
 		<link>
 			<name>FreeRTOS/FreeRTOS</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/ThirdParty/FreeRTOSV9.0.0/FreeRTOS</locationURI>
+			<locationURI>PARENT-4-PROJECT_LOC/ThirdParty/FreeRTOS</locationURI>
 		</link>
 		<link>
 			<name>Library/Library</name>
@@ -231,6 +231,15 @@
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-false-false-PollQ.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1519955483763</id>
+			<name>FreeRTOS/FreeRTOS/Source/portable/GCC</name>
+			<type>9</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-ARM_CM4F</arguments>
 			</matcher>
 		</filter>
 		<filter>

@@ -364,7 +364,7 @@
               <MiscControls></MiscControls>
               <Define>RVDS_ARMCM4_NUC4xx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Library\CMSIS\Include;..\..\..\Library\StdDriver\inc;..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Source\include;..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Demo\COMMON\include;..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\SOURCE\portable\RVDS\ARM_CM4F;..\..\FreeRTOS</IncludePath>
+              <IncludePath>..\..\..\Library\CMSIS\Include;..\..\..\Library\StdDriver\inc;..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\ThirdParty\FreeRTOS\Source\include;..\..\..\ThirdParty\FreeRTOS\Demo\COMMON\include;..\..\..\ThirdParty\FreeRTOS\SOURCE\portable\RVDS\ARM_CM4F;..\..\FreeRTOS</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -430,17 +430,17 @@
             <File>
               <FileName>QueueSet.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Demo\Common\Minimal\QueueSet.c</FilePath>
+              <FilePath>..\..\..\ThirdParty\FreeRTOS\Demo\Common\Minimal\QueueSet.c</FilePath>
             </File>
             <File>
               <FileName>PollQ.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Demo\Common\Minimal\PollQ.c</FilePath>
+              <FilePath>..\..\..\ThirdParty\FreeRTOS\Demo\Common\Minimal\PollQ.c</FilePath>
             </File>
             <File>
               <FileName>flash.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Demo\Common\Minimal\flash.c</FilePath>
+              <FilePath>..\..\..\ThirdParty\FreeRTOS\Demo\Common\Minimal\flash.c</FilePath>
             </File>
             <File>
               <FileName>ParTest.c</FileName>
@@ -455,32 +455,32 @@
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Source\portable\RVDS\ARM_CM4F\port.c</FilePath>
+              <FilePath>..\..\..\ThirdParty\FreeRTOS\Source\portable\RVDS\ARM_CM4F\port.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Source\list.c</FilePath>
+              <FilePath>..\..\..\ThirdParty\FreeRTOS\Source\list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Source\queue.c</FilePath>
+              <FilePath>..\..\..\ThirdParty\FreeRTOS\Source\queue.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Source\tasks.c</FilePath>
+              <FilePath>..\..\..\ThirdParty\FreeRTOS\Source\tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Source\timers.c</FilePath>
+              <FilePath>..\..\..\ThirdParty\FreeRTOS\Source\timers.c</FilePath>
             </File>
             <File>
               <FileName>heap_2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\FreeRTOSV9.0.0\FreeRTOS\Source\portable\MemMang\heap_2.c</FilePath>
+              <FilePath>..\..\..\ThirdParty\FreeRTOS\Source\portable\MemMang\heap_2.c</FilePath>
             </File>
           </Files>
         </Group>

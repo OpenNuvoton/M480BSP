@@ -305,7 +305,7 @@
           <state>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\M480\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\StdDriver\inc</state>
           <state>$PROJ_DIR$\..\include</state>
-          <state>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\include</state>
+          <state>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -968,85 +968,85 @@
   <group>
     <name>LwIP</name>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\ipv4\autoip.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ipv4\autoip.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\def.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\def.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\ipv4\dhcp.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ipv4\dhcp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\dns.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\dns.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\ipv4\etharp.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ipv4\etharp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\netif\ethernet.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\netif\ethernet.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\ipv4\icmp.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ipv4\icmp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\ipv4\igmp.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ipv4\igmp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\inet_chksum.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\inet_chksum.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\init.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\init.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\ip.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ip.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\ipv4\ip4.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ipv4\ip4.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\ipv4\ip4_addr.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ipv4\ip4_addr.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\ipv4\ip4_frag.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ipv4\ip4_frag.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\apps\lwiperf\lwiperf.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\apps\lwiperf\lwiperf.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\mem.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\mem.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\memp.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\memp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\netif.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\netif.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\pbuf.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\pbuf.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\raw.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\raw.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\stats.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\stats.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\sys_lwip.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\sys_lwip.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\tcp.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\tcp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\tcp_in.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\tcp_in.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\tcp_out.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\tcp_out.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\timeouts.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\timeouts.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip-2.0.2\src\core\udp.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\udp.c</name>
     </file>
   </group>
   <group>
