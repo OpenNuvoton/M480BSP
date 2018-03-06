@@ -103,7 +103,13 @@ typedef enum {                          /*!< ECC curve                \hideiniti
     CURVE_B_233,                        /*!< ECC curve B-233          \hideinitializer */
     CURVE_B_283,                        /*!< ECC curve B-283          \hideinitializer */
     CURVE_B_409,                        /*!< ECC curve B-409          \hideinitializer */
-    CURVE_B_571                         /*!< ECC curve K-571          \hideinitializer */
+    CURVE_B_571,                        /*!< ECC curve K-571          \hideinitializer */
+    CURVE_KO_192,                       /*!< ECC 192-bits "Koblitz" curve   \hideinitializer */
+    CURVE_KO_224,                       /*!< ECC 224-bits "Koblitz" curve   \hideinitializer */
+    CURVE_KO_256,                       /*!< ECC 256-bits "Koblitz" curve   \hideinitializer */
+    CURVE_BP_256,                       /*!< ECC Brainpool 256-bits curve   \hideinitializer */
+    CURVE_BP_384,                       /*!< ECC Brainpool 256-bits curve   \hideinitializer */
+    CURVE_BP_512,                       /*!< ECC Brainpool 256-bits curve   \hideinitializer */
 }
 E_ECC_CURVE;                            /*!< ECC curve                \hideinitializer */
 
@@ -346,6 +352,7 @@ void SHA_Read(CRPT_T *crpt, uint32_t u32Digest[]);
 void ECC_Complete(CRPT_T *crpt);
 int  ECC_IsPrivateKeyValid(CRPT_T *crpt, E_ECC_CURVE ecc_curve,  char private_k[]);
 int32_t  ECC_GeneratePublicKey(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *private_k, char public_k1[], char public_k2[]);
+int32_t  ECC_Mutiply(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char x1[], char y1[], char *k, char x2[], char y2[]);
 int32_t  ECC_GenerateSecretZ(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *private_k, char public_k1[], char public_k2[], char secret_z[]);
 int32_t  ECC_GenerateSignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message, char *d, char *k, char *R, char *S);
 int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message, char *public_k1, char *public_k2, char *R, char *S);
