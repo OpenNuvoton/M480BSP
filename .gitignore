@@ -7,6 +7,35 @@ Debug/
 Release/
 settings/
 
+# For GCC
+!.cproject
+!.project
+
+.lock
+.location
+.markers
+version.ini
+.history/
+.mylyn/
+Packages/
+.settings/
+RemoteSystemsTempFiles/
+Samplecode/*/*/GCC/.metadata/.plugins/*
+Samplecode/*/*/packages/
+Samplecode/*/GCC/.metadata/.plugins/*
+Samplecode/*/packages/
+
+!Samplecode/*/*/GCC/.metadata/.plugins/org.eclipse.core.resources/
+!Samplecode/*/*/GCC/.metadata/.plugins/org.eclipse.debug.core/
+!Samplecode/*/*/GCC/.metadata/.plugins/org.eclipse.debug.ui/
+!Samplecode/*/*/GCC/.metadata/.plugins/org.eclipse.e4.workbench/
+!Samplecode/*/*/GCC/.metadata/.plugins/org.eclipse.core.resources/.projects/RemoteSystemsTempFiles/
+!Samplecode/*/GCC/.metadata/.plugins/org.eclipse.core.resources/
+!Samplecode/*/GCC/.metadata/.plugins/org.eclipse.debug.core/
+!Samplecode/*/GCC/.metadata/.plugins/org.eclipse.debug.ui/
+!Samplecode/*/GCC/.metadata/.plugins/org.eclipse.e4.workbench/
+!Samplecode/*/GCC/.metadata/.plugins/org.eclipse.core.resources/.projects/RemoteSystemsTempFiles/
+
 #For OSX
 .DS_Store
 
