@@ -390,6 +390,8 @@ void EMAC_Open(uint8_t *pu8MacAddr)
                     EMAC_CAMCTL_AMP_Msk |
                     EMAC_CAMCTL_ABP_Msk;
 
+    /* Limit the max receive frame length to 1514 + 4 */
+    EMAC->MRFL = 1518;
     EMAC_PhyInit();
 }
 
