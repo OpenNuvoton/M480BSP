@@ -26,7 +26,8 @@ void EPWM0P0_IRQHandler(void)
     static uint32_t out;
 
     // Channel 0 frequency is 100Hz, every 1 second enter this IRQ handler 100 times.
-    if(++cnt == 100) {
+    if(++cnt == 100)
+    {
         if(out)
             EPWM_EnableOutput(EPWM0, EPWM_CH_0_MASK | EPWM_CH_1_MASK | EPWM_CH_2_MASK | EPWM_CH_3_MASK);
         else

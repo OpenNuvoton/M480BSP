@@ -129,7 +129,8 @@ void UART1_TEST_HANDLE(void)
 {
     uint32_t u32IntSts = UART1->INTSTS;
 
-    if(u32IntSts & UART_INTSTS_WKIF_Msk) {
+    if(u32IntSts & UART_INTSTS_WKIF_Msk)
+    {
         printf("\n UART Wake-Up ");
 
         UART1->INTSTS = UART_INTSTS_WKIF_Msk;

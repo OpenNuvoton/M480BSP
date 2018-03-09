@@ -40,8 +40,10 @@ void tcp_echoserver_serve(struct netconn *conn)
     netconn_recv(conn,&inbuf);
 
     printf(" [OK] ...\n");
-    if (inbuf != NULL) {
-        if (netconn_err(conn) == ERR_OK) {
+    if (inbuf != NULL)
+    {
+        if (netconn_err(conn) == ERR_OK)
+        {
             netbuf_data(inbuf, (void**)&buf, &buflen);
             if (strncmp(buf, "nuvoton", 7) == 0)
                 netconn_write(conn, (const unsigned char*)string_pass, (size_t)strlen(string_pass), NETCONN_NOCOPY);
@@ -76,21 +78,25 @@ static void tcp_echoserver_netconn_thread(void *arg)
     /* Create a new TCP connection handle */
     conn = netconn_new(NETCONN_TCP);
 
-    if (conn!= NULL) {
+    if (conn!= NULL)
+    {
         /* Bind to port 80 (HTTP) with default IP address */
         err = netconn_bind(conn, NULL, 80);
 
-        if (err == ERR_OK) {
+        if (err == ERR_OK)
+        {
             /* Put the connection into LISTEN state */
             netconn_listen(conn);
 
-            while(1) {
+            while(1)
+            {
                 printf("Wait for TCP connection ...");
 
                 /* accept any icoming connection */
                 netconn_accept(conn,&newconn);
 
-                if(newconn) {
+                if(newconn)
+                {
                     printf(" [OK] ...\n");
 
                     /* serve connection */
@@ -100,10 +106,14 @@ static void tcp_echoserver_netconn_thread(void *arg)
                     netconn_delete(newconn);
                 }
             }
-        } else {
+        }
+        else
+        {
             printf("can not bind netconn");
         }
-    } else {
+    }
+    else
+    {
         printf("can not create netconn");
     }
 }

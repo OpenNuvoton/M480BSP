@@ -123,7 +123,8 @@ uint8_t ComputeChksumValue(uint8_t *pu8Buf, uint32_t u32ByteCnt)
 {
     uint32_t i, CheckSum = 0;
 
-    for(i = 0 ; i < u32ByteCnt; i++) {
+    for(i = 0 ; i < u32ByteCnt; i++)
+    {
         CheckSum += pu8Buf[i];
         if(CheckSum >= 256)
             CheckSum -= 255;

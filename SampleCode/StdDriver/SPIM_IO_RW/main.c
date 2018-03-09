@@ -112,7 +112,8 @@ int main()
 
     SPIM_SET_DCNUM(8);                /* Set 8 dummy cycle. */
 
-    if (SPIM_InitFlash(1) != 0) {      /* Initialized SPI flash */
+    if (SPIM_InitFlash(1) != 0)        /* Initialized SPI flash */
+    {
         printf("SPIM flash initialize failed!\n");
         goto lexit;
     }
@@ -133,13 +134,16 @@ int main()
      *  Verify flash page be erased
      */
     printf("Verify SPI flash block 0x%x be erased...", TEST_BLOCK_ADDR);
-    for (offset = 0; offset < FLASH_BLOCK_SIZE; offset += BUFFER_SIZE) {
+    for (offset = 0; offset < FLASH_BLOCK_SIZE; offset += BUFFER_SIZE)
+    {
         memset(g_buff, 0, BUFFER_SIZE);
         SPIM_IO_Read(TEST_BLOCK_ADDR+offset, USE_4_BYTES_MODE, BUFFER_SIZE, g_buff, OPCODE_FAST_READ, 1, 1, 1, 1);
 
         pData = (uint32_t *)g_buff;
-        for (i = 0; i < BUFFER_SIZE; i += 4, pData++) {
-            if (*pData != 0xFFFFFFFF) {
+        for (i = 0; i < BUFFER_SIZE; i += 4, pData++)
+        {
+            if (*pData != 0xFFFFFFFF)
+            {
                 printf("FAILED!\n");
                 printf("Flash address 0x%x, read 0x%x!\n", TEST_BLOCK_ADDR+i, *pData);
                 goto lexit;
@@ -152,7 +156,8 @@ int main()
      *  Program data to flash block
      */
     printf("Program sequential data to flash block 0x%x...", TEST_BLOCK_ADDR);
-    for (offset = 0; offset < FLASH_BLOCK_SIZE; offset += BUFFER_SIZE) {
+    for (offset = 0; offset < FLASH_BLOCK_SIZE; offset += BUFFER_SIZE)
+    {
         pData = (uint32_t *)g_buff;
         for (i = 0; i < BUFFER_SIZE; i += 4, pData++)
             *pData = (i << 16) | (TEST_BLOCK_ADDR + offset + i);
@@ -165,13 +170,16 @@ int main()
      *  Read and compare flash data
      */
     printf("Verify SPI flash block 0x%x data with Fast Read command...", TEST_BLOCK_ADDR);
-    for (offset = 0; offset < FLASH_BLOCK_SIZE; offset += BUFFER_SIZE) {
+    for (offset = 0; offset < FLASH_BLOCK_SIZE; offset += BUFFER_SIZE)
+    {
         memset(g_buff, 0, BUFFER_SIZE);
         SPIM_IO_Read(TEST_BLOCK_ADDR+offset, USE_4_BYTES_MODE, BUFFER_SIZE, g_buff, OPCODE_FAST_READ, 1, 1, 1, 1);
 
         pData = (uint32_t *)g_buff;
-        for (i = 0; i < BUFFER_SIZE; i += 4, pData++) {
-            if (*pData != ((i << 16) | (TEST_BLOCK_ADDR + offset + i))) {
+        for (i = 0; i < BUFFER_SIZE; i += 4, pData++)
+        {
+            if (*pData != ((i << 16) | (TEST_BLOCK_ADDR + offset + i)))
+            {
                 printf("FAILED!\n");
                 printf("Flash address 0x%x, read 0x%x, expect 0x%x!\n", TEST_BLOCK_ADDR+i, *pData, (i << 16) | (TEST_BLOCK_ADDR + offset + i));
                 goto lexit;
@@ -186,13 +194,16 @@ int main()
      *  Read and compare flash data
      */
     printf("Verify SPI flash block 0x%x data with Fast Read Dual Output command...", TEST_BLOCK_ADDR);
-    for (offset = 0; offset < FLASH_BLOCK_SIZE; offset += BUFFER_SIZE) {
+    for (offset = 0; offset < FLASH_BLOCK_SIZE; offset += BUFFER_SIZE)
+    {
         memset(g_buff, 0, BUFFER_SIZE);
         SPIM_IO_Read(TEST_BLOCK_ADDR+offset, USE_4_BYTES_MODE, BUFFER_SIZE, g_buff, OPCODE_FAST_DUAL_READ, 1, 1, 2, 1);
 
         pData = (uint32_t *)g_buff;
-        for (i = 0; i < BUFFER_SIZE; i += 4, pData++) {
-            if (*pData != ((i << 16) | (TEST_BLOCK_ADDR + offset + i))) {
+        for (i = 0; i < BUFFER_SIZE; i += 4, pData++)
+        {
+            if (*pData != ((i << 16) | (TEST_BLOCK_ADDR + offset + i)))
+            {
                 printf("FAILED!\n");
                 printf("Flash address 0x%x, read 0x%x, expect 0x%x!\n", TEST_BLOCK_ADDR+i, *pData, (i << 16) | (TEST_BLOCK_ADDR + offset + i));
                 goto lexit;

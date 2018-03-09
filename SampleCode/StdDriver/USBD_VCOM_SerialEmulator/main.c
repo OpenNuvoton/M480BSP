@@ -113,37 +113,46 @@ void UART0_IRQHandler(void)
 
     u32IntStatus = UART0->INTSTS;
 
-    if((u32IntStatus & UART_INTSTS_RDAINT_Msk) || (u32IntStatus & UART_INTSTS_RXTOINT_Msk)) {
+    if((u32IntStatus & UART_INTSTS_RDAINT_Msk) || (u32IntStatus & UART_INTSTS_RXTOINT_Msk))
+    {
         /* Receiver FIFO threshold level is reached or Rx time out */
 
         /* Get all the input characters */
-        while( (!UART_GET_RX_EMPTY(UART0)) ) {
+        while( (!UART_GET_RX_EMPTY(UART0)) )
+        {
             /* Get the character from UART Buffer */
             bInChar = UART_READ(UART0);    /* Rx trigger level is 1 byte*/
 
             /* Check if buffer full */
-            if(comRbytes < RXBUFSIZE) {
+            if(comRbytes < RXBUFSIZE)
+            {
                 /* Enqueue the character */
                 comRbuf[comRtail++] = bInChar;
                 if(comRtail >= RXBUFSIZE)
                     comRtail = 0;
                 comRbytes++;
-            } else {
+            }
+            else
+            {
                 /* FIFO over run */
             }
         }
     }
 
-    if(u32IntStatus & UART_INTSTS_THREINT_Msk) {
+    if(u32IntStatus & UART_INTSTS_THREINT_Msk)
+    {
 
-        if(comTbytes) {
+        if(comTbytes)
+        {
             /* Fill the Tx FIFO */
             size = comTbytes;
-            if(size >= TX_FIFO_SIZE) {
+            if(size >= TX_FIFO_SIZE)
+            {
                 size = TX_FIFO_SIZE;
             }
 
-            while(size) {
+            while(size)
+            {
                 bInChar = comTbuf[comThead++];
                 UART_WRITE(UART0, bInChar);
                 if(comThead >= TXBUFSIZE)
@@ -151,7 +160,9 @@ void UART0_IRQHandler(void)
                 comTbytes--;
                 size--;
             }
-        } else {
+        }
+        else
+        {
             /* No more data, just stop Tx (Stop work) */
             UART0->INTEN &= ~UART_INTEN_THREIEN_Msk;
         }
@@ -163,14 +174,17 @@ void VCOM_TransferData(void)
     int32_t i, i32Len;
 
     /* Check whether USB is ready for next packet or not*/
-    if(gu32TxSize == 0) {
+    if(gu32TxSize == 0)
+    {
         /* Check whether we have new COM Rx data to send to USB or not */
-        if(comRbytes) {
+        if(comRbytes)
+        {
             i32Len = comRbytes;
             if(i32Len > EP2_MAX_PKT_SIZE)
                 i32Len = EP2_MAX_PKT_SIZE;
 
-            for(i = 0; i < i32Len; i++) {
+            for(i = 0; i < i32Len; i++)
+            {
                 gRxBuf[i] = comRbuf[comRhead++];
                 if(comRhead >= RXBUFSIZE)
                     comRhead = 0;
@@ -183,7 +197,9 @@ void VCOM_TransferData(void)
             gu32TxSize = i32Len;
             USBD_MemCopy((uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP2)), (uint8_t *)gRxBuf, i32Len);
             USBD_SET_PAYLOAD_LEN(EP2, i32Len);
-        } else {
+        }
+        else
+        {
             /* Prepare a zero packet if previous packet size is EP2_MAX_PKT_SIZE and
                no more data to send at this moment to note Host the transfer has been done */
             i32Len = USBD_GET_PAYLOAD_LEN(EP2);
@@ -193,8 +209,10 @@ void VCOM_TransferData(void)
     }
 
     /* Process the Bulk out data when bulk out data is ready. */
-    if(gi8BulkOutReady && (gu32RxSize <= TXBUFSIZE - comTbytes)) {
-        for(i = 0; i < gu32RxSize; i++) {
+    if(gi8BulkOutReady && (gu32RxSize <= TXBUFSIZE - comTbytes))
+    {
+        for(i = 0; i < gu32RxSize; i++)
+        {
             comTbuf[comTtail++] = gpu8RxBuf[i];
             if(comTtail >= TXBUFSIZE)
                 comTtail = 0;
@@ -212,9 +230,11 @@ void VCOM_TransferData(void)
     }
 
     /* Process the software Tx FIFO */
-    if(comTbytes) {
+    if(comTbytes)
+    {
         /* Check if Tx is working */
-        if((UART0->INTEN & UART_INTEN_THREIEN_Msk) == 0) {
+        if((UART0->INTEN & UART_INTEN_THREIEN_Msk) == 0)
+        {
             /* Send one bytes out */
             UART_WRITE(UART0, comTbuf[comThead++]);
             if(comThead >= TXBUFSIZE)
@@ -248,7 +268,8 @@ int32_t main (void)
 
     NVIC_EnableIRQ(USBD_IRQn);
 
-    while(1) {
+    while(1)
+    {
         VCOM_TransferData();
     }
 }

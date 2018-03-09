@@ -20,34 +20,42 @@ void USBD_IRQHandler(void)
     uint32_t u32State = USBD_GET_BUS_STATE();
 
 //------------------------------------------------------------------
-    if (u32IntSts & USBD_INTSTS_FLDET) {
+    if (u32IntSts & USBD_INTSTS_FLDET)
+    {
         // Floating detect
         USBD_CLR_INT_FLAG(USBD_INTSTS_FLDET);
 
-        if (USBD_IS_ATTACHED()) {
+        if (USBD_IS_ATTACHED())
+        {
             /* USB Plug In */
             USBD_ENABLE_USB();
-        } else {
+        }
+        else
+        {
             /* USB Un-plug */
             USBD_DISABLE_USB();
         }
     }
 
 //------------------------------------------------------------------
-    if (u32IntSts & USBD_INTSTS_BUS) {
+    if (u32IntSts & USBD_INTSTS_BUS)
+    {
         /* Clear event flag */
         USBD_CLR_INT_FLAG(USBD_INTSTS_BUS);
 
-        if (u32State & USBD_STATE_USBRST) {
+        if (u32State & USBD_STATE_USBRST)
+        {
             /* Bus reset */
             USBD_ENABLE_USB();
             USBD_SwReset();
         }
-        if (u32State & USBD_STATE_SUSPEND) {
+        if (u32State & USBD_STATE_SUSPEND)
+        {
             /* Enable USB but disable PHY */
             USBD_DISABLE_PHY();
         }
-        if (u32State & USBD_STATE_RESUME) {
+        if (u32State & USBD_STATE_RESUME)
+        {
             /* Enable USB and enable PHY */
             USBD_ENABLE_USB();
         }
@@ -60,9 +68,11 @@ void USBD_IRQHandler(void)
         USBD_CLR_INT_FLAG(USBD_INTSTS_WAKEUP);
     }
 
-    if (u32IntSts & USBD_INTSTS_USB) {
+    if (u32IntSts & USBD_INTSTS_USB)
+    {
         // USB event
-        if (u32IntSts & USBD_INTSTS_SETUP) {
+        if (u32IntSts & USBD_INTSTS_SETUP)
+        {
             // Setup packet
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_SETUP);
@@ -75,7 +85,8 @@ void USBD_IRQHandler(void)
         }
 
         // EP events
-        if (u32IntSts & USBD_INTSTS_EP0) {
+        if (u32IntSts & USBD_INTSTS_EP0)
+        {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP0);
 
@@ -83,7 +94,8 @@ void USBD_IRQHandler(void)
             USBD_CtrlIn();
         }
 
-        if (u32IntSts & USBD_INTSTS_EP1) {
+        if (u32IntSts & USBD_INTSTS_EP1)
+        {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP1);
 
@@ -91,38 +103,44 @@ void USBD_IRQHandler(void)
             USBD_CtrlOut();
         }
 
-        if (u32IntSts & USBD_INTSTS_EP2) {
+        if (u32IntSts & USBD_INTSTS_EP2)
+        {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP2);
         }
 
-        if (u32IntSts & USBD_INTSTS_EP3) {
+        if (u32IntSts & USBD_INTSTS_EP3)
+        {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP3);
             // Bulk Out -> receive printer data
             PTR_Data_Receive();
         }
 
-        if (u32IntSts & USBD_INTSTS_EP4) {
+        if (u32IntSts & USBD_INTSTS_EP4)
+        {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP4);
         }
 
-        if (u32IntSts & USBD_INTSTS_EP5) {
+        if (u32IntSts & USBD_INTSTS_EP5)
+        {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP5);
             // Interrupt IN
             EP5_Handler();
         }
 
-        if (u32IntSts & USBD_INTSTS_EP6) {
+        if (u32IntSts & USBD_INTSTS_EP6)
+        {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP6);
             // Interrupt OUT
             EP6_Handler();
         }
 
-        if (u32IntSts & USBD_INTSTS_EP7) {
+        if (u32IntSts & USBD_INTSTS_EP7)
+        {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP7);
         }
@@ -204,10 +222,13 @@ void PTR_ClassRequest(void)
 
     USBD_GetSetupPacket(buf);
 
-    if (buf[0] & 0x80) { /* request data transfer direction */
+    if (buf[0] & 0x80)   /* request data transfer direction */
+    {
         // Device to host
-        switch (buf[1]) {
-        case GET_PORT_STATUS: {
+        switch (buf[1])
+        {
+        case GET_PORT_STATUS:
+        {
             /* Data stage */
             USBD_SET_DATA1(EP0);
             USBD_SET_PAYLOAD_LEN(EP0, 0);
@@ -215,24 +236,31 @@ void PTR_ClassRequest(void)
             USBD_PrepareCtrlOut(0,0);
             break;
         }
-        default: {
+        default:
+        {
             /* Setup error, stall the device */
             USBD_SetStall(0);
             break;
         }
         }
-    } else {
+    }
+    else
+    {
         // Host to device
-        switch (buf[1]) {
-        case SET_REPORT: {
-            if (buf[3] == 3) {
+        switch (buf[1])
+        {
+        case SET_REPORT:
+        {
+            if (buf[3] == 3)
+            {
                 /* Request Type = Feature */
                 USBD_SET_DATA1(EP1);
                 USBD_SET_PAYLOAD_LEN(EP1, 0);
             }
             break;
         }
-        case SET_IDLE: {
+        case SET_IDLE:
+        {
             /* Status stage */
             USBD_SET_DATA1(EP0);
             USBD_SET_PAYLOAD_LEN(EP0, 0);
@@ -242,7 +270,8 @@ void PTR_ClassRequest(void)
 //             {
 //                 break;
 //             }
-        default: {
+        default:
+        {
             // Stall
             /* Setup error, stall the device */
             USBD_SetStall(0);
@@ -278,7 +307,8 @@ void PTR_Data_Receive(void)
 #define START_SECTOR     0x10
 
 #ifdef __ICCARM__
-typedef __packed struct {
+typedef __packed struct
+{
     uint8_t u8Cmd;
     uint8_t u8Size;
     uint32_t u32Arg1;
@@ -336,7 +366,8 @@ int32_t HID_CmdReadPages(CMD_T *pCmd)
 
     printf("Read command - Start page: %d    Pages Numbers: %d\n", u32StartPage, u32Pages);
 
-    if(u32Pages) {
+    if(u32Pages)
+    {
         /* Update data to page buffer to upload */
         /* TODO: We need to update the page data if got a page read command. (0xFF is used in this sample code) */
         memcpy(g_u8PageBuff, g_u8TestPages, sizeof(g_u8PageBuff));
@@ -381,8 +412,10 @@ int32_t HID_CmdTest(CMD_T *pCmd)
 
     pu8 = (uint8_t *)pCmd;
     printf("Get test command #%d (%d bytes)\n", gi32CmdTestCnt++, pCmd->u8Size);
-    for(i=0; i<pCmd->u8Size; i++) {
-        if((i&0xF) == 0) {
+    for(i=0; i<pCmd->u8Size; i++)
+    {
+        if((i&0xF) == 0)
+        {
             printf("\n");
         }
         printf(" %02x", pu8[i]);
@@ -405,7 +438,8 @@ uint32_t CalCheckSum(uint8_t *buf, uint32_t size)
 
     i = 0;
     sum = 0;
-    while(size--) {
+    while(size--)
+    {
         sum+=buf[i++];
     }
 
@@ -434,20 +468,25 @@ int32_t ProcessCommand(uint8_t *pu8Buffer, uint32_t u32BufferLen)
     if(u32sum != gCmd.u32Checksum)
         return -1;
 
-    switch(gCmd.u8Cmd) {
-    case HID_CMD_ERASE: {
+    switch(gCmd.u8Cmd)
+    {
+    case HID_CMD_ERASE:
+    {
         HID_CmdEraseSectors(&gCmd);
         break;
     }
-    case HID_CMD_READ: {
+    case HID_CMD_READ:
+    {
         HID_CmdReadPages(&gCmd);
         break;
     }
-    case HID_CMD_WRITE: {
+    case HID_CMD_WRITE:
+    {
         HID_CmdWritePages(&gCmd);
         break;
     }
-    case HID_CMD_TEST: {
+    case HID_CMD_TEST:
+    {
         HID_CmdTest(&gCmd);
         break;
     }
@@ -474,7 +513,8 @@ void HID_GetOutReport(uint8_t *pu8EpBuf, uint32_t u32Size)
 
 
     /* Check if it is in the data phase of write command */
-    if((u8Cmd == HID_CMD_WRITE) &&  (u32PageCnt < u32Pages)) {
+    if((u8Cmd == HID_CMD_WRITE) &&  (u32PageCnt < u32Pages))
+    {
         /* Process the data phase of write command */
 
         /* Get data from HID OUT */
@@ -482,14 +522,16 @@ void HID_GetOutReport(uint8_t *pu8EpBuf, uint32_t u32Size)
         g_u32BytesInPageBuf += EP6_MAX_PKT_SIZE;
 
         /* The HOST must make sure the data is PAGE_SIZE alignment */
-        if(g_u32BytesInPageBuf >= PAGE_SIZE) {
+        if(g_u32BytesInPageBuf >= PAGE_SIZE)
+        {
             printf("Writing page %d\n", u32StartPage + u32PageCnt);
             /* TODO: We should program received data to storage here */
             memcpy(g_u8TestPages + u32PageCnt * PAGE_SIZE, g_u8PageBuff, sizeof(g_u8PageBuff));
             u32PageCnt++;
 
             /* Write command complete! */
-            if(u32PageCnt >= u32Pages) {
+            if(u32PageCnt >= u32Pages)
+            {
                 u8Cmd = HID_CMD_NONE;
 
                 printf("Write command complete.\n");
@@ -501,9 +543,12 @@ void HID_GetOutReport(uint8_t *pu8EpBuf, uint32_t u32Size)
         /* Update command status */
         gCmd.u8Cmd        = u8Cmd;
         gCmd.u32Signature = u32PageCnt;
-    } else {
+    }
+    else
+    {
         /* Check and process the command packet */
-        if(ProcessCommand(pu8EpBuf, u32Size)) {
+        if(ProcessCommand(pu8EpBuf, u32Size))
+        {
             printf("Unknown HID command!\n");
         }
     }
@@ -523,14 +568,19 @@ void HID_SetInReport(void)
     u32PageCnt   = gCmd.u32Signature;
 
     /* Check if it is in data phase of read command */
-    if(u8Cmd == HID_CMD_READ) {
+    if(u8Cmd == HID_CMD_READ)
+    {
         /* Process the data phase of read command */
-        if((u32PageCnt >= u32TotalPages) && (g_u32BytesInPageBuf == 0)) {
+        if((u32PageCnt >= u32TotalPages) && (g_u32BytesInPageBuf == 0))
+        {
             /* The data transfer is complete. */
             u8Cmd = HID_CMD_NONE;
             printf("Read command complete!\n");
-        } else {
-            if(g_u32BytesInPageBuf == 0) {
+        }
+        else
+        {
+            if(g_u32BytesInPageBuf == 0)
+            {
                 /* The previous page has sent out. Read new page to page buffer */
                 /* TODO: We should update new page data here. (0xFF is used in this sample code) */
                 printf("Reading page %d\n", u32StartPage + u32PageCnt);

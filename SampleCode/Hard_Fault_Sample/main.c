@@ -127,14 +127,16 @@ void ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
 
 
     /* Check T bit of psr */
-    if((psr & (1 << 24)) == 0) {
+    if((psr & (1 << 24)) == 0)
+    {
         printf("PSR T bit is 0.\nHard fault caused by changing to ARM mode!\n");
         while(1);
     }
 
     /* Check hard fault caused by ISR */
     exception_num = psr & xPSR_ISR_Msk;
-    if(exception_num > 0) {
+    if(exception_num > 0)
+    {
         /*
         Exception number
             0 = Thread mode
@@ -204,7 +206,8 @@ int32_t main(void)
     /* Init UART0 for printf */
     UART0_Init();
 
-    while(1) {
+    while(1)
+    {
         printf("\n\n");
         printf("+----------------------------------------------------+\n");
         printf("|        Hard Fault Handler Sample Code              |\n");
@@ -215,7 +218,8 @@ int32_t main(void)
         printf("+----------------------------------------------------+\n");
         ch = getchar();
 
-        switch(ch) {
+        switch(ch)
+        {
         case '0':
             /* Write APROM will cause hard fault exception. (Memory access hard fault) */
             M32(0) = 0;

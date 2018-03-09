@@ -22,7 +22,8 @@
     Memory Mapped Structure for SPIM Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

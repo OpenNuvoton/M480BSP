@@ -119,7 +119,8 @@ int main(void)
     */
     retval = SCLIB_Activate(SC_INTF, FALSE);
 
-    if(retval == SCLIB_SUCCESS) {
+    if(retval == SCLIB_SUCCESS)
+    {
         /*
             Use SCLIB_GetCardInfo to get information about the card, which includes ATR.
 
@@ -133,7 +134,8 @@ int main(void)
         for(i = 0; i < s_info.ATR_Len; i++)
             printf("%02x ", s_info.ATR_Buf[i]);
         printf("\n");
-    } else
+    }
+    else
         printf("Smartcard activate failed\n");
 
     // No operating system, so we have no where to go, just loop forever.

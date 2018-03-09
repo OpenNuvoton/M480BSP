@@ -19,12 +19,14 @@
 
 void QEI0_IRQHandler(void)
 {
-    if(QEI_GET_INT_FLAG(QEI0, QEI_STATUS_CMPF_Msk)) {   /* Compare-match flag */
+    if(QEI_GET_INT_FLAG(QEI0, QEI_STATUS_CMPF_Msk))     /* Compare-match flag */
+    {
         printf("Compare-match INT!\n\n");
         QEI_CLR_INT_FLAG(QEI0, QEI_STATUS_CMPF_Msk);
     }
 
-    if(QEI_GET_INT_FLAG(QEI0, QEI_STATUS_OVUNF_Msk)) {  /* Counter Overflow or underflow flag */
+    if(QEI_GET_INT_FLAG(QEI0, QEI_STATUS_OVUNF_Msk))    /* Counter Overflow or underflow flag */
+    {
         printf("Overflow INT!\n\n");
         QEI_CLR_INT_FLAG(QEI0, QEI_STATUS_OVUNF_Msk);
     }
@@ -121,7 +123,8 @@ int32_t main(void)
     QEI_Start(QEI0);
 
     /* Wait compare-match and overflow interrupt happened */
-    while(1) {
+    while(1)
+    {
         QEI0A = 1;
         CLK_SysTickDelay(16);
         QEI0B = 1;

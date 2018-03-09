@@ -22,7 +22,8 @@
     Memory Mapped Structure for HSOTG Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

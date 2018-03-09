@@ -22,7 +22,8 @@
     Memory Mapped Structure for ECAP Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
     /**
      * @var ECAP_T::CNT

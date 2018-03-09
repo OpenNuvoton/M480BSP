@@ -385,10 +385,12 @@ static void vCheckTask( void *pvParameters )
 
     printf("Check Task is running ...\n");
 
-    for( ;; ) {
+    for( ;; )
+    {
         /* Perform this check every mainCHECK_DELAY milliseconds. */
         vTaskDelayUntil( &xLastExecutionTime, mainCHECK_DELAY );
-        if( xArePollingQueuesStillRunning() != pdTRUE ) {
+        if( xArePollingQueuesStillRunning() != pdTRUE )
+        {
             printf( "ERROR IN POLL Q\n" );
         }
     }

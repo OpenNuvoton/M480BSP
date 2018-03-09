@@ -22,7 +22,8 @@
     Memory Mapped Structure for USBH Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
     /**
      * @var USBH_T::HcRevision

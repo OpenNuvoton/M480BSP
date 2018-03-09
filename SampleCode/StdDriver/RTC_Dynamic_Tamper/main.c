@@ -29,9 +29,11 @@ void TAMPER_IRQHandler(void)
 
     u32TmpStatus = RTC->INTSTS & (0x3F << RTC_INTEN_TAMP0IEN_Pos);
 
-    if ( u32TmpStatus ) {      /* tamper interrupt occurred */
+    if ( u32TmpStatus )        /* tamper interrupt occurred */
+    {
 
-        for(i = 0; i < 6; i++) {
+        for(i = 0; i < 6; i++)
+        {
             if(u32TmpStatus & (0x1 << (i+RTC_INTEN_TAMP0IEN_Pos)))
                 printf(" Tamper %d Detected!!\n", i);
         }

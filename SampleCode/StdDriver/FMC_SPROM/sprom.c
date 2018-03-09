@@ -17,7 +17,8 @@ void sprom_putc(int ch)
 {
     while (UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk) ;
     UART0->DAT = ch;
-    if (ch == '\n') {
+    if (ch == '\n')
+    {
         while(UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
         UART0->DAT = '\r';
     }
@@ -28,8 +29,10 @@ void sprom_putc(int ch)
  */
 char sprom_getc(void)
 {
-    while(1) {
-        if ((UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0) {
+    while(1)
+    {
+        if ((UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0)
+        {
             return (UART0->DAT);
         }
     }
@@ -40,7 +43,8 @@ char sprom_getc(void)
  */
 void sprom_put_string(char *str)
 {
-    while (*str) {
+    while (*str)
+    {
         sprom_putc(*str++);
     }
 }

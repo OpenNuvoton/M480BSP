@@ -141,14 +141,19 @@ int32_t main (void)
     UAC_Init();
     NVIC_EnableIRQ(USBD20_IRQn);
     HSUSBD_Start();
-    while(1) {
-        if (g_usbd_rxflag) {
+    while(1)
+    {
+        if (g_usbd_rxflag)
+        {
             UAC_GetPlayData();
-        } else if(u8AudioPlaying && (u8TxDataCntInBuffer < 1)) {
+        }
+        else if(u8AudioPlaying && (u8TxDataCntInBuffer < 1))
+        {
             UAC_DeviceDisable(1);
         }
 
-        if ((g_usbd_UsbAudioState == UAC_START_AUDIO_RECORD) && g_usbd_txflag) {
+        if ((g_usbd_UsbAudioState == UAC_START_AUDIO_RECORD) && g_usbd_txflag)
+        {
             UAC_SendRecData();
         }
     }

@@ -13,7 +13,8 @@
 
 
 /* Keyboard Modifiers */
-enum kbd_mod {
+enum kbd_mod
+{
     LeftCtrl   = 0x01,
     LeftShift  = 0x02,
     Alt        = 0x04,
@@ -41,7 +42,8 @@ enum kbd_mod {
 #define KEY_NUM_LOCK      0x53
 
 
-struct hid_kbd_dev {
+struct hid_kbd_dev
+{
     uint8_t    pre_data[8];     /* previous received report */
     uint8_t    bLED;
 };

@@ -64,7 +64,8 @@ void enable_sys_tick(int ticks_per_second)
 {
     g_tick_cnt = 0;
     SystemCoreClock = 12000000UL;
-    if (SysTick_Config(SystemCoreClock / ticks_per_second)) {
+    if (SysTick_Config(SystemCoreClock / ticks_per_second))
+    {
         /* Setup SysTick Timer for 1 second interrupts  */
         printf("Set system tick error!!\n");
         while (1);
@@ -147,15 +148,19 @@ void NAU88L25_ConfigSampleRate(uint32_t u32SampleRate)
 {
     printf("[NAU88L25] Configure Sampling Rate to %d\n", u32SampleRate);
 
-    if((u32SampleRate % 8) == 0) {
+    if((u32SampleRate % 8) == 0)
+    {
         I2C_WriteNAU88L25(0x0005, 0x3126); //12.288Mhz
         I2C_WriteNAU88L25(0x0006, 0x0008);
-    } else {
+    }
+    else
+    {
         I2C_WriteNAU88L25(0x0005, 0x86C2); //11.2896Mhz
         I2C_WriteNAU88L25(0x0006, 0x0007);
     }
 
-    switch (u32SampleRate) {
+    switch (u32SampleRate)
+    {
     case 16000:
         I2C_WriteNAU88L25(0x0003,  0x801B); //MCLK = SYSCLK_SRC/12
         I2C_WriteNAU88L25(0x0004,  0x0001);
@@ -293,20 +298,23 @@ void SDH0_IRQHandler(void)
     unsigned int volatile ier;
 
     // FMI data abort interrupt
-    if (SDH0->GINTSTS & SDH_GINTSTS_DTAIF_Msk) {
+    if (SDH0->GINTSTS & SDH_GINTSTS_DTAIF_Msk)
+    {
         /* ResetAllEngine() */
         SDH0->GCTL |= SDH_GCTL_GCTLRST_Msk;
     }
 
     //----- SD interrupt status
     isr = SDH0->INTSTS;
-    if (isr & SDH_INTSTS_BLKDIF_Msk) {
+    if (isr & SDH_INTSTS_BLKDIF_Msk)
+    {
         // block down
         g_u8SDDataReadyFlag = TRUE;
         SDH0->INTSTS = SDH_INTSTS_BLKDIF_Msk;
     }
 
-    if (isr & SDH_INTSTS_CDIF_Msk) { // port 0 card detect
+    if (isr & SDH_INTSTS_CDIF_Msk)   // port 0 card detect
+    {
         //----- SD interrupt status
         // it is work to delay 50 times for SD_CLK = 200KHz
         {
@@ -315,11 +323,14 @@ void SDH0_IRQHandler(void)
             isr = SDH0->INTSTS;
         }
 
-        if (isr & SDH_INTSTS_CDSTS_Msk) {
+        if (isr & SDH_INTSTS_CDSTS_Msk)
+        {
             printf("\n***** card remove !\n");
             SD0.IsCardInsert = FALSE;   // SDISR_CD_Card = 1 means card remove for GPIO mode
             memset(&SD0, 0, sizeof(SDH_INFO_T));
-        } else {
+        }
+        else
+        {
             printf("***** card insert !\n");
             SDH_Open(SDH0, CardDetect_From_GPIO);
             SDH_Probe(SDH0);
@@ -329,12 +340,17 @@ void SDH0_IRQHandler(void)
     }
 
     // CRC error interrupt
-    if (isr & SDH_INTSTS_CRCIF_Msk) {
-        if (!(isr & SDH_INTSTS_CRC16_Msk)) {
+    if (isr & SDH_INTSTS_CRCIF_Msk)
+    {
+        if (!(isr & SDH_INTSTS_CRC16_Msk))
+        {
             //printf("***** ISR sdioIntHandler(): CRC_16 error !\n");
             // handle CRC error
-        } else if (!(isr & SDH_INTSTS_CRC7_Msk)) {
-            if (!g_u8R3Flag) {
+        }
+        else if (!(isr & SDH_INTSTS_CRC7_Msk))
+        {
+            if (!g_u8R3Flag)
+            {
                 //printf("***** ISR sdioIntHandler(): CRC_7 error !\n");
                 // handle CRC error
             }
@@ -342,13 +358,15 @@ void SDH0_IRQHandler(void)
         SDH0->INTSTS = SDH_INTSTS_CRCIF_Msk;      // clear interrupt flag
     }
 
-    if (isr & SDH_INTSTS_DITOIF_Msk) {
+    if (isr & SDH_INTSTS_DITOIF_Msk)
+    {
         printf("***** ISR: data in timeout !\n");
         SDH0->INTSTS |= SDH_INTSTS_DITOIF_Msk;
     }
 
     // Response in timeout interrupt
-    if (isr & SDH_INTSTS_RTOIF_Msk) {
+    if (isr & SDH_INTSTS_RTOIF_Msk)
+    {
         printf("***** ISR: response in timeout !\n");
         SDH0->INTSTS |= SDH_INTSTS_RTOIF_Msk;
     }

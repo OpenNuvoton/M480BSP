@@ -37,7 +37,8 @@
 
 #include "uipopt.h"
 
-struct fsdata_file {
+struct fsdata_file
+{
     const struct fsdata_file *next;
     const char *name;
     const char *data;
@@ -49,7 +50,8 @@ struct fsdata_file {
 #endif /* FS_STATISTICS */
 };
 
-struct fsdata_file_noconst {
+struct fsdata_file_noconst
+{
     struct fsdata_file *next;
     char *name;
     char *data;

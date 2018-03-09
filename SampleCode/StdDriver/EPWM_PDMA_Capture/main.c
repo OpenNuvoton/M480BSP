@@ -44,15 +44,19 @@ void PDMA_IRQHandler(void)
 {
     uint32_t status = PDMA_GET_INT_STATUS(PDMA);
 
-    if(status & PDMA_INTSTS_ABTIF_Msk) {  /* abort */
+    if(status & PDMA_INTSTS_ABTIF_Msk)    /* abort */
+    {
         if(PDMA_GET_ABORT_STS(PDMA) & PDMA_ABTSTS_ABTIF0_Msk)
             g_u32IsTestOver = 2;
         PDMA_CLR_ABORT_FLAG(PDMA,PDMA_ABTSTS_ABTIF0_Msk);
-    } else if(status & PDMA_INTSTS_TDIF_Msk) {  /* done */
+    }
+    else if(status & PDMA_INTSTS_TDIF_Msk)      /* done */
+    {
         if(PDMA_GET_TD_STS(PDMA) & PDMA_TDSTS_TDIF0_Msk)
             g_u32IsTestOver = 1;
         PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF0_Msk);
-    } else
+    }
+    else
         printf("unknown interrupt !!\n");
 }
 
@@ -178,7 +182,8 @@ int32_t main(void)
     printf("    EPWM1 channel 2(PC.10) <--> EPWM1 channel 0(PC.12)\n\n");
     printf("Use EPWM1 Channel 2(PC.10) to capture the EPWM1 Channel 0(PC.12) Waveform\n");
 
-    while(1) {
+    while(1)
+    {
         printf("\n\nPress any key to start EPWM Capture Test\n");
         getchar();
 

@@ -34,12 +34,14 @@ void  dump_buff_hex(uint8_t *pucBuff, int nBytes)
     int     nIdx, i;
 
     nIdx = 0;
-    while (nBytes > 0) {
+    while (nBytes > 0)
+    {
         printf("0x%04X  ", nIdx);
         for (i = 0; i < 16; i++)
             printf("%02x ", pucBuff[nIdx + i]);
         printf("  ");
-        for (i = 0; i < 16; i++) {
+        for (i = 0; i < 16; i++)
+        {
             if ((pucBuff[nIdx + i] >= 0x20) && (pucBuff[nIdx + i] < 127))
                 printf("%c", pucBuff[nIdx + i]);
             else
@@ -118,17 +120,20 @@ int32_t main (void)
     printf("|   Crypto ECC Public Key Generation Demo     |\n");
     printf("+---------------------------------------------+\n");
 
-    if (ECC_GenerateSignature(CRPT, CURVE_P_192, sha_msg, d, k, sig_R, sig_S) < 0) {
+    if (ECC_GenerateSignature(CRPT, CURVE_P_192, sha_msg, d, k, sig_R, sig_S) < 0)
+    {
         printf("ECC signature generation failed!!\n");
         while (1);
     }
 
-    if (memcmp(sig_R, R, sizeof(R))) {
+    if (memcmp(sig_R, R, sizeof(R)))
+    {
         printf("Signature R [%s] is not matched with expected [%s]!\n", sig_R, R);
         while (1);
     }
 
-    if (memcmp(sig_S, S, sizeof(S))) {
+    if (memcmp(sig_S, S, sizeof(S)))
+    {
         printf("Signature S [%s] is not matched with expected [%s]!\n", sig_S, S);
         while (1);
     }

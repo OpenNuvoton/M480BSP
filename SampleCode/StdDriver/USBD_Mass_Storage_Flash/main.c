@@ -83,7 +83,8 @@ int32_t main (void)
     if (FMC_ReadConfig(au32Config, 2) < 0)
         return -1;
 
-    if (((au32Config[0] & 0x01) == 1) || (au32Config[1] != DATA_FLASH_BASE) ) {
+    if (((au32Config[0] & 0x01) == 1) || (au32Config[1] != DATA_FLASH_BASE) )
+    {
         FMC_ENABLE_CFG_UPDATE();
         au32Config[0] &= ~0x1;
         au32Config[1] = DATA_FLASH_BASE;
@@ -91,7 +92,8 @@ int32_t main (void)
             return -1;
 
         FMC_ReadConfig(au32Config, 2);
-        if (((au32Config[0] & 0x01) == 1) || (au32Config[1] != DATA_FLASH_BASE)) {
+        if (((au32Config[0] & 0x01) == 1) || (au32Config[1] != DATA_FLASH_BASE))
+        {
             printf("Error: Program Config Failed!\n");
             /* Disable FMC ISP function */
             FMC_Close();
@@ -114,7 +116,8 @@ int32_t main (void)
 
     NVIC_EnableIRQ(USBD_IRQn);
 
-    while(1) {
+    while(1)
+    {
         MSC_ProcessCmd();
     }
 }

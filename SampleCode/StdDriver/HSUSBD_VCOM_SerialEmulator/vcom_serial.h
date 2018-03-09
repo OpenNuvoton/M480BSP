@@ -61,7 +61,8 @@
   5   bParityType  Parity:    0 - None, 1 - Odd, 2 - Even, 3 - Mark, 4 - Space
   6   bDataBits    Data bits: 5, 6, 7, 8, 16  */
 
-typedef struct {
+typedef struct
+{
     uint32_t  u32DTERate;     /* Baud rate    */
     uint8_t   u8CharFormat;   /* stop bit     */
     uint8_t   u8ParityType;   /* parity       */

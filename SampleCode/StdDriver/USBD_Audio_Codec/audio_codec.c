@@ -37,28 +37,34 @@ restart:
     I2C_SET_DATA(I2C2, 0x1A << 1);
     I2C_SET_CONTROL_REG(I2C2, I2C_CTL_SI);
     I2C_WAIT_READY(I2C2);
-    if(I2C_GET_STATUS(I2C2) == 0x38) {
+    if(I2C_GET_STATUS(I2C2) == 0x38)
+    {
         RecoveryFromArbLost();
         goto restart;
-    } else if(I2C_GET_STATUS(I2C2) != 0x18)
+    }
+    else if(I2C_GET_STATUS(I2C2) != 0x18)
         goto stop;
 
     I2C_SET_DATA(I2C2, (uint8_t)((u8addr << 1) | (u16data >> 8)));
     I2C_SET_CONTROL_REG(I2C2, I2C_CTL_SI);
     I2C_WAIT_READY(I2C2);
-    if(I2C_GET_STATUS(I2C2) == 0x38) {
+    if(I2C_GET_STATUS(I2C2) == 0x38)
+    {
         RecoveryFromArbLost();
         goto restart;
-    } else if(I2C_GET_STATUS(I2C2) != 0x28)
+    }
+    else if(I2C_GET_STATUS(I2C2) != 0x28)
         goto stop;
 
     I2C_SET_DATA(I2C2, (uint8_t)(u16data & 0x00FF));
     I2C_SET_CONTROL_REG(I2C2, I2C_CTL_SI);
     I2C_WAIT_READY(I2C2);
-    if(I2C_GET_STATUS(I2C2) == 0x38) {
+    if(I2C_GET_STATUS(I2C2) == 0x38)
+    {
         RecoveryFromArbLost();
         goto restart;
-    } else if(I2C_GET_STATUS(I2C2) != 0x28)
+    }
+    else if(I2C_GET_STATUS(I2C2) != 0x28)
         goto stop;
 
 stop:
@@ -89,19 +95,23 @@ void NAU8822_ConfigSampleRate(uint32_t u32SampleRate)
 
     printf("[NAU8822] Configure Sampling Rate to %d\n", u32SampleRate);
 
-    if((u32SampleRate % 8) == 0) {
+    if((u32SampleRate % 8) == 0)
+    {
         I2C_WriteNAU8822(36, 0x008);    //12.288Mhz
         I2C_WriteNAU8822(37, 0x00C);
         I2C_WriteNAU8822(38, 0x093);
         I2C_WriteNAU8822(39, 0x0E9);
-    } else {
+    }
+    else
+    {
         I2C_WriteNAU8822(36, 0x007);    //11.2896Mhz
         I2C_WriteNAU8822(37, 0x021);
         I2C_WriteNAU8822(38, 0x161);
         I2C_WriteNAU8822(39, 0x026);
     }
 
-    switch (u32SampleRate) {
+    switch (u32SampleRate)
+    {
     case 44100:
         I2C_WriteNAU8822(6, 0x14D);    /* Divide by 2, 48K */
         I2C_WriteNAU8822(7, 0x000);    /* 48K for internal filter coefficients */
@@ -166,7 +176,8 @@ void AdjustCodecPll(RESAMPLE_STATE_T r)
         return;
     else
         current = r;
-    switch(r) {
+    switch(r)
+    {
     case E_RS_UP:
         s = 1;
         break;
@@ -178,10 +189,13 @@ void AdjustCodecPll(RESAMPLE_STATE_T r)
         s = 0;
     }
 
-    if((g_usbd_SampleRate % 8) == 0) {
+    if((g_usbd_SampleRate % 8) == 0)
+    {
         for(i=0; i<3; i++)
             ATOM_I2C_WriteNAU8822(37+i, tb0[s][i]);
-    } else {
+    }
+    else
+    {
         for(i=0; i<3; i++)
             ATOM_I2C_WriteNAU8822(37+i, tb1[s][i]);
     }
@@ -253,15 +267,19 @@ void NAU88L25_ConfigSampleRate(uint32_t u32SampleRate)
 
     printf("[NAU88L25] Configure Sampling Rate to %d\n", u32SampleRate);
 
-    if((u32SampleRate % 8) == 0) {
+    if((u32SampleRate % 8) == 0)
+    {
         I2C_WriteNAU88L25(0x0005, 0x3126); //12.288Mhz
         I2C_WriteNAU88L25(0x0006, 0x0008);
-    } else {
+    }
+    else
+    {
         I2C_WriteNAU88L25(0x0005, 0x86C2); //11.2896Mhz
         I2C_WriteNAU88L25(0x0006, 0x0007);
     }
 
-    switch (u32SampleRate) {
+    switch (u32SampleRate)
+    {
     case 44100:
         I2C_WriteNAU88L25(0x001D,  0x301A); //301A:Master, BCLK_DIV=11.2896M/8=1.4112M, LRC_DIV=1.4112M/32=44.1K
         I2C_WriteNAU88L25(0x002B,  0x0012);
@@ -413,7 +431,8 @@ void AdjustCodecPll(RESAMPLE_STATE_T r)
         return;
     else
         current = r;
-    switch(r) {
+    switch(r)
+    {
     case E_RS_UP:
         s = 1;
         break;
@@ -425,10 +444,13 @@ void AdjustCodecPll(RESAMPLE_STATE_T r)
         s = 0;
     }
 
-    if((g_usbd_SampleRate % 8) == 0) {
+    if((g_usbd_SampleRate % 8) == 0)
+    {
         I2C_WriteNAU88L25(0x0005, tb0[s]);
         I2C_WriteNAU88L25(0x0006, 0x0008);
-    } else {
+    }
+    else
+    {
         I2C_WriteNAU88L25(0x0005, tb1[s]);
         I2C_WriteNAU88L25(0x0006, 0x0007);
     }

@@ -69,7 +69,7 @@ void SYS_Init(void)
     SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
     SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
     /* Set PB.0 ~ PB.3 to input mode */
-    PB->MODE &= ~(GPIO_MODE_MODE0_Msk | GPIO_MODE_MODE1_Msk | GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk); 
+    PB->MODE &= ~(GPIO_MODE_MODE0_Msk | GPIO_MODE_MODE1_Msk | GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk);
     /* Configure the GPB0 - GPB3 ADC analog input pins.  */
     SYS->GPB_MFPL &= ~(SYS_GPB_MFPL_PB0MFP_Msk | SYS_GPB_MFPL_PB1MFP_Msk |
                        SYS_GPB_MFPL_PB2MFP_Msk | SYS_GPB_MFPL_PB3MFP_Msk);
@@ -158,7 +158,8 @@ void EADC_FunctionTest()
 
     printf("\nIn this test, software will get 6 conversion result from the specified channel.\n");
 
-    while(1) {
+    while(1)
+    {
         /* reload PDMA configuration for next transmission */
         ReloadPDMA();
 
@@ -167,7 +168,8 @@ void EADC_FunctionTest()
         printf("  [2] Differential input (channel pair 1 only(channel 2 and 3))\n");
         printf("  Other keys: exit single mode test\n");
         u8Option = getchar();
-        if(u8Option == '1') {
+        if(u8Option == '1')
+        {
             /* Set input mode as single-end and enable the A/D converter */
             EADC_Open(EADC, EADC_CTL_DIFFEN_SINGLE_END);
 
@@ -180,7 +182,8 @@ void EADC_FunctionTest()
             /* Enable EPWM0 channel 0 counter */
             EPWM_Start(EPWM0, BIT0); /* EPWM0 channel 0 counter start running. */
 
-            while(1) {
+            while(1)
+            {
                 /* Wait PDMA interrupt (g_u32IsTestOver will be set at IRQ_Handler function) */
                 while(g_u32IsTestOver == 0);
                 break;
@@ -193,7 +196,9 @@ void EADC_FunctionTest()
             for(g_u32COVNUMFlag = 0; (g_u32COVNUMFlag) < 6; g_u32COVNUMFlag++)
                 printf("                                0x%X (%d)\n", g_i32ConversionData[g_u32COVNUMFlag], g_i32ConversionData[g_u32COVNUMFlag]);
 
-        } else if(u8Option == '2') {
+        }
+        else if(u8Option == '2')
+        {
             /* Set input mode as differential and enable the A/D converter */
             EADC_Open(EADC, EADC_CTL_DIFFEN_DIFFERENTIAL);
             /* Configure the sample module 0 for analog input channel 2 and software trigger source.*/
@@ -205,7 +210,8 @@ void EADC_FunctionTest()
             /* Enable EPWM0 channel 0 counter */
             EPWM_Start(EPWM0, BIT0); /* EPWM0 channel 0 counter start running. */
 
-            while(1) {
+            while(1)
+            {
                 /* Wait PDMA interrupt (g_u32IsTestOver will be set at IRQ_Handler function) */
                 while(g_u32IsTestOver == 0);
                 break;
@@ -218,7 +224,8 @@ void EADC_FunctionTest()
             for(g_u32COVNUMFlag = 0; (g_u32COVNUMFlag) < 6; g_u32COVNUMFlag++)
                 printf("                                0x%X (%d)\n", g_i32ConversionData[g_u32COVNUMFlag], g_i32ConversionData[g_u32COVNUMFlag]);
 
-        } else
+        }
+        else
             return ;
 
         EADC_Close(EADC);
@@ -230,15 +237,19 @@ void PDMA_IRQHandler(void)
 {
     uint32_t status = PDMA_GET_INT_STATUS(PDMA);
 
-    if(status & PDMA_INTSTS_ABTIF_Msk) {  /* abort */
+    if(status & PDMA_INTSTS_ABTIF_Msk)    /* abort */
+    {
         if(PDMA_GET_ABORT_STS(PDMA) & PDMA_ABTSTS_ABTIF2_Msk)
             g_u32IsTestOver = 2;
         PDMA_CLR_ABORT_FLAG(PDMA,PDMA_ABTSTS_ABTIF2_Msk);
-    } else if(status & PDMA_INTSTS_TDIF_Msk) {  /* done */
+    }
+    else if(status & PDMA_INTSTS_TDIF_Msk)      /* done */
+    {
         if(PDMA_GET_TD_STS(PDMA) & PDMA_TDSTS_TDIF2_Msk)
             g_u32IsTestOver = 1;
         PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF2_Msk);
-    } else
+    }
+    else
         printf("unknown interrupt !!\n");
 }
 

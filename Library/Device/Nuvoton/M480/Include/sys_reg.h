@@ -22,7 +22,8 @@
     Memory Mapped Structure for SYS Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

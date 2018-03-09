@@ -26,11 +26,13 @@ static uint32_t index = 0;
 
 void DAC_IRQHandler(void)
 {
-    if(DAC_GET_INT_FLAG(DAC0, 0)) {
+    if(DAC_GET_INT_FLAG(DAC0, 0))
+    {
 
         if(index == array_size)
             index = 0;
-        else {
+        else
+        {
             DAC_WRITE_DATA(DAC0, 0, sine[index++]);
 
             /* Clear the DAC conversion complete finish flag */
@@ -108,7 +110,8 @@ int32_t main(void)
 
     GPIO_SetMode(PA, BIT1, GPIO_MODE_OUTPUT);
 
-    while(1) {
+    while(1)
+    {
         PA1 = 1;
         CLK_SysTickDelay(100);
         PA1 = 0;

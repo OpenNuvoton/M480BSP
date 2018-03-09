@@ -51,7 +51,8 @@
 /**
  * An open file in the read-only file system.
  */
-struct fs_file {
+struct fs_file
+{
     char *data;  /**< The actual file data. */
     int len;     /**< The length of the file data. */
 };

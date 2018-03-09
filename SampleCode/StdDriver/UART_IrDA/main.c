@@ -185,11 +185,13 @@ void IrDA_FunctionTxTest()
     UART_SelectIrDAMode(UART1, 57600, TRUE); // TRUE is TX mode
 
     /* Wait Terminal input to send data to UART TX pin */
-    do {
+    do
+    {
         u8OutChar = getchar();
         printf("   Input: %c , Send %c out\n",u8OutChar,u8OutChar);
         UART_WRITE(UART1,u8OutChar);
-    } while(u8OutChar !='0');
+    }
+    while(u8OutChar !='0');
 
 }
 
@@ -215,12 +217,15 @@ void IrDA_FunctionRxTest()
     printf("Waiting...\n");
 
     /* Use polling method to wait master data */
-    do {
-        if( UART_IS_RX_READY(UART1)) {
+    do
+    {
+        if( UART_IS_RX_READY(UART1))
+        {
             u8InChar = UART_READ(UART1);
             printf("   Input: %c \n",u8InChar);
         }
-    } while(u8InChar !='0');
+    }
+    while(u8InChar !='0');
 
 }
 

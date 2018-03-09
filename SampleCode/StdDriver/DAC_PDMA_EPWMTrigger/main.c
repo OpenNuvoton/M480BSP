@@ -137,8 +137,10 @@ int32_t main(void)
     /* Enable EPWM0 channel 0 to start D/A conversion */
     EPWM_Start(EPWM0, 0x1);
 
-    while(1) {
-        if (PDMA_GET_TD_STS(PDMA) == 0x1) {
+    while(1)
+    {
+        if (PDMA_GET_TD_STS(PDMA) == 0x1)
+        {
             /* Re-Set transfer count and basic operation mode */
             PDMA_SetTransferCnt(PDMA,0, PDMA_WIDTH_16, array_size);
             PDMA_SetTransferMode(PDMA,0, PDMA_DAC0_TX, FALSE, 0);

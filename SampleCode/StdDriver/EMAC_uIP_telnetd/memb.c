@@ -77,8 +77,10 @@ memb_alloc(struct memb_blocks *m)
     char *ptr;
 
     ptr = m->mem;
-    for(i = 0; i < m->num; ++i) {
-        if(*ptr == 0) {
+    for(i = 0; i < m->num; ++i)
+    {
+        if(*ptr == 0)
+        {
             /* If this block was unused, we increase the reference count to
             indicate that it now is used and return a pointer to the
              first byte following the reference counter. */
@@ -115,9 +117,11 @@ memb_free(struct memb_blocks *m, char *ptr)
     /* Walk through the list of blocks and try to find the block to
        which the pointer "ptr" points to. */
     ptr2 = m->mem;
-    for(i = 0; i < m->num; ++i) {
+    for(i = 0; i < m->num; ++i)
+    {
 
-        if(ptr2 == ptr - 1) {
+        if(ptr2 == ptr - 1)
+        {
             /* We've found to block to which "ptr" points so we decrease the
             reference count and return the new value of it. */
             return --*ptr2;

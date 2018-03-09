@@ -14,7 +14,8 @@
 // See HIDCtrlTransferTest.cpp for the implementation of this class
 //
 
-class CHIDCtrlTransferTestApp : public CWinApp {
+class CHIDCtrlTransferTestApp : public CWinApp
+{
 public:
     CHIDCtrlTransferTestApp();
 

@@ -25,11 +25,13 @@ static uint32_t index = 0;
 
 void DAC_IRQHandler(void)
 {
-    if(DAC_GET_INT_FLAG(DAC0, 0)) {
+    if(DAC_GET_INT_FLAG(DAC0, 0))
+    {
 
         if(index == array_size)
             index = 0;
-        else {
+        else
+        {
             DAC_WRITE_DATA(DAC0, 0, sine[index++]);
 
             /* Clear the DAC conversion complete finish flag */
@@ -69,7 +71,7 @@ void SYS_Init(void)
     /* Select EPWM0 module clock source as PCLK0 */
     CLK_SetModuleClock(EPWM0_MODULE, CLK_CLKSEL2_EPWM0SEL_PCLK0, 0);
     /* Set PB.12 and PB.13 to input mode */
-    PB->MODE &= ~(GPIO_MODE_MODE12_Msk | GPIO_MODE_MODE13_Msk); 
+    PB->MODE &= ~(GPIO_MODE_MODE12_Msk | GPIO_MODE_MODE13_Msk);
     /* Set PB multi-function pins for DAC voltage output */
     SYS->GPB_MFPL |= SYS_GPB_MFPH_PB12MFP_DAC0_OUT | SYS_GPB_MFPH_PB13MFP_DAC1_OUT;
     /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */

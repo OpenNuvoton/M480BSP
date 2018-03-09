@@ -179,15 +179,19 @@ void PDMA_IRQHandler(void)
 {
     uint32_t status = PDMA_GET_INT_STATUS(PDMA);
 
-    if(status & PDMA_INTSTS_ABTIF_Msk) {  /* abort */
+    if(status & PDMA_INTSTS_ABTIF_Msk)    /* abort */
+    {
         if(PDMA_GET_ABORT_STS(PDMA) & PDMA_ABTSTS_ABTIF2_Msk)
             u32IsTestOver = 2;
         PDMA_CLR_ABORT_FLAG(PDMA, PDMA_ABTSTS_ABTIF2_Msk);
-    } else if(status & PDMA_INTSTS_TDIF_Msk) {  /* done */
+    }
+    else if(status & PDMA_INTSTS_TDIF_Msk)      /* done */
+    {
         if(PDMA_GET_TD_STS(PDMA) & PDMA_TDSTS_TDIF2_Msk)
             u32IsTestOver = 1;
         PDMA_CLR_TD_FLAG(PDMA, PDMA_TDSTS_TDIF2_Msk);
-    } else
+    }
+    else
         printf("unknown interrupt !!\n");
 }
 
@@ -201,7 +205,8 @@ void AccessEBIWithPDMA(void)
     /* Enable PDMA clock source */
     CLK_EnableModuleClock(PDMA_MODULE);
 
-    for(i=0; i<64; i++) {
+    for(i=0; i<64; i++)
+    {
         SrcArray[i] = 0x76570000 + i;
         u32Result0 += SrcArray[i];
     }
@@ -226,7 +231,8 @@ void AccessEBIWithPDMA(void)
     /* Transfer internal SRAM to EBI SRAM done */
 
     /* Clear internal SRAM data */
-    for(i=0; i<64; i++) {
+    for(i=0; i<64; i++)
+    {
         SrcArray[i] = 0x0;
     }
 
@@ -239,18 +245,25 @@ void AccessEBIWithPDMA(void)
     PDMA_Trigger(PDMA, 2);
     while(u32IsTestOver == 0);
     /* Transfer EBI SRAM to internal SRAM done */
-    for(i=0; i<64; i++) {
+    for(i=0; i<64; i++)
+    {
         u32Result1 += SrcArray[i];
     }
 
-    if(u32IsTestOver == 1) {
-        if((u32Result0 == u32Result1) && (u32Result0 != 0x5A5A)) {
+    if(u32IsTestOver == 1)
+    {
+        if((u32Result0 == u32Result1) && (u32Result0 != 0x5A5A))
+        {
             printf("        PASS (0x%X)\n\n", u32Result0);
-        } else {
+        }
+        else
+        {
             printf("        FAIL - data matched (0x%X)\n\n", u32Result0);
             while(1);
         }
-    } else {
+    }
+    else
+    {
         printf("        PDMA fail\n\n");
         while(1);
     }

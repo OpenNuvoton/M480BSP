@@ -32,17 +32,21 @@ void RS485_HANDLE()
     volatile uint32_t u32BufSts = UUART_GET_BUF_STATUS(UUART0);
     volatile uint32_t u32Data;
 
-    if(u32ProtSts & UUART_PROTSTS_RXENDIF_Msk) {    /* Receive end interrupt */
+    if(u32ProtSts & UUART_PROTSTS_RXENDIF_Msk)      /* Receive end interrupt */
+    {
         /* Handle received data */
         UUART_CLR_PROT_INT_FLAG(UUART0, UUART_PROTSTS_RXENDIF_Msk);
         u32Data = UUART_READ(UUART0);
         if( u32Data & 0x100 )
             u8Address = u32Data;
-        else {
+        else
+        {
             u8RecData[r_pointer] = u32Data;
             r_pointer++;
         }
-    } else if( u32BufSts & UUART_BUFSTS_RXOVIF_Msk ) { /* Receive buffer over-run error interrupt */
+    }
+    else if( u32BufSts & UUART_BUFSTS_RXOVIF_Msk )     /* Receive buffer over-run error interrupt */
+    {
         UUART_CLR_BUF_INT_FLAG(UUART0, UUART_BUFSTS_RXOVIF_Msk);
         printf("\nBuffer Error...\n");
     }
@@ -86,7 +90,8 @@ void RS485_9bitModeSlave()
 
     printf("\n Receive Address: 0x%x ", u8Address);
     printf("\n Receive Data:");
-    for(i=0; i<10; i++) {
+    for(i=0; i<10; i++)
+    {
         printf(" %d,", u8RecData[i]);
     }
 

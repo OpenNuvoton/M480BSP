@@ -45,19 +45,23 @@ void PDMA0_IRQHandler(void)
 {
     uint32_t status = PDMA_GET_INT_STATUS(PDMA);
 
-    if(status & PDMA_INTSTS_ABTIF_Msk) {  /* abort */
+    if(status & PDMA_INTSTS_ABTIF_Msk)    /* abort */
+    {
         /* Check if channel 1 has abort error */
         if(PDMA_GET_ABORT_STS(PDMA) & PDMA_ABTSTS_ABTIF1_Msk)
             g_u32IsTestOver = 2;
         /* Clear abort flag of channel 1 */
         PDMA_CLR_ABORT_FLAG(PDMA,PDMA_ABTSTS_ABTIF1_Msk);
-    } else if(status & PDMA_INTSTS_TDIF_Msk) {  /* done */
+    }
+    else if(status & PDMA_INTSTS_TDIF_Msk)      /* done */
+    {
         /* Check transmission of channel 1 has been transfer done */
         if(PDMA_GET_TD_STS(PDMA) & PDMA_TDSTS_TDIF1_Msk)
             g_u32IsTestOver = 1;
         /* Clear transfer done flag of channel 1 */
         PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF1_Msk);
-    } else
+    }
+    else
         printf("unknown interrupt !!\n");
 }
 
@@ -68,10 +72,13 @@ void I2C0_IRQHandler(void)
 
     u32Status = I2C_GET_STATUS(I2C0);
 
-    if(I2C_GET_TIMEOUT_FLAG(I2C0)) {
+    if(I2C_GET_TIMEOUT_FLAG(I2C0))
+    {
         /* Clear I2C0 Timeout Flag */
         I2C_ClearTimeoutFlag(I2C0);
-    } else {
+    }
+    else
+    {
         if(s_I2C0HandlerFn != NULL)
             s_I2C0HandlerFn(u32Status);
     }
@@ -83,10 +90,13 @@ void I2C1_IRQHandler(void)
 
     u32Status = I2C_GET_STATUS(I2C1);
 
-    if(I2C_GET_TIMEOUT_FLAG(I2C1)) {
+    if(I2C_GET_TIMEOUT_FLAG(I2C1))
+    {
         /* Clear I2C1 Timeout Flag */
         I2C_ClearTimeoutFlag(I2C1);
-    } else {
+    }
+    else
+    {
         if(s_I2C1HandlerFn != NULL)
             s_I2C1HandlerFn(u32Status);
     }
@@ -97,25 +107,37 @@ void I2C1_IRQHandler(void)
 /*---------------------------------------------------------------------------------------------------------*/
 void I2C_MasterTx(uint32_t u32Status)
 {
-    if(u32Status == 0x08) {                         /* START has been transmitted */
+    if(u32Status == 0x08)                           /* START has been transmitted */
+    {
         I2C_SET_DATA(I2C0, g_u8DeviceAddr << 1);    /* Write SLA+W to Register I2CDAT */
         I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
         g_u8MstDataLen++;
-    } else if(u32Status == 0x18) {              /* SLA+W has been transmitted and ACK has been received */
+    }
+    else if(u32Status == 0x18)                  /* SLA+W has been transmitted and ACK has been received */
+    {
         I2C_SET_DATA(I2C0, g_au8MstTxData[g_u8MstDataLen++]);
         I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
-    } else if(u32Status == 0x20) {              /* SLA+W has been transmitted and NACK has been received */
+    }
+    else if(u32Status == 0x20)                  /* SLA+W has been transmitted and NACK has been received */
+    {
         I2C_STOP(I2C0);
         I2C_START(I2C0);
-    } else if(u32Status == 0x28) {              /* DATA has been transmitted and ACK has been received */
-        if(g_u8MstDataLen != I2C_PDMA_RX_LENGTH) {
+    }
+    else if(u32Status == 0x28)                  /* DATA has been transmitted and ACK has been received */
+    {
+        if(g_u8MstDataLen != I2C_PDMA_RX_LENGTH)
+        {
             I2C_SET_DATA(I2C0, g_au8MstTxData[g_u8MstDataLen++]);
             I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
-        } else {
+        }
+        else
+        {
             I2C_STOP(I2C0);
             g_u8MstEndFlag = 1;
         }
-    } else {
+    }
+    else
+    {
         /* TO DO */
         printf("Status 0x%x is NOT processed\n", u32Status);
     }
@@ -126,29 +148,35 @@ void I2C_MasterTx(uint32_t u32Status)
 /*---------------------------------------------------------------------------------------------------------*/
 void I2C_PDMA_SlaveRx(uint32_t u32Status)
 {
-    if(u32Status == 0x60) {                     /* Own SLA+W has been receive; ACK has been return */
+    if(u32Status == 0x60)                       /* Own SLA+W has been receive; ACK has been return */
+    {
         /*
             Note:
             During PDMA operation, I2C controller will not occur receive Address ACK interrupt
         */
-    } else if(u32Status == 0x80)                 /* Previously address with own SLA address
+    }
+    else if(u32Status == 0x80)                 /* Previously address with own SLA address
                                                   Data has been received; ACK has been returned*/
     {
         /*
             Note:
             During PDMA operation, I2C controller will not occur receive Data ACK interrupt
         */
-    } else if(u32Status == 0x88)                 /* Previously addressed with own SLA address; NOT ACK has
+    }
+    else if(u32Status == 0x88)                 /* Previously addressed with own SLA address; NOT ACK has
                                                    been returned */
     {
         g_u8SlvDataLen = 0;
         I2C_SET_CONTROL_REG(I2C1, I2C_CTL_SI_AA);
-    } else if(u32Status == 0xA0)                 /* A STOP or repeated START has been received while still
+    }
+    else if(u32Status == 0xA0)                 /* A STOP or repeated START has been received while still
                                                    addressed as Slave/Receiver*/
     {
         g_u8SlvDataLen = 0;
         I2C_SET_CONTROL_REG(I2C1, I2C_CTL_SI_AA);
-    } else {
+    }
+    else
+    {
         /* TO DO */
         printf("Status 0x%x is NOT processed\n", u32Status);
         while(1);
@@ -319,7 +347,8 @@ void I2C_Write_to_Slave_PDMA_RX(uint8_t slvaddr)
     g_u8DeviceAddr = slvaddr;
 
     /* I2C0 prepare transmit data bytes */
-    for(i = 1; i < 200; i++) {
+    for(i = 1; i < 200; i++)
+    {
         g_au8MstTxData[i] = i;
     }
 
@@ -381,7 +410,8 @@ int32_t main(void)
     I2C_SET_CONTROL_REG(I2C1, I2C_CTL_SI_AA);
 
     /* Clear Slave receive data buffer */
-    for(i = 0; i < 0x200; i++) {
+    for(i = 0; i < 0x200; i++)
+    {
         g_au8SlvData[i] = 0;
     }
 
@@ -403,9 +433,11 @@ int32_t main(void)
     g_u32IsTestOver = 0;
 
     err = 0;
-    for(i = 0; i < I2C_PDMA_RX_LENGTH; i++) {
+    for(i = 0; i < I2C_PDMA_RX_LENGTH; i++)
+    {
         /* Compare Master Tx data with Slave Rx data */
-        if(g_au8MstTxData[i] != g_au8SlvData[i]) {
+        if(g_au8MstTxData[i] != g_au8SlvData[i])
+        {
             err = 1;
             printf("[%03d]: Tx[0x%X] != Rx[0x%X]\n", i, g_au8MstTxData[i], g_au8SlvData[i]);
         }

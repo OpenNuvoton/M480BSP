@@ -21,7 +21,8 @@
  */
 void EPWM1P1_IRQHandler(void)
 {
-    if(EPWM_GetCaptureIntFlag(EPWM1, 2) > 1) {
+    if(EPWM_GetCaptureIntFlag(EPWM1, 2) > 1)
+    {
         EPWM_ClearCaptureIntFlag(EPWM1, 2, EPWM_CAPTURE_INT_FALLING_LATCH);
     }
 }
@@ -56,7 +57,8 @@ void CalPeriodTime(EPWM_T *EPWM, uint32_t u32Ch)
 
     u32i = 0;
 
-    while(u32i < 4) {
+    while(u32i < 4)
+    {
         /* Wait for Capture Falling Indicator */
         while(EPWM_GetCaptureIntFlag(EPWM, u32Ch) < 2);
 
@@ -176,7 +178,8 @@ int32_t main(void)
     printf("    EPWM1 channel 2(PC.10) <--> EPWM1 channel 0(PC.12)\n\n");
     printf("Use EPWM1 Channel 2(PC.10) to capture the EPWM1 Channel 0(PC.12) Waveform\n");
 
-    while(1) {
+    while(1)
+    {
         printf("\n\nPress any key to start EPWM Capture Test\n");
         getchar();
 

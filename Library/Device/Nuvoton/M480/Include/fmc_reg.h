@@ -22,7 +22,8 @@
     Memory Mapped Structure for FMC Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
     /**
      * @var FMC_T::ISPCTL
      * Offset: 0x00  ISP Control Register

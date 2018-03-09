@@ -10,7 +10,8 @@
 #include "hid_mouse.h"
 
 /*!<USB HID Report Descriptor */
-const uint8_t HID_MouseReportDescriptor[] = {
+const uint8_t HID_MouseReportDescriptor[] =
+{
     0x05, 0x01,     /* Usage Page(Generic Desktop Controls) */
     0x09, 0x02,     /* Usage(Mouse) */
     0xA1, 0x01,     /* Collection(Application) */
@@ -45,7 +46,8 @@ const uint8_t HID_MouseReportDescriptor[] = {
 
 /*----------------------------------------------------------------------------*/
 /*!<USB Device Descriptor */
-const uint8_t gu8DeviceDescriptor[] = {
+const uint8_t gu8DeviceDescriptor[] =
+{
     LEN_DEVICE,     /* bLength */
     DESC_DEVICE,    /* bDescriptorType */
     0x10, 0x01,     /* bcdUSB */
@@ -67,7 +69,8 @@ const uint8_t gu8DeviceDescriptor[] = {
 };
 
 /*!<USB Configure Descriptor */
-const uint8_t gu8ConfigDescriptor[] = {
+const uint8_t gu8ConfigDescriptor[] =
+{
     LEN_CONFIG,     /* bLength */
     DESC_CONFIG,    /* bDescriptorType */
     /* wTotalLength */
@@ -113,28 +116,32 @@ const uint8_t gu8ConfigDescriptor[] = {
 };
 
 /*!<USB Language String Descriptor */
-const uint8_t gu8StringLang[4] = {
+const uint8_t gu8StringLang[4] =
+{
     4,              /* bLength */
     DESC_STRING,    /* bDescriptorType */
     0x09, 0x04
 };
 
 /*!<USB Vendor String Descriptor */
-const uint8_t gu8VendorStringDesc[] = {
+const uint8_t gu8VendorStringDesc[] =
+{
     16,
     DESC_STRING,
     'N', 0, 'u', 0, 'v', 0, 'o', 0, 't', 0, 'o', 0, 'n', 0
 };
 
 /*!<USB Product String Descriptor */
-const uint8_t gu8ProductStringDesc[] = {
+const uint8_t gu8ProductStringDesc[] =
+{
     20,
     DESC_STRING,
     'H', 0, 'I', 0, 'D', 0, ' ', 0, 'M', 0, 'o', 0, 'u', 0, 's', 0, 'e', 0
 };
 
 /*!<USB BOS Descriptor */
-const uint8_t gu8BOSDescriptor[] = {
+const uint8_t gu8BOSDescriptor[] =
+{
     LEN_BOS,        /* bLength */
     DESC_BOS,       /* bDescriptorType */
     /* wTotalLength */
@@ -149,32 +156,37 @@ const uint8_t gu8BOSDescriptor[] = {
     0x02, 0x00, 0x00, 0x00  /* bmAttributes */
 };
 
-const uint8_t *gpu8UsbString[4] = {
+const uint8_t *gpu8UsbString[4] =
+{
     gu8StringLang,
     gu8VendorStringDesc,
     gu8ProductStringDesc,
     0
 };
 
-const uint8_t *gpu8UsbHidReport[3] = {
+const uint8_t *gpu8UsbHidReport[3] =
+{
     HID_MouseReportDescriptor,
     NULL,
     NULL
 };
 
-const uint32_t gu32UsbHidReportLen[3] = {
+const uint32_t gu32UsbHidReportLen[3] =
+{
     sizeof(HID_MouseReportDescriptor),
     0,
     0
 };
 
-const uint32_t gu32ConfigHidDescIdx[3] = {
+const uint32_t gu32ConfigHidDescIdx[3] =
+{
     (LEN_CONFIG+LEN_INTERFACE),
     0,
     0
 };
 
-const S_USBD_INFO_T gsInfo = {
+const S_USBD_INFO_T gsInfo =
+{
     (uint8_t *)gu8DeviceDescriptor,
     (uint8_t *)gu8ConfigDescriptor,
     (uint8_t **)gpu8UsbString,

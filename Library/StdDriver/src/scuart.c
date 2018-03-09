@@ -43,28 +43,43 @@ static uint32_t SCUART_GetClock(SC_T *sc)
 {
     uint32_t u32ClkSrc, u32Num, u32Clk;
 
-    if(sc == SC0) {
+    if(sc == SC0)
+    {
         u32Num = 0UL;
-    } else if(sc == SC1) {
+    }
+    else if(sc == SC1)
+    {
         u32Num = 1UL;
-    } else {
+    }
+    else
+    {
         u32Num = 2UL;
     }
 
     u32ClkSrc = (CLK->CLKSEL3 >> (2UL * u32Num)) & CLK_CLKSEL3_SC0SEL_Msk;
 
     /* Get smartcard module clock */
-    if(u32ClkSrc == 0UL) {
+    if(u32ClkSrc == 0UL)
+    {
         u32Clk = __HXT;
-    } else if(u32ClkSrc == 1UL) {
+    }
+    else if(u32ClkSrc == 1UL)
+    {
         u32Clk = CLK_GetPLLClockFreq();
-    } else if(u32ClkSrc == 2UL) {
-        if(u32Num == 1UL) {
+    }
+    else if(u32ClkSrc == 2UL)
+    {
+        if(u32Num == 1UL)
+        {
             u32Clk = CLK_GetPCLK1Freq();
-        } else {
+        }
+        else
+        {
             u32Clk = CLK_GetPCLK0Freq();
         }
-    } else {
+    }
+    else
+    {
         u32Clk = __HIRC;
     }
 
@@ -117,8 +132,10 @@ uint32_t SCUART_Read(SC_T* sc, uint8_t pu8RxBuf[], uint32_t u32ReadBytes)
 {
     uint32_t u32Count;
 
-    for(u32Count = 0UL; u32Count < u32ReadBytes; u32Count++) {
-        if(SCUART_GET_RX_EMPTY(sc)) { /* no data available */
+    for(u32Count = 0UL; u32Count < u32ReadBytes; u32Count++)
+    {
+        if(SCUART_GET_RX_EMPTY(sc))   /* no data available */
+        {
             break;
         }
         pu8RxBuf[u32Count] = (uint8_t)SCUART_READ(sc);    /* get data from FIFO */
@@ -155,9 +172,12 @@ uint32_t SCUART_SetLineConfig(SC_T* sc, uint32_t u32Baudrate, uint32_t u32DataWi
 
     uint32_t u32Clk = SCUART_GetClock(sc), u32Div;
 
-    if(u32Baudrate == 0UL) {  /* keep original baudrate setting */
+    if(u32Baudrate == 0UL)    /* keep original baudrate setting */
+    {
         u32Div = sc->ETUCTL & SC_ETUCTL_ETURDIV_Msk;
-    } else {
+    }
+    else
+    {
         /* Calculate divider for target baudrate */
         u32Div = (u32Clk + (u32Baudrate >> 1) - 1UL)/ u32Baudrate - 1UL;
         sc->ETUCTL = u32Div;
@@ -198,9 +218,11 @@ void SCUART_Write(SC_T* sc,uint8_t pu8TxBuf[], uint32_t u32WriteBytes)
 {
     uint32_t u32Count;
 
-    for(u32Count = 0UL; u32Count != u32WriteBytes; u32Count++) {
+    for(u32Count = 0UL; u32Count != u32WriteBytes; u32Count++)
+    {
         /* Wait 'til FIFO not full */
-        while(SCUART_GET_TX_FULL(sc)) {
+        while(SCUART_GET_TX_FULL(sc))
+        {
             ;
         }
         /* Write 1 byte to FIFO */

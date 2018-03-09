@@ -22,7 +22,8 @@
     Memory Mapped Structure for EADC Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

@@ -28,7 +28,8 @@ void SysTick_Handler(void)
 void enable_sys_tick(int ticks_per_second)
 {
     g_tick_cnt = 0;
-    if (SysTick_Config(SystemCoreClock / ticks_per_second)) {
+    if (SysTick_Config(SystemCoreClock / ticks_per_second))
+    {
         /* Setup SysTick Timer for 1 second interrupts  */
         printf("Set system tick error!!\n");
         while (1);
@@ -59,18 +60,22 @@ void  connect_func(struct udev_t *udev, int param)
     printf("    Speed:    %s-speed\n", (udev->speed == SPEED_HIGH) ? "high" : ((udev->speed == SPEED_FULL) ? "full" : "low"));
     printf("    Location: ");
 
-    if (parent == NULL) {
+    if (parent == NULL)
+    {
         if (udev->port_num == 1)
             printf("USB 2.0 port\n");
         else
             printf("USB 1.1 port\n");
-    } else {
+    }
+    else
+    {
         if (parent->pos_id[0] == '1')
             printf("USB 2.0 port");
         else
             printf("USB 1.1 port");
 
-        for (i = 1; parent->pos_id[i] != 0; i++) {
+        for (i = 1; parent->pos_id[i] != 0; i++)
+        {
             printf(" => Hub port %c", parent->pos_id[i]);
         }
 
@@ -212,8 +217,10 @@ int32_t main(void)
 
     usbh_install_conn_callback(connect_func, disconnect_func);
 
-    while (1) {
-        if (usbh_pooling_hubs()) {           /* USB Host port detect polling and management */
+    while (1)
+    {
+        if (usbh_pooling_hubs())             /* USB Host port detect polling and management */
+        {
             // usbh_memory_used();           /* print out USB memory allocating information */
         }
     }

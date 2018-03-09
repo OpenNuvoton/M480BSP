@@ -61,7 +61,8 @@ uint8_t  oem_key_to_ascii(HID_DEV_T *hdev, uint8_t mod, uint8_t key)
     uint8_t    shift = (mod & 0x22);
 
     // [a-z]
-    if ((key > 0x03) && (key < 0x1e)) {
+    if ((key > 0x03) && (key < 0x1e))
+    {
         // Upper case letters
         if ((!(g_kbd_dev.bLED & LED_CapsLoock) && (mod & 2)) ||
                 ((g_kbd_dev.bLED & LED_CapsLoock) && ((mod & 2) == 0)))
@@ -72,22 +73,27 @@ uint8_t  oem_key_to_ascii(HID_DEV_T *hdev, uint8_t mod, uint8_t key)
             return (key - 4 + 'a');
     }
     // Numbers
-    else if ((key > 0x1d) && (key < 0x27)) {
+    else if ((key > 0x1d) && (key < 0x27))
+    {
         if (shift)
             return (numKeys[key - 0x1e]);
         else
             return (key - 0x1e + '1');
     }
     // Keypad Numbers
-    else if (key > 0x58 && key < 0x62) {
+    else if (key > 0x58 && key < 0x62)
+    {
         if (g_kbd_dev.bLED & LED_NumLock)
             return (key - 0x59 + '1');
-    } else if ((key > 0x2c) && (key < 0x39))
+    }
+    else if ((key > 0x2c) && (key < 0x39))
         return ((shift) ? symKeysUp[key-0x2d] : symKeysLo[key-0x2d]);
     else if ((key > 0x53) && (key < 0x59))
         return padKeys[key - 0x54];
-    else {
-        switch (key) {
+    else
+    {
+        switch (key)
+        {
         case KEY_SPACE:
             return (0x20);
         case KEY_ENTER:
@@ -111,7 +117,8 @@ uint8_t  update_locking_keys(HID_DEV_T *hdev, uint8_t key)
 
     old_LED = g_kbd_dev.bLED;
 
-    switch (key) {
+    switch (key)
+    {
     case KEY_NUM_LOCK:
         g_kbd_dev.bLED = g_kbd_dev.bLED ^ LED_NumLock;
         break;
@@ -123,7 +130,8 @@ uint8_t  update_locking_keys(HID_DEV_T *hdev, uint8_t key)
         break;
     }
 
-    if (g_kbd_dev.bLED != old_LED) {
+    if (g_kbd_dev.bLED != old_LED)
+    {
         ret = usbh_hid_set_report(hdev, 2, 0, &g_kbd_dev.bLED, 1);
         if (ret < 0)
             printf("usbh_hid_set_report failed - %d\n", ret);
@@ -144,24 +152,28 @@ int  kbd_parse_report(HID_DEV_T *hdev, uint8_t *buf, int len)
     if (buf[2] == 1)
         return -1;
 
-    for (i = 2; i < 8; ++i) {
+    for (i = 2; i < 8; ++i)
+    {
         down = up = 0;
 
-        for (j = 2; j < 8; j++) {
+        for (j = 2; j < 8; j++)
+        {
             if ((buf[i] == g_kbd_dev.pre_data[j]) && (buf[i] != 1))
                 down = 1;
             if ((buf[j] == g_kbd_dev.pre_data[i]) && (g_kbd_dev.pre_data[i] != 1))
                 up = 1;
         }
 
-        if (!down) {
+        if (!down)
+        {
             update_locking_keys(hdev, buf[i]);
             printf("Pressed: 0x%x ", buf[i]);
             key = oem_key_to_ascii(hdev, buf[0], buf[i]);
             print_key(buf[0], key);
         }
 
-        if (!up) {
+        if (!up)
+        {
             printf("Released: 0x%x ", buf[i]);
             key = oem_key_to_ascii(hdev, buf[0], buf[i]);
             print_key(buf[0], key);

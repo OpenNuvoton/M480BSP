@@ -37,10 +37,13 @@ void PowerDownFunction(void)
 void GPB_IRQHandler(void)
 {
     /* To check if PB.3 interrupt occurred */
-    if(GPIO_GET_INT_FLAG(PB, BIT3)) {
+    if(GPIO_GET_INT_FLAG(PB, BIT3))
+    {
         GPIO_CLR_INT_FLAG(PB, BIT3);
         printf("PB.3 INT occurred.\n");
-    } else {
+    }
+    else
+    {
         /* Un-expected interrupt. Just clear all PB interrupts */
         PB->INTSRC = PB->INTSRC;
         printf("Un-expected interrupts.\n");
@@ -116,7 +119,8 @@ int main(void)
     SYS_UnlockReg();
 
     /* Waiting for PB.3 rising-edge interrupt event */
-    while(1) {
+    while(1)
+    {
         printf("Enter to Power-Down ......\n");
 
         /* Enter to Power-down mode */

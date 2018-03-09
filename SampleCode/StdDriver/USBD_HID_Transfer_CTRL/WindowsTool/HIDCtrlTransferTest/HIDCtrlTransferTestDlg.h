@@ -7,7 +7,8 @@
 
 
 // CHIDCtrlTransferTestDlg dialog
-class CHIDCtrlTransferTestDlg : public CDialog {
+class CHIDCtrlTransferTestDlg : public CDialog
+{
 // Construction
 public:
     CHIDCtrlTransferTestDlg(CWnd* pParent = NULL);  // standard constructor

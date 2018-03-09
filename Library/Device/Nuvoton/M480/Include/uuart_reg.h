@@ -22,7 +22,8 @@
     Memory Mapped Structure for UUART Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

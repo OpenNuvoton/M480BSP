@@ -22,7 +22,8 @@
     Memory Mapped Structure for HSUSBH Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

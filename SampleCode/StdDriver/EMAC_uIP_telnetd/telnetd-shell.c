@@ -47,7 +47,8 @@
 #include "telnetd.h"
 #include <string.h>
 
-struct ptentry {
+struct ptentry
+{
     char c;
     void (* pfunc)(struct telnetd_state *s, char *str);
 };
@@ -63,15 +64,19 @@ parse(struct telnetd_state *s, register char *str, struct ptentry *t)
 
     /* Loop over the parse table entries in t in order to find one that
        matches the first character in str. */
-    for(p = t; p->c != 0; ++p) {
-        if(*str == p->c) {
+    for(p = t; p->c != 0; ++p)
+    {
+        if(*str == p->c)
+        {
             /* Skip rest of the characters up to the first space. */
-            while(*str != ' ') {
+            while(*str != ' ')
+            {
                 ++str;
             }
 
             /* Skip all spaces.*/
-            while(*str == ' ') {
+            while(*str == ' ')
+            {
                 ++str;
             }
 
@@ -96,11 +101,13 @@ static void
 inttostr(register char *str, unsigned int i)
 {
     str[0] = '0' + i / 100;
-    if(str[0] == '0') {
+    if(str[0] == '0')
+    {
         str[0] = ' ';
     }
     str[1] = '0' + (i / 10) % 10;
-    if(str[1] == '0') {
+    if(str[1] == '0')
+    {
         str[1] = ' ';
     }
     str[2] = '0' + i % 10;
@@ -151,12 +158,14 @@ help(struct telnetd_state *s, char *str)
 static void
 none(struct telnetd_state *s, char *str)
 {
-    if(strlen(str) > 0) {
+    if(strlen(str) > 0)
+    {
         telnetd_output(s, "Unknown command", "");
     }
 }
 /*-----------------------------------------------------------------------------------*/
-static struct ptentry configparsetab[] = {
+static struct ptentry configparsetab[] =
+{
     {'s', stats},
     {'e', exitt},
     {'?', help},

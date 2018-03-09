@@ -58,14 +58,16 @@ int  my_get_line(void)
     int         i;
     uint8_t     ch[2];
 
-    if (file_idx+1 >= file_size) {
+    if (file_idx+1 >= file_size)
+    {
         //printf("EOF.\n");
         return -1;
     }
 
     memset(g_line, 0, sizeof(g_line));
 
-    for (i = 0;  ; i++) {
+    for (i = 0;  ; i++)
+    {
         if (read_file(ch, 1) < 0)
             return 0;
 
@@ -75,7 +77,8 @@ int  my_get_line(void)
         g_line[i] = ch[0];
     }
 
-    while (1) {
+    while (1)
+    {
         if (read_file(ch, 1) < 0)
             return 0;
 
@@ -116,8 +119,10 @@ int  str_to_hex(uint8_t *str, uint8_t *hex, int swap)
     int         i, count = 0, actual_len;
     uint8_t     val8;
 
-    while (*str) {
-        if (!is_hex_char(*str)) {
+    while (*str)
+    {
+        if (!is_hex_char(*str))
+        {
             //printf("ERROR - not hex!!\n");
             return count;
         }
@@ -125,7 +130,8 @@ int  str_to_hex(uint8_t *str, uint8_t *hex, int swap)
         val8 = char_to_hex(*str);
         str++;
 
-        if (!is_hex_char(*str)) {
+        if (!is_hex_char(*str))
+        {
             //printf("ERROR - not hex!!\n");
             return count;
         }
@@ -147,7 +153,8 @@ int  str_to_hex(uint8_t *str, uint8_t *hex, int swap)
         return actual_len;
 
     // SWAP
-    for (i = 0; i < count; i+=4) {
+    for (i = 0; i < count; i+=4)
+    {
         val8 = hex[i];
         hex[i] = hex[i+3];
         hex[i+3] = val8;
@@ -166,8 +173,10 @@ int  str_to_decimal(uint8_t *str)
     int     val32;
 
     val32 = 0;
-    while (*str) {
-        if ((*str < '0') || (*str > '9')) {
+    while (*str)
+    {
+        if ((*str < '0') || (*str > '9'))
+        {
             return val32;
         }
         val32 = (val32 * 10) + (*str - '0');
@@ -191,13 +200,15 @@ int  get_next_pattern(void)
 
     memset(g_hmac_msg, 0x0, 128);
 
-    while (my_get_line() == 0) {
+    while (my_get_line() == 0)
+    {
         line_num++;
 
         if (g_line[0] == '#')
             continue;
 
-        if (strncmp(g_line ,"Klen", 4) == 0) {
+        if (strncmp(g_line ,"Klen", 4) == 0)
+        {
             p = (uint8_t *)&g_line[4];
             while ((*p < '0') || (*p > '9'))
                 p++;
@@ -207,7 +218,8 @@ int  get_next_pattern(void)
             continue;
         }
 
-        if (strncmp(g_line ,"Tlen", 4) == 0) {
+        if (strncmp(g_line ,"Tlen", 4) == 0)
+        {
             p = (uint8_t *)&g_line[4];
             while ((*p < '0') || (*p > '9'))
                 p++;
@@ -217,17 +229,20 @@ int  get_next_pattern(void)
             continue;
         }
 
-        if (strncmp(g_line ,"Key", 3) == 0) {
+        if (strncmp(g_line ,"Key", 3) == 0)
+        {
             p = (uint8_t *)&g_line[3];
             while (!is_hex_char(*p)) p++;
-            if (str_to_hex(p, &g_hmac_msg[0], 0) != g_key_len) {
+            if (str_to_hex(p, &g_hmac_msg[0], 0) != g_key_len)
+            {
                 printf("key len mismatch!\n");
                 return -1;
             }
             continue;
         }
 
-        if (strncmp(g_line ,"Msg", 3) == 0) {
+        if (strncmp(g_line ,"Msg", 3) == 0)
+        {
             p = (uint8_t *)&g_line[3];
             while (!is_hex_char(*p)) p++;
             g_msg_len = str_to_hex(p, &g_hmac_msg[(g_key_len+3)&0xfffffffc], 0);
@@ -235,19 +250,22 @@ int  get_next_pattern(void)
             continue;
         }
 
-        if (strncmp(g_line ,"Mac", 3) == 0) {
+        if (strncmp(g_line ,"Mac", 3) == 0)
+        {
             p = (uint8_t *)&g_line[3];
             while (!is_hex_char(*p)) p++;
             str_to_hex(p, &g_hmac_mac[0], 0);
             return 0;
         }
 
-        if (strncmp(g_line ,"[L=", 3) == 0) {
+        if (strncmp(g_line ,"[L=", 3) == 0)
+        {
             p = (uint8_t *)&g_line[3];
             while ((*p < '0') || (*p > '9'))
                 p++;
             blen = str_to_decimal(p);
-            switch (blen) {
+            switch (blen)
+            {
             case 20:
                 g_sha_mode = SHA_MODE_SHA1;
                 printf("SHA1...\n");

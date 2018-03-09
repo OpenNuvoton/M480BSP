@@ -410,7 +410,8 @@ get_errno (void);
 #define ARGS_BUF_ARRAY_SIZE 80
 #define ARGV_BUF_ARRAY_SIZE 10
 
-typedef struct {
+typedef struct
+{
     char* pCommandLine;
     int size;
 } CommandLineBlock;
@@ -434,7 +435,8 @@ __initialize_args (int* p_argc, char*** p_argv)
     cmdBlock.size = sizeof(args_buf) - 1;
 
     int ret = call_host (SEMIHOSTING_SYS_GET_CMDLINE, &cmdBlock);
-    if (ret == 0) {
+    if (ret == 0)
+    {
 
         // In case the host send more than we can chew, limit the
         // string to our buffer.
@@ -446,14 +448,18 @@ __initialize_args (int* p_argc, char*** p_argv)
         int delim = '\0';
         int ch;
 
-        while ((ch = *p) != '\0') {
-            if (isInArgument == 0) {
-                if (!isblank(ch)) {
+        while ((ch = *p) != '\0')
+        {
+            if (isInArgument == 0)
+            {
+                if (!isblank(ch))
+                {
                     if (argc
                             >= (int) ((sizeof(argv_buf) / sizeof(argv_buf[0])) - 1))
                         break;
 
-                    if (ch == '"' || ch == '\'') {
+                    if (ch == '"' || ch == '\'')
+                    {
                         // Remember the delimiter to search for the
                         // corresponding terminator
                         delim = ch;
@@ -464,13 +470,18 @@ __initialize_args (int* p_argc, char*** p_argv)
                     argv_buf[argc++] = p;
                     isInArgument = 1;
                 }
-            } else if (delim != '\0') {
-                if ((ch == delim)) {
+            }
+            else if (delim != '\0')
+            {
+                if ((ch == delim))
+                {
                     delim = '\0';
                     *p = '\0';
                     isInArgument = 0;
                 }
-            } else if (isblank(ch)) {
+            }
+            else if (isblank(ch))
+            {
                 delim = '\0';
                 *p = '\0';
                 isInArgument = 0;
@@ -479,7 +490,8 @@ __initialize_args (int* p_argc, char*** p_argv)
         }
     }
 
-    if (argc == 0) {
+    if (argc == 0)
+    {
         // No args found in string, return a single empty name.
         args_buf[0] = '\0';
         argv_buf[0] = &args_buf[0];
@@ -525,7 +537,8 @@ _kill (int pid __attribute__((unused)), int sig __attribute__((unused)))
 
 /* Struct used to keep track of the file position, just so we
  can implement fseek(fh,x,SEEK_CUR).  */
-struct fdent {
+struct fdent
+{
     int handle;
     int pos;
 };
@@ -579,12 +592,14 @@ findslot (int fd)
     CHECK_INIT(_REENT);
 
     /* User file descriptor is out of range. */
-    if ((unsigned int) fd >= MAX_OPEN_FILES) {
+    if ((unsigned int) fd >= MAX_OPEN_FILES)
+    {
         return NULL;
     }
 
     /* User file descriptor is open? */
-    if (openfiles[fd].handle == -1) {
+    if (openfiles[fd].handle == -1)
+    {
         return NULL;
     }
 
@@ -599,13 +614,16 @@ newslot (void)
 {
     int i;
 
-    for (i = 0; i < MAX_OPEN_FILES; i++) {
-        if (openfiles[i].handle == -1) {
+    for (i = 0; i < MAX_OPEN_FILES; i++)
+    {
+        if (openfiles[i].handle == -1)
+        {
             break;
         }
     }
 
-    if (i == MAX_OPEN_FILES) {
+    if (i == MAX_OPEN_FILES)
+    {
         return -1;
     }
 
@@ -645,11 +663,13 @@ initialise_monitor_handles (void)
     monitor_stderr = call_host (SEMIHOSTING_SYS_OPEN, (void*) block);
 
     /* If we failed to open stderr, redirect to stdout. */
-    if (monitor_stderr == -1) {
+    if (monitor_stderr == -1)
+    {
         monitor_stderr = monitor_stdout;
     }
 
-    for (i = 0; i < MAX_OPEN_FILES; i++) {
+    for (i = 0; i < MAX_OPEN_FILES; i++)
+    {
         openfiles[i].handle = -1;
     }
 
@@ -679,7 +699,8 @@ error (int result)
 static int
 checkerror (int result)
 {
-    if (result == -1) {
+    if (result == -1)
+    {
         return error (-1);
     }
 
@@ -712,14 +733,16 @@ _read (int fd, char* ptr, int len)
     struct fdent *pfd;
 
     pfd = findslot (fd);
-    if (pfd == NULL) {
+    if (pfd == NULL)
+    {
         errno = EBADF;
         return -1;
     }
 
     res = _swiread (pfd->handle, ptr, len);
 
-    if (res == -1) {
+    if (res == -1)
+    {
         return res;
     }
 
@@ -739,24 +762,29 @@ _swilseek (int fd, int ptr, int dir)
 
     /* Valid file descriptor? */
     pfd = findslot (fd);
-    if (pfd == NULL) {
+    if (pfd == NULL)
+    {
         errno = EBADF;
         return -1;
     }
 
     /* Valid whence? */
-    if ((dir != SEEK_CUR) && (dir != SEEK_SET) && (dir != SEEK_END)) {
+    if ((dir != SEEK_CUR) && (dir != SEEK_SET) && (dir != SEEK_END))
+    {
         errno = EINVAL;
         return -1;
     }
 
     /* Convert SEEK_CUR to SEEK_SET */
-    if (dir == SEEK_CUR) {
+    if (dir == SEEK_CUR)
+    {
         ptr = pfd->pos + ptr;
         /* The resulting file offset would be negative. */
-        if (ptr < 0) {
+        if (ptr < 0)
+        {
             errno = EINVAL;
-            if ((pfd->pos > 0) && (ptr > 0)) {
+            if ((pfd->pos > 0) && (ptr > 0))
+            {
                 errno = EOVERFLOW;
             }
             return -1;
@@ -765,10 +793,12 @@ _swilseek (int fd, int ptr, int dir)
     }
 
     int block[2];
-    if (dir == SEEK_END) {
+    if (dir == SEEK_END)
+    {
         block[0] = pfd->handle;
         res = checkerror (call_host (SEMIHOSTING_SYS_FLEN, block));
-        if (res == -1) {
+        if (res == -1)
+        {
             return -1;
         }
         ptr += res;
@@ -780,10 +810,13 @@ _swilseek (int fd, int ptr, int dir)
     res = checkerror (call_host (SEMIHOSTING_SYS_SEEK, block));
 
     /* At this point ptr is the current file position. */
-    if (res >= 0) {
+    if (res >= 0)
+    {
         pfd->pos = ptr;
         return ptr;
-    } else {
+    }
+    else
+    {
         return -1;
     }
 }
@@ -816,7 +849,8 @@ _write (int fd, char* ptr, int len)
     struct fdent *pfd;
 
     pfd = findslot (fd);
-    if (pfd == NULL) {
+    if (pfd == NULL)
+    {
         errno = EBADF;
         return -1;
     }
@@ -824,7 +858,8 @@ _write (int fd, char* ptr, int len)
     res = _swiwrite (pfd->handle, ptr, len);
 
     /* Clearly an error. */
-    if (res < 0) {
+    if (res < 0)
+    {
         return -1;
     }
 
@@ -832,7 +867,8 @@ _write (int fd, char* ptr, int len)
 
     /* We wrote 0 bytes?
      Retrieve errno just in case. */
-    if ((len - res) == 0) {
+    if ((len - res) == 0)
+    {
         return error (0);
     }
 
@@ -847,17 +883,20 @@ _swiopen (const char* path, int flags)
 
     int fd = newslot ();
 
-    if (fd == -1) {
+    if (fd == -1)
+    {
         errno = EMFILE;
         return -1;
     }
 
     /* It is an error to open a file that already exists. */
-    if ((flags & O_CREAT) && (flags & O_EXCL)) {
+    if ((flags & O_CREAT) && (flags & O_EXCL))
+    {
         struct stat st;
         int res;
         res = _stat (path, &st);
-        if (res != -1) {
+        if (res != -1)
+        {
             errno = EEXIST;
             return -1;
         }
@@ -865,22 +904,26 @@ _swiopen (const char* path, int flags)
 
     /* The flags are Unix-style, so we need to convert them. */
 #ifdef O_BINARY
-    if (flags & O_BINARY) {
+    if (flags & O_BINARY)
+    {
         aflags |= 1;
     }
 #endif
 
     /* In O_RDONLY we expect aflags == 0. */
 
-    if (flags & O_RDWR) {
+    if (flags & O_RDWR)
+    {
         aflags |= 2;
     }
 
-    if ((flags & O_CREAT) || (flags & O_TRUNC) || (flags & O_WRONLY)) {
+    if ((flags & O_CREAT) || (flags & O_TRUNC) || (flags & O_WRONLY))
+    {
         aflags |= 4;
     }
 
-    if (flags & O_APPEND) {
+    if (flags & O_APPEND)
+    {
         /* Can't ask for w AND a; means just 'a'.  */
         aflags &= ~4;
         aflags |= 8;
@@ -893,11 +936,14 @@ _swiopen (const char* path, int flags)
     fh = call_host (SEMIHOSTING_SYS_OPEN, block);
 
     /* Return a user file descriptor or an error. */
-    if (fh >= 0) {
+    if (fh >= 0)
+    {
         openfiles[fd].handle = fh;
         openfiles[fd].pos = 0;
         return fd;
-    } else {
+    }
+    else
+    {
         return error (fh);
     }
 }
@@ -923,13 +969,15 @@ _close (int fd)
     struct fdent *pfd;
 
     pfd = findslot (fd);
-    if (pfd == NULL) {
+    if (pfd == NULL)
+    {
         errno = EBADF;
         return -1;
     }
 
     /* Handle stderr == stdout. */
-    if ((fd == 1 || fd == 2) && (openfiles[1].handle == openfiles[2].handle)) {
+    if ((fd == 1 || fd == 2) && (openfiles[1].handle == openfiles[2].handle))
+    {
         pfd->handle = -1;
         return 0;
     }
@@ -938,7 +986,8 @@ _close (int fd)
     res = _swiclose (pfd->handle);
 
     /* Reclaim handle? */
-    if (res == 0) {
+    if (res == 0)
+    {
         pfd->handle = -1;
     }
 
@@ -958,7 +1007,8 @@ _swistat (int fd, struct stat* st)
     int res;
 
     pfd = findslot (fd);
-    if (pfd == NULL) {
+    if (pfd == NULL)
+    {
         errno = EBADF;
         return -1;
     }
@@ -968,7 +1018,8 @@ _swistat (int fd, struct stat* st)
     st->st_mode |= S_IFCHR;
     st->st_blksize = 1024;
     res = checkerror (call_host (SEMIHOSTING_SYS_FLEN, &pfd->handle));
-    if (res == -1) {
+    if (res == -1)
+    {
         return -1;
     }
 
@@ -991,7 +1042,8 @@ _stat (const char*fname, struct stat *st)
     memset (st, 0, sizeof(*st));
     /* The best we can do is try to open the file readonly.
      If it exists, then we can guess a few things about it. */
-    if ((fd = _open (fname, O_RDONLY)) == -1) {
+    if ((fd = _open (fname, O_RDONLY)) == -1)
+    {
         return -1;
     }
     st->st_mode |= S_IFREG | S_IREAD;
@@ -1017,7 +1069,8 @@ _unlink (const char* path)
     block[1] = strlen (path);
     res = call_host (SEMIHOSTING_SYS_REMOVE, block);
 
-    if (res == -1) {
+    if (res == -1)
+    {
         return error (res);
     }
     return 0;
@@ -1027,14 +1080,16 @@ int
 _gettimeofday (struct timeval* tp, void* tzvp)
 {
     struct timezone* tzp = tzvp;
-    if (tp) {
+    if (tp)
+    {
         /* Ask the host for the seconds since the Unix epoch.  */
         tp->tv_sec = call_host (SEMIHOSTING_SYS_TIME, NULL);
         tp->tv_usec = 0;
     }
 
     /* Return fixed data for the timezone.  */
-    if (tzp) {
+    if (tzp)
+    {
         tzp->tz_minuteswest = 0;
         tzp->tz_dsttime = 0;
     }
@@ -1058,7 +1113,8 @@ _times (struct tms* tp)
 {
     clock_t timeval = _clock ();
 
-    if (tp) {
+    if (tp)
+    {
         tp->tms_utime = timeval; /* user time */
         tp->tms_stime = 0; /* system time */
         tp->tms_cutime = 0; /* user time, children */
@@ -1075,14 +1131,16 @@ _isatty (int fd)
     int tty;
 
     pfd = findslot (fd);
-    if (pfd == NULL) {
+    if (pfd == NULL)
+    {
         errno = EBADF;
         return 0;
     }
 
     tty = call_host (SEMIHOSTING_SYS_ISTTY, &pfd->handle);
 
-    if (tty == 1) {
+    if (tty == 1)
+    {
         return 1;
     }
 
@@ -1099,19 +1157,22 @@ _system (const char* s)
     /* Hmmm.  The ARM debug interface specification doesn't say whether
      SYS_SYSTEM does the right thing with a null argument, or assign any
      meaning to its return value.  Try to do something reasonable....  */
-    if (!s) {
+    if (!s)
+    {
         return 1; /* maybe there is a shell available? we can hope. :-P */
     }
     block[0] = (uint32_t) s;
     block[1] = strlen (s);
     e = checkerror (call_host (SEMIHOSTING_SYS_SYSTEM, block));
-    if ((e >= 0) && (e < 256)) {
+    if ((e >= 0) && (e < 256))
+    {
         /* We have to convert e, an exit status to the encoded status of
          the command.  To avoid hard coding the exit status, we simply
          loop until we find the right position.  */
         int exit_code;
 
-        for (exit_code = e; e && WEXITSTATUS (e) != exit_code; e <<= 1) {
+        for (exit_code = e; e && WEXITSTATUS (e) != exit_code; e <<= 1)
+        {
             continue;
         }
     }

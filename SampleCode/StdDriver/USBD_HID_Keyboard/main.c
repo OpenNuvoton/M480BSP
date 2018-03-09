@@ -75,22 +75,28 @@ void HID_UpdateKbData(void)
     uint32_t key = 0xF;
     static uint32_t preKey;
 
-    if(g_u8EP2Ready) {
+    if(g_u8EP2Ready)
+    {
         buf = (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP2));
 
         /* If GPB15 = 1, just report it is key 'a' */
         key = (PB->PIN & (1 << 15)) ? 1 : 0;
 
-        if(key == 0) {
-            for(i = 0; i < 8; i++) {
+        if(key == 0)
+        {
+            for(i = 0; i < 8; i++)
+            {
                 buf[i] = 0;
             }
 
-            if(key != preKey) {
+            if(key != preKey)
+            {
                 /* Trigger to note key release */
                 USBD_SET_PAYLOAD_LEN(EP2, 8);
             }
-        } else {
+        }
+        else
+        {
             preKey = key;
             buf[2] = 0x04; /* Key A */
             USBD_SET_PAYLOAD_LEN(EP2, 8);
@@ -123,7 +129,8 @@ int32_t main(void)
     /* start to IN data */
     g_u8EP2Ready = 1;
 
-    while(1) {
+    while(1)
+    {
         HID_UpdateKbData();
     }
 }

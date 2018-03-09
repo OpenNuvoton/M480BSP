@@ -22,7 +22,8 @@
     Memory Mapped Structure for OPA Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

@@ -342,10 +342,13 @@ int32_t main (void)
     /* Enable I2S Rx function to receive data */
     I2S_ENABLE_RX(I2S0);
 
-    while(1) {
-        if (u32startFlag) {
+    while(1)
+    {
+        if (u32startFlag)
+        {
             /* Enable I2S Tx function to send data when data in the buffer is more than half of buffer size */
-            if (u32BuffPos >= BUFF_LEN/2) {
+            if (u32BuffPos >= BUFF_LEN/2)
+            {
                 I2S_EnableInt(I2S0, I2S_IEN_TXTHIEN_Msk);
                 I2S_ENABLE_TX(I2S0);
                 u32startFlag = 0;

@@ -48,7 +48,8 @@ void BOD_IRQHandler(void)
 void PWRWU_IRQHandler(void)
 {
     /* Check system power down mode wake-up interrupt status flag */
-    if(CLK->PWRCTL & CLK_PWRCTL_PDWKIF_Msk) {
+    if(CLK->PWRCTL & CLK_PWRCTL_PDWKIF_Msk)
+    {
         /* Clear system power down wake-up interrupt flag */
         CLK->PWRCTL |= CLK_PWRCTL_PDWKIF_Msk;
 

@@ -25,10 +25,13 @@ void EPWM0P0_IRQHandler(void)
     static int toggle = 0;
 
     // Update EPWM0 channel 0 period and duty
-    if(toggle == 0) {
+    if(toggle == 0)
+    {
         EPWM_SET_CNR(EPWM0, 0, 99);
         EPWM_SET_CMR(EPWM0, 0, 39);
-    } else {
+    }
+    else
+    {
         EPWM_SET_CNR(EPWM0, 0, 399);
         EPWM_SET_CMR(EPWM0, 0, 199);
     }

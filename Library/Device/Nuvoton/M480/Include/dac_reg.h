@@ -22,7 +22,8 @@
     Memory Mapped Structure for DAC Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

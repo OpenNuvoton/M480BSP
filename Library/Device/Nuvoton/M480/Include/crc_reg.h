@@ -22,7 +22,8 @@
     Memory Mapped Structure for CRC Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

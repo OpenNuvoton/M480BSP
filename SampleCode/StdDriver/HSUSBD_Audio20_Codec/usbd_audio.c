@@ -48,14 +48,16 @@ uint32_t PcmPlayBuffLen[PDMA_TXBUFFER_CNT] = {0};
 uint32_t PcmRecBuff[PDMA_RXBUFFER_CNT][BUFF_LEN] = {0};
 uint8_t u8PcmRxBufFull[PDMA_RXBUFFER_CNT] = {0};
 
-const uint8_t Volx[8] = {
+const uint8_t Volx[8] =
+{
     0x01,0x00,
     0x00,0x81,  // min
     0x00,0x00,  // max
     0x00,0x01   // res
 };
 
-const uint8_t Speedx[] = {
+const uint8_t Speedx[] =
+{
 #if NAU8822
     0x02, 0x00,                         //number of sample rate triplets
     0x80, 0xBB, 0x00, 0x00, //48k Max
@@ -84,14 +86,16 @@ uint32_t PcmPlayBuffLen[PDMA_TXBUFFER_CNT] __attribute__((aligned(4))) = {0};
 uint32_t PcmRecBuff[PDMA_RXBUFFER_CNT][BUFF_LEN] __attribute__((aligned(4))) = {0};
 uint8_t u8PcmRxBufFull[PDMA_RXBUFFER_CNT] __attribute__((aligned(4))) = {0};
 
-const uint8_t Volx[8] __attribute__((aligned(4))) = {
+const uint8_t Volx[8] __attribute__((aligned(4))) =
+{
     0x01,0x00,
     0x00,0x81,  // min
     0x00,0x00,  // max
     0x00,0x01   // res
 };
 
-const uint8_t Speedx[] __attribute__((aligned(4))) = {
+const uint8_t Speedx[] __attribute__((aligned(4))) =
+{
 #if NAU8822
     0x02, 0x00,                         //number of sample rate triplets
     0x80, 0xBB, 0x00, 0x00, //48k Max
@@ -141,13 +145,15 @@ void USBD20_IRQHandler(void)
     if (!IrqStL)    return;
 
     /* USB Bus interrupt */
-    if (IrqStL & HSUSBD_GINTSTS_USBIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_USBIF_Msk)
+    {
         IrqSt = HSUSBD->BUSINTSTS & HSUSBD->BUSINTEN;
 
         if (IrqSt & HSUSBD_BUSINTSTS_SOFIF_Msk)
             HSUSBD_CLR_BUS_INT_FLAG(HSUSBD_BUSINTSTS_SOFIF_Msk);
 
-        if (IrqSt & HSUSBD_BUSINTSTS_RSTIF_Msk) {
+        if (IrqSt & HSUSBD_BUSINTSTS_RSTIF_Msk)
+        {
             HSUSBD_SwReset();
             HSUSBD_ResetDMA();
 
@@ -158,31 +164,38 @@ void USBD20_IRQHandler(void)
             HSUSBD_CLR_CEP_INT_FLAG(0x1ffc);
         }
 
-        if (IrqSt & HSUSBD_BUSINTSTS_RESUMEIF_Msk) {
+        if (IrqSt & HSUSBD_BUSINTSTS_RESUMEIF_Msk)
+        {
             HSUSBD_ENABLE_BUS_INT(HSUSBD_BUSINTEN_RSTIEN_Msk|HSUSBD_BUSINTEN_SUSPENDIEN_Msk);
             HSUSBD_CLR_BUS_INT_FLAG(HSUSBD_BUSINTSTS_RESUMEIF_Msk);
         }
 
-        if (IrqSt & HSUSBD_BUSINTSTS_SUSPENDIF_Msk) {
+        if (IrqSt & HSUSBD_BUSINTSTS_SUSPENDIF_Msk)
+        {
             HSUSBD_ENABLE_BUS_INT(HSUSBD_BUSINTEN_RSTIEN_Msk | HSUSBD_BUSINTEN_RESUMEIEN_Msk);
             HSUSBD_CLR_BUS_INT_FLAG(HSUSBD_BUSINTSTS_SUSPENDIF_Msk);
         }
 
-        if (IrqSt & HSUSBD_BUSINTSTS_HISPDIF_Msk) {
+        if (IrqSt & HSUSBD_BUSINTSTS_HISPDIF_Msk)
+        {
             HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_SETUPPKIEN_Msk);
             HSUSBD_CLR_BUS_INT_FLAG(HSUSBD_BUSINTSTS_HISPDIF_Msk);
         }
 
-        if (IrqSt & HSUSBD_BUSINTSTS_DMADONEIF_Msk) {
+        if (IrqSt & HSUSBD_BUSINTSTS_DMADONEIF_Msk)
+        {
             g_hsusbd_DmaDone = 1;
             HSUSBD_CLR_BUS_INT_FLAG(HSUSBD_BUSINTSTS_DMADONEIF_Msk);
 
-            if (!(HSUSBD->DMACTL & HSUSBD_DMACTL_DMARD_Msk)) {
+            if (!(HSUSBD->DMACTL & HSUSBD_DMACTL_DMARD_Msk))
+            {
                 //HSUSBD_ENABLE_EP_INT(EPB, HSUSBD_EPINTEN_RXPKIEN_Msk);
             }
 
-            if (HSUSBD->DMACTL & HSUSBD_DMACTL_DMARD_Msk) {
-                if (g_hsusbd_ShortPacket == 1) {
+            if (HSUSBD->DMACTL & HSUSBD_DMACTL_DMARD_Msk)
+            {
+                if (g_hsusbd_ShortPacket == 1)
+                {
                     HSUSBD->EP[EPA].EPRSPCTL = HSUSBD_EP_RSPCTL_SHORTTXEN;    // packet end
                     g_hsusbd_ShortPacket = 0;
                 }
@@ -192,11 +205,15 @@ void USBD20_IRQHandler(void)
         if (IrqSt & HSUSBD_BUSINTSTS_PHYCLKVLDIF_Msk)
             HSUSBD_CLR_BUS_INT_FLAG(HSUSBD_BUSINTSTS_PHYCLKVLDIF_Msk);
 
-        if (IrqSt & HSUSBD_BUSINTSTS_VBUSDETIF_Msk) {
-            if (HSUSBD_IS_ATTACHED()) {
+        if (IrqSt & HSUSBD_BUSINTSTS_VBUSDETIF_Msk)
+        {
+            if (HSUSBD_IS_ATTACHED())
+            {
                 /* USB Plug In */
                 HSUSBD_ENABLE_USB();
-            } else {
+            }
+            else
+            {
                 /* USB Un-plug */
                 HSUSBD_DISABLE_USB();
             }
@@ -205,51 +222,64 @@ void USBD20_IRQHandler(void)
     }
 
     /* Control endpoint interrupt */
-    if (IrqStL & HSUSBD_GINTSTS_CEPIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_CEPIF_Msk)
+    {
         IrqSt = HSUSBD->CEPINTSTS & HSUSBD->CEPINTEN;
 
-        if (IrqSt & HSUSBD_CEPINTSTS_SETUPTKIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_SETUPTKIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_SETUPTKIF_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_SETUPPKIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_SETUPPKIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_SETUPPKIF_Msk);
             HSUSBD_ProcessSetupPacket();
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_OUTTKIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_OUTTKIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_OUTTKIF_Msk);
             HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_STSDONEIEN_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_INTKIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_INTKIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_INTKIF_Msk);
-            if (!(IrqSt & HSUSBD_CEPINTSTS_STSDONEIF_Msk)) {
+            if (!(IrqSt & HSUSBD_CEPINTSTS_STSDONEIF_Msk))
+            {
                 HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_TXPKIF_Msk);
                 HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_TXPKIEN_Msk);
                 HSUSBD_CtrlIn();
-            } else {
+            }
+            else
+            {
                 HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_TXPKIF_Msk);
                 HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_TXPKIEN_Msk|HSUSBD_CEPINTEN_STSDONEIEN_Msk);
             }
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_PINGIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_PINGIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_PINGIF_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_TXPKIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_TXPKIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_STSDONEIF_Msk);
             HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_NAKCLR);
-            if (g_hsusbd_CtrlInSize) {
+            if (g_hsusbd_CtrlInSize)
+            {
                 HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_INTKIF_Msk);
                 HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_INTKIEN_Msk);
-            } else {
+            }
+            else
+            {
                 if (g_hsusbd_CtrlZero == 1)
                     HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_ZEROLEN);
                 HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_STSDONEIF_Msk);
@@ -259,55 +289,64 @@ void USBD20_IRQHandler(void)
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_RXPKIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_RXPKIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_RXPKIF_Msk);
             HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_NAKCLR);
             HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_SETUPPKIEN_Msk|HSUSBD_CEPINTEN_STSDONEIEN_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_NAKIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_NAKIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_NAKIF_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_STALLIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_STALLIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_STALLIF_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_ERRIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_ERRIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_ERRIF_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_STSDONEIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_STSDONEIF_Msk)
+        {
             HSUSBD_UpdateDeviceState();
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_STSDONEIF_Msk);
             HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_SETUPPKIEN_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_BUFFULLIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_BUFFULLIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_BUFFULLIF_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_BUFEMPTYIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_BUFEMPTYIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_BUFEMPTYIF_Msk);
             return;
         }
     }
 
     /* Non-control endpoint interrupt */
-    if (IrqStL & HSUSBD_GINTSTS_EPAIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPAIF_Msk)
+    {
         /* Isochronous in */
         IrqSt = HSUSBD->EP[EPA].EPINTSTS & HSUSBD->EP[EPA].EPINTEN;
         EPA_Handler();
         HSUSBD_CLR_EP_INT_FLAG(EPA, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPBIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPBIF_Msk)
+    {
         /* Isochronous out */
         IrqSt = HSUSBD->EP[EPB].EPINTSTS & HSUSBD->EP[EPB].EPINTEN;
 
@@ -315,54 +354,64 @@ void USBD20_IRQHandler(void)
         HSUSBD_CLR_EP_INT_FLAG(EPB, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPCIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPCIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPC].EPINTSTS & HSUSBD->EP[EPC].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPC, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPDIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPDIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPD].EPINTSTS & HSUSBD->EP[EPD].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPD, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPEIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPEIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPE].EPINTSTS & HSUSBD->EP[EPE].EPINTEN;
         HSUSBD->EP[EPE].EPDAT = u32AdjSample;
         HSUSBD->EP[EPE].EPTXCNT = 4;
         HSUSBD_CLR_EP_INT_FLAG(EPE, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPFIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPFIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPF].EPINTSTS & HSUSBD->EP[EPF].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPF, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPGIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPGIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPG].EPINTSTS & HSUSBD->EP[EPG].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPG, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPHIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPHIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPH].EPINTSTS & HSUSBD->EP[EPH].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPH, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPIIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPIIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPI].EPINTSTS & HSUSBD->EP[EPI].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPI, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPJIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPJIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPJ].EPINTSTS & HSUSBD->EP[EPJ].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPJ, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPKIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPKIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPK].EPINTSTS & HSUSBD->EP[EPK].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPK, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPLIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPLIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPL].EPINTSTS & HSUSBD->EP[EPL].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPL, IrqSt);
     }
@@ -380,7 +429,8 @@ void USBD20_IRQHandler(void)
 /* Record */
 void EPA_Handler(void)
 {
-    if (HSUSBD->EP[EPA].EPINTSTS & HSUSBD_EPINTSTS_TXPKIF_Msk) {
+    if (HSUSBD->EP[EPA].EPINTSTS & HSUSBD_EPINTSTS_TXPKIF_Msk)
+    {
         g_usbd_txflag = 1;
     }
 }
@@ -397,7 +447,8 @@ void EPA_Handler(void)
 /* Play */
 void EPB_Handler(void)
 {
-    if (HSUSBD->EP[EPB].EPINTSTS & HSUSBD_EPINTSTS_RXPKIF_Msk) {
+    if (HSUSBD->EP[EPB].EPINTSTS & HSUSBD_EPINTSTS_RXPKIF_Msk)
+    {
         g_usbd_rxflag = 1;
     }
 }
@@ -414,10 +465,13 @@ void EPB_Handler(void)
  */
 void UAC_Init(void)
 {
-    if ((g_usbd_SampleRate % 8000) == 0) {
+    if ((g_usbd_SampleRate % 8000) == 0)
+    {
         u32BuffLen = 768;
         u32RxBuffLen = 768;
-    } else {
+    }
+    else
+    {
         u32BuffLen = 441;
         u32RxBuffLen = 444;
     }
@@ -468,15 +522,20 @@ void UAC_Init(void)
  */
 void UAC_ClassRequest(void)
 {
-    if (gUsbCmd.bmRequestType & 0x80) {
+    if (gUsbCmd.bmRequestType & 0x80)
+    {
         /* request data transfer direction */
         /* Get Feature Unit Control Request */
         // Device to host
-        switch (gUsbCmd.bRequest) {
+        switch (gUsbCmd.bRequest)
+        {
         /* Get current setting attribute */
-        case UAC_CUR: {
-            switch ((gUsbCmd.wIndex & 0xff00) >> 8) {
-            case CLOCK_SOURCE_ID: {
+        case UAC_CUR:
+        {
+            switch ((gUsbCmd.wIndex & 0xff00) >> 8)
+            {
+            case CLOCK_SOURCE_ID:
+            {
                 if (FREQ_CONTROL == ((gUsbCmd.wValue >> 8) & 0xff))
                     HSUSBD_PrepareCtrlIn((uint8_t *)&g_usbd_SampleRate, gUsbCmd.wLength);
 
@@ -488,7 +547,8 @@ void UAC_ClassRequest(void)
                 break;
             }
 
-            case PLAY_FEATURE_UNITID: {
+            case PLAY_FEATURE_UNITID:
+            {
                 if (UAC_MD_ENABLE_CONTROL == ((gUsbCmd.wValue >> 8) & 0xff))
                     HSUSBD_PrepareCtrlIn((uint8_t *)&g_usbd_PlayMute, gUsbCmd.wLength);
 
@@ -500,7 +560,8 @@ void UAC_ClassRequest(void)
                 break;
             }
 
-            case REC_FEATURE_UNITID: {
+            case REC_FEATURE_UNITID:
+            {
                 if (UAC_MD_ENABLE_CONTROL == ((gUsbCmd.wValue >> 8) & 0xff))
                     HSUSBD_PrepareCtrlIn((uint8_t *)&g_usbd_RecMute, gUsbCmd.wLength);
 
@@ -519,9 +580,12 @@ void UAC_ClassRequest(void)
             break;
         }
 
-        case UAC_RANGE: {
-            switch ((gUsbCmd.wValue & 0xff00) >> 8) {
-            case FREQ_CONTROL: {
+        case UAC_RANGE:
+        {
+            switch ((gUsbCmd.wValue & 0xff00) >> 8)
+            {
+            case FREQ_CONTROL:
+            {
                 if (CLOCK_SOURCE_ID == ((gUsbCmd.wIndex >> 8) & 0xff))
                     HSUSBD_PrepareCtrlIn((uint8_t *)Speedx, gUsbCmd.wLength);
                 HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_INTKIF_Msk);
@@ -529,7 +593,8 @@ void UAC_ClassRequest(void)
                 break;
             }
 
-            case UAC_MD_BALANCE_CONTROL: {
+            case UAC_MD_BALANCE_CONTROL:
+            {
                 if (PLAY_FEATURE_UNITID == ((gUsbCmd.wIndex >> 8) & 0xff))
                     HSUSBD_PrepareCtrlIn((uint8_t *)Volx, gUsbCmd.wLength);
 
@@ -552,14 +617,20 @@ void UAC_ClassRequest(void)
             /* Setup error, stall the device */
             HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_STALLEN_Msk);
         }
-    } else {
+    }
+    else
+    {
         // Host to device
-        switch (gUsbCmd.bRequest) {
+        switch (gUsbCmd.bRequest)
+        {
         /* Set Current setting attribute */
-        case UAC_CUR: {
+        case UAC_CUR:
+        {
             HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_OUTTKIEN_Msk | HSUSBD_CEPINTEN_RXPKIEN_Msk);
-            switch ((gUsbCmd.wIndex & 0xff00) >> 8) {
-            case 0x28: {
+            switch ((gUsbCmd.wIndex & 0xff00) >> 8)
+            {
+            case 0x28:
+            {
                 HSUSBD_CtrlOut((uint8_t *)&g_usbd_Class, gUsbCmd.wLength);
 
                 /* Status stage */
@@ -569,7 +640,8 @@ void UAC_ClassRequest(void)
                 break;
             }
 
-            case CLOCK_SOURCE_ID: {
+            case CLOCK_SOURCE_ID:
+            {
                 if (((gUsbCmd.wValue >> 8) & 0xff) == FREQ_CONTROL)
                     HSUSBD_CtrlOut((uint8_t *)&g_usbd_SampleRate, gUsbCmd.wLength);
 
@@ -579,7 +651,8 @@ void UAC_ClassRequest(void)
                 HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_STSDONEIEN_Msk);
                 break;
             }
-            case PLAY_FEATURE_UNITID: {
+            case PLAY_FEATURE_UNITID:
+            {
                 if (((gUsbCmd.wValue >> 8) & 0xff) == UAC_MD_BALANCE_CONTROL)
                     HSUSBD_CtrlOut((uint8_t *)&g_usbd_PlayVolume, gUsbCmd.wLength);
 
@@ -592,7 +665,8 @@ void UAC_ClassRequest(void)
                 HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_STSDONEIEN_Msk);
                 break;
             }
-            case REC_FEATURE_UNITID: {
+            case REC_FEATURE_UNITID:
+            {
                 if (((gUsbCmd.wValue >> 8) & 0xff) == UAC_MD_BALANCE_CONTROL)
                     HSUSBD_CtrlOut((uint8_t *)&g_usbd_RecVolume, gUsbCmd.wLength);
 
@@ -614,7 +688,8 @@ void UAC_ClassRequest(void)
             break;
         }
 
-        default: {
+        default:
+        {
             /* Setup error, stall the device */
             HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_STALLEN_Msk);
             break;
@@ -634,7 +709,8 @@ void UAC_ClassRequest(void)
  */
 void UAC_SetInterface(uint32_t u32AltInterface)
 {
-    if ((gUsbCmd.wIndex & 0xff) == 2) {
+    if ((gUsbCmd.wIndex & 0xff) == 2)
+    {
         /* Audio ISO OUT interface */
         if (u32AltInterface == 0)
             UAC_DeviceDisable(1);    /* stop play */
@@ -642,14 +718,18 @@ void UAC_SetInterface(uint32_t u32AltInterface)
             UAC_DeviceEnable(1);     /* start play */
     }
 
-    if ((gUsbCmd.wIndex & 0xff) == 1) {
+    if ((gUsbCmd.wIndex & 0xff) == 1)
+    {
         /* Audio ISO IN interface */
-        if (u32AltInterface == 1) { /* Start Record */
+        if (u32AltInterface == 1)   /* Start Record */
+        {
             g_usbd_UsbAudioState = UAC_START_AUDIO_RECORD;
             HSUSBD->EP[EPA].EPRSPCTL = HSUSBD_EPRSPCTL_ZEROLEN_Msk;
             UAC_DeviceEnable(0);
             g_usbd_txflag = 1;
-        } else if (u32AltInterface == 0) { /* Stop Record */
+        }
+        else if (u32AltInterface == 0)     /* Stop Record */
+        {
             UAC_DeviceDisable(0);
             HSUSBD->EP[EPA].EPRSPCTL = HSUSBD_EPRSPCTL_ZEROLEN_Msk;
             g_usbd_UsbAudioState = UAC_STOP_AUDIO_RECORD;
@@ -664,11 +744,14 @@ void UAC_SetInterface(uint32_t u32AltInterface)
   */
 void UAC_DeviceEnable(uint32_t bIsPlay)
 {
-    if (bIsPlay) {
+    if (bIsPlay)
+    {
         /* Enable play hardware */
         u8PlayEn = 1;
         TIMER_Start(TIMER0);
-    } else {
+    }
+    else
+    {
         /* Enable record hardware */
         if(!u8RecEn)
             AudioStartRecord(g_usbd_SampleRate);
@@ -685,7 +768,8 @@ void UAC_DeviceEnable(uint32_t bIsPlay)
   */
 void UAC_DeviceDisable(uint32_t bIsPlay)
 {
-    if (bIsPlay) {
+    if (bIsPlay)
+    {
         /* Disable play hardware/stop play */
         u8PlayEn = 0;
         /* Disable I2S Tx function */
@@ -712,7 +796,9 @@ void UAC_DeviceDisable(uint32_t bIsPlay)
         g_hsusbd_DmaDone = 1;
         HSUSBD->EP[EPB].EPRSPCTL |= HSUSBD_EPRSPCTL_FLUSH_Msk;
         TIMER0->CNT = 0x7657;
-    } else {
+    }
+    else
+    {
         /* Disable record hardware/stop record */
         u8RecEn = 0;
 
@@ -745,7 +831,8 @@ void UAC_GetPlayData(void)
     volatile uint32_t u32len, tmp;
 
     /* if buffer has enough data, play it!! */
-    if (!u8AudioPlaying && (u8TxDataCntInBuffer >= (PDMA_TXBUFFER_CNT/2+1))) {
+    if (!u8AudioPlaying && (u8TxDataCntInBuffer >= (PDMA_TXBUFFER_CNT/2+1)))
+    {
         AudioStartPlay(g_usbd_SampleRate);
         u8AudioPlaying = 1;
     }
@@ -762,7 +849,8 @@ void UAC_GetPlayData(void)
 
     /* Ring buffer check */
     PDMA_DisableInt(PDMA,PDMA_I2S_TX_CH, 0);
-    if ((u32PlayBufPos + tmp) > u32BuffLen) {
+    if ((u32PlayBufPos + tmp) > u32BuffLen)
+    {
         PcmPlayBuffLen[u32BufPlayIdx] = u32PlayBufPos;
         DMA_TXDESC[u32BufPlayIdx].ctl = (DMA_TXDESC[u32BufPlayIdx].ctl & ~PDMA_DSCT_CTL_TXCNT_Msk )|((u32PlayBufPos-1)<<PDMA_DSCT_CTL_TXCNT_Pos);
         u32PlayBufPos = 0;
@@ -785,7 +873,8 @@ void UAC_GetPlayData(void)
     HSUSBD_ENABLE_DMA();
 
     /* wait usbd dma complete */
-    while(1) {
+    while(1)
+    {
         if (g_hsusbd_DmaDone)
             break;
 
@@ -839,8 +928,10 @@ void UAC_SendRecData(void)
 
     PDMA_DisableInt(PDMA,PDMA_I2S_RX_CH, 0);
     /* when record buffer full, send data to host */
-    if(u8PcmRxBufFull[u32BufRecIdx]) {
-        if ((u32RecBufPos + u32PacketSize) > u32RxBuffLen) {
+    if(u8PcmRxBufFull[u32BufRecIdx])
+    {
+        if ((u32RecBufPos + u32PacketSize) > u32RxBuffLen)
+        {
             /* Set empty flag */
             u8PcmRxBufFull[u32BufRecIdx] = 0;
             u32RecBufPos = 0;
@@ -850,12 +941,15 @@ void UAC_SendRecData(void)
                 u32BufRecIdx=0;
         }
 
-        for (i=0; i<u32PacketSize; i++) {
+        for (i=0; i<u32PacketSize; i++)
+        {
             HSUSBD->EP[EPA].EPDAT = PcmRecBuff[u32BufRecIdx][u32RecBufPos++];
         }
         HSUSBD->EP[EPA].EPTXCNT = (u32PacketSize << 2);
         g_usbd_txflag = 0;
-    } else {
+    }
+    else
+    {
         /* send zero packet when no data*/
         HSUSBD->EP[EPA].EPRSPCTL = HSUSBD_EPRSPCTL_ZEROLEN_Msk;
     }
@@ -892,7 +986,8 @@ void TMR0_IRQHandler(void)
     TIMER_ClearIntFlag(TIMER0);
 
 #if NAU8822
-    if (u8AudioPlaying) {
+    if (u8AudioPlaying)
+    {
         if((u8TxDataCntInBuffer >= (PDMA_TXBUFFER_CNT/2)) && (u8TxDataCntInBuffer <= (PDMA_TXBUFFER_CNT/2+1)))
             AdjustCodecPll(E_RS_NONE);
         else if(u8TxDataCntInBuffer >= (PDMA_TXBUFFER_CNT-2))
@@ -901,11 +996,17 @@ void TMR0_IRQHandler(void)
             AdjustCodecPll(E_RS_DOWN);
     }
 #else
-    if (u8AudioPlaying) {
-        if((u8TxDataCntInBuffer >= (PDMA_TXBUFFER_CNT/2)) && (u8TxDataCntInBuffer <= (PDMA_TXBUFFER_CNT/2+1))) {
-        } else if(u8TxDataCntInBuffer >= (PDMA_TXBUFFER_CNT-2)) {
+    if (u8AudioPlaying)
+    {
+        if((u8TxDataCntInBuffer >= (PDMA_TXBUFFER_CNT/2)) && (u8TxDataCntInBuffer <= (PDMA_TXBUFFER_CNT/2+1)))
+        {
+        }
+        else if(u8TxDataCntInBuffer >= (PDMA_TXBUFFER_CNT-2))
+        {
             u32AdjSample = u32Sample - 0x30;
-        } else {
+        }
+        else
+        {
             u32AdjSample = u32Sample - 0x20;
         }
     }

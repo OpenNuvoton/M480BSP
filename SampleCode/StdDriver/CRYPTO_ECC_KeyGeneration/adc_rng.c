@@ -76,9 +76,11 @@ void adc_trng_gen_key(char *key, int key_len)
 
     memset(key, 0, bcnt);
 
-    for (i = bcnt-1; i >= 0; i--) {      /* hex loop */
+    for (i = bcnt-1; i >= 0; i--)        /* hex loop */
+    {
         c = 0;
-        for (j = 0; j < 4; j++) {
+        for (j = 0; j < 4; j++)
+        {
             c = (c << 1) | adc_trng_gen_bit();
         }
 
@@ -109,7 +111,8 @@ void  init_adc_init()
                      | (0x0 << EADC_SCTL_TRGSEL_Pos);      /* A/D SAMPLE Start of Conversion Trigger Source Selection */
 
     val_sum = 0;
-    for (i = 0; i < SNUM; i++) {
+    for (i = 0; i < SNUM; i++)
+    {
         adc_val[i] = get_adc_bg_val();
         // printf("int adc val = 0x%x\n", adc_val[i]);
         val_sum += adc_val[i];

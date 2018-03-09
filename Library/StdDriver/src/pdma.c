@@ -41,7 +41,8 @@ void PDMA_Open(PDMA_T * pdma,uint32_t u32Mask)
 {
     uint32_t i;
 
-    for (i=0UL; i<PDMA_CH_MAX; i++) {
+    for (i=0UL; i<PDMA_CH_MAX; i++)
+    {
         PDMA->DSCT[i].CTL = 0UL;
         u32ChSelect[i] = PDMA_MEM;
     }
@@ -196,7 +197,8 @@ void PDMA_SetTransferAddr(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32SrcAddr, uin
 void PDMA_SetTransferMode(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32Peripheral, uint32_t u32ScatterEn, uint32_t u32DescAddr)
 {
     u32ChSelect[u32Ch] = u32Peripheral;
-    switch(u32Ch) {
+    switch(u32Ch)
+    {
     case 0ul:
         PDMA->REQSEL0_3 = (pdma->REQSEL0_3 & ~PDMA_REQSEL0_3_REQSRC0_Msk) | u32Peripheral;
         break;
@@ -249,10 +251,13 @@ void PDMA_SetTransferMode(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32Peripheral, 
         break;
     }
 
-    if(u32ScatterEn) {
+    if(u32ScatterEn)
+    {
         pdma->DSCT[u32Ch].CTL = (pdma->DSCT[u32Ch].CTL & ~PDMA_DSCT_CTL_OPMODE_Msk) | PDMA_OP_SCATTER;
         pdma->DSCT[u32Ch].NEXT = u32DescAddr - (PDMA->SCATBA);
-    } else {
+    }
+    else
+    {
         pdma->DSCT[u32Ch].CTL = (pdma->DSCT[u32Ch].CTL & ~PDMA_DSCT_CTL_OPMODE_Msk) | PDMA_OP_BASIC;
     }
 }
@@ -332,7 +337,8 @@ void PDMA_DisableTimeout(PDMA_T * pdma,uint32_t u32Mask)
  */
 void PDMA_SetTimeOut(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32OnOff, uint32_t u32TimeOutCnt)
 {
-    switch(u32Ch) {
+    switch(u32Ch)
+    {
     case 0ul:
         pdma->TOC0_1 = (pdma->TOC0_1 & ~PDMA_TOC0_1_TOC0_Msk) | u32TimeOutCnt;
         break;
@@ -356,9 +362,11 @@ void PDMA_SetTimeOut(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32OnOff, uint32_t u
  */
 void PDMA_Trigger(PDMA_T * pdma,uint32_t u32Ch)
 {
-    if(u32ChSelect[u32Ch] == PDMA_MEM) {
+    if(u32ChSelect[u32Ch] == PDMA_MEM)
+    {
         pdma->SWREQ = (1ul << u32Ch);
-    } else {}
+    }
+    else {}
 }
 
 /**
@@ -377,7 +385,8 @@ void PDMA_Trigger(PDMA_T * pdma,uint32_t u32Ch)
  */
 void PDMA_EnableInt(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32Mask)
 {
-    switch(u32Mask) {
+    switch(u32Mask)
+    {
     case PDMA_INT_TRANS_DONE:
         pdma->INTEN |= (1ul << u32Ch);
         break;
@@ -409,7 +418,8 @@ void PDMA_EnableInt(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32Mask)
  */
 void PDMA_DisableInt(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32Mask)
 {
-    switch(u32Mask) {
+    switch(u32Mask)
+    {
     case PDMA_INT_TRANS_DONE:
         PDMA->INTEN &= ~(1ul << u32Ch);
         break;

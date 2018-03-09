@@ -22,7 +22,8 @@
     Memory Mapped Structure for TIMER Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

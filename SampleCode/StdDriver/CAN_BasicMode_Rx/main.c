@@ -21,17 +21,20 @@ void CAN_ShowMsg(STR_CANMSG_T* Msg);
 /*---------------------------------------------------------------------------------------------------------*/
 void CAN_MsgInterrupt(CAN_T *tCAN, uint32_t u32IIDR)
 {
-    if(u32IIDR==1) {
+    if(u32IIDR==1)
+    {
         printf("Msg-0 INT and Callback\n");
         CAN_Receive(tCAN, 0, &rrMsg);
         CAN_ShowMsg(&rrMsg);
     }
-    if(u32IIDR==5+1) {
+    if(u32IIDR==5+1)
+    {
         printf("Msg-5 INT and Callback \n");
         CAN_Receive(tCAN, 5, &rrMsg);
         CAN_ShowMsg(&rrMsg);
     }
-    if(u32IIDR==31+1) {
+    if(u32IIDR==31+1)
+    {
         printf("Msg-31 INT and Callback \n");
         CAN_Receive(tCAN, 31, &rrMsg);
         CAN_ShowMsg(&rrMsg);
@@ -50,17 +53,20 @@ void CAN0_IRQHandler(void)
 
     u8IIDRstatus = CAN0->IIDR;
 
-    if(u8IIDRstatus == 0x00008000) {      /* Check Status Interrupt Flag (Error status Int and Status change Int) */
+    if(u8IIDRstatus == 0x00008000)        /* Check Status Interrupt Flag (Error status Int and Status change Int) */
+    {
         /**************************/
         /* Status Change interrupt*/
         /**************************/
-        if(CAN0->STATUS & CAN_STATUS_RXOK_Msk) {
+        if(CAN0->STATUS & CAN_STATUS_RXOK_Msk)
+        {
             CAN0->STATUS &= ~CAN_STATUS_RXOK_Msk;   /* Clear Rx Ok status*/
 
             printf("RX OK INT\n") ;
         }
 
-        if(CAN0->STATUS & CAN_STATUS_TXOK_Msk) {
+        if(CAN0->STATUS & CAN_STATUS_TXOK_Msk)
+        {
             CAN0->STATUS &= ~CAN_STATUS_TXOK_Msk;    /* Clear Tx Ok status*/
 
             printf("TX OK INT\n") ;
@@ -69,26 +75,32 @@ void CAN0_IRQHandler(void)
         /**************************/
         /* Error Status interrupt */
         /**************************/
-        if(CAN0->STATUS & CAN_STATUS_EWARN_Msk) {
+        if(CAN0->STATUS & CAN_STATUS_EWARN_Msk)
+        {
             printf("EWARN INT\n") ;
         }
 
-        if(CAN0->STATUS & CAN_STATUS_BOFF_Msk) {
+        if(CAN0->STATUS & CAN_STATUS_BOFF_Msk)
+        {
             printf("BOFF INT\n") ;
-			
+
             /* Do Init to release busoff pin */
             CAN0->CON = (CAN_CON_INIT_Msk | CAN_CON_CCE_Msk);
             CAN0->CON &= (~(CAN_CON_INIT_Msk | CAN_CON_CCE_Msk));
             while(CAN0->CON & CAN_CON_INIT_Msk);
         }
-    } else if (u8IIDRstatus!=0) {
+    }
+    else if (u8IIDRstatus!=0)
+    {
         printf("=> Interrupt Pointer = %d\n",CAN0->IIDR -1);
 
         CAN_MsgInterrupt(CAN0, u8IIDRstatus);
 
         CAN_CLR_INT_PENDING_BIT(CAN0, ((CAN0->IIDR) -1));      /* Clear Interrupt Pending */
 
-    } else if(CAN0->WU_STATUS == 1) {
+    }
+    else if(CAN0->WU_STATUS == 1)
+    {
         printf("Wake up\n");
 
         CAN0->WU_STATUS = 0;                       /* Write '0' to clear */
@@ -155,11 +167,14 @@ void UART0_Init()
 
 void CAN_Init(CAN_T  *tCAN)
 {
-    if(tCAN == CAN0) {
+    if(tCAN == CAN0)
+    {
         // Enable IP clock
         CLK->APBCLK0 |= CLK_APBCLK0_CAN0CKEN_Msk;
 
-    } else if(tCAN == CAN1) {
+    }
+    else if(tCAN == CAN1)
+    {
         // Enable IP clock
         CLK->APBCLK0 |= CLK_APBCLK0_CAN1CKEN_Msk;
 
@@ -173,12 +188,15 @@ void CAN_Init(CAN_T  *tCAN)
 
 void CAN_STOP(CAN_T  *tCAN)
 {
-    if(tCAN == CAN0) {
+    if(tCAN == CAN0)
+    {
         /* Disable CAN0 Clock and Reset it */
         SYS->IPRST1 |= SYS_IPRST1_CAN0RST_Msk;
         SYS->IPRST1 &= ~SYS_IPRST1_CAN0RST_Msk;
         CLK->APBCLK0 &= ~CLK_APBCLK0_CAN0CKEN_Msk;
-    } else if(tCAN == CAN1) {
+    }
+    else if(tCAN == CAN1)
+    {
         /* Disable CAN0 Clock and Reset it */
         SYS->IPRST1 |= SYS_IPRST1_CAN1RST_Msk;
         SYS->IPRST1 &= ~SYS_IPRST1_CAN1RST_Msk;
@@ -289,7 +307,8 @@ void Test_BasicMode_Rx(CAN_T *tCAN)
     /*  Wait status flag changed and with read IF2 */
     printf("\b Total 40 bytes data(using 5 frames)will be receive by CAN0 from CAN BUS\n");
 
-    for(i=0; i<5; i++) {
+    for(i=0; i<5; i++)
+    {
         CAN_ResetIF(tCAN, 1);
         tCAN->IF[1].MCON = 0;
         while(CAN_Receive(tCAN, 0, &rMsg[i]) == FALSE);

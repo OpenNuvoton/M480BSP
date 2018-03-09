@@ -20,34 +20,42 @@ void USBD_IRQHandler(void)
     uint32_t u32State = USBD_GET_BUS_STATE();
 
 //------------------------------------------------------------------
-    if (u32IntSts & USBD_INTSTS_FLDET) {
+    if (u32IntSts & USBD_INTSTS_FLDET)
+    {
         // Floating detect
         USBD_CLR_INT_FLAG(USBD_INTSTS_FLDET);
 
-        if (USBD_IS_ATTACHED()) {
+        if (USBD_IS_ATTACHED())
+        {
             /* USB Plug In */
             USBD_ENABLE_USB();
-        } else {
+        }
+        else
+        {
             /* USB Un-plug */
             USBD_DISABLE_USB();
         }
     }
 
 //------------------------------------------------------------------
-    if (u32IntSts & USBD_INTSTS_BUS) {
+    if (u32IntSts & USBD_INTSTS_BUS)
+    {
         /* Clear event flag */
         USBD_CLR_INT_FLAG(USBD_INTSTS_BUS);
 
-        if (u32State & USBD_STATE_USBRST) {
+        if (u32State & USBD_STATE_USBRST)
+        {
             /* Bus reset */
             USBD_ENABLE_USB();
             USBD_SwReset();
         }
-        if (u32State & USBD_STATE_SUSPEND) {
+        if (u32State & USBD_STATE_SUSPEND)
+        {
             /* Enable USB but disable PHY */
             USBD_DISABLE_PHY();
         }
-        if (u32State & USBD_STATE_RESUME) {
+        if (u32State & USBD_STATE_RESUME)
+        {
             /* Enable USB and enable PHY */
             USBD_ENABLE_USB();
         }
@@ -60,10 +68,12 @@ void USBD_IRQHandler(void)
         USBD_CLR_INT_FLAG(USBD_INTSTS_WAKEUP);
     }
 
-    if (u32IntSts & USBD_INTSTS_USB) {
+    if (u32IntSts & USBD_INTSTS_USB)
+    {
         extern uint8_t g_usbd_SetupPacket[];
         // USB event
-        if (u32IntSts & USBD_INTSTS_SETUP) {
+        if (u32IntSts & USBD_INTSTS_SETUP)
+        {
             // Setup packet
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_SETUP);
@@ -76,7 +86,8 @@ void USBD_IRQHandler(void)
         }
 
         // EP events
-        if (u32IntSts & USBD_INTSTS_EP0) {
+        if (u32IntSts & USBD_INTSTS_EP0)
+        {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP0);
 
@@ -84,7 +95,8 @@ void USBD_IRQHandler(void)
             USBD_CtrlIn();
         }
 
-        if (u32IntSts & USBD_INTSTS_EP1) {
+        if (u32IntSts & USBD_INTSTS_EP1)
+        {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP1);
 
@@ -92,42 +104,49 @@ void USBD_IRQHandler(void)
             USBD_CtrlOut();
 
             // In ACK of SET_LINE_CODE
-            if(g_usbd_SetupPacket[1] == SET_LINE_CODE) {
+            if(g_usbd_SetupPacket[1] == SET_LINE_CODE)
+            {
                 if(g_usbd_SetupPacket[4] == 0)  /* VCOM-1 */
                     VCOM_LineCoding(0); /* Apply UART settings */
             }
         }
 
-        if (u32IntSts & USBD_INTSTS_EP2) {
+        if (u32IntSts & USBD_INTSTS_EP2)
+        {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP2);
             // Bulk IN
             EP2_Handler();
         }
 
-        if (u32IntSts & USBD_INTSTS_EP3) {
+        if (u32IntSts & USBD_INTSTS_EP3)
+        {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP3);
             // Bulk Out
             EP3_Handler();
         }
 
-        if (u32IntSts & USBD_INTSTS_EP4) {
+        if (u32IntSts & USBD_INTSTS_EP4)
+        {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP4);
         }
 
-        if (u32IntSts & USBD_INTSTS_EP5) {
+        if (u32IntSts & USBD_INTSTS_EP5)
+        {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP5);
         }
 
-        if (u32IntSts & USBD_INTSTS_EP6) {
+        if (u32IntSts & USBD_INTSTS_EP6)
+        {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP6);
         }
 
-        if (u32IntSts & USBD_INTSTS_EP7) {
+        if (u32IntSts & USBD_INTSTS_EP7)
+        {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP7);
         }
@@ -202,11 +221,15 @@ void VCOM_ClassRequest(void)
 
     USBD_GetSetupPacket(buf);
 
-    if (buf[0] & 0x80) { /* request data transfer direction */
+    if (buf[0] & 0x80)   /* request data transfer direction */
+    {
         // Device to host
-        switch (buf[1]) {
-        case GET_LINE_CODE: {
-            if (buf[4] == 0) { /* VCOM-1 */
+        switch (buf[1])
+        {
+        case GET_LINE_CODE:
+        {
+            if (buf[4] == 0)   /* VCOM-1 */
+            {
                 USBD_MemCopy((uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)), (uint8_t *)&gLineCoding, 7);
             }
             /* Data stage */
@@ -216,17 +239,23 @@ void VCOM_ClassRequest(void)
             USBD_PrepareCtrlOut(0,0);
             break;
         }
-        default: {
+        default:
+        {
             /* Setup error, stall the device */
             USBD_SetStall(0);
             break;
         }
         }
-    } else {
+    }
+    else
+    {
         // Host to device
-        switch (buf[1]) {
-        case SET_CONTROL_LINE_STATE: {
-            if (buf[4] == 0) { /* VCOM-1 */
+        switch (buf[1])
+        {
+        case SET_CONTROL_LINE_STATE:
+        {
+            if (buf[4] == 0)   /* VCOM-1 */
+            {
                 gCtrlSignal = buf[3];
                 gCtrlSignal = (gCtrlSignal << 8) | buf[2];
                 //printf("RTS=%d  DTR=%d\n", (gCtrlSignal0 >> 1) & 1, gCtrlSignal0 & 1);
@@ -237,7 +266,8 @@ void VCOM_ClassRequest(void)
             USBD_SET_PAYLOAD_LEN(EP0, 0);
             break;
         }
-        case SET_LINE_CODE: {
+        case SET_LINE_CODE:
+        {
             if (buf[4] == 0) /* VCOM-1 */
                 USBD_PrepareCtrlOut((uint8_t *)&gLineCoding, 7);
 
@@ -247,7 +277,8 @@ void VCOM_ClassRequest(void)
 
             break;
         }
-        default: {
+        default:
+        {
             // Stall
             /* Setup error, stall the device */
             USBD_SetStall(0);
@@ -262,7 +293,8 @@ void VCOM_LineCoding(uint8_t port)
     uint32_t u32Reg;
     uint32_t u32Baud_Div;
 
-    if (port == 0) {
+    if (port == 0)
+    {
         NVIC_DisableIRQ(UART0_IRQn);
         // Reset software fifo
         comRbytes = 0;
@@ -295,7 +327,8 @@ void VCOM_LineCoding(uint8_t port)
             u32Reg = 0;
 
         // bit width
-        switch(gLineCoding.u8DataBits) {
+        switch(gLineCoding.u8DataBits)
+        {
         case 5:
             u32Reg |= 0;
             break;

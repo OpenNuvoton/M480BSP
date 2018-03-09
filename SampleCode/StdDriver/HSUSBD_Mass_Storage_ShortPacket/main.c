@@ -86,14 +86,17 @@ int32_t main (void)
     NVIC_EnableIRQ(USBD20_IRQn);
 
     /* Start transaction */
-    while(1) {
-        if (HSUSBD_IS_ATTACHED()) {
+    while(1)
+    {
+        if (HSUSBD_IS_ATTACHED())
+        {
             HSUSBD_Start();
             break;
         }
     }
 
-    while(1) {
+    while(1)
+    {
         if (g_u8MscStart)
             MSC_ProcessCmd();
     }

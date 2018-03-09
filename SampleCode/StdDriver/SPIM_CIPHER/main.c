@@ -106,12 +106,14 @@ void  DumpBufferHex(uint8_t *pucBuff, int nSize)
     int     nIdx, i;
 
     nIdx = 0;
-    while (nSize > 0) {
+    while (nSize > 0)
+    {
         printf("0x%04X  ", nIdx);
         for (i = 0; i < 16; i++)
             printf("%02x ", pucBuff[nIdx + i]);
         printf("  ");
-        for (i = 0; i < 16; i++) {
+        for (i = 0; i < 16; i++)
+        {
             if ((pucBuff[nIdx + i] >= 0x20) && (pucBuff[nIdx + i] < 127))
                 printf("%c", pucBuff[nIdx + i]);
             else
@@ -146,13 +148,16 @@ int  dma_read_write(int is4ByteAddr, uint32_t u32RdCmd, int dc_num)
      *  Verify flash page be erased
      */
     printf("Verify SPI flash block 0x%x be erased...", TEST_BLOCK_ADDR);
-    for (offset = 0; offset < FLASH_BLOCK_SIZE; offset += BUFFER_SIZE) {
+    for (offset = 0; offset < FLASH_BLOCK_SIZE; offset += BUFFER_SIZE)
+    {
         memset(g_buff, 0, BUFFER_SIZE);
         SPIM_IO_Read(TEST_BLOCK_ADDR+offset, is4ByteAddr, BUFFER_SIZE, g_buff, OPCODE_FAST_READ, 1, 1, 1, 1);
 
         pData = (uint32_t *)g_buff;
-        for (i = 0; i < BUFFER_SIZE; i += 4, pData++) {
-            if (*pData != 0xFFFFFFFF) {
+        for (i = 0; i < BUFFER_SIZE; i += 4, pData++)
+        {
+            if (*pData != 0xFFFFFFFF)
+            {
                 printf("FAILED!\n");
                 printf("Flash address 0x%x, read 0x%x!\n", TEST_BLOCK_ADDR+i, *pData);
                 return -1;
@@ -165,7 +170,8 @@ int  dma_read_write(int is4ByteAddr, uint32_t u32RdCmd, int dc_num)
      *  Program data to flash block
      */
     printf("Program sequential data to flash block 0x%x...", TEST_BLOCK_ADDR);
-    for (offset = 0; offset < FLASH_BLOCK_SIZE; offset += BUFFER_SIZE) {
+    for (offset = 0; offset < FLASH_BLOCK_SIZE; offset += BUFFER_SIZE)
+    {
         pData = (uint32_t *)g_buff;
         for (i = 0; i < BUFFER_SIZE; i += 4, pData++)
             *pData = (i << 16) | (TEST_BLOCK_ADDR + offset + i);
@@ -181,12 +187,15 @@ int  dma_read_write(int is4ByteAddr, uint32_t u32RdCmd, int dc_num)
         SPIM_SetQuadEnable(1, 1);
 
     printf("Verify SPI flash block 0x%x data with DMA read command 0x%x...", TEST_BLOCK_ADDR, u32RdCmd);
-    for (offset = 0; offset < FLASH_BLOCK_SIZE; offset += BUFFER_SIZE) {
+    for (offset = 0; offset < FLASH_BLOCK_SIZE; offset += BUFFER_SIZE)
+    {
         memset(g_buff, 0, BUFFER_SIZE);
         SPIM_DMA_Read(TEST_BLOCK_ADDR+offset, is4ByteAddr, BUFFER_SIZE, g_buff, u32RdCmd, 1);
         pData = (uint32_t *)g_buff;
-        for (i = 0; i < BUFFER_SIZE; i += 4, pData++) {
-            if (*pData != ((i << 16) | (TEST_BLOCK_ADDR + offset + i))) {
+        for (i = 0; i < BUFFER_SIZE; i += 4, pData++)
+        {
+            if (*pData != ((i << 16) | (TEST_BLOCK_ADDR + offset + i)))
+            {
                 printf("FAILED!\n");
                 printf("Flash address 0x%x, read 0x%x, expect 0x%x!\n", TEST_BLOCK_ADDR+i, *pData, (i << 16) | (TEST_BLOCK_ADDR + offset + i));
                 return -1;
@@ -242,7 +251,8 @@ int main()
 
     SPIM_SET_DCNUM(8);                /* 8 is the default value. */
 
-    if (SPIM_InitFlash(1) != 0) {      /* Initialized SPI flash */
+    if (SPIM_InitFlash(1) != 0)        /* Initialized SPI flash */
+    {
         printf("SPIM flash initialize failed!\n");
         goto lexit;
     }
@@ -260,14 +270,16 @@ int main()
     SPIM_ENABLE_CACHE();
 
     printf("\n[1] 3-bytes address mode, fast read...");
-    if (dma_read_write(0, CMD_DMA_FAST_READ, 8) < 0) {
+    if (dma_read_write(0, CMD_DMA_FAST_READ, 8) < 0)
+    {
         printf("  FAILED!!\n");
         goto lexit;
     }
     printf("[OK].\n");
 
     printf("\n[2] 3-bytes address mode, dual read...");
-    if (dma_read_write(0, CMD_DMA_FAST_READ_DUAL_OUTPUT, 8) < 0) {
+    if (dma_read_write(0, CMD_DMA_FAST_READ_DUAL_OUTPUT, 8) < 0)
+    {
         printf("  FAILED!!\n");
         goto lexit;
     }
@@ -275,14 +287,16 @@ int main()
 
 #if 0  /* W25Q20 does not support 4-bytes address mode. */
     printf("\n[3] 4-bytes address mode, dual read...");
-    if (dma_read_write(1, CMD_DMA_NORMAL_DUAL_READ, 8) < 0) {
+    if (dma_read_write(1, CMD_DMA_NORMAL_DUAL_READ, 8) < 0)
+    {
         printf("  FAILED!!\n");
         goto lexit;
     }
     printf("[OK].\n");
 
     printf("\n[4] 4-bytes address mode, quad read...");
-    if (dma_read_write(1, CMD_DMA_FAST_QUAD_READ, 4) < 0) {
+    if (dma_read_write(1, CMD_DMA_FAST_QUAD_READ, 4) < 0)
+    {
         printf("  FAILED!!\n");
         goto lexit;
     }

@@ -115,7 +115,8 @@ int main(void)
     TIMER_EnableCaptureInt(TIMER0);
     NVIC_EnableIRQ(TMR0_IRQn);
 
-    while(1) {
+    while(1)
+    {
         PB5 = 0; // low
         CLK_SysTickDelay(10000);
         PB5 = 1;  // high

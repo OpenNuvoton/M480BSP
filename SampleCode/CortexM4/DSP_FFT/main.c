@@ -109,9 +109,12 @@ int main()
     /* Calculates maxValue and returns corresponding BIN value */
     arm_max_f32(testOutput, fftSize, &maxValue, &testIndex);
 
-    if(testIndex !=  refIndex) {
+    if(testIndex !=  refIndex)
+    {
         printf("ERROR: FFT calculation result fail!\n");
-    } else {
+    }
+    else
+    {
         printf("FFT calculation test ok!\n");
     }
 

@@ -60,14 +60,16 @@
 #endif
 
 #if HTTPD_PRECALCULATED_CHECKSUM
-struct fsdata_chksum {
+struct fsdata_chksum
+{
     u32_t offset;
     u16_t chksum;
     u16_t len;
 };
 #endif /* HTTPD_PRECALCULATED_CHECKSUM */
 
-struct fs_file {
+struct fs_file
+{
     const char *data;
     int len;
     int index;

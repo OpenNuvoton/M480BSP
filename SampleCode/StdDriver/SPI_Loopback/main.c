@@ -105,20 +105,24 @@ int main(void)
     printf("\nSPI0 Loopback test ");
 
     u32Err = 0;
-    for(u32TestCount = 0; u32TestCount < 0x1000; u32TestCount++) {
+    for(u32TestCount = 0; u32TestCount < 0x1000; u32TestCount++)
+    {
         /* set the source data and clear the destination buffer */
-        for(u32DataCount = 0; u32DataCount < TEST_COUNT; u32DataCount++) {
+        for(u32DataCount = 0; u32DataCount < TEST_COUNT; u32DataCount++)
+        {
             g_au32SourceData[u32DataCount] = u32DataCount;
             g_au32DestinationData[u32DataCount] = 0;
         }
 
         u32DataCount = 0;
 
-        if((u32TestCount & 0x1FF) == 0) {
+        if((u32TestCount & 0x1FF) == 0)
+        {
             putchar('.');
         }
 
-        while(1) {
+        while(1)
+        {
             /* Write to TX register */
             SPI_WRITE_TX(SPI0, g_au32SourceData[u32DataCount]);
             /* Check SPI0 busy status */
@@ -131,7 +135,8 @@ int main(void)
         }
 
         /*  Check the received data */
-        for(u32DataCount = 0; u32DataCount < TEST_COUNT; u32DataCount++) {
+        for(u32DataCount = 0; u32DataCount < TEST_COUNT; u32DataCount++)
+        {
             if(g_au32DestinationData[u32DataCount] != g_au32SourceData[u32DataCount])
                 u32Err = 1;
         }

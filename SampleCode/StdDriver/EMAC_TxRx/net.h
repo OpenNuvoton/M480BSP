@@ -46,13 +46,15 @@
 
 #define DHCP_OPT_OFFSET        236        /* size without options */
 
-typedef struct ETHER_HEADER {
+typedef struct ETHER_HEADER
+{
     uint8_t   au8DestMac[6]; /* Destination MAC address */
     uint8_t   au8SrcMac[6];  /* Source MAC address */
     uint16_t  u16Type;       /* Protocol type */
 } ETHER_PACKET;
 
-typedef struct ARP_PACKET {
+typedef struct ARP_PACKET
+{
     uint8_t   au8DestMac[6];    /* Destination MAC address */
     uint8_t   au8SrcMac[6];     /* Source MAC address */
     uint16_t  u16Type;          /* Protocol type, 0x0806 */
@@ -69,7 +71,8 @@ typedef struct ARP_PACKET {
 
 
 
-typedef struct IP_PACKET {
+typedef struct IP_PACKET
+{
     uint8_t   au8DestMac[6];    /* Destination MAC address */
     uint8_t   au8SrcMac[6];     /* Source MAC address */
     uint16_t  u16Type;          /* Protocol type, 0x0800 */
@@ -87,7 +90,8 @@ typedef struct IP_PACKET {
 
 
 
-typedef struct UDP_PACKET {
+typedef struct UDP_PACKET
+{
     uint8_t   au8DestMac[6];    /* Destination MAC address */
     uint8_t   au8SrcMac[6];     /* Source MAC address */
     uint16_t  u16Type;          /* Protocol type, 0x0800 */
@@ -108,14 +112,16 @@ typedef struct UDP_PACKET {
 } UDP_PACKET;
 
 
-typedef struct UDP_PSEUDO {    /* UDP pseudo header, for check sum calculation */
+typedef struct UDP_PSEUDO      /* UDP pseudo header, for check sum calculation */
+{
     uint8_t   au8SrcIP[4];     /* source IP */
     uint8_t   au8DestIP[4];    /* destination IP */
     uint16_t  u16Protocol;
     uint16_t  u16UDPLen;
 } UDP_PSEUDO;
 
-typedef struct DHCP_HDR_T {
+typedef struct DHCP_HDR_T
+{
     uint8_t   op_code;         /* operation */
     uint8_t   hw_type;         /* hardware type */
     uint8_t   hw_len;          /* hardware address length */

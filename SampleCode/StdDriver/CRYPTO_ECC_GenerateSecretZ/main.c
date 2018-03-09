@@ -12,7 +12,8 @@
 #include <string.h>
 #include "NuMicro.h"
 
-typedef struct {
+typedef struct
+{
     char     vecotr_name[16];             /* brief description of test vector             */
     E_ECC_CURVE  curve;                   /* NIST defined ECC curve                       */
     int      key_len;                     /* key length                                   */
@@ -23,7 +24,8 @@ typedef struct {
 }  ECDH_VECTOR_T;
 
 
-static const ECDH_VECTOR_T   pattern[] = {
+static const ECDH_VECTOR_T   pattern[] =
+{
     {
         "P-192", CURVE_P_192, 192,
         "f17d3fea367b74d340851ca4270dcb24c271f445bed9d527",
@@ -146,12 +148,14 @@ void  dump_buff_hex(uint8_t *pucBuff, int nBytes)
     int     nIdx, i;
 
     nIdx = 0;
-    while (nBytes > 0) {
+    while (nBytes > 0)
+    {
         printf("0x%04X  ", nIdx);
         for (i = 0; i < 16; i++)
             printf("%02x ", pucBuff[nIdx + i]);
         printf("  ");
-        for (i = 0; i < 16; i++) {
+        for (i = 0; i < 16; i++)
+        {
             if ((pucBuff[nIdx + i] >= 0x20) && (pucBuff[nIdx + i] < 127))
                 printf("%c", pucBuff[nIdx + i]);
             else
@@ -234,10 +238,12 @@ int32_t main (void)
     NVIC_EnableIRQ(CRPT_IRQn);
     ECC_ENABLE_INT(CRPT);
 
-    for (p = 0; p < sizeof(pattern)/sizeof(ECDH_VECTOR_T); p++) {
+    for (p = 0; p < sizeof(pattern)/sizeof(ECDH_VECTOR_T); p++)
+    {
         printf("Run ECC CDH pattern %s => ", pattern[p].vecotr_name);
 
-        if (ECC_GenerateSecretZ(CRPT, pattern[p].curve, (char *)pattern[p].d, (char *)pattern[p].Qx, (char *)pattern[p].Qy, my_z) < 0) {
+        if (ECC_GenerateSecretZ(CRPT, pattern[p].curve, (char *)pattern[p].d, (char *)pattern[p].Qx, (char *)pattern[p].Qy, my_z) < 0)
+        {
             printf("ECC CDH secret Z generation failed!!\n");
             while (1);
         }
@@ -246,9 +252,11 @@ int32_t main (void)
 
         for (pZ = (char *)&pattern[p].Z[0]; *pZ == '0'; pZ++); /* truncate leading zeros  */
 
-        if (strcmp(pz, pZ)) {
+        if (strcmp(pz, pZ))
+        {
             printf("Secret Z [%s] is not matched with expected [%s]!\n", my_z, pattern[p].Z);
-            for (i = 0; pz[i] != 0; i++) {
+            for (i = 0; pz[i] != 0; i++)
+            {
                 if (pz[i] != pZ[i])
                     printf("%d - 0x%x 0x%x\n", i, pz[i], pZ[i]);
             }

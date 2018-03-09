@@ -21,7 +21,8 @@
  */
 void BPWM0_IRQHandler(void)
 {
-    if(BPWM_GetCaptureIntFlag(BPWM0, 0) > 1) {
+    if(BPWM_GetCaptureIntFlag(BPWM0, 0) > 1)
+    {
         BPWM_ClearCaptureIntFlag(BPWM0, 0, BPWM_CAPTURE_INT_FALLING_LATCH);
     }
 }
@@ -56,7 +57,8 @@ void CalPeriodTime(BPWM_T *BPWM, uint32_t u32Ch)
 
     u32i = 0;
 
-    while(u32i < 4) {
+    while(u32i < 4)
+    {
         /* Wait for Capture Falling Indicator */
         while(BPWM_GetCaptureIntFlag(BPWM, u32Ch) < 2);
 
@@ -170,7 +172,8 @@ int32_t main(void)
     printf("    BPWM0_CH0(PA.0 BPWM0 channel 0) <--> BPWM1_CH5(PE.13 BPWM1 channel 5)\n\n");
     printf("Use BPWM0 Channel 0(PA.0) to capture the BPWM1 Channel 5(PE.13) Waveform\n");
 
-    while(1) {
+    while(1)
+    {
         printf("Press any key to start BPWM Capture Test\n");
         getchar();
 

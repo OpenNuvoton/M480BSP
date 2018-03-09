@@ -28,14 +28,16 @@ static int dac0_done = 0, dac1_done = 0;
 
 void DAC_IRQHandler(void)
 {
-    if(DAC_GET_INT_FLAG(DAC0, 0)) {
+    if(DAC_GET_INT_FLAG(DAC0, 0))
+    {
         /* Clear the DAC conversion complete finish flag */
         DAC_CLR_INT_FLAG(DAC0, 0);
         DAC_WRITE_DATA(DAC0, 0, sine[index]);
         dac0_done = 1;
 
     }
-    if(DAC_GET_INT_FLAG(DAC1, 0)) {
+    if(DAC_GET_INT_FLAG(DAC1, 0))
+    {
 
         /* Clear the DAC conversion complete finish flag */
         DAC_CLR_INT_FLAG(DAC1, 0);
@@ -46,7 +48,8 @@ void DAC_IRQHandler(void)
             index = 0;
     }
 
-    if(dac0_done == 1 && dac1_done == 1) {
+    if(dac0_done == 1 && dac1_done == 1)
+    {
         DAC_START_CONV(DAC0);
         dac0_done = dac1_done = 0;
     }
@@ -78,7 +81,7 @@ void SYS_Init(void)
     CLK_EnableModuleClock(DAC_MODULE);
 
     /* Set PB.12 and PB.13 to input mode */
-    PB->MODE &= ~(GPIO_MODE_MODE12_Msk | GPIO_MODE_MODE13_Msk); 
+    PB->MODE &= ~(GPIO_MODE_MODE12_Msk | GPIO_MODE_MODE13_Msk);
     /* Set PB multi-function pins for DAC voltage output */
     SYS->GPB_MFPL |= SYS_GPB_MFPH_PB12MFP_DAC0_OUT | SYS_GPB_MFPH_PB13MFP_DAC1_OUT;
     /* Disable digital input path of analog pin DAC0_OUT and DAC1_OUT to prevent leakage */

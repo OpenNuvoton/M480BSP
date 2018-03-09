@@ -67,15 +67,19 @@ void NAU88L25_ConfigSampleRate(uint32_t u32SampleRate)
 {
     printf("[NAU88L25] Configure Sampling Rate to %d\n", u32SampleRate);
 
-    if((u32SampleRate % 8) == 0) {
+    if((u32SampleRate % 8) == 0)
+    {
         I2C_WriteNAU88L25(0x0005, 0x3126); //12.288Mhz
         I2C_WriteNAU88L25(0x0006, 0x0008);
-    } else {
+    }
+    else
+    {
         I2C_WriteNAU88L25(0x0005, 0x86C2); //11.2896Mhz
         I2C_WriteNAU88L25(0x0006, 0x0007);
     }
 
-    switch (u32SampleRate) {
+    switch (u32SampleRate)
+    {
     case 16000:
         I2C_WriteNAU88L25(0x0003,  0x801B); //MCLK = SYSCLK_SRC/12
         I2C_WriteNAU88L25(0x0004,  0x0001);

@@ -23,7 +23,8 @@
 @{ */
 
 
-typedef struct {
+typedef struct
+{
 
     /**
      * @var DSCT_T::CTL
@@ -119,7 +120,8 @@ typedef struct {
 } DSCT_T;
 
 
-typedef struct {
+typedef struct
+{
     /**
      * @var STRIDE_T::STCR
      * Offset: 0x500  Stride Transfer Count Register of PDMA Channel n
@@ -142,7 +144,8 @@ typedef struct {
     __IO uint32_t ASOCR;          /*!< [0x0504] Address Stride Offset Register of PDMA Channel 0                 */
 } STRIDE_T;
 
-typedef struct {
+typedef struct
+{
 
 
     /**

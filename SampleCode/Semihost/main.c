@@ -67,7 +67,8 @@ int32_t main()
 
     printf("\n Start SEMIHOST test: \n");
 
-    while(1) {
+    while(1)
+    {
         item = getchar();
         printf("%c\n",item);
     }

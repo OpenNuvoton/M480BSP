@@ -126,7 +126,8 @@ void  WakeUpRTCTickFunction(uint32_t u32PDMode)
     /* Open RTC and start counting */
     RTC->INIT = RTC_INIT_KEY;
 
-    if(RTC->INIT != RTC_INIT_ACTIVE_Msk) {
+    if(RTC->INIT != RTC_INIT_ACTIVE_Msk)
+    {
         RTC->INIT = RTC_INIT_KEY;
         while(RTC->INIT != RTC_INIT_ACTIVE_Msk);
     }
@@ -170,7 +171,8 @@ void  WakeUpRTCAlarmFunction(uint32_t u32PDMode)
     /* Open RTC and start counting */
     RTC->INIT = RTC_INIT_KEY;
 
-    if(RTC->INIT != RTC_INIT_ACTIVE_Msk) {
+    if(RTC->INIT != RTC_INIT_ACTIVE_Msk)
+    {
         RTC->INIT = RTC_INIT_KEY;
         while(RTC->INIT != RTC_INIT_ACTIVE_Msk);
     }
@@ -235,7 +237,8 @@ void  WakeUpRTCTamperFunction(uint32_t u32PDMode)
     /* Open RTC and start counting */
     RTC->INIT = RTC_INIT_KEY;
 
-    if(RTC->INIT != RTC_INIT_ACTIVE_Msk) {
+    if(RTC->INIT != RTC_INIT_ACTIVE_Msk)
+    {
         RTC->INIT = RTC_INIT_KEY;
         while(RTC->INIT != RTC_INIT_ACTIVE_Msk);
     }
@@ -460,12 +463,14 @@ int32_t main(void)
     /* Get power manager wake up source */
     CheckPowerSource();
 
-    if(M32(FLAG_ADDR) == SIGNATURE) {
+    if(M32(FLAG_ADDR) == SIGNATURE)
+    {
         printf("System waken-up from SPD0 mode done!\n");
         M32(FLAG_ADDR) = 0;
         printf("Press any key to continue ...\n");
         getchar();
-    } else
+    }
+    else
         printf("System waken-up from SPD1 mode done!\n");
 
     printf("+-----------------------------------------------------------------+\n");
@@ -494,7 +499,8 @@ int32_t main(void)
     // SRAM retention test
     M32(FLAG_ADDR) = SIGNATURE;
 
-    switch(u8Item) {
+    switch(u8Item)
+    {
     case '1':
         WakeUpPinFunction(CLK_PMUCTL_PDMSEL_SPD0);
         break;

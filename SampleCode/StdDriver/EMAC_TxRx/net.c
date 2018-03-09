@@ -66,7 +66,8 @@ static uint16_t chksum(uint16_t *cp, int cnt)
 {
     uint16_t i1=0, i2;
 
-    while (cnt--) {
+    while (cnt--)
+    {
         i2 = *cp++;
         i2 = SWAP16(i2);
         i1 += i2;
@@ -140,28 +141,34 @@ int process_rx_packet(uint8_t *pu8Packet, uint32_t u32Len)
     IP_PACKET    *ip  = (IP_PACKET *)pu8Packet;
     UDP_PACKET    *udp  = (UDP_PACKET *)pu8Packet;
 
-    if (pu8Packet[0] == 0xFF) {     /* this is a broadcast packet */
+    if (pu8Packet[0] == 0xFF)       /* this is a broadcast packet */
+    {
         /*
          *  We manage the ARP reply process here.
          *  In the following code, if we have received a ARP request,
          *  we send ARP reply immediately.
          */
         if ((!COMPARE_IP(arp->au8TargetIP, g_au8IpAddr)) &&
-                (arp->u16Type == SWAP16(PROTOCOL_ARP)) && (arp->u16Operation == SWAP16(ARP_REQUEST))) {
+                (arp->u16Type == SWAP16(PROTOCOL_ARP)) && (arp->u16Operation == SWAP16(ARP_REQUEST)))
+        {
             arp_reply(arp->su8SenderIP, arp->au8SenderHA);
         }
 
         return 0;
-    } else {                    /* this is a multicast or unicast packet */
+    }
+    else                        /* this is a multicast or unicast packet */
+    {
         /*
          *  This is a unicast packet to us.
          */
-        if ((ip->u8Prot == IP_PRO_TCP) && (!COMPARE_IP(ip->au8DestIP, g_au8IpAddr))) {
+        if ((ip->u8Prot == IP_PRO_TCP) && (!COMPARE_IP(ip->au8DestIP, g_au8IpAddr)))
+        {
             // write me: process TCP packets here
             return 0;
         }
 
-        if ((ip->u8Prot == IP_PRO_UDP) && (udp->u16SrcPort == SWAP16(67))) {
+        if ((ip->u8Prot == IP_PRO_UDP) && (udp->u16SrcPort == SWAP16(67)))
+        {
             // This is a DHCP packet...
 
             s_u32PktRdy = u32Len;
@@ -169,7 +176,8 @@ int process_rx_packet(uint8_t *pu8Packet, uint32_t u32Len)
             return 0;
         }
 
-        if ((ip->u8Prot == IP_PRO_UDP) && (!COMPARE_IP(ip->au8DestIP, g_au8IpAddr))) {
+        if ((ip->u8Prot == IP_PRO_UDP) && (!COMPARE_IP(ip->au8DestIP, g_au8IpAddr)))
+        {
             // write me: process UDP packets here
             return 0;
         }
@@ -179,7 +187,8 @@ int process_rx_packet(uint8_t *pu8Packet, uint32_t u32Len)
          * if matched, we reply it right here
          */
         if ((ip->u8Prot == IP_PRO_ICMP) && (!COMPARE_IP(ip->au8DestIP, g_au8IpAddr)) &&
-                (pu8Packet[34] == 0x08)) {
+                (pu8Packet[34] == 0x08))
+        {
             IP_PACKET    *tx_ip;
 
 
@@ -270,7 +279,8 @@ int dhcp_start(void)
 
 wait_offer:
     out = 0;
-    for (retry = 0; (retry < 16) && (!out); retry++) {
+    for (retry = 0; (retry < 16) && (!out); retry++)
+    {
         if (retry)
             printf("DHCP DISCOVER retry: %d\n", retry);
 
@@ -279,15 +289,18 @@ wait_offer:
                  (uint8_t *)dhcpTx, DHCP_OPT_OFFSET + opt_len + 1);
 
         delay = 0x600000;
-        while(delay--) {
-            if(s_u32PktRdy) {
+        while(delay--)
+        {
+            if(s_u32PktRdy)
+            {
                 NVIC_DisableIRQ(EMAC_RX_IRQn);
                 memcpy((char *)&s_au8DhcpRawBuffer[1500], au8RxBuf, s_u32PktRdy);
                 s_u32PktRdy = 0;
                 NVIC_EnableIRQ(EMAC_RX_IRQn);
                 if ((udp->u16DestPort == SWAP16(CLIENT_PORT)) &&
                         (dhcpRx->op_code == BOOTP_REPLY) &&
-                        (dhcpRx->tx_id == dhcpTx->tx_id)) {
+                        (dhcpRx->tx_id == dhcpTx->tx_id))
+                {
                     out = 1;
                     break;
                 }
@@ -308,19 +321,24 @@ wait_offer:
     /* find out DHCP OFFER and copy server identifier */
     offer = 0;
 
-    while (*cptr != 0xff) {
+    while (*cptr != 0xff)
+    {
         len = cptr[1] + 2;
-        if (*cptr == 53) {
+        if (*cptr == 53)
+        {
             if (cptr[2] == DHCP_OFFER)
                 offer = 1;
-        } else if (*cptr == 54) {        /* add server ID */
+        }
+        else if (*cptr == 54)            /* add server ID */
+        {
             memcpy((char *)(dhcpTx->options) + opt_len, (char *)cptr, len);
             opt_len += len;
         }
         cptr += len;
     }
 
-    if (offer == 0) {
+    if (offer == 0)
+    {
         printf("No Offer!!\n");
         goto wait_offer;             /* wrong type, read again */
     }
@@ -338,7 +356,8 @@ wait_offer:
     printf("DHCP REQUEST...\n");
 
     out = 0;
-    for (retry = 0; (retry < 16) && (!out); retry++) {
+    for (retry = 0; (retry < 16) && (!out); retry++)
+    {
         if (retry)
             printf("DHCP REQUEST retry: %d\n", retry);
 
@@ -347,15 +366,18 @@ wait_offer:
                  (uint8_t *)dhcpTx, DHCP_OPT_OFFSET + opt_len + 1);
 
         delay = 0x600000;
-        while(delay--) {
-            if(s_u32PktRdy) {
+        while(delay--)
+        {
+            if(s_u32PktRdy)
+            {
                 NVIC_DisableIRQ(EMAC_RX_IRQn);
                 memcpy((char *)&s_au8DhcpRawBuffer[1500], au8RxBuf, s_u32PktRdy);
                 s_u32PktRdy = 0;
                 NVIC_EnableIRQ(EMAC_RX_IRQn);
                 if((udp->u16DestPort == SWAP16(CLIENT_PORT)) &&
                         (dhcpRx->op_code != BOOTP_REPLY) &&
-                        (dhcpRx->tx_id != dhcpTx->tx_id)) {
+                        (dhcpRx->tx_id != dhcpTx->tx_id))
+                {
                     out = 1;
                     break;
                 }
@@ -367,12 +389,15 @@ wait_offer:
 
         cptr = (uint8_t *)&dhcpRx->options + 4;
 
-        while (*cptr != 0xff) {
+        while (*cptr != 0xff)
+        {
             len = cptr[1] + 2;
-            if (cptr[0] == 53) {
+            if (cptr[0] == 53)
+            {
                 if (cptr[2] == DHCP_ACK)
                     goto acked;
-                if (cptr[2] == DHCP_NAK) {
+                if (cptr[2] == DHCP_NAK)
+                {
                     printf("DHCP Naked!\n");
 
                     return -1;
@@ -393,9 +418,11 @@ acked:
 
     cptr = (uint8_t *)&dhcpRx->options + 4;
 
-    while (*cptr != 0xff) {
+    while (*cptr != 0xff)
+    {
         len = cptr[1];
-        switch (*cptr) {
+        switch (*cptr)
+        {
         case 1:                 /* subnet mask */
             printf("Subnet Mask . . . . . . . . . . . : %d.%d.%d.%d\n", cptr[2], cptr[3], cptr[4], cptr[5]);
             break;

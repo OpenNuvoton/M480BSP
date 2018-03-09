@@ -24,10 +24,13 @@ void BPWM0_IRQHandler(void)
     static int toggle = 0;
 
     // Update BPWM0 channel 0 period and duty
-    if(toggle == 0) {
+    if(toggle == 0)
+    {
         BPWM_SET_CNR(BPWM0, 0, 99);
         BPWM_SET_CMR(BPWM0, 0, 39);
-    } else {
+    }
+    else
+    {
         BPWM_SET_CNR(BPWM0, 0, 399);
         BPWM_SET_CMR(BPWM0, 0, 199);
     }
@@ -156,7 +159,8 @@ int32_t main(void)
     /* Start BPWM counter */
     BPWM_Start(BPWM0, BPWM_CH_0_MASK);
 
-    while(1) {
+    while(1)
+    {
         printf("\nSelect new duty: \n");
         printf("[1] 100%% \n");
         printf("[2] 75%% \n");
@@ -165,15 +169,24 @@ int32_t main(void)
         printf("[Other] Exit \n");
         u8Option = getchar();
 
-        if(u8Option == '1') {
+        if(u8Option == '1')
+        {
             u32NewDutyCycle = 100;
-        } else if(u8Option == '2') {
+        }
+        else if(u8Option == '2')
+        {
             u32NewDutyCycle = 75;
-        } else if(u8Option == '3') {
+        }
+        else if(u8Option == '3')
+        {
             u32NewDutyCycle = 25;
-        } else if(u8Option == '4') {
+        }
+        else if(u8Option == '4')
+        {
             u32NewDutyCycle = 0;
-        } else {
+        }
+        else
+        {
             printf("Exit\n");
             break;
         }

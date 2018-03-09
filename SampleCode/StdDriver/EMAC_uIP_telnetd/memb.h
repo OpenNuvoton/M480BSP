@@ -28,7 +28,8 @@
         static char memb_mem[(size + 1) * num]; \
         static struct memb_blocks name = {size, num, memb_mem}
 
-struct memb_blocks {
+struct memb_blocks
+{
     unsigned short size;
     unsigned short num;
     char *mem;

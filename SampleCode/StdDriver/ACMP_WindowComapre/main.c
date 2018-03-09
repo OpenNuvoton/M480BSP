@@ -15,9 +15,12 @@ void ACMP01_IRQHandler(void)
     ACMP_CLR_INT_FLAG(ACMP01, 0);
     ACMP_CLR_INT_FLAG(ACMP01, 1);
 
-    if(ACMP01->STATUS & ACMP_STATUS_ACMPWO_Msk) {
+    if(ACMP01->STATUS & ACMP_STATUS_ACMPWO_Msk)
+    {
         printf("The input voltage is within the window\n");
-    } else {
+    }
+    else
+    {
         printf("The input voltage is not within the window\n");
     }
 }
@@ -53,7 +56,7 @@ void SYS_Init(void)
     /* Set PA.11 and PB.4 to input mode */
     PA->MODE &= ~GPIO_MODE_MODE11_Msk;
     PB->MODE &= ~GPIO_MODE_MODE4_Msk;
-    
+
     /* Set PA11 multi-function pin for ACMP0 positive input pin */
     SYS->GPA_MFPH |= SYS_GPA_MFPH_PA11MFP_ACMP0_P0;
 
@@ -113,9 +116,12 @@ int32_t main(void)
     // Give ACMP some time to settle
     for(i = 0; i < 1000; i++);
 
-    if(ACMP01->STATUS & ACMP_STATUS_ACMPWO_Msk) {
+    if(ACMP01->STATUS & ACMP_STATUS_ACMPWO_Msk)
+    {
         printf("The input voltage in inside the window\n");
-    } else {
+    }
+    else
+    {
         printf("The input voltage in outside the window\n");
     }
 

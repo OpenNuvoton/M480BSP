@@ -36,19 +36,23 @@ void PDMA_IRQHandler(void)
 {
     uint32_t status = PDMA_GET_INT_STATUS(PDMA);
 
-    if(status & PDMA_INTSTS_ABTIF_Msk) {  /* abort */
+    if(status & PDMA_INTSTS_ABTIF_Msk)    /* abort */
+    {
         /* Check if channel 2 has abort error */
         if(PDMA_GET_ABORT_STS(PDMA) & PDMA_ABTSTS_ABTIF2_Msk)
             g_u32IsTestOver = 2;
         /* Clear abort flag of channel 2 */
         PDMA_CLR_ABORT_FLAG(PDMA,PDMA_ABTSTS_ABTIF2_Msk);
-    } else if(status & PDMA_INTSTS_TDIF_Msk) {  /* done */
+    }
+    else if(status & PDMA_INTSTS_TDIF_Msk)      /* done */
+    {
         /* Check transmission of channel 2 has been transfer done */
         if(PDMA_GET_TD_STS(PDMA) & PDMA_TDSTS_TDIF2_Msk)
             g_u32IsTestOver = 1;
         /* Clear transfer done flag of channel 2 */
         PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF2_Msk);
-    } else
+    }
+    else
         printf("unknown interrupt !!\n");
 }
 

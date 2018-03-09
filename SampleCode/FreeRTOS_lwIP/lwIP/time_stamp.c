@@ -24,11 +24,15 @@ u32_t ts_init(struct ts_timeval *t)
 
 u32_t ts_update(struct ts_timeval *t)
 {
-    if(t->sec < 0) {
+    if(t->sec < 0)
+    {
         ETH_updatetime(1, -t->sec, t->nsec);
-    } else if(t->nsec < 0) {
+    }
+    else if(t->nsec < 0)
+    {
         ETH_updatetime(1, t->sec, -t->nsec);
-    } else
+    }
+    else
         ETH_updatetime(0, t->sec, t->nsec);
     return 0;
 }

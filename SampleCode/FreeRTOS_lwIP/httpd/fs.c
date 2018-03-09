@@ -54,7 +54,8 @@
 #endif
 
 /* Define the file system memory allocation structure. */
-struct fs_table {
+struct fs_table
+{
     struct fs_file file;
     u8_t inuse;
 };
@@ -72,8 +73,10 @@ static struct fs_file *
 fs_malloc(void)
 {
     int i;
-    for(i = 0; i < LWIP_MAX_OPEN_FILES; i++) {
-        if(fs_memory[i].inuse == 0) {
+    for(i = 0; i < LWIP_MAX_OPEN_FILES; i++)
+    {
+        if(fs_memory[i].inuse == 0)
+        {
             fs_memory[i].inuse = 1;
             return(&fs_memory[i].file);
         }
@@ -86,8 +89,10 @@ static void
 fs_free(struct fs_file *file)
 {
     int i;
-    for(i = 0; i < LWIP_MAX_OPEN_FILES; i++) {
-        if(&fs_memory[i].file == file) {
+    for(i = 0; i < LWIP_MAX_OPEN_FILES; i++)
+    {
+        if(&fs_memory[i].file == file)
+        {
             fs_memory[i].inuse = 0;
             break;
         }
@@ -103,20 +108,24 @@ fs_open(const char *name)
     const struct fsdata_file *f;
 
     file = fs_malloc();
-    if(file == NULL) {
+    if(file == NULL)
+    {
         return NULL;
     }
 
 #if LWIP_HTTPD_CUSTOM_FILES
-    if(fs_open_custom(file, name)) {
+    if(fs_open_custom(file, name))
+    {
         file->is_custom_file = 1;
         return file;
     }
     file->is_custom_file = 0;
 #endif /* LWIP_HTTPD_CUSTOM_FILES */
 
-    for(f = FS_ROOT; f != NULL; f = f->next) {
-        if (!strcmp(name, (char *)f->name)) {
+    for(f = FS_ROOT; f != NULL; f = f->next)
+    {
+        if (!strcmp(name, (char *)f->name))
+        {
             file->data = (const char *)f->data;
             file->len = f->len;
             file->index = f->len;
@@ -141,7 +150,8 @@ void
 fs_close(struct fs_file *file)
 {
 #if LWIP_HTTPD_CUSTOM_FILES
-    if (file->is_custom_file) {
+    if (file->is_custom_file)
+    {
         fs_close_custom(file);
     }
 #endif /* LWIP_HTTPD_CUSTOM_FILES */
@@ -156,12 +166,14 @@ fs_read(struct fs_file *file, char *buffer, int count)
 {
     int read;
 
-    if(file->index == file->len) {
+    if(file->index == file->len)
+    {
         return -1;
     }
 
     read = file->len - file->index;
-    if(read > count) {
+    if(read > count)
+    {
         read = count;
     }
 

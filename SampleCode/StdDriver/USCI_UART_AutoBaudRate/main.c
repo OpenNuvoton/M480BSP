@@ -168,7 +168,8 @@ void USCI_AutoBaudRate_TxTest()
     uint32_t u32Item;
     uint8_t u8Char;
 
-    do {
+    do
+    {
 
         printf("\n");
         printf("+-----------------------------------------------------------+\n");
@@ -186,7 +187,8 @@ void USCI_AutoBaudRate_TxTest()
         printf("%c\n", u32Item);
 
         /* Set different baud rate */
-        switch(u32Item) {
+        switch(u32Item)
+        {
         case '1':
             UUART_Open(UUART0, 38400);
             break;
@@ -202,7 +204,8 @@ void USCI_AutoBaudRate_TxTest()
         u8Char = 0x55;
         UUART_Write(UUART0, &u8Char, 1);
 
-    } while(u32Item != 27);
+    }
+    while(u32Item != 27);
 
 }
 
@@ -247,11 +250,14 @@ void USCI_AutoBaudRate_RxTest()
     /* Wait until auto baud rate detect finished or time-out */
     while(UUART0->PROTCTL & UUART_PROTCTL_ABREN_Msk);
 
-    if(UUART_GET_PROT_STATUS(UUART0) & UUART_PROTSTS_ABRDETIF_Msk) {
+    if(UUART_GET_PROT_STATUS(UUART0) & UUART_PROTSTS_ABRDETIF_Msk)
+    {
         /* Clear auto baud rate detect finished flag */
         UUART_CLR_PROT_INT_FLAG(UUART0, UUART_PROTSTS_ABRDETIF_Msk);
         printf("Baud rate is %dbps.\n", GetUuartBaudrate(UUART0));
-    } else if(UUART_GET_PROT_STATUS(UUART0) & UUART_PROTSTS_ABERRSTS_Msk) {
+    }
+    else if(UUART_GET_PROT_STATUS(UUART0) & UUART_PROTSTS_ABERRSTS_Msk)
+    {
         /* Clear auto baud rate detect time-out flag */
         UUART_CLR_PROT_INT_FLAG(UUART0, UUART_PROTSTS_ABERRSTS_Msk);
         printf("Error!\n");

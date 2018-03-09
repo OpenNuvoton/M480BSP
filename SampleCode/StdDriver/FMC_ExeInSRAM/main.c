@@ -95,7 +95,8 @@ int32_t main(void)
     /* The ROM address for erase/write/read demo */
     u32Addr = 0x4000;
     FMC_Erase(u32Addr); /* Erase page */
-    for(i = 0; i < 0x100; i += 4) {
+    for(i = 0; i < 0x100; i += 4)
+    {
 
         /* Write Demo */
         u32Data = i + 0x12345678;
@@ -107,7 +108,8 @@ int32_t main(void)
         /* Read Demo */
         u32RData = FMC_Read(u32Addr + i);
 
-        if(u32Data != u32RData) {
+        if(u32Data != u32RData)
+        {
             printf("[Read/Write FAIL]\n");
             while(1);
         }

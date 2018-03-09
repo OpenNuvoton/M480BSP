@@ -84,7 +84,8 @@ int32_t main (void)
     /* Start transaction */
     HSUSBD_Start();
 
-    while(1) {
+    while(1)
+    {
         HID_UpdateMouseData();
     }
 }

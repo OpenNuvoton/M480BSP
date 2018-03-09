@@ -20,7 +20,8 @@
 /*
  *  Dual bank background program state
  */
-enum {
+enum
+{
     DB_STATE_START,                              /* Start background dual bank program       */
     DB_STATE_ERASE,                              /* Executing ISP page erase                 */
     DB_STATE_PROGRAM,                            /* Executing ISP write                      */
@@ -40,11 +41,13 @@ void SysTick_Handler(void)
 {
     g_tick_cnt++;                                /* increase timer tick                      */
 
-    if (db_state == DB_STATE_DONE) {             /* Background program is in idle state      */
+    if (db_state == DB_STATE_DONE)               /* Background program is in idle state      */
+    {
         return;
     }
 
-    if (db_length == 0) {                        /* Background program done?                 */
+    if (db_length == 0)                          /* Background program done?                 */
+    {
         db_state = DB_STATE_DONE;                /* enter idle state                         */
         return;
     }
@@ -55,14 +58,17 @@ void SysTick_Handler(void)
     /*
      *  Dual-bank background program...
      */
-    switch (db_state) {
+    switch (db_state)
+    {
     case DB_STATE_START:
-        if (db_addr & ~FMC_PAGE_ADDR_MASK) {
+        if (db_addr & ~FMC_PAGE_ADDR_MASK)
+        {
             printf("Warning - dual bank start address is not page aligned!\n");
             db_state = DB_STATE_FAIL;
             break;
         }
-        if (db_length & ~FMC_PAGE_ADDR_MASK) {
+        if (db_length & ~FMC_PAGE_ADDR_MASK)
+        {
             printf("Warning - dual bank length is not page aligned!\n");
             db_state = DB_STATE_FAIL;
             break;
@@ -90,7 +96,8 @@ void SysTick_Handler(void)
 
         db_addr += 4;                        /* advance to next word                     */
         db_length -= 4;
-        if ((db_addr & ~FMC_PAGE_ADDR_MASK) == 0) {
+        if ((db_addr & ~FMC_PAGE_ADDR_MASK) == 0)
+        {
             /* have reached start of next page          */
             db_state = DB_STATE_ERASE;       /* next state, erase page                   */
         }
@@ -106,7 +113,8 @@ void enable_sys_tick(int ticks_per_second)
 {
     g_tick_cnt = 0;
     SystemCoreClock = 192000000UL;         /* HCLK is 160 MHz */
-    if (SysTick_Config(SystemCoreClock / ticks_per_second)) {
+    if (SysTick_Config(SystemCoreClock / ticks_per_second))
+    {
         /* Setup SysTick Timer for 1 second interrupts  */
         printf("Set system tick error!!\n");
         while (1);
@@ -160,7 +168,8 @@ void UART0_Init(void)
     UART_Open(UART0, 115200);
 }
 
-static const uint32_t crc32_tab[] = {
+static const uint32_t crc32_tab[] =
+{
     0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f,
     0xe963a535, 0x9e6495a3, 0x0edb8832, 0x79dcb8a4, 0xe0d5e91e, 0x97d2d988,
     0x09b64c2b, 0x7eb17cbd, 0xe7b82d07, 0x90bf1d91, 0x1db71064, 0x6ab020f2,
@@ -218,9 +227,11 @@ uint32_t  func_crc32(uint32_t start, uint32_t len)
     int       i;
 
     /* WDTAT_RVS, CHECKSUM_RVS, CHECKSUM_COM */
-    for (idx = 0; idx < len; idx += 4) {
+    for (idx = 0; idx < len; idx += 4)
+    {
         data32 = *(uint32_t *)(start + idx);
-        for (i = 0; i < 4; i++) {
+        for (i = 0; i < 4; i++)
+        {
             data8 = (data32 >> (i*8)) & 0xff;
             crc = crc32_tab[(crc ^ data8) & 0xFF] ^ (crc >> 8);
         }
@@ -271,7 +282,8 @@ int main()
     enable_sys_tick(1000);
     start_timer0();
 
-    for (loop = 0; loop < CRC32_LOOP_CNT; loop++) {
+    for (loop = 0; loop < CRC32_LOOP_CNT; loop++)
+    {
         func_crc32(0x0, 0x10000);      /* Calculate 64KB CRC32 value, just to consume CPU time  */
     }
 
@@ -287,7 +299,8 @@ int main()
     enable_sys_tick(1000);
     start_timer0();
 
-    for (loop = 0; loop < CRC32_LOOP_CNT; loop++) {
+    for (loop = 0; loop < CRC32_LOOP_CNT; loop++)
+    {
         func_crc32(0x0, 0x10000);      /* Calculate 64KB CRC32 value, just to consume CPU time  */
     }
 
@@ -301,8 +314,10 @@ int main()
     /*
      *  Verify ...
      */
-    for (addr = APROM_BANK1_BASE; addr < APROM_BANK1_BASE + DB_PROG_LEN; addr += 4) {
-        if (inpw(addr) != addr) {
+    for (addr = APROM_BANK1_BASE; addr < APROM_BANK1_BASE + DB_PROG_LEN; addr += 4)
+    {
+        if (inpw(addr) != addr)
+        {
             printf("Flash address 0x%x verify failed! expect: 0x%x, read: 0x%x.\n", addr, addr, inpw(addr));
             while (1);
         }

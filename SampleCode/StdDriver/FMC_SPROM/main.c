@@ -72,7 +72,8 @@ int main()
 
     FMC_Open();                        /* Enable FMC ISP function                         */
 
-    while (1) {
+    while (1)
+    {
         printf("\n\n\n");
         printf("+--------------------------------------+\n");
         printf("| M480 FMC SPROM Sample Demo           |\n");
@@ -89,13 +90,15 @@ int main()
 
         chr = getchar();
 
-        switch (chr) {
+        switch (chr)
+        {
         case '1':
             printf("Once SPROM is locked, it will become unreadable and can only "
                    "be unlocked by erase SPROM page.\n"
                    "Are you sure to lock SPROM? (y/n)");
             chr = getchar();
-            if ((chr == 'y') || (chr == 'Y')) {
+            if ((chr == 'y') || (chr == 'Y'))
+            {
                 FMC_ENABLE_SP_UPDATE();      /* enable SPROM update                   */
 
                 /*
@@ -117,7 +120,8 @@ int main()
             printf("If SPROM was erased, branch to SPROM will cause a program fault.\n");
             printf("Are you sure to erase SPROM? (y/n)");
             chr = getchar();
-            if ((chr == 'y') || (chr == 'Y')) {
+            if ((chr == 'y') || (chr == 'Y'))
+            {
                 FMC_ENABLE_SP_UPDATE();      /* enable SPROM update                   */
                 FMC_Erase_SPROM();           /* erase SPROM                           */
                 FMC_DISABLE_SP_UPDATE();     /* disable SPROM update                  */

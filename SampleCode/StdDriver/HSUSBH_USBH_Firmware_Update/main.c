@@ -67,7 +67,8 @@ void SysTick_Handler(void)
 void enable_sys_tick(int ticks_per_second)
 {
     g_tick_cnt = 0;
-    if (SysTick_Config(SystemCoreClock / ticks_per_second)) {
+    if (SysTick_Config(SystemCoreClock / ticks_per_second))
+    {
         /* Setup SysTick Timer for 1 second interrupts  */
         printf("Set system tick error!!\n");
         while (1);

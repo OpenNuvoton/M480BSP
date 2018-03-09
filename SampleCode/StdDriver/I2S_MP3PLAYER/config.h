@@ -21,7 +21,8 @@
 #define PCM_BUFFER_SIZE        2304
 #define FILE_IO_BUFFER_SIZE    4096
 
-struct mp3Header {
+struct mp3Header
+{
     unsigned int sync : 11;
     unsigned int version : 2;
     unsigned int layer : 2;
@@ -37,7 +38,8 @@ struct mp3Header {
     unsigned int emphasis : 2;
 };
 
-struct AudioInfoObject {
+struct AudioInfoObject
+{
     unsigned int playFileSize;
     unsigned int mp3FileEndFlag;
     unsigned int mp3SampleRate;
@@ -47,7 +49,8 @@ struct AudioInfoObject {
     unsigned int mp3Playing;
 };
 
-typedef struct dma_desc_t {
+typedef struct dma_desc_t
+{
     uint32_t ctl;
     uint32_t src;
     uint32_t dest;

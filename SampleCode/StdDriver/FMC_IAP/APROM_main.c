@@ -73,12 +73,14 @@ static int  set_IAP_boot_mode(void)
 {
     uint32_t  au32Config[2];           /* User Configuration */
 
-    if (FMC_ReadConfig(au32Config, 2) < 0) {     /* Read User Configuration CONFIG0 and CONFIG1. */
+    if (FMC_ReadConfig(au32Config, 2) < 0)       /* Read User Configuration CONFIG0 and CONFIG1. */
+    {
         printf("\nRead User Config failed!\n");
         return -1;                     /* Failed on reading User Configuration */
     }
 
-    if (au32Config[0] & 0x40) {        /* Check if it's boot from APROM/LDROM with IAP. */
+    if (au32Config[0] & 0x40)          /* Check if it's boot from APROM/LDROM with IAP. */
+    {
         FMC_ENABLE_CFG_UPDATE();       /* Enable User Configuration update. */
         au32Config[0] &= ~0x40;        /* Select IAP boot mode. */
         FMC_WriteConfig(au32Config, 2);/* Update User Configuration CONFIG0 and CONFIG1. */
@@ -121,21 +123,26 @@ static int  load_image_to_flash(uint32_t image_base, uint32_t image_limit, uint3
      * program the whole image to specified flash area
      */
     pu32Loader = (uint32_t *)image_base;
-    for (i = 0; i < u32ImageSize; i += FMC_FLASH_PAGE_SIZE)  {
+    for (i = 0; i < u32ImageSize; i += FMC_FLASH_PAGE_SIZE)
+    {
 
         FMC_Erase(flash_addr + i);     /* erase a flash page */
-        for (j = 0; j < FMC_FLASH_PAGE_SIZE; j += 4) {               /* program image to this flash page */
+        for (j = 0; j < FMC_FLASH_PAGE_SIZE; j += 4)                 /* program image to this flash page */
+        {
             FMC_Write(flash_addr + i + j, pu32Loader[(i + j) / 4]);
         }
     }
     printf("OK.\nVerify ...");
 
     /* Verify loader */
-    for (i = 0; i < u32ImageSize; i += FMC_FLASH_PAGE_SIZE) {
-        for (j = 0; j < FMC_FLASH_PAGE_SIZE; j += 4) {
+    for (i = 0; i < u32ImageSize; i += FMC_FLASH_PAGE_SIZE)
+    {
+        for (j = 0; j < FMC_FLASH_PAGE_SIZE; j += 4)
+        {
             u32Data = FMC_Read(flash_addr + i + j);        /* read a word from flash memory */
 
-            if (u32Data != pu32Loader[(i+j)/4]) {          /* check if the word read from flash be matched with original image */
+            if (u32Data != pu32Loader[(i+j)/4])            /* check if the word read from flash be matched with original image */
+            {
                 printf("data mismatch on 0x%x, [0x%x], [0x%x]\n", flash_addr + i + j, u32Data, pu32Loader[(i+j)/4]);
                 return -1;             /* image program failed */
             }
@@ -174,7 +181,8 @@ int main()
      *  Check if User Configuration CBS is boot with IAP mode.
      *  If not, modify it.
      */
-    if (set_IAP_boot_mode() < 0) {
+    if (set_IAP_boot_mode() < 0)
+    {
         printf("Failed to set IAP boot mode!\n");
         goto lexit;                    /* Failed to set IAP boot mode. Program aborted. */
     }
@@ -183,7 +191,8 @@ int main()
     printf("  Boot Mode ............................. ");
     if (FMC_GetBootSource() == 0)      /* Get boot source */
         printf("[APROM]\n");           /* Is booting from APROM */
-    else {
+    else
+    {
         printf("[LDROM]\n");           /* Is booting from LDROM */
         printf("  WARNING: The sample code must execute in APROM!\n");
         goto lexit;                    /* This sample program must execute in APROM. Program aborted. */
@@ -200,7 +209,8 @@ int main()
     /* Read User Configuration CONFIG1 */
     printf("  User Config 1 ......................... [0x%08x]\n", FMC_Read(FMC_CONFIG_BASE+4));
 
-    do {
+    do
+    {
         printf("\n\n\n");
         printf("+----------------------------------------+\n");
         printf("|               Select                   |\n");
@@ -212,7 +222,8 @@ int main()
         u8Item = getchar();            /* block waiting to receive any one character from UART0 */
         printf("%c\n", u8Item);        /* print out the selected item */
 
-        switch (u8Item) {
+        switch (u8Item)
+        {
         case '0':
             FMC_ENABLE_LD_UPDATE();    /* Enable LDROM update capability */
             /*
@@ -220,7 +231,8 @@ int main()
              *  load_image_to_flash() will program this LDROM code to LDROM.
              */
             if (load_image_to_flash((uint32_t)&loaderImage1Base, (uint32_t)&loaderImage1Limit,
-                                    FMC_LDROM_BASE, FMC_LDROM_SIZE) != 0) {
+                                    FMC_LDROM_BASE, FMC_LDROM_SIZE) != 0)
+            {
                 printf("Load image to LDROM failed!\n");
                 goto lexit;            /* Load LDROM code failed. Program aborted. */
             }
@@ -267,7 +279,8 @@ int main()
         default :
             continue;                  /* invalid selection */
         }
-    } while (1);
+    }
+    while (1);
 
 
 lexit:                                 /* program exit */

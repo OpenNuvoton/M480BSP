@@ -209,7 +209,8 @@ void TMR0_IRQHandler(void)
 
     /* Reset the EADC interrupt indicator and trigger sample module 0 to start A/D conversion */
     EADC_START_CONV(EADC, 0x1);
-    for(i = 20; i>0; i--) {
+    for(i = 20; i>0; i--)
+    {
         ADCData[i+1] = ADCData[i];
     }
     ADCData[1] = ADCData[0];
@@ -217,8 +218,10 @@ void TMR0_IRQHandler(void)
 
     //report sensor
     report_sensors((int16_t)g_u32ADCValue_ch14);
-    if((ADCData[7] < ADCData[6]) && (ADCData[6] < ADCData[5])) {
-        if((ADCData[4] > ADCData[3]) && (ADCData[3] > ADCData[2])) {
+    if((ADCData[7] < ADCData[6]) && (ADCData[6] < ADCData[5]))
+    {
+        if((ADCData[4] > ADCData[3]) && (ADCData[3] > ADCData[2]))
+        {
             Time[4]=Time[3];
             Time[3]=Time[2];
             Time[2]=Time[1];
@@ -229,10 +232,12 @@ void TMR0_IRQHandler(void)
             HeartFreq[1] = Time[1] - Time[2];
             HeartFreq[0] = Time[0] - Time[1];
 
-            if(((HeartFreq[0]-3) > HeartFreq[1]) && ((HeartFreq[2]-3) > HeartFreq[1])) {
+            if(((HeartFreq[0]-3) > HeartFreq[1]) && ((HeartFreq[2]-3) > HeartFreq[1]))
+            {
                 HeartFreq1[0] = HeartFreq[0] + HeartFreq[1];
                 HeartFreq1[1] = (float)1200/(float)(HeartFreq1[0]);
-                if(HeartFreq1[1]<120 && HeartFreq1[1]>45) {
+                if(HeartFreq1[1]<120 && HeartFreq1[1]>45)
+                {
                     ShowCounter++;
                     if(ShowCounter<10)
                         HeartFreq1[2] = HeartFreq1[1];
@@ -240,10 +245,13 @@ void TMR0_IRQHandler(void)
                         HeartFreq1[2] = HeartFreq1[2]*9/10 + HeartFreq1[1]/10;
                 }
                 Flag = 1;
-            } else if(((HeartFreq[0]-3) < HeartFreq[1]) && ((HeartFreq[2]+3) > HeartFreq[1])) {
+            }
+            else if(((HeartFreq[0]-3) < HeartFreq[1]) && ((HeartFreq[2]+3) > HeartFreq[1]))
+            {
                 HeartFreq1[0] = HeartFreq[0];
                 HeartFreq1[1] = (float)1200/(float)(HeartFreq1[0]);
-                if(HeartFreq1[1]<120 && HeartFreq1[1]>45) {
+                if(HeartFreq1[1]<120 && HeartFreq1[1]>45)
+                {
                     ShowCounter++;
                     if(ShowCounter<10)
                         HeartFreq1[2] = HeartFreq1[1];
@@ -251,7 +259,9 @@ void TMR0_IRQHandler(void)
                         HeartFreq1[2] = HeartFreq1[2]*9/10 + HeartFreq1[1]/10;
                 }
                 Flag = 2;
-            } else {
+            }
+            else
+            {
                 Flag = 0;
             }
         }
@@ -281,11 +291,14 @@ void ADC00_IRQHandler(void)
 void CommandProcess()
 {
     // Read incoming control messages
-    if (Serial_available(UART0) >= 2) {
+    if (Serial_available(UART0) >= 2)
+    {
         char start=Serial_read(UART0);
-        if (start == '@') {// Start of new control message
+        if (start == '@')  // Start of new control message
+        {
             int command = Serial_read(UART0); // Commands
-            if (command == 'h') {//Hook AHRS Stack Device
+            if (command == 'h')  //Hook AHRS Stack Device
+            {
                 // Read ID
                 char id[2];
                 id[0] = getchar();
@@ -293,35 +306,53 @@ void CommandProcess()
                 // Reply with synch message
                 printf("@HOOK");
                 Serial_write(UART0, id, 2);
-            } else if (command == 'm') { // Set report 'm'ode
+            }
+            else if (command == 'm')     // Set report 'm'ode
+            {
                 char mode = getchar();
-                if (mode == 'r') {// Report sensor 'r'aw data
+                if (mode == 'r')  // Report sensor 'r'aw data
+                {
                     report_mode = REPORT_SENSORS_RAW;
                 }
-                if (mode == 's') {// Report Heart 'S'peed data
+                if (mode == 's')  // Report Heart 'S'peed data
+                {
                     report_mode = REPORT_HEART_SPEED;
                 }
-            } else if (command == 'f') { // Set report 'f'ormat
+            }
+            else if (command == 'f')     // Set report 'f'ormat
+            {
                 char format = getchar();
-                if (format == 'b') {// Report 'b'inary format
+                if (format == 'b')  // Report 'b'inary format
+                {
                     report_format = REPORT_FORMAT_BINARY;
-                } else if (format == 't') { // Report 't'ext format
+                }
+                else if (format == 't')     // Report 't'ext format
+                {
                     report_format = REPORT_FORMAT_TEXT;
                 }
-            } else if (command == 's') { // 's'tream output control
+            }
+            else if (command == 's')     // 's'tream output control
+            {
                 char mode = getchar();
-                if (mode == 's') {// 's'tart stream
+                if (mode == 's')  // 's'tart stream
+                {
                     stream_mode = STREAM_START;
-                } else if (mode == 'p') { // 'p'ause stream
+                }
+                else if (mode == 'p')     // 'p'ause stream
+                {
                     stream_mode = STREAM_PAUSE;
-                } else if (mode == 't') { // 't'oggle stream
+                }
+                else if (mode == 't')     // 't'oggle stream
+                {
                     if(stream_mode==STREAM_START)
                         stream_mode = STREAM_PAUSE;
                     else
                         stream_mode = STREAM_START;
                 }
             }
-        } else {
+        }
+        else
+        {
             printf("Unknown command.\n");
         } // Skip character
     }

@@ -205,7 +205,8 @@ int32_t main(void)
     printf("+----------------------------------------------------------------+\n");
     u8Item = getchar();
 
-    switch(u8Item) {
+    switch(u8Item)
+    {
     case '1':
         WakeUpPinFunction(CLK_PMUCTL_PDMSEL_DPD, CLK_DPDWKPIN_RISING);
         break;

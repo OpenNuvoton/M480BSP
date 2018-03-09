@@ -28,11 +28,13 @@ static uint32_t index = 0;
 
 void DAC_IRQHandler(void)
 {
-    if(DAC_GET_INT_FLAG(DAC0, 0)) {
+    if(DAC_GET_INT_FLAG(DAC0, 0))
+    {
 
         if(index == array_size)
             index = 0;
-        else {
+        else
+        {
             DAC_WRITE_DATA(DAC0, 0, sine[index++]);
 
             /* Clear the DAC conversion complete finish flag */

@@ -94,7 +94,8 @@ int main()
      *  Request FMC hardware to run CRC32 calculation on LDROM.
      */
     u32ChkSum = FMC_GetChkSum(FMC_LDROM_BASE, FMC_LDROM_SIZE);
-    if (u32ChkSum == 0xFFFFFFFF)  {
+    if (u32ChkSum == 0xFFFFFFFF)
+    {
         printf("Failed on calculating LDROM CRC32 checksum!\n");
         goto lexit;                    /* failed */
     }
@@ -106,7 +107,8 @@ int main()
      *  Request FMC hardware to run CRC32 calculation on SPROM.
      */
     u32ChkSum = FMC_GetChkSum(FMC_SPROM_BASE, FMC_SPROM_SIZE);
-    if (u32ChkSum == 0xFFFFFFFF)  {
+    if (u32ChkSum == 0xFFFFFFFF)
+    {
         printf("Failed on calculating SPROM CRC32 checksum!\n");
         goto lexit;
     }
@@ -119,7 +121,8 @@ int main()
      *  Note that FMC CRC32 checksum calculation area must not cross bank boundary.
      */
     u32ChkSum = FMC_GetChkSum(FMC_APROM_BASE, 0x40000);
-    if (u32ChkSum == 0xFFFFFFFF)  {
+    if (u32ChkSum == 0xFFFFFFFF)
+    {
         printf("Failed on calculating APROM bank0 CRC32 checksum!\n");
         goto lexit;
     }
@@ -130,7 +133,8 @@ int main()
      */
     printf("\nAPROM bank1 (0x40000 ~ 0x80000) CRC32 checksum =>  ");
     u32ChkSum = FMC_GetChkSum(FMC_APROM_BASE+0x40000, 0x40000);
-    if (u32ChkSum == 0xFFFFFFFF)  {
+    if (u32ChkSum == 0xFFFFFFFF)
+    {
         printf("Failed on calculating APROM bank1 CRC32 checksum!\n");
         goto lexit;
     }

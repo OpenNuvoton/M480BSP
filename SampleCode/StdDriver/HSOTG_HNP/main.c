@@ -41,7 +41,8 @@ void enable_sys_tick(int ticks_per_second)
 {
     g_tick_cnt = 0;
     SystemCoreClock = 12000000UL;
-    if (SysTick_Config(SystemCoreClock / ticks_per_second)) {
+    if (SysTick_Config(SystemCoreClock / ticks_per_second))
+    {
         /* Setup SysTick Timer for 1 second interrupts  */
         printf("Set system tick error!!\n");
         while (1);
@@ -73,18 +74,22 @@ void  connect_func(struct udev_t *udev, int param)
     printf("    Speed:    %s-speed\n", (udev->speed == SPEED_HIGH) ? "high" : ((udev->speed == SPEED_FULL) ? "full" : "low"));
     printf("    Location: ");
 
-    if (parent == NULL) {
+    if (parent == NULL)
+    {
         if (udev->port_num == 1)
             printf("USB 2.0 port\n");
         else
             printf("USB 1.1 port\n");
-    } else {
+    }
+    else
+    {
         if (parent->pos_id[0] == '1')
             printf("USB 2.0 port");
         else
             printf("USB 1.1 port");
 
-        for (i = 1; parent->pos_id[i] != 0; i++) {
+        for (i = 1; parent->pos_id[i] != 0; i++)
+        {
             printf(" => Hub port %c", parent->pos_id[i]);
         }
 
@@ -133,9 +138,11 @@ void  dump_buff_hex(uint8_t *pucBuff, int nBytes)
     int     nIdx, i;
 
     nIdx = 0;
-    while (nBytes > 0) {
+    while (nBytes > 0)
+    {
         printf("0x%04X  ", nIdx);
-        for (i = 0; (i < 16) && (nBytes > 0); i++) {
+        for (i = 0; (i < 16) && (nBytes > 0); i++)
+        {
             printf("%02x ", pucBuff[nIdx + i]);
             nBytes--;
         }
@@ -149,7 +156,8 @@ void  dump_buff_hex(uint8_t *pucBuff, int nBytes)
 int  is_a_new_hid_device(HID_DEV_T *hdev)
 {
     int    i;
-    for (i = 0; i < CONFIG_HID_MAX_DEV; i++) {
+    for (i = 0; i < CONFIG_HID_MAX_DEV; i++)
+    {
         if ((g_hid_list[i] != NULL) && (g_hid_list[i] == hdev) &&
                 (g_hid_list[i]->uid == hdev->uid))
             return 0;
@@ -161,7 +169,8 @@ void update_hid_device_list(HID_DEV_T *hdev)
 {
     int  i = 0;
     memset(g_hid_list, 0, sizeof(g_hid_list));
-    while ((i < CONFIG_HID_MAX_DEV) && (hdev != NULL)) {
+    while ((i < CONFIG_HID_MAX_DEV) && (hdev != NULL))
+    {
         g_hid_list[i++] = hdev;
         hdev = hdev->next;
     }
@@ -175,7 +184,8 @@ void  int_read_callback(HID_DEV_T *hdev, uint16_t ep_addr, int status, uint8_t *
      *  transfer failed and HID driver will stop this pipe. It can be caused by USB transfer error
      *  or device disconnected.
      */
-    if (status < 0) {
+    if (status < 0)
+    {
         printf("Interrupt in transfer failed! status: %d\n", status);
         return;
     }
@@ -198,7 +208,8 @@ int  init_hid_device(HID_DEV_T *hdev)
     printf("  VID: 0x%x, PID: 0x%x\n\n", hdev->idVendor, hdev->idProduct);
 
     ret = usbh_hid_get_report_descriptor(hdev, data_buff, 1024);
-    if (ret > 0) {
+    if (ret > 0)
+    {
         printf("\nDump report descriptor =>\n");
         dump_buff_hex(data_buff, ret);
     }
@@ -219,7 +230,8 @@ int  init_hid_device(HID_DEV_T *hdev)
      *  Example: GET_REPORT request on report ID 0x1, report type FEATURE.
      */
     ret = usbh_hid_get_report(hdev, RT_FEATURE, 0x1, data_buff, 64);
-    if (ret > 0) {
+    if (ret > 0)
+    {
         printf("[GET_REPORT] Data => ");
         for (i = 0; i < ret; i++)
             printf("%02x ", data_buff[i]);
@@ -317,52 +329,61 @@ void USBOTG20_IRQHandler(void)
     en = HSOTG->INTEN;
     reg = HSOTG->INTSTS;
 
-    if (reg & en & HSOTG_INTSTS_ROLECHGIF_Msk) {
+    if (reg & en & HSOTG_INTSTS_ROLECHGIF_Msk)
+    {
         printf("[Role Change]\n");
         HSOTG_CLR_INT_FLAG(HSOTG_INTSTS_ROLECHGIF_Msk);
     }
 
-    if (reg & en & HSOTG_INTSTS_GOIDLEIF_Msk) {
+    if (reg & en & HSOTG_INTSTS_GOIDLEIF_Msk)
+    {
         printf("[Go Idle] 0x%x\n", HSOTG->STATUS);
         HSOTG_CLR_INT_FLAG(HSOTG_INTSTS_GOIDLEIF_Msk);
         otg_role_change = 0;
     }
 
-    if (reg & en & HSOTG_INTSTS_IDCHGIF_Msk) {
+    if (reg & en & HSOTG_INTSTS_IDCHGIF_Msk)
+    {
         printf("[ID change 0x%x]\n", HSOTG->STATUS);
         HSOTG_CLR_INT_FLAG(HSOTG_INTSTS_IDCHGIF_Msk);
         if ((HSOTG->STATUS & HSOTG_STATUS_IDSTS_Msk) == 0)
             HSOTG->CTL |= HSOTG_CTL_BUSREQ_Msk;
     }
 
-    if (reg & en & HSOTG_INTSTS_VBEIF_Msk) {
+    if (reg & en & HSOTG_INTSTS_VBEIF_Msk)
+    {
         printf("[VBUS Err]\n");
         HSOTG_CLR_INT_FLAG(HSOTG_INTSTS_VBEIF_Msk);
     }
 
-    if (reg & en & HSOTG_INTSTS_SRPFIF_Msk) {
+    if (reg & en & HSOTG_INTSTS_SRPFIF_Msk)
+    {
         printf("[SRP Fail]\n");
         HSOTG_CLR_INT_FLAG(HSOTG_INTSTS_SRPFIF_Msk);
     }
 
-    if (reg & en & HSOTG_INTSTS_HNPFIF_Msk) {
+    if (reg & en & HSOTG_INTSTS_HNPFIF_Msk)
+    {
         printf("[HNP Fail]\n");
         HSOTG_CLR_INT_FLAG(HSOTG_INTSTS_HNPFIF_Msk);
         otg_role_change = 0;
     }
 
-    if (reg & en & HSOTG_INTSTS_SRPDETIF_Msk) {
+    if (reg & en & HSOTG_INTSTS_SRPDETIF_Msk)
+    {
         printf("[SRP Detect]\n");
         HSOTG_CLR_INT_FLAG(HSOTG_INTSTS_SRPDETIF_Msk);
         for (i=0; i<10000; i++);
         HSOTG->CTL |= HSOTG_CTL_BUSREQ_Msk;
     }
 
-    if (reg & en & HSOTG_INTSTS_HOSTIF_Msk) {
+    if (reg & en & HSOTG_INTSTS_HOSTIF_Msk)
+    {
         printf("[Act as Host]\n");
         HSOTG_DISABLE_INT(HSOTG_INTEN_HOSTIEN_Msk);
         HSOTG_CLR_INT_FLAG(HSOTG_INTSTS_HOSTIF_Msk);
-        if (HSOTG->STATUS & 0x80) {
+        if (HSOTG->STATUS & 0x80)
+        {
             if (otg_role_change == 3)
                 otg_role_change = 4;
             else
@@ -370,11 +391,13 @@ void USBOTG20_IRQHandler(void)
         }
     }
 
-    if (reg & en & HSOTG_INTSTS_PDEVIF_Msk) {
+    if (reg & en & HSOTG_INTSTS_PDEVIF_Msk)
+    {
         printf("[Act as Peripheral]\n");
         HSOTG_DISABLE_INT(HSOTG_INTEN_PDEVIEN_Msk);
         HSOTG_CLR_INT_FLAG(HSOTG_INTSTS_PDEVIF_Msk);
-        if (HSOTG->STATUS & 0x40) {
+        if (HSOTG->STATUS & 0x40)
+        {
             if (otg_role_change == 2)
                 otg_role_change = 4;
             else
@@ -412,9 +435,12 @@ int32_t main(void)
     usbh_hid_init();
     memset(g_hid_list, 0, sizeof(g_hid_list));
 
-    while (1) {
-        if(HSOTG_GET_STATUS(HSOTG_STATUS_IDSTS_Msk)) { /* B-device */
-            if(HSOTG_GET_STATUS(HSOTG_STATUS_BVLD_Msk)) { /* plug-in */
+    while (1)
+    {
+        if(HSOTG_GET_STATUS(HSOTG_STATUS_IDSTS_Msk))   /* B-device */
+        {
+            if(HSOTG_GET_STATUS(HSOTG_STATUS_BVLD_Msk))   /* plug-in */
+            {
                 printf("B-device\n");
                 /* wait role change to host */
                 HSOTG_ENABLE_INT(HSOTG_INTEN_HOSTIEN_Msk);
@@ -426,26 +452,34 @@ int32_t main(void)
                 HSUSBD_Start();
                 NVIC_EnableIRQ(USBD20_IRQn);
 
-                while(1) {
+                while(1)
+                {
                     HID_UpdateMouseData();
-                    if (otg_role_change) {
+                    if (otg_role_change)
+                    {
                         printf("Role change: B->A  %d\n", otg_role_change);
                         break;
                     }
                 }
             }
-        } else {
+        }
+        else
+        {
             printf("A-device\n");
             HSOTG_CLR_INT_FLAG(HSOTG_INTSTS_HOSTIF_Msk);
             HSOTG_ENABLE_INT(HSOTG_INTEN_PDEVIEN_Msk);
             HSOTG_ENABLE();
             usbh_pooling_hubs();
-            while (1) {
-                if (usbh_pooling_hubs()) {
+            while (1)
+            {
+                if (usbh_pooling_hubs())
+                {
                     hdev_list = usbh_hid_get_device_list();
                     hdev = hdev_list;
-                    while (hdev != NULL) {
-                        if (is_a_new_hid_device(hdev)) {
+                    while (hdev != NULL)
+                    {
+                        if (is_a_new_hid_device(hdev))
+                        {
                             init_hid_device(hdev);
                         }
                         hdev = hdev->next;
@@ -453,14 +487,16 @@ int32_t main(void)
                     update_hid_device_list(hdev_list);
                 }
 
-                if (intcount > 3) {
+                if (intcount > 3)
+                {
                     usbh_hid_stop_int_read(hdev, 0);
                     delay_us(2000);
                     intcount = 0;
                     gStartHNP = 1;
                 }
 
-                if (gStartHNP) {
+                if (gStartHNP)
+                {
                     printf("do HMP...\n");
                     /* do HNP */
                     OTG_SetFeature(0x3);
@@ -473,24 +509,30 @@ int32_t main(void)
                     printf("A suspend\n");
                 }
 
-                if (otg_role_change) {
+                if (otg_role_change)
+                {
                     printf("Role change: A->B  %d\n", otg_role_change);
                     break;
                 }
             }
         }
 
-        if (otg_role_change == 2) { /* b -> a */
+        if (otg_role_change == 2)   /* b -> a */
+        {
             HSOTG_CLR_INT_FLAG(HSOTG_INTSTS_HOSTIF_Msk|HSOTG_INTSTS_PDEVIF_Msk);
             HSOTG_ENABLE_INT(HSOTG_INTEN_PDEVIEN_Msk);
             HSOTG_ENABLE();
             gStartHNP = intcount = 0;
-            while (1) {
-                if (usbh_pooling_hubs()) {
+            while (1)
+            {
+                if (usbh_pooling_hubs())
+                {
                     hdev_list = usbh_hid_get_device_list();
                     hdev = hdev_list;
-                    while (hdev != NULL) {
-                        if (is_a_new_hid_device(hdev)) {
+                    while (hdev != NULL)
+                    {
+                        if (is_a_new_hid_device(hdev))
+                        {
                             init_hid_device(hdev);
                         }
                         hdev = hdev->next;
@@ -498,27 +540,31 @@ int32_t main(void)
                     update_hid_device_list(hdev_list);
                 }
 
-                if (intcount > 5) {
+                if (intcount > 5)
+                {
                     usbh_hid_stop_int_read(hdev, 0);
                     gStartHNP = 1;
                     intcount = 0;
                 }
 
-                if (gStartHNP) {
+                if (gStartHNP)
+                {
                     printf("\n\nwaiting...\n\n");
                     HSOTG->CTL &= ~HSOTG_CTL_BUSREQ_Msk;
                     gStartHNP = 0;
                     delay_us(5000);
                 }
 
-                if (otg_role_change == 4) {
+                if (otg_role_change == 4)
+                {
                     printf("Role change: A->B  %d\n", otg_role_change);
                     break;
                 }
             }
         }
 
-        if (otg_role_change == 3) { /* a -> b */
+        if (otg_role_change == 3)   /* a -> b */
+        {
             /* wait role change to host */
             HSOTG_CLR_INT_FLAG(HSOTG_INTSTS_HOSTIF_Msk|HSOTG_INTSTS_PDEVIF_Msk);
             HSOTG_ENABLE_INT(HSOTG_INTEN_HOSTIEN_Msk);
@@ -528,9 +574,11 @@ int32_t main(void)
             HSUSBD_Start();
             NVIC_EnableIRQ(USBD20_IRQn);
 
-            while(1) {
+            while(1)
+            {
                 HID_UpdateMouseData();
-                if (otg_role_change == 4) {
+                if (otg_role_change == 4)
+                {
                     printf("Role change: B->A  %d\n", otg_role_change);
                     break;
                 }

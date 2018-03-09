@@ -22,7 +22,8 @@
     Memory Mapped Structure for QEI Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

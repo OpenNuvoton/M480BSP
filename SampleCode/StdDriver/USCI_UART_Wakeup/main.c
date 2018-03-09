@@ -124,15 +124,18 @@ void USCI0_IRQHandler(void)
     uint32_t u32IntSts = UUART_GET_PROT_STATUS(UUART0);
     uint32_t u32WkSts = UUART_GET_WAKEUP_FLAG(UUART0);
 
-    if(u32WkSts & UUART_WKSTS_WKF_Msk) { /* USCI UART wake-up flag */
+    if(u32WkSts & UUART_WKSTS_WKF_Msk)   /* USCI UART wake-up flag */
+    {
         UUART_CLR_WAKEUP_FLAG(UUART0);
         printf("USCI UART wake-up.\n");
     }
 
-    if(u32IntSts & UUART_PROTSTS_RXENDIF_Msk) { /* USCI UART receive end interrupt flag */
+    if(u32IntSts & UUART_PROTSTS_RXENDIF_Msk)   /* USCI UART receive end interrupt flag */
+    {
         UUART_CLR_PROT_INT_FLAG(UUART0, UUART_PROTSTS_RXENDIF_Msk);
 
-        while( UUART_GET_RX_EMPTY(UUART0) == 0 ) {
+        while( UUART_GET_RX_EMPTY(UUART0) == 0 )
+        {
             printf("Data: 0x%X\n", UUART_READ(UUART0));
         }
     }
@@ -207,7 +210,8 @@ void USCI_UART_PowerDownWakeUpTest(void)
     USCI_UART_PowerDown_TestItem();
     u32Item = getchar();
     printf("%c\n\n", u32Item);
-    switch(u32Item) {
+    switch(u32Item)
+    {
     case '1':
         USCI_UART_CTSWakeUp();
         break;
@@ -224,7 +228,8 @@ void USCI_UART_PowerDownWakeUpTest(void)
     /* Lock protected registers after entering Power-down mode */
     SYS_LockReg();
 
-    if(u32Item == '2') {
+    if(u32Item == '2')
+    {
         // switch HCLK to PLL
         CLK_SetCoreClock(192000000);
         CLK->PCLKDIV = (CLK_PCLKDIV_PCLK0DIV2 | CLK_PCLKDIV_PCLK1DIV2);

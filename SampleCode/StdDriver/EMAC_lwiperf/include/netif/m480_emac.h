@@ -99,7 +99,8 @@
 
 // Tx/Rx buffer descriptor structure
 struct eth_descriptor;
-struct eth_descriptor {
+struct eth_descriptor
+{
     unsigned int  status1;
     unsigned char *buf;
     unsigned int  status2;

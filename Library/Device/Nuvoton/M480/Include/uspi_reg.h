@@ -22,7 +22,8 @@
     Memory Mapped Structure for USPI Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

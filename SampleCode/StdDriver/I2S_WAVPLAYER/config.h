@@ -20,7 +20,8 @@
 
 #define PCM_BUFFER_SIZE 4*1024
 
-typedef struct dma_desc_t {
+typedef struct dma_desc_t
+{
     uint32_t ctl;
     uint32_t endsrc;
     uint32_t enddest;

@@ -26,7 +26,8 @@ void USBOTG20_IRQHandler(void)
     u32INTEN = HSOTG->INTEN;
     u32INTSTS = HSOTG->INTSTS;
 
-    if(u32INTSTS & u32INTEN & HSOTG_INTSTS_IDCHGIF_Msk) {
+    if(u32INTSTS & u32INTEN & HSOTG_INTSTS_IDCHGIF_Msk)
+    {
         printf("[ID changed]\n");
         /* Check ID status */
         if(HSOTG_GET_STATUS(HSOTG_STATUS_IDSTS_Msk))
@@ -36,7 +37,8 @@ void USBOTG20_IRQHandler(void)
         HSOTG_CLR_INT_FLAG(HSOTG_INTSTS_IDCHGIF_Msk);
     }
 
-    if(u32INTSTS & u32INTEN & HSOTG_INTSTS_BVLDCHGIF_Msk) {
+    if(u32INTSTS & u32INTEN & HSOTG_INTSTS_BVLDCHGIF_Msk)
+    {
         printf("[B session valid (HSOTG_STATUS: 0x%x)]\n", HSOTG->STATUS);
         /* Check ID status */
         if(HSOTG_GET_STATUS(HSOTG_STATUS_IDSTS_Msk) == 0)
@@ -86,7 +88,8 @@ void SysTick_Handler(void)
 void enable_sys_tick(int ticks_per_second)
 {
     g_tick_cnt = 0;
-    if (SysTick_Config(SystemCoreClock / ticks_per_second)) {
+    if (SysTick_Config(SystemCoreClock / ticks_per_second))
+    {
         /* Setup SysTick Timer for 1 second interrupts  */
         printf("Set system tick error!!\n");
         while (1);
@@ -123,12 +126,14 @@ void  dump_buff_hex(uint8_t *pucBuff, int nBytes)
     int     nIdx, i;
 
     nIdx = 0;
-    while (nBytes > 0) {
+    while (nBytes > 0)
+    {
         printf("0x%04X  ", nIdx);
         for (i = 0; i < 16; i++)
             printf("%02x ", pucBuff[nIdx + i]);
         printf("  ");
-        for (i = 0; i < 16; i++) {
+        for (i = 0; i < 16; i++)
+        {
             if ((pucBuff[nIdx + i] >= 0x20) && (pucBuff[nIdx + i] < 127))
                 printf("%c", pucBuff[nIdx + i]);
             else
@@ -167,14 +172,17 @@ int xatoi (         /* 0:Failed, 1:Successful */
     *res = 0;
     while ((c = **str) == ' ') (*str)++;    /* Skip leading spaces */
 
-    if (c == '-') {     /* negative? */
+    if (c == '-')       /* negative? */
+    {
         s = 1;
         c = *(++(*str));
     }
 
-    if (c == '0') {
+    if (c == '0')
+    {
         c = *(++(*str));
-        switch (c) {
+        switch (c)
+        {
         case 'x':       /* hexadecimal */
             r = 16;
             c = *(++(*str));
@@ -188,16 +196,20 @@ int xatoi (         /* 0:Failed, 1:Successful */
             if (c < '0' || c > '9') return 0;   /* invalid char */
             r = 8;      /* octal */
         }
-    } else {
+    }
+    else
+    {
         if (c < '0' || c > '9') return 0;   /* EOL or invalid char */
         r = 10;         /* decimal */
     }
 
     val = 0;
-    while (c > ' ') {
+    while (c > ' ')
+    {
         if (c >= 'a') c -= 0x20;
         c -= '0';
-        if (c >= 17) {
+        if (c >= 17)
+        {
             c -= 7;
             if (c <= 9) return 0;   /* invalid char */
         }
@@ -248,23 +260,28 @@ static FRESULT scan_files (char* path)
     BYTE i;
     char *fn;
 
-    if ((res = f_opendir(&dirs, path)) == FR_OK) {
+    if ((res = f_opendir(&dirs, path)) == FR_OK)
+    {
         i = strlen(path);
-        while (((res = f_readdir(&dirs, &Finfo)) == FR_OK) && Finfo.fname[0]) {
+        while (((res = f_readdir(&dirs, &Finfo)) == FR_OK) && Finfo.fname[0])
+        {
             if (FF_FS_RPATH && Finfo.fname[0] == '.') continue;
 #if _USE_LFN
             fn = *Finfo.lfname ? Finfo.lfname : Finfo.fname;
 #else
             fn = Finfo.fname;
 #endif
-            if (Finfo.fattrib & AM_DIR) {
+            if (Finfo.fattrib & AM_DIR)
+            {
                 acc_dirs++;
                 *(path+i) = '/';
                 strcpy(path+i+1, fn);
                 res = scan_files(path);
                 *(path+i) = '\0';
                 if (res != FR_OK) break;
-            } else {
+            }
+            else
+            {
                 /*              printf("%s/%s\n", path, fn); */
                 acc_files++;
                 acc_size += Finfo.fsize;
@@ -284,7 +301,8 @@ void put_rc (FRESULT rc)
         _T("NOT_ENOUGH_CORE\0TOO_MANY_OPEN_FILES\0");
     //FRESULT i;
     uint32_t i;
-    for (i = 0; (i != (UINT)rc) && *p; i++) {
+    for (i = 0; (i != (UINT)rc) && *p; i++)
+    {
         while(*p++) ;
     }
     printf(_T("rc=%d FR_%s\n"), (UINT)rc, p);
@@ -299,7 +317,8 @@ void get_line (char *buff, int len)
     TCHAR c;
     int idx = 0;
 
-    for (;;) {
+    for (;;)
+    {
         c = getchar();
         putchar(c);
         if (c == '\r') break;
@@ -416,9 +435,11 @@ void USBH_Process()
     usbh_pooling_hubs();
     f_chdrive(usb_path);          /* set default path */
 
-    for (;;) {
+    for (;;)
+    {
 
-        if(!bIsAdevice) {
+        if(!bIsAdevice)
+        {
             printf("break-A (HSOTG_STATUS: 0x%x)\n", HSOTG->STATUS);
             return;
         }
@@ -430,7 +451,8 @@ void USBH_Process()
 
         get_line(ptr, sizeof(Line));
 
-        switch (*ptr++) {
+        switch (*ptr++)
+        {
 
         case '4' :
         case '5' :
@@ -445,7 +467,8 @@ void USBH_Process()
         case 'd' :     /* d [<lba>] - Dump sector */
             if (!xatoi(&ptr, &p2)) p2 = sect;
             res = (FRESULT)disk_read(3, Buff1, p2, 1);
-            if (res) {
+            if (res)
+            {
                 printf("rc=%d\n", (WORD)res);
                 break;
             }
@@ -456,7 +479,8 @@ void USBH_Process()
             break;
 
         case 'b' :
-            switch (*ptr++) {
+            switch (*ptr++)
+            {
             case 'd' :  /* bd <addr> - Dump R/W buffer */
                 if (!xatoi(&ptr, &p1)) break;
                 for (ptr=(char*)&Buff1[p1], ofs = p1, cnt = 32; cnt; cnt--, ptr+=16, ofs+=16)
@@ -465,18 +489,23 @@ void USBH_Process()
 
             case 'e' :  /* be <addr> [<data>] ... - Edit R/W buffer */
                 if (!xatoi(&ptr, &p1)) break;
-                if (xatoi(&ptr, &p2)) {
-                    do {
+                if (xatoi(&ptr, &p2))
+                {
+                    do
+                    {
                         Buff1[p1++] = (BYTE)p2;
-                    } while (xatoi(&ptr, &p2));
+                    }
+                    while (xatoi(&ptr, &p2));
                     break;
                 }
-                for (;;) {
+                for (;;)
+                {
                     printf("%04X %02X-", (WORD)p1, Buff1[p1]);
                     get_line(Line, sizeof(Line));
                     ptr = Line;
                     if (*ptr == '.') break;
-                    if (*ptr < ' ') {
+                    if (*ptr < ' ')
+                    {
                         p1++;
                         continue;
                     }
@@ -508,11 +537,13 @@ void USBH_Process()
             break;
 
         case 'f' :
-            switch (*ptr++) {
+            switch (*ptr++)
+            {
 
             case 's' :  /* fs - Show logical drive status */
                 res = f_getfree("", (DWORD*)&p2, &fs);
-                if (res) {
+                if (res)
+                {
                     put_rc(res);
                     break;
                 }
@@ -529,7 +560,8 @@ void USBH_Process()
                 Finfo.lfsize = sizeof(Lfname);
 #endif
                 res = scan_files(ptr);
-                if (res) {
+                if (res)
+                {
                     put_rc(res);
                     break;
                 }
@@ -542,17 +574,22 @@ void USBH_Process()
             case 'l' :  /* fl [<path>] - Directory listing */
                 while (*ptr == ' ') ptr++;
                 res = f_opendir(&dir, ptr);
-                if (res) {
+                if (res)
+                {
                     put_rc(res);
                     break;
                 }
                 p1 = s1 = s2 = 0;
-                for(;;) {
+                for(;;)
+                {
                     res = f_readdir(&dir, &Finfo);
                     if ((res != FR_OK) || !Finfo.fname[0]) break;
-                    if (Finfo.fattrib & AM_DIR) {
+                    if (Finfo.fattrib & AM_DIR)
+                    {
                         s2++;
-                    } else {
+                    }
+                    else
+                    {
                         s1++;
                         p1 += Finfo.fsize;
                     }
@@ -599,16 +636,21 @@ void USBH_Process()
             case 'd' :  /* fd <len> - read and dump file from current fp */
                 if (!xatoi(&ptr, &p1)) break;
                 ofs = file1.fptr;
-                while (p1) {
-                    if ((UINT)p1 >= 16) {
+                while (p1)
+                {
+                    if ((UINT)p1 >= 16)
+                    {
                         cnt = 16;
                         p1 -= 16;
-                    } else                {
+                    }
+                    else
+                    {
                         cnt = p1;
                         p1 = 0;
                     }
                     res = f_read(&file1, Buff1, cnt, &cnt);
-                    if (res != FR_OK) {
+                    if (res != FR_OK)
+                    {
                         put_rc(res);
                         break;
                     }
@@ -622,16 +664,21 @@ void USBH_Process()
                 if (!xatoi(&ptr, &p1)) break;
                 p2 = 0;
                 t0 = get_ticks();
-                while (p1) {
-                    if ((UINT)p1 >= blen) {
+                while (p1)
+                {
+                    if ((UINT)p1 >= blen)
+                    {
                         cnt = blen;
                         p1 -= blen;
-                    } else {
+                    }
+                    else
+                    {
                         cnt = p1;
                         p1 = 0;
                     }
                     res = f_read(&file1, Buff1, cnt, &s2);
-                    if (res != FR_OK) {
+                    if (res != FR_OK)
+                    {
                         put_rc(res);
                         break;
                     }
@@ -648,16 +695,21 @@ void USBH_Process()
                 memset(Buff1, (BYTE)p2, blen);
                 p2 = 0;
                 t0 = get_ticks();
-                while (p1) {
-                    if ((UINT)p1 >= blen) {
+                while (p1)
+                {
+                    if ((UINT)p1 >= blen)
+                    {
                         cnt = blen;
                         p1 -= blen;
-                    } else {
+                    }
+                    else
+                    {
                         cnt = p1;
                         p1 = 0;
                     }
                     res = f_write(&file1, Buff1, cnt, &s2);
-                    if (res != FR_OK) {
+                    if (res != FR_OK)
+                    {
                         put_rc(res);
                         break;
                     }
@@ -715,21 +767,24 @@ void USBH_Process()
                 printf("Opening \"%s\"", ptr);
                 res = f_open(&file1, ptr, FA_OPEN_EXISTING | FA_READ);
                 printf("\n");
-                if (res) {
+                if (res)
+                {
                     put_rc(res);
                     break;
                 }
                 printf("Creating \"%s\"", ptr2);
                 res = f_open(&file2, ptr2, FA_CREATE_ALWAYS | FA_WRITE);
                 putchar('\n');
-                if (res) {
+                if (res)
+                {
                     put_rc(res);
                     f_close(&file1);
                     break;
                 }
                 printf("Copying...");
                 p1 = 0;
-                for (;;) {
+                for (;;)
+                {
                     res = f_read(&file1, Buff1, BUFF_SIZE, &s1);
                     if (res || s1 == 0) break;   /* error or eof */
                     res = f_write(&file2, Buff1, s1, &s2);
@@ -750,29 +805,34 @@ void USBH_Process()
                 printf("Opening \"%s\"", ptr);
                 res = f_open(&file1, ptr, FA_OPEN_EXISTING | FA_READ);
                 printf("\n");
-                if (res) {
+                if (res)
+                {
                     put_rc(res);
                     break;
                 }
                 printf("Opening \"%s\"", ptr2);
                 res = f_open(&file2, ptr2, FA_OPEN_EXISTING | FA_READ);
                 putchar('\n');
-                if (res) {
+                if (res)
+                {
                     put_rc(res);
                     f_close(&file1);
                     break;
                 }
                 printf("Compare...");
                 p1 = 0;
-                for (;;) {
+                for (;;)
+                {
                     res = f_read(&file1, Buff1, BUFF_SIZE, &s1);
-                    if (res || s1 == 0) {
+                    if (res || s1 == 0)
+                    {
                         printf("\nRead file %s terminated. (%d)\n", ptr, res);
                         break;     /* error or eof */
                     }
 
                     res = f_read(&file2, Buff2, BUFF_SIZE, &s2);
-                    if (res || s2 == 0) {
+                    if (res || s2 == 0)
+                    {
                         printf("\nRead file %s terminated. (%d)\n", ptr2, res);
                         break;     /* error or eof */
                     }
@@ -780,7 +840,8 @@ void USBH_Process()
                     p1 += s2;
                     if (res || s2 < s1) break;   /* error or disk full */
 
-                    if (memcmp(Buff1, Buff2, s1) != 0) {
+                    if (memcmp(Buff1, Buff2, s1) != 0)
+                    {
                         printf("Compare failed!!\n");
                         break;
                     }
@@ -894,15 +955,20 @@ int32_t main(void)
     NVIC_EnableIRQ(USBD20_IRQn);
     usbh_core_init();
     usbh_umas_init();
-    while(1) {
-        if(HSOTG_GET_STATUS(HSOTG_STATUS_IDSTS_Msk)) { /* B-device */
-            if(HSOTG_GET_STATUS(HSOTG_STATUS_BVLD_Msk)) { /* plug-in */
+    while(1)
+    {
+        if(HSOTG_GET_STATUS(HSOTG_STATUS_IDSTS_Msk))   /* B-device */
+        {
+            if(HSOTG_GET_STATUS(HSOTG_STATUS_BVLD_Msk))   /* plug-in */
+            {
                 bIsBdevice = 1;
                 printf("B-device (HSOTG_STATUS: 0x%x)\n", HSOTG->STATUS);
 
                 /* Start transaction */
-                while(1) {
-                    if (HSUSBD_IS_ATTACHED()) {
+                while(1)
+                {
+                    if (HSUSBD_IS_ATTACHED())
+                    {
                         HSUSBD_Start();
                         break;
                     }
@@ -915,7 +981,8 @@ int32_t main(void)
                 /* Enable B-device session valid state change interrupt */
                 HSOTG_ENABLE_INT(HSOTG_INTEN_BVLDCHGIEN_Msk);
 
-                while(1) {
+                while(1)
+                {
                     if(HSOTG_GET_STATUS(HSOTG_STATUS_BVLD_Msk) == 0)
                         break;
                     if (g_u8MscStart)
@@ -927,7 +994,9 @@ int32_t main(void)
                 HSOTG_CLR_INT_FLAG(HSOTG_INTSTS_BVLDCHGIF_Msk);
                 printf("break-B (HSOTG_STATUS: 0x%x)\n", HSOTG->STATUS);
             }
-        } else { /* A-device */
+        }
+        else     /* A-device */
+        {
             bIsAdevice = 1;
             printf("A-device (HSOTG_STATUS: 0x%x)\n", HSOTG->STATUS);
             /* Clear ID status changed interrupt flag */

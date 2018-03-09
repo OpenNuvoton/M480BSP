@@ -22,7 +22,8 @@
     Memory Mapped Structure for WDT Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

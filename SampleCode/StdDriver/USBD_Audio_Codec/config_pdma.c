@@ -28,11 +28,15 @@ void PDMA_IRQHandler(void)
 {
     uint32_t u32Status = PDMA_GET_INT_STATUS(PDMA);
 
-    if (u32Status & 0x1) { /* abort */
+    if (u32Status & 0x1)   /* abort */
+    {
         if (PDMA_GET_ABORT_STS(PDMA) & 0x4)
             PDMA_CLR_ABORT_FLAG(PDMA,PDMA_ABTSTS_ABTIF2_Msk);
-    } else if (u32Status & 0x2) {
-        if (PDMA_GET_TD_STS(PDMA) & 0x2) {          /* channel 1 done, Tx */
+    }
+    else if (u32Status & 0x2)
+    {
+        if (PDMA_GET_TD_STS(PDMA) & 0x2)            /* channel 1 done, Tx */
+        {
             PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF1_Msk);
 
             /* Decrease number of full buffer */
@@ -42,7 +46,8 @@ void PDMA_IRQHandler(void)
             if(u8PDMATxIdx >= PDMA_TXBUFFER_CNT)
                 u8PDMATxIdx = 0;
         }
-        if (PDMA_GET_TD_STS(PDMA) & 0x4) {          /* channel 2 done, Rx */
+        if (PDMA_GET_TD_STS(PDMA) & 0x4)            /* channel 2 done, Rx */
+        {
 
             PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF2_Msk);
 
@@ -87,7 +92,8 @@ void PDMA_WriteTxSGTable(void)
     uint16_t i;
 
     /* Use PDMA_TXBUFFER_CNT scatter-gather tables and link with each other */
-    for(i=0; i<PDMA_TXBUFFER_CNT; i++) {
+    for(i=0; i<PDMA_TXBUFFER_CNT; i++)
+    {
         DMA_TXDESC[i].ctl = ((u32BuffLen-1)<<PDMA_DSCT_CTL_TXCNT_Pos)|PDMA_WIDTH_32|PDMA_SAR_INC|PDMA_DAR_FIX|PDMA_REQ_SINGLE|PDMA_OP_SCATTER;
         DMA_TXDESC[i].src = (uint32_t)&PcmPlayBuff[i];
         DMA_TXDESC[i].dest = (uint32_t)&I2S0->TXFIFO;
@@ -105,7 +111,8 @@ void PDMA_WriteRxSGTable(void)
     uint16_t i;
 
     /* Use PDMA_RXBUFFER_CNT scatter-gather tables and link with each other */
-    for(i=0; i<PDMA_RXBUFFER_CNT; i++) {
+    for(i=0; i<PDMA_RXBUFFER_CNT; i++)
+    {
         DMA_RXDESC[i].ctl = (((u32RxBuffLen/4)-1)<<PDMA_DSCT_CTL_TXCNT_Pos)|PDMA_WIDTH_32|PDMA_SAR_FIX|PDMA_DAR_INC|PDMA_REQ_SINGLE|PDMA_OP_SCATTER;
         DMA_RXDESC[i].src = (uint32_t)&I2S0->RXFIFO;
         DMA_RXDESC[i].dest = (uint32_t)&PcmRecBuff[i];

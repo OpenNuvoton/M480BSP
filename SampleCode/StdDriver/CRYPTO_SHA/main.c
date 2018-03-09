@@ -27,7 +27,8 @@ static volatile int g_SHA_done;
 
 void CRYPTO_IRQHandler()
 {
-    if (SHA_GET_INT_FLAG(CRPT)) {
+    if (SHA_GET_INT_FLAG(CRPT))
+    {
         g_SHA_done = 1;
         SHA_CLR_INT_FLAG(CRPT);
     }
@@ -38,7 +39,8 @@ int  do_compare(uint8_t *output, uint8_t *expect, int cmp_len)
 {
     int   i;
 
-    if (memcmp(expect, output, cmp_len)) {
+    if (memcmp(expect, output, cmp_len))
+    {
         printf("\nMismatch!! - %d\n", cmp_len);
         for (i = 0; i < cmp_len; i++)
             printf("0x%02x    0x%02x\n", expect[i], output[i]);
@@ -67,7 +69,8 @@ int  run_sha()
     /*--------------------------------------------*/
     /*  Compare                                   */
     /*--------------------------------------------*/
-    if (do_compare((uint8_t *)&au32OutputDigest[0], &_au8ShaDigest[0], _i32DigestLength) < 0) {
+    if (do_compare((uint8_t *)&au32OutputDigest[0], &_au8ShaDigest[0], _i32DigestLength) < 0)
+    {
         printf("Compare error!\n");
         while (1);
     }
@@ -142,7 +145,8 @@ int main(void)
 
     open_test_vector();
 
-    while (1) {
+    while (1)
+    {
         if (get_next_pattern() < 0)
             break;
 

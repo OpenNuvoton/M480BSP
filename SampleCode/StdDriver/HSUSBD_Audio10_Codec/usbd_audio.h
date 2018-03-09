@@ -101,7 +101,8 @@
 #define PDMA_I2S_RX_CH  2
 
 /* For I2C transfer */
-typedef enum {
+typedef enum
+{
     E_RS_NONE,          // no re-sampling
     E_RS_UP,            // up sampling
     E_RS_DOWN           // down sampling
@@ -140,7 +141,8 @@ void NAU88L25_Setup(void);
 void NAU88L25_ConfigSampleRate(uint32_t u32SampleRate);
 #endif
 
-typedef struct dma_desc_t {
+typedef struct dma_desc_t
+{
     uint32_t ctl;
     uint32_t src;
     uint32_t dest;

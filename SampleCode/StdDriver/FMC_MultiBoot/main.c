@@ -118,7 +118,8 @@ int32_t main(void)
     printf("[Others] Boot, base = 0x0\n");
 
     ch = getchar();
-    switch(ch) {
+    switch(ch)
+    {
     case '0':
         FMC_SetVectorPageAddr(0x4000);
         break;

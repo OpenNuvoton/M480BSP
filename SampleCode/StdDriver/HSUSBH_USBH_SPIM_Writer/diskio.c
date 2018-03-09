@@ -70,10 +70,10 @@ DRESULT disk_read (
     ret = usbh_umas_read(pdrv, sector, count, buff);
     if (ret != UMAS_OK)
     {
-    	usbh_umas_reset_disk(pdrv);
-    	ret = usbh_umas_read(pdrv, sector, count, buff);
-	}
-	
+        usbh_umas_reset_disk(pdrv);
+        ret = usbh_umas_read(pdrv, sector, count, buff);
+    }
+
     if (ret == UMAS_OK)
         return RES_OK;
 
@@ -107,9 +107,9 @@ DRESULT disk_write (
     ret = usbh_umas_write(pdrv, sector, count, (uint8_t *)buff);
     if (ret != UMAS_OK)
     {
-    	usbh_umas_reset_disk(pdrv);
-    	ret = usbh_umas_write(pdrv, sector, count, (uint8_t *)buff);
-	}
+        usbh_umas_reset_disk(pdrv);
+        ret = usbh_umas_write(pdrv, sector, count, (uint8_t *)buff);
+    }
 
     if (ret == UMAS_OK)
         return RES_OK;

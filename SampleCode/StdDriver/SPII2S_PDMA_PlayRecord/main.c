@@ -19,7 +19,8 @@
 /*---------------------------------------------------------------------------------------------------------*/
 #define BUFF_LEN 4
 
-typedef struct {
+typedef struct
+{
     uint32_t CTL;
     uint32_t SA;
     uint32_t DA;
@@ -93,7 +94,8 @@ int32_t main(void)
 
     /* Data initiation */
     u32InitValue = 0x50005000;
-    for(u32DataCount = 0; u32DataCount < BUFF_LEN; u32DataCount++) {
+    for(u32DataCount = 0; u32DataCount < BUFF_LEN; u32DataCount++)
+    {
         PcmTxBuff[0][u32DataCount] = u32InitValue;
         PcmTxBuff[1][u32DataCount] = u32InitValue + 0x50005000;
         u32InitValue += 0x00010001;
@@ -146,8 +148,10 @@ int32_t main(void)
 
     /* Print the transmitted data */
     printf("\nTX Buffer 1\tTX Buffer 2\n");
-    while(u32PlayReady) {
-        for(u32DataCount = 0; u32DataCount < BUFF_LEN; u32DataCount++) {
+    while(u32PlayReady)
+    {
+        for(u32DataCount = 0; u32DataCount < BUFF_LEN; u32DataCount++)
+        {
             printf("0x%X\t0x%X\n", PcmTxBuff[0][u32DataCount], PcmTxBuff[1][u32DataCount]);
         }
         u32PlayReady = 0;
@@ -155,8 +159,10 @@ int32_t main(void)
 
     /* Print the received data */
     printf("\nRX Buffer 1\tRX Buffer 2\n");
-    while(u32RecReady) {
-        for(u32DataCount = 0; u32DataCount < BUFF_LEN; u32DataCount++) {
+    while(u32RecReady)
+    {
+        for(u32DataCount = 0; u32DataCount < BUFF_LEN; u32DataCount++)
+        {
             printf("0x%X\t0x%X\n", PcmRxBuff[0][u32DataCount], PcmRxBuff[1][u32DataCount]);
         }
         u32RecReady = 0;
@@ -217,26 +223,32 @@ void PDMA_IRQHandler(void)
 {
     uint32_t u32Status = PDMA_GET_INT_STATUS(PDMA);
 
-    if (u32Status & 0x1) { /* abort */
+    if (u32Status & 0x1)   /* abort */
+    {
         if (PDMA_GET_ABORT_STS(PDMA) & 0x4)
             PDMA_CLR_ABORT_FLAG(PDMA,PDMA_ABTSTS_ABTIF1_Msk);
         PDMA_CLR_ABORT_FLAG(PDMA,PDMA_ABTSTS_ABTIF2_Msk);
-    } else if (u32Status & 0x2) {
-        if (PDMA_GET_TD_STS(PDMA) & 0x2) {          /* channel 1 done */
+    }
+    else if (u32Status & 0x2)
+    {
+        if (PDMA_GET_TD_STS(PDMA) & 0x2)            /* channel 1 done */
+        {
             /* Reset PDMA Scatter-Gather table */
             PDMA_ResetTxSGTable(u8TxIdx);
             u8TxIdx ^= 1;
             u32PlayReady = 1;
         }
         PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF1_Msk);
-        if (PDMA_GET_TD_STS(PDMA) & 0x4) {          /* channel 2 done */
+        if (PDMA_GET_TD_STS(PDMA) & 0x4)            /* channel 2 done */
+        {
             /* Reset PDMA Scatter-Gather table */
             PDMA_ResetRxSGTable(u8RxIdx);
             u8RxIdx ^= 1;
             u32RecReady = 1;
         }
         PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF2_Msk);
-    } else
+    }
+    else
         printf("unknown interrupt, status=0x%x!!\n", u32Status);
 }
 

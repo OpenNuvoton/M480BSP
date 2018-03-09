@@ -192,10 +192,13 @@ int main(void)
     /* Step 1, check ID */
     NOR_MX29LV320T_GET_ID(EBI_BANK1, (uint16_t *)u16IDTable);
     printf(">> Manufacture ID: 0x%X, Device ID: 0x%X .... ", u16IDTable[0], u16IDTable[1]);
-    if((u16IDTable[0] != 0xC2) || (u16IDTable[1] != 0x22A8)) {
+    if((u16IDTable[0] != 0xC2) || (u16IDTable[1] != 0x22A8))
+    {
         printf("FAIL !!!\n\n");
         while(1);
-    } else {
+    }
+    else
+    {
         printf("PASS !!!\n\n");
     }
 
@@ -208,25 +211,33 @@ int main(void)
     /* Step 3, program flash and compare data */
     printf(">> Run program flash test ......\n");
     u32MaxEBISize = EBI_MAX_SIZE;
-    for(u32Addr = 0; u32Addr < u32MaxEBISize; u32Addr += 2) {
+    for(u32Addr = 0; u32Addr < u32MaxEBISize; u32Addr += 2)
+    {
         u16WData = (0x7657 + u32Addr / 2) & 0xFFFF;
-        if(NOR_MX29LV320T_WRITE(EBI_BANK1, u32Addr, u16WData) < 0) {
+        if(NOR_MX29LV320T_WRITE(EBI_BANK1, u32Addr, u16WData) < 0)
+        {
             printf("Program [0x%08X]: [0x%08X] FAIL !!!\n\n", (uint32_t)EBI_BANK0_BASE_ADDR + (0x100000 * EBI_BANK1) + u32Addr, u16WData);
             while(1);
-        } else {
+        }
+        else
+        {
             /* Show UART message ...... */
             if((u32Addr % 256) == 0)
                 printf("Program [0x%08X]:[0x%08X] !!!       \r", (uint32_t)EBI_BANK0_BASE_ADDR + (0x100000 * EBI_BANK1) + u32Addr, u16WData);
         }
     }
 
-    for(u32Addr = 0; u32Addr < u32MaxEBISize; u32Addr += 2) {
+    for(u32Addr = 0; u32Addr < u32MaxEBISize; u32Addr += 2)
+    {
         u16WData = (0x7657 + u32Addr / 2) & 0xFFFF;
         u16RData = NOR_MX29LV320T_READ(EBI_BANK1, u32Addr);
-        if(u16WData != u16RData) {
+        if(u16WData != u16RData)
+        {
             printf("Compare [0x%08X] FAIL !!! (W:0x%08X, R:0x%08X)\n\n", (uint32_t)EBI_BANK0_BASE_ADDR + (0x100000 * EBI_BANK1) + u32Addr, u16WData, u16RData);
             while(1);
-        } else {
+        }
+        else
+        {
             /* Show UART message ...... */
             if((u32Addr % 256) == 0)
                 printf("Read [0x%08X]: [0x%08X] !!!         \r", (uint32_t)EBI_BANK0_BASE_ADDR + (0x100000 * EBI_BANK1) + u32Addr, u16RData);

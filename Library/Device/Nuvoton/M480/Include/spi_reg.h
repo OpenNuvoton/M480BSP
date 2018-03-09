@@ -22,7 +22,8 @@
     Memory Mapped Structure for SPI Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

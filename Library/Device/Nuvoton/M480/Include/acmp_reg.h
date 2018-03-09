@@ -22,7 +22,8 @@
     Memory Mapped Structure for ACMP Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

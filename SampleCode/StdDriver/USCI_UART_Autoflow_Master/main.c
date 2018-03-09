@@ -135,7 +135,8 @@ void USCI_AutoFlow_FunctionTxTest()
     UUART_EnableFlowCtrl(UUART0);
 
     /* Send 1k bytes data */
-    for(u32i = 0; u32i < RXBUFSIZE; u32i++) {
+    for(u32i = 0; u32i < RXBUFSIZE; u32i++)
+    {
         /* Send 1 byte data */
         UUART_WRITE(UUART0, (u32i&0xFF));
 

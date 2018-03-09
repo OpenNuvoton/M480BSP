@@ -51,7 +51,7 @@ void SYS_Init(void)
     CLK_EnableModuleClock(PDMA_MODULE);
 
     /* Set PB.12 and PB.13 to input mode */
-    PB->MODE &= ~(GPIO_MODE_MODE12_Msk | GPIO_MODE_MODE13_Msk); 
+    PB->MODE &= ~(GPIO_MODE_MODE12_Msk | GPIO_MODE_MODE13_Msk);
     /* Set PB multi-function pins for DAC voltage output */
     SYS->GPB_MFPL |= SYS_GPB_MFPH_PB12MFP_DAC0_OUT | SYS_GPB_MFPH_PB13MFP_DAC1_OUT;
 
@@ -104,8 +104,10 @@ int32_t main(void)
     TIMER_SetTriggerTarget(TIMER0, TIMER_TRG_TO_DAC);
     TIMER_Start(TIMER0);
 
-    while(1) {
-        if (PDMA_GET_TD_STS(PDMA) == 0x1) {
+    while(1)
+    {
+        if (PDMA_GET_TD_STS(PDMA) == 0x1)
+        {
             /* Re-Set transfer count and basic operation mode */
             PDMA_SetTransferCnt(PDMA,0, PDMA_WIDTH_16, array_size);
             PDMA_SetTransferMode(PDMA,0, PDMA_DAC0_TX, FALSE, 0);

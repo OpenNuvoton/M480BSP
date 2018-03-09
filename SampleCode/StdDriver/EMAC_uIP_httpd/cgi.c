@@ -63,7 +63,8 @@ static u8_t print_stats(u8_t next);
 static u8_t file_stats(u8_t next);
 static u8_t tcp_stats(u8_t next);
 
-cgifunction cgitab[] = {
+cgifunction cgitab[] =
+{
     print_stats,   /* CGI function "a" */
     file_stats,    /* CGI function "b" */
     tcp_stats      /* CGI function "c" */
@@ -112,7 +113,8 @@ static const char last_ack[] = /*  "LAST-ACK"*/
     0x4b, 0
 };
 
-static const char *states[] = {
+static const char *states[] =
+{
     closed,
     syn_rcvd,
     syn_sent,
@@ -140,11 +142,13 @@ print_stats(u8_t next)
     u8_t *buf;
     u16_t *databytes;
 
-    if(next) {
+    if(next)
+    {
         /* If our last data has been acknowledged, we move on the next
            chunk of statistics. */
         hs->count = hs->count + 4;
-        if(hs->count >= sizeof(struct uip_stats)/sizeof(u16_t)) {
+        if(hs->count >= sizeof(struct uip_stats)/sizeof(u16_t))
+        {
             /* We have printed out all statistics, so we return 1 to
             indicate that we are done. */
             return 1;
@@ -157,7 +161,8 @@ print_stats(u8_t next)
 
     j = 4 + 1;
     i = hs->count;
-    while (i < sizeof(struct uip_stats)/sizeof(u16_t) && --j > 0) {
+    while (i < sizeof(struct uip_stats)/sizeof(u16_t) && --j > 0)
+    {
         sprintf((char *)buf, "%5u\r\n", *databytes);
         ++databytes;
         buf += 6;
@@ -179,7 +184,8 @@ file_stats(u8_t next)
     /* We use sprintf() to print the number of file accesses to a
        particular file (given as an argument to the function in the
        script). We then use uip_send() to actually send the data. */
-    if(next) {
+    if(next)
+    {
         return 1;
     }
     uip_send(uip_appdata, sprintf((char *)uip_appdata, "%5u", fs_count(&hs->script[4])));
@@ -191,10 +197,12 @@ tcp_stats(u8_t next)
 {
     struct uip_conn *conn;
 
-    if(next) {
+    if(next)
+    {
         /* If the previously sent data has been acknowledged, we move
            forward one connection. */
-        if(++hs->count == UIP_CONNS) {
+        if(++hs->count == UIP_CONNS)
+        {
             /* If all connections has been printed out, we are done and
             return 1. */
             return 1;
@@ -202,14 +210,17 @@ tcp_stats(u8_t next)
     }
 
     conn = &uip_conns[hs->count];
-    if((conn->tcpstateflags & TS_MASK) == CLOSED) {
+    if((conn->tcpstateflags & TS_MASK) == CLOSED)
+    {
         uip_send(uip_appdata, sprintf((char *)uip_appdata,
                                       "<tr align=\"center\"><td>-</td><td>-</td><td>%u</td><td>%u</td><td>%c %c</td></tr>\r\n",
                                       conn->nrtx,
                                       conn->timer,
                                       (uip_outstanding(conn))? '*':' ',
                                       (uip_stopped(conn))? '!':' '));
-    } else {
+    }
+    else
+    {
         uip_send(uip_appdata, sprintf((char *)uip_appdata,
                                       "<tr align=\"center\"><td>%u.%u.%u.%u:%u</td><td>%s</td><td>%u</td><td>%u</td><td>%c %c</td></tr>\r\n",
                                       htons(conn->ripaddr[0]) >> 8,

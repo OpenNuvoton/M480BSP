@@ -53,7 +53,8 @@ void SysTick_Handler(void)
 void enable_sys_tick(int ticks_per_second)
 {
     g_tick_cnt = 0;
-    if (SysTick_Config(SystemCoreClock / ticks_per_second)) {
+    if (SysTick_Config(SystemCoreClock / ticks_per_second))
+    {
         /* Setup SysTick Timer for 1 second interrupts  */
         printf("Set system tick error!!\n");
         while (1);
@@ -199,7 +200,8 @@ void get_line (char *buff, int len)
     char    c;
     int     idx = 0;
 
-    for (;;) {
+    for (;;)
+    {
         c = getchar();
         putchar(c);
         if (c == '\r') break;
@@ -236,7 +238,8 @@ void put_rc (FRESULT rc)
         _T("NOT_ENOUGH_CORE\0TOO_MANY_OPEN_FILES\0");
     //FRESULT i;
     uint32_t i;
-    for (i = 0; (i != (UINT)rc) && *p; i++) {
+    for (i = 0; (i != (UINT)rc) && *p; i++)
+    {
         while(*p++) ;
     }
     printf(_T("rc=%d FR_%s\n"), (UINT)rc, p);
@@ -255,14 +258,17 @@ int xatoi (                                 /* 0:Failed, 1:Successful           
     *res = 0;
     while ((c = **str) == ' ') (*str)++;    /* Skip leading spaces */
 
-    if (c == '-') {     /* negative? */
+    if (c == '-')       /* negative? */
+    {
         s = 1;
         c = *(++(*str));
     }
 
-    if (c == '0') {
+    if (c == '0')
+    {
         c = *(++(*str));
-        switch (c) {
+        switch (c)
+        {
         case 'x':       /* hexadecimal */
             r = 16;
             c = *(++(*str));
@@ -276,16 +282,20 @@ int xatoi (                                 /* 0:Failed, 1:Successful           
             if (c < '0' || c > '9') return 0;   /* invalid char */
             r = 8;      /* octal */
         }
-    } else {
+    }
+    else
+    {
         if (c < '0' || c > '9') return 0;   /* EOL or invalid char */
         r = 10;         /* decimal */
     }
 
     val = 0;
-    while (c > ' ') {
+    while (c > ' ')
+    {
         if (c >= 'a') c -= 0x20;
         c -= '0';
-        if (c >= 17) {
+        if (c >= 17)
+        {
             c -= 7;
             if (c <= 9) return 0;   /* invalid char */
         }
@@ -304,12 +314,14 @@ static void  dump_buff_hex(uint32_t addr, uint8_t *pucBuff, int nBytes)
     int     nIdx, i;
 
     nIdx = 0;
-    while (nBytes > 0) {
+    while (nBytes > 0)
+    {
         printf("0x%08X  ", addr+ nIdx);
         for (i = 0; i < 16; i++)
             printf("%02x ", pucBuff[nIdx + i]);
         printf("  ");
-        for (i = 0; i < 16; i++) {
+        for (i = 0; i < 16; i++)
+        {
             if ((pucBuff[nIdx + i] >= 0x20) && (pucBuff[nIdx + i] < 127))
                 printf("%c", pucBuff[nIdx + i]);
             else
@@ -334,12 +346,16 @@ int  show_root_dir()
         return -1;                          /* open failed                                */
 
     p1 = s1 = s2 = 0;                       /* initialize counters                        */
-    for (; ;) {                             /* loop until reached end of root directory   */
+    for (; ;)                               /* loop until reached end of root directory   */
+    {
         res = f_readdir(&dir, &Finfo);      /* read directory entry                       */
         if ((res != FR_OK) || !Finfo.fname[0]) break;  /* no more entries                 */
-        if (Finfo.fattrib & AM_DIR) {       /* is a directory?                            */
+        if (Finfo.fattrib & AM_DIR)         /* is a directory?                            */
+        {
             s2++;                           /* increase directory counter                 */
-        } else {                            /* should be a file                           */
+        }
+        else                                /* should be a file                           */
+        {
             s1++;                           /* increase file counter                      */
             p1 += Finfo.fsize;              /* increase total file size counter           */
         }
@@ -378,14 +394,16 @@ int  write_file_to_flash(char *cmdline)
 
     while (*ptr == ' ') ptr++;              /* skip space characters                      */
 
-    for (len = 0; len < 60; len++) {
+    for (len = 0; len < 60; len++)
+    {
         if ((*ptr == ' ') || (*ptr == 0))
             break;
         fname[len] = *ptr++;
     }
     fname[len] = 0;
 
-    if (!xatoi(&ptr, &faddr)) {             /* get <addr> parameter (SPIM flash address)  */
+    if (!xatoi(&ptr, &faddr))               /* get <addr> parameter (SPIM flash address)  */
+    {
         printf("Usage:  w <file> <addr>\n");
         return -1;
     }
@@ -393,7 +411,8 @@ int  write_file_to_flash(char *cmdline)
 
     printf("Write file [%s] to SPIM address 0x%x...\n", fname, faddr);
     res = f_open(&file, fname, FA_OPEN_EXISTING | FA_READ);   /* Open file                */
-    if (res) {
+    if (res)
+    {
         put_rc(res);                        /* Open failed, print error message           */
         return -1;                          /* Abort...                                   */
     }
@@ -406,7 +425,8 @@ int  write_file_to_flash(char *cmdline)
     /*
      *  Erase SPIM flash page and program...
      */
-    for (page_addr = faddr; page_addr < SPIM_FLASH_MAX_SIZE; page_addr += SPIM_FLASH_PAGE_SIZE) {
+    for (page_addr = faddr; page_addr < SPIM_FLASH_MAX_SIZE; page_addr += SPIM_FLASH_PAGE_SIZE)
+    {
         /* Erase SPIM flash */
         printf("Erase flash page 0x%x...\n", page_addr);
         SPIM_EraseBlock(page_addr, IS_4BYTES_ADDR, OPCODE_BE_64K, 1, 1);
@@ -415,13 +435,15 @@ int  write_file_to_flash(char *cmdline)
 
         /* Verify erased page */
         printf("Verify erased page...");
-        for (addr = page_addr; addr < page_addr+SPIM_FLASH_PAGE_SIZE; addr += BUFF_SIZE) {
+        for (addr = page_addr; addr < page_addr+SPIM_FLASH_PAGE_SIZE; addr += BUFF_SIZE)
+        {
             memset(Buff1, 0x11, BUFF_SIZE); /* fill buffer with non-0xFF                  */
 
             /* DMA read SPIM flash                                                        */
             SPIM_DMA_Read(addr, IS_4BYTES_ADDR, BUFF_SIZE, Buff1, CMD_DMA_FAST_READ, 1);
 
-            if (memcmp(Buff1, Buff2, BUFF_SIZE) != 0) {
+            if (memcmp(Buff1, Buff2, BUFF_SIZE) != 0)
+            {
                 printf("Verify address 0x%x failed!\n", addr);
                 f_close(&file);             /* close file                                 */
                 return -1;                  /* non-0xFF data found, erase failed          */
@@ -430,10 +452,12 @@ int  write_file_to_flash(char *cmdline)
         printf("OK.\n");
 
         printf("Program page and verify...");
-        for (addr = page_addr; addr < page_addr+SPIM_FLASH_PAGE_SIZE; addr += BUFF_SIZE) {
+        for (addr = page_addr; addr < page_addr+SPIM_FLASH_PAGE_SIZE; addr += BUFF_SIZE)
+        {
             res = f_read(&file, Buff1, BUFF_SIZE, &len);
 
-            if (res || (len == 0)) {
+            if (res || (len == 0))
+            {
                 printf("OK [%d]\n", res);
                 f_close(&file);             /* close file                                 */
                 return 0;                   /* done                                       */
@@ -445,7 +469,8 @@ int  write_file_to_flash(char *cmdline)
             /* DMA read SPIM flash                        */
             SPIM_DMA_Read(addr, IS_4BYTES_ADDR, BUFF_SIZE, Buff2, CMD_DMA_FAST_READ, 1);
 
-            if (memcmp(Buff1, Buff2, BUFF_SIZE) != 0) {
+            if (memcmp(Buff1, Buff2, BUFF_SIZE) != 0)
+            {
                 printf("Failed at address 0x%x!\n", addr);
                 f_close(&file);             /* close file                                 */
                 return -1;
@@ -470,14 +495,16 @@ int  compare_file_with_flash(char *cmdline)
 
     while (*ptr == ' ') ptr++;              /* skip space characters                      */
 
-    for (len = 0; len < 60; len++) {
+    for (len = 0; len < 60; len++)
+    {
         if ((*ptr == ' ') || (*ptr == 0))
             break;
         fname[len] = *ptr++;
     }
     fname[len] = 0;
 
-    if (!xatoi(&ptr, &faddr)) {             /* get <addr> parameter (SPIM flash address)  */
+    if (!xatoi(&ptr, &faddr))               /* get <addr> parameter (SPIM flash address)  */
+    {
         printf("Usage:  c <file> <addr>\n");
         return -1;
     }
@@ -485,7 +512,8 @@ int  compare_file_with_flash(char *cmdline)
 
     printf("Compare file [%s] with SPIM address 0x%x...\n", fname, faddr);
     res = f_open(&file, fname, FA_OPEN_EXISTING | FA_READ);   /* Open file                */
-    if (res) {
+    if (res)
+    {
         put_rc(res);                        /* Open failed, print error message           */
         return -1;                          /* Abort...                                   */
     }
@@ -498,14 +526,17 @@ int  compare_file_with_flash(char *cmdline)
     /*
      *  Compare ...
      */
-    for (page_addr = faddr; page_addr < SPIM_FLASH_MAX_SIZE; page_addr += SPIM_FLASH_PAGE_SIZE) {
+    for (page_addr = faddr; page_addr < SPIM_FLASH_MAX_SIZE; page_addr += SPIM_FLASH_PAGE_SIZE)
+    {
         printf("Comparing...");
-        for (addr = page_addr; addr < page_addr+SPIM_FLASH_PAGE_SIZE; addr += BUFF_SIZE) {
+        for (addr = page_addr; addr < page_addr+SPIM_FLASH_PAGE_SIZE; addr += BUFF_SIZE)
+        {
             memset(Buff1, 0xff, BUFF_SIZE); /* fill 0xff to clear buffer                  */
             memset(Buff2, 0, BUFF_SIZE);    /* fill 0x00 to clear buffer                  */
 
             res = f_read(&file, Buff1, BUFF_SIZE, &len);
-            if (res || (len == 0)) {
+            if (res || (len == 0))
+            {
                 printf("Compare OK.\n");
                 f_close(&file);             /* close file                                 */
                 return 0;                   /* done                                       */
@@ -513,7 +544,8 @@ int  compare_file_with_flash(char *cmdline)
             /* DMA read SPIM flash                        */
             SPIM_DMA_Read(addr, IS_4BYTES_ADDR, BUFF_SIZE, Buff2, CMD_DMA_FAST_READ, 1);
 
-            if (memcmp(Buff1, Buff2, len) != 0) {
+            if (memcmp(Buff1, Buff2, len) != 0)
+            {
                 for (i = 0; i < len; i++)
                     printf("0x%04x: 0x%02x  0x%02x\n", addr+i, Buff1[i], Buff2[i]);
                 printf("Compare failed!\n");
@@ -537,13 +569,15 @@ int  dump_spim_flash(char *cmdline)
     uint32_t    dump_len;                   /* dump length                                */
     UINT        len;                        /* data length                                */
 
-    if (!xatoi(&ptr, &faddr)) {             /* get <addr> parameter (SPIM flash address)  */
+    if (!xatoi(&ptr, &faddr))               /* get <addr> parameter (SPIM flash address)  */
+    {
         printf("Usage:  d <addr> <len>\n");
         return -1;
     }
     faddr = faddr - (faddr % BUFF_SIZE);    /* force block alignment                      */
 
-    if (!xatoi(&ptr, &dump_len)) {          /* get <len> parameter (data dump length)     */
+    if (!xatoi(&ptr, &dump_len))            /* get <len> parameter (data dump length)     */
+    {
         printf("Usage:  d <addr> <len>\n");
         return -1;
     }
@@ -556,7 +590,8 @@ int  dump_spim_flash(char *cmdline)
     /*
      *  Read and dump ...
      */
-    for (addr = faddr; dump_len > 0; addr += BUFF_SIZE) {
+    for (addr = faddr; dump_len > 0; addr += BUFF_SIZE)
+    {
         memset(Buff1, 0, BUFF_SIZE);        /* fill 0x00 to clear buffer                  */
         /* DMA read SPIM flash                        */
         SPIM_DMA_Read(addr, IS_4BYTES_ADDR, BUFF_SIZE, Buff1, CMD_DMA_FAST_READ, 1);
@@ -586,7 +621,8 @@ int  go_to_flash(char *cmdline)
     uint32_t    faddr;                      /* flash address                              */
     FUNC_PTR    *func;                      /* function pointer                           */
 
-    if (!xatoi(&ptr, &faddr)) {             /* get <addr> parameter (SPIM flash address)  */
+    if (!xatoi(&ptr, &faddr))               /* get <addr> parameter (SPIM flash address)  */
+    {
         printf("Usage:  g <addr>\n");
         return -1;
     }
@@ -644,7 +680,8 @@ int32_t main(void)
 
     SPIM_SET_DCNUM(8);                     /* 8 is the default value.                    */
 
-    if (SPIM_InitFlash(1) != 0) {           /* Initialized SPI flash                      */
+    if (SPIM_InitFlash(1) != 0)             /* Initialized SPI flash                      */
+    {
         printf("SPIM flash initialize failed!\n");
         while (1);
     }
@@ -658,7 +695,8 @@ int32_t main(void)
 
     f_chdrive(usbh_path);                   /* set default path                           */
 
-    for (;;) {
+    for (;;)
+    {
         usbh_pooling_hubs();
 
         printf(_T(">"));
@@ -666,7 +704,8 @@ int32_t main(void)
 
         get_line(ptr, sizeof(Line));
 
-        switch (*ptr++) {
+        switch (*ptr++)
+        {
 
         case 'h':
         case '?':                           /* Show usage                                 */

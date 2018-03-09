@@ -35,10 +35,13 @@ void SystemCoreClockUpdate (void)            /* Get Core Clock Frequency      */
 
     u32ClkSrc = CLK->CLKSEL0 & CLK_CLKSEL0_HCLKSEL_Msk;
 
-    if(u32ClkSrc == CLK_CLKSEL0_HCLKSEL_PLL) {
+    if(u32ClkSrc == CLK_CLKSEL0_HCLKSEL_PLL)
+    {
         /* Use PLL clock */
         u32Freq = PllClock;
-    } else {
+    }
+    else
+    {
         /* Use the clock sources directly */
         u32Freq = gau32ClkSrcTbl[u32ClkSrc];
     }

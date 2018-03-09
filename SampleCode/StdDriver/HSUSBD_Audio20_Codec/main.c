@@ -140,16 +140,20 @@ int32_t main (void)
     UAC_Init();
     NVIC_EnableIRQ(USBD20_IRQn);
     HSUSBD_Start();
-    while(1) {
-        if (HSUSBD->EP[EPB].EPINTSTS & HSUSBD_EPINTSTS_RXPKIF_Msk) {
+    while(1)
+    {
+        if (HSUSBD->EP[EPB].EPINTSTS & HSUSBD_EPINTSTS_RXPKIF_Msk)
+        {
             UAC_GetPlayData();
             HSUSBD->EP[EPB].EPINTSTS = HSUSBD_EPINTSTS_RXPKIF_Msk;
         }
-        if(u8AudioPlaying && (u8TxDataCntInBuffer < 1)) {
+        if(u8AudioPlaying && (u8TxDataCntInBuffer < 1))
+        {
             UAC_DeviceDisable(1);
         }
 
-        if ((g_usbd_UsbAudioState == UAC_START_AUDIO_RECORD) && (HSUSBD->EP[EPA].EPINTSTS & HSUSBD_EPINTSTS_TXPKIF_Msk)) {
+        if ((g_usbd_UsbAudioState == UAC_START_AUDIO_RECORD) && (HSUSBD->EP[EPA].EPINTSTS & HSUSBD_EPINTSTS_TXPKIF_Msk))
+        {
             UAC_SendRecData();
             HSUSBD->EP[EPA].EPINTSTS = HSUSBD_EPINTSTS_TXPKIF_Msk;
         }

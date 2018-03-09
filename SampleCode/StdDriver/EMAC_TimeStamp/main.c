@@ -26,7 +26,8 @@ uint8_t g_au8MacAddr[6] = {0x00, 0x00, 0x00, 0x59, 0x16, 0x88};
 void EMAC_TX_IRQHandler(void)
 {
 
-    if(EMAC_GET_ALARM_FLAG()) {
+    if(EMAC_GET_ALARM_FLAG())
+    {
         printf("Alarm interrupt!! Rewind current time by 5 second : 0 nano second\n");
         // First parameter set 1 means rewind current time, second parameter is second, and third parameter is nano second
         EMAC_UpdateTime(1, 5, 0);
@@ -84,10 +85,10 @@ void SYS_Init(void)
     SYS->GPC_MFPL |= SYS_GPC_MFPL_PC6MFP_EMAC_RMII_RXD1 | SYS_GPC_MFPL_PC7MFP_EMAC_RMII_RXD0;
     SYS->GPC_MFPH |= SYS_GPC_MFPH_PC8MFP_EMAC_RMII_REFCLK;
     SYS->GPE_MFPH |= SYS_GPE_MFPH_PE8MFP_EMAC_RMII_MDC |
-                    SYS_GPE_MFPH_PE9MFP_EMAC_RMII_MDIO |
-                    SYS_GPE_MFPH_PE10MFP_EMAC_RMII_TXD0 |
-                    SYS_GPE_MFPH_PE11MFP_EMAC_RMII_TXD1 |
-                    SYS_GPE_MFPH_PE12MFP_EMAC_RMII_TXEN;
+                     SYS_GPE_MFPH_PE9MFP_EMAC_RMII_MDIO |
+                     SYS_GPE_MFPH_PE10MFP_EMAC_RMII_TXD0 |
+                     SYS_GPE_MFPH_PE11MFP_EMAC_RMII_TXD1 |
+                     SYS_GPE_MFPH_PE12MFP_EMAC_RMII_TXEN;
 
     // Enable high slew rate on all RMII TX output pins
     PE->SLEWCTL = (GPIO_SLEWCTL_HIGH << GPIO_SLEWCTL_HSREN10_Pos) |
@@ -128,9 +129,11 @@ int main(void)
     // Set Alarm at 1010s:0ns
     EMAC_EnableAlarm(1010, 0);
 
-    while(1) {
+    while(1)
+    {
         EMAC_GetTime(&s, &ns);
-        if(s != old_s) {
+        if(s != old_s)
+        {
             printf("Current time %ds. %dns\n", s, ns);
             old_s = s;
         }

@@ -14,14 +14,18 @@ void TMR0_IRQHandler(void)
 {
     static uint32_t u32Toggle = 0;
 
-    if(TPWM_GET_PERIOD_INT_FLAG(TIMER0)) {
-        if(u32Toggle == 0) {
+    if(TPWM_GET_PERIOD_INT_FLAG(TIMER0))
+    {
+        if(u32Toggle == 0)
+        {
             /* Set PWM period to generate output frequency 9000 Hz */
             TPWM_SET_PERIOD(TIMER0, ((gu32Period/2)-1));
 
             /* Set PWM duty, 40% */
             TPWM_SET_CMPDAT(TIMER0, (((gu32Period/2)*4) / 10));
-        } else {
+        }
+        else
+        {
             /* Set PWM period to generate output frequency 18000 Hz */
             TPWM_SET_PERIOD(TIMER0, (gu32Period-1));
 

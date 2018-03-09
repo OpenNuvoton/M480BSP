@@ -22,7 +22,8 @@
     Memory Mapped Structure for SC Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

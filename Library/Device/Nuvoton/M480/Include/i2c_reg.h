@@ -22,7 +22,8 @@
     Memory Mapped Structure for I2C Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

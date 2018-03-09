@@ -48,19 +48,24 @@ uip_add32(u8_t *op32, u16_t op16)
     uip_acc32[1] = op32[1];
     uip_acc32[0] = op32[0];
 
-    if(uip_acc32[2] < (op16 >> 8)) {
+    if(uip_acc32[2] < (op16 >> 8))
+    {
         ++uip_acc32[1];
-        if(uip_acc32[1] == 0) {
+        if(uip_acc32[1] == 0)
+        {
             ++uip_acc32[0];
         }
     }
 
 
-    if(uip_acc32[3] < (op16 & 0xff)) {
+    if(uip_acc32[3] < (op16 & 0xff))
+    {
         ++uip_acc32[2];
-        if(uip_acc32[2] == 0) {
+        if(uip_acc32[2] == 0)
+        {
             ++uip_acc32[1];
-            if(uip_acc32[1] == 0) {
+            if(uip_acc32[1] == 0)
+            {
                 ++uip_acc32[0];
             }
         }
@@ -72,9 +77,11 @@ uip_chksum(u16_t *sdata, u16_t len)
 {
     u16_t acc;
 
-    for(acc = 0; len > 1; len -= 2) {
+    for(acc = 0; len > 1; len -= 2)
+    {
         acc += *sdata;
-        if(acc < *sdata) {
+        if(acc < *sdata)
+        {
             /* Overflow, so we add the carry to acc (i.e., increase by
                one). */
             ++acc;
@@ -83,9 +90,11 @@ uip_chksum(u16_t *sdata, u16_t len)
     }
 
     /* add up any odd byte */
-    if(len == 1) {
+    if(len == 1)
+    {
         acc += htons(((u16_t)(*(u8_t *)sdata)) << 8);
-        if(acc < htons(((u16_t)(*(u8_t *)sdata)) << 8)) {
+        if(acc < htons(((u16_t)(*(u8_t *)sdata)) << 8))
+        {
             ++acc;
         }
     }
@@ -113,29 +122,36 @@ uip_tcpchksum(void)
     sum = uip_chksum((u16_t *)uip_appdata,
                      (u16_t)(((((u16_t)(BUF->len[0]) << 8) + BUF->len[1]) - 40)));
 
-    if((sum += hsum) < hsum) {
+    if((sum += hsum) < hsum)
+    {
         ++sum;
     }
 
-    if((sum += BUF->srcipaddr[0]) < BUF->srcipaddr[0]) {
+    if((sum += BUF->srcipaddr[0]) < BUF->srcipaddr[0])
+    {
         ++sum;
     }
-    if((sum += BUF->srcipaddr[1]) < BUF->srcipaddr[1]) {
+    if((sum += BUF->srcipaddr[1]) < BUF->srcipaddr[1])
+    {
         ++sum;
     }
-    if((sum += BUF->destipaddr[0]) < BUF->destipaddr[0]) {
+    if((sum += BUF->destipaddr[0]) < BUF->destipaddr[0])
+    {
         ++sum;
     }
-    if((sum += BUF->destipaddr[1]) < BUF->destipaddr[1]) {
+    if((sum += BUF->destipaddr[1]) < BUF->destipaddr[1])
+    {
         ++sum;
     }
-    if((sum += (u16_t)htons((u16_t)IP_PROTO_TCP)) < (u16_t)htons((u16_t)IP_PROTO_TCP)) {
+    if((sum += (u16_t)htons((u16_t)IP_PROTO_TCP)) < (u16_t)htons((u16_t)IP_PROTO_TCP))
+    {
         ++sum;
     }
 
     hsum = (u16_t)htons((((u16_t)(BUF->len[0]) << 8) + BUF->len[1]) - 20);
 
-    if((sum += hsum) < hsum) {
+    if((sum += hsum) < hsum)
+    {
         ++sum;
     }
 

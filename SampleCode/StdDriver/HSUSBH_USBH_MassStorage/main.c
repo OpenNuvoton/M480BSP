@@ -65,7 +65,8 @@ void SysTick_Handler(void)
 void enable_sys_tick(int ticks_per_second)
 {
     g_tick_cnt = 0;
-    if (SysTick_Config(SystemCoreClock / ticks_per_second)) {
+    if (SysTick_Config(SystemCoreClock / ticks_per_second))
+    {
         /* Setup SysTick Timer for 1 second interrupts  */
         printf("Set system tick error!!\n");
         while (1);
@@ -111,12 +112,14 @@ void  dump_buff_hex(uint8_t *pucBuff, int nBytes)
     int     nIdx, i;
 
     nIdx = 0;
-    while (nBytes > 0) {
+    while (nBytes > 0)
+    {
         printf("0x%04X  ", nIdx);
         for (i = 0; i < 16; i++)
             printf("%02x ", pucBuff[nIdx + i]);
         printf("  ");
-        for (i = 0; i < 16; i++) {
+        for (i = 0; i < 16; i++)
+        {
             if ((pucBuff[nIdx + i] >= 0x20) && (pucBuff[nIdx + i] < 127))
                 printf("%c", pucBuff[nIdx + i]);
             else
@@ -158,14 +161,17 @@ int xatoi (         /* 0:Failed, 1:Successful */
     *res = 0;
     while ((c = **str) == ' ') (*str)++;    /* Skip leading spaces */
 
-    if (c == '-') {     /* negative? */
+    if (c == '-')       /* negative? */
+    {
         s = 1;
         c = *(++(*str));
     }
 
-    if (c == '0') {
+    if (c == '0')
+    {
         c = *(++(*str));
-        switch (c) {
+        switch (c)
+        {
         case 'x':       /* hexadecimal */
             r = 16;
             c = *(++(*str));
@@ -179,16 +185,20 @@ int xatoi (         /* 0:Failed, 1:Successful */
             if (c < '0' || c > '9') return 0;   /* invalid char */
             r = 8;      /* octal */
         }
-    } else {
+    }
+    else
+    {
         if (c < '0' || c > '9') return 0;   /* EOL or invalid char */
         r = 10;         /* decimal */
     }
 
     val = 0;
-    while (c > ' ') {
+    while (c > ' ')
+    {
         if (c >= 'a') c -= 0x20;
         c -= '0';
-        if (c >= 17) {
+        if (c >= 17)
+        {
             c -= 7;
             if (c <= 9) return 0;   /* invalid char */
         }
@@ -243,23 +253,28 @@ FRESULT scan_files (
     char *fn;
 
 
-    if ((res = f_opendir(&dirs, path)) == FR_OK) {
+    if ((res = f_opendir(&dirs, path)) == FR_OK)
+    {
         i = strlen(path);
-        while (((res = f_readdir(&dirs, &Finfo)) == FR_OK) && Finfo.fname[0]) {
+        while (((res = f_readdir(&dirs, &Finfo)) == FR_OK) && Finfo.fname[0])
+        {
             if (FF_FS_RPATH && Finfo.fname[0] == '.') continue;
 #if _USE_LFN
             fn = *Finfo.lfname ? Finfo.lfname : Finfo.fname;
 #else
             fn = Finfo.fname;
 #endif
-            if (Finfo.fattrib & AM_DIR) {
+            if (Finfo.fattrib & AM_DIR)
+            {
                 acc_dirs++;
                 *(path+i) = '/';
                 strcpy(path+i+1, fn);
                 res = scan_files(path);
                 *(path+i) = '\0';
                 if (res != FR_OK) break;
-            } else {
+            }
+            else
+            {
                 /*              printf("%s/%s\n", path, fn); */
                 acc_files++;
                 acc_size += Finfo.fsize;
@@ -281,7 +296,8 @@ void put_rc (FRESULT rc)
         _T("NOT_ENOUGH_CORE\0TOO_MANY_OPEN_FILES\0");
     //FRESULT i;
     uint32_t i;
-    for (i = 0; (i != (UINT)rc) && *p; i++) {
+    for (i = 0; (i != (UINT)rc) && *p; i++)
+    {
         while(*p++) ;
     }
     printf(_T("rc=%d FR_%s\n"), (UINT)rc, p);
@@ -298,7 +314,8 @@ void get_line (char *buff, int len)
 //  DWORD dw;
 
 
-    for (;;) {
+    for (;;)
+    {
         c = getchar();
         putchar(c);
         if (c == '\r') break;
@@ -500,7 +517,8 @@ int32_t main(void)
 
     f_chdrive(usb_path);               /* set default path                                */
 
-    for (;;) {
+    for (;;)
+    {
 
         usbh_pooling_hubs();
 
@@ -511,13 +529,15 @@ int32_t main(void)
 
         get_line(ptr, sizeof(Line));
 
-        switch (*ptr++) {
+        switch (*ptr++)
+        {
 
         case 'q' :  /* Exit program */
             return 0;
 
         case '5':
-            for (sector_no = 0; sector_no < 128000; sector_no++) {
+            for (sector_no = 0; sector_no < 128000; sector_no++)
+            {
                 if (sector_no % 1000 == 0)
                     printf("\nLBK transfer count: Ii:%d, Io: %d, Si:%d, So:%d\n", int_in_cnt, int_out_cnt, iso_in_cnt, iso_out_cnt);
 
@@ -527,20 +547,23 @@ int32_t main(void)
                 memset(buff2, 0x87, 512);
 
                 res = (FRESULT)disk_read(3, buff1, sector_no, 1);
-                if (res) {
+                if (res)
+                {
                     printf("read failed at %d, rc=%d\n", sector_no, (WORD)res);
                     put_rc(res);
                     break;
                 }
 
                 res = (FRESULT)disk_read(3, buff2, sector_no, 1);
-                if (res) {
+                if (res)
+                {
                     printf("read failed at %d, rc=%d\n", sector_no, (WORD)res);
                     put_rc(res);
                     break;
                 }
 
-                if (memcmp(buff1, buff2, 512) != 0) {
+                if (memcmp(buff1, buff2, 512) != 0)
+                {
                     printf("\nData compare failed!!\n");
                     break;
                 }
@@ -557,11 +580,13 @@ int32_t main(void)
             break;
 
         case 'd' :
-            switch (*ptr++) {
+            switch (*ptr++)
+            {
             case 'd' :  /* dd [<lba>] - Dump sector */
                 if (!xatoi(&ptr, &p2)) p2 = sect;
                 res = (FRESULT)disk_read(3, Buff, p2, 1);
-                if (res) {
+                if (res)
+                {
                     printf("rc=%d\n", (WORD)res);
                     break;
                 }
@@ -574,10 +599,12 @@ int32_t main(void)
             case 't' :  /* dt - raw sector read/write performance test */
                 printf("Raw sector read performance test...\n");
                 timer_init();
-                for (s1 = 0; s1 < (0x800000/BUFF_SIZE); s1++) {
+                for (s1 = 0; s1 < (0x800000/BUFF_SIZE); s1++)
+                {
                     s2 = BUFF_SIZE/512;     /* sector count for each read  */
                     res = (FRESULT)disk_read(3, Buff, 10000 + s1 * s2, s2);
-                    if (res) {
+                    if (res)
+                    {
                         printf("read failed at %d, rc=%d\n", 10000 + s1 * s2, (WORD)res);
                         put_rc(res);
                         break;
@@ -591,10 +618,12 @@ int32_t main(void)
 
                 printf("Raw sector write performance test...\n");
                 timer_init();
-                for (s1 = 0; s1 < (0x800000/BUFF_SIZE); s1++) {
+                for (s1 = 0; s1 < (0x800000/BUFF_SIZE); s1++)
+                {
                     s2 = BUFF_SIZE/512;     /* sector count for each read  */
                     res = (FRESULT)disk_write(3, Buff, 20000 + s1 * s2, s2);
-                    if (res) {
+                    if (res)
+                    {
                         printf("write failed at %d, rc=%d\n", 20000 + s1 * s2, (WORD)res);
                         put_rc(res);
                         break;
@@ -611,14 +640,17 @@ int32_t main(void)
 #if 0
                 printf("File write performance test...\n");
                 res = f_open(&file1, "3:\\tfile", FA_CREATE_ALWAYS | FA_WRITE);
-                if (res) {
+                if (res)
+                {
                     put_rc(res);
                     break;
                 }
                 timer_init();
-                for (s1 = 0; s1 < (0x800000/BUFF_SIZE); s1++) {
+                for (s1 = 0; s1 < (0x800000/BUFF_SIZE); s1++)
+                {
                     res = f_write(&file1, Buff, BUFF_SIZE, &cnt);
-                    if (res || (cnt != BUFF_SIZE)) {
+                    if (res || (cnt != BUFF_SIZE))
+                    {
                         put_rc(res);
                         break;
                     }
@@ -632,14 +664,17 @@ int32_t main(void)
 #endif
                 printf("File read performance test...\n");
                 res = f_open(&file1, "3:\\tfile", FA_READ);
-                if (res) {
+                if (res)
+                {
                     put_rc(res);
                     break;
                 }
                 timer_init();
-                for (s1 = 0; s1 < (0x800000/BUFF_SIZE); s1++) {
+                for (s1 = 0; s1 < (0x800000/BUFF_SIZE); s1++)
+                {
                     res = f_read(&file1, Buff, BUFF_SIZE, &cnt);
-                    if (res || (cnt != BUFF_SIZE)) {
+                    if (res || (cnt != BUFF_SIZE))
+                    {
                         put_rc(res);
                         break;
                     }
@@ -655,7 +690,8 @@ int32_t main(void)
             break;
 
         case 'b' :
-            switch (*ptr++) {
+            switch (*ptr++)
+            {
             case 'd' :  /* bd <addr> - Dump R/W buffer */
                 if (!xatoi(&ptr, &p1)) break;
                 for (ptr=(char*)&Buff[p1], ofs = p1, cnt = 32; cnt; cnt--, ptr+=16, ofs+=16)
@@ -664,18 +700,23 @@ int32_t main(void)
 
             case 'e' :  /* be <addr> [<data>] ... - Edit R/W buffer */
                 if (!xatoi(&ptr, &p1)) break;
-                if (xatoi(&ptr, &p2)) {
-                    do {
+                if (xatoi(&ptr, &p2))
+                {
+                    do
+                    {
                         Buff[p1++] = (BYTE)p2;
-                    } while (xatoi(&ptr, &p2));
+                    }
+                    while (xatoi(&ptr, &p2));
                     break;
                 }
-                for (;;) {
+                for (;;)
+                {
                     printf("%04X %02X-", (WORD)p1, Buff[p1]);
                     get_line(Line, sizeof(Line));
                     ptr = Line;
                     if (*ptr == '.') break;
-                    if (*ptr < ' ') {
+                    if (*ptr < ' ')
+                    {
                         p1++;
                         continue;
                     }
@@ -709,11 +750,13 @@ int32_t main(void)
 
 
         case 'f' :
-            switch (*ptr++) {
+            switch (*ptr++)
+            {
 
             case 's' :  /* fs - Show logical drive status */
                 res = f_getfree("", (DWORD*)&p2, &fs);
-                if (res) {
+                if (res)
+                {
                     put_rc(res);
                     break;
                 }
@@ -730,7 +773,8 @@ int32_t main(void)
                 Finfo.lfsize = sizeof(Lfname);
 #endif
                 res = scan_files(ptr);
-                if (res) {
+                if (res)
+                {
                     put_rc(res);
                     break;
                 }
@@ -743,17 +787,22 @@ int32_t main(void)
             case 'l' :  /* fl [<path>] - Directory listing */
                 while (*ptr == ' ') ptr++;
                 res = f_opendir(&dir, ptr);
-                if (res) {
+                if (res)
+                {
                     put_rc(res);
                     break;
                 }
                 p1 = s1 = s2 = 0;
-                for(;;) {
+                for(;;)
+                {
                     res = f_readdir(&dir, &Finfo);
                     if ((res != FR_OK) || !Finfo.fname[0]) break;
-                    if (Finfo.fattrib & AM_DIR) {
+                    if (Finfo.fattrib & AM_DIR)
+                    {
                         s2++;
-                    } else {
+                    }
+                    else
+                    {
                         s1++;
                         p1 += Finfo.fsize;
                     }
@@ -800,16 +849,21 @@ int32_t main(void)
             case 'd' :  /* fd <len> - read and dump file from current fp */
                 if (!xatoi(&ptr, &p1)) break;
                 ofs = file1.fptr;
-                while (p1) {
-                    if ((UINT)p1 >= 16) {
+                while (p1)
+                {
+                    if ((UINT)p1 >= 16)
+                    {
                         cnt = 16;
                         p1 -= 16;
-                    } else                {
+                    }
+                    else
+                    {
                         cnt = p1;
                         p1 = 0;
                     }
                     res = f_read(&file1, Buff, cnt, &cnt);
-                    if (res != FR_OK) {
+                    if (res != FR_OK)
+                    {
                         put_rc(res);
                         break;
                     }
@@ -823,16 +877,21 @@ int32_t main(void)
                 if (!xatoi(&ptr, &p1)) break;
                 p2 = 0;
                 timer_init();
-                while (p1) {
-                    if ((UINT)p1 >= blen) {
+                while (p1)
+                {
+                    if ((UINT)p1 >= blen)
+                    {
                         cnt = blen;
                         p1 -= blen;
-                    } else {
+                    }
+                    else
+                    {
                         cnt = p1;
                         p1 = 0;
                     }
                     res = f_read(&file1, Buff, cnt, &s2);
-                    if (res != FR_OK) {
+                    if (res != FR_OK)
+                    {
                         put_rc(res);
                         break;
                     }
@@ -849,16 +908,21 @@ int32_t main(void)
                 memset(Buff, (BYTE)p2, blen);
                 p2 = 0;
                 timer_init();
-                while (p1) {
-                    if ((UINT)p1 >= blen) {
+                while (p1)
+                {
+                    if ((UINT)p1 >= blen)
+                    {
                         cnt = blen;
                         p1 -= blen;
-                    } else {
+                    }
+                    else
+                    {
                         cnt = p1;
                         p1 = 0;
                     }
                     res = f_write(&file1, Buff, cnt, &s2);
-                    if (res != FR_OK) {
+                    if (res != FR_OK)
+                    {
                         put_rc(res);
                         break;
                     }
@@ -916,21 +980,24 @@ int32_t main(void)
                 printf("Opening \"%s\"", ptr);
                 res = f_open(&file1, ptr, FA_OPEN_EXISTING | FA_READ);
                 printf("\n");
-                if (res) {
+                if (res)
+                {
                     put_rc(res);
                     break;
                 }
                 printf("Creating \"%s\"", ptr2);
                 res = f_open(&file2, ptr2, FA_CREATE_ALWAYS | FA_WRITE);
                 putchar('\n');
-                if (res) {
+                if (res)
+                {
                     put_rc(res);
                     f_close(&file1);
                     break;
                 }
                 printf("Copying...");
                 p1 = 0;
-                for (;;) {
+                for (;;)
+                {
                     res = f_read(&file1, Buff, BUFF_SIZE, &s1);
                     if (res || s1 == 0) break;   /* error or eof */
                     res = f_write(&file2, Buff, s1, &s2);
@@ -955,29 +1022,34 @@ int32_t main(void)
                 printf("Opening \"%s\"", ptr);
                 res = f_open(&file1, ptr, FA_OPEN_EXISTING | FA_READ);
                 printf("\n");
-                if (res) {
+                if (res)
+                {
                     put_rc(res);
                     break;
                 }
                 printf("Opening \"%s\"", ptr2);
                 res = f_open(&file2, ptr2, FA_OPEN_EXISTING | FA_READ);
                 putchar('\n');
-                if (res) {
+                if (res)
+                {
                     put_rc(res);
                     f_close(&file1);
                     break;
                 }
                 printf("Compare...");
                 p1 = 0;
-                for (;;) {
+                for (;;)
+                {
                     res = f_read(&file1, Buff, BUFF_SIZE, &s1);
-                    if (res || s1 == 0) {
+                    if (res || s1 == 0)
+                    {
                         printf("\nRead file %s terminated. (%d)\n", ptr, res);
                         break;     /* error or eof */
                     }
 
                     res = f_read(&file2, Buff2, BUFF_SIZE, &s2);
-                    if (res || s2 == 0) {
+                    if (res || s2 == 0)
+                    {
                         printf("\nRead file %s terminated. (%d)\n", ptr2, res);
                         break;     /* error or eof */
                     }
@@ -985,7 +1057,8 @@ int32_t main(void)
                     p1 += s2;
                     if (res || s2 < s1) break;   /* error or disk full */
 
-                    if (memcmp(Buff, Buff2, s1) != 0) {
+                    if (memcmp(Buff, Buff2, s1) != 0)
+                    {
                         printf("Compre failed!! %d %d\n", s1 ,s2);
                         break;
                     }

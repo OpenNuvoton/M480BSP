@@ -64,7 +64,8 @@ extern "C" {
 /**
  * @details  Interrupt Number Definition.
  */
-typedef enum IRQn {
+typedef enum IRQn
+{
     /******  Cortex-M4 Processor Exceptions Numbers ***************************************************/
     NonMaskableInt_IRQn           = -14,      /*!<  2 Non Maskable Interrupt                        */
     MemoryManagement_IRQn         = -12,      /*!<  4 Memory Management Interrupt                   */

@@ -96,7 +96,8 @@ int main(void)
     NVIC_EnableIRQ(TMR0_IRQn);
 
 
-    for(i = 0; i < 1000; i++) {
+    for(i = 0; i < 1000; i++)
+    {
         PB4 = 0; // low
         CLK_SysTickDelay(1);
         PB4 = 1;  // high

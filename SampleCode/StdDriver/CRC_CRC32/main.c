@@ -56,7 +56,8 @@ uint32_t GetFMCChecksum(uint32_t u32Address, uint32_t u32Size)
     return u32CHKS;
 }
 
-typedef struct dma_desc_t {
+typedef struct dma_desc_t
+{
     uint32_t ctl;
     uint32_t src;
     uint32_t dest;
@@ -91,8 +92,10 @@ uint32_t GetPDMAChecksum(uint32_t u32Address, uint32_t u32Size)
     /* Trigger PDMA CH0 transfer ... */
     PDMA->SWREQ = (1<<0);
 
-    while(PDMA->TRGSTS & 0x1) { // wait PDMA finish
-        if(loop++ > (SystemCoreClock/100)) {
+    while(PDMA->TRGSTS & 0x1)   // wait PDMA finish
+    {
+        if(loop++ > (SystemCoreClock/100))
+        {
             printf("\n[PDMA transfer time-out]\n");
             while(1);
         }
@@ -141,7 +144,8 @@ int main(void)
     /* Configure CRC controller for CRC-CRC32 mode */
     CRC_Open(CRC_32, (CRC_WDATA_RVS | CRC_CHECKSUM_RVS | CRC_CHECKSUM_COM), 0xFFFFFFFF, CRC_CPU_WDATA_32);
     /* Start to execute CRC-CRC32 operation */
-    for(addr=0; addr<size; addr+=4) {
+    for(addr=0; addr<size; addr+=4)
+    {
         CRC_WRITE_DATA(inpw(addr));
     }
     u32CRC32Checksum = CRC_GetChecksum();
@@ -156,13 +160,19 @@ int main(void)
     printf("   - by CPU write:   0x%08X\n", u32CRC32Checksum);
     printf("   - by PDMA write:  0x%08X\n", u32PDMAChecksum);
 
-    if((u32FMCChecksum == u32CRC32Checksum) && (u32CRC32Checksum == u32PDMAChecksum)) {
-        if((u32FMCChecksum == 0) || (u32FMCChecksum == 0xFFFFFFFF)) {
+    if((u32FMCChecksum == u32CRC32Checksum) && (u32CRC32Checksum == u32PDMAChecksum))
+    {
+        if((u32FMCChecksum == 0) || (u32FMCChecksum == 0xFFFFFFFF))
+        {
             printf("\n[Get checksum ... WRONG]");
-        } else {
+        }
+        else
+        {
             printf("\n[Compare checksum ... PASS]");
         }
-    } else {
+    }
+    else
+    {
         printf("\n[Compare checksum ... WRONG]");
     }
 

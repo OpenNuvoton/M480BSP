@@ -83,7 +83,8 @@ int32_t main (void)
 
     PE->MODE = 0x5000;   //??
 
-    while(1) {
+    while(1)
+    {
         CLK_SysTickDelay(2000);   // delay
         if(++Str[1] > 0x39)
             Str[1] = 0x30;      // increase 1 to 10 than reset to 0

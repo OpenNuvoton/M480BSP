@@ -52,7 +52,7 @@ void SYS_Init(void)
     SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
     SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
     /* Set PB.0 ~ PB.3 to input mode */
-    PB->MODE &= ~(GPIO_MODE_MODE0_Msk | GPIO_MODE_MODE1_Msk | GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk); 
+    PB->MODE &= ~(GPIO_MODE_MODE0_Msk | GPIO_MODE_MODE1_Msk | GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk);
     /* Configure the GPB0 - GPB3 ADC analog input pins.  */
     SYS->GPB_MFPL &= ~(SYS_GPB_MFPL_PB0MFP_Msk | SYS_GPB_MFPL_PB1MFP_Msk |
                        SYS_GPB_MFPL_PB2MFP_Msk | SYS_GPB_MFPL_PB3MFP_Msk);
@@ -133,9 +133,12 @@ void EADC_FunctionTest()
     EADC_DISABLE_CMP0(EADC);
     EADC_DISABLE_CMP1(EADC);
 
-    if(g_u32AdcCmp0IntFlag == 1) {
+    if(g_u32AdcCmp0IntFlag == 1)
+    {
         printf("Comparator 0 interrupt occurs.\nThe conversion result of channel 2 is less than 0x800\n");
-    } else {
+    }
+    else
+    {
         printf("Comparator 1 interrupt occurs.\nThe conversion result of channel 2 is greater than or equal to 0x800\n");
     }
 
@@ -143,12 +146,14 @@ void EADC_FunctionTest()
 
 void ADC03_IRQHandler(void)
 {
-    if(EADC_GET_INT_FLAG(EADC, EADC_STATUS2_ADCMPF0_Msk)) {
+    if(EADC_GET_INT_FLAG(EADC, EADC_STATUS2_ADCMPF0_Msk))
+    {
         g_u32AdcCmp0IntFlag = 1;
         EADC_CLR_INT_FLAG(EADC, EADC_STATUS2_ADCMPF0_Msk);/* Clear the A/D compare flag 0 */
     }
 
-    if(EADC_GET_INT_FLAG(EADC, EADC_STATUS2_ADCMPF1_Msk)) {
+    if(EADC_GET_INT_FLAG(EADC, EADC_STATUS2_ADCMPF1_Msk))
+    {
         g_u32AdcCmp1IntFlag = 1;
         EADC_CLR_INT_FLAG(EADC, EADC_STATUS2_ADCMPF1_Msk);/* Clear the A/D compare flag 1 */
     }

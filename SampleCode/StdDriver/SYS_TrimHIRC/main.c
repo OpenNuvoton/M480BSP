@@ -25,13 +25,15 @@
   */
 void IRC_IRQHandler()
 {
-    if(SYS->IRCTISTS & SYS_IRCTISTS_TFAILIF_Msk) { /* Get Trim Failure Interrupt */
+    if(SYS->IRCTISTS & SYS_IRCTISTS_TFAILIF_Msk)   /* Get Trim Failure Interrupt */
+    {
         /* Display HIRC trim status */
         printf("HIRC Trim Failure Interrupt\n");
         /* Clear Trim Failure Interrupt */
         SYS->IRCTISTS = SYS_IRCTISTS_TFAILIF_Msk;
     }
-    if(SYS->IRCTISTS & SYS_IRCTISTS_CLKERRIF_Msk) { /* Get LXT Clock Error Interrupt */
+    if(SYS->IRCTISTS & SYS_IRCTISTS_CLKERRIF_Msk)   /* Get LXT Clock Error Interrupt */
+    {
         /* Display HIRC trim status */
         printf("LXT Clock Error Interrupt\n");
         /* Clear LXT Clock Error Interrupt */
@@ -93,8 +95,10 @@ void TrimHIRC()
     CLK_SysTickDelay(2000); /* Waiting for HIRC Frequency Lock */
 
     /* Get HIRC Frequency Lock */
-    while(1) {
-        if(SYS->IRCTISTS & SYS_IRCTISTS_FREQLOCK_Msk) {
+    while(1)
+    {
+        if(SYS->IRCTISTS & SYS_IRCTISTS_FREQLOCK_Msk)
+        {
             printf("HIRC Frequency Lock\n");
             SYS->IRCTISTS = SYS_IRCTISTS_FREQLOCK_Msk;     /* Clear Trim Lock */
             break;

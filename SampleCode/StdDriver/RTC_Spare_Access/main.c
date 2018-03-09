@@ -97,20 +97,24 @@ int32_t main(void)
     RTC_EnableSpareAccess();
 
     // Write spare register
-    for(i = 0; i < 20; i++) {
+    for(i = 0; i < 20; i++)
+    {
         RTC_AccessEnable();
         RTC_WRITE_SPARE_REGISTER(i, i);
     }
 
     // Check spare register data
-    for(i = 0; i < 20; i++) {
+    for(i = 0; i < 20; i++)
+    {
         RTC_AccessEnable();
         Spare_Data = RTC_READ_SPARE_REGISTER(i);
-        if(Spare_Data != i) {
+        if(Spare_Data != i)
+        {
             printf(" SPARE_REGISTER[%d] = 0x%x \n", i, Spare_Data);
             printf(" Test Fail!! \n");
             while(1);
-        } else
+        }
+        else
             printf(" SPARE_REGISTER[%d] = 0x%x \n", i, Spare_Data);
     }
 

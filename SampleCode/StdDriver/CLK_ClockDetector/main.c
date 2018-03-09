@@ -24,7 +24,8 @@ void CKFAIL_IRQHandler(void)
 
     u32Reg = CLK->CLKDSTS;
 
-    if(u32Reg & CLK_CLKDSTS_HXTFIF_Msk) {
+    if(u32Reg & CLK_CLKDSTS_HXTFIF_Msk)
+    {
         /* HCLK is switched to HIRC automatically if HXT clock fail interrupt is happened */
         printf("HXT Clock is stopped! HCLK is switched to HIRC.\n");
 
@@ -35,7 +36,8 @@ void CKFAIL_IRQHandler(void)
         CLK->CLKDSTS = CLK_CLKDSTS_HXTFIF_Msk;
     }
 
-    if(u32Reg & CLK_CLKDSTS_LXTFIF_Msk) {
+    if(u32Reg & CLK_CLKDSTS_LXTFIF_Msk)
+    {
         /* LXT clock fail interrupt is happened */
         printf("LXT Clock is stopped!\n");
 
@@ -46,7 +48,8 @@ void CKFAIL_IRQHandler(void)
         CLK->CLKDSTS = CLK_CLKDSTS_LXTFIF_Msk;
     }
 
-    if(u32Reg & CLK_CLKDSTS_HXTFQIF_Msk) {
+    if(u32Reg & CLK_CLKDSTS_HXTFQIF_Msk)
+    {
         /* HCLK should be switched to HIRC if HXT clock frequency monitor interrupt is happened */
         CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_HIRC, CLK_CLKDIV0_HCLK(1));
         printf("HXT Frequency is abnormal! HCLK is switched to HIRC.\n");

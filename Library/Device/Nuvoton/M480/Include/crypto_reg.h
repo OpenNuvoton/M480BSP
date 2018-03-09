@@ -22,7 +22,8 @@
     Memory Mapped Structure for Cryptographic Accelerator
 @{ */
 
-typedef struct {
+typedef struct
+{
 
     /**
      * @var CRPT_T::INTEN

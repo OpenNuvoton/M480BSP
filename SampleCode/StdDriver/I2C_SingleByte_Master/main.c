@@ -141,7 +141,8 @@ int32_t main(void)
 
     err = 0;
 
-    for(i = 0; i < 256; i++) {
+    for(i = 0; i < 256; i++)
+    {
         u8tmp = (uint8_t)i + 3;
 
         /* Single Byte Write (Two Registers) */
@@ -149,7 +150,8 @@ int32_t main(void)
 
         /* Single Byte Read (Two Registers) */
         u8data = I2C_ReadByteTwoRegs(I2C0, g_u8DeviceAddr, i);
-        if(u8data != u8tmp) {
+        if(u8data != u8tmp)
+        {
             err = 1;
             printf("%03d: Single byte write data fail,  W(0x%X)/R(0x%X) \n", i, u8tmp, u8data);
         }

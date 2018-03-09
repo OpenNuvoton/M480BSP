@@ -74,57 +74,67 @@ int main()
 
     FMC_Open();                        /* Enable FMC ISP function */
 
-    for (i = 0; i < FMC_OTP_ENTRY_CNT; i++) {
-        if (FMC_Read_OTP(i, &otp_lw, &otp_hw) != 0) {
+    for (i = 0; i < FMC_OTP_ENTRY_CNT; i++)
+    {
+        if (FMC_Read_OTP(i, &otp_lw, &otp_hw) != 0)
+        {
             printf("Read OTP%d failed!\n", i);
             goto lexit;
         }
 
-        if ((otp_lw == 0xFFFFFFFF) && (otp_hw == 0xFFFFFFFF)) {
+        if ((otp_lw == 0xFFFFFFFF) && (otp_hw == 0xFFFFFFFF))
+        {
             printf("OTP%d is 0xFFFFFFFF-0xFFFFFFFF. It should be a free entry.\n", i);
             break;
         }
     }
 
-    if (i == FMC_OTP_ENTRY_CNT) {
+    if (i == FMC_OTP_ENTRY_CNT)
+    {
         printf("All OTP entries are used.\n");
         goto lexit;
     }
 
     printf("Program OTP%d with 0x%x-0x%x...\n", i, 0x5A5A0000 | i, 0x00005A5A | i);
 
-    if (FMC_Write_OTP(i, 0x5A5A0000 | i, 0x00005A5A | i) != 0) {
+    if (FMC_Write_OTP(i, 0x5A5A0000 | i, 0x00005A5A | i) != 0)
+    {
         printf("Failed to program OTP%d!\n", i);
         goto lexit;
     }
 
-    if (FMC_Read_OTP(i, &otp_lw, &otp_hw) != 0) {
+    if (FMC_Read_OTP(i, &otp_lw, &otp_hw) != 0)
+    {
         printf("Read OTP%d failed after programmed!\n", i);
         goto lexit;
     }
 
     printf("Read back OTP%d: 0x%x-0x%x.\n", i, otp_lw, otp_hw);
 
-    if ((otp_lw != (0x5A5A0000 | i)) || (otp_hw != (0x00005A5A | i))) {
+    if ((otp_lw != (0x5A5A0000 | i)) || (otp_hw != (0x00005A5A | i)))
+    {
         printf("OTP%d value is not matched with programmed value!\n", i);
         goto lexit;
     }
 
     printf("Lock OTP%d...\n", i);
 
-    if (FMC_Lock_OTP(i) != 0) {
+    if (FMC_Lock_OTP(i) != 0)
+    {
         printf("Failed to lock OTP%d!\n", i);
         goto lexit;
     }
 
-    if (FMC_Read_OTP(i, &otp_lw, &otp_hw) != 0) {
+    if (FMC_Read_OTP(i, &otp_lw, &otp_hw) != 0)
+    {
         printf("Read OTP%d failed after programmed!\n", i);
         goto lexit;
     }
 
     printf("Read OTP%d after locked: 0x%x-0x%x.\n", i, otp_lw, otp_hw);
 
-    if ((otp_lw != (0x5A5A0000 | i)) || (otp_hw != (0x00005A5A | i))) {
+    if ((otp_lw != (0x5A5A0000 | i)) || (otp_hw != (0x00005A5A | i)))
+    {
         printf("OTP%d value is incorrect after locked!\n", i);
         goto lexit;
     }

@@ -32,7 +32,8 @@
 extern "C" {
 #endif
 
-struct ts_timeval {
+struct ts_timeval
+{
     s32_t sec;
     s32_t nsec;
 };

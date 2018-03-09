@@ -26,13 +26,15 @@ void EINT0_IRQHandler(void)
 {
 
     /* To check if PA.6 external interrupt occurred */
-    if(GPIO_GET_INT_FLAG(PA, BIT6)) {
+    if(GPIO_GET_INT_FLAG(PA, BIT6))
+    {
         GPIO_CLR_INT_FLAG(PA, BIT6);
         printf("PA.6 EINT0 occurred.\n");
     }
 
     /* To check if PB.5 external interrupt occurred */
-    if(GPIO_GET_INT_FLAG(PB, BIT5)) {
+    if(GPIO_GET_INT_FLAG(PB, BIT5))
+    {
         GPIO_CLR_INT_FLAG(PB, BIT5);
         printf("PB.5 EINT0 occurred.\n");
     }
@@ -52,7 +54,8 @@ void EINT1_IRQHandler(void)
 {
 
     /* To check if PA.7 external interrupt occurred */
-    if(GPIO_GET_INT_FLAG(PA, BIT7)) {
+    if(GPIO_GET_INT_FLAG(PA, BIT7))
+    {
         GPIO_CLR_INT_FLAG(PA, BIT7);
         printf("PA.7 EINT1 occurred.\n");
     }

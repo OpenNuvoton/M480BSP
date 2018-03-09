@@ -25,10 +25,13 @@ void BPWM0_IRQHandler(void)
     static int toggle = 0;
 
     // Update BPWM0 channel 0 period and duty
-    if(toggle == 0) {
+    if(toggle == 0)
+    {
         BPWM_SET_CNR(BPWM0, 0, 99);
         BPWM_SET_CMR(BPWM0, 0, 39);
-    } else {
+    }
+    else
+    {
         BPWM_SET_CNR(BPWM0, 0, 399);
         BPWM_SET_CMR(BPWM0, 0, 199);
     }

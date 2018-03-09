@@ -75,7 +75,8 @@ static void SendChar_ToUART(int ch)
     while (UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
 
     UART0->DAT = ch;
-    if(ch == '\n') {
+    if(ch == '\n')
+    {
         while (UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
         UART0->DAT = '\r';
     }
@@ -83,7 +84,8 @@ static void SendChar_ToUART(int ch)
 
 static void PutString(char *str)
 {
-    while (*str != '\0') {
+    while (*str != '\0')
+    {
         SendChar_ToUART(*str++);
     }
 }
@@ -99,11 +101,14 @@ static void PutString(char *str)
 uint16_t ReceiveBytes(int32_t cnt)
 {
     if(cnt!=0) cnt*=0x10000;
-    while(1) {
-        if(cnt--==1) {
+    while(1)
+    {
+        if(cnt--==1)
+        {
             return RECEIVE_TIMEROUT;
         }
-        if((UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0) {
+        if((UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0)
+        {
             return (UART0->DAT);
         }
     }
@@ -120,12 +125,15 @@ uint16_t ReceiveBytes(int32_t cnt)
  */
 uint32_t Get_Version(int item)
 {
-    if(item==1) {
+    if(item==1)
+    {
         if (FMC_Read(AP_HEAD)==1)
             return AP_BOOT_ADDR0;
         else
             return AP_BOOT_ADDR1;
-    } else {
+    }
+    else
+    {
         if (FMC_Read(AP_HEAD)==1)
             return AP_BOOT_ADDR1;
         else
@@ -155,18 +163,23 @@ void UpdatedFirmware(uint32_t UpdateAddr)
     cnt++;
     IdxBytes=1;
     FMC_Erase(UpdateAddr);   /* Erase page */
-    while(1) {
+    while(1)
+    {
         tmp = ReceiveBytes(0x20);
-        if((tmp & RECEIVE_TIMEROUT)==0) {
+        if((tmp & RECEIVE_TIMEROUT)==0)
+        {
             *(u8TmpPtr+IdxBytes)=(uint8_t)tmp;
             cnt++;
             IdxBytes++;
-        } else
+        }
+        else
             break;
 
-        if(IdxBytes==4) {
+        if(IdxBytes==4)
+        {
             IdxBytes=0;
-            if(cnt%FMC_FLASH_PAGE_SIZE==(FMC_FLASH_PAGE_SIZE-1)) {
+            if(cnt%FMC_FLASH_PAGE_SIZE==(FMC_FLASH_PAGE_SIZE-1))
+            {
                 ipage++;
                 FMC_Erase(UpdateAddr+FMC_FLASH_PAGE_SIZE*ipage);   /* Erase page */
             }
@@ -175,17 +188,21 @@ void UpdatedFirmware(uint32_t UpdateAddr)
             if(cnt%10==0) PutString(".");
         }
     }
-    if(cnt%FMC_FLASH_PAGE_SIZE==(FMC_FLASH_PAGE_SIZE-1)) {
+    if(cnt%FMC_FLASH_PAGE_SIZE==(FMC_FLASH_PAGE_SIZE-1))
+    {
         ipage++;
         FMC_Erase(UpdateAddr+FMC_FLASH_PAGE_SIZE*ipage);   /* Erase page */
     }
     FMC_Write(Addr+=4, *u32TmpPtr);
 
     FMC_Erase(AP_HEAD);
-    if(UpdateAddr==AP_BOOT_ADDR0) {
+    if(UpdateAddr==AP_BOOT_ADDR0)
+    {
         FMC_Write(AP_HEAD, 1);
         FMC_Write(AP_HEAD+4, 0);
-    } else {
+    }
+    else
+    {
         FMC_Write(AP_HEAD, 0);
         FMC_Write(AP_HEAD+4, 1);
     }
@@ -223,7 +240,8 @@ int32_t main (void)
     PutString("|     Firmware update by UART0(1:boot,2:update)       |\n");
     PutString("+-----------------------------------------------------+\n");
     ch = ReceiveBytes(0); /* block on waiting for any one character input from UART0 */
-    switch(ch) {
+    switch(ch)
+    {
     case '2':
         Uaddr=Get_Version(0);
         PutString("Update");

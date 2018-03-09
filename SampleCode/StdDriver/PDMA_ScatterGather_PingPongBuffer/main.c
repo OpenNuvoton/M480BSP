@@ -21,7 +21,8 @@ uint32_t volatile g_u32IsTestOver = 0;
 uint32_t volatile g_u32TransferredCount = 0;
 uint32_t g_u32DMAConfig = 0;
 
-typedef struct dma_desc_t {
+typedef struct dma_desc_t
+{
     uint32_t ctl;
     uint32_t src;
     uint32_t dest;
@@ -48,7 +49,8 @@ void PDMA_IRQHandler(void)
         g_u32TransferredCount++;
 
         /* Check if PDMA has finished PDMA_TEST_COUNT tasks */
-        if (g_u32TransferredCount >= PDMA_TEST_COUNT) {
+        if (g_u32TransferredCount >= PDMA_TEST_COUNT)
+        {
             /* Set PDMA into idle state by Descriptor table */
             DMA_DESC[0].ctl &= ~PDMA_DSCT_CTL_OPMODE_Msk;
             DMA_DESC[1].ctl &= ~PDMA_DSCT_CTL_OPMODE_Msk;
@@ -240,8 +242,10 @@ int main(void)
     /* Start PDMA operation */
     PDMA_Trigger(PDMA,4);
 
-    while(1) {
-        if(g_u32IsTestOver == 1) {
+    while(1)
+    {
+        if(g_u32IsTestOver == 1)
+        {
             g_u32IsTestOver = 0;
             printf("test done...\n");
 

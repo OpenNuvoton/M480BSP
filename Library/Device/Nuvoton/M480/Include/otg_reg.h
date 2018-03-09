@@ -22,7 +22,8 @@
     Memory Mapped Structure for OTG Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

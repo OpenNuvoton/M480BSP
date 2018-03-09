@@ -108,7 +108,8 @@ int main(void)
     // We need capture interrupt
     NVIC_EnableIRQ(TMR1_IRQn);
 
-    while(1) {
+    while(1)
+    {
         complete = 0;
         // Count event by timer 0, disable drop count (set to 0), disable timeout (set to 0). Enable interrupt after complete
         TIMER_EnableFreqCounter(TIMER0, 0, 0, TRUE);

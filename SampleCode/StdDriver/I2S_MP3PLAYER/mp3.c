@@ -67,7 +67,8 @@ void MP3_ParseHeaderInfo(uint8_t *pFileName)
     FRESULT res;
 
     res = f_open(&mp3FileObject, (void *)pFileName, FA_OPEN_EXISTING | FA_READ);
-    if (res == FR_OK) {
+    if (res == FR_OK)
+    {
         printf("file is opened!!\r\n");
         f_stat((void *)pFileName, &Finfo);
         audioInfo.playFileSize = Finfo.fsize;
@@ -76,7 +77,9 @@ void MP3_ParseHeaderInfo(uint8_t *pFileName)
 
         //parsing MP3 header
         mp3CountV1L3Headers((unsigned char *)(&MadInputBuffer[0]), ReturnSize);
-    } else {
+    }
+    else
+    {
         printf("Open File Error\r\n");
         return;
     }
@@ -142,7 +145,8 @@ void MP3Player(void)
 
     /* Open MP3 file */
     res = f_open(&mp3FileObject, MP3_FILE, FA_OPEN_EXISTING | FA_READ);
-    if (res != FR_OK) {
+    if (res != FR_OK)
+    {
         printf("Open file error \r\n");
         return;
     }
@@ -165,15 +169,20 @@ void MP3Player(void)
     /* Configure NAU88L25 to specific sample rate */
     NAU88L25_ConfigSampleRate(audioInfo.mp3SampleRate);
 
-    while(1) {
-        if(Stream.buffer==NULL || Stream.error==MAD_ERROR_BUFLEN) {
-            if(Stream.next_frame != NULL) {
+    while(1)
+    {
+        if(Stream.buffer==NULL || Stream.error==MAD_ERROR_BUFLEN)
+        {
+            if(Stream.next_frame != NULL)
+            {
                 /* Get the remaining frame */
                 Remaining = Stream.bufend - Stream.next_frame;
                 memmove(MadInputBuffer, Stream.next_frame, Remaining);
                 ReadStart = MadInputBuffer + Remaining;
                 ReadSize = FILE_IO_BUFFER_SIZE - Remaining;
-            } else {
+            }
+            else
+            {
                 ReadSize = FILE_IO_BUFFER_SIZE,
                 ReadStart = MadInputBuffer,
                 Remaining = 0;
@@ -181,18 +190,21 @@ void MP3Player(void)
 
             /* read the file */
             res = f_read(&mp3FileObject, ReadStart, ReadSize, &ReturnSize);
-            if(res != FR_OK) {
+            if(res != FR_OK)
+            {
                 printf("Stop !(%x)\n\r", res);
                 goto stop;
             }
 
-            if(f_eof(&mp3FileObject)) {
+            if(f_eof(&mp3FileObject))
+            {
                 if(ReturnSize == 0)
                     goto stop;
             }
 
             /* if the file is over */
-            if (ReadSize > ReturnSize) {
+            if (ReadSize > ReturnSize)
+            {
                 GuardPtr=ReadStart+ReadSize;
                 memset(GuardPtr,0,MAD_BUFFER_GUARD);
                 ReadSize+=MAD_BUFFER_GUARD;
@@ -207,18 +219,25 @@ void MP3Player(void)
         }
 
         /* decode a frame from the mp3 stream data */
-        if(mad_frame_decode(&Frame,&Stream)) {
-            if(MAD_RECOVERABLE(Stream.error)) {
+        if(mad_frame_decode(&Frame,&Stream))
+        {
+            if(MAD_RECOVERABLE(Stream.error))
+            {
                 /*if(Stream.error!=MAD_ERROR_LOSTSYNC ||
                    Stream.this_frame!=GuardPtr)
                 {
                 }*/
                 continue;
-            } else {
+            }
+            else
+            {
                 /* the current frame is not full, need to read the remaining part */
-                if(Stream.error==MAD_ERROR_BUFLEN) {
+                if(Stream.error==MAD_ERROR_BUFLEN)
+                {
                     continue;
-                } else {
+                }
+                else
+                {
                     printf("Something error!!\n");
 
                     /* play the next file */
@@ -237,18 +256,23 @@ void MP3Player(void)
         // decode finished, try to copy pcm data to audio buffer
         //
 
-        if(audioInfo.mp3Playing) {
+        if(audioInfo.mp3Playing)
+        {
             //if next buffer is still full (playing), wait until it's empty
             if(aPCMBuffer_Full[u8PCMBufferTargetIdx] == 1)
                 while(aPCMBuffer_Full[u8PCMBufferTargetIdx]);
-        } else {
+        }
+        else
+        {
 
-            if((aPCMBuffer_Full[0] == 1) && (aPCMBuffer_Full[1] == 1 )) {       //all buffers are full, wait
+            if((aPCMBuffer_Full[0] == 1) && (aPCMBuffer_Full[1] == 1 ))         //all buffers are full, wait
+            {
                 StartPlay();
             }
         }
 
-        for(i=0; i<(int)Synth.pcm.length; i++) {
+        for(i=0; i<(int)Synth.pcm.length; i++)
+        {
             /* Get the left/right samples */
             sampleL = Synth.pcm.samples[0][i];
             sampleR = Synth.pcm.samples[1][i];
@@ -257,7 +281,8 @@ void MP3Player(void)
             aPCMBuffer[u8PCMBufferTargetIdx][pcmbuf_idx++] = sampleR | (sampleL << 16);
 
             /* Need change buffer ? */
-            if(pcmbuf_idx == PCM_BUFFER_SIZE) {
+            if(pcmbuf_idx == PCM_BUFFER_SIZE)
+            {
                 aPCMBuffer_Full[u8PCMBufferTargetIdx] = 1;      //set full flag
                 u8PCMBufferTargetIdx ^= 1;
 

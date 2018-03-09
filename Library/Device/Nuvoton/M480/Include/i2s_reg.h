@@ -22,7 +22,8 @@
     Memory Mapped Structure for I2S Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

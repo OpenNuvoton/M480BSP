@@ -134,7 +134,8 @@ void RS485_HANDLE()
 
     if((u32IntSts & UART_INTSTS_RLSINT_Msk)&&(u32IntSts & UART_INTSTS_RDAINT_Msk))           /* RLS INT & RDA INT */  //For RS485 Detect Address
     {
-        if(UART1->FIFOSTS & UART_FIFOSTS_ADDRDETF_Msk) { /* ADD_IF, RS485 mode */
+        if(UART1->FIFOSTS & UART_FIFOSTS_ADDRDETF_Msk)   /* ADD_IF, RS485 mode */
+        {
             addr = UART1->DAT;
             UART_RS485_CLEAR_ADDR_FLAG(UART1);        /* clear ADD_IF flag */
             printf("\nAddr=0x%x,Get:",addr);
@@ -142,19 +143,26 @@ void RS485_HANDLE()
 #if (IS_USE_RS485NMM ==1) //RS485_NMM
             /* if address match, enable RX to receive data, otherwise to disable RX. */
             /* In NMM mode,user can decide multi-address filter. In AAD mode,only one address can set */
-            if (( addr == MATCH_ADDRSS1)||( addr == MATCH_ADDRSS2)) {
+            if (( addr == MATCH_ADDRSS1)||( addr == MATCH_ADDRSS2))
+            {
                 UART1->FIFO &= ~ UART_FIFO_RXOFF_Msk;  /* Enable RS485 RX */
-            } else {
+            }
+            else
+            {
                 printf("\n");
                 UART1->FIFO |= UART_FIFO_RXOFF_Msk;      /* Disable RS485 RX */
                 UART1->FIFO |= UART_FIFO_RXRST_Msk;      /* Clear data from RX FIFO */
             }
 #endif
         }
-    } else if((u32IntSts & UART_INTSTS_RDAINT_Msk) || (u32IntSts & UART_INTSTS_RXTOINT_Msk) ) { /* Rx Ready or Time-out INT*/
+    }
+    else if((u32IntSts & UART_INTSTS_RDAINT_Msk) || (u32IntSts & UART_INTSTS_RXTOINT_Msk) )     /* Rx Ready or Time-out INT*/
+    {
         /* Handle received data */
         printf("%2d,",UART1->DAT);
-    } else if(u32IntSts & UART_INTSTS_BUFERRINT_Msk) { /* Buffer Error INT */
+    }
+    else if(u32IntSts & UART_INTSTS_BUFERRINT_Msk)     /* Buffer Error INT */
+    {
         printf("\nBuffer Error...\n");
         UART_ClearIntFlag(UART1, UART_INTSTS_BUFERRINT_Msk);
     }
@@ -202,7 +210,8 @@ void RS485_9bitModeMaster()
     UART_SelectRS485Mode(UART1, UART_ALTCTL_RS485AUD_Msk, 0);
 
     /* Prepare Data to transmit*/
-    for(i32=0; i32<10; i32++) {
+    for(i32=0; i32<10; i32++)
+    {
         g_u8SendDataGroup1[i32] = i32;
         g_u8SendDataGroup2[i32] = i32+10;
         g_u8SendDataGroup3[i32] = i32+20;
@@ -275,7 +284,8 @@ void RS485_9bitModeSlave()
     getchar();
 
     /* Flush FIFO */
-    while(UART_GET_RX_EMPTY(UART1) != 1) {
+    while(UART_GET_RX_EMPTY(UART1) != 1)
+    {
         UART_READ(UART1);
     }
 

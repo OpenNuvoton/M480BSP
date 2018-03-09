@@ -30,19 +30,23 @@ void PDMA_IRQHandler(void)
 {
     uint32_t u32Status = PDMA_GET_INT_STATUS(PDMA);
 
-    if (u32Status & 0x2) {
-        if (PDMA_GET_TD_STS(PDMA) & 0x4) {          /* channel 2 done */
+    if (u32Status & 0x2)
+    {
+        if (PDMA_GET_TD_STS(PDMA) & 0x4)            /* channel 2 done */
+        {
             /* Copy RX data to TX buffer */
             u8CopyData = 1;
             u8RxIdx ^= 1;
             PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF2_Msk);
         }
 
-        if (PDMA_GET_TD_STS(PDMA) & 0x2) {          /* channel 1 done */
+        if (PDMA_GET_TD_STS(PDMA) & 0x2)            /* channel 1 done */
+        {
             u8TxIdx ^= 1;
             PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF1_Msk);
         }
-    } else
+    }
+    else
         printf("unknown interrupt, status=0x%x!!\n", u32Status);
 }
 
@@ -399,8 +403,10 @@ int32_t main (void)
     I2S_ENABLE_TXDMA(I2S0);
     I2S_ENABLE_TX(I2S0);
 
-    while(1) {
-        if (u8CopyData) {
+    while(1)
+    {
+        if (u8CopyData)
+        {
             memcpy(&PcmTxBuff[u8TxIdx^1], &PcmRxBuff[u8RxIdx], BUFF_LEN*4);
         }
     }

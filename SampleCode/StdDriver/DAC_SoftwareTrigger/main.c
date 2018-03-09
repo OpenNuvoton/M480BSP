@@ -27,11 +27,13 @@ const uint32_t array_size = sizeof(sine) / sizeof(uint16_t);
 
 void DAC_IRQHandler(void)
 {
-    if(DAC_GET_INT_FLAG(DAC0, 0)) {
+    if(DAC_GET_INT_FLAG(DAC0, 0))
+    {
 
         if(index == array_size)
             index = 0;
-        else {
+        else
+        {
             DAC_WRITE_DATA(DAC0, 0, sine[index++]);
             DAC_START_CONV(DAC0);
             /* Clear the DAC conversion complete finish flag */

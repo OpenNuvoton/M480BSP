@@ -70,11 +70,13 @@ loop:
 
     if(str2[i] == 0 ||
             str1[i] == '\r' ||
-            str1[i] == '\n') {
+            str1[i] == '\n')
+    {
         return 0;
     }
 
-    if(str1[i] != str2[i]) {
+    if(str1[i] != str2[i])
+    {
         return 1;
     }
 
@@ -95,9 +97,11 @@ fs_open(const char *name, struct fs_file *file)
 
     for(f = (struct fsdata_file_noconst *)FS_ROOT;
             f != NULL;
-            f = (struct fsdata_file_noconst *)f->next) {
+            f = (struct fsdata_file_noconst *)f->next)
+    {
 
-        if(fs_strcmp(name, f->name) == 0) {
+        if(fs_strcmp(name, f->name) == 0)
+        {
             file->data = f->data;
             file->len = f->len;
 #ifdef FS_STATISTICS
@@ -123,7 +127,8 @@ fs_init(void)
 #ifdef FS_STATISTICS
 #if FS_STATISTICS == 1
     u16_t i;
-    for(i = 0; i < FS_NUMFILES; i++) {
+    for(i = 0; i < FS_NUMFILES; i++)
+    {
         count[i] = 0;
     }
 #endif /* FS_STATISTICS */
@@ -141,9 +146,11 @@ u16_t fs_count
     i = 0;
     for(f = (struct fsdata_file_noconst *)FS_ROOT;
             f != NULL;
-            f = (struct fsdata_file_noconst *)f->next) {
+            f = (struct fsdata_file_noconst *)f->next)
+    {
 
-        if(fs_strcmp(name, f->name) == 0) {
+        if(fs_strcmp(name, f->name) == 0)
+        {
             return count[i];
         }
         ++i;

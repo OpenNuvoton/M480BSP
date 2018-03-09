@@ -16,7 +16,8 @@ volatile uint32_t g_au32TMRINTCount[4] = {0};
 
 void TMR0_IRQHandler(void)
 {
-    if(TIMER_GetIntFlag(TIMER0) == 1) {
+    if(TIMER_GetIntFlag(TIMER0) == 1)
+    {
         /* Clear Timer0 time-out interrupt flag */
         TIMER_ClearIntFlag(TIMER0);
 
@@ -27,7 +28,8 @@ void TMR0_IRQHandler(void)
 
 void TMR1_IRQHandler(void)
 {
-    if(TIMER_GetIntFlag(TIMER1) == 1) {
+    if(TIMER_GetIntFlag(TIMER1) == 1)
+    {
         /* Clear Timer1 time-out interrupt flag */
         TIMER_ClearIntFlag(TIMER1);
 
@@ -38,7 +40,8 @@ void TMR1_IRQHandler(void)
 
 void TMR2_IRQHandler(void)
 {
-    if(TIMER_GetIntFlag(TIMER2) == 1) {
+    if(TIMER_GetIntFlag(TIMER2) == 1)
+    {
         /* Clear Timer2 time-out interrupt flag */
         TIMER_ClearIntFlag(TIMER2);
 
@@ -49,7 +52,8 @@ void TMR2_IRQHandler(void)
 
 void TMR3_IRQHandler(void)
 {
-    if(TIMER_GetIntFlag(TIMER3) == 1) {
+    if(TIMER_GetIntFlag(TIMER3) == 1)
+    {
         /* Clear Timer3 time-out interrupt flag */
         TIMER_ClearIntFlag(TIMER3);
 
@@ -178,8 +182,10 @@ int main(void)
 
     /* Check Timer0 ~ Timer3 interrupt counts */
     printf("# Timer interrupt counts :\n");
-    while(u32InitCount < 20) {
-        if(g_au32TMRINTCount[0] != u32InitCount) {
+    while(u32InitCount < 20)
+    {
+        if(g_au32TMRINTCount[0] != u32InitCount)
+        {
             au32Counts[0] = g_au32TMRINTCount[0];
             au32Counts[1] = g_au32TMRINTCount[1];
             au32Counts[2] = g_au32TMRINTCount[2];
@@ -190,7 +196,8 @@ int main(void)
 
             if((au32Counts[1] > (au32Counts[0] * 2 + 1)) || (au32Counts[1] < (au32Counts[0] * 2 - 1)) ||
                     (au32Counts[2] > (au32Counts[0] * 4 + 1)) || (au32Counts[2] < (au32Counts[0] * 4 - 1)) ||
-                    (au32Counts[3] > (au32Counts[0] * 8 + 1)) || (au32Counts[3] < (au32Counts[0] * 8 - 1))) {
+                    (au32Counts[3] > (au32Counts[0] * 8 + 1)) || (au32Counts[3] < (au32Counts[0] * 8 - 1)))
+            {
                 printf("*** FAIL ***\n");
                 while(1) {}
             }

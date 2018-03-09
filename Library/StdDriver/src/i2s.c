@@ -35,7 +35,8 @@ static uint32_t I2S_GetSourceClockFreq(I2S_T *i2s)
     /* get I2S selection clock source */
     u32ClkSrcSel = CLK->CLKSEL3 & CLK_CLKSEL3_I2S0SEL_Msk;
 
-    switch (u32ClkSrcSel) {
+    switch (u32ClkSrcSel)
+    {
     case CLK_CLKSEL3_I2S0SEL_HXT:
         u32Freq = __HXT;
         break;
@@ -158,9 +159,12 @@ uint32_t I2S_EnableMCLK(I2S_T *i2s, uint32_t u32BusClock)
     uint32_t u32SrcClk, u32Reg, u32Clock;
 
     u32SrcClk = I2S_GetSourceClockFreq(i2s);
-    if (u32BusClock == u32SrcClk) {
+    if (u32BusClock == u32SrcClk)
+    {
         u8Divider = 0U;
-    } else {
+    }
+    else
+    {
         u8Divider = (uint8_t)(u32SrcClk/u32BusClock) >> 1U;
     }
 
@@ -170,9 +174,12 @@ uint32_t I2S_EnableMCLK(I2S_T *i2s, uint32_t u32BusClock)
 
     u32Reg = i2s->CLKDIV & I2S_CLKDIV_MCLKDIV_Msk;
 
-    if (u32Reg == 0U) {
+    if (u32Reg == 0U)
+    {
         u32Clock = u32SrcClk;
-    } else {
+    }
+    else
+    {
         u32Clock = ((u32SrcClk >> 1U) / u32Reg);
     }
 
@@ -200,8 +207,8 @@ void I2S_DisableMCLK(I2S_T *i2s)
 void I2S_SetFIFO(I2S_T *i2s, uint32_t u32TxThreshold, uint32_t u32RxThreshold)
 {
     i2s->CTL1 = ((i2s->CTL1 & ~(I2S_CTL1_TXTH_Msk | I2S_CTL1_RXTH_Msk)) |
-                              (u32TxThreshold << I2S_CTL1_TXTH_Pos) |
-                              (u32RxThreshold << I2S_CTL1_RXTH_Pos));
+                 (u32TxThreshold << I2S_CTL1_TXTH_Pos) |
+                 (u32RxThreshold << I2S_CTL1_RXTH_Pos));
 }
 
 
@@ -227,9 +234,9 @@ void I2S_SetFIFO(I2S_T *i2s, uint32_t u32TxThreshold, uint32_t u32RxThreshold)
 void I2S_ConfigureTDM(I2S_T *i2s, uint32_t u32ChannelWidth, uint32_t u32ChannelNum, uint32_t u32SyncWidth)
 {
     i2s->CTL0 = ((i2s->CTL0 & ~(I2S_CTL0_TDMCHNUM_Msk | I2S_CTL0_CHWIDTH_Msk | I2S_CTL0_PCMSYNC_Msk)) |
-                              (u32ChannelWidth << I2S_CTL0_CHWIDTH_Pos) |
-                              (u32ChannelNum << I2S_CTL0_TDMCHNUM_Pos) |
-                              (u32SyncWidth << I2S_CTL0_PCMSYNC_Pos));
+                 (u32ChannelWidth << I2S_CTL0_CHWIDTH_Pos) |
+                 (u32ChannelNum << I2S_CTL0_TDMCHNUM_Pos) |
+                 (u32SyncWidth << I2S_CTL0_PCMSYNC_Pos));
 }
 
 /*@}*/ /* end of group I2S_EXPORTED_FUNCTIONS */

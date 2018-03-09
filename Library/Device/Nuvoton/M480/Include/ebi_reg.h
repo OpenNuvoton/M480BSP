@@ -22,7 +22,8 @@
     Memory Mapped Structure for EBI Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

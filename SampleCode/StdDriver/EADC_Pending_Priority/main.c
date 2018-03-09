@@ -56,8 +56,8 @@ void SYS_Init(void)
     SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
     SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
     /* Set PB.0, PB.6 ~ PB.9 to input mode */
-    PB->MODE &= ~(GPIO_MODE_MODE0_Msk | GPIO_MODE_MODE6_Msk | GPIO_MODE_MODE7_Msk | 
-                  GPIO_MODE_MODE8_Msk | GPIO_MODE_MODE9_Msk); 
+    PB->MODE &= ~(GPIO_MODE_MODE0_Msk | GPIO_MODE_MODE6_Msk | GPIO_MODE_MODE7_Msk |
+                  GPIO_MODE_MODE8_Msk | GPIO_MODE_MODE9_Msk);
     /* Configure the EADC analog input pins.  */
     SYS->GPB_MFPL = (SYS->GPB_MFPL & ~SYS_GPB_MFPL_PB0MFP_Msk) | SYS_GPB_MFPL_PB0MFP_EADC0_CH0;
     SYS->GPB_MFPL = (SYS->GPB_MFPL & ~SYS_GPB_MFPL_PB6MFP_Msk) | SYS_GPB_MFPL_PB6MFP_EADC0_CH6;
@@ -89,24 +89,29 @@ void EADC_FunctionTest()
     /* Set the EADC and enable the A/D converter */
     EADC_Open(EADC, NULL);
 
-    while (1) {
+    while (1)
+    {
         printf("Select test items:\n");
         printf("  [1] Assign interrupt ADINT0~3 to Sample Module 0~3\n");
         printf("  [2] Assign interrupt ADINT3~0 to Sample Module 0~3\n");
         printf("  Other keys: exit EADC test\n");
         u8Option = getchar();
 
-        if (u8Option == '1') {
+        if (u8Option == '1')
+        {
             g_u32IntModule[0] = 0;  /* Assign ADINT0 to Sample module 0 */
             g_u32IntModule[1] = 1;  /* Assign ADINT1 to Sample module 1 */
             g_u32IntModule[2] = 2;  /* Assign ADINT2 to Sample module 2 */
             g_u32IntModule[3] = 3;  /* Assign ADINT3 to Sample module 3 */
-        } else if (u8Option == '2') {
+        }
+        else if (u8Option == '2')
+        {
             g_u32IntModule[0] = 3;  /* Assign ADINT0 to Sample module 3 */
             g_u32IntModule[1] = 2;  /* Assign ADINT1 to Sample module 2 */
             g_u32IntModule[2] = 1;  /* Assign ADINT2 to Sample module 1 */
             g_u32IntModule[3] = 0;  /* Assign ADINT3 to Sample module 0 */
-        } else
+        }
+        else
             break;  /* exit while loop */
 
         /* Configure the sample module for analog input channel and software trigger source. */
@@ -150,7 +155,8 @@ void EADC_FunctionTest()
         /* Get the conversion result of the sample module */
         printf("The ADINTx interrupt sequence is:\n");
 
-        for (i = 0; i < 4; i++) {
+        for (i = 0; i < 4; i++)
+        {
             i32ConversionData = EADC_GET_CONV_DATA(EADC, g_u32IntModule[i]);
             printf("ADINT%d: #%d, Module %d, Conversion result: 0x%X (%d)\n", i, g_u32IntSequence[i], g_u32IntModule[i], i32ConversionData, i32ConversionData);
         }

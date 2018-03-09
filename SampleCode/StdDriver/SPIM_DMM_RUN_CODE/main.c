@@ -104,7 +104,8 @@ int main()
 
     SPIM_SET_DCNUM(8);                /* 8 is the default value. */
 
-    if (SPIM_InitFlash(1) != 0) {      /* Initialized SPI flash */
+    if (SPIM_InitFlash(1) != 0)        /* Initialized SPI flash */
+    {
         printf("SPIM flash initialize failed!\n");
         while (1);
     }
@@ -128,7 +129,8 @@ int main()
 
     SPIM_EnterDirectMapMode(USE_4_BYTES_MODE, CMD_DMA_FAST_READ, 0);
 
-    while (1) {
+    while (1)
+    {
         printf("\n\nProgram is currently running on APROM flash.\n");
         printf("Press any key to branch to sub-routine on SPIM flash...\n");
 

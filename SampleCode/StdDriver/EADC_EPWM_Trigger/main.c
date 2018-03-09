@@ -58,7 +58,7 @@ void SYS_Init(void)
     SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
     SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
     /* Set PB.0 ~ PB.3 to input mode */
-    PB->MODE &= ~(GPIO_MODE_MODE0_Msk | GPIO_MODE_MODE1_Msk | GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk); 
+    PB->MODE &= ~(GPIO_MODE_MODE0_Msk | GPIO_MODE_MODE1_Msk | GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk);
     /* Configure the GPB0 - GPB3 ADC analog input pins.  */
     SYS->GPB_MFPL &= ~(SYS_GPB_MFPL_PB0MFP_Msk | SYS_GPB_MFPL_PB1MFP_Msk |
                        SYS_GPB_MFPL_PB2MFP_Msk | SYS_GPB_MFPL_PB3MFP_Msk);
@@ -117,13 +117,15 @@ void EADC_FunctionTest()
 
     printf("\nIn this test, software will get 6 conversion result from the specified channel.\n");
 
-    while(1) {
+    while(1)
+    {
         printf("Select input mode:\n");
         printf("  [1] Single end input (channel 2 only)\n");
         printf("  [2] Differential input (channel pair 1 only)\n");
         printf("  Other keys: exit single mode test\n");
         u8Option = getchar();
-        if(u8Option == '1') {
+        if(u8Option == '1')
+        {
             /* Set input mode as single-end and enable the A/D converter */
             EADC_Open(EADC, EADC_CTL_DIFFEN_SINGLE_END);
 
@@ -145,7 +147,8 @@ void EADC_FunctionTest()
             g_u32COVNUMFlag = 0;
             EPWM_Start(EPWM0, BIT0); //EPWM0 channel 0 counter start running.
 
-            while(1) {
+            while(1)
+            {
                 /* Wait ADC interrupt (g_u32AdcIntFlag will be set at IRQ_Handler function) */
                 while(g_u32AdcIntFlag == 0);
 
@@ -168,7 +171,9 @@ void EADC_FunctionTest()
             for(g_u32COVNUMFlag = 0; (g_u32COVNUMFlag) < 6; g_u32COVNUMFlag++)
                 printf("                                0x%X (%d)\n", i32ConversionData[g_u32COVNUMFlag], i32ConversionData[g_u32COVNUMFlag]);
 
-        } else if(u8Option == '2') {
+        }
+        else if(u8Option == '2')
+        {
 
             /* Set input mode as differential and enable the A/D converter */
             EADC_Open(EADC, EADC_CTL_DIFFEN_DIFFERENTIAL);
@@ -190,7 +195,8 @@ void EADC_FunctionTest()
             g_u32COVNUMFlag = 0;
             EPWM_Start(EPWM0, BIT0); //EPWM0 channel 0 counter start running.
 
-            while(1) {
+            while(1)
+            {
                 /* Wait ADC interrupt (g_u32AdcIntFlag will be set at IRQ_Handler function) */
                 while(g_u32AdcIntFlag == 0);
 
@@ -213,7 +219,8 @@ void EADC_FunctionTest()
             for(g_u32COVNUMFlag = 0; (g_u32COVNUMFlag) < 6; g_u32COVNUMFlag++)
                 printf("                                0x%X (%d)\n", i32ConversionData[g_u32COVNUMFlag], i32ConversionData[g_u32COVNUMFlag]);
 
-        } else
+        }
+        else
             return ;
 
     }

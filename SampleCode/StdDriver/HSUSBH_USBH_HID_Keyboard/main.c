@@ -43,7 +43,8 @@ void SysTick_Handler(void)
 void enable_sys_tick(int ticks_per_second)
 {
     g_tick_cnt = 0;
-    if (SysTick_Config(SystemCoreClock / ticks_per_second)) {
+    if (SysTick_Config(SystemCoreClock / ticks_per_second))
+    {
         /* Setup SysTick Timer for 1 second interrupts  */
         printf("Set system tick error!!\n");
         while (1);
@@ -79,9 +80,11 @@ void  dump_buff_hex(uint8_t *pucBuff, int nBytes)
     int     nIdx, i;
 
     nIdx = 0;
-    while (nBytes > 0) {
+    while (nBytes > 0)
+    {
         printf("0x%04X  ", nIdx);
-        for (i = 0; (i < 16) && (nBytes > 0); i++) {
+        for (i = 0; (i < 16) && (nBytes > 0); i++)
+        {
             printf("%02x ", pucBuff[nIdx + i]);
             nBytes--;
         }
@@ -94,7 +97,8 @@ void  dump_buff_hex(uint8_t *pucBuff, int nBytes)
 int  is_a_new_hid_device(HID_DEV_T *hdev)
 {
     int    i;
-    for (i = 0; i < CONFIG_HID_MAX_DEV; i++) {
+    for (i = 0; i < CONFIG_HID_MAX_DEV; i++)
+    {
         if ((g_hid_list[i] != NULL) && (g_hid_list[i] == hdev) &&
                 (g_hid_list[i]->uid == hdev->uid))
             return 0;
@@ -106,7 +110,8 @@ void update_hid_device_list(HID_DEV_T *hdev)
 {
     int  i = 0;
     memset(g_hid_list, 0, sizeof(g_hid_list));
-    while ((i < CONFIG_HID_MAX_DEV) && (hdev != NULL)) {
+    while ((i < CONFIG_HID_MAX_DEV) && (hdev != NULL))
+    {
         g_hid_list[i++] = hdev;
         hdev = hdev->next;
     }
@@ -136,7 +141,8 @@ int  init_hid_device(HID_DEV_T *hdev)
     printf("  VID: 0x%x, PID: 0x%x\n\n", hdev->idVendor, hdev->idProduct);
 
     ret = usbh_hid_get_report_descriptor(hdev, data_buff, 1024);
-    if (ret > 0) {
+    if (ret > 0)
+    {
         printf("\nDump report descriptor =>\n");
         dump_buff_hex(data_buff, ret);
     }
@@ -254,16 +260,20 @@ int32_t main(void)
 
     memset(g_hid_list, 0, sizeof(g_hid_list));
 
-    while (1) {
-        if (usbh_pooling_hubs()) {           /* USB Host port detect polling and management */
+    while (1)
+    {
+        if (usbh_pooling_hubs())             /* USB Host port detect polling and management */
+        {
 
             usbh_memory_used();              /* print out USB memory allocating information */
 
             printf("\n Has hub events.\n");
             hdev_list = usbh_hid_get_device_list();
             hdev = hdev_list;
-            while (hdev != NULL) {
-                if (is_a_new_hid_device(hdev)) {
+            while (hdev != NULL)
+            {
+                if (is_a_new_hid_device(hdev))
+                {
                     init_hid_device(hdev);
                 }
                 hdev = hdev->next;
@@ -273,12 +283,14 @@ int32_t main(void)
             usbh_memory_used();
         }
 
-        if (hdev_ToDo != NULL) {
+        if (hdev_ToDo != NULL)
+        {
             kbd_parse_report(hdev_ToDo, data_ToDo, 8);
             hdev_ToDo = NULL;
         }
 
-        if (!kbhit()) {
+        if (!kbhit())
+        {
             getchar();
             usbh_memory_used();
         }

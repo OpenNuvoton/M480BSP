@@ -35,7 +35,8 @@
 #include "lwip/opt.h"
 #include "fs.h"
 
-struct fsdata_file {
+struct fsdata_file
+{
     const struct fsdata_file *next;
     const unsigned char *name;
     const unsigned char *data;

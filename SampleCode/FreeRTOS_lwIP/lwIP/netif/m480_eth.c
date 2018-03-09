@@ -70,13 +70,15 @@ static int reset_phy(void)
     mdio_write(CONFIG_PHY_ADDR, MII_BMCR, BMCR_RESET);
 
     delay = 2000;
-    while(delay-- > 0) {
+    while(delay-- > 0)
+    {
         if((mdio_read(CONFIG_PHY_ADDR, MII_BMCR) & BMCR_RESET) == 0)
             break;
 
     }
 
-    if(delay == 0) {
+    if(delay == 0)
+    {
         printf("Reset phy failed\n");
         return(-1);
     }
@@ -91,29 +93,40 @@ static int reset_phy(void)
     mdio_write(CONFIG_PHY_ADDR, MII_BMCR, reg | BMCR_ANRESTART);
 
     delay = 200000;
-    while(delay-- > 0) {
+    while(delay-- > 0)
+    {
         if((mdio_read(CONFIG_PHY_ADDR, MII_BMSR) & (BMSR_ANEGCOMPLETE | BMSR_LSTATUS))
                 == (BMSR_ANEGCOMPLETE | BMSR_LSTATUS))
             break;
     }
 
-    if(delay == 0) {
+    if(delay == 0)
+    {
         printf("AN failed. Set to 100 FULL\n");
         EMAC->CTL |= (EMAC_CTL_OPMODE_Msk | EMAC_CTL_FUDUP_Msk);
         return(-1);
-    } else {
+    }
+    else
+    {
         reg = mdio_read(CONFIG_PHY_ADDR, MII_LPA);
 
-        if(reg & ADVERTISE_100FULL) {
+        if(reg & ADVERTISE_100FULL)
+        {
             printf("100 full\n");
             EMAC->CTL |= (EMAC_CTL_OPMODE_Msk | EMAC_CTL_FUDUP_Msk);
-        } else if(reg & ADVERTISE_100HALF) {
+        }
+        else if(reg & ADVERTISE_100HALF)
+        {
             printf("100 half\n");
             EMAC->CTL = (EMAC->CTL & ~EMAC_CTL_FUDUP_Msk) | EMAC_CTL_OPMODE_Msk;
-        } else if(reg & ADVERTISE_10FULL) {
+        }
+        else if(reg & ADVERTISE_10FULL)
+        {
             printf("10 full\n");
             EMAC->CTL = (EMAC->CTL & ~EMAC_CTL_OPMODE_Msk) | EMAC_CTL_FUDUP_Msk;
-        } else {
+        }
+        else
+        {
             printf("10 half\n");
             EMAC->CTL &= ~(EMAC_CTL_OPMODE_Msk | EMAC_CTL_FUDUP_Msk);
         }
@@ -130,7 +143,8 @@ static void init_tx_desc(void)
 
     cur_tx_desc_ptr = fin_tx_desc_ptr = &tx_desc[0];
 
-    for(i = 0; i < TX_DESCRIPTOR_NUM; i++) {
+    for(i = 0; i < TX_DESCRIPTOR_NUM; i++)
+    {
         tx_desc[i].status1 = TXFD_PADEN | TXFD_CRCAPP | TXFD_INTEN;
         tx_desc[i].buf = &tx_buf[i][0];
         tx_desc[i].status2 = 0;
@@ -151,7 +165,8 @@ static void init_rx_desc(void)
 
     cur_rx_desc_ptr = &rx_desc[0];
 
-    for(i = 0; i < RX_DESCRIPTOR_NUM; i++) {
+    for(i = 0; i < RX_DESCRIPTOR_NUM; i++)
+    {
         rx_desc[i].status1 = OWNERSHIP_EMAC;
         rx_desc[i].buf = &rx_buf[i][0];
         rx_desc[i].status2 = 0;
@@ -225,11 +240,13 @@ void EMAC_RX_IRQHandler(void)
     xInsideISR = pdTRUE;
     status = EMAC->INTSTS & 0xFFFF;
     EMAC->INTSTS = status;
-    if (status & EMAC_INTSTS_RXBEIF_Msk) {
+    if (status & EMAC_INTSTS_RXBEIF_Msk)
+    {
         // Shouldn't goes here, unless descriptor corrupted
     }
 
-    do {
+    do
+    {
 
         //cur_entry = EMAC->CRXDSA;
 
@@ -240,10 +257,12 @@ void EMAC_RX_IRQHandler(void)
         if(status & OWNERSHIP_EMAC)
             break;
 
-        if (status & RXFD_RXGD) {
+        if (status & RXFD_RXGD)
+        {
 
 #ifdef    TIME_STAMPING
-            if(status & RXFD_RTSAS) {
+            if(status & RXFD_RTSAS)
+            {
                 cur_rx_desc_ptr->buf = (uint8_t *)fin_tx_desc_ptr->backup1;
                 cur_rx_desc_ptr->next = (struct eth_descriptor *)fin_tx_desc_ptr->backup2;
             }
@@ -256,7 +275,8 @@ void EMAC_RX_IRQHandler(void)
         cur_rx_desc_ptr->status1 = OWNERSHIP_EMAC;
         cur_rx_desc_ptr = cur_rx_desc_ptr->next;
 
-    } while (1);
+    }
+    while (1);
 
     ETH_TRIGGER_RX();
     xInsideISR = pdFALSE;
@@ -271,28 +291,35 @@ void EMAC_TX_IRQHandler(void)
     status = EMAC->INTSTS & 0xFFFF0000;
     EMAC->INTSTS = status;
 #ifdef    TIME_STAMPING
-    if(status & EMAC_INTSTS_TSALMIF_Msk) {
+    if(status & EMAC_INTSTS_TSALMIF_Msk)
+    {
         // TODO: time stamp alarm. write me!!
     }
 #endif
-    if(status & EMAC_INTSTS_TXBEIF_Msk) {
+    if(status & EMAC_INTSTS_TXBEIF_Msk)
+    {
         // Shouldn't goes here, unless descriptor corrupted
         return;
     }
 
     cur_entry = EMAC->CTXDSA;
 
-    while (cur_entry != (u32_t)fin_tx_desc_ptr) {
+    while (cur_entry != (u32_t)fin_tx_desc_ptr)
+    {
 #ifdef  TIME_STAMPING
-        if(fin_tx_desc_ptr->status2 & TXFD_TTSAS) {
-            if(fin_tx_desc_ptr->reserved1 != NULL) {
+        if(fin_tx_desc_ptr->status2 & TXFD_TTSAS)
+        {
+            if(fin_tx_desc_ptr->reserved1 != NULL)
+            {
                 ((struct pbuf *)(fin_tx_desc_ptr->reserved1))->ts_nsec = (u32_t)(fin_tx_desc_ptr->buf);
                 ((struct pbuf *)(fin_tx_desc_ptr->reserved1))->ts_sec = (u32_t)(fin_tx_desc_ptr->next);
                 ethernetif_loopback_input((struct pbuf *)fin_tx_desc_ptr->reserved1);
             }
             fin_tx_desc_ptr->buf = (u8_t *)fin_tx_desc_ptr->backup1;
             fin_tx_desc_ptr->next = (struct eth_descriptor *)fin_tx_desc_ptr->backup2;
-        } else {
+        }
+        else
+        {
             if((struct pbuf *)fin_tx_desc_ptr->reserved1 != NULL)
                 pbuf_free((struct pbuf *)fin_tx_desc_ptr->reserved1);  //need to define LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT 1
         }

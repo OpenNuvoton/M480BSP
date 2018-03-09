@@ -103,7 +103,8 @@ int main(void)
     printf("In the meanwhile the SPI controller will receive %d data from the off-chip master device.\n", TEST_COUNT);
     printf("After the transfer is done, the %d received data will be printed out.\n", TEST_COUNT);
 
-    for(u32TxDataCount = 0; u32TxDataCount < TEST_COUNT; u32TxDataCount++) {
+    for(u32TxDataCount = 0; u32TxDataCount < TEST_COUNT; u32TxDataCount++)
+    {
         /* Write the initial value to source buffer */
         g_au32SourceData[u32TxDataCount] = 0x00AA0000 + u32TxDataCount;
         /* Clear destination buffer */
@@ -120,7 +121,8 @@ int main(void)
     SPI_SetFIFO(SPI0, 4, 4);
 
     /* Access TX and RX FIFO */
-    while(u32RxDataCount < TEST_COUNT) {
+    while(u32RxDataCount < TEST_COUNT)
+    {
         /* Check TX FULL flag and TX data count */
         if((SPI_GET_TX_FIFO_FULL_FLAG(SPI0) == 0) && (u32TxDataCount < TEST_COUNT))
             SPI_WRITE_TX(SPI0, g_au32SourceData[u32TxDataCount++]); /* Write to TX FIFO */
@@ -131,7 +133,8 @@ int main(void)
 
     /* Print the received data */
     printf("Received data:\n");
-    for(u32RxDataCount = 0; u32RxDataCount < TEST_COUNT; u32RxDataCount++) {
+    for(u32RxDataCount = 0; u32RxDataCount < TEST_COUNT; u32RxDataCount++)
+    {
         printf("%d:\t0x%X\n", u32RxDataCount, g_au32DestinationData[u32RxDataCount]);
     }
     printf("The data transfer was done.\n");

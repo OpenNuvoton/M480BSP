@@ -70,7 +70,8 @@ extern u8_t my_mac_addr[6];
  * as it is already kept in the struct netif.
  * But this is only an example, anyway...
  */
-struct ethernetif {
+struct ethernetif
+{
     struct eth_addr *ethaddr;
     /* Add whatever per-interface state that is needed here. */
 };
@@ -141,7 +142,8 @@ low_level_output(struct netif *netif, struct pbuf *p)
     pbuf_header(p, -ETH_PAD_SIZE); /* drop the padding word */
 #endif
 
-    for(q = p; q != NULL; q = q->next) {
+    for(q = p; q != NULL; q = q->next)
+    {
         memcpy((u8_t*)&buf[len], q->payload, q->len);
         len = len + q->len;
     }
@@ -180,7 +182,8 @@ low_level_input(struct netif *netif, u16_t len, u8_t *buf)
     /* We allocate a pbuf chain of pbufs from the pool. */
     p = pbuf_alloc(PBUF_RAW, len, PBUF_POOL);
 
-    if (p != NULL) {
+    if (p != NULL)
+    {
 
 #if ETH_PAD_SIZE
         pbuf_header(p, -ETH_PAD_SIZE); /* drop the padding word */
@@ -190,7 +193,8 @@ low_level_input(struct netif *netif, u16_t len, u8_t *buf)
         len = 0;
         /* We iterate over the pbuf chain until we have read the entire
         * packet into the pbuf. */
-        for(q = p; q != NULL; q = q->next) {
+        for(q = p; q != NULL; q = q->next)
+        {
             memcpy((u8_t*)q->payload, (u8_t*)&buf[len], q->len);
             len = len + q->len;
         }
@@ -201,7 +205,9 @@ low_level_input(struct netif *netif, u16_t len, u8_t *buf)
 #endif
 
         LINK_STATS_INC(link.recv);
-    } else {
+    }
+    else
+    {
         // do nothing. drop the packet
         LINK_STATS_INC(link.memerr);
         LINK_STATS_INC(link.drop);
@@ -238,7 +244,8 @@ ethernetif_input(u16_t len, u8_t *buf, u32_t s, u32_t ns)
     /* points to packet payload, which starts with an Ethernet header */
     ethhdr = p->payload;
 
-    switch (htons(ethhdr->type)) {
+    switch (htons(ethhdr->type))
+    {
     /* IP or ARP packet? */
     case ETHTYPE_IP:
     case ETHTYPE_ARP:
@@ -248,7 +255,8 @@ ethernetif_input(u16_t len, u8_t *buf, u32_t s, u32_t ns)
     case ETHTYPE_PPPOE:
 #endif /* PPPOE_SUPPORT */
         /* full packet send to tcpip_thread to process */
-        if (_netif->input(p, _netif)!=ERR_OK) {
+        if (_netif->input(p, _netif)!=ERR_OK)
+        {
             LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_input: IP input error\n"));
             pbuf_free(p);
             p = NULL;
@@ -271,7 +279,8 @@ ethernetif_loopback_input(struct pbuf *p)           // TODO: make sure packet no
     /* points to packet payload, which starts with an Ethernet header */
     ethhdr = p->payload;
 
-    switch (htons(ethhdr->type)) {
+    switch (htons(ethhdr->type))
+    {
     /* IP or ARP packet? */
     case ETHTYPE_IP:
     case ETHTYPE_ARP:
@@ -281,7 +290,8 @@ ethernetif_loopback_input(struct pbuf *p)           // TODO: make sure packet no
     case ETHTYPE_PPPOE:
 #endif /* PPPOE_SUPPORT */
         /* full packet send to tcpip_thread to process */
-        if (_netif->input(p, _netif)!=ERR_OK) {
+        if (_netif->input(p, _netif)!=ERR_OK)
+        {
             LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_input: IP input error\n"));
             pbuf_free(p);
             p = NULL;
@@ -318,7 +328,8 @@ ethernetif_init(struct netif *netif)
 
     _netif = netif;
     ethernetif = mem_malloc(sizeof(struct ethernetif));
-    if (ethernetif == NULL) {
+    if (ethernetif == NULL)
+    {
         LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_init: out of memory\n"));
         return ERR_MEM;
     }

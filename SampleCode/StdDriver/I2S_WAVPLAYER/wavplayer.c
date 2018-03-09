@@ -45,7 +45,8 @@ void WAVPlayer(void)
     uint32_t u32WavSamplingRate;
 
     res = f_open(&wavFileObject, "0:\\test.wav", FA_OPEN_EXISTING | FA_READ);       //USBH:0 , SD0: 1
-    if (res != FR_OK) {
+    if (res != FR_OK)
+    {
         printf("Open file error!\n");
         return;
     }
@@ -63,9 +64,12 @@ void WAVPlayer(void)
     I2S_EnableMCLK(I2S0, 12000000);
     I2S0->CTL0 |= I2S_CTL0_ORDER_Msk;
 
-    while(1) {
-        if((aPCMBuffer_Full[0] == 1) && (aPCMBuffer_Full[1] == 1 )) {       //all buffers are full, wait
-            if(!bAudioPlaying) {
+    while(1)
+    {
+        if((aPCMBuffer_Full[0] == 1) && (aPCMBuffer_Full[1] == 1 ))         //all buffers are full, wait
+        {
+            if(!bAudioPlaying)
+            {
                 bAudioPlaying = 1;
                 I2S_ENABLE_TXDMA(I2S0);
                 I2S_ENABLE_TX(I2S0);
@@ -80,7 +84,8 @@ void WAVPlayer(void)
         if(f_eof(&wavFileObject))   break;
         aPCMBuffer_Full[u8PCMBufferTargetIdx] = 1;
 
-        if(bAudioPlaying) {
+        if(bAudioPlaying)
+        {
             if(aPCMBuffer_Full[u8PCMBufferTargetIdx^1] == 1)
                 while(aPCMBuffer_Full[u8PCMBufferTargetIdx^1]);
         }

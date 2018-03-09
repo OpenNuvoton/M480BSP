@@ -35,20 +35,23 @@ Environment:
 #define HIDP_LINK_COLLECTION_UNSPECIFIED ((USHORT) 0)
 
 
-typedef enum _HIDP_REPORT_TYPE {
+typedef enum _HIDP_REPORT_TYPE
+{
     HidP_Input,
     HidP_Output,
     HidP_Feature
 } HIDP_REPORT_TYPE;
 
-typedef struct _USAGE_AND_PAGE {
+typedef struct _USAGE_AND_PAGE
+{
     USAGE Usage;
     USAGE UsagePage;
 } USAGE_AND_PAGE, *PUSAGE_AND_PAGE;
 
 #define HidP_IsSameUsageAndPage(u1, u2) ((* (PULONG) &u1) == (* (PULONG) &u2))
 
-typedef struct _HIDP_BUTTON_CAPS {
+typedef struct _HIDP_BUTTON_CAPS
+{
     USAGE    UsagePage;
     UCHAR    ReportID;
     BOOLEAN  IsAlias;
@@ -65,14 +68,17 @@ typedef struct _HIDP_BUTTON_CAPS {
     BOOLEAN  IsAbsolute;
 
     ULONG    Reserved[10];
-    union {
-        struct {
+    union
+    {
+        struct
+        {
             USAGE    UsageMin,         UsageMax;
             USHORT   StringMin,        StringMax;
             USHORT   DesignatorMin,    DesignatorMax;
             USHORT   DataIndexMin,     DataIndexMax;
         } Range;
-        struct {
+        struct
+        {
             USAGE    Usage,            Reserved1;
             USHORT   StringIndex,      Reserved2;
             USHORT   DesignatorIndex,  Reserved3;
@@ -83,7 +89,8 @@ typedef struct _HIDP_BUTTON_CAPS {
 } HIDP_BUTTON_CAPS, *PHIDP_BUTTON_CAPS;
 
 
-typedef struct _HIDP_VALUE_CAPS {
+typedef struct _HIDP_VALUE_CAPS
+{
     USAGE    UsagePage;
     UCHAR    ReportID;
     BOOLEAN  IsAlias;
@@ -112,15 +119,18 @@ typedef struct _HIDP_VALUE_CAPS {
     LONG     LogicalMin,       LogicalMax;
     LONG     PhysicalMin,      PhysicalMax;
 
-    union {
-        struct {
+    union
+    {
+        struct
+        {
             USAGE    UsageMin,         UsageMax;
             USHORT   StringMin,        StringMax;
             USHORT   DesignatorMin,    DesignatorMax;
             USHORT   DataIndexMin,     DataIndexMax;
         } Range;
 
-        struct {
+        struct
+        {
             USAGE    Usage,            Reserved1;
             USHORT   StringIndex,      Reserved2;
             USHORT   DesignatorIndex,  Reserved3;
@@ -181,7 +191,8 @@ typedef struct _HIDP_VALUE_CAPS {
 // tree.
 //
 //
-typedef struct _HIDP_LINK_COLLECTION_NODE {
+typedef struct _HIDP_LINK_COLLECTION_NODE
+{
     USAGE    LinkUsage;
     USAGE    LinkUsagePage;
     USHORT   Parent;
@@ -218,7 +229,8 @@ typedef struct _HIDP_LINK_COLLECTION_NODE {
 typedef PUCHAR  PHIDP_REPORT_DESCRIPTOR;
 typedef struct _HIDP_PREPARSED_DATA * PHIDP_PREPARSED_DATA;
 
-typedef struct _HIDP_CAPS {
+typedef struct _HIDP_CAPS
+{
     USAGE    Usage;
     USAGE    UsagePage;
     USHORT   InputReportByteLength;
@@ -241,10 +253,12 @@ typedef struct _HIDP_CAPS {
     USHORT   NumberFeatureDataIndices;
 } HIDP_CAPS, *PHIDP_CAPS;
 
-typedef struct _HIDP_DATA {
+typedef struct _HIDP_DATA
+{
     USHORT  DataIndex;
     USHORT  Reserved;
-    union {
+    union
+    {
         ULONG   RawValue; // for values
         BOOLEAN On; // for buttons MUST BE TRUE for buttons.
     };
@@ -268,13 +282,15 @@ typedef struct _HIDP_DATA {
 // HidP_Data useful.
 //
 
-typedef struct _HIDP_UNKNOWN_TOKEN {
+typedef struct _HIDP_UNKNOWN_TOKEN
+{
     UCHAR  Token;
     UCHAR  Reserved[3];
     ULONG  BitField;
 } HIDP_UNKNOWN_TOKEN, *PHIDP_UNKNOWN_TOKEN;
 
-typedef struct _HIDP_EXTENDED_ATTRIBUTES {
+typedef struct _HIDP_EXTENDED_ATTRIBUTES
+{
     UCHAR   NumGlobalUnknowns;
     UCHAR   Reserved [3];
     PHIDP_UNKNOWN_TOKEN  GlobalUnknowns;
@@ -1666,7 +1682,8 @@ HidP_UsageAndPageListDifference(
 //
 // Produce Make or Break Codes
 //
-typedef enum _HIDP_KEYBOARD_DIRECTION {
+typedef enum _HIDP_KEYBOARD_DIRECTION
+{
     HidP_Keyboard_Break,
     HidP_Keyboard_Make
 } HIDP_KEYBOARD_DIRECTION;
@@ -1675,9 +1692,12 @@ typedef enum _HIDP_KEYBOARD_DIRECTION {
 // A bitmap of the current shift state of the keyboard when using the
 // below keyboard usages to i8042 translation function.
 //
-typedef struct _HIDP_KEYBOARD_MODIFIER_STATE {
-    union {
-        struct {
+typedef struct _HIDP_KEYBOARD_MODIFIER_STATE
+{
+    union
+    {
+        struct
+        {
             ULONG LeftControl: 1;
             ULONG LeftShift: 1;
             ULONG LeftAlt: 1;

@@ -29,13 +29,15 @@ void USBD20_IRQHandler(void)
     if (!IrqStL)    return;
 
     /* USB interrupt */
-    if (IrqStL & HSUSBD_GINTSTS_USBIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_USBIF_Msk)
+    {
         IrqSt = HSUSBD->BUSINTSTS & HSUSBD->BUSINTEN;
 
         if (IrqSt & HSUSBD_BUSINTSTS_SOFIF_Msk)
             HSUSBD_CLR_BUS_INT_FLAG(HSUSBD_BUSINTSTS_SOFIF_Msk);
 
-        if (IrqSt & HSUSBD_BUSINTSTS_RSTIF_Msk) {
+        if (IrqSt & HSUSBD_BUSINTSTS_RSTIF_Msk)
+        {
             HSUSBD_SwReset();
 
             HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_SETUPPKIEN_Msk);
@@ -45,27 +47,33 @@ void USBD20_IRQHandler(void)
             HSUSBD_CLR_CEP_INT_FLAG(0x1ffc);
         }
 
-        if (IrqSt & HSUSBD_BUSINTSTS_RESUMEIF_Msk) {
+        if (IrqSt & HSUSBD_BUSINTSTS_RESUMEIF_Msk)
+        {
             HSUSBD_ENABLE_BUS_INT(HSUSBD_BUSINTEN_RSTIEN_Msk|HSUSBD_BUSINTEN_SUSPENDIEN_Msk);
             HSUSBD_CLR_BUS_INT_FLAG(HSUSBD_BUSINTSTS_RESUMEIF_Msk);
         }
 
-        if (IrqSt & HSUSBD_BUSINTSTS_SUSPENDIF_Msk) {
+        if (IrqSt & HSUSBD_BUSINTSTS_SUSPENDIF_Msk)
+        {
             HSUSBD_ENABLE_BUS_INT(HSUSBD_BUSINTEN_RSTIEN_Msk | HSUSBD_BUSINTEN_RESUMEIEN_Msk);
             HSUSBD_CLR_BUS_INT_FLAG(HSUSBD_BUSINTSTS_SUSPENDIF_Msk);
         }
 
-        if (IrqSt & HSUSBD_BUSINTSTS_HISPDIF_Msk) {
+        if (IrqSt & HSUSBD_BUSINTSTS_HISPDIF_Msk)
+        {
             HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_SETUPPKIEN_Msk);
             HSUSBD_CLR_BUS_INT_FLAG(HSUSBD_BUSINTSTS_HISPDIF_Msk);
         }
 
-        if (IrqSt & HSUSBD_BUSINTSTS_DMADONEIF_Msk) {
+        if (IrqSt & HSUSBD_BUSINTSTS_DMADONEIF_Msk)
+        {
             g_hsusbd_DmaDone = 1;
             HSUSBD_CLR_BUS_INT_FLAG(HSUSBD_BUSINTSTS_DMADONEIF_Msk);
 
-            if (HSUSBD->DMACTL & HSUSBD_DMACTL_DMARD_Msk) {
-                if (g_hsusbd_ShortPacket == 1) {
+            if (HSUSBD->DMACTL & HSUSBD_DMACTL_DMARD_Msk)
+            {
+                if (g_hsusbd_ShortPacket == 1)
+                {
                     HSUSBD->EP[EPA].EPRSPCTL = (HSUSBD->EP[EPA].EPRSPCTL & 0x10) | HSUSBD_EP_RSPCTL_SHORTTXEN;    // packet end
                     g_hsusbd_ShortPacket = 0;
                 }
@@ -75,11 +83,15 @@ void USBD20_IRQHandler(void)
         if (IrqSt & HSUSBD_BUSINTSTS_PHYCLKVLDIF_Msk)
             HSUSBD_CLR_BUS_INT_FLAG(HSUSBD_BUSINTSTS_PHYCLKVLDIF_Msk);
 
-        if (IrqSt & HSUSBD_BUSINTSTS_VBUSDETIF_Msk) {
-            if (HSUSBD_IS_ATTACHED()) {
+        if (IrqSt & HSUSBD_BUSINTSTS_VBUSDETIF_Msk)
+        {
+            if (HSUSBD_IS_ATTACHED())
+            {
                 /* USB Plug In */
                 HSUSBD_ENABLE_USB();
-            } else {
+            }
+            else
+            {
                 /* USB Un-plug */
                 HSUSBD_DISABLE_USB();
             }
@@ -87,51 +99,64 @@ void USBD20_IRQHandler(void)
         }
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_CEPIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_CEPIF_Msk)
+    {
         IrqSt = HSUSBD->CEPINTSTS & HSUSBD->CEPINTEN;
 
-        if (IrqSt & HSUSBD_CEPINTSTS_SETUPTKIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_SETUPTKIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_SETUPTKIF_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_SETUPPKIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_SETUPPKIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_SETUPPKIF_Msk);
             HSUSBD_ProcessSetupPacket();
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_OUTTKIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_OUTTKIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_OUTTKIF_Msk);
             HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_STSDONEIEN_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_INTKIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_INTKIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_INTKIF_Msk);
-            if (!(IrqSt & HSUSBD_CEPINTSTS_STSDONEIF_Msk)) {
+            if (!(IrqSt & HSUSBD_CEPINTSTS_STSDONEIF_Msk))
+            {
                 HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_TXPKIF_Msk);
                 HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_TXPKIEN_Msk);
                 HSUSBD_CtrlIn();
-            } else {
+            }
+            else
+            {
                 HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_TXPKIF_Msk);
                 HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_TXPKIEN_Msk|HSUSBD_CEPINTEN_STSDONEIEN_Msk);
             }
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_PINGIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_PINGIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_PINGIF_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_TXPKIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_TXPKIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_STSDONEIF_Msk);
             HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_NAKCLR);
-            if (g_hsusbd_CtrlInSize) {
+            if (g_hsusbd_CtrlInSize)
+            {
                 HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_INTKIF_Msk);
                 HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_INTKIEN_Msk);
-            } else {
+            }
+            else
+            {
                 HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_STSDONEIF_Msk);
                 HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_SETUPPKIEN_Msk|HSUSBD_CEPINTEN_STSDONEIEN_Msk);
             }
@@ -139,48 +164,56 @@ void USBD20_IRQHandler(void)
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_RXPKIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_RXPKIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_RXPKIF_Msk);
             HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_NAKCLR);
             HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_SETUPPKIEN_Msk|HSUSBD_CEPINTEN_STSDONEIEN_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_NAKIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_NAKIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_NAKIF_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_STALLIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_STALLIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_STALLIF_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_ERRIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_ERRIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_ERRIF_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_STSDONEIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_STSDONEIF_Msk)
+        {
             HSUSBD_UpdateDeviceState();
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_STSDONEIF_Msk);
             HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_SETUPPKIEN_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_BUFFULLIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_BUFFULLIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_BUFFULLIF_Msk);
             return;
         }
 
-        if (IrqSt & HSUSBD_CEPINTSTS_BUFEMPTYIF_Msk) {
+        if (IrqSt & HSUSBD_CEPINTSTS_BUFEMPTYIF_Msk)
+        {
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_BUFEMPTYIF_Msk);
             return;
         }
     }
 
     /* interrupt in */
-    if (IrqStL & HSUSBD_GINTSTS_EPAIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPAIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPA].EPINTSTS & HSUSBD->EP[EPA].EPINTEN;
 
         HSUSBD_ENABLE_EP_INT(EPA, 0);
@@ -188,7 +221,8 @@ void USBD20_IRQHandler(void)
         HSUSBD_CLR_EP_INT_FLAG(EPA, IrqSt);
     }
     /* interrupt out */
-    if (IrqStL & HSUSBD_GINTSTS_EPBIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPBIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPB].EPINTSTS & HSUSBD->EP[EPB].EPINTEN;
 
         HSUSBD_ENABLE_EP_INT(EPB, 0);
@@ -196,52 +230,62 @@ void USBD20_IRQHandler(void)
         HSUSBD_CLR_EP_INT_FLAG(EPB, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPCIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPCIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPC].EPINTSTS & HSUSBD->EP[EPC].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPC, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPDIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPDIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPD].EPINTSTS & HSUSBD->EP[EPD].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPD, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPEIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPEIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPE].EPINTSTS & HSUSBD->EP[EPE].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPE, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPFIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPFIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPF].EPINTSTS & HSUSBD->EP[EPF].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPF, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPGIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPGIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPG].EPINTSTS & HSUSBD->EP[EPG].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPG, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPHIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPHIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPH].EPINTSTS & HSUSBD->EP[EPH].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPH, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPIIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPIIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPI].EPINTSTS & HSUSBD->EP[EPI].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPI, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPJIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPJIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPJ].EPINTSTS & HSUSBD->EP[EPJ].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPJ, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPKIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPKIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPK].EPINTSTS & HSUSBD->EP[EPK].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPK, IrqSt);
     }
 
-    if (IrqStL & HSUSBD_GINTSTS_EPLIF_Msk) {
+    if (IrqStL & HSUSBD_GINTSTS_EPLIF_Msk)
+    {
         IrqSt = HSUSBD->EP[EPL].EPINTSTS & HSUSBD->EP[EPL].EPINTEN;
         HSUSBD_CLR_EP_INT_FLAG(EPL, IrqSt);
     }
@@ -298,9 +342,11 @@ void HID_Init(void)
 
 void HID_ClassRequest(void)
 {
-    if (gUsbCmd.bmRequestType & 0x80) { /* request data transfer direction */
+    if (gUsbCmd.bmRequestType & 0x80)   /* request data transfer direction */
+    {
         // Device to host
-        switch (gUsbCmd.bRequest) {
+        switch (gUsbCmd.bRequest)
+        {
         case GET_REPORT:
 //             {
 //                 break;
@@ -313,17 +359,23 @@ void HID_ClassRequest(void)
 //            {
 //                break;
 //            }
-        default: {
+        default:
+        {
             /* Setup error, stall the device */
             HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_STALLEN_Msk);
             break;
         }
         }
-    } else {
+    }
+    else
+    {
         // Host to device
-        switch (gUsbCmd.bRequest) {
-        case SET_REPORT: {
-            if (((gUsbCmd.wValue >> 8) & 0xff) == 3) {
+        switch (gUsbCmd.bRequest)
+        {
+        case SET_REPORT:
+        {
+            if (((gUsbCmd.wValue >> 8) & 0xff) == 3)
+            {
                 /* Request Type = Feature */
                 HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_STSDONEIF_Msk);
                 HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_NAKCLR);
@@ -331,7 +383,8 @@ void HID_ClassRequest(void)
             }
             break;
         }
-        case SET_IDLE: {
+        case SET_IDLE:
+        {
             /* Status stage */
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_STSDONEIF_Msk);
             HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_NAKCLR);
@@ -342,7 +395,8 @@ void HID_ClassRequest(void)
 //             {
 //                 break;
 //             }
-        default: {
+        default:
+        {
             // Stall
             /* Setup error, stall the device */
             HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_STALLEN_Msk);
@@ -354,19 +408,26 @@ void HID_ClassRequest(void)
 
 void HID_VendorRequest(void)
 {
-    if (gUsbCmd.bmRequestType & 0x80) { /* request data transfer direction */
+    if (gUsbCmd.bmRequestType & 0x80)   /* request data transfer direction */
+    {
         // Device to host
-        switch (gUsbCmd.bRequest) {
-        default: {
+        switch (gUsbCmd.bRequest)
+        {
+        default:
+        {
             /* Setup error, stall the device */
             HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_STALLEN_Msk);
             break;
         }
         }
-    } else {
+    }
+    else
+    {
         // Host to device
-        switch (gUsbCmd.bRequest) {
-        default: {
+        switch (gUsbCmd.bRequest)
+        {
+        default:
+        {
             // Stall
             /* Setup error, stall the device */
             HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_STALLEN_Msk);
@@ -381,7 +442,8 @@ void HID_UpdateMouseData(void)
     uint8_t buf[4];
     int volatile i;
 
-    if (g_u8EPAReady) {
+    if (g_u8EPAReady)
+    {
         /* Update new report data */
         buf[0] = 0x00;
         buf[1] = 0x00;
@@ -401,7 +463,8 @@ void HID_UpdateKeyboardData(void)
     uint8_t buf[8];
     int volatile i;
 
-    if (g_u8EPBReady) {
+    if (g_u8EPBReady)
+    {
         /* Update new report data */
         for(i = 0; i < 8; i++)
             buf[i] = 0;

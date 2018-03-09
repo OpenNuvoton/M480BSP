@@ -71,7 +71,8 @@ typedef PVOID HINF;
 // Inf context structure. Applications must not interpret or
 // overwrite values in these structures.
 //
-typedef struct _INFCONTEXT {
+typedef struct _INFCONTEXT
+{
     PVOID Inf;
     PVOID CurrentInf;
     UINT Section;
@@ -81,7 +82,8 @@ typedef struct _INFCONTEXT {
 //
 // Inf file information structure.
 //
-typedef struct _SP_INF_INFORMATION {
+typedef struct _SP_INF_INFORMATION
+{
     DWORD InfStyle;
     DWORD InfCount;
     BYTE VersionData[ANYSIZE_ARRAY];
@@ -224,14 +226,16 @@ typedef UINT (CALLBACK* PSP_FILE_CALLBACK_W)(
 // Source and file paths. Used when notifying queue callback
 // of SPFILENOTIFY_STARTxxx, SPFILENOTIFY_ENDxxx, and SPFILENOTIFY_xxxERROR.
 //
-typedef struct _FILEPATHS_A {
+typedef struct _FILEPATHS_A
+{
     PCSTR  Target;
     PCSTR  Source;  // not used for delete operations
     UINT   Win32Error;
     DWORD  Flags;   // such as SP_COPY_NOSKIP for copy errors
 } FILEPATHS_A, *PFILEPATHS_A;
 
-typedef struct _FILEPATHS_W {
+typedef struct _FILEPATHS_W
+{
     PCWSTR Target;
     PCWSTR Source;  // not used for delete operations
     UINT   Win32Error;
@@ -250,7 +254,8 @@ typedef PFILEPATHS_A PFILEPATHS;
 //
 // Structure used with SPFILENOTIFY_NEEDMEDIA
 //
-typedef struct _SOURCE_MEDIA_A {
+typedef struct _SOURCE_MEDIA_A
+{
     PCSTR Reserved;
     PCSTR Tagfile;          // may be NULL
     PCSTR Description;
@@ -263,7 +268,8 @@ typedef struct _SOURCE_MEDIA_A {
     DWORD Flags;            // subset of SP_COPY_xxx
 } SOURCE_MEDIA_A, *PSOURCE_MEDIA_A;
 
-typedef struct _SOURCE_MEDIA_W {
+typedef struct _SOURCE_MEDIA_W
+{
     PCWSTR Reserved;
     PCWSTR Tagfile;         // may be NULL
     PCWSTR Description;
@@ -288,7 +294,8 @@ typedef PSOURCE_MEDIA_A PSOURCE_MEDIA;
 // Structure used with SPFILENOTIFY_CABINETINFO and
 // SPFILENOTIFY_NEEDNEWCABINET
 //
-typedef struct _CABINET_INFO_A {
+typedef struct _CABINET_INFO_A
+{
     PCSTR CabinetPath;
     PCSTR CabinetFile;
     PCSTR DiskName;
@@ -296,7 +303,8 @@ typedef struct _CABINET_INFO_A {
     USHORT CabinetNumber;
 } CABINET_INFO_A, *PCABINET_INFO_A;
 
-typedef struct _CABINET_INFO_W {
+typedef struct _CABINET_INFO_W
+{
     PCWSTR CabinetPath;
     PCWSTR CabinetFile;
     PCWSTR DiskName;
@@ -315,7 +323,8 @@ typedef PCABINET_INFO_A PCABINET_INFO;
 //
 // Structure used with SPFILENOTIFY_FILEINCABINET
 //
-typedef struct _FILE_IN_CABINET_INFO_A {
+typedef struct _FILE_IN_CABINET_INFO_A
+{
     PCSTR NameInCabinet;
     DWORD FileSize;
     DWORD Win32Error;
@@ -325,7 +334,8 @@ typedef struct _FILE_IN_CABINET_INFO_A {
     CHAR  FullTargetName[MAX_PATH];
 } FILE_IN_CABINET_INFO_A, *PFILE_IN_CABINET_INFO_A;
 
-typedef struct _FILE_IN_CABINET_INFO_W {
+typedef struct _FILE_IN_CABINET_INFO_W
+{
     PCWSTR NameInCabinet;
     DWORD  FileSize;
     DWORD  Win32Error;
@@ -363,7 +373,8 @@ typedef PVOID HDEVINFO;
 // Device information structure (references a device instance
 // that is a member of a device information set)
 //
-typedef struct _SP_DEVINFO_DATA {
+typedef struct _SP_DEVINFO_DATA
+{
     DWORD cbSize;
     GUID  ClassGuid;
     DWORD DevInst;    // DEVINST handle
@@ -375,7 +386,8 @@ typedef struct _SP_DEVINFO_DATA {
 // interface that is associated with the device information
 // element that owns it).
 //
-typedef struct _SP_DEVICE_INTERFACE_DATA {
+typedef struct _SP_DEVICE_INTERFACE_DATA
+{
     DWORD cbSize;
     GUID  InterfaceClassGuid;
     DWORD Flags;
@@ -399,12 +411,14 @@ typedef PSP_DEVICE_INTERFACE_DATA PSP_INTERFACE_DEVICE_DATA;
 #define SPID_REMOVED              SPINT_REMOVED
 
 
-typedef struct _SP_DEVICE_INTERFACE_DETAIL_DATA_A {
+typedef struct _SP_DEVICE_INTERFACE_DETAIL_DATA_A
+{
     DWORD  cbSize;
     CHAR   DevicePath[ANYSIZE_ARRAY];
 } SP_DEVICE_INTERFACE_DETAIL_DATA_A, *PSP_DEVICE_INTERFACE_DETAIL_DATA_A;
 
-typedef struct _SP_DEVICE_INTERFACE_DETAIL_DATA_W {
+typedef struct _SP_DEVICE_INTERFACE_DETAIL_DATA_W
+{
     DWORD  cbSize;
     WCHAR  DevicePath[ANYSIZE_ARRAY];
 } SP_DEVICE_INTERFACE_DETAIL_DATA_W, *PSP_DEVICE_INTERFACE_DETAIL_DATA_W;
@@ -438,14 +452,16 @@ typedef PSP_INTERFACE_DEVICE_DETAIL_DATA_A PSP_INTERFACE_DEVICE_DETAIL_DATA;
 // SetupDiGetDeviceInfoListDetail which supercedes the functionality of
 // SetupDiGetDeviceInfoListClass).
 //
-typedef struct _SP_DEVINFO_LIST_DETAIL_DATA_A {
+typedef struct _SP_DEVINFO_LIST_DETAIL_DATA_A
+{
     DWORD  cbSize;
     GUID   ClassGuid;
     HANDLE RemoteMachineHandle;
     CHAR   RemoteMachineName[SP_MAX_MACHINENAME_LENGTH];
 } SP_DEVINFO_LIST_DETAIL_DATA_A, *PSP_DEVINFO_LIST_DETAIL_DATA_A;
 
-typedef struct _SP_DEVINFO_LIST_DETAIL_DATA_W {
+typedef struct _SP_DEVINFO_LIST_DETAIL_DATA_W
+{
     DWORD  cbSize;
     GUID   ClassGuid;
     HANDLE RemoteMachineHandle;
@@ -501,7 +517,8 @@ typedef UINT        DI_FUNCTION;    // Function type for device installer
 // particular device information element, or globally with a device
 // information set)
 //
-typedef struct _SP_DEVINSTALL_PARAMS_A {
+typedef struct _SP_DEVINSTALL_PARAMS_A
+{
     DWORD             cbSize;
     DWORD             Flags;
     DWORD             FlagsEx;
@@ -514,7 +531,8 @@ typedef struct _SP_DEVINSTALL_PARAMS_A {
     CHAR              DriverPath[MAX_PATH];
 } SP_DEVINSTALL_PARAMS_A, *PSP_DEVINSTALL_PARAMS_A;
 
-typedef struct _SP_DEVINSTALL_PARAMS_W {
+typedef struct _SP_DEVINSTALL_PARAMS_W
+{
     DWORD             cbSize;
     DWORD             Flags;
     DWORD             FlagsEx;
@@ -653,7 +671,8 @@ typedef PSP_DEVINSTALL_PARAMS_A PSP_DEVINSTALL_PARAMS;
 // EnableClassParams.ClassInstallHeader.cbSize = sizeof(SP_CLASSINSTALL_HEADER);
 // EnableClassParams.ClassInstallHeader.InstallFunction = DIF_ENABLECLASS;
 //
-typedef struct _SP_CLASSINSTALL_HEADER {
+typedef struct _SP_CLASSINSTALL_HEADER
+{
     DWORD       cbSize;
     DI_FUNCTION InstallFunction;
 } SP_CLASSINSTALL_HEADER, *PSP_CLASSINSTALL_HEADER;
@@ -662,7 +681,8 @@ typedef struct _SP_CLASSINSTALL_HEADER {
 //
 // Structure corresponding to a DIF_ENABLECLASS install function.
 //
-typedef struct _SP_ENABLECLASS_PARAMS {
+typedef struct _SP_ENABLECLASS_PARAMS
+{
     SP_CLASSINSTALL_HEADER ClassInstallHeader;
     GUID                   ClassGuid;
     DWORD                  EnableMessage;
@@ -676,7 +696,8 @@ typedef struct _SP_ENABLECLASS_PARAMS {
 //
 // Structure corresponding to a DIF_MOVEDEVICE install function.
 //
-typedef struct _SP_MOVEDEV_PARAMS {
+typedef struct _SP_MOVEDEV_PARAMS
+{
     SP_CLASSINSTALL_HEADER ClassInstallHeader;
     SP_DEVINFO_DATA        SourceDeviceInfoData;
 } SP_MOVEDEV_PARAMS, *PSP_MOVEDEV_PARAMS;
@@ -700,7 +721,8 @@ typedef struct _SP_MOVEDEV_PARAMS {
 //
 // Structure corresponding to a DIF_PROPERTYCHANGE install function.
 //
-typedef struct _SP_PROPCHANGE_PARAMS {
+typedef struct _SP_PROPCHANGE_PARAMS
+{
     SP_CLASSINSTALL_HEADER ClassInstallHeader;
     DWORD                  StateChange;
     DWORD                  Scope;
@@ -711,7 +733,8 @@ typedef struct _SP_PROPCHANGE_PARAMS {
 //
 // Structure corresponding to a DIF_REMOVE install function.
 //
-typedef struct _SP_REMOVEDEVICE_PARAMS {
+typedef struct _SP_REMOVEDEVICE_PARAMS
+{
     SP_CLASSINSTALL_HEADER ClassInstallHeader;
     DWORD Scope;
     DWORD HwProfile;
@@ -724,7 +747,8 @@ typedef struct _SP_REMOVEDEVICE_PARAMS {
 //
 // Structure corresponding to a DIF_UNREMOVE install function.
 //
-typedef struct _SP_UNREMOVEDEVICE_PARAMS {
+typedef struct _SP_UNREMOVEDEVICE_PARAMS
+{
     SP_CLASSINSTALL_HEADER ClassInstallHeader;
     DWORD Scope;
     DWORD HwProfile;
@@ -736,7 +760,8 @@ typedef struct _SP_UNREMOVEDEVICE_PARAMS {
 //
 // Structure corresponding to a DIF_SELECTDEVICE install function.
 //
-typedef struct _SP_SELECTDEVICE_PARAMS_A {
+typedef struct _SP_SELECTDEVICE_PARAMS_A
+{
     SP_CLASSINSTALL_HEADER ClassInstallHeader;
     CHAR                   Title[MAX_TITLE_LEN];
     CHAR                   Instructions[MAX_INSTRUCTION_LEN];
@@ -744,7 +769,8 @@ typedef struct _SP_SELECTDEVICE_PARAMS_A {
     BYTE                   Reserved[2];                  // DWORD size alignment
 } SP_SELECTDEVICE_PARAMS_A, *PSP_SELECTDEVICE_PARAMS_A;
 
-typedef struct _SP_SELECTDEVICE_PARAMS_W {
+typedef struct _SP_SELECTDEVICE_PARAMS_W
+{
     SP_CLASSINSTALL_HEADER ClassInstallHeader;
     WCHAR                  Title[MAX_TITLE_LEN];
     WCHAR                  Instructions[MAX_INSTRUCTION_LEN];
@@ -778,7 +804,8 @@ typedef BOOL (CALLBACK* PDETECT_PROGRESS_NOTIFY)(
 //                requesting detection to stop detection asap.
 //
 
-typedef struct _SP_DETECTDEVICE_PARAMS {
+typedef struct _SP_DETECTDEVICE_PARAMS
+{
     SP_CLASSINSTALL_HEADER  ClassInstallHeader;
     PDETECT_PROGRESS_NOTIFY DetectProgressNotify;
     PVOID                   ProgressNotifyParam;
@@ -798,7 +825,8 @@ typedef struct _SP_DETECTDEVICE_PARAMS {
 //
 #define MAX_INSTALLWIZARD_DYNAPAGES             20
 
-typedef struct _SP_INSTALLWIZARD_DATA {
+typedef struct _SP_INSTALLWIZARD_DATA
+{
     SP_CLASSINSTALL_HEADER ClassInstallHeader;
     DWORD                  Flags;
     HPROPSHEETPAGE         DynamicPages[MAX_INSTALLWIZARD_DYNAPAGES];
@@ -936,7 +964,8 @@ typedef struct _SP_INSTALLWIZARD_DATA {
 // Driver information structure (member of a driver info list that may be associated
 // with a particular device instance, or (globally) with a device information set)
 //
-typedef struct _SP_DRVINFO_DATA_A {
+typedef struct _SP_DRVINFO_DATA_A
+{
     DWORD cbSize;
     DWORD DriverType;
     DWORD Reserved;
@@ -945,7 +974,8 @@ typedef struct _SP_DRVINFO_DATA_A {
     CHAR  ProviderName[LINE_LEN];
 } SP_DRVINFO_DATA_A, *PSP_DRVINFO_DATA_A;
 
-typedef struct _SP_DRVINFO_DATA_W {
+typedef struct _SP_DRVINFO_DATA_W
+{
     DWORD cbSize;
     DWORD DriverType;
     DWORD Reserved;
@@ -967,7 +997,8 @@ typedef PSP_DRVINFO_DATA_A PSP_DRVINFO_DATA;
 // Driver information details structure (provides detailed information about a
 // particular driver information structure)
 //
-typedef struct _SP_DRVINFO_DETAIL_DATA_A {
+typedef struct _SP_DRVINFO_DETAIL_DATA_A
+{
     DWORD    cbSize;
     FILETIME InfDate;
     DWORD    CompatIDsOffset;
@@ -979,7 +1010,8 @@ typedef struct _SP_DRVINFO_DETAIL_DATA_A {
     CHAR     HardwareID[ANYSIZE_ARRAY];
 } SP_DRVINFO_DETAIL_DATA_A, *PSP_DRVINFO_DETAIL_DATA_A;
 
-typedef struct _SP_DRVINFO_DETAIL_DATA_W {
+typedef struct _SP_DRVINFO_DETAIL_DATA_W
+{
     DWORD    cbSize;
     FILETIME InfDate;
     DWORD    CompatIDsOffset;
@@ -1004,7 +1036,8 @@ typedef PSP_DRVINFO_DETAIL_DATA_A PSP_DRVINFO_DETAIL_DATA;
 // Driver installation parameters (associated with a particular driver
 // information element)
 //
-typedef struct _SP_DRVINSTALL_PARAMS {
+typedef struct _SP_DRVINSTALL_PARAMS
+{
     DWORD cbSize;
     DWORD Rank;
     DWORD Flags;
@@ -1038,7 +1071,8 @@ typedef DWORD (CALLBACK* PSP_DETSIG_CMPPROC)(
 //
 // Define context structure handed to co-installers
 //
-typedef struct _COINSTALLER_CONTEXT_DATA {
+typedef struct _COINSTALLER_CONTEXT_DATA
+{
     BOOL  PostProcessing;
     DWORD InstallResult;
     PVOID PrivateData;
@@ -1048,7 +1082,8 @@ typedef struct _COINSTALLER_CONTEXT_DATA {
 //
 // Structure containing class image list information.
 //
-typedef struct _SP_CLASSIMAGELIST_DATA {
+typedef struct _SP_CLASSIMAGELIST_DATA
+{
     DWORD      cbSize;
     HIMAGELIST ImageList;
     DWORD      Reserved;
@@ -1061,7 +1096,8 @@ typedef struct _SP_CLASSIMAGELIST_DATA {
 // points provided by class/device property page providers.  Used to retrieve a handle
 // (or, potentially, multiple handles) to property pages for a specified property page type.
 //
-typedef struct _SP_PROPSHEETPAGE_REQUEST {
+typedef struct _SP_PROPSHEETPAGE_REQUEST
+{
     DWORD            cbSize;
     DWORD            PageRequested;
     HDEVINFO         DeviceInfoSet;
@@ -3337,7 +3373,8 @@ SetupRemoveFileLogEntryW(
 //
 // Items retrievable from SetupQueryFileLog()
 //
-typedef enum {
+typedef enum
+{
     SetupFileLogSourceFilename,
     SetupFileLogChecksum,
     SetupFileLogDiskTagfile,
@@ -3382,7 +3419,8 @@ SetupQueryFileLogW(
 // Text logging APIs
 //
 
-typedef enum {
+typedef enum
+{
     LogSevInformation,
     LogSevWarning,
     LogSevError,

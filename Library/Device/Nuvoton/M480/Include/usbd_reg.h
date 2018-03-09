@@ -22,7 +22,8 @@
     Memory Mapped Structure for USBD Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
     /**
      * @var USBD_EP_T::BUFSEG
@@ -96,7 +97,8 @@ typedef struct {
 
 } USBD_EP_T;
 
-typedef struct {
+typedef struct
+{
 
 
     /**

@@ -40,12 +40,16 @@ int  do_dir()
         return -1;                          /* open failed                                */
 
     p1 = s1 = s2 = 0;                       /* initialize counters                        */
-    for (; ;) {                             /* loop until reached end of root directory   */
+    for (; ;)                               /* loop until reached end of root directory   */
+    {
         res = f_readdir(&dir, &Finfo);      /* read directory entry                       */
         if ((res != FR_OK) || !Finfo.fname[0]) break;  /* no more entries                 */
-        if (Finfo.fattrib & AM_DIR) {       /* is a directory?                            */
+        if (Finfo.fattrib & AM_DIR)         /* is a directory?                            */
+        {
             s2++;                           /* increase directory counter                 */
-        } else {                            /* should be a file                           */
+        }
+        else                                /* should be a file                           */
+        {
             s1++;                           /* increase file counter                      */
             p1 += Finfo.fsize;              /* increase total file size counter           */
         }
@@ -84,14 +88,17 @@ int  program_flash_page(uint32_t page_addr, uint32_t *buff, int count)
     else
         FMC_Erase(page_addr);               /* Erase an APROM page                        */
 
-    for (addr = page_addr; addr < page_addr+count; addr += 4, p++) {    /* loop page      */
+    for (addr = page_addr; addr < page_addr+count; addr += 4, p++)      /* loop page      */
+    {
         FMC_Write(addr, *p);                /* program flash                              */
     }
 
     /* Verify ... */
     p = buff;
-    for (addr = page_addr; addr < page_addr+count; addr += 4, p++) {    /* loop page      */
-        if (FMC_Read(addr) != *p) {         /* Read flash word and verify                 */
+    for (addr = page_addr; addr < page_addr+count; addr += 4, p++)      /* loop page      */
+    {
+        if (FMC_Read(addr) != *p)           /* Read flash word and verify                 */
+        {
             printf("Verify failed at 0x%x, read:0x%x, epect:0x%x\n", addr, FMC_Read(addr), *p);
             return -1;                      /* verify data mismatched                     */
         }
@@ -116,22 +123,29 @@ void usbh_firmware_update()
     /*  Try to open APROM firmware image. If opened successfully, read and update APROM.  */
     /*------------------------------------------------------------------------------------*/
     /* Try to open APROM firmware image file      */
-    if (f_open(&file1, APROM_FILE_NAME, FA_OPEN_EXISTING | FA_READ)) {
+    if (f_open(&file1, APROM_FILE_NAME, FA_OPEN_EXISTING | FA_READ))
+    {
         printf("APROM image [%s] not found.\n", APROM_FILE_NAME);    /* File not found    */
-    } else {
+    }
+    else
+    {
         printf("APROM image [%s] found, start update APROM firmware...\n", APROM_FILE_NAME);
         FMC_ENABLE_AP_UPDATE();             /* enable APROM update                        */
 
-        for (addr = 0; ; addr += FMC_FLASH_PAGE_SIZE) {
+        for (addr = 0; ; addr += FMC_FLASH_PAGE_SIZE)
+        {
             cnt = FMC_FLASH_PAGE_SIZE;      /* read a flash page size data from file      */
             res = f_read(&file1, _Buff, cnt, &cnt);   /* read file                        */
-            if ((res == FR_OK) && cnt) {    /* read operation success?                    */
+            if ((res == FR_OK) && cnt)      /* read operation success?                    */
+            {
                 /* update APROM firmware page                 */
-                if (program_flash_page(addr, (uint32_t *)_Buff, cnt) != 0) {
+                if (program_flash_page(addr, (uint32_t *)_Buff, cnt) != 0)
+                {
                     f_close(&file1);        /* program failed! Close file.                */
                     return;                 /* Abort...                                   */
                 }
-            } else
+            }
+            else
                 break;                      /* read file failed or reached end-of-file    */
         }
 
@@ -147,16 +161,21 @@ void usbh_firmware_update()
     /*  Try to open SPROM firmware image. If opened successfully, read and update SPROM.  */
     /*------------------------------------------------------------------------------------*/
     /* Try to open SPROM firmware image file      */
-    if (f_open(&file1, SPROM_FILE_NAME, FA_OPEN_EXISTING | FA_READ)) {
+    if (f_open(&file1, SPROM_FILE_NAME, FA_OPEN_EXISTING | FA_READ))
+    {
         printf("SPROM image [%s] not found.\n", SPROM_FILE_NAME);    /* File not found    */
-    } else {
+    }
+    else
+    {
         printf("SPROM image [%s] found, start update SPROM firmware...\n", SPROM_FILE_NAME);
         FMC_ENABLE_SP_UPDATE();             /* Enable SPROM update                        */
         cnt = FMC_FLASH_PAGE_SIZE;          /* read a flash page size data from file      */
         res = f_read(&file1, _Buff, cnt, &cnt);  /* read file                             */
-        if ((res == FR_OK) && cnt) {        /* read operation success?                    */
+        if ((res == FR_OK) && cnt)          /* read operation success?                    */
+        {
             /* update SPROM firmware page                 */
-            if (program_flash_page(FMC_SPROM_BASE, (uint32_t *)_Buff, cnt) != 0) {
+            if (program_flash_page(FMC_SPROM_BASE, (uint32_t *)_Buff, cnt) != 0)
+            {
                 f_close(&file1);            /* program failed! Close file.                */
                 return;                     /* Abort...                                   */
             }
@@ -173,29 +192,37 @@ void usbh_firmware_update()
     /*------------------------------------------------------------------------------------*/
     /*  Try to open Data Flash data image. If found, read and update Data Flash.          */
     /*------------------------------------------------------------------------------------*/
-    if (FMC_Read(FMC_USER_CONFIG_0) & 0x1) { /* Data Flash is enabled?                     */
+    if (FMC_Read(FMC_USER_CONFIG_0) & 0x1)   /* Data Flash is enabled?                     */
+    {
         printf("Data Flash is not enabled.\n");  /* Data Flash is not enabled             */
         return;                             /* Skip Data Flash update                     */
     }
 
     dfba = FMC_ReadDataFlashBaseAddr();     /* get Data Flash base address                */
     /* try to open Data Flash update image        */
-    if (f_open(&file1, DATA_FILE_NAME, FA_OPEN_EXISTING | FA_READ)) {
+    if (f_open(&file1, DATA_FILE_NAME, FA_OPEN_EXISTING | FA_READ))
+    {
         /* File not found                             */
         printf("Data file %s not found.\n", DATA_FILE_NAME);
-    } else {
+    }
+    else
+    {
         /* Data image found, start updating...        */
-        for (addr = dfba; ; addr += FMC_FLASH_PAGE_SIZE) { /* flash page loop             */
+        for (addr = dfba; ; addr += FMC_FLASH_PAGE_SIZE)   /* flash page loop             */
+        {
             cnt = FMC_FLASH_PAGE_SIZE;      /* will program a flash page                  */
             res = f_read(&file1, _Buff, cnt, &cnt);   /* Read a page size from file       */
-            if ((res == FR_OK) && cnt) {
+            if ((res == FR_OK) && cnt)
+            {
                 /* file read success, program to flash        */
-                if (program_flash_page(addr, (uint32_t *)_Buff, cnt) != 0) { /* program?   */
+                if (program_flash_page(addr, (uint32_t *)_Buff, cnt) != 0)   /* program?   */
+                {
                     /* program failed                             */
                     f_close(&file1);        /* close file                                 */
                     return;                 /* Abort...                                   */
                 }
-            } else                          /* Read failed or reached end-of-file         */
+            }
+            else                            /* Read failed or reached end-of-file         */
                 break;
         }
 

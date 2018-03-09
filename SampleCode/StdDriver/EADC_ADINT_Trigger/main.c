@@ -60,7 +60,7 @@ void SYS_Init(void)
     SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
     SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
     /* Set PB.0 ~ PB.3 to input mode */
-    PB->MODE &= ~(GPIO_MODE_MODE0_Msk | GPIO_MODE_MODE1_Msk | GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk); 
+    PB->MODE &= ~(GPIO_MODE_MODE0_Msk | GPIO_MODE_MODE1_Msk | GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk);
     /* Configure the GPB0 - GPB3 ADC analog input pins.  */
     SYS->GPB_MFPL &= ~(SYS_GPB_MFPL_PB0MFP_Msk | SYS_GPB_MFPL_PB1MFP_Msk |
                        SYS_GPB_MFPL_PB2MFP_Msk | SYS_GPB_MFPL_PB3MFP_Msk);
@@ -93,13 +93,15 @@ void EADC_FunctionTest()
     printf("|                      ADINT trigger mode test                         |\n");
     printf("+----------------------------------------------------------------------+\n");
 
-    while(1) {
+    while(1)
+    {
         printf("\n\nSelect input mode:\n");
         printf("  [1] Single end input (channel 0, 1, 2 and 3)\n");
         printf("  [2] Differential input (input channel pair 0 and 1)\n");
         printf("  Other keys: exit continuous scan mode test\n");
         u8Option = getchar();
-        if(u8Option == '1') {
+        if(u8Option == '1')
+        {
             /* Set input mode as single-end and enable the A/D converter */
             EADC_Open(EADC, EADC_CTL_DIFFEN_SINGLE_END);
 
@@ -140,7 +142,9 @@ void EADC_FunctionTest()
             for(g_u32COVNUMFlag = 0; (g_u32COVNUMFlag) < 4; g_u32COVNUMFlag++)
                 printf("Conversion result of channel %d: 0x%X (%d)\n", g_u32COVNUMFlag, i32ConversionData[g_u32COVNUMFlag], i32ConversionData[g_u32COVNUMFlag]);
 
-        } else if(u8Option == '2') {
+        }
+        else if(u8Option == '2')
+        {
             /* Set input mode as differential and enable the A/D converter */
             EADC_Open(EADC, EADC_CTL_DIFFEN_DIFFERENTIAL);
 
@@ -181,7 +185,8 @@ void EADC_FunctionTest()
             for(g_u32COVNUMFlag = 0; (g_u32COVNUMFlag) < 4; g_u32COVNUMFlag++)
                 printf("Conversion result of channel %d: 0x%X (%d)\n", g_u32COVNUMFlag, i32ConversionData[g_u32COVNUMFlag], i32ConversionData[g_u32COVNUMFlag]);
 
-        } else
+        }
+        else
             return ;
 
     }

@@ -62,7 +62,8 @@ static int mp3GetFrameLength(mp3Header *pHdr)
     int pV2L1Rates[] = {   0,  32,  48,  56,  64,  80,  96, 112, 128, 144, 160, 176, 192, 224, 256,  -1 };
     int pV2L3Rates[] = {   0,   8,  16,  24,  32,  40,  48,  56,  64,  80,  96, 112, 128, 144, 160,  -1 };
 
-    int pRate[4][4] = {
+    int pRate[4][4] =
+    {
         { 11025, 12000, 8000, -1 }, // 2.5
         { -1, -1, -1, -1 }, // reserved
         { 22050, 24000, 16000, -1 }, // 2
@@ -74,24 +75,30 @@ static int mp3GetFrameLength(mp3Header *pHdr)
 
     int base = 144;
 
-    if (pHdr->layer == 0x01) {
+    if (pHdr->layer == 0x01)
+    {
         if (pHdr->version == 0x03)
             bitrate = pV1L3Rates[pHdr->bitrate];
         else
             bitrate = pV2L3Rates[pHdr->bitrate];
-    } else if (pHdr->layer == 0x02) {
+    }
+    else if (pHdr->layer == 0x02)
+    {
         if (pHdr->version == 0x03)
             bitrate = pL2Rates[pHdr->bitrate];
         else
             bitrate = pV2L3Rates[pHdr->bitrate];
-    } else {
+    }
+    else
+    {
         if (pHdr->version == 0x03)
             bitrate = pL1Rates[pHdr->bitrate];
         else
             bitrate = pV2L1Rates[pHdr->bitrate];
     }
 
-    if (pHdr->layer == 3) { /* Layer 1 */
+    if (pHdr->layer == 3)   /* Layer 1 */
+    {
         base = 12;
     }
 
@@ -108,7 +115,8 @@ static void mp3PrintHeader(mp3Header *pHdr)
     int pV2L1Rates[] = {   0,  32,  48,  56,  64,  80,  96, 112, 128, 144, 160, 176, 192, 224, 256,  -1 };
     int pV2L3Rates[] = {   0,   8,  16,  24,  32,  40,  48,  56,  64,  80,  96, 112, 128, 144, 160,  -1 };
 
-    int pRate[4][4] = {
+    int pRate[4][4] =
+    {
         { 11025, 12000, 8000, -1 }, // 2.5
         { -1, -1, -1, -1 }, // reserved
         { 22050, 24000, 16000, -1 }, // 2
@@ -117,17 +125,22 @@ static void mp3PrintHeader(mp3Header *pHdr)
 
     int bitrate;
 
-    if (pHdr->layer == 0x01) {
+    if (pHdr->layer == 0x01)
+    {
         if (pHdr->version == 0x03)
             bitrate = pV1L3Rates[pHdr->bitrate];
         else
             bitrate = pV2L3Rates[pHdr->bitrate];
-    } else if (pHdr->layer == 0x02) {
+    }
+    else if (pHdr->layer == 0x02)
+    {
         if (pHdr->version == 0x03)
             bitrate = pL2Rates[pHdr->bitrate];
         else
             bitrate = pV2L3Rates[pHdr->bitrate];
-    } else {
+    }
+    else
+    {
         if (pHdr->version == 0x03)
             bitrate = pL1Rates[pHdr->bitrate];
         else
@@ -147,19 +160,24 @@ int mp3CountV1L3Headers(unsigned char *pBytes, size_t size)
     int             result              = 0;
     mp3Header       header;
 
-    while (size >= 4) {
+    while (size >= 4)
+    {
         if ((pBytes[0] == 0xFF)
                 && ((pBytes[1] & 0xE0) == 0xE0)
-           ) {
+           )
+        {
             MP3_DECODE_HEADER(pBytes, &header);
 
-            if (MP3_IS_VALID_HEADER(&header)) {
+            if (MP3_IS_VALID_HEADER(&header))
+            {
                 int framelength = mp3GetFrameLength(&header);
 
-                if ((framelength > 0) && (size > framelength + 4)) {
+                if ((framelength > 0) && (size > framelength + 4))
+                {
                     MP3_DECODE_HEADER(pBytes + framelength, &header);
 
-                    if (MP3_IS_VALID_HEADER(&header)) {
+                    if (MP3_IS_VALID_HEADER(&header))
+                    {
                         offset = 0;
                         mp3PrintHeader(&header);
                         result++;

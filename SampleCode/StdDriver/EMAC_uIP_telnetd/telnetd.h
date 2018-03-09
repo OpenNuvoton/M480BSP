@@ -65,7 +65,8 @@
 /**
  * A telnet connection structure.
  */
-struct telnetd_state {
+struct telnetd_state
+{
     char *lines[TELNETD_NUMLINES];
     char buf[TELNETD_LINELEN];
     char bufptr;

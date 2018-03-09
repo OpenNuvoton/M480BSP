@@ -106,7 +106,8 @@ int main()
     FMC_Open();                        /* Enable FMC ISP function */
 
     /* Setup a new key */
-    if (FMC_SetSPKey(good_key, KPMAX_VAL, KEMAX_VAL, 0, 0) < 0) {
+    if (FMC_SetSPKey(good_key, KPMAX_VAL, KEMAX_VAL, 0, 0) < 0)
+    {
         printf("Failed to setup key!\n");   /* error message */
         while (1);                     /* Failed to setup security key. Program aborted. */
     }

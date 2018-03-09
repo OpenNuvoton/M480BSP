@@ -21,7 +21,8 @@
 #define BUFF_LEN        512
 #define BUFF_HALF_LEN   (BUFF_LEN/2)
 
-typedef struct dma_desc_t {
+typedef struct dma_desc_t
+{
     uint32_t ctl;
     uint32_t src;
     uint32_t dest;

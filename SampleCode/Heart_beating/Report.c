@@ -48,7 +48,8 @@ char Serial_read(UART_T *uart)
 void Serial_write(UART_T *uart, char* id, int num)
 {
     int i;
-    for(i=0; i<num; i++) {
+    for(i=0; i<num; i++)
+    {
         while(uart->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
         uart->DAT = id[i];
     }
@@ -60,9 +61,12 @@ void report_sensor_raw(int16_t data)
 
     RawData = g_u32ADCValue_ch14;
 
-    if (report_format == REPORT_FORMAT_BINARY) {
+    if (report_format == REPORT_FORMAT_BINARY)
+    {
         Serial_write(UART0, (char*)&RawData, 2);
-    } else if (report_format == REPORT_FORMAT_TEXT) {
+    }
+    else if (report_format == REPORT_FORMAT_TEXT)
+    {
         printf("%d\n",RawData);
     }
 }
@@ -73,9 +77,12 @@ void report_heart_speed(int16_t data)
 
     SpeedData = (int16_t)HeartFreq1[2];
 
-    if (report_format == REPORT_FORMAT_BINARY) {
+    if (report_format == REPORT_FORMAT_BINARY)
+    {
         Serial_write(UART0, (char*)&SpeedData, 2);
-    } else if (report_format == REPORT_FORMAT_TEXT) {
+    }
+    else if (report_format == REPORT_FORMAT_TEXT)
+    {
         printf("SpeedData:%d\n",SpeedData);
     }
 }
@@ -85,10 +92,12 @@ void report_sensors(int16_t data)
     if(stream_mode==STREAM_PAUSE)
         return;
 
-    if (report_mode == REPORT_SENSORS_RAW) {
+    if (report_mode == REPORT_SENSORS_RAW)
+    {
         report_sensor_raw(data);
     }
-    if (report_mode == REPORT_HEART_SPEED) {
+    if (report_mode == REPORT_HEART_SPEED)
+    {
         report_heart_speed(data);
     }
 }

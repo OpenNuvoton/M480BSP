@@ -22,7 +22,8 @@
     Memory Mapped Structure for EMAC Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
     /**
      * @var EMAC_T::CAMCTL

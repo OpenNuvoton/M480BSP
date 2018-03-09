@@ -13,7 +13,8 @@ void SC0_IRQHandler(void)
 {
     static uint32_t sec = 1;
 
-    if (SC0->INTSTS & SC_INTSTS_TMR0IF_Msk) {
+    if (SC0->INTSTS & SC_INTSTS_TMR0IF_Msk)
+    {
         /* Clear interrupt flag */
         SC0->INTSTS = SC_INTSTS_TMR0IF_Msk;
         printf("%d sec\n", sec++);

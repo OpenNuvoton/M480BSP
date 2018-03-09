@@ -35,12 +35,14 @@ void  dump_buff_hex(uint8_t *pucBuff, int nBytes)
     int     nIdx, i;
 
     nIdx = 0;
-    while (nBytes > 0) {
+    while (nBytes > 0)
+    {
         printf("0x%04X  ", nIdx);
         for (i = 0; i < 16; i++)
             printf("%02x ", pucBuff[nIdx + i]);
         printf("  ");
-        for (i = 0; i < 16; i++) {
+        for (i = 0; i < 16; i++)
+        {
             if ((pucBuff[nIdx + i] >= 0x20) && (pucBuff[nIdx + i] < 127))
                 printf("%c", pucBuff[nIdx + i]);
             else
@@ -122,12 +124,14 @@ int32_t main (void)
     NVIC_EnableIRQ(CRPT_IRQn);
     ECC_ENABLE_INT(CRPT);
 
-    if (ECC_GeneratePublicKey(CRPT, CURVE_P_192, d, key1, key2) < 0) {
+    if (ECC_GeneratePublicKey(CRPT, CURVE_P_192, d, key1, key2) < 0)
+    {
         printf("ECC key generation failed!!\n");
         while (1);
     }
 
-    if (memcmp(Qx, key1, KEY_LENGTH/8)) {
+    if (memcmp(Qx, key1, KEY_LENGTH/8))
+    {
 
         printf("Public key 1 [%s] is not matched with expected [%s]!\n", key1, Qx);
 
@@ -137,14 +141,16 @@ int32_t main (void)
             printf("Error !!\n");
 
 
-        for (i = 0; i < KEY_LENGTH/8; i++) {
+        for (i = 0; i < KEY_LENGTH/8; i++)
+        {
             if (Qx[i] != key1[i])
                 printf("\n%d - 0x%x 0x%x\n", i, Qx[i], key1[i]);
         }
         while (1);
     }
 
-    if (memcmp(Qy, key2, KEY_LENGTH/8)) {
+    if (memcmp(Qy, key2, KEY_LENGTH/8))
+    {
         printf("Public key 2 [%s] is not matched with expected [%s]!\n", key2, Qy);
         while (1);
     }
@@ -156,17 +162,20 @@ int32_t main (void)
     init_adc_init();
     memset(d, 0, sizeof(d));
 
-    for (i = 0; i < 192; i++) {
+    for (i = 0; i < 192; i++)
+    {
         adc_trng_gen_key(d, 192-i);
 
-        if (ECC_IsPrivateKeyValid(CRPT, CURVE_P_192, d)) {
+        if (ECC_IsPrivateKeyValid(CRPT, CURVE_P_192, d))
+        {
             break;
         }
     }
 
     printf("Select private key: [%s]\n", d);
 
-    if (ECC_GeneratePublicKey(CRPT, CURVE_P_192, d, key1, key2) < 0) {
+    if (ECC_GeneratePublicKey(CRPT, CURVE_P_192, d, key1, key2) < 0)
+    {
         printf("ECC key generation failed!!\n");
         while (1);
     }
@@ -179,17 +188,20 @@ int32_t main (void)
     printf("\n\nECC P-256 key pair generation =>\n");
 
     memset(d, 0, sizeof(d));
-    for (i = 0; i < 256; i++) {
+    for (i = 0; i < 256; i++)
+    {
         adc_trng_gen_key(d, 256-i);
 
-        if (ECC_IsPrivateKeyValid(CRPT, CURVE_P_256, d)) {
+        if (ECC_IsPrivateKeyValid(CRPT, CURVE_P_256, d))
+        {
             break;
         }
     }
 
     printf("Select private key: [%s]\n", d);
 
-    if (ECC_GeneratePublicKey(CRPT, CURVE_P_256, d, key1, key2) < 0) {
+    if (ECC_GeneratePublicKey(CRPT, CURVE_P_256, d, key1, key2) < 0)
+    {
         printf("ECC key generation failed!!\n");
         while (1);
     }

@@ -18,7 +18,8 @@ uint8_t au8SrcArray[256];
 uint8_t au8DestArray0[256];
 uint8_t au8DestArray1[256];
 
-typedef struct dma_desc_t {
+typedef struct dma_desc_t
+{
     uint32_t ctl;
     uint32_t src;
     uint32_t dest;

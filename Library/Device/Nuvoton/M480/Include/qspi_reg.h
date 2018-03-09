@@ -22,7 +22,8 @@
     Memory Mapped Structure for QSPI Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

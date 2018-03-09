@@ -85,7 +85,8 @@ int main(void)
     p16SrcAddr = (uint16_t *)acCRCSrcPattern;
 
     /* Start to execute CRC-CCITT operation */
-    for(i=0; i<sizeof(acCRCSrcPattern)/2; i++) {
+    for(i=0; i<sizeof(acCRCSrcPattern)/2; i++)
+    {
         CRC_WRITE_DATA((p16SrcAddr[i] & 0xFFFF));
     }
 

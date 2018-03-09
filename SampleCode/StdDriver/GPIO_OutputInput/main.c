@@ -94,10 +94,14 @@ int32_t main(void)
     i32TimeOutCnt = 100;
 
     /* Wait for PD.7 input pin status is low for a while */
-    while(PD7 != 0) {
-        if(i32TimeOutCnt > 0) {
+    while(PD7 != 0)
+    {
+        if(i32TimeOutCnt > 0)
+        {
             i32TimeOutCnt--;
-        } else {
+        }
+        else
+        {
             i32Err = 1;
             break;
         }
@@ -110,19 +114,26 @@ int32_t main(void)
     i32TimeOutCnt = 100;
 
     /* Wait for PD.7 input pin status is high for a while */
-    while(PD7 != 1) {
-        if(i32TimeOutCnt > 0) {
+    while(PD7 != 1)
+    {
+        if(i32TimeOutCnt > 0)
+        {
             i32TimeOutCnt--;
-        } else {
+        }
+        else
+        {
             i32Err = 1;
             break;
         }
     }
 
     /* Print test result */
-    if(i32Err) {
+    if(i32Err)
+    {
         printf("  [FAIL].\n");
-    } else {
+    }
+    else
+    {
         printf("  [OK].\n");
     }
 

@@ -22,7 +22,8 @@
     Memory Mapped Structure for HSUSBD Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
     /**
      * @var HSUSBD_EP_T::EPDAT
@@ -274,7 +275,8 @@ typedef struct {
      * |        |          |This is the end-address of the RAM space allocated for the endpoint A~L.
      */
 
-    union {
+    union
+    {
         __IO uint32_t EPDAT;
         __IO uint8_t  EPDAT_BYTE;
 
@@ -292,7 +294,8 @@ typedef struct {
 
 } HSUSBD_EP_T;
 
-typedef struct {
+typedef struct
+{
 
     /**
      * @var HSUSBD_T::GINTSTS
@@ -876,7 +879,8 @@ typedef struct {
     __IO uint32_t FADDR;                 /*!< [0x0020] USB Function Address Register                                    */
     __IO uint32_t TEST;                  /*!< [0x0024] USB Test Mode Register                                           */
 
-    union {
+    union
+    {
         __IO uint32_t CEPDAT;
         __IO uint8_t  CEPDAT_BYTE;
 

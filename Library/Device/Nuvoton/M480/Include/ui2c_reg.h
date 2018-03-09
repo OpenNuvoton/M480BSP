@@ -22,7 +22,8 @@
     Memory Mapped Structure for UI2C Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

@@ -66,18 +66,22 @@ int32_t main(void)
 
     printf("Start I2S ...\nTX value: 0x%X\n", g_u32TxValue);
 
-    while(1) {
+    while(1)
+    {
         /* Check RX FIFO empty flag */
-        if((SPI1->I2SSTS & SPI_I2SSTS_RXEMPTY_Msk) == 0) {
+        if((SPI1->I2SSTS & SPI_I2SSTS_RXEMPTY_Msk) == 0)
+        {
             /* Read RX FIFO */
             u32RxValue2 = SPII2S_READ_RX_FIFO(SPI1);
-            if(u32RxValue1 != u32RxValue2) {
+            if(u32RxValue1 != u32RxValue2)
+            {
                 u32RxValue1 = u32RxValue2;
                 /* If received value changes, print the current TX value and the new received value. */
                 printf("TX value: 0x%X;  RX value: 0x%X\n", g_u32TxValue, u32RxValue1);
             }
         }
-        if(g_u32DataCount >= 50000) {
+        if(g_u32DataCount >= 50000)
+        {
             g_u32TxValue = 0xAA00AA00 | ((g_u32TxValue + 0x00020002) & 0x00FF00FF); /* g_u32TxValue: 0xAA00AA01, 0xAA02AA03, ..., 0xAAFEAAFF */
             printf("TX value: 0x%X\n", g_u32TxValue);
             g_u32DataCount = 0;

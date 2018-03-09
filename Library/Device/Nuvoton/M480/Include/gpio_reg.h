@@ -23,7 +23,8 @@
 @{ */
 
 
-typedef struct {
+typedef struct
+{
 
     /**
      * @var GPIO_T::MODE
@@ -246,7 +247,8 @@ typedef struct {
 
 } GPIO_T;
 
-typedef struct {
+typedef struct
+{
 
     /**
      * @var GPIO_DBCTL_T::DBCTL

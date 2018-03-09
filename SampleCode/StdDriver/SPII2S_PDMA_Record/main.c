@@ -20,7 +20,8 @@
 #define BUFF_LEN 4
 #define TX_BUFF_LEN 8
 
-typedef struct {
+typedef struct
+{
     uint32_t CTL;
     uint32_t SA;
     uint32_t DA;
@@ -86,7 +87,8 @@ int32_t main(void)
 
     /* Data initiation */
     u32InitValue = 0x50005000;
-    for(u32DataCount = 0; u32DataCount < BUFF_LEN; u32DataCount++) {
+    for(u32DataCount = 0; u32DataCount < BUFF_LEN; u32DataCount++)
+    {
         PcmTxDataBuff[0][u32DataCount] = u32InitValue;
         u32InitValue += 0x00010001;
     }
@@ -132,7 +134,8 @@ int32_t main(void)
     printf("RX Buffer 1\tRX Buffer 2\n");
 
     /* Print the received data */
-    for(u32DataCount = 0; u32DataCount < 12; u32DataCount++) {
+    for(u32DataCount = 0; u32DataCount < 12; u32DataCount++)
+    {
         printf("0x%X\t\t0x%X\n", PcmRxBuff[0][u32DataCount], PcmRxBuff[1][u32DataCount]);
     }
 
@@ -193,17 +196,22 @@ void PDMA_IRQHandler(void)
 {
     uint32_t u32Status = PDMA_GET_INT_STATUS(PDMA);
 
-    if (u32Status & 0x1) { /* abort */
+    if (u32Status & 0x1)   /* abort */
+    {
         if (PDMA_GET_ABORT_STS(PDMA) & 0x4)
             PDMA_CLR_ABORT_FLAG(PDMA,PDMA_ABTSTS_ABTIF2_Msk);
-    } else if (u32Status & 0x2) {
-        if (PDMA_GET_TD_STS(PDMA) & 0x4) {          /* channel 2 done */
+    }
+    else if (u32Status & 0x2)
+    {
+        if (PDMA_GET_TD_STS(PDMA) & 0x4)            /* channel 2 done */
+        {
             /* Reset PDMA Scatter-Gather table */
             PDMA_ResetRxSGTable(u8RxIdx);
             u8RxIdx ^= 1;
         }
         PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF2_Msk);
-    } else
+    }
+    else
         printf("unknown interrupt, status=0x%x!!\n", u32Status);
 }
 

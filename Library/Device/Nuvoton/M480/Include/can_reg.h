@@ -23,7 +23,8 @@
 @{ */
 
 
-typedef struct {
+typedef struct
+{
 
     /**
      * @var CAN_IF_T::CREQ
@@ -259,7 +260,8 @@ typedef struct {
 } CAN_IF_T;
 
 
-typedef struct {
+typedef struct
+{
 
 
     /**

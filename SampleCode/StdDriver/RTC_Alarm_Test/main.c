@@ -34,7 +34,8 @@ void RTC_AlarmHandle(void)
   */
 void RTC_IRQHandler(void)
 {
-    if ( (RTC->INTEN & RTC_INTEN_ALMIEN_Msk) && (RTC->INTSTS & RTC_INTSTS_ALMIF_Msk) ) {      /* alarm interrupt occurred */
+    if ( (RTC->INTEN & RTC_INTEN_ALMIEN_Msk) && (RTC->INTSTS & RTC_INTSTS_ALMIF_Msk) )        /* alarm interrupt occurred */
+    {
         RTC->INTSTS = 0x1;
 
         RTC_AlarmHandle();

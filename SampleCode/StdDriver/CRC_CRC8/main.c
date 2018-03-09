@@ -80,7 +80,8 @@ int main(void)
     CRC_Open(CRC_8, 0, 0x5A, CRC_CPU_WDATA_8);
 
     /* Start to execute CRC-8 CPU operation */
-    for(i = 0; i < sizeof(acCRCSrcPattern); i++) {
+    for(i = 0; i < sizeof(acCRCSrcPattern); i++)
+    {
         CRC_WRITE_DATA((acCRCSrcPattern[i] & 0xFF));
     }
 

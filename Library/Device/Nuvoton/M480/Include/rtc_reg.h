@@ -22,7 +22,8 @@
     Memory Mapped Structure for RTC Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
 
     /**

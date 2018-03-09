@@ -34,14 +34,16 @@ void WDT_IRQHandler(void)
     if(g_u32WDTINTCounts < 10)
         WDT_RESET_COUNTER();
 
-    if(WDT_GET_TIMEOUT_INT_FLAG() == 1) {
+    if(WDT_GET_TIMEOUT_INT_FLAG() == 1)
+    {
         /* Clear WDT time-out interrupt flag */
         WDT_CLEAR_TIMEOUT_INT_FLAG();
 
         g_u32WDTINTCounts++;
     }
 
-    if(WDT_GET_TIMEOUT_WAKEUP_FLAG() == 1) {
+    if(WDT_GET_TIMEOUT_WAKEUP_FLAG() == 1)
+    {
         /* Clear WDT time-out wake-up flag */
         WDT_CLEAR_TIMEOUT_WAKEUP_FLAG();
 
@@ -111,7 +113,8 @@ int main(void)
     printf("+----------------------------------------+\n\n");
 
     /* To check if system has been reset by WDT time-out reset or not */
-    if(WDT_GET_RESET_FLAG() == 1) {
+    if(WDT_GET_RESET_FLAG() == 1)
+    {
         WDT_CLEAR_RESET_FLAG();
         printf("*** System has been reset by WDT time-out event ***\n\n");
         while(1);
@@ -149,7 +152,8 @@ int main(void)
     /* Enable WDT interrupt function */
     WDT_EnableInt();
 
-    while(1) {
+    while(1)
+    {
         /* System enter to Power-down */
         /* To program PWRCTL register, it needs to disable register protection first. */
         SYS_UnlockReg();

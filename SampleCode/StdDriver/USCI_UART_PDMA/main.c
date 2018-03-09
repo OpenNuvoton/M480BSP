@@ -29,22 +29,29 @@ void PDMA_IRQHandler(void)
 {
     uint32_t status = PDMA_GET_INT_STATUS(PDMA);
 
-    if (status & 0x1) { /* abort */
+    if (status & 0x1)   /* abort */
+    {
         printf("target abort interrupt !!\n");
         if (PDMA_GET_ABORT_STS(PDMA) & 0x4)
             u32IsTestOver = 2;
         PDMA_CLR_ABORT_FLAG(PDMA,PDMA_GET_ABORT_STS(PDMA));
-    } else if (status & 0x2) { /* done */
-        if ( (PDMA_GET_TD_STS(PDMA) & (1 << 0)) && (PDMA_GET_TD_STS(PDMA) & (1 << 1)) ) {
+    }
+    else if (status & 0x2)     /* done */
+    {
+        if ( (PDMA_GET_TD_STS(PDMA) & (1 << 0)) && (PDMA_GET_TD_STS(PDMA) & (1 << 1)) )
+        {
             u32IsTestOver = 1;
             PDMA_CLR_TD_FLAG(PDMA,PDMA_GET_TD_STS(PDMA));
         }
-    } else if (status & 0x300) { /* channel 2 timeout */
+    }
+    else if (status & 0x300)     /* channel 2 timeout */
+    {
         printf("timeout interrupt !!\n");
         u32IsTestOver = 3;
         PDMA_CLR_TMOUT_FLAG(PDMA,0);
         PDMA_CLR_TMOUT_FLAG(PDMA,1);
-    } else
+    }
+    else
         printf("unknown interrupt !!\n");
 }
 
@@ -182,7 +189,8 @@ void USCI_UART_PDMATest()
     printf("+-----------------------------------------------------------+\n");
     printf("Please press any key to start test. \n\n");
 
-    for (i = 0; i < PDMA_TEST_LENGTH; i++) {
+    for (i = 0; i < PDMA_TEST_LENGTH; i++)
+    {
         g_u8Tx_Buffer[i] = i;
         g_u8Rx_Buffer[i] = 0xff;
     }
@@ -211,8 +219,10 @@ void USCI_UART_PDMATest()
     PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF0_Msk|PDMA_TDSTS_TDIF1_Msk);
 #endif
 
-    for (i=0; i<PDMA_TEST_LENGTH; i++) {
-        if(g_u8Rx_Buffer[i] != i) {
+    for (i=0; i<PDMA_TEST_LENGTH; i++)
+    {
+        if(g_u8Rx_Buffer[i] != i)
+        {
             printf("\n Receive Data Compare Error !!");
             while(1);
         }

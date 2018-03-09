@@ -22,7 +22,8 @@
     Memory Mapped Structure for SDH Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
 
     /**
      * @var SDH_T::FB

@@ -33,13 +33,15 @@ typedef LONG NTSTATUS;
 #include "hidusage.h"
 #include "hidpi.h"
 
-typedef struct _HIDD_CONFIGURATION {
+typedef struct _HIDD_CONFIGURATION
+{
     PVOID    cookie;
     ULONG    size;
     ULONG    RingBufferSize;
 } HIDD_CONFIGURATION, *PHIDD_CONFIGURATION;
 
-typedef struct _HIDD_ATTRIBUTES {
+typedef struct _HIDD_ATTRIBUTES
+{
     ULONG   Size; // = sizeof (struct _HIDD_ATTRIBUTES)
 
     //

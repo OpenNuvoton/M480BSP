@@ -22,7 +22,8 @@
     Memory Mapped Structure for EPWM Controller
 @{ */
 
-typedef struct {
+typedef struct
+{
     /**
      * @var ECAPDAT_T::RCAPDAT
      * Offset: 0x20C  EPWM Rising Capture Data Register 0~5
@@ -43,7 +44,8 @@ typedef struct {
     __IO uint32_t FCAPDAT; /*!< [0x210/0x218/0x220/0x228/0x230/0x238] EPWM Falling Capture Data Register 0~5 */
 } ECAPDAT_T;
 
-typedef struct {
+typedef struct
+{
 
 
     /**

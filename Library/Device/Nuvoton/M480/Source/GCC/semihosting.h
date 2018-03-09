@@ -5,7 +5,8 @@
 // ----------------------------------------------------------------------------
 
 // Semihosting operations.
-enum OperationNumber {
+enum OperationNumber
+{
     // Regular operations
     SEMIHOSTING_EnterSVC = 0x17,
     SEMIHOSTING_ReportException = 0x18,

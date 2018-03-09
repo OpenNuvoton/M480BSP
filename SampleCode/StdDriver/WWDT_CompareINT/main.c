@@ -33,7 +33,8 @@ volatile uint8_t g_u32WWDTINTCounts;
  */
 void WDT_IRQHandler(void)
 {
-    if(WWDT_GET_INT_FLAG() == 1) {
+    if(WWDT_GET_INT_FLAG() == 1)
+    {
         /* Clear WWDT compare match interrupt flag */
         WWDT_CLEAR_INT_FLAG();
 
@@ -41,7 +42,8 @@ void WDT_IRQHandler(void)
 
         g_u32WWDTINTCounts++;
 
-        if(g_u32WWDTINTCounts < 10) {
+        if(g_u32WWDTINTCounts < 10)
+        {
             /* To reload the WWDT counter value to 0x3F */
             WWDT_RELOAD_COUNTER();
         }
@@ -114,7 +116,8 @@ int main(void)
     printf("+------------------------------------------------+\n\n");
 
     /* To check if system has been reset by WWDT time-out reset or not */
-    if(WWDT_GET_RESET_FLAG() == 1) {
+    if(WWDT_GET_RESET_FLAG() == 1)
+    {
         printf("*** System has been reset by WWDT time-out reset event. [WWDT_CTL: 0x%08X] ***\n\n", WWDT->CTL);
         WWDT_CLEAR_RESET_FLAG();
         while(1);

@@ -25,10 +25,13 @@
 void GPB_IRQHandler(void)
 {
     /* To check if PB.2 interrupt occurred */
-    if(GPIO_GET_INT_FLAG(PB, BIT2)) {
+    if(GPIO_GET_INT_FLAG(PB, BIT2))
+    {
         GPIO_CLR_INT_FLAG(PB, BIT2);
         printf("PB.2 INT occurred.\n");
-    } else {
+    }
+    else
+    {
         /* Un-expected interrupt. Just clear all PB interrupts */
         PB->INTSRC = PB->INTSRC;
         printf("Un-expected interrupts.\n");
@@ -47,10 +50,13 @@ void GPB_IRQHandler(void)
 void GPC_IRQHandler(void)
 {
     /* To check if PC.5 interrupt occurred */
-    if(GPIO_GET_INT_FLAG(PC, BIT5)) {
+    if(GPIO_GET_INT_FLAG(PC, BIT5))
+    {
         GPIO_CLR_INT_FLAG(PC, BIT5);
         printf("PC.5 INT occurred.\n");
-    } else {
+    }
+    else
+    {
         /* Un-expected interrupt. Just clear all PC interrupts */
         PC->INTSRC = PC->INTSRC;
         printf("Un-expected interrupts.\n");
