@@ -159,8 +159,6 @@ __Vectors:
 	.long	0                     /* 91: Reserved                   */
 	.long	EHCI_IRQHandler       /* 92:  EHCI                      */
 	.long	USBOTG20_IRQHandler   /* 93:  HSOTG                     */
-	.long	SWDC_IRQHandler       /* 94:  SWDC                      */
-	.long	ETMC_IRQHandler       /* 95:  ETMC                      */
 
 	.size	__Vectors, . - __Vectors
 
@@ -447,7 +445,5 @@ Default_Handler:
 	def_irq_handler	SDH1_IRQHandler
 	def_irq_handler	EHCI_IRQHandler
 	def_irq_handler	USBOTG20_IRQHandler
-	def_irq_handler	SWDC_IRQHandler
-	def_irq_handler	ETMC_IRQHandler
 
 	.end

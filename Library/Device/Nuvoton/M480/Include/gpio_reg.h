@@ -216,7 +216,7 @@ typedef struct {
      * |        |          |00 = Px.n pull-up and pull-up disable.
      * |        |          |01 = Px.n pull-up enable.
      * |        |          |10 = Px.n pull-down enable.
-     * |        |          |11 = Px.n pull-up and pull-up disable.
+     * |        |          |11 = Reserved.
      * |        |          |Note1:
      * |        |          |Basically, the pull-up control and pull-down control has following behavior limitation
      * |        |          |The independent pull-up control register only valid when MODEn set as tri-state and open-drain mode
