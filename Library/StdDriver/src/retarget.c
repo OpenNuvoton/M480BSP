@@ -89,7 +89,10 @@ void Hard_Fault_Handler(uint32_t stack[])
 /* The static buffer is used to speed up the semihost    */
 static char g_buf[16];
 static char g_buf_len = 0;
-# if defined (__GNUC__)
+
+/* Make sure won't goes here only because --gnu is defined , so
+   add !__CC_ARM and !__ICCARM__ checking */
+# if defined ( __GNUC__ ) && !(__CC_ARM) && !(__ICCARM__)
 
 # elif defined(__ICCARM__)      // IAR
 
@@ -318,8 +321,9 @@ SH_End
 
 #else   // ndef DEBUG_ENABLE_SEMIHOST
 
-
-# if defined ( __GNUC__ )
+/* Make sure won't goes here only because --gnu is defined , so
+   add !__CC_ARM and !__ICCARM__ checking */
+# if defined ( __GNUC__ ) && !(__CC_ARM) && !(__ICCARM__) 
 
 /**
  * @brief    This HardFault handler is implemented to show r0, r1, r2, r3, r12, lr, pc, psr
