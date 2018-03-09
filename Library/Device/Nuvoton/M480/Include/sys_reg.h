@@ -1951,11 +1951,11 @@ typedef struct
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[7:0]   |REGLCTL   |Register Lock Control Code (Write Only)
+     * |[7:0]   |REGLCTL   |Register Lock Control Code
      * |        |          |Some registers have write-protection function
      * |        |          |Writing these registers have to disable the protected function by writing the sequence value "59h", "16h", "88h" to this field.
      * |        |          |After this sequence is completed, the REGLCTL bit will be set to 1 and write-protection registers can be normal write.
-     * |        |          |Register Lock Control Code (Read Only)
+     * |        |          |Register Lock Control Code
      * |        |          |0 = Write-protection Enabled for writing protected registers
      * |        |          |Any write to the protected register is ignored.
      * |        |          |1 = Write-protection Disabled for writing protected registers.
