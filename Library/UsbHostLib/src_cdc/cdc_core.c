@@ -20,25 +20,21 @@
 #include "usbh_cdc.h"
 
 
-/** @addtogroup Component_Library Component Library
+/** @addtogroup LIBRARY Library
   @{
 */
 
-/** @addtogroup USB_Host_Driver USB Host Driver
+/** @addtogroup USBH_Library USB Host Library
   @{
 */
 
-/** @addtogroup USBH_CDC_Driver USB Host CDC Driver
+/** @addtogroup USBH_EXPORTED_FUNCTIONS USB Host Exported Functions
   @{
 */
 
-/** @addtogroup USBH_CDC_EXPORTED_FUNCTIONS USB Host CDC Driver Exported Functions
-  @{
-*/
-
-
+/// @cond HIDDEN_SYMBOLS
 #define USB_XFER_TIMEOUT             100
-
+/// @endcond /* HIDDEN_SYMBOLS */
 
 /**
  *  @brief  GET_LINE_CODING  request
@@ -266,7 +262,7 @@ int32_t usbh_cdc_start_polling_status(CDC_DEV_T *cdev, CDC_CB_FUNC *func)
 
     return 0;
 }
-
+/// @cond HIDDEN_SYMBOLS
 /*
  * CDC BULK-in complete function
  */
@@ -357,7 +353,7 @@ int32_t usbh_cdc_start_to_receive_data(CDC_DEV_T *cdev, CDC_CB_FUNC *func)
     }
     return 0;
 }
-
+/// @cond HIDDEN_SYMBOLS
 /*
  * CDC BULK-in complete function
  */
@@ -366,7 +362,7 @@ static void  cdc_bulk_out_irq(UTR_T *utr)
 {
 	bulk_out_done = 1;
 }
-
+/// @endcond /* HIDDEN_SYMBOLS */
 /**
  * @brief  Send a block of data via CDC device's bulk-out transfer pipe.
  *  @param[in] cdev      CDC device
@@ -432,13 +428,11 @@ int32_t usbh_cdc_send_data(CDC_DEV_T *cdev, uint8_t *buff, int buff_len)
     return 0;
 }
 
-/*@}*/ /* end of group USBH_CDC_EXPORTED_FUNCTIONS */
+/*@}*/ /* end of group USBH_EXPORTED_FUNCTIONS */
 
-/*@}*/ /* end of group USBH_CDC_Driver */
+/*@}*/ /* end of group USBH_Library */
 
-/*@}*/ /* end of group USB_Host_Driver */
-
-/*@}*/ /* end of group Component_Library */
+/*@}*/ /* end of group Library */
 
 
 /*** (C) COPYRIGHT 2018~2019 Nuvoton Technology Corp. ***/

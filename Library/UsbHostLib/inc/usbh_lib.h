@@ -145,6 +145,12 @@ extern void usbh_install_conn_callback(CONN_FUNC *conn_func, CONN_FUNC *disconn_
 extern void usbh_suspend(void);
 extern void usbh_resume(void);
 extern struct udev_t * usbh_find_device(char *hub_id, int port);
+/**
+ * @brief  A function return current tick count.
+ * @return Current tick.
+ * @detail User application must provide this function to return current tick.
+ *         The tick should increase by 1 for every 10 ms.
+ */
 extern uint32_t get_ticks(void);   /* This function must be provided by user application. */
 
 /*------------------------------------------------------------------*/
@@ -154,8 +160,10 @@ extern uint32_t get_ticks(void);   /* This function must be provided by user app
 /*------------------------------------------------------------------*/
 extern void     usbh_cdc_init(void);
 extern struct cdc_dev_t * usbh_cdc_get_device_list(void);
+/// @cond HIDDEN_SYMBOLS
 extern int32_t  usbh_cdc_get_line_coding(struct cdc_dev_t *cdev, struct line_coding_t *line_code);
 extern int32_t  usbh_cdc_set_line_coding(struct cdc_dev_t *cdev, struct line_coding_t *line_code);
+/// @endcond HIDDEN_SYMBOLS
 extern int32_t  usbh_cdc_set_control_line_state(struct cdc_dev_t *cdev, int active_carrier, int DTE_present);
 extern int32_t  usbh_cdc_start_polling_status(struct cdc_dev_t *cdev, CDC_CB_FUNC *func);
 extern int32_t  usbh_cdc_start_to_receive_data(struct cdc_dev_t *cdev, CDC_CB_FUNC *func);
@@ -191,8 +199,9 @@ extern int  usbh_umas_disk_status(int drv_no);
 extern int  usbh_umas_read(int drv_no, uint32_t sec_no, int sec_cnt, uint8_t *buff);
 extern int  usbh_umas_write(int drv_no, uint32_t sec_no, int sec_cnt, uint8_t *buff);
 extern int  usbh_umas_ioctl(int drv_no, int cmd, void *buff);
+/// @cond HIDDEN_SYMBOLS
 extern int  usbh_umas_reset_disk(int drv_no);
-
+/// @endcond HIDDEN_SYMBOLS
 /*------------------------------------------------------------------*/
 /*                                                                  */
 /*  USB Audio Class Library APIs                                    */
