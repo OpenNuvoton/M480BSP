@@ -54,11 +54,6 @@
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/main.c</locationURI>
 		</link>
-		<link>
-			<name>Library/Library/i2c.c</name>
-			<type>1</type>
-			<location>C:/hcrdgit/M480/bsp_20171117/Library/StdDriver/src/i2c.c</location>
-		</link>
 	</linkedResources>
 	<filteredResources>
 		<filter>
@@ -71,7 +66,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>0</id>
+			<id>1521075871079</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -80,7 +75,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>0</id>
+			<id>1521075871086</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -89,7 +84,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>0</id>
+			<id>1521075871093</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -98,7 +93,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>0</id>
+			<id>1521075871100</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -107,12 +102,21 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>0</id>
+			<id>1521075871107</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-false-false-usci_i2c.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1521075871115</id>
+			<name>Library/Library</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-i2c.c</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>
