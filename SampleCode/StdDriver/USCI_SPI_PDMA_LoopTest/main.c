@@ -138,7 +138,7 @@ void USCI_SPI_Init(void)
     /* Configure USCI_SPI1 */
     /* Configure USCI_SPI1 as a slave, clock idle low, 32-bit transaction, drive output on falling clock edge and latch input on rising edge. */
     /* Configure USCI_SPI1 as a low level active device. USCI_SPI peripheral clock rate = f_PCLK0 */
-    USPI_Open(USPI1, USPI_SLAVE, USPI_MODE_0, 16, NULL);
+    USPI_Open(USPI1, USPI_SLAVE, USPI_MODE_0, 16, 0);
 
 }
 
