@@ -42,32 +42,32 @@
 		<link>
 			<name>CMSIS/CMSIS</name>
 			<type>2</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Library/Device/Nuvoton/M480/Source</locationURI>
+			<locationURI>PARENT-5-PROJECT_LOC/Library/Device/Nuvoton/M480/Source</locationURI>
 		</link>
 		<link>
 			<name>Library/Library</name>
 			<type>2</type>
-			<locationURI>PARENT-6-PROJECT_LOC/Library/StdDriver/src</locationURI>
+			<locationURI>PARENT-5-PROJECT_LOC/Library/StdDriver/src</locationURI>
 		</link>
 		<link>
 			<name>User/LDROM_iap.ld</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/LDROM_iap.ld</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/LDROM_iap.ld</locationURI>
 		</link>
 		<link>
 			<name>User/main.c</name>
 			<type>1</type>
-			<locationURI>PARENT-3-PROJECT_LOC/main.c</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/main.c</locationURI>
 		</link>
 		<link>
 			<name>User/startup_M480_tiny.S</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/startup_M480_tiny.S</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/startup_M480_tiny.S</locationURI>
 		</link>
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>0</id>
+			<id>1521107766119</id>
 			<name>CMSIS/CMSIS</name>
 			<type>9</type>
 			<matcher>
@@ -76,7 +76,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505989970879</id>
+			<id>1521107856531</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -85,7 +85,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505989970888</id>
+			<id>1521107856535</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -94,7 +94,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>0</id>
+			<id>1521107809742</id>
 			<name>CMSIS/CMSIS/GCC</name>
 			<type>6</type>
 			<matcher>
