@@ -564,6 +564,7 @@
           <state>$PROJ_DIR$..\..\..\..\..\..\Library\StdDriver\inc</state>
           <state>$PROJ_DIR$..\..\..\..\..\..\ThirdParty\FreeRTOS\SOURCE\include</state>
           <state>$PROJ_DIR$..\..\</state>
+          <state>$PROJ_DIR$..\..\..\Common\include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -597,7 +598,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>freertos_lwip_udp_echoserver.bin</state>
+          <state>tcp_echoserver.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -651,7 +652,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>freertos_lwip_udp_echoserver.out</state>
+          <state>tcp_echoserver.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -1010,118 +1011,118 @@
   <group>
     <name>lwIP</name>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\api\api_lib.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\api\api_lib.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\api\api_msg.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\api\api_msg.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ipv4\autoip.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\ipv4\autoip.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\def.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\def.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ipv4\dhcp.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\ipv4\dhcp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\dns.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\dns.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\api\err.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\api\err.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ipv4\etharp.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\ipv4\etharp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\netif\ethernet.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\netif\ethernet.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lwIP\netif\ethernetif.c</name>
+      <name>$PROJ_DIR$\..\..\lwip\netif\ethernetif.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ipv4\icmp.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\ipv4\icmp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ipv4\igmp.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\ipv4\igmp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\inet_chksum.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\inet_chksum.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\init.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\init.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ip.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\ip.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ipv4\ip4.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\ipv4\ip4.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ipv4\ip4_addr.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\ipv4\ip4_addr.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\ipv4\ip4_frag.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\ipv4\ip4_frag.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lwIP\netif\m480_eth.c</name>
+      <name>$PROJ_DIR$\..\..\lwip\netif\m480_eth.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\mem.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\mem.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\memp.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\memp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\api\netbuf.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\api\netbuf.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\api\netdb.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\api\netdb.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\netif.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\netif.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\api\netifapi.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\api\netifapi.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\pbuf.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\pbuf.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\raw.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\raw.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\api\sockets.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\api\sockets.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\stats.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\stats.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lwIP\sys_arch.c</name>
+      <name>$PROJ_DIR$\..\..\lwip\sys_arch.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\sys_lwip.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\sys_lwip.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\tcp.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\tcp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\tcp_in.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\tcp_in.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\tcp_out.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\tcp_out.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\api\tcpip.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\api\tcpip.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\lwIP\time_stamp.c</name>
+      <name>$PROJ_DIR$\..\..\lwip\time_stamp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\timeouts.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\timeouts.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwIP\src\core\udp.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\lwip\src\core\udp.c</name>
     </file>
   </group>
   <group>
@@ -1130,7 +1131,7 @@
       <name>$PROJ_DIR$\..\main.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\udp_echoserver-netconn.c</name>
+      <name>$PROJ_DIR$\..\tcp_echoserver-netconn.c</name>
     </file>
   </group>
 </project>

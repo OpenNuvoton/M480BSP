@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\HSUSBH_USBH_UAC_AudioClass.ewp</path>
+    <path>$WS_DIR$\httpd.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

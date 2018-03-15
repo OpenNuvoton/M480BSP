@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\FreeRTOS_lwip_httpd.ewp</path>
+    <path>$WS_DIR$\udp_echoserver.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

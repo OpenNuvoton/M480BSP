@@ -564,7 +564,6 @@
           <state>$PROJ_DIR$..\..\..\..\..\..\Library\StdDriver\inc</state>
           <state>$PROJ_DIR$..\..\..\..\..\..\ThirdParty\FreeRTOS\SOURCE\include</state>
           <state>$PROJ_DIR$..\..\</state>
-          <state>$PROJ_DIR$..\..\..\Common\include</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -598,7 +597,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>FreeRTOS_lwip_httpd.bin</state>
+          <state>udp_echoserver.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -652,7 +651,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>FreeRTOS_lwip_httpd.out</state>
+          <state>udp_echoserver.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -1128,13 +1127,10 @@
   <group>
     <name>User</name>
     <file>
-      <name>$PROJ_DIR$\..\fs.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\httpserver-netconn.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\..\main.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\udp_echoserver-netconn.c</name>
     </file>
   </group>
 </project>
