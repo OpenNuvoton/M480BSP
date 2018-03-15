@@ -587,7 +587,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>HSUSBH_USBH_UAC_AudioClass.bin</state>
+          <state>HSUSBH_USBH_AudioClass.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -641,7 +641,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>HSUSBH_USBH_UAC_AudioClass.out</state>
+          <state>HSUSBH_USBH_AudioClass.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -705,7 +705,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$\HSUSBH_USBH_UAC_AudioClass.icf</state>
+          <state>$PROJ_DIR$\HSUSBH_USBH_AudioClass.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>

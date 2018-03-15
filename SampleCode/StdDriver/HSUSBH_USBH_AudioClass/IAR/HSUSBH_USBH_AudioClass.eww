@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\freertos_lwip_tcp_echoserver.ewp</path>
+    <path>$WS_DIR$\HSUSBH_USBH_AudioClass.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

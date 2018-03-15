@@ -148,8 +148,8 @@ extern struct udev_t * usbh_find_device(char *hub_id, int port);
 /**
  * @brief  A function return current tick count.
  * @return Current tick.
- * @detail User application must provide this function to return current tick.
- *         The tick should increase by 1 for every 10 ms.
+ * @details User application must provide this function to return current tick.
+ *          The tick should increase by 1 for every 10 ms.
  */
 extern uint32_t get_ticks(void);   /* This function must be provided by user application. */
 
