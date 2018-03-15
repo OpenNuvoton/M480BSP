@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>USCI_I2C_EEPROM</TargetName>
+      <TargetName>USCI_I2C_SingleByte_Master</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -45,7 +45,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>USCI_I2C_EEPROM</OutputName>
+          <OutputName>USCI_I2C_SingleByte_Master</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -171,11 +171,11 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4102</DriverSelection>
+            <DriverSelection>4107</DriverSelection>
           </Flash1>
           <bUseTDR>0</bUseTDR>
           <Flash2>Bin\Nu_Link.dll</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -436,14 +436,14 @@
           <GroupName>Library</GroupName>
           <Files>
             <File>
+              <FileName>retarget.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Library\StdDriver\src\retarget.c</FilePath>
+            </File>
+            <File>
               <FileName>clk.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\Library\StdDriver\src\clk.c</FilePath>
-            </File>
-            <File>
-              <FileName>uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\StdDriver\src\uart.c</FilePath>
             </File>
             <File>
               <FileName>usci_i2c.c</FileName>
@@ -451,9 +451,9 @@
               <FilePath>..\..\..\..\Library\StdDriver\src\usci_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>retarget.c</FileName>
+              <FileName>uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\StdDriver\src\retarget.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\uart.c</FilePath>
             </File>
           </Files>
         </Group>
