@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>USCI_I2C_Loopback_10bit</name>
+	<name>USCI_I2C_Master_10bit</name>
 	<comment></comment>
 	<projects>
 	</projects>
