@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>I2C_Master</TargetName>
+      <TargetName>I2C_Loopback</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
