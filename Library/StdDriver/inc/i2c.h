@@ -440,7 +440,8 @@ __STATIC_INLINE void I2C_STOP(I2C_T *i2c)
 {
 
     (i2c)->CTL0 |= (I2C_CTL0_SI_Msk | I2C_CTL0_STO_Msk);
-    while(i2c->CTL0 & I2C_CTL0_STO_Msk) {
+    while(i2c->CTL0 & I2C_CTL0_STO_Msk)
+    {
     }
 }
 

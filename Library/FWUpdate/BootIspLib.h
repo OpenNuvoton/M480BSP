@@ -3,7 +3,7 @@
  * @version  V1.00
  * @brief    Firmware Update library header file
  * @details  Secure Boot provide four APIs to do firmware update. M480 can
- *           connect with a PC executing firmware update tool via ether HSUSBD 
+ *           connect with a PC executing firmware update tool via ether HSUSBD
  *           or UART1 to update firmware.
  *
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
@@ -32,7 +32,7 @@ extern "C"
 
 /**
   * @brief UART1 Interrupt Handler
-  *        Secure boot firmware update need use interrupt, this API is used to remap 
+  *        Secure boot firmware update need use interrupt, this API is used to remap
   *        UART1 IRQHandler to MKROM UART1 IRQHandler
   */
 void UART1_ISR(void);
@@ -46,7 +46,7 @@ void UART1_ISP(void);
 
 /**
   * @brief HSUSBD Interrupt Handler
-  *        Secure boot firmware update need use interrupt, this API is used to remap 
+  *        Secure boot firmware update need use interrupt, this API is used to remap
   *        HSUSBD IRQHandler to MKROM HSUSBD IRQHandler
   */
 void HSUSBD_ISR(void);

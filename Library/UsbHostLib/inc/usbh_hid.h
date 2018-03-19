@@ -69,7 +69,8 @@ extern "C"
 /*  HID device                                                                                 */
 /*---------------------------------------------------------------------------------------------*/
 /*! HID device structure \hideinitializer                                                      */
-typedef struct usbhid_dev {
+typedef struct usbhid_dev
+{
     uint16_t      idVendor;             /*!< USB device vendor ID. (from device descriptor)    */
     uint16_t      idProduct;            /*!< USB device product ID. (from device descriptor)   */
     uint8_t       bSubClassCode;        /*!< Interface subclass code                           */

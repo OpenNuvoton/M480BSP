@@ -49,8 +49,10 @@ int msc_bulk_transfer(MSC_T *msc, EP_INFO_T *ep, uint8_t *data_buff, int data_le
         return ret;
 
     t0 = get_ticks();
-    while (utr->bIsTransferDone == 0) {
-        if (get_ticks() - t0 > timeout_ticks) {
+    while (utr->bIsTransferDone == 0)
+    {
+        if (get_ticks() - t0 > timeout_ticks)
+        {
             usbh_quit_utr(utr);
             free_utr(utr);
             return USBH_ERR_TIMEOUT;
@@ -81,7 +83,8 @@ static int  do_scsi_command(MSC_T *msc, uint8_t *buff, uint32_t data_len, int bI
 
     msc_debug_msg("    [XFER] MSC CMD OK.\n");
 
-    if (data_len > 0) {
+    if (data_len > 0)
+    {
         if (bIsDataIn)
             ret = msc_bulk_transfer(msc, msc->ep_bulk_in, buff, data_len, 500);
         else
@@ -97,7 +100,8 @@ static int  do_scsi_command(MSC_T *msc, uint8_t *buff, uint32_t data_len, int bI
 
     msc_debug_msg("    [XFER] MSC STATUS OK.\n");
 
-    if (cmd_status->Status != 0) {
+    if (cmd_status->Status != 0)
+    {
         msc_debug_msg("    !! CSW status error.\n");
         return UMAS_ERR_CMD_STATUS;
     }

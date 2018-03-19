@@ -207,7 +207,7 @@ int  get_next_pattern(void)
         if (g_line[0] == '#')
             continue;
 
-        if (strncmp(g_line ,"Klen", 4) == 0)
+        if (strncmp(g_line,"Klen", 4) == 0)
         {
             p = (uint8_t *)&g_line[4];
             while ((*p < '0') || (*p > '9'))
@@ -218,7 +218,7 @@ int  get_next_pattern(void)
             continue;
         }
 
-        if (strncmp(g_line ,"Tlen", 4) == 0)
+        if (strncmp(g_line,"Tlen", 4) == 0)
         {
             p = (uint8_t *)&g_line[4];
             while ((*p < '0') || (*p > '9'))
@@ -229,7 +229,7 @@ int  get_next_pattern(void)
             continue;
         }
 
-        if (strncmp(g_line ,"Key", 3) == 0)
+        if (strncmp(g_line,"Key", 3) == 0)
         {
             p = (uint8_t *)&g_line[3];
             while (!is_hex_char(*p)) p++;
@@ -241,7 +241,7 @@ int  get_next_pattern(void)
             continue;
         }
 
-        if (strncmp(g_line ,"Msg", 3) == 0)
+        if (strncmp(g_line,"Msg", 3) == 0)
         {
             p = (uint8_t *)&g_line[3];
             while (!is_hex_char(*p)) p++;
@@ -250,7 +250,7 @@ int  get_next_pattern(void)
             continue;
         }
 
-        if (strncmp(g_line ,"Mac", 3) == 0)
+        if (strncmp(g_line,"Mac", 3) == 0)
         {
             p = (uint8_t *)&g_line[3];
             while (!is_hex_char(*p)) p++;
@@ -258,7 +258,7 @@ int  get_next_pattern(void)
             return 0;
         }
 
-        if (strncmp(g_line ,"[L=", 3) == 0)
+        if (strncmp(g_line,"[L=", 3) == 0)
         {
             p = (uint8_t *)&g_line[3];
             while ((*p < '0') || (*p > '9'))

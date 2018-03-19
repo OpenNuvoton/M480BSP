@@ -52,7 +52,8 @@ extern "C"
 /**
   * @details    CAN message structure
   */
-typedef struct {
+typedef struct
+{
     uint32_t  IdType;       /*!< ID type */
     uint32_t  FrameType;    /*!< Frame type */
     uint32_t  Id;           /*!< Message ID */
@@ -63,7 +64,8 @@ typedef struct {
 /**
   * @details    CAN mask message structure
   */
-typedef struct {
+typedef struct
+{
     uint8_t   u8Xtd;      /*!< Extended ID */
     uint8_t   u8Dir;      /*!< Direction */
     uint32_t  u32Id;      /*!< Message ID */
@@ -154,12 +156,12 @@ void CAN_Close(CAN_T *tCAN);
 void CAN_CLR_INT_PENDING_BIT(CAN_T *tCAN, uint8_t u32MsgNum);
 void CAN_EnableInt(CAN_T *tCAN, uint32_t u32Mask);
 void CAN_DisableInt(CAN_T *tCAN, uint32_t u32Mask);
-int32_t CAN_Transmit(CAN_T *tCAN, uint32_t u32MsgNum , STR_CANMSG_T* pCanMsg);
-int32_t CAN_Receive(CAN_T *tCAN, uint32_t u32MsgNum , STR_CANMSG_T* pCanMsg);
-int32_t CAN_SetMultiRxMsg(CAN_T *tCAN, uint32_t u32MsgNum , uint32_t u32MsgCount, uint32_t u32IDType, uint32_t u32ID);
-int32_t CAN_SetRxMsg(CAN_T *tCAN, uint32_t u32MsgNum , uint32_t u32IDType, uint32_t u32ID);
-int32_t CAN_SetRxMsgAndMsk(CAN_T *tCAN, uint32_t u32MsgNum , uint32_t u32IDType, uint32_t u32ID, uint32_t u32IDMask);
-int32_t CAN_SetTxMsg(CAN_T *tCAN, uint32_t u32MsgNum , STR_CANMSG_T* pCanMsg);
+int32_t CAN_Transmit(CAN_T *tCAN, uint32_t u32MsgNum, STR_CANMSG_T* pCanMsg);
+int32_t CAN_Receive(CAN_T *tCAN, uint32_t u32MsgNum, STR_CANMSG_T* pCanMsg);
+int32_t CAN_SetMultiRxMsg(CAN_T *tCAN, uint32_t u32MsgNum, uint32_t u32MsgCount, uint32_t u32IDType, uint32_t u32ID);
+int32_t CAN_SetRxMsg(CAN_T *tCAN, uint32_t u32MsgNum, uint32_t u32IDType, uint32_t u32ID);
+int32_t CAN_SetRxMsgAndMsk(CAN_T *tCAN, uint32_t u32MsgNum, uint32_t u32IDType, uint32_t u32ID, uint32_t u32IDMask);
+int32_t CAN_SetTxMsg(CAN_T *tCAN, uint32_t u32MsgNum, STR_CANMSG_T* pCanMsg);
 int32_t CAN_TriggerTxMsg(CAN_T  *tCAN, uint32_t u32MsgNum);
 int32_t CAN_BasicSendMsg(CAN_T *tCAN, STR_CANMSG_T* pCanMsg);
 int32_t CAN_BasicReceiveMsg(CAN_T *tCAN, STR_CANMSG_T* pCanMsg);

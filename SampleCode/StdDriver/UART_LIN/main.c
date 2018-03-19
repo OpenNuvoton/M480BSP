@@ -104,7 +104,7 @@ int32_t main(void)
 /*---------------------------------------------------------------------------------------------------------*/
 uint8_t GetParityValue(uint32_t u32id)
 {
-    uint32_t u32Res = 0, ID[6], p_Bit[2] , mask = 0;
+    uint32_t u32Res = 0, ID[6], p_Bit[2], mask = 0;
 
     for(mask = 0; mask < 6; mask++)
         ID[mask] = (u32id & (1 << mask)) >> mask;

@@ -349,7 +349,7 @@ extern "C"
  * \hideinitializer
  */
 #define EPWM_GET_PRESCALER(epwm, u32ChannelNum) ((epwm)->CLKPSC[(u32ChannelNum) >> 1U])
- 
+
 /**
  * @brief This macro set the comparator of the selected channel
  * @param[in] epwm The pointer of the specified EPWM module

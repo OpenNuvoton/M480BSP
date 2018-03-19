@@ -117,7 +117,7 @@ typedef void (CONN_FUNC)(struct udev_t *udev, int param);
 
 struct line_coding_t;
 struct cdc_dev_t;
-typedef void (CDC_CB_FUNC)(struct cdc_dev_t *cdev, uint8_t *rdata, int data_len); 
+typedef void (CDC_CB_FUNC)(struct cdc_dev_t *cdev, uint8_t *rdata, int data_len);
 
 struct usbhid_dev;
 typedef void (HID_IR_FUNC)(struct usbhid_dev *hdev, uint16_t ep_addr, int status, uint8_t *rdata, uint32_t data_len);    /*!< interrupt in callback function \hideinitializer */

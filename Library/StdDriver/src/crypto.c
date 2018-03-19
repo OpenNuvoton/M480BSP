@@ -436,8 +436,9 @@ void SHA_Read(CRPT_T *crpt, uint32_t u32Digest[])
     {
         wcnt = 12UL;
     }
-    else         /* SHA_MODE_SHA512 */
+    else
     {
+        /* SHA_MODE_SHA512 */
         wcnt = 16UL;
     }
 
@@ -901,7 +902,9 @@ static void dump_ecc_reg(char *str, uint32_t volatile regs[], int32_t count)
     printf("\n");
 }
 #else
-static void dump_ecc_reg(char *str, uint32_t volatile regs[], int32_t count) { }
+static void dump_ecc_reg(char *str, uint32_t volatile regs[], int32_t count)
+{
+}
 #endif
 
 static char  ch2hex(char ch)
@@ -1207,7 +1210,6 @@ int32_t  ECC_GeneratePublicKey(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *privat
 
     if (ret == 0)
     {
-
         for (i = 0; i < 18; i++)
         {
             crpt->ECC_K[i] = 0UL;
@@ -1219,8 +1221,9 @@ int32_t  ECC_GeneratePublicKey(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *privat
         {
             crpt->ECC_CTL = 0UL;
         }
-        else           /*  CURVE_GF_P */
+        else
         {
+            /*  CURVE_GF_P */
             crpt->ECC_CTL = CRPT_ECC_CTL_FSEL_Msk;
         }
 
@@ -1228,7 +1231,9 @@ int32_t  ECC_GeneratePublicKey(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *privat
         crpt->ECC_CTL |= ((uint32_t)pCurve->key_len << CRPT_ECC_CTL_CURVEM_Pos) |
                          ECCOP_POINT_MUL | CRPT_ECC_CTL_START_Msk;
 
-        while ((g_ECC_done | g_ECCERR_done) == 0UL) { }
+        while ((g_ECC_done | g_ECCERR_done) == 0UL)
+        {
+        }
 
         Reg2Hex(pCurve->Echar, crpt->ECC_X1, public_k1);
         Reg2Hex(pCurve->Echar, crpt->ECC_Y1, public_k2);
@@ -1260,7 +1265,6 @@ int32_t  ECC_Mutiply(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char x1[], char y1[], 
 
     if (ret == 0)
     {
-
         for (i = 0; i < 18; i++)
         {
             crpt->ECC_X1[i] = 0UL;
@@ -1276,8 +1280,9 @@ int32_t  ECC_Mutiply(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char x1[], char y1[], 
         {
             crpt->ECC_CTL = 0UL;
         }
-        else           /*  CURVE_GF_P */
+        else
         {
+            /*  CURVE_GF_P */
             crpt->ECC_CTL = CRPT_ECC_CTL_FSEL_Msk;
         }
 
@@ -1285,7 +1290,9 @@ int32_t  ECC_Mutiply(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char x1[], char y1[], 
         crpt->ECC_CTL |= ((uint32_t)pCurve->key_len << CRPT_ECC_CTL_CURVEM_Pos) |
                          ECCOP_POINT_MUL | CRPT_ECC_CTL_START_Msk;
 
-        while ((g_ECC_done | g_ECCERR_done) == 0UL) { }
+        while ((g_ECC_done | g_ECCERR_done) == 0UL)
+        {
+        }
 
         Reg2Hex(pCurve->Echar, crpt->ECC_X1, x2);
         Reg2Hex(pCurve->Echar, crpt->ECC_Y1, y2);
@@ -1346,15 +1353,18 @@ int32_t  ECC_GenerateSecretZ(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *private_
         {
             crpt->ECC_CTL = 0UL;
         }
-        else           /*  CURVE_GF_P */
+        else
         {
+            /*  CURVE_GF_P */
             crpt->ECC_CTL = CRPT_ECC_CTL_FSEL_Msk;
         }
         g_ECC_done = g_ECCERR_done = 0UL;
         crpt->ECC_CTL |= ((uint32_t)pCurve->key_len << CRPT_ECC_CTL_CURVEM_Pos) |
                          ECCOP_POINT_MUL | CRPT_ECC_CTL_START_Msk;
 
-        while ((g_ECC_done | g_ECCERR_done) == 0UL) { }
+        while ((g_ECC_done | g_ECCERR_done) == 0UL)
+        {
+        }
 
         Reg2Hex(pCurve->Echar, crpt->ECC_X1, secret_z);
     }
@@ -1386,9 +1396,13 @@ static void run_ecc_codec(CRPT_T *crpt, uint32_t mode)
 
     g_ECC_done = g_ECCERR_done = 0UL;
     crpt->ECC_CTL |= ((uint32_t)pCurve->key_len << CRPT_ECC_CTL_CURVEM_Pos) | mode | CRPT_ECC_CTL_START_Msk;
-    while ((g_ECC_done | g_ECCERR_done) == 0UL) { }
+    while ((g_ECC_done | g_ECCERR_done) == 0UL)
+    {
+    }
 
-    while (crpt->ECC_STS & CRPT_ECC_STS_BUSY_Msk) { }
+    while (crpt->ECC_STS & CRPT_ECC_STS_BUSY_Msk)
+    {
+    }
 }
 /** @endcond HIDDEN_SYMBOLS */
 
@@ -1417,7 +1431,6 @@ int32_t  ECC_GenerateSignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *messag
 
     if (ret == 0)
     {
-
         /*
          *   1. Calculate e = HASH(m), where HASH is a cryptographic hashing algorithm, (i.e. SHA-1)
          *      (1) Use SHA to calculate e
@@ -1672,7 +1685,6 @@ int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message,
 
     if (ret == 0)
     {
-
         /*  3-(1) Write the curve order to N registers */
         for (i = 0; i < 18; i++)
         {

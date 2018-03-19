@@ -1059,7 +1059,7 @@ int32_t main(void)
 
                     if (memcmp(Buff, Buff2, s1) != 0)
                     {
-                        printf("Compre failed!! %d %d\n", s1 ,s2);
+                        printf("Compre failed!! %d %d\n", s1,s2);
                         break;
                     }
 

@@ -141,7 +141,7 @@ uint32_t SDH_SDCmdAndRsp(SDH_T *sdh, uint32_t ucCmd, uint32_t uArg, uint32_t nti
 
     if (_SDH_uR7_CMD)
     {
-        uint32_t tmp0 = 0ul , tmp1= 0ul;
+        uint32_t tmp0 = 0ul, tmp1= 0ul;
         tmp1 = sdh->RESP1 & 0xfful;
         tmp0 = sdh->RESP0 & 0xful;
         if ((tmp1 != 0x55ul) && (tmp0 != 0x01ul))

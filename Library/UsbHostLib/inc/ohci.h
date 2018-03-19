@@ -29,7 +29,8 @@ struct udev_t;
 /*----------------------------------------------------------------------------------------*/
 /*   Endpoint descriptor                                                                  */
 /*----------------------------------------------------------------------------------------*/
-typedef struct ed_t {
+typedef struct ed_t
+{
     /* OHCI spec. Endpoint descriptor  */
     uint32_t    Info;
     uint32_t    TailP;
@@ -67,7 +68,8 @@ typedef struct ed_t {
 /*   Transfer descriptor                                                                  */
 /*----------------------------------------------------------------------------------------*/
 /* general transfer descriptor  */
-typedef struct td_t {
+typedef struct td_t
+{
     uint32_t    Info;
     uint32_t    CBP;                        /* Current Buffer Pointer                     */
     uint32_t    NextTD;                     /* Next TD                                    */
@@ -83,7 +85,8 @@ typedef struct td_t {
 #define TD_ADDR_MASK              0xFFFFFFFC
 
 /* Completion codes */
-enum OCHI_CC_CODE {
+enum OCHI_CC_CODE
+{
     /* mapping of the OHCI CC status to error codes */
     CC_NOERROR,                             /* No  Error                                  */
     CC_CRC,                                 /* CRC Error                                  */
@@ -128,7 +131,8 @@ enum OCHI_CC_CODE {
  * structure defined in the OHCI spec. that the host controller is
  * told the base address of.  It must be 256-byte aligned.
  */
-typedef struct {
+typedef struct
+{
     uint32_t   int_table[32];               /* Interrupt ED table                         */
     uint16_t   frame_no;                    /* current frame number                       */
     uint16_t   pad1;                        /* set to 0 on each frame_no change           */

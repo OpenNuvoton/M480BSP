@@ -71,7 +71,8 @@ extern "C"
 /** @addtogroup SDH_EXPORTED_TYPEDEF SDH Exported Type Defines
   @{
 */
-typedef struct SDH_info_t {
+typedef struct SDH_info_t
+{
     unsigned int    CardType;       /*!< SDHC, SD, or MMC */
     unsigned int    RCA;            /*!< Relative card address */
     unsigned char   IsCardInsert;   /*!< Card insert state */
@@ -127,7 +128,7 @@ extern SDH_INFO_T SD0, SD1;
  *                           \ref SDH_INTSTS_BLKDIF_Msk / \ref SDH_INTSTS_CRCIF_Msk / \ref SDH_INTSTS_CRC7_Msk /
  *                           \ref SDH_INTSTS_CRC16_Msk / \ref SDH_INTSTS_CRCSTS_Msk / \ref SDH_INTSTS_DAT0STS_Msk /
  *                           \ref SDH_INTSTS_CDIF_Msk \ref SDH_INTSTS_RTOIF_Msk /
- *                           \ref SDH_INTSTS_DITOIF_Msk / \ref SDH_INTSTS_CDSTS_Msk / 
+ *                           \ref SDH_INTSTS_DITOIF_Msk / \ref SDH_INTSTS_CDSTS_Msk /
  *                           \ref SDH_INTSTS_DAT1STS_Msk
  *
  *

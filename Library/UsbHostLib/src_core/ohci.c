@@ -48,8 +48,10 @@ static void add_to_ED_remove_list(ED_T *ed)
 
     /* check if this ED found in ed_remove_list */
     p = ed_remove_list;
-    while (p) {
-        if (p == ed) {
+    while (p)
+    {
+        if (p == ed)
+        {
             ENABLE_OHCI_IRQ();              /* This ED found in ed_remove_list            */
             return;                         /* do nothing                                 */
         }
@@ -79,7 +81,8 @@ static int ohci_reset(void)
     delay_us(10000);
 
     /* Check if OHCI reset completed? */
-    if ((USBH->HcCommandStatus & USBH_HcCommandStatus_HCR_Msk) != 0) {
+    if ((USBH->HcCommandStatus & USBH_HcCommandStatus_HCR_Msk) != 0)
+    {
         USB_error("Error! - USB OHCI reset timed out!\n");
         return -1;
     }
@@ -91,7 +94,8 @@ static int ohci_reset(void)
     delay_us(10000);
 
     /* Check if OHCI reset completed? */
-    if ((USBH->HcCommandStatus & USBH_HcCommandStatus_HCR_Msk) != 0) {
+    if ((USBH->HcCommandStatus & USBH_HcCommandStatus_HCR_Msk) != 0)
+    {
         USB_error("Error! - USB HC reset timed out!\n");
         return -1;
     }
@@ -105,23 +109,30 @@ static void init_hcca_int_table()
 
     memset(_hcca.int_table, 0, sizeof(_hcca.int_table));
 
-    for (i = 5; i >= 0; i--) {              /* interval = i^2                             */
+    for (i = 5; i >= 0; i--)                /* interval = i^2                             */
+    {
         _Ied[i] = alloc_ohci_ED();
         _Ied[i]->Info = ED_SKIP;
 
         interval = 0x1 << i;
 
-        for (idx = interval - 1; idx < 32; idx += interval) {
-            if (_hcca.int_table[idx] == 0) {     /* is empty list, insert directly        */
+        for (idx = interval - 1; idx < 32; idx += interval)
+        {
+            if (_hcca.int_table[idx] == 0)       /* is empty list, insert directly        */
+            {
                 _hcca.int_table[idx] = (uint32_t)_Ied[i];
-            } else {
+            }
+            else
+            {
                 ed_p = (ED_T *)_hcca.int_table[idx];
 
-                while (1) {
+                while (1)
+                {
                     if (ed_p == _Ied[i])
                         break;                   /* already chained by previous visit     */
 
-                    if (ed_p->NextED == 0) {     /* reach end of list?                    */
+                    if (ed_p->NextED == 0)       /* reach end of list?                    */
+                    {
                         ed_p->NextED = (uint32_t)_Ied[i];
                         break;
                     }
@@ -136,7 +147,8 @@ static ED_T * get_int_tree_head_node(int interval)
 {
     int    i;
 
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < 5; i++)
+    {
         interval >>= 1;
         if (interval == 0)
             return _Ied[i];
@@ -148,7 +160,8 @@ static int get_ohci_interval(int interval)
 {
     int    i, bInterval = 1;
 
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < 5; i++)
+    {
         interval >>= 1;
         if (interval == 0)
             return bInterval;
@@ -253,7 +266,8 @@ static int ohci_quit_xfer(UTR_T *utr, EP_INFO_T *ep)
 {
     ED_T       *ed;
 
-    if (utr != NULL) {
+    if (utr != NULL)
+    {
         if (utr->ep == NULL)
             return USBH_ERR_NOT_FOUND;
 
@@ -267,7 +281,8 @@ static int ohci_quit_xfer(UTR_T *utr, EP_INFO_T *ep)
         utr->ep->hw_pipe = NULL;
     }
 
-    if ((ep != NULL) && (ep->hw_pipe != NULL)) {
+    if ((ep != NULL) && (ep->hw_pipe != NULL))
+    {
         ed = (ED_T *)(ep->hw_pipe);
         /* add the endpoint to remove list, it will be removed on the next start of frame */
         add_to_ED_remove_list(ed);
@@ -281,9 +296,11 @@ uint32_t ed_make_info(UDEV_T *udev, EP_INFO_T *ep)
 {
     uint32_t  info;
 
-    if (ep == NULL) {                           /* is a control endpoint                   */
+    if (ep == NULL)                             /* is a control endpoint                   */
+    {
         /* control endpoint direction is from TD  */
-        if (udev->descriptor.bMaxPacketSize0 == 0) { /* is 0 if device descriptor still not obtained. */
+        if (udev->descriptor.bMaxPacketSize0 == 0)   /* is 0 if device descriptor still not obtained. */
+        {
             if (udev->speed == SPEED_LOW)       /* give a default maximum packet size     */
                 udev->descriptor.bMaxPacketSize0 = 8;
             else
@@ -293,7 +310,9 @@ uint32_t ed_make_info(UDEV_T *udev, EP_INFO_T *ep)
                | ED_DIR_BY_TD                   /* Direction (Get direction From TD)      */
                | ED_FORMAT_GENERAL              /* General format                         */
                | (0 << ED_CTRL_EN_Pos);         /* Endpoint address 0                     */
-    } else {                                    /* Other endpoint direction is from endpoint descriptor */
+    }
+    else                                        /* Other endpoint direction is from endpoint descriptor */
+    {
         info = (ep->wMaxPacketSize << 16);      /* Maximum Packet Size from endpoint      */
 
         info |= ((ep->bEndpointAddress & 0xf) << ED_CTRL_EN_Pos);   /* Endpoint Number     */
@@ -345,7 +364,8 @@ static int ohci_ctrl_xfer(UTR_T *utr)
 
     td_status = alloc_ohci_TD(utr);
 
-    if (td_status == NULL) {
+    if (td_status == NULL)
+    {
         free_ohci_TD(td_setup);
         if (utr->data_len > 0)
             free_ohci_TD(td_data);
@@ -353,16 +373,19 @@ static int ohci_ctrl_xfer(UTR_T *utr)
     }
 
     /* Check if there's any transfer pending on this endpoint... */
-    if (udev->ep0.hw_pipe == NULL) {
+    if (udev->ep0.hw_pipe == NULL)
+    {
         ed = alloc_ohci_ED();
-        if (ed == NULL) {
+        if (ed == NULL)
+        {
             free_ohci_TD(td_setup);
             free_ohci_TD(td_status);
             if (utr->data_len > 0)
                 free_ohci_TD(td_data);
             return USBH_ERR_MEMORY_OUT;
         }
-    } else
+    }
+    else
         ed = (ED_T *)udev->ep0.hw_pipe;
 
     /*------------------------------------------------------------------------------------*/
@@ -375,7 +398,8 @@ static int ohci_ctrl_xfer(UTR_T *utr)
     /*------------------------------------------------------------------------------------*/
     /* prepare DATA stage TD                                                              */
     /*------------------------------------------------------------------------------------*/
-    if (utr->data_len > 0) {
+    if (utr->data_len > 0)
+    {
         if ((utr->setup.bmRequestType & 0x80) == REQ_TYPE_OUT)
             info = (TD_CC | TD_R | TD_DP_OUT | TD_T_DATA1 | TD_TYPE_CTRL | TD_CTRL_DATA);
         else
@@ -387,7 +411,9 @@ static int ohci_ctrl_xfer(UTR_T *utr)
         td_setup->next   = td_data;
         td_data->NextTD  = (uint32_t)td_status;
         td_data->next    = td_status;
-    } else {
+    }
+    else
+    {
         td_setup->NextTD = (uint32_t)td_status;
         td_setup->next = td_status;
     }
@@ -459,8 +485,10 @@ static int ohci_bulk_xfer(UTR_T *utr)
 
     /* Check if there's any transfer pending on this endpoint... */
     ed = (ED_T *)_ohci->HcBulkHeadED;       /* get the head of bulk endpoint list         */
-    while (ed != NULL) {
-        if (ed->Info == info) {             /* have transfer of this EP not completed?    */
+    while (ed != NULL)
+    {
+        if (ed->Info == info)               /* have transfer of this EP not completed?    */
+        {
             if ((ed->HeadP & 0xFFFFFFF0) != (ed->TailP & 0xFFFFFFF0))
                 return USBH_ERR_OHCI_EP_BUSY;     /* endpoint is busy                     */
             else
@@ -469,7 +497,8 @@ static int ohci_bulk_xfer(UTR_T *utr)
         ed = (ED_T *)ed->NextED;
     }
 
-    if (ed == NULL) {
+    if (ed == NULL)
+    {
         bIsNewED = 1;
         ed = alloc_ohci_ED();               /* allocate an Endpoint Descriptor            */
         if (ed == NULL)
@@ -488,7 +517,8 @@ static int ohci_bulk_xfer(UTR_T *utr)
     data_len = utr->data_len;
     buff = utr->buff;
 
-    do {
+    do
+    {
         if ((ep->bEndpointAddress & EP_ADDR_DIR_MASK) == EP_ADDR_DIR_OUT)
             info = (TD_CC | TD_R | TD_DP_OUT | TD_TYPE_BULK);
         else
@@ -514,16 +544,20 @@ static int ohci_bulk_xfer(UTR_T *utr)
         data_len -= xfer_len;
 
         /* chain to end of TD list */
-        if (td_list == NULL) {
+        if (td_list == NULL)
+        {
             td_list = td;
-        } else {
+        }
+        else
+        {
             td_p = td_list;
             while (td_p->NextTD != 0)
                 td_p = (TD_T *)td_p->NextTD;
             td_p->NextTD = (uint32_t)td;
         }
 
-    }  while (data_len > 0);
+    }
+    while (data_len > 0);
 
     /*------------------------------------------------------------------------------------*/
     /*  Start transfer                                                                    */
@@ -531,7 +565,8 @@ static int ohci_bulk_xfer(UTR_T *utr)
     utr->status = 0;
     DISABLE_OHCI_IRQ();
     ed->HeadP = (ed->HeadP & 0x2) | (uint32_t)td_list;       /* keep toggleCarry bit      */
-    if (bIsNewED) {
+    if (bIsNewED)
+    {
         ed->HeadP = (uint32_t)td_list;
         /* Link ED to OHCI Bulk List */
         ed->NextED = _ohci->HcBulkHeadED;
@@ -544,7 +579,8 @@ static int ohci_bulk_xfer(UTR_T *utr)
     return 0;
 
 mem_out:
-    while (td_list != NULL) {
+    while (td_list != NULL)
+    {
         td = td_list;
         td_list = (TD_T *)td_list->NextTD;
         free_ohci_TD(td);
@@ -571,13 +607,15 @@ static int ohci_int_xfer(UTR_T *utr)
     /*------------------------------------------------------------------------------------*/
     info = ed_make_info(udev, ep);
     ed = ied;
-    while (ed != NULL) {
+    while (ed != NULL)
+    {
         if (ed->Info == info)
             break;                          /* Endpoint found                             */
         ed = (ED_T *)ed->NextED;
     }
 
-    if (ed == NULL) {                       /* ED not found, create it                    */
+    if (ed == NULL)                         /* ED not found, create it                    */
+    {
         bIsNewED = 1;
         ed = alloc_ohci_ED();               /* allocate an Endpoint Descriptor            */
         if (ed == NULL)
@@ -596,7 +634,8 @@ static int ohci_int_xfer(UTR_T *utr)
     data_len = utr->data_len;
     buff = utr->buff;
 
-    do {
+    do
+    {
         if ((ep->bEndpointAddress & EP_ADDR_DIR_MASK) == EP_ADDR_DIR_OUT)
             info = (TD_CC | TD_R | TD_DP_OUT | TD_TYPE_INT);
         else
@@ -622,16 +661,20 @@ static int ohci_int_xfer(UTR_T *utr)
         data_len -= xfer_len;
 
         /* chain to end of TD list */
-        if (td_list == NULL) {
+        if (td_list == NULL)
+        {
             td_list = td;
-        } else {
+        }
+        else
+        {
             td_p = td_list;
             while (td_p->NextTD != 0)
                 td_p = (TD_T *)td_p->NextTD;
             td_p->NextTD = (uint32_t)td;
         }
 
-    }  while (data_len > 0);
+    }
+    while (data_len > 0);
 
     /*------------------------------------------------------------------------------------*/
     /*  Hook ED and TD list to HCCA interrupt table                                       */
@@ -641,7 +684,8 @@ static int ohci_int_xfer(UTR_T *utr)
 
     ed->HeadP = (ed->HeadP & 0x2) | (uint32_t)td_list;   /* keep toggleCarry bit          */
 
-    if (bIsNewED) {
+    if (bIsNewED)
+    {
         /* Add to list of the same interval */
         ed->NextED = ied->NextED;
         ied->NextED = (uint32_t)ed;
@@ -654,7 +698,8 @@ static int ohci_int_xfer(UTR_T *utr)
     return 0;
 
 mem_out:
-    while (td_list != NULL) {
+    while (td_list != NULL)
+    {
         td = td_list;
         td_list = (TD_T *)td_list->NextTD;
         free_ohci_TD(td);
@@ -681,13 +726,15 @@ static int ohci_iso_xfer(UTR_T *utr)
     /*------------------------------------------------------------------------------------*/
     info = ed_make_info(udev, ep);
     ed = ied;
-    while (ed != NULL) {
+    while (ed != NULL)
+    {
         if (ed->Info == info)
             break;                          /* Endpoint found                             */
         ed = (ED_T *)ed->NextED;
     }
 
-    if (ed == NULL) {                       /* ED not found, create it                    */
+    if (ed == NULL)                         /* ED not found, create it                    */
+    {
         bIsNewED = 1;
         ed = alloc_ohci_ED();               /* allocate an Endpoint Descriptor            */
         if (ed == NULL)
@@ -695,7 +742,8 @@ static int ohci_iso_xfer(UTR_T *utr)
         ed->Info = info;
         ed->HeadP = 0;
         ed->bInterval = ep->bInterval;
-    } else
+    }
+    else
 
         ep->hw_pipe = (void *)ed;
 
@@ -711,7 +759,8 @@ static int ohci_iso_xfer(UTR_T *utr)
     last_td = NULL;
     td_list = NULL;
 
-    for (i = 0; i < IF_PER_UTR; i++) {
+    for (i = 0; i < IF_PER_UTR; i++)
+    {
         utr->iso_status[i] = USBH_ERR_NOT_ACCESS1;
 
         td = alloc_ohci_TD(utr);            /* allocate a TD                              */
@@ -745,16 +794,19 @@ static int ohci_iso_xfer(UTR_T *utr)
 
     if ((ed->HeadP & ~0x3) == 0)
         ed->HeadP = (ed->HeadP & 0x2) | (uint32_t)td_list;   /* keep toggleCarry bit      */
-    else {
+    else
+    {
         /* find the tail of TDs under this ED */
         td = (TD_T *)(ed->HeadP & ~0x3);
-        while (td->NextTD != 0) {
+        while (td->NextTD != 0)
+        {
             td = (TD_T *)td->NextTD;
         }
         td->NextTD = (uint32_t)td_list;
     }
 
-    if (bIsNewED) {
+    if (bIsNewED)
+    {
         /* Add to list of the same interval */
         ed->NextED = ied->NextED;
         ied->NextED = (uint32_t)ed;
@@ -767,7 +819,8 @@ static int ohci_iso_xfer(UTR_T *utr)
     return 0;
 
 mem_out:
-    while (td_list != NULL) {
+    while (td_list != NULL)
+    {
         td = td_list;
         td_list = (TD_T *)td_list->NextTD;
         free_ohci_TD(td);
@@ -781,7 +834,8 @@ static UDEV_T * ohci_find_device_by_port(int port)
     UDEV_T  *udev;
 
     udev = g_udev_list;
-    while (udev != NULL) {
+    while (udev != NULL)
+    {
         if ((udev->parent == NULL) && (udev->port_num == port) &&
                 ((udev->speed == SPEED_LOW) || (udev->speed == SPEED_FULL)))
             return udev;
@@ -798,11 +852,13 @@ static int ohci_rh_port_reset(int port)
 
     reset_time = PORT_RESET_TIME_MS;
 
-    for (retry = 0; retry < PORT_RESET_RETRY; retry++) {
+    for (retry = 0; retry < PORT_RESET_RETRY; retry++)
+    {
         _ohci->HcRhPortStatus[port] = USBH_HcRhPortStatus_PRS_Msk;
 
         t0 = get_ticks();
-        while (get_ticks() - t0 < (reset_time/10)+1) {
+        while (get_ticks() - t0 < (reset_time/10)+1)
+        {
             /*
              *  If device is disconnected or port enabled, we can stop port reset.
              */
@@ -817,7 +873,8 @@ static int ohci_rh_port_reset(int port)
     return USBH_ERR_PORT_RESET;
 
 port_reset_done:
-    if ((_ohci->HcRhPortStatus[port] & USBH_HcRhPortStatus_CCS_Msk) == 0) { /* check again if device disconnected */
+    if ((_ohci->HcRhPortStatus[port] & USBH_HcRhPortStatus_CCS_Msk) == 0)   /* check again if device disconnected */
+    {
         _ohci->HcRhPortStatus[port] = USBH_HcRhPortStatus_CSC_Msk;         /* clear CSC */
         return USBH_ERR_DISCONNECTED;
     }
@@ -830,7 +887,8 @@ static int ohci_rh_polling(void)
     UDEV_T    *udev;
     int       ret;
 
-    for (i = 0; i < 2; i++) {
+    for (i = 0; i < 2; i++)
+    {
         /* clear unwanted port change status */
         _ohci->HcRhPortStatus[i] = USBH_HcRhPortStatus_OCIC_Msk | USBH_HcRhPortStatus_PRSC_Msk |
                                    USBH_HcRhPortStatus_PSSC_Msk | USBH_HcRhPortStatus_PESC_Msk;
@@ -844,11 +902,13 @@ static int ohci_rh_polling(void)
 
         _ohci->HcRhPortStatus[i] = USBH_HcRhPortStatus_CSC_Msk;     /* clear CSC          */
 
-        if (_ohci->HcRhPortStatus[i] & USBH_HcRhPortStatus_CCS_Msk) {
+        if (_ohci->HcRhPortStatus[i] & USBH_HcRhPortStatus_CCS_Msk)
+        {
             /*----------------------------------------------------------------------------*/
             /*  First of all, check if there's any previously connected device.           */
             /*----------------------------------------------------------------------------*/
-            while (1) {
+            while (1)
+            {
                 udev = ohci_find_device_by_port(i+1);
                 if (udev == NULL)
                     break;
@@ -874,17 +934,21 @@ static int ohci_rh_polling(void)
             udev->hc_driver = &ohci_driver;
 
             ret = connect_device(udev);
-            if (ret < 0) {
+            if (ret < 0)
+            {
                 USB_error("connect_device error! [%d]\n", ret);
                 free_device(udev);
             }
 
             change = 1;
-        } else {
+        }
+        else
+        {
             /*
              *  Device disconnected
              */
-            while (1) {
+            while (1)
+            {
                 udev = ohci_find_device_by_port(i+1);
                 if (udev == NULL)
                     break;
@@ -907,41 +971,50 @@ void td_done(TD_T *td)
     TD_debug("td_done: 0x%x, 0x%x, 0x%x, 0x%x, 0x%x\n", (int)td, td->Info, td->CBP, td->NextTD, td->BE);
 
     /* ISO ... drivers see per-TD length/status */
-    if ((info & TD_TYPE_Msk) == TD_TYPE_ISO) {
+    if ((info & TD_TYPE_Msk) == TD_TYPE_ISO)
+    {
         uint16_t    sf;
         int         idx;
 
         sf = info & 0xFFFF;
         idx = ((sf + 0x10000 - utr->iso_sf) & 0xFFFF) / get_ohci_interval(td->ed->bInterval);
-        if (idx >= IF_PER_UTR) {
+        if (idx >= IF_PER_UTR)
+        {
             USB_error("ISO invalid index!! %d, %d\n", sf, utr->iso_sf);
             goto td_out;
         }
 
         cc = (td->PSW[0] >> 12) & 0xF;
-        if (cc == 0xF) {                    /* this frame was not transferred             */
+        if (cc == 0xF)                      /* this frame was not transferred             */
+        {
             USB_debug("ISO F %d N/A!\n", sf);
             utr->iso_status[idx] = USBH_ERR_SCH_OVERRUN;
             goto td_out;
         }
-        if ((cc != 0) && (cc != CC_DATA_UNDERRUN)) {
+        if ((cc != 0) && (cc != CC_DATA_UNDERRUN))
+        {
             utr->iso_status[idx] = USBH_ERR_CC_NO_ERR - cc;
             goto td_out;
         }
         utr->iso_status[idx] = 0;
         utr->iso_xlen[idx] = td->PSW[0] & 0x7FF;
-    } else {
+    }
+    else
+    {
         cc = TD_CC_GET(info);
 
         /* short packet is fine */
-        if ((cc != CC_NOERROR) && (cc != CC_DATA_UNDERRUN)) {
+        if ((cc != CC_NOERROR) && (cc != CC_DATA_UNDERRUN))
+        {
             USB_error("TD error, CC = 0x%x\n", cc);
             utr->status = USBH_ERR_TRANSFER;
         }
 
-        switch (info & TD_TYPE_Msk) {
+        switch (info & TD_TYPE_Msk)
+        {
         case TD_TYPE_CTRL:
-            if (info & TD_CTRL_DATA) {
+            if (info & TD_CTRL_DATA)
+            {
                 if (td->CBP == 0)
                     utr->xfer_len += td->BE - td->buff_start + 1;
                 else
@@ -964,7 +1037,8 @@ td_out:
     utr->td_cnt--;
 
     /* If all TDs are done, call-back to requester. */
-    if (utr->td_cnt == 0) {
+    if (utr->td_cnt == 0)
+    {
         utr->bIsTransferDone = 1;
         if (utr->func)
             utr->func(utr);
@@ -979,7 +1053,8 @@ static void remove_ed()
     UTR_T     *utr;
     int       found;
 
-    while (ed_remove_list != NULL) {
+    while (ed_remove_list != NULL)
+    {
         ED_debug("Remove ED: 0x%x, %d\n", (int)ed_remove_list, ed_remove_list->bInterval);
         ed_p = ed_remove_list;
         found = 0;
@@ -987,14 +1062,20 @@ static void remove_ed()
         /*--------------------------------------------------------------------------------*/
         /*  Remove endpoint from Control List if found                                    */
         /*--------------------------------------------------------------------------------*/
-        if ((ed_p->Info & ED_EP_ADDR_Msk) == 0) {
-            if (_ohci->HcControlHeadED == (uint32_t)ed_p) {
+        if ((ed_p->Info & ED_EP_ADDR_Msk) == 0)
+        {
+            if (_ohci->HcControlHeadED == (uint32_t)ed_p)
+            {
                 _ohci->HcControlHeadED = (uint32_t)ed_p->NextED;
                 found = 1;
-            } else {
+            }
+            else
+            {
                 ed = (ED_T *)_ohci->HcControlHeadED;
-                while (ed != NULL) {
-                    if (ed->NextED == (uint32_t)ed_p) {
+                while (ed != NULL)
+                {
+                    if (ed->NextED == (uint32_t)ed_p)
+                    {
                         ed->NextED = ed_p->NextED;
                         found = 1;
                     }
@@ -1006,12 +1087,15 @@ static void remove_ed()
         /*--------------------------------------------------------------------------------*/
         /*  Remove INT or ISO endpoint from HCCA interrupt table                          */
         /*--------------------------------------------------------------------------------*/
-        else if (ed_p->bInterval > 0) {
+        else if (ed_p->bInterval > 0)
+        {
             ied = get_int_tree_head_node(ed_p->bInterval);
 
             ed = ied;
-            while (ed != NULL) {
-                if (ed->NextED == (uint32_t)ed_p) {
+            while (ed != NULL)
+            {
+                if (ed->NextED == (uint32_t)ed_p)
+                {
                     ed->NextED = ed_p->NextED;
                     found = 1;
                     break;
@@ -1023,15 +1107,21 @@ static void remove_ed()
         /*--------------------------------------------------------------------------------*/
         /*  Remove endpoint from Bulk List if found                                       */
         /*--------------------------------------------------------------------------------*/
-        else {
-            if (_ohci->HcBulkHeadED == (uint32_t)ed_p) {
+        else
+        {
+            if (_ohci->HcBulkHeadED == (uint32_t)ed_p)
+            {
                 ed = (ED_T *)ed_p;
                 _ohci->HcBulkHeadED = ed_p->NextED;
                 found = 1;
-            } else {
+            }
+            else
+            {
                 ed = (ED_T *)_ohci->HcBulkHeadED;
-                while (ed != NULL) {
-                    if (ed->NextED == (uint32_t)ed_p) {
+                while (ed != NULL)
+                {
+                    if (ed->NextED == (uint32_t)ed_p)
+                    {
                         ed->NextED = ed_p->NextED;
                         found = 1;
                     }
@@ -1043,17 +1133,21 @@ static void remove_ed()
         /*--------------------------------------------------------------------------------*/
         /*  Remove and free all TDs under this endpoint                                   */
         /*--------------------------------------------------------------------------------*/
-        if (found) {
+        if (found)
+        {
             td = (TD_T *)(ed_p->HeadP & ~0x3);
-            if (td != NULL) {
-                while (td != NULL) {
+            if (td != NULL)
+            {
+                while (td != NULL)
+                {
                     utr = td->utr;
                     td_next = (TD_T *)td->NextTD;
                     free_ohci_TD(td);
                     td = td_next;
 
                     utr->td_cnt--;
-                    if (utr->td_cnt == 0) {
+                    if (utr->td_cnt == 0)
+                    {
                         utr->status = USBH_ERR_ABORT;
                         if (utr->func)
                             utr->func(utr);
@@ -1082,7 +1176,8 @@ void OHCI_IRQHandler(void)
     //USB_debug("ohci int_sts = 0x%x\n", int_sts);
 
     if ((_ohci->HcInterruptEnable & USBH_HcInterruptEnable_SF_Msk) &&
-            (int_sts & USBH_HcInterruptStatus_SF_Msk)) {
+            (int_sts & USBH_HcInterruptStatus_SF_Msk))
+    {
         int_sts &= ~USBH_HcInterruptStatus_SF_Msk;
 
         _ohci->HcInterruptDisable = USBH_HcInterruptDisable_SF_Msk;
@@ -1090,7 +1185,8 @@ void OHCI_IRQHandler(void)
         _ohci->HcInterruptStatus = USBH_HcInterruptStatus_SF_Msk;
     }
 
-    if (int_sts & USBH_HcInterruptStatus_WDH_Msk) {
+    if (int_sts & USBH_HcInterruptStatus_WDH_Msk)
+    {
         int_sts &= ~USBH_HcInterruptStatus_WDH_Msk;
         /*
          *  reverse done list
@@ -1100,7 +1196,8 @@ void OHCI_IRQHandler(void)
         td_prev = NULL;
         _ohci->HcInterruptStatus = USBH_HcInterruptStatus_WDH_Msk;
 
-        while (td != NULL) {
+        while (td != NULL)
+        {
             //TD_debug("Done list TD 0x%x => 0x%x\n", (int)td, (int)td->NextTD);
             td_next = (TD_T *)(td->NextTD & TD_ADDR_MASK);
             td->NextTD = (uint32_t)td_prev;
@@ -1112,7 +1209,8 @@ void OHCI_IRQHandler(void)
         /*
          *  reclaim TDs
          */
-        while (td != NULL) {
+        while (td != NULL)
+        {
             TD_debug("Reclaim TD 0x%x, next 0x%x\n", (int)td, td->NextTD);
             td_next = (TD_T *)td->NextTD;
             td_done(td);
@@ -1121,7 +1219,8 @@ void OHCI_IRQHandler(void)
         }
     }
 
-    if (int_sts & USBH_HcInterruptStatus_RHSC_Msk) {
+    if (int_sts & USBH_HcInterruptStatus_RHSC_Msk)
+    {
         _ohci->HcInterruptDisable = USBH_HcInterruptDisable_RHSC_Msk;
     }
 
@@ -1143,7 +1242,8 @@ void dump_ohci_int_table()
 
         ed = (ED_T *)_hcca.int_table[i];
 
-        while (ed != NULL) {
+        while (ed != NULL)
+        {
             USB_debug("0x%x (0x%x) => ", (int)ed, ed->HeadP);
             ed = (ED_T *)ed->NextED;
         }
@@ -1188,7 +1288,8 @@ void dump_ohci_ports()
 
 #endif  // ENABLE_DEBUG_MSG
 
-HC_DRV_T  ohci_driver = {
+HC_DRV_T  ohci_driver =
+{
     ohci_init,               /* init               */
     ohci_shutdown,           /* shutdown           */
     ohci_suspend,            /* suspend            */

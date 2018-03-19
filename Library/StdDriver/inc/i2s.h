@@ -125,7 +125,8 @@ extern "C"
   */
 __STATIC_INLINE void I2S_ENABLE_TX_ZCD(I2S_T *i2s, uint32_t u32ChMask)
 {
-    if((u32ChMask > 0U) && (u32ChMask < 9U)) {
+    if((u32ChMask > 0U) && (u32ChMask < 9U))
+    {
         i2s->CTL1 |= ((uint32_t)1U << (u32ChMask-1U));
     }
 }
@@ -139,7 +140,8 @@ __STATIC_INLINE void I2S_ENABLE_TX_ZCD(I2S_T *i2s, uint32_t u32ChMask)
   */
 __STATIC_INLINE void I2S_DISABLE_TX_ZCD(I2S_T *i2s, uint32_t u32ChMask)
 {
-    if((u32ChMask > 0U) && (u32ChMask < 9U)) {
+    if((u32ChMask > 0U) && (u32ChMask < 9U))
+    {
         i2s->CTL1 &= ~((uint32_t)1U << (u32ChMask-1U));
     }
 }

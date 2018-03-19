@@ -1441,11 +1441,13 @@ __STATIC_INLINE void SYS_LockReg(void);
   */
 __STATIC_INLINE void SYS_UnlockReg(void)
 {
-    do {
+    do
+    {
         SYS->REGLCTL = 0x59UL;
         SYS->REGLCTL = 0x16UL;
         SYS->REGLCTL = 0x88UL;
-    } while(SYS->REGLCTL == 0UL);
+    }
+    while(SYS->REGLCTL == 0UL);
 }
 
 /**

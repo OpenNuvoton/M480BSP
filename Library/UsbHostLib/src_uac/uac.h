@@ -16,7 +16,8 @@
 #define UAC_DBGMSG(...)
 #endif
 
-typedef enum {
+typedef enum
+{
     UAC_STATE_CONNECTING,
     UAC_STATE_READY,
     UAC_STATE_RUNNING,
@@ -160,13 +161,15 @@ typedef enum {
  *  Audio Class Control Interface Descriptor header
  */
 #ifdef __ICCARM__
-typedef struct cs_hdr_t {                   /*! Audio Class-Specific AC Interface Header Descriptor   */
+typedef struct cs_hdr_t                     /*! Audio Class-Specific AC Interface Header Descriptor   */
+{
     __packed uint8_t  bLength;              /*!< Size of this descriptor in bytes                     */
     __packed uint8_t  bDescriptorType;      /*!< CS_INTERFACE descriptor type 0x24                    */
     __packed uint8_t  bDescriptorSubtype;   /*!< HEADER descriptor subtype                            */
 } CS_HDR_T;                                 /*! Audio Class-Specific AC Interface Header Descriptor   */
 #else
-typedef struct __attribute__((__packed__)) cs_hdr_t {     /*! Audio Class-Specific AC Interface Header Descriptor   */
+typedef struct __attribute__((__packed__)) cs_hdr_t       /*! Audio Class-Specific AC Interface Header Descriptor   */
+{
     uint8_t  bLength;                       /*!< Size of this descriptor in bytes                     */
     uint8_t  bDescriptorType;               /*!< CS_INTERFACE descriptor type 0x24                    */
     uint8_t  bDescriptorSubtype;            /*!< HEADER descriptor subtype                            */
@@ -177,7 +180,8 @@ typedef struct __attribute__((__packed__)) cs_hdr_t {     /*! Audio Class-Specif
  *  Class-Specific AC Interface Header Descriptor (4.3.2)
  */
 #ifdef __ICCARM__
-typedef struct ac_if_header {               /*! Audio Class-Specific AC Interface Header Descriptor   */
+typedef struct ac_if_header                 /*! Audio Class-Specific AC Interface Header Descriptor   */
+{
     __packed uint8_t  bLength;              /*!< Size of this descriptor, in bytes: 8+n               */
     __packed uint8_t  bDescriptorType;      /*!< CS_INTERFACE descriptor type; 0x24                   */
     __packed uint8_t  bDescriptorSubtype;   /*!< HEADER descriptor subtype; 0x1                       */
@@ -189,7 +193,8 @@ typedef struct ac_if_header {               /*! Audio Class-Specific AC Interfac
                                                 Interface Collection to which this AudioControl interface belongs.  */
 } AC_IF_HDR_T;                              /*! Audio Class-Specific AC Interface Header Descriptor   */
 #else
-typedef struct __attribute__((__packed__)) ac_if_header {  /*! Audio Class-Specific AC Interface Header Descriptor   */
+typedef struct __attribute__((__packed__)) ac_if_header    /*! Audio Class-Specific AC Interface Header Descriptor   */
+{
     uint8_t  bLength;                       /*!< Size of this descriptor, in bytes: 8+n               */
     uint8_t  bDescriptorType;               /*!< CS_INTERFACE descriptor type; 0x24                   */
     uint8_t  bDescriptorSubtype;            /*!< HEADER descriptor subtype; 0x1                       */
@@ -206,7 +211,8 @@ typedef struct __attribute__((__packed__)) ac_if_header {  /*! Audio Class-Speci
  *  UAC Input Terminal Descriptor
  */
 #ifdef __ICCARM__
-typedef struct ac_itd_t {                   /*! Audio Class-Specific Input Terminal Descriptor        */
+typedef struct ac_itd_t                     /*! Audio Class-Specific Input Terminal Descriptor        */
+{
     __packed uint8_t  bLength;              /*!< Size of this descriptor, in bytes: 12                */
     __packed uint8_t  bDescriptorType;      /*!< CS_INTERFACE descriptor type; 0x24                   */
     __packed uint8_t  bDescriptorSubtype;   /*!< INPUT_TERMINAL descriptor subtype; 0x2               */
@@ -219,7 +225,8 @@ typedef struct ac_itd_t {                   /*! Audio Class-Specific Input Termi
     __packed uint8_t  iTerminal;
 } AC_IT_T;                                  /*! Audio Class-Specific Input Terminal Descriptor        */
 #else
-typedef struct __attribute__((__packed__)) ac_itd_t {   /*! Audio Class-Specific Input Terminal Descriptor        */
+typedef struct __attribute__((__packed__)) ac_itd_t     /*! Audio Class-Specific Input Terminal Descriptor        */
+{
     uint8_t  bLength;                       /*!< Size of this descriptor, in bytes: 12                */
     uint8_t  bDescriptorType;               /*!< CS_INTERFACE descriptor type; 0x24                   */
     uint8_t  bDescriptorSubtype;            /*!< INPUT_TERMINAL descriptor subtype; 0x2               */
@@ -237,7 +244,8 @@ typedef struct __attribute__((__packed__)) ac_itd_t {   /*! Audio Class-Specific
  *  UAC Output Terminal Descriptor
  */
 #ifdef __ICCARM__
-typedef struct ac_otd_t {
+typedef struct ac_otd_t
+{
     __packed uint8_t  bLength;
     __packed uint8_t  bDescriptorType;
     __packed uint8_t  bDescriptorSubtype;
@@ -248,7 +256,8 @@ typedef struct ac_otd_t {
     __packed uint8_t  iTerminal;
 } AC_OT_T;
 #else
-typedef struct __attribute__((__packed__)) ac_otd_t {
+typedef struct __attribute__((__packed__)) ac_otd_t
+{
     uint8_t  bLength;
     uint8_t  bDescriptorType;
     uint8_t  bDescriptorSubtype;
@@ -311,7 +320,8 @@ typedef struct __attribute__((__packed__)) ac_otd_t {
 /*  UAC Mixer Unit Descriptor                                                             */
 /*----------------------------------------------------------------------------------------*/
 #ifdef __ICCARM__
-typedef struct ac_mxr_t {
+typedef struct ac_mxr_t
+{
     __packed uint8_t  bLength;
     __packed uint8_t  bDescriptorType;
     __packed uint8_t  bDescriptorSubtype;
@@ -319,7 +329,8 @@ typedef struct ac_mxr_t {
     __packed uint8_t  bNrInPins;            /* Number of Input Pins of this Unit: p       */
 } AC_MXR_T;
 #else
-typedef struct __attribute__((__packed__)) ac_mxr_t {
+typedef struct __attribute__((__packed__)) ac_mxr_t
+{
     uint8_t  bLength;
     uint8_t  bDescriptorType;
     uint8_t  bDescriptorSubtype;
@@ -332,7 +343,8 @@ typedef struct __attribute__((__packed__)) ac_mxr_t {
  *  UAC Selector Unit Descriptor
  */
 #ifdef __ICCARM__
-typedef struct ac_su_t {
+typedef struct ac_su_t
+{
     __packed uint8_t  bLength;
     __packed uint8_t  bDescriptorType;
     __packed uint8_t  bDescriptorSubtype;
@@ -340,7 +352,8 @@ typedef struct ac_su_t {
     __packed uint8_t  bNrInPins;            /* Number of Input Pins of this Unit: p       */
 } AC_SU_T;
 #else
-typedef struct __attribute__((__packed__)) ac_su_t {
+typedef struct __attribute__((__packed__)) ac_su_t
+{
     uint8_t  bLength;
     uint8_t  bDescriptorType;
     uint8_t  bDescriptorSubtype;
@@ -353,7 +366,8 @@ typedef struct __attribute__((__packed__)) ac_su_t {
  *  UAC Feature Unit Descriptor
  */
 #ifdef __ICCARM__
-typedef struct ac_fu_t {
+typedef struct ac_fu_t
+{
     __packed uint8_t  bLength;
     __packed uint8_t  bDescriptorType;
     __packed uint8_t  bDescriptorSubtype;
@@ -362,7 +376,8 @@ typedef struct ac_fu_t {
     __packed uint8_t  bControlSize;         /* Size in bytes of an element of the bmaControls() array: n */
 } AC_FU_T;
 #else
-typedef struct __attribute__((__packed__)) ac_fu_t {
+typedef struct __attribute__((__packed__)) ac_fu_t
+{
     uint8_t  bLength;
     uint8_t  bDescriptorType;
     uint8_t  bDescriptorSubtype;
@@ -389,7 +404,8 @@ typedef struct __attribute__((__packed__)) ac_fu_t {
  *  UAC AS Isochronous Audio Data Endpoint Descriptor
  */
 #ifdef __ICCARM__
-typedef struct as_gen_t {
+typedef struct as_gen_t
+{
     __packed uint8_t  bLength;
     __packed uint8_t  bDescriptorType;
     __packed uint8_t  bDescriptorSubtype;
@@ -398,7 +414,8 @@ typedef struct as_gen_t {
     __packed uint16_t wFormatTag;
 } AS_GEN_T;
 #else
-typedef struct __attribute__((__packed__)) as_gen_t {
+typedef struct __attribute__((__packed__)) as_gen_t
+{
     uint8_t  bLength;
     uint8_t  bDescriptorType;
     uint8_t  bDescriptorSubtype;
@@ -412,7 +429,8 @@ typedef struct __attribute__((__packed__)) as_gen_t {
  *  UAC Processing Unit Descriptor
  */
 #ifdef __ICCARM__
-typedef struct ac_pu_t {
+typedef struct ac_pu_t
+{
     __packed uint8_t  bLength;
     __packed uint8_t  bDescriptorType;
     __packed uint8_t  bDescriptorSubtype;
@@ -421,7 +439,8 @@ typedef struct ac_pu_t {
     __packed uint8_t  bNrInPins;            /* Number of Input Pins of this Unit: p */
 } AC_PU_T;
 #else
-typedef struct __attribute__((__packed__)) ac_pu_t {
+typedef struct __attribute__((__packed__)) ac_pu_t
+{
     uint8_t  bLength;
     uint8_t  bDescriptorType;
     uint8_t  bDescriptorSubtype;
@@ -435,7 +454,8 @@ typedef struct __attribute__((__packed__)) ac_pu_t {
  *  Class-Specific AS Isochronous Audio Data Endpoint Descriptor
  */
 #ifdef __ICCARM__
-typedef struct cs_ep_t {
+typedef struct cs_ep_t
+{
     __packed uint8_t  bLength;
     __packed uint8_t  bDescriptorType;
     __packed uint8_t  bDescriptorSubtype;
@@ -444,7 +464,8 @@ typedef struct cs_ep_t {
     __packed uint16_t wLockDelay;
 } CS_EP_T;
 #else
-typedef struct __attribute__((__packed__)) cs_ep_t {
+typedef struct __attribute__((__packed__)) cs_ep_t
+{
     uint8_t  bLength;
     uint8_t  bDescriptorType;
     uint8_t  bDescriptorSubtype;
@@ -458,7 +479,8 @@ typedef struct __attribute__((__packed__)) cs_ep_t {
  *  UAC Type I Format Type Descriptor
  */
 #ifdef __ICCARM__
-typedef struct ac_ft1_t {
+typedef struct ac_ft1_t
+{
     __packed uint8_t  bLength;
     __packed uint8_t  bDescriptorType;
     __packed uint8_t  bDescriptorSubtype;
@@ -470,7 +492,8 @@ typedef struct ac_ft1_t {
     __packed uint8_t  tSamFreq[16][3];
 } AS_FT1_T;
 #else
-typedef struct __attribute__((__packed__)) ac_ft1_t {
+typedef struct __attribute__((__packed__)) ac_ft1_t
+{
     uint8_t  bLength;
     uint8_t  bDescriptorType;
     uint8_t  bDescriptorSubtype;
@@ -487,7 +510,8 @@ typedef struct __attribute__((__packed__)) ac_ft1_t {
  *  UAC Type 2 Format Type Descriptor
  */
 #ifdef __ICCARM__
-typedef struct ac_ft2_t {
+typedef struct ac_ft2_t
+{
     __packed uint8_t  bLength;
     __packed uint8_t  bDescriptorType;
     __packed uint8_t  bDescriptorSubtype;
@@ -497,7 +521,8 @@ typedef struct ac_ft2_t {
     __packed uint8_t  bSamFreqType;
 } AS_FT2_T;
 #else
-typedef struct __attribute__((__packed__)) ac_ft2_t {
+typedef struct __attribute__((__packed__)) ac_ft2_t
+{
     uint8_t  bLength;
     uint8_t  bDescriptorType;
     uint8_t  bDescriptorSubtype;
@@ -512,7 +537,8 @@ typedef struct __attribute__((__packed__)) ac_ft2_t {
  *  UAC Type 3 Format Type Descriptor
  */
 #ifdef __ICCARM__
-typedef struct ac_ft3_t {
+typedef struct ac_ft3_t
+{
     __packed uint8_t  bLength;
     __packed uint8_t  bDescriptorType;
     __packed uint8_t  bDescriptorSubtype;
@@ -525,7 +551,8 @@ typedef struct ac_ft3_t {
     __packed uint8_t  tUpperSamFreq[3];
 } AS_FT3_T;
 #else
-typedef struct __attribute__((__packed__)) ac_ft3_t {
+typedef struct __attribute__((__packed__)) ac_ft3_t
+{
     uint8_t  bLength;
     uint8_t  bDescriptorType;
     uint8_t  bDescriptorSubtype;
