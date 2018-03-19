@@ -69,8 +69,7 @@ static int  get_nibble_value(char c);
   */
 void PRNG_Open(CRPT_T *crpt, uint32_t u32KeySize, uint32_t u32SeedReload, uint32_t u32Seed)
 {
-    if (u32SeedReload)
-    {
+    if (u32SeedReload) {
         crpt->PRNG_SEED = u32Seed;
     }
 
@@ -100,8 +99,7 @@ void PRNG_Read(CRPT_T *crpt, uint32_t u32RandKey[])
 
     wcnt = (((crpt->PRNG_CTL & CRPT_PRNG_CTL_KEYSZ_Msk) >> CRPT_PRNG_CTL_KEYSZ_Pos) + 1U) * 2U;
 
-    for (i = 0U; i < wcnt; i++)
-    {
+    for (i = 0U; i < wcnt; i++) {
         u32RandKey[i] = crpt->PRNG_KEY[i];
     }
 
@@ -179,8 +177,7 @@ void AES_SetKey(CRPT_T *crpt, uint32_t u32Channel, uint32_t au32Keys[], uint32_t
     key_reg_addr = (uint32_t)&crpt->AES0_KEY[0] + (u32Channel * 0x3CUL);
     wcnt = 4UL + u32KeySize*2UL;
 
-    for (i = 0U; i < wcnt; i++)
-    {
+    for (i = 0U; i < wcnt; i++) {
         outpw(key_reg_addr, au32Keys[i]);
         key_reg_addr += 4UL;
     }
@@ -199,8 +196,7 @@ void AES_SetInitVect(CRPT_T *crpt, uint32_t u32Channel, uint32_t au32IV[])
 
     key_reg_addr = (uint32_t)&crpt->AES0_IV[0] + (u32Channel * 0x3CUL);
 
-    for (i = 0U; i < 4U; i++)
-    {
+    for (i = 0U; i < 4U; i++) {
         outpw(key_reg_addr, au32IV[i]);
         key_reg_addr += 4UL;
     }
@@ -260,12 +256,10 @@ void TDES_Open(CRPT_T *crpt, uint32_t u32Channel, uint32_t u32EncDec, int32_t Is
     g_TDES_CTL[u32Channel] = (u32Channel << CRPT_TDES_CTL_CHANNEL_Pos) |
                              (u32EncDec << CRPT_TDES_CTL_ENCRPT_Pos) |
                              u32OpMode | (u32SwapType << CRPT_TDES_CTL_BLKSWAP_Pos);
-    if (Is3DES)
-    {
+    if (Is3DES) {
         g_TDES_CTL[u32Channel] |= CRPT_TDES_CTL_TMODE_Msk;
     }
-    if (Is3Key)
-    {
+    if (Is3Key) {
         g_TDES_CTL[u32Channel] |= CRPT_TDES_CTL_3KEYS_Msk;
     }
 }
@@ -299,8 +293,7 @@ void TDES_SetKey(CRPT_T *crpt, uint32_t u32Channel, uint32_t au32Keys[3][2])
 
     reg_addr = (uint32_t)&crpt->TDES0_KEY1H + (0x40UL * u32Channel);
 
-    for (i = 0U; i < 3U; i++)
-    {
+    for (i = 0U; i < 3U; i++) {
         outpw(reg_addr, au32Keys[i][0]);   /* TDESn_KEYxH */
         reg_addr += 4UL;
         outpw(reg_addr, au32Keys[i][1]);   /* TDESn_KEYxL */
@@ -373,8 +366,7 @@ void SHA_Open(CRPT_T *crpt, uint32_t u32OpMode, uint32_t u32SwapType, uint32_t h
     crpt->HMAC_CTL = (u32OpMode << CRPT_HMAC_CTL_OPMODE_Pos) |
                      (u32SwapType << CRPT_HMAC_CTL_OUTSWAP_Pos);
 
-    if (hmac_key_len != 0UL)
-    {
+    if (hmac_key_len != 0UL) {
         crpt->HMAC_KEYCNT = hmac_key_len;
         crpt->HMAC_CTL |= CRPT_HMAC_CTL_HMACEN_Msk;
     }
@@ -420,30 +412,21 @@ void SHA_Read(CRPT_T *crpt, uint32_t u32Digest[])
 
     i = (crpt->HMAC_CTL & CRPT_HMAC_CTL_OPMODE_Msk) >> CRPT_HMAC_CTL_OPMODE_Pos;
 
-    if (i == SHA_MODE_SHA1)
-    {
+    if (i == SHA_MODE_SHA1) {
         wcnt = 5UL;
-    }
-    else if (i == SHA_MODE_SHA224)
-    {
+    } else if (i == SHA_MODE_SHA224) {
         wcnt = 7UL;
-    }
-    else if (i == SHA_MODE_SHA256)
-    {
+    } else if (i == SHA_MODE_SHA256) {
         wcnt = 8UL;
-    }
-    else if (i == SHA_MODE_SHA384)
-    {
+    } else if (i == SHA_MODE_SHA384) {
         wcnt = 12UL;
-    }
-    else         /* SHA_MODE_SHA512 */
-    {
+    } else {
+        /* SHA_MODE_SHA512 */
         wcnt = 16UL;
     }
 
     reg_addr = (uint32_t)&(crpt->HMAC_DGST[0]);
-    for (i = 0UL; i < wcnt; i++)
-    {
+    for (i = 0UL; i < wcnt; i++) {
         u32Digest[i] = inpw(reg_addr);
         reg_addr += 4UL;
     }
@@ -467,8 +450,7 @@ void SHA_Read(CRPT_T *crpt, uint32_t u32Digest[])
 #define MODOP_ADD           (0x2UL << CRPT_ECC_CTL_MODOP_Pos)
 #define MODOP_SUB           (0x3UL << CRPT_ECC_CTL_MODOP_Pos)
 
-enum
-{
+enum {
     CURVE_GF_P,
     CURVE_GF_2M,
 };
@@ -477,8 +459,7 @@ enum
 /*  Define elliptic curve (EC):                        */
 /*-----------------------------------------------------*/
 
-typedef struct e_curve_t
-{
+typedef struct e_curve_t {
     E_ECC_CURVE  curve_id;
     int32_t   Echar;
     char  Ea[144];
@@ -496,8 +477,7 @@ typedef struct e_curve_t
     int32_t   GF;
 }  ECC_CURVE;
 
-const ECC_CURVE _Curve[] =
-{
+const ECC_CURVE _Curve[] = {
     {
         /* NIST: Curve P-192 : y^2=x^3-ax+b (mod p) */
         CURVE_P_192,
@@ -894,28 +874,24 @@ static void dump_ecc_reg(char *str, uint32_t volatile regs[], int32_t count)
     int32_t  i;
 
     printf("%s => ", str);
-    for (i = 0; i < count; i++)
-    {
+    for (i = 0; i < count; i++) {
         printf("0x%08x ", regs[i]);
     }
     printf("\n");
 }
 #else
-static void dump_ecc_reg(char *str, uint32_t volatile regs[], int32_t count) { }
+static void dump_ecc_reg(char *str, uint32_t volatile regs[], int32_t count)
+{
+}
 #endif
 
 static char  ch2hex(char ch)
 {
-    if (ch <= '9')
-    {
+    if (ch <= '9') {
         ch = ch - '0';
-    }
-    else if ((ch <= 'z') && (ch >= 'a'))
-    {
+    } else if ((ch <= 'z') && (ch >= 'a')) {
         ch = ch - 'a' + 10U;
-    }
-    else
-    {
+    } else {
         ch = ch - 'A' + 10U;
     }
     return ch;
@@ -930,11 +906,9 @@ static void Hex2Reg(char input[], uint32_t volatile reg[])
     si = (int)strlen(input) - 1;
     ri = 0;
 
-    while (si >= 0)
-    {
+    while (si >= 0) {
         val32 = 0UL;
-        for (i = 0UL; (i < 8UL) && (si >= 0); i++)
-        {
+        for (i = 0UL; (i < 8UL) && (si >= 0); i++) {
             hex = ch2hex(input[si]);
             val32 |= (uint32_t)hex << (i * 4UL);
             si--;
@@ -952,11 +926,9 @@ static void Hex2RegEx(char input[], uint32_t volatile reg[], int shift)
     si = (int)strlen(input) - 1;
     ri = 0L;
     carry = 0UL;
-    while (si >= 0)
-    {
+    while (si >= 0) {
         val32 = 0UL;
-        for (i = 0UL; (i < 8UL) && (si >= 0L); i++)
-        {
+        for (i = 0UL; (i < 8UL) && (si >= 0L); i++) {
             hex = (uint32_t)ch2hex(input[si]);
             hex <<= shift;
 
@@ -966,8 +938,7 @@ static void Hex2RegEx(char input[], uint32_t volatile reg[], int shift)
         }
         reg[ri++] = val32;
     }
-    if (carry != 0UL)
-    {
+    if (carry != 0UL) {
         reg[ri] = carry;
     }
 }
@@ -994,10 +965,8 @@ static void Reg2Hex(int32_t count, uint32_t volatile reg[], char output[])
     output[count] = 0U;
     idx = count - 1;
 
-    for (ri = 0; idx >= 0; ri++)
-    {
-        for (i = 0UL; (i < 8UL) && (idx >= 0); i++)
-        {
+    for (ri = 0; idx >= 0; ri++) {
+        for (i = 0UL; (i < 8UL) && (idx >= 0); i++) {
             output[idx] = get_Nth_nibble_char(reg[ri], i);
             idx--;
         }
@@ -1009,15 +978,12 @@ static ECC_CURVE * get_curve(E_ECC_CURVE ecc_curve)
     uint32_t   i;
     ECC_CURVE  *ret = NULL;
 
-    for (i = 0UL; i < sizeof(_Curve) / sizeof(ECC_CURVE); i++)
-    {
-        if (ecc_curve == _Curve[i].curve_id)
-        {
+    for (i = 0UL; i < sizeof(_Curve) / sizeof(ECC_CURVE); i++) {
+        if (ecc_curve == _Curve[i].curve_id) {
             memcpy((char *)&Curve_Copy, &_Curve[i], sizeof(ECC_CURVE));
             ret = &Curve_Copy;   /* (ECC_CURVE *)&_Curve[i]; */
         }
-        if (ret != NULL)
-        {
+        if (ret != NULL) {
             break;
         }
     }
@@ -1029,16 +995,13 @@ static int32_t ecc_init_curve(CRPT_T *crpt, E_ECC_CURVE ecc_curve)
     int32_t  i, ret = 0;
 
     pCurve = get_curve(ecc_curve);
-    if (pCurve == NULL)
-    {
+    if (pCurve == NULL) {
         CRPT_DBGMSG("Cannot find curve %d!!\n", ecc_curve);
         ret = -1;
     }
 
-    if (ret == 0)
-    {
-        for (i = 0; i < 18; i++)
-        {
+    if (ret == 0) {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_A[i] = 0UL;
             crpt->ECC_B[i] = 0UL;
             crpt->ECC_X1[i] = 0UL;
@@ -1057,16 +1020,13 @@ static int32_t ecc_init_curve(CRPT_T *crpt, E_ECC_CURVE ecc_curve)
         dump_ecc_reg("CRPT_ECC_POINT_X1", crpt->ECC_X1, 10);
         dump_ecc_reg("CRPT_ECC_POINT_Y1", crpt->ECC_Y1, 10);
 
-        if (pCurve->GF == (int)CURVE_GF_2M)
-        {
+        if (pCurve->GF == (int)CURVE_GF_2M) {
             crpt->ECC_N[0] = 0x1UL;
             crpt->ECC_N[(pCurve->key_len) / 32] |= (1UL << ((pCurve->key_len) % 32));
             crpt->ECC_N[(pCurve->irreducible_k1) / 32] |= (1UL << ((pCurve->irreducible_k1) % 32));
             crpt->ECC_N[(pCurve->irreducible_k2) / 32] |= (1UL << ((pCurve->irreducible_k2) % 32));
             crpt->ECC_N[(pCurve->irreducible_k3) / 32] |= (1UL << ((pCurve->irreducible_k3) % 32));
-        }
-        else
-        {
+        } else {
             Hex2Reg(pCurve->Pp, crpt->ECC_N);
         }
     }
@@ -1076,18 +1036,15 @@ static int32_t ecc_init_curve(CRPT_T *crpt, E_ECC_CURVE ecc_curve)
 
 static int  get_nibble_value(char c)
 {
-    if ((c >= '0') && (c <= '9'))
-    {
+    if ((c >= '0') && (c <= '9')) {
         c = c - '0';
     }
 
-    if ((c >= 'a') && (c <= 'f'))
-    {
+    if ((c >= 'a') && (c <= 'f')) {
         c = c - 'a' - (char)10;
     }
 
-    if ((c >= 'A') && (c <= 'F'))
-    {
+    if ((c >= 'A') && (c <= 'F')) {
         c = c - 'A' - (char)10;
     }
     return (int)c;
@@ -1100,8 +1057,7 @@ static int ecc_strcmp(char *s1, char *s2)
     while (*s1 == '0') s1++;
     while (*s2 == '0') s2++;
 
-    for ( ; *s1 || *s2; s1++, s2++)
-    {
+    for ( ; *s1 || *s2; s1++, s2++) {
         if ((*s1 >= 'A') && (*s1 <= 'Z'))
             c1 = *s1 + 32;
         else
@@ -1130,15 +1086,13 @@ volatile uint32_t g_ECC_done, g_ECCERR_done;
   */
 void ECC_Complete(CRPT_T *crpt)
 {
-    if (crpt->INTSTS & CRPT_INTSTS_ECCIF_Msk)
-    {
+    if (crpt->INTSTS & CRPT_INTSTS_ECCIF_Msk) {
         g_ECC_done = 1UL;
         crpt->INTSTS = CRPT_INTSTS_ECCIF_Msk;
         /* printf("ECC done IRQ.\n"); */
     }
 
-    if (crpt->INTSTS & CRPT_INTSTS_ECCEIF_Msk)
-    {
+    if (crpt->INTSTS & CRPT_INTSTS_ECCEIF_Msk) {
         g_ECCERR_done = 1UL;
         crpt->INTSTS = CRPT_INTSTS_ECCEIF_Msk;
         /* printf("ECCERRIF is set!!\n"); */
@@ -1160,25 +1114,20 @@ int ECC_IsPrivateKeyValid(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char private_k[])
     int       ret = -1;
 
     pCurve = get_curve(ecc_curve);
-    if (pCurve == NULL)
-    {
+    if (pCurve == NULL) {
         ret = -1;
     }
 
-    if (strlen(private_k) < strlen(pCurve->Eorder))
-    {
+    if (strlen(private_k) < strlen(pCurve->Eorder)) {
         ret = 1;
     }
 
-    if (strlen(private_k) > strlen(pCurve->Eorder))
-    {
+    if (strlen(private_k) > strlen(pCurve->Eorder)) {
         ret = 0;
     }
 
-    for (i = 0UL; i < strlen(private_k); i++)
-    {
-        if (get_nibble_value(private_k[i]) < get_nibble_value(pCurve->Eorder[i]))
-        {
+    for (i = 0UL; i < strlen(private_k); i++) {
+        if (get_nibble_value(private_k[i]) < get_nibble_value(pCurve->Eorder[i])) {
             ret = 1;
             break;
         }
@@ -1200,27 +1149,21 @@ int32_t  ECC_GeneratePublicKey(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *privat
 {
     int32_t  i, ret = 0;
 
-    if (ecc_init_curve(crpt, ecc_curve) != 0)
-    {
+    if (ecc_init_curve(crpt, ecc_curve) != 0) {
         ret = -1;
     }
 
-    if (ret == 0)
-    {
-
-        for (i = 0; i < 18; i++)
-        {
+    if (ret == 0) {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_K[i] = 0UL;
         }
         Hex2Reg(private_k, crpt->ECC_K);
 
         /* set FSEL (Field selection) */
-        if (pCurve->GF == (int)CURVE_GF_2M)
-        {
+        if (pCurve->GF == (int)CURVE_GF_2M) {
             crpt->ECC_CTL = 0UL;
-        }
-        else           /*  CURVE_GF_P */
-        {
+        } else {
+            /*  CURVE_GF_P */
             crpt->ECC_CTL = CRPT_ECC_CTL_FSEL_Msk;
         }
 
@@ -1228,7 +1171,8 @@ int32_t  ECC_GeneratePublicKey(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *privat
         crpt->ECC_CTL |= ((uint32_t)pCurve->key_len << CRPT_ECC_CTL_CURVEM_Pos) |
                          ECCOP_POINT_MUL | CRPT_ECC_CTL_START_Msk;
 
-        while ((g_ECC_done | g_ECCERR_done) == 0UL) { }
+        while ((g_ECC_done | g_ECCERR_done) == 0UL) {
+        }
 
         Reg2Hex(pCurve->Echar, crpt->ECC_X1, public_k1);
         Reg2Hex(pCurve->Echar, crpt->ECC_Y1, public_k2);
@@ -1253,16 +1197,12 @@ int32_t  ECC_Mutiply(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char x1[], char y1[], 
 {
     int32_t  i, ret = 0;
 
-    if (ecc_init_curve(crpt, ecc_curve) != 0)
-    {
+    if (ecc_init_curve(crpt, ecc_curve) != 0) {
         ret = -1;
     }
 
-    if (ret == 0)
-    {
-
-        for (i = 0; i < 18; i++)
-        {
+    if (ret == 0) {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_X1[i] = 0UL;
             crpt->ECC_Y1[i] = 0UL;
             crpt->ECC_K[i] = 0UL;
@@ -1272,12 +1212,10 @@ int32_t  ECC_Mutiply(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char x1[], char y1[], 
         Hex2Reg(k, crpt->ECC_K);
 
         /* set FSEL (Field selection) */
-        if (pCurve->GF == (int)CURVE_GF_2M)
-        {
+        if (pCurve->GF == (int)CURVE_GF_2M) {
             crpt->ECC_CTL = 0UL;
-        }
-        else           /*  CURVE_GF_P */
-        {
+        } else {
+            /*  CURVE_GF_P */
             crpt->ECC_CTL = CRPT_ECC_CTL_FSEL_Msk;
         }
 
@@ -1285,7 +1223,8 @@ int32_t  ECC_Mutiply(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char x1[], char y1[], 
         crpt->ECC_CTL |= ((uint32_t)pCurve->key_len << CRPT_ECC_CTL_CURVEM_Pos) |
                          ECCOP_POINT_MUL | CRPT_ECC_CTL_START_Msk;
 
-        while ((g_ECC_done | g_ECCERR_done) == 0UL) { }
+        while ((g_ECC_done | g_ECCERR_done) == 0UL) {
+        }
 
         Reg2Hex(pCurve->Echar, crpt->ECC_X1, x2);
         Reg2Hex(pCurve->Echar, crpt->ECC_Y1, y2);
@@ -1309,32 +1248,24 @@ int32_t  ECC_GenerateSecretZ(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *private_
 {
     int32_t  i, ret = 0;
 
-    if (ecc_init_curve(crpt, ecc_curve) != 0)
-    {
+    if (ecc_init_curve(crpt, ecc_curve) != 0) {
         ret = -1;
     }
 
-    if (ret == 0)
-    {
-        for (i = 0; i < 18; i++)
-        {
+    if (ret == 0) {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_K[i] = 0UL;
             crpt->ECC_X1[i] = 0UL;
             crpt->ECC_Y1[i] = 0UL;
         }
 
         if ((ecc_curve == CURVE_B_163) || (ecc_curve == CURVE_B_233) || (ecc_curve == CURVE_B_283) ||
-                (ecc_curve == CURVE_B_409) || (ecc_curve == CURVE_B_571) || (ecc_curve == CURVE_K_163))
-        {
+                (ecc_curve == CURVE_B_409) || (ecc_curve == CURVE_B_571) || (ecc_curve == CURVE_K_163)) {
             Hex2RegEx(private_k, crpt->ECC_K, 1);
-        }
-        else if ((ecc_curve == CURVE_K_233) || (ecc_curve == CURVE_K_283) ||
-                 (ecc_curve == CURVE_K_409) || (ecc_curve == CURVE_K_571))
-        {
+        } else if ((ecc_curve == CURVE_K_233) || (ecc_curve == CURVE_K_283) ||
+                   (ecc_curve == CURVE_K_409) || (ecc_curve == CURVE_K_571)) {
             Hex2RegEx(private_k, crpt->ECC_K, 2);
-        }
-        else
-        {
+        } else {
             Hex2Reg(private_k, crpt->ECC_K);
         }
 
@@ -1342,19 +1273,18 @@ int32_t  ECC_GenerateSecretZ(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *private_
         Hex2Reg(public_k2, crpt->ECC_Y1);
 
         /* set FSEL (Field selection) */
-        if (pCurve->GF == (int)CURVE_GF_2M)
-        {
+        if (pCurve->GF == (int)CURVE_GF_2M) {
             crpt->ECC_CTL = 0UL;
-        }
-        else           /*  CURVE_GF_P */
-        {
+        } else {
+            /*  CURVE_GF_P */
             crpt->ECC_CTL = CRPT_ECC_CTL_FSEL_Msk;
         }
         g_ECC_done = g_ECCERR_done = 0UL;
         crpt->ECC_CTL |= ((uint32_t)pCurve->key_len << CRPT_ECC_CTL_CURVEM_Pos) |
                          ECCOP_POINT_MUL | CRPT_ECC_CTL_START_Msk;
 
-        while ((g_ECC_done | g_ECCERR_done) == 0UL) { }
+        while ((g_ECC_done | g_ECCERR_done) == 0UL) {
+        }
 
         Reg2Hex(pCurve->Echar, crpt->ECC_X1, secret_z);
     }
@@ -1366,19 +1296,13 @@ int32_t  ECC_GenerateSecretZ(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *private_
 
 static void run_ecc_codec(CRPT_T *crpt, uint32_t mode)
 {
-    if ((mode & CRPT_ECC_CTL_ECCOP_Msk) == ECCOP_MODULE)
-    {
+    if ((mode & CRPT_ECC_CTL_ECCOP_Msk) == ECCOP_MODULE) {
         crpt->ECC_CTL = CRPT_ECC_CTL_FSEL_Msk;
-    }
-    else
-    {
-        if (pCurve->GF == (int)CURVE_GF_2M)
-        {
+    } else {
+        if (pCurve->GF == (int)CURVE_GF_2M) {
             /* point */
             crpt->ECC_CTL = 0UL;
-        }
-        else
-        {
+        } else {
             /* CURVE_GF_P */
             crpt->ECC_CTL = CRPT_ECC_CTL_FSEL_Msk;
         }
@@ -1386,9 +1310,11 @@ static void run_ecc_codec(CRPT_T *crpt, uint32_t mode)
 
     g_ECC_done = g_ECCERR_done = 0UL;
     crpt->ECC_CTL |= ((uint32_t)pCurve->key_len << CRPT_ECC_CTL_CURVEM_Pos) | mode | CRPT_ECC_CTL_START_Msk;
-    while ((g_ECC_done | g_ECCERR_done) == 0UL) { }
+    while ((g_ECC_done | g_ECCERR_done) == 0UL) {
+    }
 
-    while (crpt->ECC_STS & CRPT_ECC_STS_BUSY_Msk) { }
+    while (crpt->ECC_STS & CRPT_ECC_STS_BUSY_Msk) {
+    }
 }
 /** @endcond HIDDEN_SYMBOLS */
 
@@ -1410,14 +1336,11 @@ int32_t  ECC_GenerateSignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *messag
     uint32_t volatile temp_result1[18], temp_result2[18];
     int32_t  i, ret = 0;
 
-    if (ecc_init_curve(crpt, ecc_curve) != 0)
-    {
+    if (ecc_init_curve(crpt, ecc_curve) != 0) {
         ret = -1;
     }
 
-    if (ret == 0)
-    {
-
+    if (ret == 0) {
         /*
          *   1. Calculate e = HASH(m), where HASH is a cryptographic hashing algorithm, (i.e. SHA-1)
          *      (1) Use SHA to calculate e
@@ -1447,8 +1370,7 @@ int32_t  ECC_GenerateSignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *messag
          */
 
         /* 3-(4) Write the random integer k to K register */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_K[i] = 0UL;
         }
         Hex2Reg(k, crpt->ECC_K);
@@ -1456,23 +1378,20 @@ int32_t  ECC_GenerateSignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *messag
         run_ecc_codec(crpt, ECCOP_POINT_MUL);
 
         /*  3-(9) Write the curve order to N registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_N[i] = 0UL;
         }
         Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
         /* 3-(10) Write 0x0 to Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_Y1[i] = 0UL;
         }
 
         run_ecc_codec(crpt, ECCOP_MODULE | MODOP_ADD);
 
         /* 3-(15) Read X1 registers to get r */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             temp_result1[i] = crpt->ECC_X1[i];
         }
 
@@ -1512,22 +1431,19 @@ int32_t  ECC_GenerateSignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *messag
         /* S/W: GFp_add_mod_order(pCurve->key_len+2, 0, x1, a, R); */
 
         /*  4-(1) Write the curve order to N registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_N[i] = 0UL;
         }
         Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
         /*  4-(2) Write 0x1 to Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_Y1[i] = 0UL;
         }
         crpt->ECC_Y1[0] = 0x1UL;
 
         /*  4-(3) Write the random integer k to X1 registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_X1[i] = 0UL;
         }
         Hex2Reg(k, crpt->ECC_X1);
@@ -1541,8 +1457,7 @@ int32_t  ECC_GenerateSignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *messag
 
         /*  4-(8) Read X1 registers to get k^-1 */
 
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             temp_result2[i] = crpt->ECC_X1[i];
         }
 
@@ -1552,20 +1467,17 @@ int32_t  ECC_GenerateSignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *messag
 #endif
 
         /*  4-(9) Write the curve order and curve length to N ,M registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_N[i] = 0UL;
         }
         Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
         /*  4-(10) Write r, d to X1, Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_X1[i] = temp_result1[i];
         }
 
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_Y1[i] = 0UL;
         }
         Hex2Reg(d, crpt->ECC_Y1);
@@ -1578,15 +1490,13 @@ int32_t  ECC_GenerateSignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *messag
 #endif
 
         /*  4-(15) Write the curve order to N registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_N[i] = 0UL;
         }
         Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
         /*  4-(16) Write e to Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_Y1[i] = 0UL;
         }
         Hex2Reg(message, crpt->ECC_Y1);
@@ -1599,23 +1509,20 @@ int32_t  ECC_GenerateSignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *messag
 #endif
 
         /*  4-(21) Write the curve order and curve length to N ,M registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_N[i] = 0UL;
         }
         Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
         /*  4-(22) Write k^-1 to Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_Y1[i] = temp_result2[i];
         }
 
         run_ecc_codec(crpt, ECCOP_MODULE | MODOP_MUL);
 
         /*  4-(27) Read X1 registers to get s */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             temp_result2[i] = crpt->ECC_X1[i];
         }
 
@@ -1665,31 +1572,25 @@ int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message,
      *      (9) Read X1 registers to get w
      */
 
-    if (ecc_init_curve(crpt, ecc_curve) != 0)
-    {
+    if (ecc_init_curve(crpt, ecc_curve) != 0) {
         ret = -1;
     }
 
-    if (ret == 0)
-    {
-
+    if (ret == 0) {
         /*  3-(1) Write the curve order to N registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_N[i] = 0UL;
         }
         Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
         /*  3-(2) Write 0x1 to Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_Y1[i] = 0UL;
         }
         crpt->ECC_Y1[0] = 0x1UL;
 
         /*  3-(3) Write s to X1 registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_X1[i] = 0UL;
         }
         Hex2Reg(S, crpt->ECC_X1);
@@ -1697,8 +1598,7 @@ int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message,
         run_ecc_codec(crpt, ECCOP_MODULE | MODOP_DIV);
 
         /*  3-(9) Read X1 registers to get w */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             temp_result2[i] = crpt->ECC_X1[i];
         }
 
@@ -1728,29 +1628,25 @@ int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message,
          */
 
         /*  4-(1) Write the curve order and curve length to N ,M registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_N[i] = 0UL;
         }
         Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
         /* 4-(2) Write e, w to X1, Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_X1[i] = 0UL;
         }
         Hex2Reg(message, crpt->ECC_X1);
 
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_Y1[i] = temp_result2[i];
         }
 
         run_ecc_codec(crpt, ECCOP_MODULE | MODOP_MUL);
 
         /*  4-(7) Read X1 registers to get u1 */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             temp_result1[i] = crpt->ECC_X1[i];
         }
 
@@ -1760,29 +1656,25 @@ int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message,
 #endif
 
         /*  4-(8) Write the curve order and curve length to N ,M registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_N[i] = 0UL;
         }
         Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
         /* 4-(9) Write r, w to X1, Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_X1[i] = 0UL;
         }
         Hex2Reg(R, crpt->ECC_X1);
 
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_Y1[i] = temp_result2[i];
         }
 
         run_ecc_codec(crpt, ECCOP_MODULE | MODOP_MUL);
 
         /*  4-(14) Read X1 registers to get u2 */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             temp_result2[i] = crpt->ECC_X1[i];
         }
 
@@ -1831,16 +1723,14 @@ int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message,
         ecc_init_curve(crpt, ecc_curve);
 
         /* (3) Write u1 to K registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_K[i] = temp_result1[i];
         }
 
         run_ecc_codec(crpt, ECCOP_POINT_MUL);
 
         /* (7) Read X1, Y1 registers to get u1*G */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             temp_x[i] = crpt->ECC_X1[i];
             temp_y[i] = crpt->ECC_Y1[i];
         }
@@ -1856,8 +1746,7 @@ int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message,
         ecc_init_curve(crpt, ecc_curve);
 
         /* (9) Write the public key Q(x,y) to X1, Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_X1[i] = 0UL;
             crpt->ECC_Y1[i] = 0UL;
         }
@@ -1866,15 +1755,13 @@ int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message,
         Hex2Reg(public_k2, crpt->ECC_Y1);
 
         /* (10) Write u2 to K registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_K[i] = temp_result2[i];
         }
 
         run_ecc_codec(crpt, ECCOP_POINT_MUL);
 
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             temp_result1[i] = crpt->ECC_X1[i];
             temp_result2[i] = crpt->ECC_Y1[i];
         }
@@ -1890,15 +1777,13 @@ int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message,
         ecc_init_curve(crpt, ecc_curve);
 
         /* Write the result data u2*Q to X1, Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_X1[i] = temp_result1[i];
             crpt->ECC_Y1[i] = temp_result2[i];
         }
 
         /* (15) Write the result data u1*G to X2, Y2 registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_X2[i] = temp_x[i];
             crpt->ECC_Y2[i] = temp_y[i];
         }
@@ -1906,8 +1791,7 @@ int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message,
         run_ecc_codec(crpt, ECCOP_POINT_ADD);
 
         /* (19) Read X1, Y1 registers to get X・(x1・, y1・) */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             temp_x[i] = crpt->ECC_X1[i];
             temp_y[i] = crpt->ECC_Y1[i];
         }
@@ -1920,8 +1804,7 @@ int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message,
 #endif
 
         /*  (20) Write the curve order and curve length to N ,M registers */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_N[i] = 0UL;
         }
         Hex2Reg(pCurve->Eorder, crpt->ECC_N);
@@ -1930,8 +1813,7 @@ int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message,
          *  (21) Write x1・ to X1 registers
          *  (22) Write 0x0 to Y1 registers
          */
-        for (i = 0; i < 18; i++)
-        {
+        for (i = 0; i < 18; i++) {
             crpt->ECC_X1[i] = temp_x[i];
             crpt->ECC_Y1[i] = 0UL;
         }
@@ -1952,8 +1834,7 @@ int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message,
         /* 6. The signature is valid if x1・ = r, otherwise it is invalid */
 
         /* Compare with test pattern to check if r is correct or not */
-        if (ecc_strcmp(temp_hex_str, R) != 0)
-        {
+        if (ecc_strcmp(temp_hex_str, R) != 0) {
             CRPT_DBGMSG("x1' (mod n) != R Test filed!!\n");
             CRPT_DBGMSG("Signature R [%s] is not matched with expected R [%s]!\n", temp_hex_str, R);
             ret = -2;
