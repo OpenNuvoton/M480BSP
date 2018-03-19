@@ -82,7 +82,8 @@ extern "C"
 */
 
 
-typedef struct HSUSBD_CMD_STRUCT {
+typedef struct HSUSBD_CMD_STRUCT
+{
     uint8_t  bmRequestType;
     uint8_t  bRequest;
     uint16_t wValue;
@@ -94,7 +95,8 @@ typedef struct HSUSBD_CMD_STRUCT {
 
 
 
-typedef struct s_hsusbd_info {
+typedef struct s_hsusbd_info
+{
     uint8_t *gu8DevDesc;            /*!< Device descriptor */
     uint8_t *gu8ConfigDesc;         /*!< Config descriptor */
     uint8_t **gu8StringDesc;        /*!< Pointer for USB String Descriptor pointers */
@@ -193,10 +195,13 @@ __STATIC_INLINE void HSUSBD_ResetDMA(void)
   */
 __STATIC_INLINE void HSUSBD_SetEpBufAddr(uint32_t u32Ep, uint32_t u32Base, uint32_t u32Len)
 {
-    if (u32Ep == CEP) {
+    if (u32Ep == CEP)
+    {
         HSUSBD->CEPBUFST = u32Base;
         HSUSBD->CEPBUFEND   = u32Base + u32Len - 1ul;
-    } else {
+    }
+    else
+    {
         HSUSBD->EP[u32Ep].EPBUFST = u32Base;
         HSUSBD->EP[u32Ep].EPBUFEND = u32Base + u32Len - 1ul;
     }

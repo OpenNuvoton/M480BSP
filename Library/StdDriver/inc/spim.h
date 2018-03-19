@@ -65,7 +65,8 @@ extern "C"
 
 /** @cond HIDDEN_SYMBOLS */
 
-typedef enum {
+typedef enum
+{
     MFGID_UNKNOW    = 0x00U,
     MFGID_SPANSION  = 0x01U,
     MFGID_EON       = 0x1CU,

@@ -414,7 +414,7 @@ uint32_t UI2C_GetIntFlag(UI2C_T *ui2c, uint32_t u32Mask)
  *
  *    @details      Use this function to clear USCI_I2C interrupt flag when module occurs interrupt event and set flag.
  */
-void UI2C_ClearIntFlag(UI2C_T *ui2c , uint32_t u32Mask)
+void UI2C_ClearIntFlag(UI2C_T *ui2c, uint32_t u32Mask)
 {
     /* Clear Time-out Interrupt Flag */
     if(u32Mask & UI2C_TO_INT_MASK)

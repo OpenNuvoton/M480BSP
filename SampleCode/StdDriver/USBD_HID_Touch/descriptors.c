@@ -114,10 +114,10 @@ uint8_t gu8DeviceDescriptor[] =
     EP0_MAX_PKT_SIZE,   /* bMaxPacketSize0 */
     /* idVendor */
     USBD_VID & 0x00FF,
-    (USBD_VID & 0xFF00) >> 8,
+    ((USBD_VID & 0xFF00) >> 8),
     /* idProduct */
     USBD_PID & 0x00FF,
-    (USBD_PID & 0xFF00) >> 8,
+    ((USBD_PID & 0xFF00) >> 8),
     0x00, 0x00,     /* bcdDevice */
     0x01,           /* iManufacture */
     0x02,           /* iProduct */
@@ -132,7 +132,7 @@ uint8_t gu8ConfigDescriptor[] =
     DESC_CONFIG,    /* bDescriptorType */
     /* wTotalLength */
     LEN_CONFIG_AND_SUBORDINATE & 0x00FF,
-    (LEN_CONFIG_AND_SUBORDINATE & 0xFF00) >> 8,
+    ((LEN_CONFIG_AND_SUBORDINATE & 0xFF00) >> 8),
     0x01,           /* bNumInterfaces */
     0x01,           /* bConfigurationValue */
     0x00,           /* iConfiguration */
@@ -159,7 +159,7 @@ uint8_t gu8ConfigDescriptor[] =
     DESC_HID_RPT,   /* Descriptor type. */
     /* Total length of report descriptor. */
     sizeof(HID_DigitizerReportDescriptor) & 0x00FF,
-    (sizeof(HID_DigitizerReportDescriptor) & 0xFF00) >> 8,
+    ((sizeof(HID_DigitizerReportDescriptor) & 0xFF00) >> 8),
 
     /* EP Descriptor: interrupt in. */
     LEN_ENDPOINT,   /* bLength */
@@ -168,7 +168,7 @@ uint8_t gu8ConfigDescriptor[] =
     EP_INT,         /* bmAttributes */
     /* wMaxPacketSize */
     EP2_MAX_PKT_SIZE & 0x00FF,
-    (EP2_MAX_PKT_SIZE & 0xFF00) >> 8,
+    ((EP2_MAX_PKT_SIZE & 0xFF00) >> 8),
     HID_DEFAULT_INT_IN_INTERVAL     /* bInterval */
 };
 
@@ -203,7 +203,7 @@ uint8_t gu8BOSDescriptor[] =
     DESC_BOS,       /* bDescriptorType */
     /* wTotalLength */
     0x0C & 0x00FF,
-    (0x0C & 0xFF00) >> 8,
+    ((0x0C & 0xFF00) >> 8),
     0x01,           /* bNumDeviceCaps */
 
     /* Device Capability */

@@ -155,7 +155,7 @@ __STATIC_INLINE uint32_t FMC_ReadCID(void)
 #if ISBEN
     __ISB();
 #endif                                           /* To make sure ISP/CPU be Synchronized */
-    while(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk){}  /* Waiting for ISP Done */
+    while(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) {} /* Waiting for ISP Done */
 
     return FMC->ISPDAT;
 }
@@ -174,7 +174,7 @@ __STATIC_INLINE uint32_t FMC_ReadPID(void)
 #if ISBEN
     __ISB();
 #endif                                          /* To make sure ISP/CPU be Synchronized */
-    while(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk){} /* Waiting for ISP Done */
+    while(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) {} /* Waiting for ISP Done */
 
     return FMC->ISPDAT;
 }
@@ -194,7 +194,7 @@ __STATIC_INLINE uint32_t FMC_ReadUID(uint8_t u8Index)
 #if ISBEN
     __ISB();
 #endif
-    while(FMC->ISPTRG){}
+    while(FMC->ISPTRG) {}
 
     return FMC->ISPDAT;
 }
@@ -213,7 +213,7 @@ __STATIC_INLINE uint32_t FMC_ReadUCID(uint32_t u32Index)
 #if ISBEN
     __ISB();
 #endif                                            /* To make sure ISP/CPU be Synchronized */
-    while(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk){}   /* Waiting for ISP Done */
+    while(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) {}  /* Waiting for ISP Done */
 
     return FMC->ISPDAT;
 }
@@ -234,7 +234,7 @@ __STATIC_INLINE void FMC_SetVectorPageAddr(uint32_t u32PageAddr)
 #if ISBEN
     __ISB();
 #endif                                /* To make sure ISP/CPU be Synchronized */
-    while(FMC->ISPTRG){}              /* Waiting for ISP Done */
+    while(FMC->ISPTRG) {}             /* Waiting for ISP Done */
 }
 
 

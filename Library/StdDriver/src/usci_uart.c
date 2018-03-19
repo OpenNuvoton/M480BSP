@@ -41,7 +41,7 @@
  *    @details      The function is used to clear USCI_UART related interrupt flags specified by u32Mask parameter.
  */
 
-void UUART_ClearIntFlag(UUART_T* uuart , uint32_t u32Mask)
+void UUART_ClearIntFlag(UUART_T* uuart, uint32_t u32Mask)
 {
 
     if(u32Mask & UUART_ABR_INT_MASK)   /* Clear Auto-baud Rate Interrupt */
@@ -101,7 +101,7 @@ void UUART_ClearIntFlag(UUART_T* uuart , uint32_t u32Mask)
  *    @details      The function is used to get USCI_UART related interrupt flags specified by u32Mask parameter.
  */
 
-uint32_t UUART_GetIntFlag(UUART_T* uuart , uint32_t u32Mask)
+uint32_t UUART_GetIntFlag(UUART_T* uuart, uint32_t u32Mask)
 {
     uint32_t u32IntFlag = 0ul;
     uint32_t u32Tmp1, u32Tmp2;

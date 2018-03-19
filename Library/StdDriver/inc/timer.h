@@ -469,7 +469,8 @@ __STATIC_INLINE uint32_t TIMER_GetCounter(TIMER_T *timer)
 __STATIC_INLINE void TIMER_ResetCounter(TIMER_T *timer)
 {
     timer->CNT = 0UL;
-    while((timer->CNT&TIMER_CNT_RSTACT_Msk) == TIMER_CNT_RSTACT_Msk) {
+    while((timer->CNT&TIMER_CNT_RSTACT_Msk) == TIMER_CNT_RSTACT_Msk)
+    {
         ;
     }
 }

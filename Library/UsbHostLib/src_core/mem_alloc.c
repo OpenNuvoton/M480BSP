@@ -52,12 +52,14 @@ static  int  _sidx = 0;;
 
 void usbh_memory_init(void)
 {
-    if (sizeof(TD_T) > MEM_POOL_UNIT_SIZE) {
+    if (sizeof(TD_T) > MEM_POOL_UNIT_SIZE)
+    {
         USB_error("TD_T - MEM_POOL_UNIT_SIZE too small!\n");
         while (1);
     }
 
-    if (sizeof(ED_T) > MEM_POOL_UNIT_SIZE) {
+    if (sizeof(ED_T) > MEM_POOL_UNIT_SIZE)
+    {
         USB_error("ED_T - MEM_POOL_UNIT_SIZE too small!\n");
         while (1);
     }
@@ -91,7 +93,8 @@ void * usbh_alloc_mem(int size)
     void  *p;
 
     p = malloc(size);
-    if (p == NULL) {
+    if (p == NULL)
+    {
         USB_error("usbh_alloc_mem failed! %d\n", size);
         return NULL;
     }
@@ -117,7 +120,8 @@ UDEV_T * alloc_device(void)
     UDEV_T  *udev;
 
     udev = malloc(sizeof(*udev));
-    if (udev == NULL) {
+    if (udev == NULL)
+    {
         USB_error("alloc_device failed!\n");
         return NULL;
     }
@@ -142,12 +146,17 @@ void free_device(UDEV_T *udev)
     /*
      *  Remove it from the global device list
      */
-    if (g_udev_list == udev) {
+    if (g_udev_list == udev)
+    {
         g_udev_list = g_udev_list->next;
-    } else {
+    }
+    else
+    {
         d = g_udev_list;
-        while (d != NULL) {
-            if (d->next == udev) {
+        while (d != NULL)
+        {
+            if (d->next == udev)
+            {
                 d->next = udev->next;
                 break;
             }
@@ -176,7 +185,8 @@ UTR_T * alloc_utr(UDEV_T *udev)
     UTR_T  *utr;
 
     utr = malloc(sizeof(*utr));
-    if (utr == NULL) {
+    if (utr == NULL)
+    {
         USB_error("alloc_utr failed!\n");
         return NULL;
     }
@@ -206,8 +216,10 @@ ED_T * alloc_ohci_ED(void)
     int    i;
     ED_T   *ed;
 
-    for (i = 0; i < MEM_POOL_UNIT_NUM; i++) {
-        if (_unit_used[i] == 0) {
+    for (i = 0; i < MEM_POOL_UNIT_NUM; i++)
+    {
+        if (_unit_used[i] == 0)
+        {
             _unit_used[i] = 1;
             _mem_pool_used++;
             ed = (ED_T *)&_mem_pool[i];
@@ -224,8 +236,10 @@ void free_ohci_ED(ED_T *ed)
 {
     int      i;
 
-    for (i = 0; i < MEM_POOL_UNIT_NUM; i++) {
-        if ((uint32_t)&_mem_pool[i] == (uint32_t)ed) {
+    for (i = 0; i < MEM_POOL_UNIT_NUM; i++)
+    {
+        if ((uint32_t)&_mem_pool[i] == (uint32_t)ed)
+        {
             mem_debug("[FREE]  [ED] - 0x%x\n", (int)ed);
             _unit_used[i] = 0;
             _mem_pool_used--;
@@ -243,8 +257,10 @@ TD_T * alloc_ohci_TD(UTR_T *utr)
     int    i;
     TD_T   *td;
 
-    for (i = 0; i < MEM_POOL_UNIT_NUM; i++) {
-        if (_unit_used[i] == 0) {
+    for (i = 0; i < MEM_POOL_UNIT_NUM; i++)
+    {
+        if (_unit_used[i] == 0)
+        {
             _unit_used[i] = 1;
             _mem_pool_used++;
             td = (TD_T *)&_mem_pool[i];
@@ -263,8 +279,10 @@ void free_ohci_TD(TD_T *td)
 {
     int   i;
 
-    for (i = 0; i < MEM_POOL_UNIT_NUM; i++) {
-        if ((uint32_t)&_mem_pool[i] == (uint32_t)td) {
+    for (i = 0; i < MEM_POOL_UNIT_NUM; i++)
+    {
+        if ((uint32_t)&_mem_pool[i] == (uint32_t)td)
+        {
             mem_debug("[FREE]  [TD] - 0x%x\n", (int)td);
             _unit_used[i] = 0;
             _mem_pool_used--;
@@ -282,8 +300,10 @@ QH_T * alloc_ehci_QH(void)
     int    i;
     QH_T   *qh = NULL;
 
-    for (i = (_sidx+1) % MEM_POOL_UNIT_NUM; i != _sidx; i = (i+1) % MEM_POOL_UNIT_NUM) {
-        if (_unit_used[i] == 0) {
+    for (i = (_sidx+1) % MEM_POOL_UNIT_NUM; i != _sidx; i = (i+1) % MEM_POOL_UNIT_NUM)
+    {
+        if (_unit_used[i] == 0)
+        {
             _unit_used[i] = 1;
             _sidx = i;
             _mem_pool_used++;
@@ -293,7 +313,8 @@ QH_T * alloc_ehci_QH(void)
             break;
         }
     }
-    if (qh == NULL) {
+    if (qh == NULL)
+    {
         USB_error("alloc_ehci_QH failed!\n");
         return NULL;
     }
@@ -308,8 +329,10 @@ void free_ehci_QH(QH_T *qh)
 {
     int      i;
 
-    for (i = 0; i < MEM_POOL_UNIT_NUM; i++) {
-        if ((uint32_t)&_mem_pool[i] == (uint32_t)qh) {
+    for (i = 0; i < MEM_POOL_UNIT_NUM; i++)
+    {
+        if ((uint32_t)&_mem_pool[i] == (uint32_t)qh)
+        {
             mem_debug("[FREE]  [QH] - 0x%x\n", (int)qh);
             _unit_used[i] = 0;
             _mem_pool_used--;
@@ -327,8 +350,10 @@ qTD_T * alloc_ehci_qTD(UTR_T *utr)
     int     i;
     qTD_T   *qtd;
 
-    for (i = (_sidx+1) % MEM_POOL_UNIT_NUM; i != _sidx; i = (i+1) % MEM_POOL_UNIT_NUM) {
-        if (_unit_used[i] == 0) {
+    for (i = (_sidx+1) % MEM_POOL_UNIT_NUM; i != _sidx; i = (i+1) % MEM_POOL_UNIT_NUM)
+    {
+        if (_unit_used[i] == 0)
+        {
             _unit_used[i] = 1;
             _sidx = i;
             _mem_pool_used++;
@@ -351,8 +376,10 @@ void free_ehci_qTD(qTD_T *qtd)
 {
     int   i;
 
-    for (i = 0; i < MEM_POOL_UNIT_NUM; i++) {
-        if ((uint32_t)&_mem_pool[i] == (uint32_t)qtd) {
+    for (i = 0; i < MEM_POOL_UNIT_NUM; i++)
+    {
+        if ((uint32_t)&_mem_pool[i] == (uint32_t)qtd)
+        {
             mem_debug("[FREE]  [qTD] - 0x%x\n", (int)qtd);
             _unit_used[i] = 0;
             _mem_pool_used--;
@@ -370,11 +397,13 @@ iTD_T * alloc_ehci_iTD(void)
     int     i;
     iTD_T   *itd;
 
-    for (i = (_sidx+1) % MEM_POOL_UNIT_NUM; i != _sidx; i = (i+1) % MEM_POOL_UNIT_NUM) {
+    for (i = (_sidx+1) % MEM_POOL_UNIT_NUM; i != _sidx; i = (i+1) % MEM_POOL_UNIT_NUM)
+    {
         if (i+2 >= MEM_POOL_UNIT_NUM)
             continue;
 
-        if ((_unit_used[i] == 0) && (_unit_used[i+1] == 0)) {
+        if ((_unit_used[i] == 0) && (_unit_used[i+1] == 0))
+        {
             _unit_used[i] = _unit_used[i+1] = 1;
             _sidx = i+1;
             _mem_pool_used += 2;
@@ -392,8 +421,10 @@ void free_ehci_iTD(iTD_T *itd)
 {
     int   i;
 
-    for (i = 0; i+1 < MEM_POOL_UNIT_NUM; i++) {
-        if ((uint32_t)&_mem_pool[i] == (uint32_t)itd) {
+    for (i = 0; i+1 < MEM_POOL_UNIT_NUM; i++)
+    {
+        if ((uint32_t)&_mem_pool[i] == (uint32_t)itd)
+        {
             mem_debug("[FREE]  [iTD] - 0x%x\n", (int)itd);
             _unit_used[i] = _unit_used[i+1] = 0;
             _mem_pool_used -= 2;
@@ -411,8 +442,10 @@ siTD_T * alloc_ehci_siTD(void)
     int     i;
     siTD_T  *sitd;
 
-    for (i = (_sidx+1) % MEM_POOL_UNIT_NUM; i != _sidx; i = (i+1) % MEM_POOL_UNIT_NUM) {
-        if (_unit_used[i] == 0) {
+    for (i = (_sidx+1) % MEM_POOL_UNIT_NUM; i != _sidx; i = (i+1) % MEM_POOL_UNIT_NUM)
+    {
+        if (_unit_used[i] == 0)
+        {
             _unit_used[i] = 1;
             _sidx = i;
             _mem_pool_used ++;
@@ -430,8 +463,10 @@ void free_ehci_siTD(siTD_T *sitd)
 {
     int   i;
 
-    for (i = 0; i < MEM_POOL_UNIT_NUM; i++) {
-        if ((uint32_t)&_mem_pool[i] == (uint32_t)sitd) {
+    for (i = 0; i < MEM_POOL_UNIT_NUM; i++)
+    {
+        if ((uint32_t)&_mem_pool[i] == (uint32_t)sitd)
+        {
             mem_debug("[FREE]  [siTD] - 0x%x\n", (int)sitd);
             _unit_used[i] = 0;
             _mem_pool_used--;

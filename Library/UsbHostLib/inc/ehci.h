@@ -33,7 +33,8 @@ struct ep_info_t;
 /*----------------------------------------------------------------------------------------*/
 /*  Queue Element Transfer Descriptor (qTD)                                               */
 /*----------------------------------------------------------------------------------------*/
-typedef struct qTD_t {
+typedef struct qTD_t
+{
     uint32_t      Next_qTD;                 /* Next qTD Pointer                           */
     uint32_t      Alt_Next_qTD;             /* Alternate Next qTD Pointer                 */
     uint32_t      Token;                    /* qTD Token                                  */
@@ -82,7 +83,8 @@ typedef struct qTD_t {
 /*----------------------------------------------------------------------------------------*/
 /*  Queue Head (QH)                                                                       */
 /*----------------------------------------------------------------------------------------*/
-typedef struct qh_t {
+typedef struct qh_t
+{
     /* OHCI spec. Endpoint descriptor  */
     uint32_t    HLink;                      /* Queue Head Horizontal Link Pointer         */
     uint32_t    Chrst;                      /* Endpoint Characteristics: QH DWord 1       */
@@ -140,7 +142,8 @@ typedef struct qh_t {
 /*----------------------------------------------------------------------------------------*/
 /*  Isochronous (High-Speed) Transfer Descriptor (iTD)                                    */
 /*----------------------------------------------------------------------------------------*/
-typedef struct itd_t {
+typedef struct itd_t
+{
     uint32_t      Next_Link;                /* Next Link Pointer                          */
     uint32_t      Transaction[8];           /* Transaction Status and Control             */
     uint32_t      Bptr[7];                  /* Buffer Page Pointer List                   */
@@ -198,7 +201,8 @@ typedef struct itd_t {
 /*----------------------------------------------------------------------------------------*/
 /*  Split Isochronous (Full-Speed) Transfer Descriptor (siTD)                             */
 /*----------------------------------------------------------------------------------------*/
-typedef struct sitd_t {
+typedef struct sitd_t
+{
     uint32_t      Next_Link;                /* Next Link Pointer                          */
     uint32_t      Chrst;                    /* Endpoint and Transaction Translator Characteristics */
     uint32_t      Sched;                    /* Micro-frame Schedule Control               */
@@ -255,7 +259,8 @@ typedef struct sitd_t {
 /*----------------------------------------------------------------------------------------*/
 /*  Isochronous endpoint transfer information block. (Software only)                      */
 /*----------------------------------------------------------------------------------------*/
-typedef struct iso_ep_t {
+typedef struct iso_ep_t
+{
     struct ep_info_t  *ep;
     uint32_t      next_frame;               /* frame number of next scheduling            */
     iTD_T         *itd_list;                /* Reference to a list of installed iTDs      */

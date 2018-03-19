@@ -45,15 +45,21 @@ static int  review_itd(iTD_T *itd)
 
     // printf("R - %d %d, 0x%x\n", now_frame, frnidx, itd->Transaction[0]);
 
-    if (now_frame == frnidx) {
-        for (i = 0; i < 8; i++) {
+    if (now_frame == frnidx)
+    {
+        for (i = 0; i < 8; i++)
+        {
             if (itd->Transaction[i] & ITD_STATUS_ACTIVE)
                 return 0;                   /* have any not completed frames              */
         }
-    } else if (now_frame > frnidx) {
+    }
+    else if (now_frame > frnidx)
+    {
         if ((now_frame - frnidx) > EHCI_ISO_RCLM_RANGE)
             return 0;                       /* don't touch it                             */
-    } else {
+    }
+    else
+    {
         if (now_frame + FL_SIZE - frnidx > EHCI_ISO_RCLM_RANGE)
             return 0;                       /* don't touch it                             */
     }
@@ -63,24 +69,35 @@ static int  review_itd(iTD_T *itd)
      */
     utr = itd->utr;
     fidx = itd->fidx;
-    for (i = 0; i < 8; i++) {
+    for (i = 0; i < 8; i++)
+    {
         if (!(itd->trans_mask & (0x1<<i)))
             continue;                       /* not scheduled micro-frame                  */
 
-        if (ITD_STATUS(itd->Transaction[i])) {
-            if (itd->Transaction[i] & ITD_STATUS_ACTIVE) {
+        if (ITD_STATUS(itd->Transaction[i]))
+        {
+            if (itd->Transaction[i] & ITD_STATUS_ACTIVE)
+            {
                 utr->iso_status[fidx] = USBH_ERR_NOT_ACCESS0;
-            } else if (itd->Transaction[i] & ITD_STATUS_BABBLE) {
+            }
+            else if (itd->Transaction[i] & ITD_STATUS_BABBLE)
+            {
                 utr->iso_status[fidx] = USBH_ERR_BABBLE_DETECTED;
                 utr->status = USBH_ERR_TRANSFER;
-            } else if (itd->Transaction[i] & ITD_STATUS_BUFF_ERR) {
+            }
+            else if (itd->Transaction[i] & ITD_STATUS_BUFF_ERR)
+            {
                 utr->iso_status[fidx] = USBH_ERR_DATA_BUFF;
                 utr->status = USBH_ERR_TRANSFER;
-            } else {
+            }
+            else
+            {
                 utr->iso_status[fidx] = USBH_ERR_TRANSACTION;
                 utr->status = USBH_ERR_TRANSFER;
             }
-        } else {
+        }
+        else
+        {
             utr->iso_status[fidx] = 0;
             utr->iso_xlen[fidx] = ITD_XFER_LEN(itd->Transaction[i]);
         }
@@ -88,7 +105,8 @@ static int  review_itd(iTD_T *itd)
     }
     utr->td_cnt--;
 
-    if (utr->td_cnt == 0) {                 /* All iTD of this UTR done                   */
+    if (utr->td_cnt == 0)                   /* All iTD of this UTR done                   */
+    {
         if (utr->func)
             utr->func(utr);
     }
@@ -109,13 +127,18 @@ static int  review_sitd(siTD_T *sitd)
     int        fidx;
     uint32_t   TotalBytesToTransfer;
 
-    if (now_frame == frnidx) {
+    if (now_frame == frnidx)
+    {
         if (SITD_STATUS(sitd->StsCtrl) == SITD_STATUS_ACTIVE)
             return 0;
-    } else if (now_frame > frnidx) {
+    }
+    else if (now_frame > frnidx)
+    {
         if ((now_frame - frnidx) > EHCI_ISO_RCLM_RANGE)
             return 0;                       /* don't touch it                             */
-    } else {
+    }
+    else
+    {
         if (now_frame + FL_SIZE - frnidx > EHCI_ISO_RCLM_RANGE)
             return 0;                       /* don't touch it                             */
     }
@@ -126,27 +149,38 @@ static int  review_sitd(siTD_T *sitd)
     utr = sitd->utr;
     fidx = sitd->fidx;
 
-    if (SITD_STATUS(sitd->StsCtrl)) {
-        if (sitd->StsCtrl & SITD_STATUS_ACTIVE) {
+    if (SITD_STATUS(sitd->StsCtrl))
+    {
+        if (sitd->StsCtrl & SITD_STATUS_ACTIVE)
+        {
             utr->iso_status[fidx] = USBH_ERR_NOT_ACCESS0;
-        } else if (sitd->StsCtrl & SITD_BABBLE_DETECTED) {
+        }
+        else if (sitd->StsCtrl & SITD_BABBLE_DETECTED)
+        {
             utr->iso_status[fidx] = USBH_ERR_BABBLE_DETECTED;
             utr->status = USBH_ERR_TRANSFER;
-        } else if (sitd->StsCtrl & SITD_STATUS_BUFF_ERR) {
+        }
+        else if (sitd->StsCtrl & SITD_STATUS_BUFF_ERR)
+        {
             utr->iso_status[fidx] = USBH_ERR_DATA_BUFF;
             utr->status = USBH_ERR_TRANSFER;
-        } else {
+        }
+        else
+        {
             utr->iso_status[fidx] = USBH_ERR_TRANSACTION;
             utr->status = USBH_ERR_TRANSFER;
         }
-    } else {
+    }
+    else
+    {
         TotalBytesToTransfer = (sitd->StsCtrl & SITD_XFER_CNT_Msk) >> SITD_XFER_CNT_Pos;
         utr->iso_xlen[fidx] =  utr->iso_xlen[fidx] - TotalBytesToTransfer;
         utr->iso_status[fidx] = 0;
     }
     utr->td_cnt--;
 
-    if (utr->td_cnt == 0) {                 /* All iTD of this UTR done                   */
+    if (utr->td_cnt == 0)                   /* All iTD of this UTR done                   */
+    {
         if (utr->func)
             utr->func(utr);
     }
@@ -166,30 +200,40 @@ void scan_isochronous_list(void)
 
     DISABLE_EHCI_IRQ();
 
-    while (iso_ep != NULL) {                /* Search all activated iso endpoints         */
+    while (iso_ep != NULL)                  /* Search all activated iso endpoints         */
+    {
         /*--------------------------------------------------------------------------------*/
         /*  Scan all iTDs                                                                 */
         /*--------------------------------------------------------------------------------*/
         itd = iso_ep->itd_list;             /* get the first iTD from iso_ep's iTD list   */
         itd_pre = NULL;
-        while (itd != NULL) {               /* traverse all iTDs of itd list              */
-            if (review_itd(itd)) {          /* inspect and reclaim iTD                    */
+        while (itd != NULL)                 /* traverse all iTDs of itd list              */
+        {
+            if (review_itd(itd))            /* inspect and reclaim iTD                    */
+            {
                 /*------------------------------------------------------------------------*/
                 /*  Remove this iTD from period frame list                                */
                 /*------------------------------------------------------------------------*/
                 frnidx = itd->sched_frnidx;
-                if (_PFList[frnidx] == ITD_HLNK_ITD(itd)) {
+                if (_PFList[frnidx] == ITD_HLNK_ITD(itd))
+                {
                     /* is the first entry, just change to next     */
                     _PFList[frnidx] = itd->Next_Link;
-                } else {
+                }
+                else
+                {
                     p = ITD_PTR(_PFList[frnidx]);     /* find the preceding iTD            */
-                    while ((ITD_PTR(p->Next_Link) != itd) && (p != NULL)) {
+                    while ((ITD_PTR(p->Next_Link) != itd) && (p != NULL))
+                    {
                         p = ITD_PTR(p->Next_Link);
                     }
 
-                    if (p == NULL) {                  /* link list out of control!         */
+                    if (p == NULL)                    /* link list out of control!         */
+                    {
                         USB_error("An iTD lost refernece to periodic frame list! 0x%x -> %d\n", (int)itd, frnidx);
-                    } else {                          /* remove iTD from list              */
+                    }
+                    else                              /* remove iTD from list              */
+                    {
                         p->Next_Link = itd->Next_Link;
                     }
                 }
@@ -197,15 +241,20 @@ void scan_isochronous_list(void)
                 /*------------------------------------------------------------------------*/
                 /*  Remove this iTD from iso_ep's iTD list                                */
                 /*------------------------------------------------------------------------*/
-                if (itd_pre == NULL) {
+                if (itd_pre == NULL)
+                {
                     iso_ep->itd_list = itd->next;
-                } else {
+                }
+                else
+                {
                     itd_pre->next = itd->next;
                 }
                 p = itd->next;
                 free_ehci_iTD(itd);
                 itd = p;
-            } else {
+            }
+            else
+            {
                 itd_pre = itd;
                 itd = itd->next;            /* traverse to the next iTD of iTD list       */
             }
@@ -216,24 +265,33 @@ void scan_isochronous_list(void)
         /*--------------------------------------------------------------------------------*/
         sitd = iso_ep->sitd_list;           /* get the first siTD from iso_ep's siTD list */
         sitd_pre = NULL;
-        while (sitd != NULL) {              /* traverse all siTDs of sitd list            */
-            if (review_sitd(sitd)) {        /* inspect and reclaim siTD                   */
+        while (sitd != NULL)                /* traverse all siTDs of sitd list            */
+        {
+            if (review_sitd(sitd))          /* inspect and reclaim siTD                   */
+            {
                 /*------------------------------------------------------------------------*/
                 /*  Remove this siTD from period frame list                               */
                 /*------------------------------------------------------------------------*/
                 frnidx = sitd->sched_frnidx;
-                if (_PFList[frnidx] == SITD_HLNK_SITD(sitd)) {
+                if (_PFList[frnidx] == SITD_HLNK_SITD(sitd))
+                {
                     /* is the first entry, just change to next     */
                     _PFList[frnidx] = sitd->Next_Link;
-                } else {
+                }
+                else
+                {
                     sp = SITD_PTR(_PFList[frnidx]);   /* find the preceding siTD           */
-                    while ((SITD_PTR(sp->Next_Link) != sitd) && (sp != NULL)) {
+                    while ((SITD_PTR(sp->Next_Link) != sitd) && (sp != NULL))
+                    {
                         sp = SITD_PTR(sp->Next_Link);
                     }
 
-                    if (sp == NULL) {                 /* link list out of control!         */
+                    if (sp == NULL)                   /* link list out of control!         */
+                    {
                         USB_error("An siTD lost refernece to periodic frame list! 0x%x -> %d\n", (int)sitd, frnidx);
-                    } else {                          /* remove iTD from list              */
+                    }
+                    else                              /* remove iTD from list              */
+                    {
                         sp->Next_Link = sitd->Next_Link;
                     }
                 }
@@ -241,15 +299,20 @@ void scan_isochronous_list(void)
                 /*------------------------------------------------------------------------*/
                 /*  Remove this siTD from iso_ep's siTD list                              */
                 /*------------------------------------------------------------------------*/
-                if (sitd_pre == NULL) {
+                if (sitd_pre == NULL)
+                {
                     iso_ep->sitd_list = sitd->next;
-                } else {
+                }
+                else
+                {
                     sitd_pre->next = sitd->next;
                 }
                 sp = sitd->next;
                 free_ehci_siTD(sitd);
                 sitd = sp;
-            } else {
+            }
+            else
+            {
                 sitd_pre = sitd;
                 sitd = sitd->next;           /* traverse to the next siTD of siTD list     */
             }
@@ -271,7 +334,8 @@ static void  write_itd_info(UTR_T *utr, iTD_T *itd)
 
     buff_page_addr = itd->buff_base & 0xFFFFF000;     /* 4K page                          */
 
-    for (i = 0; i < 7; i++) {
+    for (i = 0; i < 7; i++)
+    {
         itd->Bptr[i] = buff_page_addr + (0x1000 * i);
     }
     /* EndPtr  R  Device Address        */
@@ -304,7 +368,8 @@ static void add_iso_ep_to_list(ISO_EP_T *iso_ep)
 
     iso_ep->next = NULL;
 
-    if (iso_ep_list == NULL) {
+    if (iso_ep_list == NULL)
+    {
         iso_ep_list = iso_ep;
         return;
     }
@@ -313,7 +378,8 @@ static void add_iso_ep_to_list(ISO_EP_T *iso_ep)
      * Find the tail entry of iso_ep_list
      */
     p = iso_ep_list;
-    while (p->next != NULL) {
+    while (p->next != NULL)
+    {
         p = p->next;
     }
     p->next = iso_ep;
@@ -323,20 +389,24 @@ static void remove_iso_ep_from_list(ISO_EP_T *iso_ep)
 {
     ISO_EP_T  *p;
 
-    if (iso_ep_list == iso_ep) {
+    if (iso_ep_list == iso_ep)
+    {
         iso_ep_list = iso_ep->next;         /* it's the first entry, remove it            */
         return;
     }
 
     p = iso_ep_list;                        /* find the previous entry of iso_ep          */
-    while (p->next != NULL) {
-        if (p->next == iso_ep) {
+    while (p->next != NULL)
+    {
+        if (p->next == iso_ep)
+        {
             break;
         }
         p = p->next;
     }
 
-    if (p->next == NULL) {
+    if (p->next == NULL)
+    {
         return;                             /* not found                                  */
     }
     p->next = iso_ep->next;                 /* remove iso_ep from list                    */
@@ -348,7 +418,8 @@ static __inline void  add_itd_to_iso_ep(ISO_EP_T *iso_ep, iTD_T *itd)
 
     itd->next = NULL;
 
-    if (iso_ep->itd_list == NULL) {
+    if (iso_ep->itd_list == NULL)
+    {
         iso_ep->itd_list = itd;
         return;
     }
@@ -357,7 +428,8 @@ static __inline void  add_itd_to_iso_ep(ISO_EP_T *iso_ep, iTD_T *itd)
      * Find the tail entry of iso_ep->itd_list
      */
     p = iso_ep->itd_list;
-    while (p->next != NULL) {
+    while (p->next != NULL)
+    {
         p = p->next;
     }
     p->next = itd;
@@ -373,12 +445,15 @@ int ehci_iso_xfer(UTR_T *utr)
     int        fidx;                        /* index to the 8 iso frames of UTR           */
     int        interval;                    /* frame interval of iTD                      */
 
-    if (ep->hw_pipe != NULL) {
+    if (ep->hw_pipe != NULL)
+    {
         iso_ep = (ISO_EP_T *)ep->hw_pipe;   /* get reference of the isochronous endpoint  */
 
         if (utr->bIsoNewSched)
             iso_ep->next_frame = (((_ehci->UFINDR + (EHCI_ISO_DELAY * 8)) & HSUSBH_UFINDR_FI_Msk) >> 3) & 0x3FF;
-    } else {
+    }
+    else
+    {
         /* first time transfer of this iso endpoint   */
         iso_ep = usbh_alloc_mem(sizeof(*iso_ep));
         if (iso_ep == NULL)
@@ -399,44 +474,61 @@ int ehci_iso_xfer(UTR_T *utr)
     /*  Allocate iTDs                                                                     */
     /*------------------------------------------------------------------------------------*/
 
-    if (ep->bInterval < 2) {                /* transfer interval is 1 micro-frame         */
+    if (ep->bInterval < 2)                  /* transfer interval is 1 micro-frame         */
+    {
         trans_mask = 0xFF;
         itd_cnt = 1;                        /* required 1 iTD for one UTR                 */
         interval = 1;                       /* iTD frame interval of this endpoint        */
-    } else if (ep->bInterval < 4) {         /* transfer interval is 2 micro-frames        */
+    }
+    else if (ep->bInterval < 4)             /* transfer interval is 2 micro-frames        */
+    {
         trans_mask = 0x55;
         itd_cnt = 2;                        /* required 2 iTDs for one UTR                */
         interval = 1;                       /* iTD frame interval of this endpoint        */
-    } else if (ep->bInterval < 8) {         /* transfer interval is 4 micro-frames        */
+    }
+    else if (ep->bInterval < 8)             /* transfer interval is 4 micro-frames        */
+    {
         trans_mask = 0x44;
         itd_cnt = 4;                        /* required 4 iTDs for one UTR                */
         interval = 1;                       /* iTD frame interval of this endpoint        */
-    } else if (ep->bInterval < 16) {        /* transfer interval is 8 micro-frames        */
+    }
+    else if (ep->bInterval < 16)            /* transfer interval is 8 micro-frames        */
+    {
         trans_mask = 0x08;                  /* there's 1 transfer in one iTD              */
         itd_cnt = 8;                        /* required 8 iTDs for one UTR                */
         interval = 1;                       /* iTD frame interval of this endpoint        */
-    } else if (ep->bInterval < 32) {        /* transfer interval is 16 micro-frames       */
+    }
+    else if (ep->bInterval < 32)            /* transfer interval is 16 micro-frames       */
+    {
         trans_mask = 0x10;                  /* there's 1 transfer in one iTD              */
         itd_cnt = 8;                        /* required 8 iTDs for one UTR                */
         interval = 2;                       /* iTD frame interval of this endpoint        */
-    } else if (ep->bInterval < 64) {        /* transfer interval is 32 micro-frames       */
+    }
+    else if (ep->bInterval < 64)            /* transfer interval is 32 micro-frames       */
+    {
         trans_mask = 0x02;                  /* there's 1 transfer in one iTD              */
         itd_cnt = 8;                        /* required 8 iTDs for one UTR                */
         interval = 4;                       /* iTD frame interval of this endpoint        */
-    } else  {                               /* transfer interval is 64 micro-frames       */
+    }
+    else                                    /* transfer interval is 64 micro-frames       */
+    {
         trans_mask = 0x04;                  /* there's 1 transfer in one iTD              */
         itd_cnt = 8;                        /* required 8 iTDs for one UTR                */
         interval = 8;                       /* iTD frame interval of this endpoint        */
     }
 
-    for (i = 0; i < itd_cnt; i++) {         /* allocate all iTDs required by UTR          */
+    for (i = 0; i < itd_cnt; i++)           /* allocate all iTDs required by UTR          */
+    {
         itd = alloc_ehci_iTD();
         if (itd == NULL)
             goto malloc_failed;
 
-        if (itd_list == NULL) {             /* link all iTDs                              */
+        if (itd_list == NULL)               /* link all iTDs                              */
+        {
             itd_list = itd;
-        } else {
+        }
+        else
+        {
             itd->next = itd_list;
             itd_list = itd;
         }
@@ -451,8 +543,10 @@ int ehci_iso_xfer(UTR_T *utr)
     utr->iso_sf = iso_ep->next_frame;
     fidx = 0;                               /* index to UTR iso frmes (total IF_PER_UTR)  */
 
-    for (itd = itd_list; (itd != NULL); ) {
-        if (fidx >= IF_PER_UTR) {           /* unlikely                                   */
+    for (itd = itd_list; (itd != NULL); )
+    {
+        if (fidx >= IF_PER_UTR)             /* unlikely                                   */
+        {
             USB_error("EHCI driver ITD bug!?\n");
             goto malloc_failed;
         }
@@ -464,8 +558,10 @@ int ehci_iso_xfer(UTR_T *utr)
 
         write_itd_info(utr, itd);
 
-        for (i = 0; i < 8; i++) {           /* settle xfer into micro-frames              */
-            if (!(trans_mask & (0x1<<i))) {
+        for (i = 0; i < 8; i++)             /* settle xfer into micro-frames              */
+        {
+            if (!(trans_mask & (0x1<<i)))
+            {
                 itd->Transaction[i] = 0;    /* not accesed                                */
                 continue;                   /* not scheduled micro-frame                  */
             }
@@ -474,7 +570,8 @@ int ehci_iso_xfer(UTR_T *utr)
 
             fidx++;                         /* preceed to next UTR iso frame              */
 
-            if (fidx == IF_PER_UTR) {       /* is the last scheduled micro-frame?         */
+            if (fidx == IF_PER_UTR)         /* is the last scheduled micro-frame?         */
+            {
                 /* raise interrupt on completed               */
                 itd->Transaction[i] |= ITD_IOC;
                 break;
@@ -503,7 +600,8 @@ int ehci_iso_xfer(UTR_T *utr)
 
 malloc_failed:
 
-    while (itd_list != NULL) {
+    while (itd_list != NULL)
+    {
         itd = itd_list;
         itd_list = itd->next;
         free_ehci_iTD(itd);
@@ -517,7 +615,8 @@ static __inline void  add_sitd_to_iso_ep(ISO_EP_T *iso_ep, siTD_T *sitd)
 
     sitd->next = NULL;
 
-    if (iso_ep->sitd_list == NULL) {
+    if (iso_ep->sitd_list == NULL)
+    {
         iso_ep->sitd_list = sitd;
         return;
     }
@@ -526,7 +625,8 @@ static __inline void  add_sitd_to_iso_ep(ISO_EP_T *iso_ep, siTD_T *sitd)
      * Find the tail entry of iso_ep->itd_list
      */
     p = iso_ep->sitd_list;
-    while (p->next != NULL) {
+    while (p->next != NULL)
+    {
         p = p->next;
     }
     p->next = sitd;
@@ -551,21 +651,26 @@ static void  write_sitd_info(UTR_T *utr, siTD_T *sitd)
 
     scnt = (xlen + 187) / 188;
 
-    if ((ep->bEndpointAddress & EP_ADDR_DIR_MASK) == EP_ADDR_DIR_IN) { /* I/O               */
+    if ((ep->bEndpointAddress & EP_ADDR_DIR_MASK) == EP_ADDR_DIR_IN)   /* I/O               */
+    {
         sitd->Chrst |= SITD_XFER_IN;
         sitd->Sched = (1 << (scnt + 2)) - 1;
         sitd->Sched = (sitd->Sched << 10) | 0x1;
         //sitd->Sched <<= 1;
-    } else {
+    }
+    else
+    {
         sitd->Chrst |= SITD_XFER_OUT;
         sitd->Sched = sitd_OUT_Smask[scnt-1];
-        if (scnt > 1) {
+        if (scnt > 1)
+        {
             sitd->Bptr[1] |= (0x1 << 3);        /* Transaction position (TP)  01b: Begin  */
         }
         sitd->Bptr[1] |= scnt;                  /* Transaction count (T-Count)            */
     }
 
-    if (sitd->fidx == IF_PER_UTR) {
+    if (sitd->fidx == IF_PER_UTR)
+    {
         sitd->Sched |= SITD_IOC;
     }
 
@@ -580,13 +685,18 @@ static void ehci_sitd_adjust_schedule(siTD_T *sitd)
     siTD_T     *hlink = (siTD_T  *)_PFList[sitd->sched_frnidx];
     uint32_t   uframe_mask = 0x00;
 
-    while (hlink && !HLINK_IS_TERMINATED(hlink) && HLINK_IS_SITD(hlink)) {
+    while (hlink && !HLINK_IS_TERMINATED(hlink) && HLINK_IS_SITD(hlink))
+    {
         hlink = SITD_PTR(hlink);
-        if (hlink != sitd) {
-            if ((hlink->Chrst & SITD_XFER_IO_Msk) == SITD_XFER_IN) {
+        if (hlink != sitd)
+        {
+            if ((hlink->Chrst & SITD_XFER_IO_Msk) == SITD_XFER_IN)
+            {
                 uframe_mask |= (hlink->Sched & 0xFF);         /* mark micro-frames used by IN S-mask   */
                 uframe_mask |= ((hlink->Sched >> 8) & 0xFF);  /* mark micro-frames used by IN C-mask   */
-            } else {
+            }
+            else
+            {
                 uframe_mask |= (hlink->Sched & 0xFF);         /* mark micro-frames used by OUT S-mask  */
             }
         }
@@ -595,14 +705,19 @@ static void ehci_sitd_adjust_schedule(siTD_T *sitd)
 
     uframe_mask = uframe_mask | (uframe_mask << 8);           /* mark both S-mask and C-mask           */
 
-    if (uframe_mask) {
+    if (uframe_mask)
+    {
         /*
          *  Shift afterward one micro-frame until no conflicts.
          */
-        while (1) {
-            if (sitd->Sched & uframe_mask) {
+        while (1)
+        {
+            if (sitd->Sched & uframe_mask)
+            {
                 sitd->Sched = (sitd->Sched & 0xFFFF0000) | ((sitd->Sched << 1) & 0xFFFF);
-            } else {
+            }
+            else
+            {
                 break;                      /* no conflit, done.                          */
             }
         }
@@ -617,7 +732,8 @@ static int ehci_iso_split_xfer(UTR_T *utr, ISO_EP_T *iso_ep)
     int        i;
     int        fidx;                        /* index to the 8 iso frames of UTR           */
 
-    if (utr->udev->parent == NULL) {
+    if (utr->udev->parent == NULL)
+    {
         USB_error("siso xfer - parent lost!\n");
         return USBH_ERR_INVALID_PARAM;
     }
@@ -625,14 +741,18 @@ static int ehci_iso_split_xfer(UTR_T *utr, ISO_EP_T *iso_ep)
     /*------------------------------------------------------------------------------------*/
     /*  Allocate siTDs                                                                    */
     /*------------------------------------------------------------------------------------*/
-    for (i = 0; i < IF_PER_UTR; i++) {      /* allocate all siTDs required by UTR         */
+    for (i = 0; i < IF_PER_UTR; i++)        /* allocate all siTDs required by UTR         */
+    {
         sitd = alloc_ehci_siTD();
         if (sitd == NULL)
             goto malloc_failed;
 
-        if (sitd_list == NULL) {             /* link all siTDs                             */
+        if (sitd_list == NULL)               /* link all siTDs                             */
+        {
             sitd_list = sitd;
-        } else {
+        }
+        else
+        {
             sitd->next = sitd_list;
             sitd_list = sitd;
         }
@@ -647,8 +767,10 @@ static int ehci_iso_split_xfer(UTR_T *utr, ISO_EP_T *iso_ep)
     utr->iso_sf = iso_ep->next_frame;
     fidx = 0;                               /* index to UTR iso frmes (total IF_PER_UTR)  */
 
-    for (sitd = sitd_list; (sitd != NULL); fidx++) {
-        if (fidx >= IF_PER_UTR) {           /* unlikely                                   */
+    for (sitd = sitd_list; (sitd != NULL); fidx++)
+    {
+        if (fidx >= IF_PER_UTR)             /* unlikely                                   */
+        {
             USB_error("EHCI driver siTD bug!?\n");
             goto malloc_failed;
         }
@@ -681,7 +803,8 @@ static int ehci_iso_split_xfer(UTR_T *utr, ISO_EP_T *iso_ep)
 
 malloc_failed:
 
-    while (sitd_list != NULL) {
+    while (sitd_list != NULL)
+    {
         sitd = sitd_list;
         sitd_list = sitd->next;
         free_ehci_siTD(sitd);
@@ -698,7 +821,8 @@ int ehci_quit_iso_xfer(UTR_T *utr, EP_INFO_T *ep)
     iTD_T      *itd, *itd_next, *p;
     uint32_t   frnidx;
 
-    if (ep == NULL) {
+    if (ep == NULL)
+    {
         if (utr == NULL)
             return USBH_ERR_NOT_FOUND;
 
@@ -715,7 +839,8 @@ int ehci_quit_iso_xfer(UTR_T *utr, EP_INFO_T *ep)
     /*  It's an iso endpoint. Remove it as required.                                      */
     /*------------------------------------------------------------------------------------*/
     iso_ep = iso_ep_list;
-    while (iso_ep != NULL) {                /* Search all activated iso endpoints         */
+    while (iso_ep != NULL)                  /* Search all activated iso endpoints         */
+    {
         if (iso_ep->ep == ep)
             break;
         iso_ep = iso_ep->next;
@@ -725,7 +850,8 @@ int ehci_quit_iso_xfer(UTR_T *utr, EP_INFO_T *ep)
 
     itd = iso_ep->itd_list;                 /* get the first iTD from iso_ep's iTD list   */
 
-    while (itd != NULL) {                   /* traverse all iTDs of itd list              */
+    while (itd != NULL)                     /* traverse all iTDs of itd list              */
+    {
         itd_next = itd->next;               /* remember the next iTD                      */
         utr = itd->utr;
 
@@ -733,18 +859,25 @@ int ehci_quit_iso_xfer(UTR_T *utr, EP_INFO_T *ep)
         /*  Remove this iTD from period frame list                                        */
         /*--------------------------------------------------------------------------------*/
         frnidx = itd->sched_frnidx;
-        if (_PFList[frnidx] == ITD_HLNK_ITD(itd)) {
+        if (_PFList[frnidx] == ITD_HLNK_ITD(itd))
+        {
             /* is the first entry, just change to next     */
             _PFList[frnidx] = itd->Next_Link;
-        } else {
+        }
+        else
+        {
             p = ITD_PTR(_PFList[frnidx]);   /* find the preceding iTD                     */
-            while ((ITD_PTR(p->Next_Link) != itd) && (p != NULL)) {
+            while ((ITD_PTR(p->Next_Link) != itd) && (p != NULL))
+            {
                 p = ITD_PTR(p->Next_Link);
             }
 
-            if (p == NULL) {                /* link list out of control!                  */
+            if (p == NULL)                  /* link list out of control!                  */
+            {
                 USB_error("ehci_quit_iso_xfer - An iTD lost reference to periodic frame list! 0x%x -> %d\n", (int)itd, frnidx);
-            } else {                        /* remove iTD from list                       */
+            }
+            else                            /* remove iTD from list                       */
+            {
                 p->Next_Link = itd->Next_Link;
             }
         }
@@ -753,7 +886,8 @@ int ehci_quit_iso_xfer(UTR_T *utr, EP_INFO_T *ep)
         utr->td_cnt--;
         utr->status = USBH_ERR_ABORT;
 
-        if (utr->td_cnt == 0) {             /* All iTD of this UTR done                   */
+        if (utr->td_cnt == 0)               /* All iTD of this UTR done                   */
+        {
             if (utr->func)
                 utr->func(utr);
         }

@@ -37,7 +37,8 @@
 
 
 /* Command Block Wrapper */
-struct bulk_cb_wrap {
+struct bulk_cb_wrap
+{
     uint32_t  Signature;                 /* 0x43425355 = "USBC"           */
     uint32_t  Tag;                       /* unique per command id         */
     uint32_t  DataTransferLength;        /* size of data                  */
@@ -53,7 +54,8 @@ struct bulk_cb_wrap {
 #define MSC_FLAG_OUT              0
 
 /* Command Status Wrapper */
-struct bulk_cs_wrap {
+struct bulk_cs_wrap
+{
     uint32_t  Signature;                 /* 0x53425355 = "USBS"           */
     uint32_t  Tag;                       /* same as original command      */
     uint32_t  Residue;                   /* amount not transferred        */
@@ -80,7 +82,8 @@ struct bulk_cs_wrap {
 
 #define SCSI_BUFF_LEN             36
 
-typedef struct msc_t {
+typedef struct msc_t
+{
     IFACE_T     *iface;
     uint32_t    uid;                     /*!< The unique ID to identify a MSC device.     */
     EP_INFO_T   *ep_bulk_in;             /* bulk-in endpoint                              */

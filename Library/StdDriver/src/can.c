@@ -908,7 +908,7 @@ uint32_t CAN_Open(CAN_T *tCAN, uint32_t u32BaudRate, uint32_t u32Mode)
   * @details The two sets of interface registers (IF1 and IF2) control the software access to the Message RAM.
   *          They buffer the data to be transferred to and from the RAM, avoiding conflicts between software accesses and message reception/transmission.
   */
-int32_t CAN_SetTxMsg(CAN_T *tCAN, uint32_t u32MsgNum , STR_CANMSG_T* pCanMsg)
+int32_t CAN_SetTxMsg(CAN_T *tCAN, uint32_t u32MsgNum, STR_CANMSG_T* pCanMsg)
 {
     int32_t rev = 1l;
     uint32_t u32MsgIfNum;
@@ -1054,7 +1054,7 @@ void CAN_DisableInt(CAN_T *tCAN, uint32_t u32Mask)
   * @details If the RxIE bit (CAN_IFn_MCON[10]) is set, the IntPnd bit (CAN_IFn_MCON[13])
   *          will be set when a received Data Frame is accepted and stored in the Message Object.
   */
-int32_t CAN_SetRxMsg(CAN_T *tCAN, uint32_t u32MsgNum , uint32_t u32IDType, uint32_t u32ID)
+int32_t CAN_SetRxMsg(CAN_T *tCAN, uint32_t u32MsgNum, uint32_t u32IDType, uint32_t u32ID)
 {
     int32_t rev = (int32_t)TRUE;
     uint32_t u32TimeOutCount = 0ul;
@@ -1091,7 +1091,7 @@ int32_t CAN_SetRxMsg(CAN_T *tCAN, uint32_t u32MsgNum , uint32_t u32IDType, uint3
   * @details If the RxIE bit (CAN_IFn_MCON[10]) is set, the IntPnd bit (CAN_IFn_MCON[13])
   *          will be set when a received Data Frame is accepted and stored in the Message Object.
   */
-int32_t CAN_SetRxMsgAndMsk(CAN_T *tCAN, uint32_t u32MsgNum , uint32_t u32IDType, uint32_t u32ID, uint32_t u32IDMask)
+int32_t CAN_SetRxMsgAndMsk(CAN_T *tCAN, uint32_t u32MsgNum, uint32_t u32IDType, uint32_t u32ID, uint32_t u32IDMask)
 {
     int32_t  rev = (int32_t)TRUE;
     uint32_t u32TimeOutCount = 0ul;
@@ -1128,7 +1128,7 @@ int32_t CAN_SetRxMsgAndMsk(CAN_T *tCAN, uint32_t u32MsgNum , uint32_t u32IDType,
   * @details The Interface Registers avoid conflict between the CPU accesses to the Message RAM and CAN message reception
   *          and transmission by buffering the data to be transferred.
   */
-int32_t CAN_SetMultiRxMsg(CAN_T *tCAN, uint32_t u32MsgNum , uint32_t u32MsgCount, uint32_t u32IDType, uint32_t u32ID)
+int32_t CAN_SetMultiRxMsg(CAN_T *tCAN, uint32_t u32MsgNum, uint32_t u32MsgCount, uint32_t u32IDType, uint32_t u32ID)
 {
     int32_t  rev = (int32_t)TRUE;
     uint32_t i = 0ul;
@@ -1179,7 +1179,7 @@ int32_t CAN_SetMultiRxMsg(CAN_T *tCAN, uint32_t u32MsgNum , uint32_t u32MsgCount
   * @details The receive/transmit priority for the Message Objects is attached to the message number.
   *          Message Object 1 has the highest priority, while Message Object 32 has the lowest priority.
   */
-int32_t CAN_Transmit(CAN_T *tCAN, uint32_t u32MsgNum , STR_CANMSG_T* pCanMsg)
+int32_t CAN_Transmit(CAN_T *tCAN, uint32_t u32MsgNum, STR_CANMSG_T* pCanMsg)
 {
     int32_t rev = (int32_t)TRUE;
     uint32_t u32Tmp;
@@ -1218,7 +1218,7 @@ int32_t CAN_Transmit(CAN_T *tCAN, uint32_t u32MsgNum , STR_CANMSG_T* pCanMsg)
   * @details The Interface Registers avoid conflict between the CPU accesses to the Message RAM and CAN message reception
   *          and transmission by buffering the data to be transferred.
   */
-int32_t CAN_Receive(CAN_T *tCAN, uint32_t u32MsgNum , STR_CANMSG_T* pCanMsg)
+int32_t CAN_Receive(CAN_T *tCAN, uint32_t u32MsgNum, STR_CANMSG_T* pCanMsg)
 {
     int32_t rev = (int32_t)TRUE;
     uint32_t u32Tmp;

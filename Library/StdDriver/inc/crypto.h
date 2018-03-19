@@ -88,7 +88,8 @@ extern "C"
 #define CRYPTO_DMA_CONTINUE     0x6UL   /*!< Do continuous encrypt/decrypt in DMA cascade \hideinitializer */
 #define CRYPTO_DMA_LAST         0x7UL   /*!< Do last encrypt/decrypt in DMA cascade          \hideinitializer */
 
-typedef enum {
+typedef enum
+{
     /*!< ECC curve                \hideinitializer */
     CURVE_P_192,                        /*!< ECC curve P-192          \hideinitializer */
     CURVE_P_224,                        /*!< ECC curve P-224          \hideinitializer */

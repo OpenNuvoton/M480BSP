@@ -29,8 +29,10 @@ static HID_DEV_T *alloc_hid_device(void)
 {
     int     i;
 
-    for (i = 0; i < CONFIG_HID_MAX_DEV; i++) {
-        if (g_hid_dev[i].iface == NULL) {
+    for (i = 0; i < CONFIG_HID_MAX_DEV; i++)
+    {
+        if (g_hid_dev[i].iface == NULL)
+        {
             memset((char *)&g_hid_dev[i], 0, sizeof(HID_DEV_T));
             g_hid_dev[i].uid = get_ticks();
             return &g_hid_dev[i];
@@ -67,8 +69,10 @@ static int hid_probe(IFACE_T *iface)
     /*
      *  Try to find any interrupt endpoints
      */
-    for (i = 0; i < aif->ifd->bNumEndpoints; i++) {
-        if ((aif->ep[i].bmAttributes & EP_ATTR_TT_MASK) == EP_ATTR_TT_INT) {
+    for (i = 0; i < aif->ifd->bNumEndpoints; i++)
+    {
+        if ((aif->ep[i].bmAttributes & EP_ATTR_TT_MASK) == EP_ATTR_TT_INT)
+        {
             ep = &aif->ep[i];
             break;
         }
@@ -94,7 +98,8 @@ static int hid_probe(IFACE_T *iface)
      */
     if (g_hdev_list == NULL)
         g_hdev_list = hdev;
-    else {
+    else
+    {
         for (p = g_hdev_list; p->next != NULL; p = p->next)
             ;
         p->next = hdev;
@@ -114,16 +119,19 @@ static void  hid_disconnect(IFACE_T *iface)
 
     hdev = (HID_DEV_T *)(iface->context);
 
-    for (i = 0; i < iface->aif->ifd->bNumEndpoints; i++) {
+    for (i = 0; i < iface->aif->ifd->bNumEndpoints; i++)
+    {
         iface->udev->hc_driver->quit_xfer(NULL, &(iface->aif->ep[i]));
     }
 
     /*
      *  Abort all UTR of this HID device (interface)
      */
-    for (i = 0; i < CONFIG_HID_DEV_MAX_PIPE; i++) {
+    for (i = 0; i < CONFIG_HID_DEV_MAX_PIPE; i++)
+    {
         utr = hdev->utr_list[i];
-        if (utr != NULL) {
+        if (utr != NULL)
+        {
             usbh_quit_utr(utr);             /* Quit the UTR                               */
             usbh_free_mem(utr->buff, utr->ep->wMaxPacketSize);
             free_utr(utr);
@@ -133,15 +141,22 @@ static void  hid_disconnect(IFACE_T *iface)
     /*
      *  remove it from HID device list
      */
-    for (i = 0; i < CONFIG_HID_MAX_DEV; i++) {
-        if (g_hid_dev[i].iface == iface) {
+    for (i = 0; i < CONFIG_HID_MAX_DEV; i++)
+    {
+        if (g_hid_dev[i].iface == iface)
+        {
             hdev = &g_hid_dev[i];
 
-            if (hdev == g_hdev_list) {
+            if (hdev == g_hdev_list)
+            {
                 g_hdev_list = g_hdev_list->next;
-            } else {
-                for (p = g_hdev_list; p != NULL; p = p->next) {
-                    if (p->next == hdev) {
+            }
+            else
+            {
+                for (p = g_hdev_list; p != NULL; p = p->next)
+                {
+                    if (p->next == hdev)
+                    {
                         p->next = hdev->next;
                         break;
                     }
@@ -155,7 +170,8 @@ static void  hid_disconnect(IFACE_T *iface)
 }
 
 
-UDEV_DRV_T  hid_driver = {
+UDEV_DRV_T  hid_driver =
+{
     hid_probe,
     hid_disconnect,
     NULL,                       /* suspend */

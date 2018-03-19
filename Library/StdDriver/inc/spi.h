@@ -338,9 +338,12 @@ __STATIC_INLINE void SPII2S_SET_MONO_RX_CHANNEL(SPI_T *i2s, uint32_t u32Ch);
   */
 __STATIC_INLINE void SPII2S_ENABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
 {
-    if(u32ChMask == SPII2S_RIGHT) {
+    if(u32ChMask == SPII2S_RIGHT)
+    {
         i2s->I2SCTL |= SPI_I2SCTL_RZCEN_Msk;
-    } else {
+    }
+    else
+    {
         i2s->I2SCTL |= SPI_I2SCTL_LZCEN_Msk;
     }
 }
@@ -356,9 +359,12 @@ __STATIC_INLINE void SPII2S_ENABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
   */
 __STATIC_INLINE void SPII2S_DISABLE_TX_ZCD(SPI_T *i2s, uint32_t u32ChMask)
 {
-    if(u32ChMask == SPII2S_RIGHT) {
+    if(u32ChMask == SPII2S_RIGHT)
+    {
         i2s->I2SCTL &= ~SPI_I2SCTL_RZCEN_Msk;
-    } else {
+    }
+    else
+    {
         i2s->I2SCTL &= ~SPI_I2SCTL_LZCEN_Msk;
     }
 }

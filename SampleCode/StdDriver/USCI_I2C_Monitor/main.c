@@ -11,9 +11,9 @@
 #define PLL_CLOCK       192000000
 
 #if 0
-    #define DbgPrintf  printf
+#define DbgPrintf  printf
 #else
-    #define DbgPrintf(...)
+#define DbgPrintf(...)
 #endif
 
 /*---------------------------------------------------------------------------------------------------------*/

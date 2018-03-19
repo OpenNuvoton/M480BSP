@@ -517,7 +517,8 @@ __STATIC_INLINE void CLK_SysTickDelay(uint32_t us)
     SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;
 
     /* Waiting for down-count to zero */
-    while((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0UL) {
+    while((SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk) == 0UL)
+    {
     }
 
     /* Disable SysTick counter */
@@ -561,7 +562,8 @@ __STATIC_INLINE void CLK_SysTickLongDelay(uint32_t us)
         /* Disable SysTick counter */
         SysTick->CTRL = 0UL;
 
-    }while(us > 0UL);
+    }
+    while(us > 0UL);
 
 }
 

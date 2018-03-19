@@ -79,7 +79,8 @@
 /*----------------------------------------------------------------------------------------*/
 /*  Audio Control Interface                                                               */
 /*----------------------------------------------------------------------------------------*/
-typedef struct ac_if_t {
+typedef struct ac_if_t
+{
     IFACE_T        *iface;                  /*!< USB interface                            */
     uint8_t        mic_id;                  /*!< Microphone Input Terminal ID             */
     uint8_t        mic_fuid;                /*!< Microphone Feature Unit ID               */
@@ -90,7 +91,8 @@ typedef struct ac_if_t {
 /*----------------------------------------------------------------------------------------*/
 /*  Audio Streaming Interface                                                             */
 /*----------------------------------------------------------------------------------------*/
-typedef struct as_if_t {
+typedef struct as_if_t
+{
     IFACE_T        *iface;                  /*!< USB interface                            */
     EP_INFO_T      *ep;                     /*!< Currently selected streaming endpoint    */
     UTR_T          *utr[NUM_UTR];           /*!< ping-pong transfer requests              */
@@ -106,7 +108,8 @@ typedef struct as_if_t {
 /*----------------------------------------------------------------------------------------*/
 /*  Audio Class device                                                                    */
 /*----------------------------------------------------------------------------------------*/
-typedef struct uac_dev_t {
+typedef struct uac_dev_t
+{
     UDEV_T         *udev;                   /*!< pointer to this UAC device               */
     AC_IF_T        acif;                    /*!< audio control interface                  */
     AS_IF_T        asif_in;                 /*!< audio streaming in interface             */

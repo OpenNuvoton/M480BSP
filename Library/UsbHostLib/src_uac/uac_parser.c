@@ -28,7 +28,8 @@ static int  uac_parse_ac_interface(UAC_DEV_T *uac, uint8_t *bptr)
 
     UAC_DBGMSG("Parse AC - [%d] [0x%x] [0x%x]\n", ((CS_HDR_T *)bptr)->bLength, ((CS_HDR_T *)bptr)->bDescriptorType, ((CS_HDR_T *)bptr)->bDescriptorSubtype);
 
-    switch (((CS_HDR_T *)bptr)->bDescriptorSubtype) {
+    switch (((CS_HDR_T *)bptr)->bDescriptorSubtype)
+    {
     case AC_DESCRIPTOR_UNDEFINED:       /* Not interested, discard it...              */
         UAC_DBGMSG("AC: AC_DESCRIPTOR_UNDEFINED\n");
         break;
@@ -41,12 +42,17 @@ static int  uac_parse_ac_interface(UAC_DEV_T *uac, uint8_t *bptr)
     case INPUT_TERMINAL:
         ac_itd = (AC_IT_T *)bptr;
         UAC_DBGMSG("AC: INPUT_TERMINAL\n");
-        if (ac_itd->wTerminalType == UAC_TT_USB_STREAMING) {
+        if (ac_itd->wTerminalType == UAC_TT_USB_STREAMING)
+        {
             UAC_DBGMSG("USB streaming terminal found, ID=0x%x\n", ac_itd->bTerminalID);
-        } else if ((ac_itd->wTerminalType & 0x200) == 0x200) {
+        }
+        else if ((ac_itd->wTerminalType & 0x200) == 0x200)
+        {
             UAC_DBGMSG("MICROPHONE input terminal found, ID=0x%x\n", ac_itd->bTerminalID);
             uac->acif.mic_id = ac_itd->bTerminalID;
-        } else {
+        }
+        else
+        {
             UAC_DBGMSG("Unsupported INPUT TERMINAL, ignore it!\n");
         }
         UAC_DBGMSG("      bTerminalID: 0%x\n", ac_itd->bTerminalID);
@@ -59,13 +65,18 @@ static int  uac_parse_ac_interface(UAC_DEV_T *uac, uint8_t *bptr)
     case OUTPUT_TERMINAL:
         ac_otd = (AC_OT_T *)bptr;
         UAC_DBGMSG("AC: OUTPUT_TERMINAL\n");
-        if (ac_otd->wTerminalType == UAC_TT_USB_STREAMING) {
+        if (ac_otd->wTerminalType == UAC_TT_USB_STREAMING)
+        {
             UAC_DBGMSG("USB streaming terminal found, ID=0x%x\n", ac_otd->bTerminalID);
-        } else if ((ac_otd->wTerminalType & 0x300) == 0x300) {
+        }
+        else if ((ac_otd->wTerminalType & 0x300) == 0x300)
+        {
             UAC_DBGMSG("SPEAKER output terminal found, ID=0x%x\n", ac_otd->bTerminalID);
             uac->acif.speaker_id = ac_otd->bTerminalID;
             uac->acif.speaker_fuid = ac_otd->bSourceID;
-        } else {
+        }
+        else
+        {
             UAC_DBGMSG("Unsupported OUTPUT TERMINAL, ignore it!\n");
         }
         UAC_DBGMSG("      bTerminalID: 0%x\n", ac_otd->bTerminalID);
@@ -138,11 +149,13 @@ static int  uac_set_microphone_feature_unit(UAC_DEV_T *uac)
     /*------------------------------------------------------------------------------------*/
     /*  Find the Terminal Descriptor                                                      */
     /*------------------------------------------------------------------------------------*/
-    while (size >= sizeof(DESC_IF_T)) {
+    while (size >= sizeof(DESC_IF_T))
+    {
         hdr = (AC_FU_T *)bptr;
 
         if ((hdr->bDescriptorType == CS_INTERFACE) && (hdr->bDescriptorSubtype == FEATURE_UNIT) &&
-                (hdr->bSourceID == bTerminalID)) {
+                (hdr->bSourceID == bTerminalID))
+        {
             uac->acif.mic_fuid = hdr->bUnitID;
             return 0;
         }
@@ -189,7 +202,8 @@ int uac_parse_control_interface(UAC_DEV_T *uac, IFACE_T *iface)
     /*------------------------------------------------------------------------------------*/
     /*  Find the Standard AC Interface Descriptor                                         */
     /*------------------------------------------------------------------------------------*/
-    while (size >= sizeof(DESC_IF_T)) {
+    while (size >= sizeof(DESC_IF_T))
+    {
         ifd = (DESC_IF_T *)bptr;
 
         if ((ifd->bDescriptorType == USB_DT_INTERFACE) && (ifd->bInterfaceNumber == if_num) &&
@@ -203,7 +217,8 @@ int uac_parse_control_interface(UAC_DEV_T *uac, IFACE_T *iface)
         size -= ifd->bLength;
     }
 
-    if (size < sizeof(DESC_IF_T)) {         /* cannot find the Standard AC descriptor     */
+    if (size < sizeof(DESC_IF_T))           /* cannot find the Standard AC descriptor     */
+    {
         UAC_ERRMSG("UAC_RET_PARSER! - AC standard not found!\n");
         return UAC_RET_PARSER;
     }
@@ -214,14 +229,16 @@ int uac_parse_control_interface(UAC_DEV_T *uac, IFACE_T *iface)
     /*------------------------------------------------------------------------------------*/
     /*  Walk though all Class-Specific AC Interface Descriptor (4.3.2)                    */
     /*------------------------------------------------------------------------------------*/
-    while (size > sizeof(DESC_HDR_T)) {
+    while (size > sizeof(DESC_HDR_T))
+    {
         ifd = (DESC_IF_T *)bptr;
 
         if (ifd->bDescriptorType != CS_INTERFACE)
             break;
 
         ret = uac_parse_ac_interface(uac, bptr);
-        if (ret < 0) {
+        if (ret < 0)
+        {
             UAC_ERRMSG("UAC_RET_PARSER! - parsing CS\n");
             return UAC_RET_PARSER;
         }
@@ -248,26 +265,32 @@ static int  uac_parse_as_interface(AS_IF_T *asif, uint8_t *bptr)
     ALT_IFACE_T  *aif = asif->iface->aif;
     int   i;
 
-    if (((CS_HDR_T *)bptr)->bDescriptorType == USB_DT_ENDPOINT) {
-        for (i = 0; i < aif->ifd->bNumEndpoints; i++) {
-            if (aif->ep[i].bEndpointAddress == ((DESC_EP_T *)bptr)->bEndpointAddress) {
+    if (((CS_HDR_T *)bptr)->bDescriptorType == USB_DT_ENDPOINT)
+    {
+        for (i = 0; i < aif->ifd->bNumEndpoints; i++)
+        {
+            if (aif->ep[i].bEndpointAddress == ((DESC_EP_T *)bptr)->bEndpointAddress)
+            {
                 asif->ep = &(asif->iface->aif->ep[i]);
                 break;
             }
         }
-        if (i >= aif->ifd->bNumEndpoints) {
+        if (i >= aif->ifd->bNumEndpoints)
+        {
             UAC_ERRMSG("Endpoint 0x%x parsing error!\n", ((DESC_EP_T *)bptr)->bEndpointAddress);
             return UAC_RET_PARSER;
         }
         return 0;
     }
 
-    if (((CS_HDR_T *)bptr)->bDescriptorType == CS_ENDPOINT) {
+    if (((CS_HDR_T *)bptr)->bDescriptorType == CS_ENDPOINT)
+    {
         asif->cs_epd = (CS_EP_T *)bptr;
         return 0;
     }
 
-    switch (((CS_HDR_T *)bptr)->bDescriptorSubtype) {
+    switch (((CS_HDR_T *)bptr)->bDescriptorSubtype)
+    {
     case AS_DESCRIPTOR_UNDEFINED:
         UAC_DBGMSG("AS: AS_DESCRIPTOR_UNDEFINED\n");
         break;
@@ -301,10 +324,13 @@ static int  iface_have_iso_in_ep(IFACE_T *iface)
     int         i, j;
     EP_INFO_T   *ep;
 
-    for (i = 0; i < iface->num_alt; i++) {
-        for (j = 0; j < iface->alt[i].ifd->bNumEndpoints; j++) {
+    for (i = 0; i < iface->num_alt; i++)
+    {
+        for (j = 0; j < iface->alt[i].ifd->bNumEndpoints; j++)
+        {
             ep = &(iface->alt[i].ep[j]);
-            if (ep != NULL) {
+            if (ep != NULL)
+            {
                 if (((ep->bmAttributes & EP_ATTR_TT_MASK) == EP_ATTR_TT_ISO) &&
                         ((ep->bEndpointAddress & EP_ADDR_DIR_MASK) == EP_ADDR_DIR_IN))
                     return 1;
@@ -319,10 +345,13 @@ static int  iface_have_iso_out_ep(IFACE_T *iface)
     int         i, j;
     EP_INFO_T   *ep;
 
-    for (i = 0; i < iface->num_alt; i++) {
-        for (j = 0; j < iface->alt[i].ifd->bNumEndpoints; j++) {
+    for (i = 0; i < iface->num_alt; i++)
+    {
+        for (j = 0; j < iface->alt[i].ifd->bNumEndpoints; j++)
+        {
             ep = &(iface->alt[i].ep[j]);
-            if (ep != NULL) {
+            if (ep != NULL)
+            {
                 if (((ep->bmAttributes & EP_ATTR_TT_MASK) == EP_ATTR_TT_ISO) &&
                         ((ep->bEndpointAddress & EP_ADDR_DIR_MASK) == EP_ADDR_DIR_OUT))
                     return 1;
@@ -349,7 +378,8 @@ static void * uac_find_terminal(UAC_DEV_T *uac, uint8_t bTerminalID)
     /*------------------------------------------------------------------------------------*/
     /*  Find the Terminal Descriptor                                                      */
     /*------------------------------------------------------------------------------------*/
-    while (size >= sizeof(DESC_IF_T)) {
+    while (size >= sizeof(DESC_IF_T))
+    {
         hdr = (AC_OT_T *)bptr;
 
         if ((hdr->bDescriptorType == CS_INTERFACE) &&
@@ -384,7 +414,8 @@ static void * uac_find_feature_unit(UAC_DEV_T *uac, uint8_t bUnitID)
     /*------------------------------------------------------------------------------------*/
     /*  Find the Terminal Descriptor                                                      */
     /*------------------------------------------------------------------------------------*/
-    while (size >= sizeof(DESC_IF_T)) {
+    while (size >= sizeof(DESC_IF_T))
+    {
         hdr = (AC_FU_T *)bptr;
 
         if ((hdr->bDescriptorType == CS_INTERFACE) && (hdr->bDescriptorSubtype == FEATURE_UNIT) &&
@@ -436,7 +467,8 @@ int uac_parse_streaming_interface(UAC_DEV_T *uac, IFACE_T *iface, uint8_t bAlter
     /*------------------------------------------------------------------------------------*/
     /*  Find the Standard AS Interface Descriptor                                         */
     /*------------------------------------------------------------------------------------*/
-    while (size >= sizeof(DESC_IF_T)) {
+    while (size >= sizeof(DESC_IF_T))
+    {
         ifd = (DESC_IF_T *)bptr;
 
         if ((ifd->bDescriptorType == USB_DT_INTERFACE) &&
@@ -451,12 +483,14 @@ int uac_parse_streaming_interface(UAC_DEV_T *uac, IFACE_T *iface, uint8_t bAlter
         size -= ifd->bLength;
     }
 
-    if (size < sizeof(DESC_IF_T)) {         /* cannot find the Standard AC descriptor     */
+    if (size < sizeof(DESC_IF_T))           /* cannot find the Standard AC descriptor     */
+    {
         UAC_ERRMSG("UAC_RET_PARSER! - AC standard not found!\n");
         return UAC_RET_PARSER;
     }
 
-    if (ifd->bNumEndpoints == 0) {
+    if (ifd->bNumEndpoints == 0)
+    {
         UAC_DBGMSG("This alternative interface is an idle interface.\n");
         return 0;
     }
@@ -467,7 +501,8 @@ int uac_parse_streaming_interface(UAC_DEV_T *uac, IFACE_T *iface, uint8_t bAlter
     /*------------------------------------------------------------------------------------*/
     /*  Walk though all Class-Specific AS Interface Descriptor (4.5.2)                    */
     /*------------------------------------------------------------------------------------*/
-    while (size > sizeof(DESC_HDR_T)) {
+    while (size > sizeof(DESC_HDR_T))
+    {
         ifd = (DESC_IF_T *)bptr;
 
         //UAC_DBGMSG("Parse AS - [%d] [0x%x] [0x%x]\n", ((CS_HDR_T *)bptr)->bLength, ((CS_HDR_T *)bptr)->bDescriptorType, ((CS_HDR_T *)bptr)->bDescriptorSubtype);
@@ -479,7 +514,8 @@ int uac_parse_streaming_interface(UAC_DEV_T *uac, IFACE_T *iface, uint8_t bAlter
 
 
         ret = uac_parse_as_interface(&asif, bptr);
-        if (ret < 0) {
+        if (ret < 0)
+        {
             UAC_ERRMSG("UAC_RET_PARSER! - parsing CS\n");
             return UAC_RET_PARSER;
         }
@@ -491,36 +527,48 @@ int uac_parse_streaming_interface(UAC_DEV_T *uac, IFACE_T *iface, uint8_t bAlter
         size -= ifd->bLength;
     }
 
-    if (asif.as_gen == NULL) {
+    if (asif.as_gen == NULL)
+    {
         UAC_ERRMSG("UAC_RET_PARSER! - AS_GEN not found!\n");
         return UAC_RET_PARSER;
     }
 
-    if (iface_have_iso_in_ep(iface)) {
+    if (iface_have_iso_in_ep(iface))
+    {
         /* Find microphone's output terminal by AS_GEN's bTerminalLink */
         asif.ot = (AC_OT_T *)uac_find_terminal(uac, asif.as_gen->bTerminalLink);
-        if (asif.ot) {
+        if (asif.ot)
+        {
             UAC_DBGMSG("Audio in Terminal ID: 0%x\n", asif.ot->bTerminalID);
             UAC_DBGMSG("    bDescriptorSubtype: 0%x\n", asif.ot->bDescriptorSubtype);
             UAC_DBGMSG("    wTerminalType: 0%x\n", asif.ot->wTerminalType);
             UAC_DBGMSG("    bAssocTerminal: 0%x\n", asif.ot->bAssocTerminal);
             UAC_DBGMSG("    bSourceID: 0%x\n", asif.ot->bSourceID);
-        } else {
+        }
+        else
+        {
             UAC_ERRMSG("Cannot find audio in Output Terminal %d!\n", asif.as_gen->bTerminalLink);
         }
         memcpy(&uac->asif_in, &asif, sizeof(asif));
-    } else if (iface_have_iso_out_ep(iface)) {
+    }
+    else if (iface_have_iso_out_ep(iface))
+    {
         asif.it = (AC_IT_T *)uac_find_terminal(uac, asif.as_gen->bTerminalLink);
-        if (asif.it) {
+        if (asif.it)
+        {
             UAC_DBGMSG("Audio out Terminal ID: 0%x\n", asif.it->bTerminalID);
             UAC_DBGMSG("    bDescriptorSubtype: 0%x\n", asif.it->bDescriptorSubtype);
             UAC_DBGMSG("    wTerminalType: 0%x\n", asif.it->wTerminalType);
             UAC_DBGMSG("    bAssocTerminal: 0%x\n", asif.it->bAssocTerminal);
-        } else {
+        }
+        else
+        {
             UAC_ERRMSG("Cannot find audio in Output Terminal %d!\n", asif.as_gen->bTerminalLink);
         }
         memcpy(&uac->asif_out, &asif, sizeof(asif));
-    } else {
+    }
+    else
+    {
         UAC_ERRMSG("Interface cannot find iso endpoints!\n");
         return UAC_RET_PARSER;
     }

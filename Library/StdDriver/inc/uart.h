@@ -446,7 +446,7 @@ __STATIC_INLINE void UART_SET_RTS(UART_T* uart)
 }
 
 
-void UART_ClearIntFlag(UART_T* uart , uint32_t u32InterruptFlag);
+void UART_ClearIntFlag(UART_T* uart, uint32_t u32InterruptFlag);
 void UART_Close(UART_T* uart);
 void UART_DisableFlowCtrl(UART_T* uart);
 void UART_DisableInt(UART_T*  uart, uint32_t u32InterruptFlag);
