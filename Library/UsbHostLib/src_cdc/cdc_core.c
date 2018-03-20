@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     cdc_core.c
  * @version  V1.00
- * $Revision: 14 $
- * $Date: 18/01/30 11:46a $
- * @brief    M451 MCU USB Host CDC library core
+ * @brief    M480 MCU USB Host CDC library core
  *
- * @note
- * Copyright (C) 2018~2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>

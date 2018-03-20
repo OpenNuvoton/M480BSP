@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     cdc_driver.c
  * @version  V1.00
- * $Revision: 9 $
- * $Date: 18/01/29 11:46a $
- * @brief    M451 MCU USB Host CDC driver
+ * @brief    M480 MCU USB Host CDC driver
  *
- * @note
- * Copyright (C) 2018~2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>

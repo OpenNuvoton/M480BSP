@@ -5,7 +5,7 @@
  *           This file contains all the peripheral register's definitions,
  *           bits definitions and memory mapping for NuMicro M480 MCU.
  *
- * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017-2018 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 /**
   \mainpage NuMicro M480 Driver Reference Guide
@@ -678,6 +678,4 @@ typedef volatile unsigned long  vu32;       ///< Define 32-bit unsigned volatile
 #endif
 
 #endif  /* __M480_H__ */
-
-/*** (C) COPYRIGHT 2017 Nuvoton Technology Corp. ***/
 

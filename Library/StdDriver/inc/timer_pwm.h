@@ -1,5 +1,5 @@
 /**************************************************************************//**
- * @file     timer.h
+ * @file     timer_pwm.h
  * @version  V1.00
  * @brief    M480 series Timer PWM Controller(Timer PWM) driver header file
  *
