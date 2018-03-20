@@ -1,5 +1,5 @@
 /**************************************************************************//**
- * @file     _syscall.c
+ * @file     _syscalls.c
  * @version  V1.00
  * @brief    system call for semihost.
  *

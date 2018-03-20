@@ -44,7 +44,7 @@
   *
   * <b>Copyright Notice</b>
   *
-  * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+  * Copyright (C) 2017-2018 Nuvoton Technology Corp. All rights reserved.
   */
 #ifndef __M480_H__
 #define __M480_H__
