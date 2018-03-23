@@ -93,7 +93,7 @@ int32_t main(void)
     FMC_ENABLE_AP_UPDATE();
 
     /* The ROM address for erase/write/read demo */
-    u32Addr = 0x4000;
+    u32Addr = 0x20000;
     FMC_Erase(u32Addr); /* Erase page */
     for(i = 0; i < 0x100; i += 4)
     {
