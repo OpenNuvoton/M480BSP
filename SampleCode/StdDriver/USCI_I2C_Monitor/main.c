@@ -54,7 +54,7 @@ uint8_t g_u8SlvDataLen;
 uint32_t g_u32ProtOn;
 uint8_t g_u8MonRcvEveryThing = 0;
 uint8_t g_u8MonRecEachState[100] = {0};
-uint8_t g_u8MonRecData[I2C_DATA_MAX] = {0};
+uint8_t g_u8MonRecData[(I2C_DATA_MAX+1)*2] = {0};
 uint8_t g_u8MonCountS = 0, g_u8MonCountD = 0;
 uint32_t g_u32PCLKClock = 0;
 
