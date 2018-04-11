@@ -196,7 +196,7 @@ int  init_hid_device(HID_DEV_T *hdev)
 
 #ifdef HAVE_INT_OUT
     ret = usbh_hid_start_int_write(hdev, 0, int_write_callback);
-    if ((ret != HID_RET_OK) && (ret != HID_RET_EP_USED))
+    if ((ret != HID_RET_OK) && (ret != HID_RET_XFER_IS_RUNNING))
         printf("usbh_hid_start_int_write failed!\n");
     else
         printf("Interrupt out transfer started...\n");
