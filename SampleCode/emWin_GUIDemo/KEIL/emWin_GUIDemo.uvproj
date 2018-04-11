@@ -371,7 +371,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>--diag_suppress=177</MiscControls>
               <Define></Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\Library\StdDriver\inc;..\..\..\ThirdParty\emWin\Config;..\..\..\ThirdParty\emWin\Include;..\tslib;..\..\..\ThirdParty\FatFs\source</IncludePath>
