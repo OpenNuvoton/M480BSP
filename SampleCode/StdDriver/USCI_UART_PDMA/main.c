@@ -129,8 +129,8 @@ void PDMA_Init(void)
     //PDMA_SetTimeOut(1, 0, 0x5555);
 
 #ifdef ENABLE_PDMA_INTERRUPT
-    PDMA_EnableInt(0, 0);
-    PDMA_EnableInt(1, 0);
+    PDMA_EnableInt(PDMA, 0, PDMA_INT_TRANS_DONE);
+    PDMA_EnableInt(PDMA, 1, PDMA_INT_TRANS_DONE);
     NVIC_EnableIRQ(PDMA_IRQn);
     u32IsTestOver = 0;
 #endif
