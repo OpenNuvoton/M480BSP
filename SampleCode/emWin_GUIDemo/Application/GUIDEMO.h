@@ -94,10 +94,10 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
   #define SHOW_GUIDEMO_AATEXT            (0)
 #endif
 #ifndef   SHOW_GUIDEMO_AUTOMOTIVE
-  #define SHOW_GUIDEMO_AUTOMOTIVE        (0)
+  #define SHOW_GUIDEMO_AUTOMOTIVE        (1)
 #endif
 #ifndef   SHOW_GUIDEMO_BARGRAPH
-  #define SHOW_GUIDEMO_BARGRAPH          (0)
+  #define SHOW_GUIDEMO_BARGRAPH          (1)
 #endif
 #ifndef   SHOW_GUIDEMO_BITMAP
   #define SHOW_GUIDEMO_BITMAP            (1)
