@@ -340,7 +340,7 @@ int main(void)
         if ( res )
         {
             f_close(&hFile);
-            GUI_DispStringAt("CANNOT create the calibration file.\nPlease insert a SD card for PCBA V2.0 then reboot.", 0, 0);
+            GUI_DispStringAt("CANNOT create the calibration file.\nPlease insert a SD card then reboot.", 0, 0);
             while(1);
         }
 
