@@ -449,11 +449,28 @@ static void  write_qh(UDEV_T *udev, EP_INFO_T *ep, QH_T *qh)
     /*  Write QH DWord 2 - Endpoint Capabilities                                         */
     /*------------------------------------------------------------------------------------*/
     if (udev->speed == SPEED_HIGH)
+    {
         cap = 0;
+    }
     else
     {
-        cap = (udev->port_num << QH_HUB_PORT_Pos) |
-              (udev->parent->iface->udev->dev_num << QH_HUB_ADDR_Pos);
+        /*
+         *  Backtrace device tree until the USB 2.0 hub found
+         */
+        HUB_DEV_T   *hub;
+        int         port_num;
+
+        port_num = udev->port_num;
+        hub = udev->parent;
+
+        while ((hub != NULL) && (hub->iface->udev->speed != SPEED_HIGH))
+        {
+            port_num = hub->iface->udev->port_num;
+            hub = hub->iface->udev->parent;
+        }
+
+        cap = (port_num << QH_HUB_PORT_Pos) |
+              (hub->iface->udev->dev_num << QH_HUB_ADDR_Pos);
     }
 
     qh->Cap = cap;

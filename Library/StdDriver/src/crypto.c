@@ -1086,12 +1086,12 @@ static int  get_nibble_value(char c)
 
     if ((c >= 'a') && (c <= 'f'))
     {
-        c = c - 'a' - (char)10;
+        c = c - 'a' + (char)10;
     }
 
     if ((c >= 'A') && (c <= 'F'))
     {
-        c = c - 'A' - (char)10;
+        c = c - 'A' + (char)10;
     }
     return (int)c;
 }
@@ -1183,6 +1183,11 @@ int ECC_IsPrivateKeyValid(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char private_k[])
         if (get_nibble_value(private_k[i]) < get_nibble_value(pCurve->Eorder[i]))
         {
             ret = 1;
+            break;
+        }
+        if (get_nibble_value(private_k[i]) > get_nibble_value(pCurve->Eorder[i]))
+        {
+            ret = 0;
             break;
         }
     }
