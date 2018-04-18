@@ -1,19 +1,41 @@
 /*********************************************************************
-*                SEGGER Microcontroller GmbH & Co. KG                *
+*                 SEGGER Software GmbH                               *
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2012  SEGGER Microcontroller GmbH & Co. KG       *
+*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.18 - Graphical user interface for embedded applications **
-emWin is protected by international copyright laws.   Knowledge of the
-source code may not be used to write a similar product.  This file may
-only be used in accordance with a license and should not be re-
-distributed in any way. We appreciate your understanding and fairness.
+** emWin V5.46 - Graphical user interface for embedded applications **
+All  Intellectual Property rights in the Software belongs to  SEGGER.
+emWin is protected by  international copyright laws.  Knowledge of the
+source code may not be used to write a similar product. This file may
+only be used in accordance with the following terms:
+
+The  software has  been licensed by SEGGER Software GmbH to Nuvoton Technology Corporation
+at the address: No. 4, Creation Rd. III, Hsinchu Science Park, Taiwan
+for the purposes  of  creating  libraries  for its 
+Arm Cortex-M and  Arm9 32-bit microcontrollers, commercialized and distributed by Nuvoton Technology Corporation
+under  the terms and conditions  of  an  End  User  
+License  Agreement  supplied  with  the libraries.
+Full source code is available at: www.segger.com
+
+We appreciate your understanding and fairness.
+----------------------------------------------------------------------
+Licensing information
+Licensor:                 SEGGER Software GmbH
+Licensed to:              Nuvoton Technology Corporation, No. 4, Creation Rd. III, Hsinchu Science Park, 30077 Hsinchu City, Taiwan
+Licensed SEGGER software: emWin
+License number:           GUI-00735
+License model:            emWin License Agreement, signed February 27, 2018
+Licensed platform:        Cortex-M and ARM9 32-bit series microcontroller designed and manufactured by or for Nuvoton Technology Corporation
+----------------------------------------------------------------------
+Support and Update Agreement (SUA)
+SUA period:               2018-03-26 - 2019-03-27
+Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUIDEMO_WashingMachine.c
 Purpose     : Washing machine demo
@@ -10569,7 +10591,7 @@ static GUI_MEMDEV_Handle _CreateBitmap(WM_HWIN hWin, int x0, int y0_, int x1, in
   if (hMem) {
     WM_SelectWindow(hWin);
     hOld = GUI_MEMDEV_Select(hMem);
-    GUI_MEMDEV_CopyFromLCD(hMem);
+//    GUI_MEMDEV_CopyFromLCD(hMem);
     _DrawGradientRoundBar(x0 + 2, y0_ + 2, x1 - 2, y1_ - 2, GUI_MAKE_COLOR(0xEEEEEE), GUI_MAKE_COLOR(0x737373));
     GUI_SetColor(GUI_MAKE_COLOR(0xff0000));
     GUI_SetPenSize(3);
@@ -10952,7 +10974,7 @@ static GUI_MEMDEV_Handle _CreateButton(WM_HWIN hWin, int x0, int y0_, int xSize,
   GUI_DrawGradientV(5, 80, xSizeLCD - 6, ySizeLCD - 1, GUI_MAKE_COLOR(0xffffff), GUI_MAKE_COLOR(0xffa0a0));  // Draws the background of the button
   if (hMem) {
     hOld = GUI_MEMDEV_Select(hMem);
-    GUI_MEMDEV_CopyFromLCD(hMem);
+//    GUI_MEMDEV_CopyFromLCD(hMem);
     _DrawGradientRoundBar(x0 + 2, y0_ + 2, x0 + xSize - 2, y0_ + ySize - 2, Color0, Color1);
     GUI_SetColor(GUI_MAKE_COLOR(0xff0000));
     GUI_SetPenSize(3);

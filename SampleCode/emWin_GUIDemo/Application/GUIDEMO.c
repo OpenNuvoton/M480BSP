@@ -1,19 +1,41 @@
 /*********************************************************************
-*                SEGGER Microcontroller GmbH & Co. KG                *
+*                 SEGGER Software GmbH                               *
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2012  SEGGER Microcontroller GmbH & Co. KG       *
+*        (c) 1996 - 2018  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V5.18 - Graphical user interface for embedded applications **
-emWin is protected by international copyright laws.   Knowledge of the
-source code may not be used to write a similar product.  This file may
-only be used in accordance with a license and should not be re-
-distributed in any way. We appreciate your understanding and fairness.
+** emWin V5.46 - Graphical user interface for embedded applications **
+All  Intellectual Property rights in the Software belongs to  SEGGER.
+emWin is protected by  international copyright laws.  Knowledge of the
+source code may not be used to write a similar product. This file may
+only be used in accordance with the following terms:
+
+The  software has  been licensed by SEGGER Software GmbH to Nuvoton Technology Corporation
+at the address: No. 4, Creation Rd. III, Hsinchu Science Park, Taiwan
+for the purposes  of  creating  libraries  for its 
+Arm Cortex-M and  Arm9 32-bit microcontrollers, commercialized and distributed by Nuvoton Technology Corporation
+under  the terms and conditions  of  an  End  User  
+License  Agreement  supplied  with  the libraries.
+Full source code is available at: www.segger.com
+
+We appreciate your understanding and fairness.
+----------------------------------------------------------------------
+Licensing information
+Licensor:                 SEGGER Software GmbH
+Licensed to:              Nuvoton Technology Corporation, No. 4, Creation Rd. III, Hsinchu Science Park, 30077 Hsinchu City, Taiwan
+Licensed SEGGER software: emWin
+License number:           GUI-00735
+License model:            emWin License Agreement, signed February 27, 2018
+Licensed platform:        Cortex-M and ARM9 32-bit series microcontroller designed and manufactured by or for Nuvoton Technology Corporation
+----------------------------------------------------------------------
+Support and Update Agreement (SUA)
+SUA period:               2018-03-26 - 2019-03-27
+Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUIDEMO.c
 Purpose     : Several GUIDEMO routines
@@ -25,7 +47,7 @@ Purpose     : Several GUIDEMO routines
 //
 // Recommended memory to run the sample with adequate performance
 //
-#define RECOMMENDED_MEMORY (1024L * 2200)
+//#define RECOMMENDED_MEMORY (1024L * 2200)
 
 /*********************************************************************
 *
@@ -37,15 +59,15 @@ Purpose     : Several GUIDEMO routines
 
 static const GUI_WIDGET_CREATE_INFO _aFrameWinControl[] = {
   { FRAMEWIN_CreateIndirect, "Control",    0,               0,  0,  CONTROL_SIZE_X, CONTROL_SIZE_Y, 0,          0 },
-  { BUTTON_CreateIndirect,   "Halt",       GUI_ID_HALT,     3,  20, BUTTON_SIZE_X,  BUTTON_SIZE_Y,  0,          0 },
-  { BUTTON_CreateIndirect,   "Next",       GUI_ID_NEXT,     41, 20, BUTTON_SIZE_X,  BUTTON_SIZE_Y,  0,          0 },
-  { PROGBAR_CreateIndirect,  0,            GUI_ID_PROGBAR0, 3,  4,  PROGBAR_SIZE_X, PROGBAR_SIZE_Y, WM_CF_HIDE, 0 },
+  { BUTTON_CreateIndirect,   "Halt",       GUI_ID_HALT,     2,  24, BUTTON_SIZE_X,  BUTTON_SIZE_Y,  0,          0 },
+  { BUTTON_CreateIndirect,   "Next",       GUI_ID_NEXT,     36, 24, BUTTON_SIZE_X,  BUTTON_SIZE_Y,  0,          0 },
+  { PROGBAR_CreateIndirect,  0,            GUI_ID_PROGBAR0, 2,  11,  PROGBAR_SIZE_X, PROGBAR_SIZE_Y, WM_CF_HIDE, 0 },
   { TEXT_CreateIndirect,     0,            GUI_ID_TEXT0,    2,  2,  TEXT_SIZE_X,    TEXT_SIZE_Y,    0,          0 }
 };
 
 static const GUI_WIDGET_CREATE_INFO _aFrameWinInfo[] = {
   { FRAMEWIN_CreateIndirect, "emWin Demo", 0,               0,  0,  0,              0,              0,          0 },
-  { TEXT_CreateIndirect,     "",           GUI_ID_TEXT1,    5,  3,  0,              0,              0,          0 }
+  { TEXT_CreateIndirect,     "",           GUI_ID_TEXT1,    3,  3,  0,              0,              0,          0 }
 };
 
 #endif
@@ -170,7 +192,7 @@ static void _cbFrameWinControl(WM_MESSAGE * pMsg) {
     break;
   case WM_INIT_DIALOG:
     FRAMEWIN_SetFont(pMsg->hWin, &GUI_Font8_1);
-    FRAMEWIN_SetTitleHeight(pMsg->hWin, 14);
+//    FRAMEWIN_SetTitleHeight(pMsg->hWin, 14);
     hItem = WM_GetDialogItem(pMsg->hWin, GUI_ID_PROGBAR0);
     PROGBAR_SetTextAlign(hItem, GUI_TA_HCENTER | GUI_TA_VCENTER);
     PROGBAR_SetFont(hItem, &GUI_FontD6x8);
@@ -440,7 +462,7 @@ static void _UpdateControlText(void) {
   TEXT_SetText             (hText,  acText);
 }
 #endif
-
+#if 0
 /*********************************************************************
 *
 *       _DrawSkin_BUTTON
@@ -581,7 +603,7 @@ static int _DrawSkin_FRAMEWIN(const WIDGET_ITEM_DRAW_INFO * pDrawItemInfo) {
   }
   return 0;
 }
-
+#endif
 /*********************************************************************
 *
 *       _Main
@@ -590,7 +612,7 @@ static void _Main(void) {
   #if GUI_WINSUPPORT
     int xSize;
     int ySize;
-    WM_HWIN hItem;
+//    WM_HWIN hItem;
 
     WM_SelectWindow(WM_HBKWIN);
   #endif
@@ -607,9 +629,9 @@ static void _Main(void) {
     //
     // Set skinning functions for control- and info window
     //
-    FRAMEWIN_SetDefaultSkin(_DrawSkin_FRAMEWIN);
-    BUTTON_SetDefaultSkin(_DrawSkin_BUTTON);
-    PROGBAR_SetDefaultSkin(_DrawSkin_PROGBAR);
+//    FRAMEWIN_SetDefaultSkin(_DrawSkin_FRAMEWIN);
+//    BUTTON_SetDefaultSkin(_DrawSkin_BUTTON);
+//    PROGBAR_SetDefaultSkin(_DrawSkin_PROGBAR);
     //
     // Create control- and info window
     //
@@ -619,19 +641,21 @@ static void _Main(void) {
     //
     // Reset skinning functions to (demo)defaults
     //
-    FRAMEWIN_SetDefaultSkin(_FrameDrawSkinFlex);
-    BUTTON_SetDefaultSkin(BUTTON_SKIN_FLEX);
-    PROGBAR_SetDefaultSkin(PROGBAR_SKIN_FLEX);
+//    FRAMEWIN_SetDefaultSkin(_FrameDrawSkinFlex);
+//    BUTTON_SetDefaultSkin(BUTTON_SKIN_FLEX);
+//    PROGBAR_SetDefaultSkin(PROGBAR_SKIN_FLEX);
     //
     // Hide ugly text, may be (re)activated in a later version
     //
-    hItem = WM_GetDialogItem(_hDialogControl, GUI_ID_TEXT0);
-    WM_HideWindow(hItem);
+//    hItem = WM_GetDialogItem(_hDialogControl, GUI_ID_TEXT0);
+//    WM_HideWindow(hItem);
     //
     // Show Intro
     //
     WM_InvalidateWindow(WM_HBKWIN);
+    WM_DisableMemdev(WM_HBKWIN);
     GUI_Exec();
+    WM_EnableMemdev(WM_HBKWIN);
   #endif
   GUIDEMO_Intro();
   //
