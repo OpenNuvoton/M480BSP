@@ -5,7 +5,7 @@
 
 #include "GUI.h"
 #include "wm.h"
-
+#include "FRAMEWIN.h"
 #include "LCDConf.h"
 
 #include "diskio.h"
@@ -229,10 +229,15 @@ void ts_test(int xsize, int ysize);
 volatile int g_enable_Touch;
 void MainTask(void)
 {
+    WM_HWIN hWin;
+    char     acVersion[40] = "Framewin: Version of emWin: ";
+    
     printf("Main Task -> \n");
     //GUI_Init();
     //GUI_SetDrawMode(GUI_DRAWMODE_NORMAL);
-    CreateFramewin();
+    strcat(acVersion, GUI_GetVersionString());
+    hWin = CreateFramewin();
+    FRAMEWIN_SetText(hWin, acVersion);
     while (1)
     {
         //GUI_PID_STATE State;
