@@ -49,28 +49,10 @@ uint32_t TIMER_Open(TIMER_T *timer, uint32_t u32Mode, uint32_t u32Freq)
     }
     else
     {
-        if(u32Clk > 128000000UL)
-        {
-            u32Prescale = 15UL;    /* real prescaler value is 16 */
-            u32Clk >>= 4;
-        }
-        else if(u32Clk > 64000000UL)
-        {
-            u32Prescale = 7UL;    /* real prescaler value is 8 */
-            u32Clk >>= 3;
-        }
-        else if(u32Clk > 32000000UL)
-        {
-            u32Prescale = 3UL;    /* real prescaler value is 4 */
-            u32Clk >>= 2;
-        }
-        else if(u32Clk > 16000000UL)
-        {
-            u32Prescale = 1UL;    /* real prescaler value is 2 */
-            u32Clk >>= 1;
-        }
-
         u32Cmpr = u32Clk / u32Freq;
+        u32Prescale = (u32Cmpr >> 24);  /* for 24 bits CMPDAT */
+        if (u32Prescale > 0UL)
+            u32Cmpr = u32Cmpr / (u32Prescale + 1UL);
     }
 
     timer->CTL = u32Mode | u32Prescale;
@@ -147,36 +129,10 @@ void TIMER_Delay(TIMER_T *timer, uint32_t u32Usec)
     }
     else
     {
-        if(u32Clk > 128000000UL)
-        {
-            u32Prescale = 15UL;    /* real prescaler value is 16 */
-            u32Clk >>= 4;
-        }
-        else if(u32Clk > 64000000UL)
-        {
-            u32Prescale = 7UL;    /* real prescaler value is 8 */
-            u32Clk >>= 3;
-        }
-        else if(u32Clk > 32000000UL)
-        {
-            u32Prescale = 3UL;    /* real prescaler value is 4 */
-            u32Clk >>= 2;
-        }
-        else if(u32Clk > 16000000UL)
-        {
-            u32Prescale = 1UL;    /* real prescaler value is 2 */
-            u32Clk >>= 1;
-        }
-
-        if(u32Usec < 250UL)
-        {
-            u32Cmpr = (u32Usec * u32Clk) / 1000000UL;
-        }
-        else
-        {
-            u32NsecPerTick = 1000000000UL / u32Clk;
-            u32Cmpr = (u32Usec * 1000UL) / u32NsecPerTick;
-        }
+        u32Cmpr = u32Usec * (u32Clk / 1000000UL);
+        u32Prescale = (u32Cmpr >> 24);  /* for 24 bits CMPDAT */
+        if (u32Prescale > 0UL)
+            u32Cmpr = u32Cmpr / (u32Prescale + 1UL);
     }
 
     timer->CMP = u32Cmpr;
