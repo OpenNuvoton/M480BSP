@@ -315,7 +315,7 @@ extern "C"
   *
   * @return      None
   *
-  * @details     This macro is used to improve EBI write operation for EBI bank0 and bank1.
+  * @details     This macro is used to improve EBI write operation for all EBI banks.
   * \hideinitializer
   */
 #define EBI_ENABLE_WRITE_BUFFER()           (EBI->CTL0 |= EBI_CTL_WBUFEN_Msk);

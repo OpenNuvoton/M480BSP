@@ -981,16 +981,19 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPF_MFPL_PF3MFP_I2C0_SCL          (0x04UL<<SYS_GPF_MFPL_PF3MFP_Pos)  /*!< I2C0 clock pin. \hideinitializer */
 #define SYS_GPF_MFPL_PF3MFP_XT1_IN            (0x0AUL<<SYS_GPF_MFPL_PF3MFP_Pos)  /*!< External 4~24 MHz (high speed) crystal input pin. \hideinitializer */
 #define SYS_GPF_MFPL_PF3MFP_BPWM1_CH0         (0x0BUL<<SYS_GPF_MFPL_PF3MFP_Pos)  /*!< BPWM1 channel0 output/capture input. \hideinitializer */
+#define SYS_GPF_MFPL_PF4MFP_GPIO              (0x00UL<<SYS_GPF_MFPL_PF4MFP_Pos)  /*!< General purpose digital I/O pin.  \hideinitializer */
 #define SYS_GPF_MFPL_PF4MFP_UART2_TXD         (0x02UL<<SYS_GPF_MFPL_PF4MFP_Pos)  /*!< Data transmitter output pin for UART2. \hideinitializer */
 #define SYS_GPF_MFPL_PF4MFP_UART2_nRTS        (0x04UL<<SYS_GPF_MFPL_PF4MFP_Pos)  /*!< Request to Send output pin for UART2. \hideinitializer */
 #define SYS_GPF_MFPL_PF4MFP_BPWM0_CH5         (0x08UL<<SYS_GPF_MFPL_PF4MFP_Pos)  /*!< BPWM0 channel5 output/capture input. \hideinitializer */
 #define SYS_GPF_MFPL_PF4MFP_X32_OUT           (0x0AUL<<SYS_GPF_MFPL_PF4MFP_Pos)  /*!< External 32.768 kHz (low speed) crystal output pin. \hideinitializer */
+#define SYS_GPF_MFPL_PF5MFP_GPIO              (0x00UL<<SYS_GPF_MFPL_PF5MFP_Pos)  /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPF_MFPL_PF5MFP_UART2_RXD         (0x02UL<<SYS_GPF_MFPL_PF5MFP_Pos)  /*!< Data receiver input pin for UART2. \hideinitializer */
 #define SYS_GPF_MFPL_PF5MFP_UART2_nCTS        (0x04UL<<SYS_GPF_MFPL_PF5MFP_Pos)  /*!< Clear to Send input pin for UART2. \hideinitializer */
 #define SYS_GPF_MFPL_PF5MFP_BPWM0_CH4         (0x08UL<<SYS_GPF_MFPL_PF5MFP_Pos)  /*!< BPWM0 channel4 output/capture input. \hideinitializer */
 #define SYS_GPF_MFPL_PF5MFP_EPWM0_SYNC_OUT    (0x09UL<<SYS_GPF_MFPL_PF5MFP_Pos)  /*!< EPWM0 counter synchronous trigger output pin. \hideinitializer */
 #define SYS_GPF_MFPL_PF5MFP_X32_IN            (0x0AUL<<SYS_GPF_MFPL_PF5MFP_Pos)  /*!< External 32.768 kHz (low speed) crystal input pin. \hideinitializer */
 #define SYS_GPF_MFPL_PF5MFP_EADC0_ST          (0x0BUL<<SYS_GPF_MFPL_PF5MFP_Pos)  /*!< EADC external trigger input. \hideinitializer */
+#define SYS_GPF_MFPL_PF6MFP_GPIO              (0x00UL<<SYS_GPF_MFPL_PF6MFP_Pos)  /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPF_MFPL_PF6MFP_EBI_ADR19         (0x02UL<<SYS_GPF_MFPL_PF6MFP_Pos)  /*!< EBI address/data bus bit*. \hideinitializer */
 #define SYS_GPF_MFPL_PF6MFP_SC0_CLK           (0x03UL<<SYS_GPF_MFPL_PF6MFP_Pos)  /*!< SmartCard0 clock pin. \hideinitializer */
 #define SYS_GPF_MFPL_PF6MFP_I2S0_LRCK         (0x04UL<<SYS_GPF_MFPL_PF6MFP_Pos)  /*!< I2S0 left right channel clock. \hideinitializer */
@@ -998,6 +1001,7 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPF_MFPL_PF6MFP_UART4_RXD         (0x06UL<<SYS_GPF_MFPL_PF6MFP_Pos)  /*!< Data receiver input pin for UART4. \hideinitializer */
 #define SYS_GPF_MFPL_PF6MFP_EBI_nCS0          (0x07UL<<SYS_GPF_MFPL_PF6MFP_Pos)  /*!< EBI chip select enable output pin. \hideinitializer */
 #define SYS_GPF_MFPL_PF6MFP_TAMPER0           (0x0AUL<<SYS_GPF_MFPL_PF6MFP_Pos)  /*!< TAMPER detector loop pin0. \hideinitializer */
+#define SYS_GPF_MFPL_PF7MFP_GPIO              (0x00UL<<SYS_GPF_MFPL_PF7MFP_Pos)  /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPF_MFPL_PF7MFP_EBI_ADR18         (0x02UL<<SYS_GPF_MFPL_PF7MFP_Pos)  /*!< EBI address/data bus bit*. \hideinitializer */
 #define SYS_GPF_MFPL_PF7MFP_SC0_DAT           (0x03UL<<SYS_GPF_MFPL_PF7MFP_Pos)  /*!< SmartCard0 data pin. \hideinitializer */
 #define SYS_GPF_MFPL_PF7MFP_I2S0_DO           (0x04UL<<SYS_GPF_MFPL_PF7MFP_Pos)  /*!< I2S0 data output. \hideinitializer */
@@ -1005,21 +1009,25 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPF_MFPL_PF7MFP_UART4_TXD         (0x06UL<<SYS_GPF_MFPL_PF7MFP_Pos)  /*!< Data transmitter output pin for UART4. \hideinitializer */
 #define SYS_GPF_MFPL_PF7MFP_TAMPER1           (0x0AUL<<SYS_GPF_MFPL_PF7MFP_Pos)  /*!< TAMPER detector loop pin1. \hideinitializer */
 /********************* Bit definition of GPF_MFPH register **********************/
+#define SYS_GPF_MFPH_PF8MFP_GPIO              (0x00UL<<SYS_GPF_MFPH_PF8MFP_Pos)  /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPF_MFPH_PF8MFP_EBI_ADR17         (0x02UL<<SYS_GPF_MFPH_PF8MFP_Pos)  /*!< EBI address/data bus bit*. \hideinitializer */
 #define SYS_GPF_MFPH_PF8MFP_SC0_RST           (0x03UL<<SYS_GPF_MFPH_PF8MFP_Pos)  /*!< SmartCard0 reset pin. \hideinitializer */
 #define SYS_GPF_MFPH_PF8MFP_I2S0_DI           (0x04UL<<SYS_GPF_MFPH_PF8MFP_Pos)  /*!< I2S0 data input. \hideinitializer */
 #define SYS_GPF_MFPH_PF8MFP_SPI0_CLK          (0x05UL<<SYS_GPF_MFPH_PF8MFP_Pos)  /*!< SPI0 serial clock pin. \hideinitializer */
 #define SYS_GPF_MFPH_PF8MFP_TAMPER2           (0x0AUL<<SYS_GPF_MFPH_PF8MFP_Pos)  /*!< TAMPER detector loop pin2. \hideinitializer */
+#define SYS_GPF_MFPH_PF9MFP_GPIO              (0x00UL<<SYS_GPF_MFPH_PF9MFP_Pos)  /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPF_MFPH_PF9MFP_EBI_ADR16         (0x02UL<<SYS_GPF_MFPH_PF9MFP_Pos)  /*!< EBI address/data bus bit*. \hideinitializer */
 #define SYS_GPF_MFPH_PF9MFP_SC0_PWR           (0x03UL<<SYS_GPF_MFPH_PF9MFP_Pos)  /*!< SmartCard0 power pin. \hideinitializer */
 #define SYS_GPF_MFPH_PF9MFP_I2S0_MCLK         (0x04UL<<SYS_GPF_MFPH_PF9MFP_Pos)  /*!< I2S0 master clock output pin. \hideinitializer */
 #define SYS_GPF_MFPH_PF9MFP_SPI0_SS           (0x05UL<<SYS_GPF_MFPH_PF9MFP_Pos)  /*!< 1st SPI0 slave select pin. \hideinitializer */
 #define SYS_GPF_MFPH_PF9MFP_TAMPER3           (0x0AUL<<SYS_GPF_MFPH_PF9MFP_Pos)  /*!< TAMPER detector loop pin3. \hideinitializer */
+#define SYS_GPF_MFPH_PF10MFP_GPIO             (0x00UL<<SYS_GPF_MFPH_PF10MFP_Pos) /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPF_MFPH_PF10MFP_EBI_ADR15        (0x02UL<<SYS_GPF_MFPH_PF10MFP_Pos) /*!< EBI address/data bus bit*. \hideinitializer */
 #define SYS_GPF_MFPH_PF10MFP_SC0_nCD          (0x03UL<<SYS_GPF_MFPH_PF10MFP_Pos) /*!< SmartCard0 card detect pin. \hideinitializer */
 #define SYS_GPF_MFPH_PF10MFP_I2S0_BCLK        (0x04UL<<SYS_GPF_MFPH_PF10MFP_Pos) /*!< I2S0 bit clock pin. \hideinitializer */
 #define SYS_GPF_MFPH_PF10MFP_SPI0_I2SMCLK     (0x05UL<<SYS_GPF_MFPH_PF10MFP_Pos) /*!< SPI0 I2S master clock output pin. \hideinitializer */
 #define SYS_GPF_MFPH_PF10MFP_TAMPER4          (0x0AUL<<SYS_GPF_MFPH_PF10MFP_Pos) /*!< TAMPER detector loop pin4. \hideinitializer */
+#define SYS_GPF_MFPH_PF11MFP_GPIO             (0x00UL<<SYS_GPF_MFPH_PF11MFP_Pos) /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPF_MFPH_PF11MFP_EBI_ADR14        (0x02UL<<SYS_GPF_MFPH_PF11MFP_Pos) /*!< EBI address/data bus bit*. \hideinitializer */
 #define SYS_GPF_MFPH_PF11MFP_SPI2_MOSI        (0x03UL<<SYS_GPF_MFPH_PF11MFP_Pos) /*!< 1st SPI2 MOSI (Master Out, Slave In) pin. \hideinitializer */
 #define SYS_GPF_MFPH_PF11MFP_TAMPER5          (0x0AUL<<SYS_GPF_MFPH_PF11MFP_Pos) /*!< TAMPER detector loop pin5. \hideinitializer */

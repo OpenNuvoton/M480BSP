@@ -447,7 +447,7 @@ extern "C"
 /**
  * @brief       Set Wake-up Timer Time-out Interval
  *
- * @param[in]   u32Interval   The de-bounce sampling cycle selection. It could be
+ * @param[in]   u32Interval   The Wake-up Timer Time-out Interval selection. It could be
  *                             - \ref CLK_PMUCTL_WKTMRIS_128
  *                             - \ref CLK_PMUCTL_WKTMRIS_256
  *                             - \ref CLK_PMUCTL_WKTMRIS_512
