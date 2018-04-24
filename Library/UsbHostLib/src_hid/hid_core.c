@@ -427,8 +427,7 @@ int32_t usbh_hid_start_int_read(HID_DEV_T *hdev, uint8_t ep_addr, HID_IR_FUNC *f
     for (i = 0; i < CONFIG_HID_DEV_MAX_PIPE; i++)
     {
         utr = hdev->utr_list[i];
-        if ((utr != NULL) && (utr->ep != NULL) &&
-                ((utr->ep->bEndpointAddress == ep_addr) || (ep_addr == 0)))
+        if ((utr != NULL) && (utr->ep != NULL) && (utr->ep->bEndpointAddress == ep_addr))
         {
             return HID_RET_XFER_IS_RUNNING;      /* transfer of this pipe is running      */
         }
@@ -567,8 +566,7 @@ int32_t usbh_hid_start_int_write(HID_DEV_T *hdev, uint8_t ep_addr, HID_IW_FUNC *
     for (i = 0; i < CONFIG_HID_DEV_MAX_PIPE; i++)
     {
         utr = hdev->utr_list[i];
-        if ((utr != NULL) && (utr->ep != NULL) &&
-                ((utr->ep->bEndpointAddress == ep_addr) || (ep_addr == 0)))
+        if ((utr != NULL) && (utr->ep != NULL) && (utr->ep->bEndpointAddress == ep_addr))
         {
             return HID_RET_XFER_IS_RUNNING;      /* transfer of this pipe is running      */
         }

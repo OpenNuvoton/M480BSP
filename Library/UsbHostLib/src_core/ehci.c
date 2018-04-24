@@ -983,7 +983,7 @@ static void scan_periodic_frame_list()
 
         if (visit_qtd(qtd))                 /* if TRUE, reclaim this qtd                  */
         {
-            /* qTD is completed, will remove it           */
+            qtd->next = qh->done_list;      /* push qTD into the done list                */
             qh->done_list = qtd;            /* move qTD to done list                      */
             qh->qtd_list = NULL;            /* qtd_list becomes empty                     */
         }
