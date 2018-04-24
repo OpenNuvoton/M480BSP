@@ -17,9 +17,9 @@ only be used in accordance with the following terms:
 
 The  software has  been licensed by SEGGER Software GmbH to Nuvoton Technology Corporation
 at the address: No. 4, Creation Rd. III, Hsinchu Science Park, Taiwan
-for the purposes  of  creating  libraries  for its 
+for the purposes  of  creating  libraries  for its
 Arm Cortex-M and  Arm9 32-bit microcontrollers, commercialized and distributed by Nuvoton Technology Corporation
-under  the terms and conditions  of  an  End  User  
+under  the terms and conditions  of  an  End  User
 License  Agreement  supplied  with  the libraries.
 Full source code is available at: www.segger.com
 
@@ -52,21 +52,21 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 #include "GUI.h"
 
 #if GUI_WINSUPPORT
-  #include "WM.h"
+#include "WM.h"
 
-  #include "CHECKBOX.h"
-  #include "FRAMEWIN.h"
-  #include "PROGBAR.h"
-  #include "TEXT.h"
-  #include "BUTTON.h"
-  #include "SLIDER.h"
-  #include "HEADER.h"
-  #include "GRAPH.h"
-  #include "ICONVIEW.h"
-  #include "LISTVIEW.h"
-  #include "TREEVIEW.h"
+#include "CHECKBOX.h"
+#include "FRAMEWIN.h"
+#include "PROGBAR.h"
+#include "TEXT.h"
+#include "BUTTON.h"
+#include "SLIDER.h"
+#include "HEADER.h"
+#include "GRAPH.h"
+#include "ICONVIEW.h"
+#include "LISTVIEW.h"
+#include "TREEVIEW.h"
 #else
-  #include <stdlib.h>  // Definition of NULL
+#include <stdlib.h>  // Definition of NULL
 #endif
 
 /*********************************************************************
@@ -113,64 +113,64 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 **********************************************************************
 */
 #ifndef   SHOW_GUIDEMO_AATEXT
-  #define SHOW_GUIDEMO_AATEXT            (0)
+#define SHOW_GUIDEMO_AATEXT            (0)
 #endif
 #ifndef   SHOW_GUIDEMO_AUTOMOTIVE
-  #define SHOW_GUIDEMO_AUTOMOTIVE        (1)
+#define SHOW_GUIDEMO_AUTOMOTIVE        (1)
 #endif
 #ifndef   SHOW_GUIDEMO_BARGRAPH
-  #define SHOW_GUIDEMO_BARGRAPH          (1)
+#define SHOW_GUIDEMO_BARGRAPH          (1)
 #endif
 #ifndef   SHOW_GUIDEMO_BITMAP
-  #define SHOW_GUIDEMO_BITMAP            (1)
+#define SHOW_GUIDEMO_BITMAP            (1)
 #endif
 #ifndef   SHOW_GUIDEMO_COLORBAR
-  #define SHOW_GUIDEMO_COLORBAR          (1)
+#define SHOW_GUIDEMO_COLORBAR          (1)
 #endif
 #ifndef   SHOW_GUIDEMO_CURSOR
-  #define SHOW_GUIDEMO_CURSOR            (0)
+#define SHOW_GUIDEMO_CURSOR            (0)
 #endif
 #ifndef   SHOW_GUIDEMO_FADING
-  #define SHOW_GUIDEMO_FADING            (0)
+#define SHOW_GUIDEMO_FADING            (0)
 #endif
 #ifndef   SHOW_GUIDEMO_GRAPH
-  #define SHOW_GUIDEMO_GRAPH             (1)
+#define SHOW_GUIDEMO_GRAPH             (1)
 #endif
 #ifndef   SHOW_GUIDEMO_ICONVIEW
-  #define SHOW_GUIDEMO_ICONVIEW          (0)
+#define SHOW_GUIDEMO_ICONVIEW          (0)
 #endif
 #ifndef   SHOW_GUIDEMO_IMAGEFLOW
-  #define SHOW_GUIDEMO_IMAGEFLOW         (0)
+#define SHOW_GUIDEMO_IMAGEFLOW         (0)
 #endif
 #ifndef   SHOW_GUIDEMO_LISTVIEW
-  #define SHOW_GUIDEMO_LISTVIEW          (1)
+#define SHOW_GUIDEMO_LISTVIEW          (1)
 #endif
 #ifndef   SHOW_GUIDEMO_RADIALMENU
-  #define SHOW_GUIDEMO_RADIALMENU        (0)
+#define SHOW_GUIDEMO_RADIALMENU        (0)
 #endif
 #ifndef   SHOW_GUIDEMO_SKINNING
-  #define SHOW_GUIDEMO_SKINNING          (0)
+#define SHOW_GUIDEMO_SKINNING          (0)
 #endif
 #ifndef   SHOW_GUIDEMO_SPEED
-  #define SHOW_GUIDEMO_SPEED             (1)
+#define SHOW_GUIDEMO_SPEED             (1)
 #endif
 #ifndef   SHOW_GUIDEMO_SPEEDOMETER
-  #define SHOW_GUIDEMO_SPEEDOMETER       (0)
+#define SHOW_GUIDEMO_SPEEDOMETER       (0)
 #endif
 #ifndef   SHOW_GUIDEMO_TRANSPARENTDIALOG
-  #define SHOW_GUIDEMO_TRANSPARENTDIALOG (0)
+#define SHOW_GUIDEMO_TRANSPARENTDIALOG (0)
 #endif
 #ifndef   SHOW_GUIDEMO_TREEVIEW
-  #define SHOW_GUIDEMO_TREEVIEW          (1)
+#define SHOW_GUIDEMO_TREEVIEW          (1)
 #endif
 #ifndef   SHOW_GUIDEMO_VSCREEN
-  #define SHOW_GUIDEMO_VSCREEN           (0)
+#define SHOW_GUIDEMO_VSCREEN           (0)
 #endif
 #ifndef   SHOW_GUIDEMO_WASHINGMACHINE
-  #define SHOW_GUIDEMO_WASHINGMACHINE    (0)
+#define SHOW_GUIDEMO_WASHINGMACHINE    (0)
 #endif
 #ifndef   SHOW_GUIDEMO_ZOOMANDROTATE
-  #define SHOW_GUIDEMO_ZOOMANDROTATE     (0)
+#define SHOW_GUIDEMO_ZOOMANDROTATE     (0)
 #endif
 
 /*********************************************************************
@@ -180,53 +180,54 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 **********************************************************************
 */
 #ifndef   GUIDEMO_SHOW_SPRITES
-  #define GUIDEMO_SHOW_SPRITES    (0)
+#define GUIDEMO_SHOW_SPRITES    (0)
 #endif
 #ifndef   GUIDEMO_USE_VNC
-  #define GUIDEMO_USE_VNC         (0)
+#define GUIDEMO_USE_VNC         (0)
 #endif
 #ifndef   GUIDEMO_USE_AUTO_BK
-  #define GUIDEMO_USE_AUTO_BK     (0)
+#define GUIDEMO_USE_AUTO_BK     (0)
 #endif
 #ifndef   GUIDEMO_SUPPORT_TOUCH
-  #define GUIDEMO_SUPPORT_TOUCH   (0)
+#define GUIDEMO_SUPPORT_TOUCH   (0)
 #endif
 #ifndef   GUIDEMO_SUPPORT_CURSOR
-  #define GUIDEMO_SUPPORT_CURSOR  (GUI_SUPPORT_CURSOR && GUI_SUPPORT_TOUCH)
+#define GUIDEMO_SUPPORT_CURSOR  (GUI_SUPPORT_CURSOR && GUI_SUPPORT_TOUCH)
 #endif
 
 #ifndef   GUIDEMO_CF_SHOW_SPRITES
-  #define GUIDEMO_CF_SHOW_SPRITES   (GUIDEMO_SHOW_SPRITES                   <<  0)
+#define GUIDEMO_CF_SHOW_SPRITES   (GUIDEMO_SHOW_SPRITES                   <<  0)
 #endif
 #ifndef   GUIDEMO_CF_USE_VNC
-  #define GUIDEMO_CF_USE_VNC        (GUIDEMO_USE_VNC                        <<  1)
+#define GUIDEMO_CF_USE_VNC        (GUIDEMO_USE_VNC                        <<  1)
 #endif
 #ifndef   GUIDEMO_CF_USE_AUTO_BK
-  #define GUIDEMO_CF_USE_AUTO_BK    (GUIDEMO_USE_AUTO_BK                    <<  2)
+#define GUIDEMO_CF_USE_AUTO_BK    (GUIDEMO_USE_AUTO_BK                    <<  2)
 #endif
 #ifndef   GUIDEMO_CF_SUPPORT_TOUCH
-  #define GUIDEMO_CF_SUPPORT_TOUCH  (GUI_WINSUPPORT ? GUIDEMO_SUPPORT_TOUCH <<  3 : 0)
+#define GUIDEMO_CF_SUPPORT_TOUCH  (GUI_WINSUPPORT ? GUIDEMO_SUPPORT_TOUCH <<  3 : 0)
 #endif
 
 /*********************************************************************
 *
 *       GUIDEMO_CONFIG
 */
-typedef struct GUIDEMO_CONFIG {
-  void (* * apFunc)(void);
-  int       NumDemos;
-  U16       Flags;
-  #if GUIDEMO_USE_VNC
+typedef struct GUIDEMO_CONFIG
+{
+    void (* * apFunc)(void);
+    int       NumDemos;
+    U16       Flags;
+#if GUIDEMO_USE_VNC
     int  (* pGUI_VNC_X_StartServer)(int LayerIndex, int ServerIndex);
-  #endif
+#endif
 } GUIDEMO_CONFIG;
 
 #if (GUI_WINSUPPORT == 0)
-  #define GUIDEMO_NotifyStartNext  GUIDEMO_ClearHalt
-  #define GUIDEMO_Delay            GUI_Delay
+#define GUIDEMO_NotifyStartNext  GUIDEMO_ClearHalt
+#define GUIDEMO_Delay            GUI_Delay
 #else
-  void    GUIDEMO_NotifyStartNext  (void);
-  void    GUIDEMO_Delay            (int Time);
+void    GUIDEMO_NotifyStartNext  (void);
+void    GUIDEMO_Delay            (int Time);
 #endif
 
 /*********************************************************************
@@ -319,7 +320,7 @@ extern GUI_CONST_STORAGE GUI_BITMAP bmDolphin_13;
 extern GUI_CONST_STORAGE GUI_BITMAP bmDolphin_14;
 
 #if defined(__cplusplus)
-  }
+}
 #endif
 
 #endif // Avoid multiple inclusion

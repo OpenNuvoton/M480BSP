@@ -34,10 +34,13 @@
 DSTATUS disk_initialize (BYTE pdrv)       /* Physical drive number (0..) */
 {
 
-    if (pdrv == 0) {
+    if (pdrv == 0)
+    {
         if (SDH_GET_CARD_CAPACITY(SDH0) == 0)
             return STA_NOINIT;
-    } else if (pdrv == 1) {
+    }
+    else if (pdrv == 1)
+    {
         if (SDH_GET_CARD_CAPACITY(SDH1) == 0)
             return STA_NOINIT;
     }
@@ -51,10 +54,13 @@ DSTATUS disk_initialize (BYTE pdrv)       /* Physical drive number (0..) */
 
 DSTATUS disk_status (BYTE pdrv)       /* Physical drive number (0..) */
 {
-    if (pdrv == 0) {
+    if (pdrv == 0)
+    {
         if (SDH_GET_CARD_CAPACITY(SDH0) == 0)
             return STA_NOINIT;
-    } else if (pdrv == 1) {
+    }
+    else if (pdrv == 1)
+    {
         if (SDH_GET_CARD_CAPACITY(SDH1) == 0)
             return STA_NOINIT;
     }
@@ -128,7 +134,8 @@ DRESULT disk_ioctl (
 
     DRESULT res = RES_OK;
 
-    switch(cmd) {
+    switch(cmd)
+    {
     case CTRL_SYNC:
         break;
     case GET_SECTOR_COUNT:

@@ -17,9 +17,9 @@ only be used in accordance with the following terms:
 
 The  software has  been licensed by SEGGER Software GmbH to Nuvoton Technology Corporation
 at the address: No. 4, Creation Rd. III, Hsinchu Science Park, Taiwan
-for the purposes  of  creating  libraries  for its 
+for the purposes  of  creating  libraries  for its
 Arm Cortex-M and  Arm9 32-bit microcontrollers, commercialized and distributed by Nuvoton Technology Corporation
-under  the terms and conditions  of  an  End  User  
+under  the terms and conditions  of  an  End  User
 License  Agreement  supplied  with  the libraries.
 Full source code is available at: www.segger.com
 
@@ -48,15 +48,16 @@ Purpose     : GUIDEMO initialization
 *
 *       MainTask
 */
-void MainTask(void) {
-  #if GUI_WINSUPPORT
+void MainTask(void)
+{
+#if GUI_WINSUPPORT
     WM_SetCreateFlags(WM_CF_MEMDEV);
-  #endif
-  GUI_Init();
-  #if GUI_WINSUPPORT
+#endif
+    GUI_Init();
+#if GUI_WINSUPPORT
     WM_MULTIBUF_Enable(1);
-  #endif
-  GUIDEMO_Main();
+#endif
+    GUIDEMO_Main();
 }
 
 /*************************** End of file ****************************/

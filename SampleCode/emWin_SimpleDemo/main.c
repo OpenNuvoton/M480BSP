@@ -231,7 +231,7 @@ void MainTask(void)
 {
     WM_HWIN hWin;
     char     acVersion[40] = "Framewin: Version of emWin: ";
-    
+
     printf("Main Task -> \n");
     //GUI_Init();
     //GUI_SetDrawMode(GUI_DRAWMODE_NORMAL);

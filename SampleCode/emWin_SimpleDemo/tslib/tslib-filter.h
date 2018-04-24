@@ -20,28 +20,31 @@ extern "C" {
 struct tslib_module_info;
 struct tsdev;
 
-struct tslib_vars {
-	const char *name;
-	void *data;
-	int (*fn)(struct tslib_module_info *inf, char *str, void *data);
+struct tslib_vars
+{
+    const char *name;
+    void *data;
+    int (*fn)(struct tslib_module_info *inf, char *str, void *data);
 };
 
-struct tslib_ops {
-	int (*read)(struct tslib_module_info *inf, struct ts_sample *samp, int nr);
-	int (*fini)(struct tslib_module_info *inf);
+struct tslib_ops
+{
+    int (*read)(struct tslib_module_info *inf, struct ts_sample *samp, int nr);
+    int (*fini)(struct tslib_module_info *inf);
 };
 
-struct tslib_module_info {
-	struct tsdev *dev;
-	struct tslib_module_info *next;	/* next module in chain	*/
-	const struct tslib_ops *ops;
-	void *handle;			/* dl handle		*/
+struct tslib_module_info
+{
+    struct tsdev *dev;
+    struct tslib_module_info *next; /* next module in chain */
+    const struct tslib_ops *ops;
+    void *handle;           /* dl handle        */
 };
 
 #if 0
 TSAPI extern int tslib_parse_vars(struct tslib_module_info *,
-			    const struct tslib_vars *, int,
-			    const char *);
+                                  const struct tslib_vars *, int,
+                                  const char *);
 #endif
 
 #ifdef __cplusplus

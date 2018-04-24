@@ -19,7 +19,7 @@
  * to draw in exclusive-or mode (that is, drawing the same second time
  * in the same place will remove the element leaving the background intact).
  */
-#define XORMODE	0x80000000
+#define XORMODE 0x80000000
 
 extern unsigned int xres, yres;
 

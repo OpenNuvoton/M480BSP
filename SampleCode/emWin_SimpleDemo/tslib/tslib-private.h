@@ -18,12 +18,13 @@ extern "C" {
 #include "tslib.h"
 #include "tslib-filter.h"
 
-struct tsdev {
-	int fd;
-	struct tslib_module_info *list;
-	struct tslib_module_info *list_raw; /* points to position in 'list' where raw reads
-					       come from.  default is the position of the
-					       ts_read_raw module. */
+struct tsdev
+{
+    int fd;
+    struct tslib_module_info *list;
+    struct tslib_module_info *list_raw; /* points to position in 'list' where raw reads
+                           come from.  default is the position of the
+                           ts_read_raw module. */
 };
 
 int __ts_attach(struct tsdev *ts, struct tslib_module_info *info);

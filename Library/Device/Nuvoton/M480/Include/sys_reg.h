@@ -3237,6 +3237,235 @@ typedef struct
 
 /**@}*/ /* SYS_CONST */
 /**@}*/ /* end of SYS register group */
+
+/**
+    @addtogroup NMI NMI Controller (NMI)
+    Memory Mapped Structure for NMI Controller
+@{ */
+
+typedef struct
+{
+
+
+    /**
+     * @var NMI_T::NMIEN
+     * Offset: 0x00  NMI Source Interrupt Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |BODOUT    |BOD NMI Source Enable (Write Protect)
+     * |        |          |0 = BOD NMI source Disabled.
+     * |        |          |1 = BOD NMI source Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[1]     |IRC_INT   |IRC TRIM NMI Source Enable (Write Protect)
+     * |        |          |0 = IRC TRIM NMI source Disabled.
+     * |        |          |1 = IRC TRIM NMI source Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[2]     |PWRWU_INT |Power-down Mode Wake-up NMI Source Enable (Write Protect)
+     * |        |          |0 = Power-down mode wake-up NMI source Disabled.
+     * |        |          |1 = Power-down mode wake-up NMI source Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[3]     |SRAM_PERR |SRAM Parity Check NMI Source Enable (Write Protect)
+     * |        |          |0 = SRAM parity check error NMI source Disabled.
+     * |        |          |1 = SRAM parity check error NMI source Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[4]     |CLKFAIL   |Clock Fail Detected and IRC Auto Trim Interrupt NMI Source Enable (Write Protect)
+     * |        |          |0 = Clock fail detected and IRC Auto Trim interrupt NMI source Disabled.
+     * |        |          |1 = Clock fail detected and IRC Auto Trim interrupt NMI source Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[6]     |RTC_INT   |RTC NMI Source Enable (Write Protect)
+     * |        |          |0 = RTC NMI source Disabled.
+     * |        |          |1 = RTC NMI source Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[7]     |TAMPER_INT|TAMPER_INT NMI Source Enable (Write Protect)
+     * |        |          |0 = Backup register tamper detected NMI source Disabled.
+     * |        |          |1 = Backup register tamper detected NMI source Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[8]     |EINT0     |External Interrupt From PA.6 or PB.5 Pin NMI Source Enable (Write Protect)
+     * |        |          |0 = External interrupt from PA.6 or PB.5 pin NMI source Disabled.
+     * |        |          |1 = External interrupt from PA.6 or PB.5 pin NMI source Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[9]     |EINT1     |External Interrupt From PA.7, PB.4 or PD.15 Pin NMI Source Enable (Write Protect)
+     * |        |          |0 = External interrupt from PA.7, PB.4 or PD.15 pin NMI source Disabled.
+     * |        |          |1 = External interrupt from PA.7, PB.4 or PD.15 pin NMI source Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[10]    |EINT2     |External Interrupt From PB.3 or PC.6 Pin NMI Source Enable (Write Protect)
+     * |        |          |0 = External interrupt from PB.3 or PC.6 pin NMI source Disabled.
+     * |        |          |1 = External interrupt from PB.3 or PC.6 pin NMI source Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[11]    |EINT3     |External Interrupt From PB.2 or PC.7 Pin NMI Source Enable (Write Protect)
+     * |        |          |0 = External interrupt from PB.2 or PC.7 pin NMI source Disabled.
+     * |        |          |1 = External interrupt from PB.2 or PC.7 pin NMI source Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[12]    |EINT4     |External Interrupt From PA.8, PB.6 or PF.15 Pin NMI Source Enable (Write Protect)
+     * |        |          |0 = External interrupt from PA.8, PB.6 or PF.15 pin NMI source Disabled.
+     * |        |          |1 = External interrupt from PA.8, PB.6 or PF.15 pin NMI source Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[13]    |EINT5     |External Interrupt From PB.7 or PF.14 Pin NMI Source Enable (Write Protect)
+     * |        |          |0 = External interrupt from PB.7 or PF.14 pin NMI source Disabled.
+     * |        |          |1 = External interrupt from PB.7 or PF.14 pin NMI source Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[14]    |UART0_INT |UART0 NMI Source Enable (Write Protect)
+     * |        |          |0 = UART0 NMI source Disabled.
+     * |        |          |1 = UART0 NMI source Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[15]    |UART1_INT |UART1 NMI Source Enable (Write Protect)
+     * |        |          |0 = UART1 NMI source Disabled.
+     * |        |          |1 = UART1 NMI source Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * @var NMI_T::NMISTS
+     * Offset: 0x04  NMI Source Interrupt Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |BODOUT    |BOD Interrupt Flag (Read Only)
+     * |        |          |0 = BOD interrupt is deasserted.
+     * |        |          |1 = BOD interrupt is asserted.
+     * |[1]     |IRC_INT   |IRC TRIM Interrupt Flag (Read Only)
+     * |        |          |0 = HIRC TRIM interrupt is deasserted.
+     * |        |          |1 = HIRC TRIM interrupt is asserted.
+     * |[2]     |PWRWU_INT |Power-down Mode Wake-up Interrupt Flag (Read Only)
+     * |        |          |0 = Power-down mode wake-up interrupt is deasserted.
+     * |        |          |1 = Power-down mode wake-up interrupt is asserted.
+     * |[3]     |SRAM_PERR |SRAM ParityCheck Error Interrupt Flag (Read Only)
+     * |        |          |0 = SRAM parity check error interrupt is deasserted.
+     * |        |          |1 = SRAM parity check error interrupt is asserted.
+     * |[4]     |CLKFAIL   |Clock Fail Detected or IRC Auto Trim Interrupt Flag (Read Only)
+     * |        |          |0 = Clock fail detected or IRC Auto Trim interrupt is deasserted.
+     * |        |          |1 = Clock fail detected or IRC Auto Trim interrupt is asserted.
+     * |[6]     |RTC_INT   |RTC Interrupt Flag (Read Only)
+     * |        |          |0 = RTC interrupt is deasserted.
+     * |        |          |1 = RTC interrupt is asserted.
+     * |[7]     |TAMPER_INT|TAMPER_INT Interrupt Flag (Read Only)
+     * |        |          |0 = Backup register tamper detected interrupt is deasserted.
+     * |        |          |1 = Backup register tamper detected interrupt is asserted.
+     * |[8]     |EINT0     |External Interrupt From PA.6 or PB.5 Pin Interrupt Flag (Read Only)
+     * |        |          |0 = External Interrupt from PA.6 or PB.5 interrupt is deasserted.
+     * |        |          |1 = External Interrupt from PA.6 or PB.5 interrupt is asserted.
+     * |[9]     |EINT1     |External Interrupt From PA.7, PB.4 or PD.15 Pin Interrupt Flag (Read Only)
+     * |        |          |0 = External Interrupt from PA.7, PB.4 or PD.15 interrupt is deasserted.
+     * |        |          |1 = External Interrupt from PA.7, PB.4 or PD.15 interrupt is asserted.
+     * |[10]    |EINT2     |External Interrupt From PB.3 or PC.6 Pin Interrupt Flag (Read Only)
+     * |        |          |0 = External Interrupt from PB.3 or PC.6 interrupt is deasserted.
+     * |        |          |1 = External Interrupt from PB.3 or PC.6 interrupt is asserted.
+     * |[11]    |EINT3     |External Interrupt From PB.2 or PC.7 Pin Interrupt Flag (Read Only)
+     * |        |          |0 = External Interrupt from PB.2 or PC.7 interrupt is deasserted.
+     * |        |          |1 = External Interrupt from PB.2 or PC.7 interrupt is asserted.
+     * |[12]    |EINT4     |External Interrupt From PA.8, PB.6 or PF.15 Pin Interrupt Flag (Read Only)
+     * |        |          |0 = External Interrupt from PA.8, PB.6 or PF.15 interrupt is deasserted.
+     * |        |          |1 = External Interrupt from PA.8, PB.6 or PF.15 interrupt is asserted.
+     * |[13]    |EINT5     |External Interrupt From PB.7 or PF.14 Pin Interrupt Flag (Read Only)
+     * |        |          |0 = External Interrupt from PB.7 or PF.14 interrupt is deasserted.
+     * |        |          |1 = External Interrupt from PB.7 or PF.14 interrupt is asserted.
+     * |[14]    |UART0_INT |UART0 Interrupt Flag (Read Only)
+     * |        |          |0 = UART1 interrupt is deasserted.
+     * |        |          |1 = UART1 interrupt is asserted.
+     * |[15]    |UART1_INT |UART1 Interrupt Flag (Read Only)
+     * |        |          |0 = UART1 interrupt is deasserted.
+     * |        |          |1 = UART1 interrupt is asserted.
+     */
+    __IO uint32_t NMIEN;                 /*!< [0x0000] NMI Source Interrupt Enable Register                             */
+    __I  uint32_t NMISTS;                /*!< [0x0004] NMI Source Interrupt Status Register                             */
+
+} NMI_T;
+
+/**
+    @addtogroup NMI_CONST NMI Bit Field Definition
+    Constant Definitions for NMI Controller
+@{ */
+
+#define NMI_NMIEN_BODOUT_Pos             (0)                                               /*!< NMI_T::NMIEN: BODOUT Position          */
+#define NMI_NMIEN_BODOUT_Msk             (0x1ul << NMI_NMIEN_BODOUT_Pos)                   /*!< NMI_T::NMIEN: BODOUT Mask              */
+
+#define NMI_NMIEN_IRC_INT_Pos            (1)                                               /*!< NMI_T::NMIEN: IRC_INT Position         */
+#define NMI_NMIEN_IRC_INT_Msk            (0x1ul << NMI_NMIEN_IRC_INT_Pos)                  /*!< NMI_T::NMIEN: IRC_INT Mask             */
+
+#define NMI_NMIEN_PWRWU_INT_Pos          (2)                                               /*!< NMI_T::NMIEN: PWRWU_INT Position       */
+#define NMI_NMIEN_PWRWU_INT_Msk          (0x1ul << NMI_NMIEN_PWRWU_INT_Pos)                /*!< NMI_T::NMIEN: PWRWU_INT Mask           */
+
+#define NMI_NMIEN_SRAM_PERR_Pos          (3)                                               /*!< NMI_T::NMIEN: SRAM_PERR Position       */
+#define NMI_NMIEN_SRAM_PERR_Msk          (0x1ul << NMI_NMIEN_SRAM_PERR_Pos)                /*!< NMI_T::NMIEN: SRAM_PERR Mask           */
+
+#define NMI_NMIEN_CLKFAIL_Pos            (4)                                               /*!< NMI_T::NMIEN: CLKFAIL Position         */
+#define NMI_NMIEN_CLKFAIL_Msk            (0x1ul << NMI_NMIEN_CLKFAIL_Pos)                  /*!< NMI_T::NMIEN: CLKFAIL Mask             */
+
+#define NMI_NMIEN_RTC_INT_Pos            (6)                                               /*!< NMI_T::NMIEN: RTC_INT Position         */
+#define NMI_NMIEN_RTC_INT_Msk            (0x1ul << NMI_NMIEN_RTC_INT_Pos)                  /*!< NMI_T::NMIEN: RTC_INT Mask             */
+
+#define NMI_NMIEN_TAMPER_INT_Pos         (7)                                               /*!< NMI_T::NMIEN: TAMPER_INT Position      */
+#define NMI_NMIEN_TAMPER_INT_Msk         (0x1ul << NMI_NMIEN_TAMPER_INT_Pos)               /*!< NMI_T::NMIEN: TAMPER_INT Mask          */
+
+#define NMI_NMIEN_EINT0_Pos              (8)                                               /*!< NMI_T::NMIEN: EINT0 Position           */
+#define NMI_NMIEN_EINT0_Msk              (0x1ul << NMI_NMIEN_EINT0_Pos)                    /*!< NMI_T::NMIEN: EINT0 Mask               */
+
+#define NMI_NMIEN_EINT1_Pos              (9)                                               /*!< NMI_T::NMIEN: EINT1 Position           */
+#define NMI_NMIEN_EINT1_Msk              (0x1ul << NMI_NMIEN_EINT1_Pos)                    /*!< NMI_T::NMIEN: EINT1 Mask               */
+
+#define NMI_NMIEN_EINT2_Pos              (10)                                              /*!< NMI_T::NMIEN: EINT2 Position           */
+#define NMI_NMIEN_EINT2_Msk              (0x1ul << NMI_NMIEN_EINT2_Pos)                    /*!< NMI_T::NMIEN: EINT2 Mask               */
+
+#define NMI_NMIEN_EINT3_Pos              (11)                                              /*!< NMI_T::NMIEN: EINT3 Position           */
+#define NMI_NMIEN_EINT3_Msk              (0x1ul << NMI_NMIEN_EINT3_Pos)                    /*!< NMI_T::NMIEN: EINT3 Mask               */
+
+#define NMI_NMIEN_EINT4_Pos              (12)                                              /*!< NMI_T::NMIEN: EINT4 Position           */
+#define NMI_NMIEN_EINT4_Msk              (0x1ul << NMI_NMIEN_EINT4_Pos)                    /*!< NMI_T::NMIEN: EINT4 Mask               */
+
+#define NMI_NMIEN_EINT5_Pos              (13)                                              /*!< NMI_T::NMIEN: EINT5 Position           */
+#define NMI_NMIEN_EINT5_Msk              (0x1ul << NMI_NMIEN_EINT5_Pos)                    /*!< NMI_T::NMIEN: EINT5 Mask               */
+
+#define NMI_NMIEN_UART0_INT_Pos          (14)                                              /*!< NMI_T::NMIEN: UART0_INT Position       */
+#define NMI_NMIEN_UART0_INT_Msk          (0x1ul << NMI_NMIEN_UART0_INT_Pos)                /*!< NMI_T::NMIEN: UART0_INT Mask           */
+
+#define NMI_NMIEN_UART1_INT_Pos          (15)                                              /*!< NMI_T::NMIEN: UART1_INT Position       */
+#define NMI_NMIEN_UART1_INT_Msk          (0x1ul << NMI_NMIEN_UART1_INT_Pos)                /*!< NMI_T::NMIEN: UART1_INT Mask           */
+
+#define NMI_NMISTS_BODOUT_Pos            (0)                                               /*!< NMI_T::NMISTS: BODOUT Position         */
+#define NMI_NMISTS_BODOUT_Msk            (0x1ul << NMI_NMISTS_BODOUT_Pos)                  /*!< NMI_T::NMISTS: BODOUT Mask             */
+
+#define NMI_NMISTS_IRC_INT_Pos           (1)                                               /*!< NMI_T::NMISTS: IRC_INT Position        */
+#define NMI_NMISTS_IRC_INT_Msk           (0x1ul << NMI_NMISTS_IRC_INT_Pos)                 /*!< NMI_T::NMISTS: IRC_INT Mask            */
+
+#define NMI_NMISTS_PWRWU_INT_Pos         (2)                                               /*!< NMI_T::NMISTS: PWRWU_INT Position      */
+#define NMI_NMISTS_PWRWU_INT_Msk         (0x1ul << NMI_NMISTS_PWRWU_INT_Pos)               /*!< NMI_T::NMISTS: PWRWU_INT Mask          */
+
+#define NMI_NMISTS_SRAM_PERR_Pos         (3)                                               /*!< NMI_T::NMISTS: SRAM_PERR Position      */
+#define NMI_NMISTS_SRAM_PERR_Msk         (0x1ul << NMI_NMISTS_SRAM_PERR_Pos)               /*!< NMI_T::NMISTS: SRAM_PERR Mask          */
+
+#define NMI_NMISTS_CLKFAIL_Pos           (4)                                               /*!< NMI_T::NMISTS: CLKFAIL Position        */
+#define NMI_NMISTS_CLKFAIL_Msk           (0x1ul << NMI_NMISTS_CLKFAIL_Pos)                 /*!< NMI_T::NMISTS: CLKFAIL Mask            */
+
+#define NMI_NMISTS_RTC_INT_Pos           (6)                                               /*!< NMI_T::NMISTS: RTC_INT Position        */
+#define NMI_NMISTS_RTC_INT_Msk           (0x1ul << NMI_NMISTS_RTC_INT_Pos)                 /*!< NMI_T::NMISTS: RTC_INT Mask            */
+
+#define NMI_NMISTS_TAMPER_INT_Pos        (7)                                               /*!< NMI_T::NMISTS: TAMPER_INT Position     */
+#define NMI_NMISTS_TAMPER_INT_Msk        (0x1ul << NMI_NMISTS_TAMPER_INT_Pos)              /*!< NMI_T::NMISTS: TAMPER_INT Mask         */
+
+#define NMI_NMISTS_EINT0_Pos             (8)                                               /*!< NMI_T::NMISTS: EINT0 Position          */
+#define NMI_NMISTS_EINT0_Msk             (0x1ul << NMI_NMISTS_EINT0_Pos)                   /*!< NMI_T::NMISTS: EINT0 Mask              */
+
+#define NMI_NMISTS_EINT1_Pos             (9)                                               /*!< NMI_T::NMISTS: EINT1 Position          */
+#define NMI_NMISTS_EINT1_Msk             (0x1ul << NMI_NMISTS_EINT1_Pos)                   /*!< NMI_T::NMISTS: EINT1 Mask              */
+
+#define NMI_NMISTS_EINT2_Pos             (10)                                              /*!< NMI_T::NMISTS: EINT2 Position          */
+#define NMI_NMISTS_EINT2_Msk             (0x1ul << NMI_NMISTS_EINT2_Pos)                   /*!< NMI_T::NMISTS: EINT2 Mask              */
+
+#define NMI_NMISTS_EINT3_Pos             (11)                                              /*!< NMI_T::NMISTS: EINT3 Position          */
+#define NMI_NMISTS_EINT3_Msk             (0x1ul << NMI_NMISTS_EINT3_Pos)                   /*!< NMI_T::NMISTS: EINT3 Mask              */
+
+#define NMI_NMISTS_EINT4_Pos             (12)                                              /*!< NMI_T::NMISTS: EINT4 Position          */
+#define NMI_NMISTS_EINT4_Msk             (0x1ul << NMI_NMISTS_EINT4_Pos)                   /*!< NMI_T::NMISTS: EINT4 Mask              */
+
+#define NMI_NMISTS_EINT5_Pos             (13)                                              /*!< NMI_T::NMISTS: EINT5 Position          */
+#define NMI_NMISTS_EINT5_Msk             (0x1ul << NMI_NMISTS_EINT5_Pos)                   /*!< NMI_T::NMISTS: EINT5 Mask              */
+
+#define NMI_NMISTS_UART0_INT_Pos         (14)                                              /*!< NMI_T::NMISTS: UART0_INT Position      */
+#define NMI_NMISTS_UART0_INT_Msk         (0x1ul << NMI_NMISTS_UART0_INT_Pos)               /*!< NMI_T::NMISTS: UART0_INT Mask          */
+
+#define NMI_NMISTS_UART1_INT_Pos         (15)                                              /*!< NMI_T::NMISTS: UART1_INT Position      */
+#define NMI_NMISTS_UART1_INT_Msk         (0x1ul << NMI_NMISTS_UART1_INT_Pos)               /*!< NMI_T::NMISTS: UART1_INT Mask          */
+
+/**@}*/ /* NMI_CONST */
+/**@}*/ /* end of NMI register group */
 /**@}*/ /* end of REGISTER group */
 
 #if defined ( __CC_ARM   )

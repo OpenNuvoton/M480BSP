@@ -18,33 +18,34 @@ extern "C" {
 //#include <sys/time.h>
 
 #ifdef WIN32
-  #define TSIMPORT __declspec(dllimport)
-  #define TSEXPORT __declspec(dllexport)
-  #define TSLOCAL
+#define TSIMPORT __declspec(dllimport)
+#define TSEXPORT __declspec(dllexport)
+#define TSLOCAL
 #else
-  #define TSIMPORT
-  #ifdef GCC_HASCLASSVISIBILITY
-    #define TSEXPORT __attribute__ ((visibility("default")))
-    #define TSLOCAL __attribute__ ((visibility("hidden")))
-  #else
-    #define TSEXPORT
-    #define TSLOCAL
-  #endif
+#define TSIMPORT
+#ifdef GCC_HASCLASSVISIBILITY
+#define TSEXPORT __attribute__ ((visibility("default")))
+#define TSLOCAL __attribute__ ((visibility("hidden")))
+#else
+#define TSEXPORT
+#define TSLOCAL
+#endif
 #endif
 
 #ifdef TSLIB_INTERNAL
-  #define TSAPI TSEXPORT
+#define TSAPI TSEXPORT
 #else
-  #define TSAPI TSIMPORT
+#define TSAPI TSIMPORT
 #endif // TSLIB_INTERNAL
 
 struct tsdev;
 
-struct ts_sample {
-	int		x;
-	int		y;
-	unsigned int	pressure;
-//	struct timeval	tv;
+struct ts_sample
+{
+    int     x;
+    int     y;
+    unsigned int    pressure;
+//  struct timeval  tv;
 };
 
 /*

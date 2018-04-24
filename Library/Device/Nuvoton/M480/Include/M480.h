@@ -257,6 +257,7 @@ IRQn_Type;
 /*!< AHB peripherals */
 #define SYS_BASE               (AHBPERIPH_BASE + 0x00000UL)
 #define CLK_BASE               (AHBPERIPH_BASE + 0x00200UL)
+#define NMI_BASE               (AHBPERIPH_BASE + 0x00300UL)
 #define GPIOA_BASE             (AHBPERIPH_BASE + 0x04000UL)
 #define GPIOB_BASE             (AHBPERIPH_BASE + 0x04040UL)
 #define GPIOC_BASE             (AHBPERIPH_BASE + 0x04080UL)
@@ -345,6 +346,7 @@ IRQn_Type;
 
 #define SYS                  ((SYS_T *)   SYS_BASE)
 #define CLK                  ((CLK_T *)   CLK_BASE)
+#define NMI                  ((NMI_T *)   NMI_BASE)
 #define PA                   ((GPIO_T *)  GPIOA_BASE)
 #define PB                   ((GPIO_T *)  GPIOB_BASE)
 #define PC                   ((GPIO_T *)  GPIOC_BASE)

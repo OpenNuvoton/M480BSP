@@ -13,27 +13,27 @@ int Init_TouchPanel(void)
 {
     /* Enable peripheral clock */
     CLK_EnableModuleClock(EADC_MODULE);
-    
+
     /* Peripheral clock source */
     CLK_SetModuleClock(EADC_MODULE, 0, CLK_CLKDIV0_EADC(8));
-    
+
     /* Init ADC for TP */
     /* Set input mode as single-end and enable the A/D converter */
     EADC_Open(EADC, EADC_CTL_DIFFEN_SINGLE_END);
-    
-    return 1;		
+
+    return 1;
 }
 
 static volatile    uint32_t    g_u32AdcIntFlag_TP;
 
 /*-----------------------------------------------*/
-// ADC01 ISR 
-// 
+// ADC01 ISR
+//
 /*-----------------------------------------------*/
 void ADC01_IRQHandler(void)
 {
     /* Clear the A/D ADINT1 interrupt flag */
-    EADC_CLR_INT_FLAG(EADC, EADC_STATUS2_ADIF1_Msk);      
+    EADC_CLR_INT_FLAG(EADC, EADC_STATUS2_ADIF1_Msk);
 
     g_u32AdcIntFlag_TP = 1;
 
@@ -41,7 +41,7 @@ void ADC01_IRQHandler(void)
 
 /*-----------------------------------------------*/
 // Get X Position from Touch Panel (ADC input)
-// 
+//
 /*-----------------------------------------------*/
 uint16_t Get_TP_X(void)
 {
@@ -53,14 +53,14 @@ uint16_t Get_TP_X(void)
     GPIO_SetMode(PH, BIT4, GPIO_MODE_OUTPUT);   // XL
     PB9 = 1;
     PH4 = 0;
-    
+
     /* Configure the GPB8 ADC analog input pins.  */
     SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB8MFP_Msk | SYS_GPB_MFPH_PB9MFP_Msk);
     SYS->GPB_MFPH |= SYS_GPB_MFPH_PB8MFP_EADC0_CH8;
-        
+
     /* Disable the GPB8 digital input path to avoid the leakage current. */
     GPIO_DISABLE_DIGITAL_PATH(PB, BIT8);
-    
+
     /* Configure the sample module 1 for analog input channel 8 and software trigger source.*/
     EADC_ConfigSampleModule(EADC, 1, EADC_SOFTWARE_TRIGGER, 8); // YU
 
@@ -86,7 +86,7 @@ uint16_t Get_TP_X(void)
 
 /*-----------------------------------------------*/
 // Get Y Position from Touch Panel (ADC input)
-// 
+//
 /*-----------------------------------------------*/
 uint16_t Get_TP_Y(void)
 {
@@ -98,14 +98,14 @@ uint16_t Get_TP_Y(void)
     GPIO_SetMode(PH, BIT4, GPIO_MODE_INPUT);    // XL
     PB8 = 1;
     PH5 = 0;
-    
+
     /* Configure the GPB9 ADC analog input pins.  */
     SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB8MFP_Msk | SYS_GPB_MFPH_PB9MFP_Msk);
     SYS->GPB_MFPH |= SYS_GPB_MFPH_PB9MFP_EADC0_CH9;
 
     /* Disable the GPB9 digital input path to avoid the leakage current. */
     GPIO_DISABLE_DIGITAL_PATH(PB, BIT9);
-    
+
     /* Configure the sample module 2 for analog input channel 9 and software trigger source.*/
     EADC_ConfigSampleModule(EADC, 2, EADC_SOFTWARE_TRIGGER, 9); // XR
 
@@ -140,11 +140,11 @@ int Read_TouchPanel(int *x, int *y)
 
 int Uninit_TouchPanel(void)
 {
-	return 1;
+    return 1;
 }
 
 int Check_TouchPanel(void)
 {
-		return 0;	//Pen up;	
+    return 0;   //Pen up;
 }
 
