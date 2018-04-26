@@ -241,6 +241,8 @@ void USBD20_IRQHandler(void)
             }
             else
             {
+                if (g_hsusbd_CtrlZero == 1)
+                    HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_ZEROLEN);
                 HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_STSDONEIF_Msk);
                 HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_SETUPPKIEN_Msk|HSUSBD_CEPINTEN_STSDONEIEN_Msk);
             }
