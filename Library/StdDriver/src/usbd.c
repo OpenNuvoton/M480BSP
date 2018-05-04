@@ -388,6 +388,7 @@ void USBD_StandardRequest(void)
                     if(((USBD->EP[i].CFG & 0xFul) == epNum) && ((g_u32EpStallLock & (1ul << i)) == 0ul))
                     {
                         USBD->EP[i].CFGP &= ~USBD_CFGP_SSTALL_Msk;
+                        USBD->EP[i].CFG &= ~USBD_CFG_DSQSYNC_Msk;
                     }
                 }
             }
