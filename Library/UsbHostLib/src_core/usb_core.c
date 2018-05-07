@@ -566,7 +566,7 @@ int usbh_get_device_descriptor(UDEV_T *udev, DESC_DEV_T *desc_buff)
 {
     uint32_t  read_len;
     int       ret, retry;
-    int       timeout = 100;
+    int       timeout = 10;
 
     for (retry = 0; retry < 3; retry++)
     {
@@ -578,7 +578,6 @@ int usbh_get_device_descriptor(UDEV_T *udev, DESC_DEV_T *desc_buff)
             return 0;
 
         USB_debug("Get device descriptor failed - %d, retry!\n", ret);
-        timeout += 50;
     }
     return ret;
 }
@@ -671,6 +670,7 @@ static int  usbh_parse_endpoint(ALT_IFACE_T *alt, int ep_idx, uint8_t *desc_buff
 {
     DESC_EP_T    *ep_desc;
     int          parsed_len = 0;
+    int          pksz;
 
     while (len > 0)
     {
@@ -697,7 +697,9 @@ static int  usbh_parse_endpoint(ALT_IFACE_T *alt, int ep_idx, uint8_t *desc_buff
     alt->ep[ep_idx].bEndpointAddress = ep_desc->bEndpointAddress;
     alt->ep[ep_idx].bmAttributes     = ep_desc->bmAttributes;
     alt->ep[ep_idx].bInterval        = ep_desc->bInterval;
-    alt->ep[ep_idx].wMaxPacketSize   = ep_desc->wMaxPacketSize;
+    pksz = ep_desc->wMaxPacketSize;
+    pksz = (pksz & 0x07ff) * (1 + ((pksz >> 11) & 3));
+    alt->ep[ep_idx].wMaxPacketSize   = pksz;
     alt->ep[ep_idx].hw_pipe          = NULL;
 
     return parsed_len + ep_desc->bLength;
@@ -939,8 +941,6 @@ int  connect_device(UDEV_T *udev)
     uint32_t     read_len;
     int          ret;
 
-    ENABLE_OHCI_IRQ();
-
     USB_debug("Connect device =>\n");
 
     delay_us(100 * 1000);                   /* initially, give 100 ms delay               */
@@ -953,7 +953,10 @@ int  connect_device(UDEV_T *udev)
 
     ret = usbh_set_address(udev);
     if (ret < 0)
+    {
+        USB_debug("Set address command failed!!\n");
         return ret;
+    }
 
     delay_us(100 * 1000);                   /* after set address, give 100 ms delay       */
 
@@ -1254,7 +1257,7 @@ void usbh_dump_iface(IFACE_T *iface)
 
 void usbh_dump_ep_info(EP_INFO_T *ep)
 {
-    USB_debug("\n  [Endoint Info] (0x%x)\n", (int)ep);
+    USB_debug("\n  [Endpoint Info] (0x%x)\n", (int)ep);
     USB_debug("  ----------------------------------------------\n");
     USB_debug("  bEndpointAddress    = 0x%02x\n", ep->bEndpointAddress);
     USB_debug("  bmAttributes        = 0x%02x\n", ep->bmAttributes);

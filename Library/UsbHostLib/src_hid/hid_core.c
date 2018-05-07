@@ -448,7 +448,7 @@ int32_t usbh_hid_start_int_read(HID_DEV_T *hdev, uint8_t ep_addr, HID_IR_FUNC *f
     utr->buff = usbh_alloc_mem(ep->wMaxPacketSize);
     if (utr->buff == NULL)
     {
-        free(utr);
+        free_utr(utr);
         return USBH_ERR_MEMORY_OUT;
     }
 
@@ -587,7 +587,7 @@ int32_t usbh_hid_start_int_write(HID_DEV_T *hdev, uint8_t ep_addr, HID_IW_FUNC *
     utr->buff = usbh_alloc_mem(ep->wMaxPacketSize);
     if (utr->buff == NULL)
     {
-        free(utr);
+        free_utr(utr);
         return USBH_ERR_MEMORY_OUT;
     }
 

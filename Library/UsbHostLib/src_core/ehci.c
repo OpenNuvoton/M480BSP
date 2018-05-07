@@ -151,7 +151,7 @@ void dump_ehci_period_frame_list()
             USB_debug("0x%x => ", (int)qh);
             qh = QH_PTR(qh->HLink);
         }
-        printf("0\n");
+        USB_debug("0\n");
     }
 }
 
@@ -286,8 +286,6 @@ static int  ehci_init(void)
         return USBH_ERR_EHCI_INIT;               /* Invalid FL_SIZE setting!              */
 
     _ehci->UPFLBAR = (uint32_t)_PFList;
-
-    // init_periodic_frame_list();
 
     /*------------------------------------------------------------------------------------*/
     /*  start run                                                                         */
@@ -844,8 +842,13 @@ static int ehci_quit_xfer(UTR_T *utr, EP_INFO_T *ep)
 
     // USB_debug("ehci_quit_xfer - utr: 0x%x, ep: 0x%x\n", (int)utr, (int)ep);
 
+    DISABLE_EHCI_IRQ();
     if (ehci_quit_iso_xfer(utr, ep) == 0)
+    {
+        ENABLE_EHCI_IRQ();
         return 0;
+    }
+    ENABLE_EHCI_IRQ();
 
     if (utr != NULL)
     {
@@ -1175,30 +1178,48 @@ port_reset_done:
 static int ehci_rh_polling(void)
 {
     UDEV_T    *udev;
-    int       ret, change;
+    int       ret;
+    int       connect_status, t0;
 
-    if ((_ehci->UPSCR[0] & HSUSBH_UPSCR_CSC_Msk) == 0)
+    if (!(_ehci->UPSCR[0] & HSUSBH_UPSCR_CSC_Msk))
         return 0;
 
     /*------------------------------------------------------------------------------------*/
     /*  connect status change                                                             */
     /*------------------------------------------------------------------------------------*/
 
-    _ehci->UPSCR[0] |= HSUSBH_UPSCR_CSC_Msk;      /* clear all status change bits         */
+    USB_debug("EHCI port1 status change: 0x%x\n", _ehci->UPSCR[0]);
 
-    if (_ehci->UPSCR[0] & HSUSBH_UPSCR_CCS_Msk)
+    /*--------------------------------------------------------------------------------*/
+    /*  Disconnect the devices attached to this port.                                 */
+    /*--------------------------------------------------------------------------------*/
+    while (1)
     {
-        /*--------------------------------------------------------------------------------*/
-        /*  First of all, check if there's any previously connected device.               */
-        /*--------------------------------------------------------------------------------*/
-        while (1)
-        {
-            udev = ehci_find_device_by_port(1);
-            if (udev == NULL)
-                break;
-            disconnect_device(udev);
-        }
+        udev = ehci_find_device_by_port(1);
+        if (udev == NULL)
+            break;
+        disconnect_device(udev);
+    }
 
+    /*--------------------------------------------------------------------------------*/
+    /*  Port de-bounce                                                                */
+    /*--------------------------------------------------------------------------------*/
+    t0 = get_ticks();
+    connect_status = _ehci->UPSCR[0] & HSUSBH_UPSCR_CCS_Msk;
+    while (get_ticks() - t0 < HUB_DEBOUNCE_TIME/10)
+    {
+        if (connect_status != (_ehci->UPSCR[0] & HSUSBH_UPSCR_CCS_Msk))
+        {
+            /* reset stable time counting                                             */
+            t0 = get_ticks();
+            connect_status = _ehci->UPSCR[0] & HSUSBH_UPSCR_CCS_Msk;
+        }
+    }
+
+    _ehci->UPSCR[0] |= HSUSBH_UPSCR_CSC_Msk;     /* clear connect status change bit   */
+
+    if (connect_status == HSUSBH_UPSCR_CCS_Msk)
+    {
         /*--------------------------------------------------------------------------------*/
         /*  A new device connected.                                                       */
         /*--------------------------------------------------------------------------------*/
@@ -1206,6 +1227,7 @@ static int ehci_rh_polling(void)
         {
             /* port reset failed, maybe an USB 1.1 device */
             _ehci->UPSCR[0] |= HSUSBH_UPSCR_PO_Msk;     /* change port owner to OHCI      */
+            _ehci->UPSCR[0] |= HSUSBH_UPSCR_CSC_Msk;    /* clear all status change bits   */
             return 0;
         }
 
@@ -1240,9 +1262,8 @@ static int ehci_rh_polling(void)
                 break;
             disconnect_device(udev);
         }
-        change = 1;
     }
-    return change;
+    return 1;
 }
 
 

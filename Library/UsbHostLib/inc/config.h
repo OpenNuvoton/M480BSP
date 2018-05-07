@@ -3,7 +3,7 @@
  * @version  V1.00
  * @brief    This header file defines the configuration of USB Host library.
  * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * Copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
 #ifndef  _USBH_CONFIG_H_
@@ -25,6 +25,8 @@
 #define ENABLE_OHCI                         /* Enable OHCI host controller                */
 #define ENABLE_EHCI                         /* Enable EHCI host controller                */
 
+#define EHCI_PORT_CNT          1            /* Number of EHCI roothub ports               */
+#define OHCI_PORT_CNT          2            /* Number of OHCI roothub ports               */
 #define OHCI_PER_PORT_POWER                 /* OHCI root hub per port powered             */
 
 #define OHCI_ISO_DELAY         4            /* preserved number frames while scheduling 
@@ -101,5 +103,5 @@
 
 #endif  /* _USBH_CONFIG_H_ */
 
-/*** (C) COPYRIGHT 2017 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2018 Nuvoton Technology Corp. ***/
 

@@ -79,6 +79,7 @@ static int  review_itd(iTD_T *itd)
             if (itd->Transaction[i] & ITD_STATUS_ACTIVE)
             {
                 utr->iso_status[fidx] = USBH_ERR_NOT_ACCESS0;
+                utr->status = USBH_ERR_NOT_ACCESS0;
             }
             else if (itd->Transaction[i] & ITD_STATUS_BABBLE)
             {
@@ -288,7 +289,7 @@ void scan_isochronous_list(void)
 
                     if (sp == NULL)                   /* link list out of control!         */
                     {
-                        USB_error("An siTD lost refernece to periodic frame list! 0x%x -> %d\n", (int)sitd, frnidx);
+                        USB_error("An siTD lost reference to periodic frame list! 0x%x -> %d\n", (int)sitd, frnidx);
                     }
                     else                              /* remove iTD from list              */
                     {
@@ -362,28 +363,6 @@ static void  write_itd_micro_frame(UTR_T *utr, int fidx, iTD_T *itd, int mf)
                            (buff_addr & 0xFFF);                                           /* Transaction offset */
 }
 
-static void add_iso_ep_to_list(ISO_EP_T *iso_ep)
-{
-    ISO_EP_T  *p;
-
-    iso_ep->next = NULL;
-
-    if (iso_ep_list == NULL)
-    {
-        iso_ep_list = iso_ep;
-        return;
-    }
-
-    /*
-     * Find the tail entry of iso_ep_list
-     */
-    p = iso_ep_list;
-    while (p->next != NULL)
-    {
-        p = p->next;
-    }
-    p->next = iso_ep;
-}
 
 static void remove_iso_ep_from_list(ISO_EP_T *iso_ep)
 {
@@ -411,6 +390,7 @@ static void remove_iso_ep_from_list(ISO_EP_T *iso_ep)
     }
     p->next = iso_ep->next;                 /* remove iso_ep from list                    */
 }
+
 
 static __inline void  add_itd_to_iso_ep(ISO_EP_T *iso_ep, iTD_T *itd)
 {
@@ -464,7 +444,14 @@ int ehci_iso_xfer(UTR_T *utr)
         iso_ep->next_frame = (((_ehci->UFINDR + (EHCI_ISO_DELAY * 8)) & HSUSBH_UFINDR_FI_Msk) >> 3) & 0x3FF;
 
         ep->hw_pipe = iso_ep;
-        add_iso_ep_to_list(iso_ep);
+
+        /*
+         *  Add this iso_ep into iso_ep_list
+         */
+        DISABLE_EHCI_IRQ();
+        iso_ep->next = iso_ep_list;
+        iso_ep_list = iso_ep;
+        ENABLE_EHCI_IRQ();
     }
 
     if (utr->udev->speed == SPEED_FULL)
@@ -820,6 +807,7 @@ int ehci_quit_iso_xfer(UTR_T *utr, EP_INFO_T *ep)
     ISO_EP_T   *iso_ep;
     iTD_T      *itd, *itd_next, *p;
     uint32_t   frnidx;
+    uint32_t   now_frame;
 
     if (ep == NULL)
     {
@@ -859,6 +847,19 @@ int ehci_quit_iso_xfer(UTR_T *utr, EP_INFO_T *ep)
         /*  Remove this iTD from period frame list                                        */
         /*--------------------------------------------------------------------------------*/
         frnidx = itd->sched_frnidx;
+
+        /*
+         *  Prevent to race with Host Controller. If the iTD to be removed is located in
+         *  current or next frame, wait until HC passed through it.
+         */
+        while (1)
+        {
+            now_frame = (_ehci->UFINDR >> 3) & 0x3FF;
+            if ((now_frame == frnidx) || (((now_frame+1)%1024) == frnidx))
+                continue;
+            break;
+        }
+
         if (_PFList[frnidx] == ITD_HLNK_ITD(itd))
         {
             /* is the first entry, just change to next     */
@@ -874,7 +875,7 @@ int ehci_quit_iso_xfer(UTR_T *utr, EP_INFO_T *ep)
 
             if (p == NULL)                  /* link list out of control!                  */
             {
-                USB_error("ehci_quit_iso_xfer - An iTD lost reference to periodic frame list! 0x%x -> %d\n", (int)itd, frnidx);
+                USB_error("ehci_quit_iso_xfer - An iTD lost reference to periodic frame list! 0x%x on %d\n", (int)itd, frnidx);
             }
             else                            /* remove iTD from list                       */
             {
@@ -882,15 +883,15 @@ int ehci_quit_iso_xfer(UTR_T *utr, EP_INFO_T *ep)
             }
         }
 
-        free_ehci_iTD(itd);
         utr->td_cnt--;
-        utr->status = USBH_ERR_ABORT;
 
         if (utr->td_cnt == 0)               /* All iTD of this UTR done                   */
         {
             if (utr->func)
                 utr->func(utr);
+            utr->status = USBH_ERR_ABORT;
         }
+        free_ehci_iTD(itd);
         itd = itd_next;
     }
 
@@ -899,6 +900,9 @@ int ehci_quit_iso_xfer(UTR_T *utr, EP_INFO_T *ep)
      */
     remove_iso_ep_from_list(iso_ep);
     usbh_free_mem(iso_ep, sizeof(*iso_ep));      /* free this iso_ep                      */
+
+    if (iso_ep_list == NULL)
+        _ehci->UCMDR &= ~HSUSBH_UCMDR_PSEN_Msk;
 
     return 0;
 }
