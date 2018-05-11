@@ -115,6 +115,22 @@ static int  read_file(uint8_t *pu8Buff, int i32Len)
     return 0;
 }
 
+
+void start_timer()
+{
+    /*
+     *  Configure Timer0, clock source from XTL_12M. Prescale 12
+     */
+    /* TIMER0 clock from HXT */
+    CLK->CLKSEL1 = (CLK->CLKSEL1 & (~CLK_CLKSEL1_TMR0SEL_Msk)) | CLK_CLKSEL1_TMR0SEL_HXT;
+    CLK->APBCLK0 |= CLK_APBCLK0_TMR0CKEN_Msk;
+    TIMER0->CTL = 0;        /* disable timer */
+    TIMER0->INTSTS = (TIMER_INTSTS_TIF_Msk | TIMER_INTSTS_TWKF_Msk);   /* write 1 to clear for safety */
+    TIMER0->CMP = 0xFFFFFF;
+    TIMER0->CTL = (11 << TIMER_CTL_PSC_Pos) | TIMER_ONESHOT_MODE | TIMER_CTL_CNTEN_Msk;
+}
+
+
 int  get_line(void)
 {
     int         i;
@@ -470,6 +486,7 @@ void test_suite_ecdsa_prim_random( int id )
     mbedtls_mpi d, r, s;
     rnd_pseudo_info rnd_info;
     unsigned char buf[66];
+    int  t0;
 
     mbedtls_ecp_group_init( &grp );
     mbedtls_ecp_point_init( &Q );
@@ -482,12 +499,25 @@ void test_suite_ecdsa_prim_random( int id )
     /* prepare material for signature */
     TEST_ASSERT( rnd_pseudo_rand( &rnd_info, buf, sizeof( buf ) ) == 0 );
     TEST_ASSERT( mbedtls_ecp_group_load( &grp, (mbedtls_ecp_group_id)id ) == 0 );
+
+    start_timer();
     TEST_ASSERT( mbedtls_ecp_gen_keypair( &grp, &d, &Q, &rnd_pseudo_rand, &rnd_info ) == 0 );
 
+    t0 = TIMER0->CNT;
+    printf("mbedtls_ecp_gen_keypair time: %d\n", t0);
+
+    start_timer();
     TEST_ASSERT( mbedtls_ecdsa_sign( &grp, &r, &s, &d, buf, sizeof( buf ),
                                      &rnd_pseudo_rand, &rnd_info ) == 0 );
 
+    t0 = TIMER0->CNT;
+    printf("mbedtls_ecp_gen_keypair time: %d\n", t0);
+
+    start_timer();
     TEST_ASSERT( mbedtls_ecdsa_verify( &grp, buf, sizeof( buf ), &Q, &r, &s ) == 0 );
+
+    t0 = TIMER0->CNT;
+    printf("mbedtls_ecp_gen_keypair time: %d\n", t0);
 
 exit:
     mbedtls_ecp_group_free( &grp );
@@ -974,6 +1004,12 @@ volatile int  g_Crypto_Int_done = 0;
 
 void CRYPTO_IRQHandler()
 {
+    if (SHA_GET_INT_FLAG(CRPT))
+    {
+        g_Crypto_Int_done = 1;
+        SHA_CLR_INT_FLAG(CRPT);
+    }
+
     ECC_Complete(CRPT);
 }
 
@@ -995,6 +1031,7 @@ int main()
 
     NVIC_EnableIRQ(CRPT_IRQn);
     ECC_ENABLE_INT(CRPT);
+    SHA_ENABLE_INT(CRPT);
 
     /* Now begin to execute the tests in the testfiles */
     for (vector_no = 1; ; vector_no++)
@@ -1042,6 +1079,7 @@ int main()
 
     printf("\n----------------------------------------------------------------------------\n\n");
     printf("%d pattern PASSED", pass_cnt );
+    while (1);
 }
 
 
