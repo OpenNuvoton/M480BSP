@@ -42,7 +42,9 @@ static volatile int  _mem_pool_used;
 
 
 UDEV_T * g_udev_list;
-static volatile int  _device_num;
+
+uint8_t  _dev_addr_pool[128];
+static volatile int  _device_addr;
 
 static  int  _sidx = 0;;
 
@@ -72,7 +74,9 @@ void usbh_memory_init(void)
     _sidx = 0;
 
     g_udev_list = NULL;
-    _device_num = 1;
+
+    memset(_dev_addr_pool, 0, sizeof(_dev_addr_pool));
+    _device_addr = 1;
 }
 
 uint32_t  usbh_memory_used(void)
@@ -168,12 +172,30 @@ void free_device(UDEV_T *udev)
     memory_counter(-sizeof(*udev));
 }
 
-int  alloc_device_number(void)
+int  alloc_dev_address(void)
 {
-    int   dev_num;
-    dev_num = _device_num;                  /* allocate device number */
-    _device_num = (_device_num % 254) + 1;  /* cannot be 0            */
-    return dev_num;
+    _device_addr++;
+
+    if (_device_addr >= 128)
+        _device_addr = 1;
+
+    while (1)
+    {
+        if (_dev_addr_pool[_device_addr] == 0)
+        {
+            _dev_addr_pool[_device_addr] = 1;
+            return _device_addr;
+        }
+        _device_addr++;
+        if (_device_addr >= 128)
+            _device_addr = 1;
+    }
+}
+
+void  free_dev_address(int dev_addr)
+{
+    if (dev_addr < 128)
+        _dev_addr_pool[dev_addr] = 0;
 }
 
 /*--------------------------------------------------------------------------*/
