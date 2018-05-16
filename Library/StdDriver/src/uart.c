@@ -42,7 +42,7 @@ void UART_ClearIntFlag(UART_T* uart, uint32_t u32InterruptFlag)
 
     if(u32InterruptFlag & UART_INTSTS_RLSINT_Msk)   /* Clear Receive Line Status Interrupt */
     {
-        uart->FIFOSTS = UART_FIFOSTS_BIF_Msk | UART_FIFOSTS_FEF_Msk | UART_FIFOSTS_FEF_Msk;
+        uart->FIFOSTS = UART_FIFOSTS_BIF_Msk | UART_FIFOSTS_FEF_Msk | UART_FIFOSTS_PEF_Msk;
         uart->FIFOSTS = UART_FIFOSTS_ADDRDETF_Msk;
     }
 
