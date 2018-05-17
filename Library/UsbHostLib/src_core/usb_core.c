@@ -475,7 +475,7 @@ int usbh_set_address(UDEV_T *udev)
     if (udev->dev_num != 0)
         return USBH_ERR_SET_DEV_ADDR;
 
-    dev_num = alloc_device_number();
+    dev_num = alloc_dev_address();
 
     /*------------------------------------------------------------------------------------*/
     /* Issue SET ADDRESS command to set device address                                    */
@@ -484,7 +484,10 @@ int usbh_set_address(UDEV_T *udev)
                          USB_REQ_SET_ADDRESS, dev_num, 0, 0,
                          NULL, &read_len, 100);
     if (ret < 0)
+    {
+        free_dev_address(dev_num);
         return ret;
+    }
 
     udev->dev_num = dev_num;
 
@@ -965,7 +968,10 @@ int  connect_device(UDEV_T *udev)
     /* Get device descriptor again with new device address */
     ret = usbh_get_device_descriptor(udev, &udev->descriptor);
     if (ret < 0)
+    {
+        free_dev_address(udev->dev_num);
         return ret;
+    }
 
 #if  defined(DUMP_DESCRIPTOR) && defined(ENABLE_DEBUG_MSG)
     dump_device_descriptor(&udev->descriptor);
@@ -978,14 +984,20 @@ int  connect_device(UDEV_T *udev)
 
     conf = (DESC_CONF_T *)usbh_alloc_mem(MAX_DESC_BUFF_SIZE);
     if (conf == NULL)
+    {
+        free_dev_address(udev->dev_num);
         return USBH_ERR_MEMORY_OUT;
+    }
 
     udev->cfd_buff = (uint8_t *)conf;
 
     /* Get configuration descriptor again with new device address */
     ret = usbh_get_config_descriptor(udev, (uint8_t *)conf, MAX_DESC_BUFF_SIZE);
     if (ret < 0)
+    {
+        free_dev_address(udev->dev_num);
         return ret;
+    }
 
 #if  defined(DUMP_DESCRIPTOR) && defined(ENABLE_DEBUG_MSG)
     dump_config_descriptor(conf);
@@ -1016,6 +1028,7 @@ int  connect_device(UDEV_T *udev)
     if (ret < 0)
     {
         USB_debug("Set configuration %d failed!\n", conf->bConfigurationValue);
+        free_dev_address(udev->dev_num);
         return ret;
     }
 
@@ -1024,6 +1037,7 @@ int  connect_device(UDEV_T *udev)
     if (ret < 0)
     {
         USB_debug("Parse configuration %d failed!\n", conf->bConfigurationValue);
+        free_dev_address(udev->dev_num);
         return ret;
     }
 
@@ -1167,6 +1181,7 @@ void disconnect_device(UDEV_T *udev)
     }
 
     /* remove device from global device list */
+    free_dev_address(udev->dev_num);
     free_device(udev);
 
     usbh_memory_used();
