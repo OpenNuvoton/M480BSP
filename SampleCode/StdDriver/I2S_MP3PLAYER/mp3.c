@@ -158,6 +158,11 @@ void MP3Player(void)
     I2S_Open(I2S0, I2S_MODE_SLAVE, 16000, I2S_DATABIT_16, I2S_DISABLE_MONO, I2S_FORMAT_I2S);
     NVIC_EnableIRQ(I2S0_IRQn);
 
+    /* Set PE.13 low to enable phone jack on NuMaker board. */
+    SYS->GPE_MFPH &= ~(SYS_GPE_MFPH_PE13MFP_Msk);
+    GPIO_SetMode(PE, BIT13, GPIO_MODE_OUTPUT);
+    PE13 = 0;
+
     /* Set MCLK and enable MCLK */
     I2S_EnableMCLK(I2S0, 12000000);
     I2S0->CTL0 |= I2S_CTL0_ORDER_Msk;

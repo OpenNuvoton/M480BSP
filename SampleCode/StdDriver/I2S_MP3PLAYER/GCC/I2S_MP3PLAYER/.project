@@ -206,6 +206,15 @@
 			</matcher>
 		</filter>
 		<filter>
+			<id>1505206283088</id>
+			<name>Library/Library</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-gpio.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
 			<id>1505206715895</id>
 			<name>MP3Lib/MP3Lib</name>
 			<type>5</type>

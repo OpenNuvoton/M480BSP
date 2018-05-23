@@ -264,11 +264,11 @@ void SYS_Init(void)
     SYS->GPF_MFPH = (SYS->GPF_MFPH & ~(SYS_GPF_MFPH_PF8MFP_Msk|SYS_GPF_MFPH_PF9MFP_Msk|SYS_GPF_MFPH_PF10MFP_Msk)) |
                     (SYS_GPF_MFPH_PF8MFP_I2S0_DI|SYS_GPF_MFPH_PF9MFP_I2S0_MCLK|SYS_GPF_MFPH_PF10MFP_I2S0_BCLK );
 
-    SYS->GPD_MFPH &= ~(SYS_GPD_MFPH_PD8MFP_Msk | SYS_GPD_MFPH_PD9MFP_Msk);
-    SYS->GPD_MFPH |= (SYS_GPD_MFPH_PD8MFP_I2C2_SDA | SYS_GPD_MFPH_PD9MFP_I2C2_SCL);
+    SYS->GPD_MFPL &= ~(SYS_GPD_MFPL_PD0MFP_Msk | SYS_GPD_MFPL_PD1MFP_Msk);
+    SYS->GPD_MFPL |= (SYS_GPD_MFPL_PD0MFP_I2C2_SDA | SYS_GPD_MFPL_PD1MFP_I2C2_SCL);
 
     PF->SMTEN |= GPIO_SMTEN_SMTEN10_Msk;
-    PD->SMTEN |= GPIO_SMTEN_SMTEN9_Msk;
+    PD->SMTEN |= GPIO_SMTEN_SMTEN1_Msk;
 }
 
 void I2C2_Init(void)
@@ -319,6 +319,11 @@ int32_t main (void)
     /* Open I2S0 interface and set to slave mode, stereo channel, I2S format */
     I2S_Open(I2S0, I2S_MODE_SLAVE, 16000, I2S_DATABIT_16, I2S_DISABLE_MONO, I2S_FORMAT_I2S);
     NVIC_EnableIRQ(I2S0_IRQn);
+
+    /* Set PE.13 low to enable phone jack on NuMaker board. */
+    SYS->GPE_MFPH &= ~(SYS_GPE_MFPH_PE13MFP_Msk);
+    GPIO_SetMode(PE, BIT13, GPIO_MODE_OUTPUT);
+    PE13 = 0;
 
     // select source from HXT(12MHz)
     CLK_SetModuleClock(I2S0_MODULE, CLK_CLKSEL3_I2S0SEL_HXT, 0);
