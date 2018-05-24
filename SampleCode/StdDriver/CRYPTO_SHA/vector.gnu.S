@@ -15,7 +15,7 @@
 	.text
         
 VectorDataBase:
-    .incbin  "..\\..\\..\\sha_test_vector"
+    .incbin  "..\\..\\sha_test_vector"
 VectorDataLimit:
     .space   4
     

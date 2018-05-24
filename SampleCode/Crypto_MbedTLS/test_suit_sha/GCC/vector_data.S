@@ -15,7 +15,7 @@
 	.text
         
 VectorBase_SHA:
-    .incbin  "..\\..\\..\\test_suite_shax.data"
+    .incbin  "..\\..\\test_suite_shax.data"
 VectorLimit_SHA:
     .space   4
 

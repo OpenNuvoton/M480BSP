@@ -15,7 +15,7 @@
 	.text
         
 VectorBase_ECDH:
-    .incbin  "..\\..\\..\\test_suite_ecdh.data"
+    .incbin  "..\\..\\test_suite_ecdh.data"
 VectorLimit_ECDH:
     .space   4
 

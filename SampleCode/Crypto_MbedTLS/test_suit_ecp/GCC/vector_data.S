@@ -15,7 +15,7 @@
 	.text
         
 VectorBase_ECP:
-    .incbin  "..\\..\\..\\test_suite_ecp.data"
+    .incbin  "..\\..\\test_suite_ecp.data"
 VectorLimit_ECP:
     .space   4
 

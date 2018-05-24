@@ -15,7 +15,7 @@
 	.text
         
 loaderImage1Base:
-    .incbin  "..\\..\\..\\LDROM_iap.bin"
+    .incbin  "..\\..\\LDROM_iap.bin"
 loaderImage1Limit:
     .space   4
     

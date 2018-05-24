@@ -15,7 +15,7 @@
 	.text
         
 loaderImage1Base:
-    .incbin  "..\\..\\..\\multi_word_prog.bin"
+    .incbin  "..\\..\\multi_word_prog.bin"
 loaderImage1Limit:
     .space   4
     

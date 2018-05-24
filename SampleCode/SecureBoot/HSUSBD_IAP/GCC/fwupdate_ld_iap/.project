@@ -60,7 +60,7 @@
 			<locationURI>PARENT-2-PROJECT_LOC/fwupdate_ld_iap.c</locationURI>
 		</link>
 		<link>
-			<name>CMSIS/CMSIS/gcc_arm.ld</name>
+			<name>User/gcc_arm.ld</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/GCC/gcc_arm.ld</locationURI>
 		</link>

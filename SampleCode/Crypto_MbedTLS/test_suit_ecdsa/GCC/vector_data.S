@@ -15,7 +15,7 @@
 	.text
         
 VectorBase_ECDSA:
-    .incbin  "..\\..\\..\\test_suite_ecdsa.data"
+    .incbin  "..\\..\\test_suite_ecdsa.data"
 VectorLimit_ECDSA:
     .space   4
 
