@@ -1,10 +1,9 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     main.c
  * @brief    Demonstrate how to implement a composite device.(VCOM and HID Transfer)
  *           Transfer data between USB device and PC through USB HID interface.
  *           A windows tool is also included in this sample code to connect with a USB device.
  * @version  2.0.0
- * @date     25, Aug, 2016
  *
  * @note
  *           Windows tool: User need to input the specific PID for the USB HID device connected to PC.
@@ -12,7 +11,7 @@
  *
  *           -> PID is 0xDC00 in this sample.
  *
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

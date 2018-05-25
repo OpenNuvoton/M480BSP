@@ -1,3 +1,10 @@
+/**************************************************************************//**
+ * @file     uac.h
+ * @version  V1.00
+ * @brief    M480 MCU USB Host Audio Class header file
+ *
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ *****************************************************************************/
 #ifndef __INCLUDED_UAC_H__
 #define __INCLUDED_UAC_H__
 

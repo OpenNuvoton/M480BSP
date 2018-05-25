@@ -1,9 +1,8 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     DataFlashProg.h
  * @brief    M480 series data flash programming driver header
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __DATA_FLASH_PROG_H__
 #define __DATA_FLASH_PROG_H__

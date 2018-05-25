@@ -1,7 +1,8 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V3.00
- * @brief    Implement WDT time-out interrupt event to wake up system and generate time-out reset system event while WDT time-out reset delay period expired.
+ * @brief    Implement WDT time-out interrupt event to wake up system and generate
+ *           time-out reset system event while WDT time-out reset delay period expired.
  *
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/

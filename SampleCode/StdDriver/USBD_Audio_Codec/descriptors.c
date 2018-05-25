@@ -1,11 +1,9 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     descriptors.c
  * @brief    NuMicro series USBD driver source file
  * @version  1.0.0
- * @date     01, April, 2017
  *
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 /*!<Includes */
 #include "NuMicro.h"

@@ -1,13 +1,10 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V2.00
- * $Revision: 7 $
- * $Date: 14/05/29 1:14p $
  * @brief    M480 I2C Driver Sample Code
  *           This is a I2C master mode demo and need to be tested with a slave device.
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/
 #include <stdio.h>

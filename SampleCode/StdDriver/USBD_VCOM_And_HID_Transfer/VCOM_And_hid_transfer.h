@@ -1,11 +1,9 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     usbd_hid.h
  * @brief    M480 series USB driver header file
  * @version  2.0.0
- * @date     22, Aug, 2016
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __USBD_HID_H__
 #define __USBD_HID_H__

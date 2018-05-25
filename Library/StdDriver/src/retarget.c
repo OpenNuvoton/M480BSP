@@ -1,13 +1,9 @@
 /**************************************************************************//**
  * @file     retarget.c
  * @version  V3.00
- * $Revision: 1 $
- * $Date: 16/06/14 10:32a $
  * @brief    M480 Series Debug Port and Semihost Setting Source File
  *
- * @note
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
- *
  ******************************************************************************/
 
 
@@ -283,7 +279,7 @@ Get_LR_and_Branch
 
     B       .
 
-                 ALIGN
+    ALIGN
 }
 
 /**
@@ -676,12 +672,14 @@ int _write (int fd, char *ptr, int len)
 {
     int i = len;
 
-    while(i--) {
+    while(i--)
+    {
         while(DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
 
         DEBUG_PORT->DAT = *ptr++;
 
-        if(*ptr == '\n') {
+        if(*ptr == '\n')
+        {
             while(DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
             DEBUG_PORT->DAT = '\r';
         }

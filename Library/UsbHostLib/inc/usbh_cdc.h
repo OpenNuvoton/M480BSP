@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     usbh_cdc.h
  * @version  V1.10
- * $Revision: 1 $
- * $Date: 15/06/12 9:58a $
  * @brief    USB Host CDC(Communication Device Class) driver header file.
  *
- * @note
- * Copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef  _USBH_CDC_H_
 #define  _USBH_CDC_H_

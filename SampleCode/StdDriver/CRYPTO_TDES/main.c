@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V1.10
- * $Revision: 8 $
- * $Date: 15/11/19 10:48a $
  * @brief    Show Crypto IP Triple DES CBC mode encrypt/decrypt function
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
 #include <string.h>

@@ -1,8 +1,11 @@
-/*-----------------------------------------------------------------------------*/
-/*                                                                             */
-/* Copyright(c) 2016 Nuvoton Technology Corp. All rights reserved.             */
-/*                                                                             */
-/*-----------------------------------------------------------------------------*/
+/**************************************************************************//**
+ * @file     parser.c
+ * @version  V1.00
+ * @brief    A simple parser
+ *
+ *
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ ******************************************************************************/
 
 extern uint32_t  VectorDataBase, VectorDataLimit;
 

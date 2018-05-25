@@ -5,7 +5,7 @@
  *           update APROM flash with it. This sample requires booting from LDROM with IAP.
  *
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+ *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
 

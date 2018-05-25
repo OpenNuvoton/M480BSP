@@ -1,11 +1,9 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     main.c
  * @brief    Demonstrate how to implement a USB virtual com port device.
  * @version  2.0.0
- * @date     22, Sep, 2014
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

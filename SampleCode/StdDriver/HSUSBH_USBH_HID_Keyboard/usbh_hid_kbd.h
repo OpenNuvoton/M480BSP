@@ -1,12 +1,9 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     usbh_hid_kbd.h
  * @brief    M480 USB Host HID keyboard driver header file
  * @version  V1.00
- * $Revision: 1 $
- * $Date: 14/12/02 5:49p $
  *
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __USBH_HID_KBD_H__
 #define __USBH_HID_KBD_H__

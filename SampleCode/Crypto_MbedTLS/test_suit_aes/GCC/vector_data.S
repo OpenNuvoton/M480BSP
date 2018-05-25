@@ -4,22 +4,22 @@
 ;/*                                                                                                         */
 ;/*---------------------------------------------------------------------------------------------------------*/
 
-	.syntax	unified
-	.arch	armv7-m
+    .syntax unified
+    .arch   armv7-m
 
-	.globl	VectorBase_CBC
-	.globl	VectorLimit_CBC
+    .globl  VectorBase_CBC
+    .globl  VectorLimit_CBC
 
-	.globl	VectorBase_CFB
-	.globl	VectorLimit_CFB
+    .globl  VectorBase_CFB
+    .globl  VectorLimit_CFB
 
-	.globl	VectorBase_ECB
-	.globl	VectorLimit_ECB
+    .globl  VectorBase_ECB
+    .globl  VectorLimit_ECB
 
-	.align	4
- 
-	.text
-        
+    .align  4
+
+    .text
+
 VectorBase_CBC:
     .incbin  "..\\..\\test_suite_aes.cbc.data"
 VectorLimit_CBC:
@@ -34,6 +34,6 @@ VectorBase_ECB:
     .incbin  "..\\..\\test_suite_aes.ecb.data"
 VectorLimit_ECB:
     .space   4
-    
+
     .end
-   
+

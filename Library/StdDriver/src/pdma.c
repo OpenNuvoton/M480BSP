@@ -1,11 +1,8 @@
 /**************************************************************************//**
  * @file     pdma.c
  * @version  V1.00
- * $Revision: 1 $
- * $Date: 16/06/14 10:23a $
  * @brief    M480 series PDMA driver source file
  *
- * @note
  * @copyright (C) 2014~2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include "NuMicro.h"

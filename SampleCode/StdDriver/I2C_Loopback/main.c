@@ -1,14 +1,10 @@
-
-/******************************************************************************
+/**************************************************************************//**
  * @file     main.c
  * @version  V3.00
- * $Revision: 3 $
- * $Date: 16/10/17 2:06p $
  * @brief
  *           Demonstrate how to set I2C Master mode and Slave mode.
  *           And show how a master access a slave on a chip.
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

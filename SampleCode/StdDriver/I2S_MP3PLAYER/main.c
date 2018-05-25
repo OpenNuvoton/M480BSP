@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V1.00
- * $Revision: 6 $
- * $Date: 14/08/04 9:58a $
  * @brief    MP3 player sample plays MP3 files stored on SD memory card
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/
 #include <stdio.h>

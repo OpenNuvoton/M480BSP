@@ -2,8 +2,8 @@
  * @file     ehci.h
  * @version  V1.00
  * @brief    USB EHCI host controller driver header file.
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ *
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
 #ifndef _USBH_EHCI_H_

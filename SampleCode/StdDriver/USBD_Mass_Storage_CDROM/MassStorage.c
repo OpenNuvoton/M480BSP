@@ -1,12 +1,9 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     MassStorage.c
  * @brief    M480 series USBD driver Sample file
  * @version  V1.00
- * $Revision: 5 $
- * $Date: 16/08/14 10:36a $
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 /*!<Includes */

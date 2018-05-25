@@ -1,7 +1,8 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     main.c
  * @version  V1.00
- * @brief    Demonstrate how to use FMC Read-All-One ISP command to verify APROM/LDROM pages are all 0xFFFFFFFF or not.
+ * @brief    Demonstrate how to use FMC Read-All-One ISP command to verify 
+ *           APROM/LDROM pages are all 0xFFFFFFFF or not.
  *
  *
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.

@@ -1,11 +1,9 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     hid_mousekeyboard.c
  * @brief    M480 series USBD driver Sample file
  * @version  2.0.0
- * @date     22, aug, 2016
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 /*!<Includes */

@@ -1,9 +1,8 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     descriptors.c
  * @brief    M480 series USBD descriptor
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 /*!<Includes */
 #include "NuMicro.h"

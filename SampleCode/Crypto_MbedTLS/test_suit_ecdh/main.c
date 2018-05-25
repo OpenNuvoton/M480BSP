@@ -1,8 +1,9 @@
 /**************************************************************************//**
  * @file     test_suit_ecdh.c
  * @version  V1.00
- * $Date: 15/05/06 9:54a $
  * @brief    mbedtls ECDH test suit
+ *
+ * @copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 #include <stdio.h>

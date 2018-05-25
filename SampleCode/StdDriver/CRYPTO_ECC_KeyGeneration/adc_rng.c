@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     adc_rng.c
  * @version  V1.10
- * $Revision: 10 $
- * $Date: 15/11/19 10:11a $
  * @brief    Use M480 ADC to generate true random numbers.
  *
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
 #include <string.h>

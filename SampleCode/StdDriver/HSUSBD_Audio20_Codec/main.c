@@ -1,12 +1,10 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     main.c
  * @version  1.0.0
- * @date     02, Sep, 2016
  * @brief    This is an UAC1.0 sample and used to plays the sound send from PC
  *           through the USB interface
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

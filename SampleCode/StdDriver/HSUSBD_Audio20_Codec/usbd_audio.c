@@ -1,11 +1,9 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     usbd_audio.c
  * @brief    NuMicro series HSUSBD driver Sample file
  * @version  1.0.0
- * @date     03, Sep, 2016
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 /*!<Includes */

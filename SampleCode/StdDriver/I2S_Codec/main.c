@@ -1,13 +1,10 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V2.00
- * $Revision: 13 $
- * $Date: 14/09/17 1:41p $
  * @brief    This is an I2S demo using NAU8822/88L25 audio codec, and used to play
  *           back the input from line-in or MIC interface..
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/
 #include <stdio.h>

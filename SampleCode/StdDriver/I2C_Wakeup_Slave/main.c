@@ -1,14 +1,10 @@
-
-/******************************************************************************
+/*************************************************************************//**
  * @file     main.c
  * @version  V3.00
- * $Revision: 3 $
- * $Date: 16/10/17 2:06p $
  * @brief
  *           Show how to wake up MCU from Power-down mode through I2C interface.
  *           This sample code needs to work with I2C_Master.
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

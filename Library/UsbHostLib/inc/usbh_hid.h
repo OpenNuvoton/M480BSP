@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     usbh_hid.h
  * @version  V1.10
- * $Revision: 1 $
- * $Date: 15/06/12 9:58a $
  * @brief    USB Host HID class driver header file.
  *
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef  _USBH_HID_H_
 #define  _USBH_HID_H_

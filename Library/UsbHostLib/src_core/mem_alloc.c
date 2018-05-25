@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     mem_alloc.c
  * @version  V1.10
- * $Revision: 11 $
- * $Date: 14/10/03 1:54p $
  * @brief   USB host library memory allocation functions.
  *
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>

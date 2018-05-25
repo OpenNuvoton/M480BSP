@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     hid_core.c
  * @version  V1.00
- * $Revision: 13 $
- * $Date: 14/12/02 5:47p $
  * @brief    M480 USB Host HID driver.
  *
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>

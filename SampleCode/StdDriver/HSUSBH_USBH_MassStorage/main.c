@@ -1,11 +1,13 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V1.00
- * @brief    This sample uses a command-shell-like interface to demonstrate how to use USBH mass storage driver and make it working as a disk driver under FATFS file system.
+ * @brief    This sample uses a command-shell-like interface to demonstrate
+ *           how to use USBH mass storage driver and make it working as a disk
+ *           driver under FATFS file system.
  *
  *
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+ *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
 

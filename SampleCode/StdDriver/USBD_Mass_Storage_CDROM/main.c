@@ -1,8 +1,7 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     main.c
  * @brief    USB Mass Storage Device CD-ROM Emulation.
  * @version  2.0.0
- * @date     12, Aug, 2016
  *
  * @note
  *
@@ -27,7 +26,7 @@
  *                  Modify MSC_ImageSize value to hold the file size.
  *
  *
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

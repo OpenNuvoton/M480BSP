@@ -1,13 +1,10 @@
-/******************************************************************************
-* @file     main.c
-* @version  V1.00
-* $Revision: 1 $
-* $Date: 16/10/06 2:55p $
-* @brief    Demonstrate how to use LXT to trim HIRC
-*
-* @note
-* Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+/**************************************************************************//**
+ * @file     main.c
+ * @version  V1.00
+ * @brief    Demonstrate how to use LXT to trim HIRC
+ *
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ *****************************************************************************/
 #include "stdio.h"
 #include "NuMicro.h"
 

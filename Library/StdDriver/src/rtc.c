@@ -1,11 +1,8 @@
 /**************************************************************************//**
  * @file     rtc.c
  * @version  V3.00
- * $Revision: 5 $
- * $Date: 14/06/10 5:49p $
  * @brief    M480 series RTC driver source file
  *
- * @note
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include "NuMicro.h"

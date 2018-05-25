@@ -1,11 +1,9 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     hid_touch.c
  * @brief    M480 series USBD driver Sample file
  * @version  2.0.0
- * @date     24, Aug, 2016
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 /*!<Includes */

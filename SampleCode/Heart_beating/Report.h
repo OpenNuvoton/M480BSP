@@ -1,3 +1,11 @@
+/**************************************************************************//**
+ * @file     Report.h
+ * @version  V1.00
+ * @brief    Nuvoton A.H.R.S Library header file
+ *
+ *
+ * @copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
+*****************************************************************************/
 #ifndef _REPORT_H
 #define _REPORT_H
 

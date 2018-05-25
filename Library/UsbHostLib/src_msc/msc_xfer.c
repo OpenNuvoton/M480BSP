@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     msc_xfer.c
  * @version  V1.00
- * $Revision: 4 $
- * $Date: 14/10/07 4:33p $
  * @brief    Lightweight USB mass storage class transfer layer
  *
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>

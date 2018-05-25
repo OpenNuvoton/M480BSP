@@ -1,4 +1,4 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     multi_word_prog.c
  * @version  V1.00
  * @brief    This sample run on SRAM to show FMC multi word program function.

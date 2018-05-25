@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V2.00
- * $Revision: 9 $
- * $Date: 14/05/30 6:00p $
  * @brief    Show how to use auto baud rate detection function
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/
 

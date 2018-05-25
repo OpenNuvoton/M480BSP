@@ -1,12 +1,10 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V1.00
- * $Date: 16/08/02 5:11p $
  * @brief    Implement a mass storage class sample to demonstrate how to
  *           receive an USB short packet.
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

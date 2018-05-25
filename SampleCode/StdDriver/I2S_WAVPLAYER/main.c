@@ -1,13 +1,10 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V1.00
- * $Revision: 10 $
- * $Date: 14/09/17 1:43p $
  * @brief    This is a WAV file player which plays back WAV file stored in
  *           USB pen drive.
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/
 #include <stdio.h>

@@ -1,9 +1,8 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     hid_mouse.c
  * @brief    M480 series USBD HID mouse sample file
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 /*!<Includes */

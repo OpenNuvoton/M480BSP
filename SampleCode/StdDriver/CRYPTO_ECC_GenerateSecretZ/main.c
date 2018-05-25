@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V1.10
- * $Revision: 10 $
- * $Date: 15/11/19 10:11a $
  * @brief    Show Crypto IP ECC CDH secret Z generation.
  *
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
 #include <string.h>

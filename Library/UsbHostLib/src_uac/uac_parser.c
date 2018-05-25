@@ -1,13 +1,10 @@
 /**************************************************************************//**
  * @file     uac_parser.c
  * @version  V1.00
- * $Revision: 1 $
- * $Date: 15/06/10 2:03p $
  * @brief    M480 MCU USB Host Audio Class driver
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ *****************************************************************************/
 
 #include <stdio.h>
 #include <string.h>

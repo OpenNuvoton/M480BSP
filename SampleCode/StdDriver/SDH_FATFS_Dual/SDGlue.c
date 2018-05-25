@@ -1,12 +1,9 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     SDGlue.c
  * @version  V1.00
- * $Revision: 4 $
- * $Date: 16/07/01 1:14p $
  * @brief    SD glue functions for FATFS
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>

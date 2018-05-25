@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     nau88L25.c
  * @version  V1.00
- * $Revision: 4 $
- * $Date: 15/03/19 5:27p $
  * @brief    M480 I2S Driver Sample Code
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/
 #include <stdio.h>

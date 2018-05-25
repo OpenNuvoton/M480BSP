@@ -1,11 +1,8 @@
 /**************************************************************************//**
  * @file     qei.c
  * @version  V3.00
- * $Revision: 1 $
- * $Date: 16/06/16 10:23a $
  * @brief    Quadrature Encoder Interface (QEI) driver source file
  *
- * @note
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include "NuMicro.h"

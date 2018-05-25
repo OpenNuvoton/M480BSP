@@ -1,11 +1,9 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     descriptors.c
- * @brief    NuMicro series HSUSBD driver source file
- * @version  1.0.0
- * @date     03, Sep, 2016
+ * @version  V1.00
+ * @brief    M480 HSUSBD driver source file
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 /*!<Includes */
 #include "NuMicro.h"

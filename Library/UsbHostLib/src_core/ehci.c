@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     ehci.c
  * @version  V1.10
- * $Revision: 11 $
- * $Date: 14/10/03 1:54p $
  * @brief   USB Host library EHCI (USB 2.0) host controller driver.
  *
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>

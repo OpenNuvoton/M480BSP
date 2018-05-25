@@ -1,8 +1,7 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     main.c
  * @version  V1.00
- * @brief
- *           Use embedded data flash as storage to implement a USB Mass-Storage device.
+ * @brief    Use embedded data flash as storage to implement a USB Mass-Storage device.
  *
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/

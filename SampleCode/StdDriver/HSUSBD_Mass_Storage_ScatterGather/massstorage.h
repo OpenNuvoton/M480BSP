@@ -1,12 +1,9 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     massstorage.h
  * @brief    M480 USB driver header file
  * @version  V1.00
- * $Revision: 4 $
- * $Date: 16/09/02 5:11p $
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __USBD_MASS_H__
 #define __USBD_MASS_H__

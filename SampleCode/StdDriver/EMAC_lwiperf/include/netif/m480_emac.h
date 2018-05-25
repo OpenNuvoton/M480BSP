@@ -1,7 +1,10 @@
-/*
- * Copyright (c) 2016 Nuvoton Technology Corp.
- * Description:   M480 EMAC driver header file
- */
+/***************************************************************************//**
+ * @file     m480_emac.h.c
+ * @brief    M480 EMAC driver header file
+ * @version  1.0
+ *
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ ******************************************************************************/
 #include "lwip/def.h"
 #include "lwip/pbuf.h"
 #include "NuMicro.h"

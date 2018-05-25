@@ -1,14 +1,12 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     main.c
  * @brief    Simulate an USB HID mouse and HID keyboard.
  *           Mouse draws circle on the screen and
  *           Keyboard use GPIO to simulate key input.
  *
  * @version  2.0.0
- * @date     12, aug, 2016
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

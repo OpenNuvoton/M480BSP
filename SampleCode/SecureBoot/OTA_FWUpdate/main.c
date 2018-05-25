@@ -1,12 +1,11 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     main.c
  * @version  2.0.0
  * @date     20, June, 2017
  * @brief    This sample code is run at LDROM, and use it to boot from APROM or
  *           update APROM. After reset the system, the program will boot from APROM.
  *
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

@@ -1,4 +1,4 @@
-/****************************************************************************
+/**************************************************************************//**
  * @file     main.c
  * @version  V1.00
  * @brief    Demonstrate the RTC spare_register read/write function and displays test result to the

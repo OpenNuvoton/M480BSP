@@ -1,13 +1,11 @@
-/******************************************************************************
+/*************************************************************************//**
  * @file     main.c
  * @brief    Demonstrate how to implement a USB audio class device.
  *           Codec is used in this sample code to play the audio data from Host.
  *           It also supports to record data from codec to Host.
  * @version  1.0.0
- * @date     01, April, 2017
  *
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

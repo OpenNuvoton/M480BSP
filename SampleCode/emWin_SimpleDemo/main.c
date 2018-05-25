@@ -1,7 +1,14 @@
+/**************************************************************************//**
+ * @file     main.c
+ * @version  V1.00
+ * @brief    emWin demo application
+ *
+ * @copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
+ ******************************************************************************/
 #include <stdio.h>
 #include <string.h>
 
-#include "M480.h"
+#include "NuMicro.h"
 
 #include "GUI.h"
 #include "wm.h"

@@ -2,8 +2,8 @@
  * @file     config.h
  * @version  V1.00
  * @brief    This header file defines the configuration of USB Host library.
- * @note
- * Copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
+ *
+ * @copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
 #ifndef  _USBH_CONFIG_H_

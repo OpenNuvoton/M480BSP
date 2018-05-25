@@ -1,13 +1,11 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     main.c
  * @version  2.0.0
- * @date     20, June, 2017
  * @brief    Use MKROM API to do internal ISP. This sample code is run at APROM,
  *           and use API to update LDROM. After reset the system, the program will
  *           boot from LDROM.
  *
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "bootisplib.h"

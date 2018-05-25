@@ -1,12 +1,9 @@
-/******************************************************************************
+/*************************************************************************//**
  * @file     isr.c
  * @version  V0.10
- * $Revision: 4 $
- * $Date: 14/05/29 1:14p $
  * @brief    M480 ISR source file
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
 #include <string.h>

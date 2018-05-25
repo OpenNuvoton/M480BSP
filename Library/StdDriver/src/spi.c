@@ -1,11 +1,8 @@
 /**************************************************************************//**
  * @file     spi.c
  * @version  V3.00
- * $Revision: 2 $
- * $Date: 16/05/31 3:57p $
  * @brief    M480 series SPI driver source file
  *
- * @note
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include "NuMicro.h"

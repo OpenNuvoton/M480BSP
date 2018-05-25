@@ -1,3 +1,10 @@
+/**************************************************************************//**
+ * @file     msc.h.c
+ * @version  V1.00
+ * @brief    M480 MCU USB Host mass storage class header
+ *
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ *****************************************************************************/
 #ifndef _USBH_MSC_H_
 #define _USBH_MSC_H_
 

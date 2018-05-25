@@ -1,11 +1,9 @@
 /**************************************************************************//**
  * @file     descriptors.c
  * @version  V1.00
- * $Date: 16/07/17 5:36p $
  * @brief    M480 HSUSBD driver source file
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __DESCRIPTORS_C__
 #define __DESCRIPTORS_C__

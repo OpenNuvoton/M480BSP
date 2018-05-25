@@ -1,9 +1,8 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     massstorage.h
  * @brief    M480 series USB mass storage header file
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __USBD_MASS_H__
 #define __USBD_MASS_H__

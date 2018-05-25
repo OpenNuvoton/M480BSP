@@ -1,11 +1,9 @@
 /**************************************************************************//**
  * @file     hid_mouse.c
  * @version  V1.00
- * $Date: 16/08/07 5:36p $
  * @brief    M480 HSUSBD driver Sample file
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 /*!<Includes */

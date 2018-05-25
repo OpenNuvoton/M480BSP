@@ -1,12 +1,9 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     micro_printer_and_hid_transfer.h
  * @brief    M480 series USB driver header file
  * @version  V1.00
- * $Revision: 1 $
- * $Date: 16/08/31 5:34p $
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __USBD_PRINTER_H__
 #define __USBD_PRINTER_H__

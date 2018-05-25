@@ -1,11 +1,8 @@
 /**************************************************************************//**
  * @file     sys.c
  * @version  V1.00
- * $Revision: 1 $
- * $Date: 16/06/14 10:32a $
  * @brief    M480 series SYS driver source file
  *
- * @note
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 

@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     wavplayer.c
  * @version  V1.00
- * $Revision: 2 $
- * $Date: 14/05/29 1:14p $
  * @brief    M480 Wave file audio player
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/
 #include <stdio.h>

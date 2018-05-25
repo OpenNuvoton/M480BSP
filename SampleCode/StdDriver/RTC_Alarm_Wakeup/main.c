@@ -2,8 +2,7 @@
  * @file     main.c
  * @version  V3.00
  * @brief    Use RTC alarm interrupt event to wake up system.
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

@@ -1,5 +1,6 @@
 /**************************************************************************//**
  * @file     scuart.c
+ * @version  V3.00
  * @brief    M480 Smartcard UART mode (SCUART) driver source file
  *
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.

@@ -1,12 +1,9 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     cdc_serial.h
  * @brief    M480 series USB driver header file
  * @version  V1.00
- * $Revision: 1 $
- * $Date: 16/08/27 11:50a $
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __USBD_CDC_H__
 #define __USBD_CDC_H__

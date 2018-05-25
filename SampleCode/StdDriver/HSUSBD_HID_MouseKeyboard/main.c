@@ -1,11 +1,9 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V1.00
- * $Date: 16/09/02 4:47p $
  * @brief    Simulate an USB mouse and draws circle on the screen
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

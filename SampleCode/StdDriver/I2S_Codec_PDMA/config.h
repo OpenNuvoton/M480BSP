@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     config.h
  * @version  V1.00
- * $Revision: 2 $
- * $Date: 14/05/29 1:14p $
  * @brief    I2S Driver Sample Configuration Header File
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/
 #ifndef CONFIG_H

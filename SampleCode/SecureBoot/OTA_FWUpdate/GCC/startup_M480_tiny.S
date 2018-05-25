@@ -1,5 +1,5 @@
 /****************************************************************************//**
- * @file     startup_M480.S
+ * @file     startup_M480_tiny.S
  * @version  V1.00
  * @brief    CMSIS Cortex-M4 Core Device Startup File for M480
  *

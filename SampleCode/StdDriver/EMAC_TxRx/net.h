@@ -1,9 +1,8 @@
-/******************************************************************************
+/*************************************************************************//**
  * @file     net.c
  * @brief    Packet processor header file for M480 MCU
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #ifndef  _NET_H_
 #define  _NET_H_

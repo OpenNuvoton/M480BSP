@@ -1,7 +1,8 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     main.c
  * @version  V1.00
- * @brief    Demonstrate how to use FMC CRC32 ISP command to calculate the CRC32 checksum of APROM, LDROM, and SPROM.
+ * @brief    Demonstrate how to use FMC CRC32 ISP command to calculate the 
+ *           CRC32 checksum of APROM, LDROM, and SPROM.
  *
  *
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.

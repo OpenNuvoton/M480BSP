@@ -1,11 +1,9 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     codec.c
  * @brief    Audio Codec setting.
  * @version  1.0.0
- * @date     01, September, 2017
  *
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

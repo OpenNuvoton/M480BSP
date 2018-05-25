@@ -1,7 +1,8 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     main.c
  * @version  V1.00
- * @brief    This sample shows how to setup the secure key (KPROM) and how to perform secure key comparison.
+ * @brief    This sample shows how to setup the secure key (KPROM) and how 
+ *           to perform secure key comparison.
  *
  *
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.

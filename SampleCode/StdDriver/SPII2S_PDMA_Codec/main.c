@@ -1,13 +1,10 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V3.00
- * $Revision: 1 $
- * $Date: 16/06/03 5:23p $
  * @brief    NuMicro I2S Driver Sample Code
  *           This is a I2S demo with PDMA function connected with audio codec.
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/
 #include <stdio.h>

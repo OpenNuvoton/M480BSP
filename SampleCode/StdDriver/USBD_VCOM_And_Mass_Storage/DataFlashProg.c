@@ -1,13 +1,9 @@
-/****************************************************************************
+/**************************************************************************//**
  * @file     DataFlashProg.c
  * @version  V1.00
- * $Revision: 1 $
- * $Date: 16/08/23 5:07p $
  * @brief    M480 Series Data Flash Access API
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
- *
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 

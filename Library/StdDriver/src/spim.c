@@ -1,11 +1,8 @@
 /**************************************************************************//**
  * @file    spim.c
  * @version V1.00
- * $Revision:1$
- * $Date:14/5/5 5:45p$
  * @brief   M480 series SPIM driver
  *
- * @note
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 

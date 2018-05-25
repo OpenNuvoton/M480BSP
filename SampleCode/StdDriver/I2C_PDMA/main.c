@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V2.00
- * $Revision: 7 $
- * $Date: 14/05/29 1:14p $
  * @brief    Demonstrate I2C PDMA mode and need to connect I2C0(Master) and I2C1(Slave).
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/
 #include <stdio.h>

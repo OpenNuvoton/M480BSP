@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     hid_driver.c
  * @version  V1.00
- * $Revision: 11 $
- * $Date: 14/12/02 5:47p $
  * @brief    M480 MCU USB Host HID driver
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>

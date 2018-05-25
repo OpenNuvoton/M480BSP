@@ -1,14 +1,11 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     main.c
  * @version  V3.00
- * $Revision: 3 $
- * $Date: 16/10/17 2:06p $
  * @brief
  *           Implement a code and execute in SRAM to program embedded Flash.
  *           (Support KEIL MDK Only)
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ *****************************************************************************/
 #include <stdio.h>
 
 #include "NuMicro.h"

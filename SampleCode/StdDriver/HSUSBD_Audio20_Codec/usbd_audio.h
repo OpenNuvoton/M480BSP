@@ -1,11 +1,9 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     usbd_audio.h
  * @brief    NuMicro series HSUSBD driver header file
  * @version  1.0.0
- * @date     22, Sep, 2016
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __USBD_UAC_H__
 #define __USBD_UAC_H__

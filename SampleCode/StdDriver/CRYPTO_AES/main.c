@@ -1,13 +1,10 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V1.10
- * $Revision: 10 $
- * $Date: 15/11/19 10:11a $
  * @brief    Show Crypto IP AES-128 ECB mode encrypt/decrypt function.
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
 #include "NuMicro.h"

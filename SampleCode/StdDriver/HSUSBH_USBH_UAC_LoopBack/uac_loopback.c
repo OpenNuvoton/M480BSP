@@ -1,9 +1,8 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     usbd_audio.c
  * @brief    NuMicro series USBD audio sample file
  *
- * @note
- * Copyright (C) 2013~2015 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2013~2015 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 /*!<Includes */

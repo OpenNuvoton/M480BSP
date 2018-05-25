@@ -4,7 +4,7 @@
  * @brief    Search and read new firmware from USB drive and update APROM flash with it.
  *
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
-*****************************************************************************/
+ *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
 

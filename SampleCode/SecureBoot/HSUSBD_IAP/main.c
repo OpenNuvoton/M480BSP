@@ -1,15 +1,13 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     main.c
  * @version  2.0.0
- * @date     20, June, 2017
  * @brief    Use MKROM API to do internal ISP. This sample code is run at APROM,
  *           this sample will load an image to LDROM, and than doing Secure boot
  *           ISP to update APROM. After finish firmware update, remember to reset
  *           the system.
  *           The LDROM sample code is Secure boot ISP function.
  *
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

@@ -1,12 +1,9 @@
-/******************************************************************************
+/**************************************************************************//**
  * @file     vcom_serial.h
  * @brief    M480 series USB driver header file
  * @version  V1.00
- * $Revision: 2 $
- * $Date: 15/04/14 2:23p $
  *
- * @note
- * Copyright (C) 2013 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2013 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __USBD_CDC_H__
 #define __USBD_CDC_H__

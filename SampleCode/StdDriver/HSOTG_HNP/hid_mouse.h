@@ -1,11 +1,9 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     hid_mouse.h
  * @brief    M480 USB driver header file
  * @version  2.0.0
- * @date     22, Sept, 2014
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __HID_MOUSE_H__
 #define __HID_MOUSE_H__

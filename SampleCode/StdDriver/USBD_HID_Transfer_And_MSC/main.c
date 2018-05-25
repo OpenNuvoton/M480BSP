@@ -1,13 +1,11 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     main.c
  * @brief    Demonstrate how to implement a composite device.(HID Transfer and Mass storage)
              Transfer data between USB device and PC through USB HID interface.
  *           A windows tool is also included in this sample code to connect with a USB device.
  * @version  2.0.0
- * @date     16, Aug, 2016
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

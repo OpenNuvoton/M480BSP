@@ -1,11 +1,9 @@
-/******************************************************************************
+/***************************************************************************//**
  * @file     main.c
  * @brief    Use internal Flash as back end storage media to simulate a USB pen drive.
  * @version  2.0.0
- * @date     27, Aug, 2016
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

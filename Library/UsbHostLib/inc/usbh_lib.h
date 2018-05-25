@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     usbh_lib.h
  * @version  V1.10
- * $Revision: 4 $
- * $Date: 15/06/10 2:06p $
  * @brief    USB Host library exported header file.
  *
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef  _USBH_LIB_H_
 #define  _USBH_LIB_H_

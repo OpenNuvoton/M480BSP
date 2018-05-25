@@ -1,11 +1,8 @@
 /**************************************************************************//**
  * @file     SDH.c
  * @version  V1.00
- * $Revision: 13 $
- * $Date: 16/07/01 9:02a $
  * @brief    M480 SDH driver source file
  *
- * @note
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>

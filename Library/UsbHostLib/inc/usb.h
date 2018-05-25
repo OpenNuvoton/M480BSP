@@ -2,8 +2,8 @@
  * @file     usb.h
  * @version  V1.00
  * @brief    USB Host library header file.
- * @note
- * Copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ *
+ * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
 #ifndef _USBH_H_

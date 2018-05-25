@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     uac_core.c
  * @version  V1.00
- * $Revision: 2 $
- * $Date: 15/06/12 10:12a $
  * @brief    M480 MCU USB Host Audio Class driver
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>

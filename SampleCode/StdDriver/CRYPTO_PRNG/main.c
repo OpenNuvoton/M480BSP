@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V1.10
- * $Revision: 7 $
- * $Date: 14/05/30 5:58p $
  * @brief    Generate random numbers using Crypto IP PRNG
  *
- * @note
- * Copyright (C) 2013 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2013 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
 #include <string.h>

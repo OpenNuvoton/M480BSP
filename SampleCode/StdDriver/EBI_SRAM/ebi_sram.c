@@ -1,12 +1,9 @@
 /**************************************************************************//**
  * @file     ebi_sram.c
  * @version  V3.00
- * $Revision: 1 $
- * $Date: 16/05/31 4:37p $
  * @brief    EBI SRAM Test source file
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"

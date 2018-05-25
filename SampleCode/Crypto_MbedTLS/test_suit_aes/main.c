@@ -1,9 +1,9 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V1.10
- * $Revision: 10 $
- * $Date: 15/11/19 10:11a $
  * @brief    Mbedtls AES test suite
+ *
+ * @copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
