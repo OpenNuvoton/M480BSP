@@ -31,6 +31,13 @@
 /* Global variables                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
 #if !(defined(__ICCARM__) && (__VER__ >= 6010000))
+# if (__ARMCC_VERSION < 6040000)
+struct __FILE
+{
+    int handle; /* Add whatever you need here */
+};
+# endif
+#elif(__VER__ >= 8000000)
 struct __FILE
 {
     int handle; /* Add whatever you need here */
@@ -38,6 +45,7 @@ struct __FILE
 #endif
 FILE __stdout;
 FILE __stdin;
+
 
 enum { r0, r1, r2, r3, r12, lr, pc, psr};
 
