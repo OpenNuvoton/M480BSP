@@ -1,0 +1,35 @@
+#! armcc -E
+
+#define SM_SIZE 4096
+#define SM_START AlignExpr(ImageLimit(ER_MODULE_END), SM_SIZE) 
+#define SM_PAD_SIZE (SM_SIZE - ImageLength(ER_SM))
+
+LR_IROM1 0x00000000 0x00010000  {
+  ER1 0x00000000 0x00010000  {
+    startup_M480.o (RESET, +FIRST)
+    .ANY (+RO)
+  }
+
+  ER_MODULE_START (ImageLimit(ER1)) {
+    .ANY (.module_start)
+  }
+
+  ER2_MODULE (ImageLimit(ER_MODULE_START)){
+    .ANY (.module)
+  }
+
+  ER_MODULE_END (ImageLimit(ER2_MODULE)){
+    .ANY (.module_end)
+  }
+
+  ER_SM SM_START FIXED SM_SIZE{
+    *.o (.sm_sector)
+  }
+  
+  ER_ROM_UNUSED +0 FILL 0xFFFFFFFF SM_PAD_SIZE{
+  }
+  
+  RW_IRAM1 0x20000000 0x00005000  {
+    .ANY (+RW +ZI)
+  }
+}
