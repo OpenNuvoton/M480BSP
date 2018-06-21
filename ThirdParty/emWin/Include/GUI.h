@@ -9,13 +9,13 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.46 - Graphical user interface for embedded applications **
+** emWin V5.48 - Graphical user interface for embedded applications **
 All  Intellectual Property rights in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product. This file may
 only be used in accordance with the following terms:
 
-The  software has  been licensed by SEGGER Software GmbH to Nuvoton Technology Corporationat the address: No. 4, Creation Rd. III, Hsinchu Science Park, Taiwan
+The  software has  been licensed by SEGGER Software GmbH to Nuvoton Technology Corporationat the address: No. 4, Creation Rd. III, Hsinchu Science Park, Taiwan
 for the purposes  of  creating  libraries  for its 
 Arm Cortex-M and  Arm9 32-bit microcontrollers, commercialized and distributed by Nuvoton Technology Corporation
 under  the terms and conditions  of  an  End  User  
@@ -243,7 +243,6 @@ struct GUI_CONTEXT {
   //
   LCD_PIXELINDEX * LCD_pBkColorIndex;
   LCD_PIXELINDEX * LCD_pColorIndex;
-  LCD_PIXELINDEX * LCD_pAColorIndex;
   //
   // Variables in WM module
   //
@@ -387,6 +386,9 @@ void             MainTask                 (void);
 */
 void GUI_SetpfMemset(void * (* pFunc)(void * pDest, int c, size_t Cnt));
 void GUI_SetpfMemcpy(void * (* pFunc)(void * pDest, const void * pSrc, size_t Cnt));
+void GUI_SetpfStrcmp(int    (* pFunc)(const char *, const char *));
+void GUI_SetpfStrlen(size_t (* pFunc)(const char *));
+void GUI_SetpfStrcpy(char * (* pFunc)(char *, const char *));
 
 /*********************************************************************
 *
@@ -890,6 +892,9 @@ U16  GUI_DB2UC (U8 Byte0, U8 Byte1);
 #define GUI_BIDI_BASEDIR_LTR  0
 #define GUI_BIDI_BASEDIR_RTL  1
 #define GUI_BIDI_BASEDIR_AUTO 2
+
+#define GUI_BIDI_LOG2VIS_CALC     0
+#define GUI_BIDI_LOG2VIS_GETCACHE 1
 
 /*********************************************************************
 *
@@ -1904,88 +1909,6 @@ extern const tGUI_XBF_APIList GUI_XBF_APIList_Prop_AA4_Ext;
 *
 *       Standard colors
 */
-#if (GUI_USE_ARGB)
-  #define GUI_BLUE          0xFF0000FF
-  #define GUI_GREEN         0xFF00FF00
-  #define GUI_RED           0xFFFF0000
-  #define GUI_CYAN          0xFF00FFFF
-  #define GUI_MAGENTA       0xFFFF00FF
-  #define GUI_YELLOW        0xFFFFFF00
-  #define GUI_LIGHTBLUE     0xFF8080FF
-  #define GUI_LIGHTGREEN    0xFF80FF80
-  #define GUI_LIGHTRED      0xFFFF8080
-  #define GUI_LIGHTCYAN     0xFF80FFFF
-  #define GUI_LIGHTMAGENTA  0xFFFF80FF
-  #define GUI_LIGHTYELLOW   0xFFFFFF80
-  #define GUI_DARKBLUE      0xFF000080
-  #define GUI_DARKGREEN     0xFF008000
-  #define GUI_DARKRED       0xFF800000
-  #define GUI_DARKCYAN      0xFF008080
-  #define GUI_DARKMAGENTA   0xFF800080
-  #define GUI_DARKYELLOW    0xFF808000
-  #define GUI_WHITE         0xFFFFFFFF
-  #define GUI_LIGHTGRAY     0xFFD3D3D3
-  #define GUI_GRAY          0xFF808080
-  #define GUI_DARKGRAY      0xFF404040
-  #define GUI_BLACK         0xFF000000
-  #define GUI_BROWN         0xFFA52A2A
-  #define GUI_ORANGE        0xFFFFA500
-  #define GUI_TRANSPARENT   0x00000000
-
-  #define GUI_GRAY_3F       0xFF3F3F3F
-  #define GUI_GRAY_50       0xFF505050
-  #define GUI_GRAY_55       0xFF555555
-  #define GUI_GRAY_60       0xFF606060
-  #define GUI_GRAY_7C       0xFF7C7C7C
-  #define GUI_GRAY_9A       0xFF9A9A9A
-  #define GUI_GRAY_AA       0xFFAAAAAA
-  #define GUI_GRAY_C0       0xFFC0C0C0
-  #define GUI_GRAY_C8       0xFFC8C8C8
-  #define GUI_GRAY_D0       0xFFD0D0D0
-  #define GUI_GRAY_E7       0xFFE7E7E7
-  #define GUI_BLUE_98       0xFF000098
-#else
-  #define GUI_BLUE          0x00FF0000
-  #define GUI_GREEN         0x0000FF00
-  #define GUI_RED           0x000000FF
-  #define GUI_CYAN          0x00FFFF00
-  #define GUI_MAGENTA       0x00FF00FF
-  #define GUI_YELLOW        0x0000FFFF
-  #define GUI_LIGHTBLUE     0x00FF8080
-  #define GUI_LIGHTGREEN    0x0080FF80
-  #define GUI_LIGHTRED      0x008080FF
-  #define GUI_LIGHTCYAN     0x00FFFF80
-  #define GUI_LIGHTMAGENTA  0x00FF80FF
-  #define GUI_LIGHTYELLOW   0x0080FFFF
-  #define GUI_DARKBLUE      0x00800000
-  #define GUI_DARKGREEN     0x00008000
-  #define GUI_DARKRED       0x00000080
-  #define GUI_DARKCYAN      0x00808000
-  #define GUI_DARKMAGENTA   0x00800080
-  #define GUI_DARKYELLOW    0x00008080
-  #define GUI_WHITE         0x00FFFFFF
-  #define GUI_LIGHTGRAY     0x00D3D3D3
-  #define GUI_GRAY          0x00808080
-  #define GUI_DARKGRAY      0x00404040
-  #define GUI_BLACK         0x00000000
-  #define GUI_BROWN         0x002A2AA5
-  #define GUI_ORANGE        0x0000A5FF
-  #define GUI_TRANSPARENT   0xFF000000
-
-  #define GUI_GRAY_3F       0x003F3F3F
-  #define GUI_GRAY_50       0x00505050
-  #define GUI_GRAY_55       0x00555555
-  #define GUI_GRAY_60       0x00606060
-  #define GUI_GRAY_7C       0x007C7C7C
-  #define GUI_GRAY_9A       0x009A9A9A
-  #define GUI_GRAY_AA       0x00AAAAAA
-  #define GUI_GRAY_C0       0x00C0C0C0
-  #define GUI_GRAY_C8       0x00C8C8C8
-  #define GUI_GRAY_D0       0x00D0D0D0
-  #define GUI_GRAY_E7       0x00E7E7E7
-  #define GUI_BLUE_98       0x00980000
-#endif
-
 #define GUI_INVALID_COLOR ((((U32)GUI_TRANS_BYTE) << 24) | 0x12345678ul)  /* Invalid color (transparency + determined color) */
 
 #if (GUI_USE_ARGB)
@@ -2002,6 +1925,45 @@ extern const tGUI_XBF_APIList GUI_XBF_APIList_Prop_AA4_Ext;
   #define GUI_TRANS_BYTE 0xFF
 #endif
 
+#define GUI_BLUE          GUI_MAKE_COLOR(0x00FF0000)
+#define GUI_GREEN         GUI_MAKE_COLOR(0x0000FF00)
+#define GUI_RED           GUI_MAKE_COLOR(0x000000FF)
+#define GUI_CYAN          GUI_MAKE_COLOR(0x00FFFF00)
+#define GUI_MAGENTA       GUI_MAKE_COLOR(0x00FF00FF)
+#define GUI_YELLOW        GUI_MAKE_COLOR(0x0000FFFF)
+#define GUI_LIGHTBLUE     GUI_MAKE_COLOR(0x00FF8080)
+#define GUI_LIGHTGREEN    GUI_MAKE_COLOR(0x0080FF80)
+#define GUI_LIGHTRED      GUI_MAKE_COLOR(0x008080FF)
+#define GUI_LIGHTCYAN     GUI_MAKE_COLOR(0x00FFFF80)
+#define GUI_LIGHTMAGENTA  GUI_MAKE_COLOR(0x00FF80FF)
+#define GUI_LIGHTYELLOW   GUI_MAKE_COLOR(0x0080FFFF)
+#define GUI_DARKBLUE      GUI_MAKE_COLOR(0x00800000)
+#define GUI_DARKGREEN     GUI_MAKE_COLOR(0x00008000)
+#define GUI_DARKRED       GUI_MAKE_COLOR(0x00000080)
+#define GUI_DARKCYAN      GUI_MAKE_COLOR(0x00808000)
+#define GUI_DARKMAGENTA   GUI_MAKE_COLOR(0x00800080)
+#define GUI_DARKYELLOW    GUI_MAKE_COLOR(0x00008080)
+#define GUI_WHITE         GUI_MAKE_COLOR(0x00FFFFFF)
+#define GUI_LIGHTGRAY     GUI_MAKE_COLOR(0x00D3D3D3)
+#define GUI_GRAY          GUI_MAKE_COLOR(0x00808080)
+#define GUI_DARKGRAY      GUI_MAKE_COLOR(0x00404040)
+#define GUI_BLACK         GUI_MAKE_COLOR(0x00000000)
+#define GUI_BROWN         GUI_MAKE_COLOR(0x002A2AA5)
+#define GUI_ORANGE        GUI_MAKE_COLOR(0x0000A5FF)
+#define GUI_TRANSPARENT   GUI_MAKE_COLOR(0xFF000000)
+
+#define GUI_GRAY_3F       GUI_MAKE_COLOR(0x003F3F3F)
+#define GUI_GRAY_50       GUI_MAKE_COLOR(0x00505050)
+#define GUI_GRAY_55       GUI_MAKE_COLOR(0x00555555)
+#define GUI_GRAY_60       GUI_MAKE_COLOR(0x00606060)
+#define GUI_GRAY_7C       GUI_MAKE_COLOR(0x007C7C7C)
+#define GUI_GRAY_9A       GUI_MAKE_COLOR(0x009A9A9A)
+#define GUI_GRAY_AA       GUI_MAKE_COLOR(0x00AAAAAA)
+#define GUI_GRAY_C0       GUI_MAKE_COLOR(0x00C0C0C0)
+#define GUI_GRAY_C8       GUI_MAKE_COLOR(0x00C8C8C8)
+#define GUI_GRAY_D0       GUI_MAKE_COLOR(0x00D0D0D0)
+#define GUI_GRAY_E7       GUI_MAKE_COLOR(0x00E7E7E7)
+#define GUI_BLUE_98       GUI_MAKE_COLOR(0x00980000)
 
 /*********************************************************************
 *
@@ -2218,18 +2180,28 @@ extern GUI_CONST_STORAGE GUI_FONT GUI_FontComic24B_ASCII, GUI_FontComic24B_1;
 #define GUI_TM_REV           LCD_DRAWMODE_REV
 
 /* Text alignment flags, horizontal */
-#define GUI_TA_LEFT        (0)
-#define GUI_TA_HORIZONTAL  (3<<0)
-#define GUI_TA_RIGHT	     (1<<0)
-#define GUI_TA_CENTER	     (2<<0)
-#define GUI_TA_HCENTER	   GUI_TA_CENTER  /* easier to remember :-)  */
+#define GUI_TA_LEFT       (0)
+#define GUI_TA_HORIZONTAL (3 << 0)
+#define GUI_TA_RIGHT      (1 << 0)
+#define GUI_TA_CENTER     (2 << 0)
+#define GUI_TA_HCENTER    GUI_TA_CENTER  /* easier to remember :-)  */
 
 /* Text alignment flags, vertical */
-#define GUI_TA_TOP	      (0)
-#define GUI_TA_VERTICAL   (3<<2)
-#define GUI_TA_BOTTOM	    (1<<2)
-#define GUI_TA_BASELINE   (2<<2)
-#define GUI_TA_VCENTER    (3<<2)
+#define GUI_TA_TOP        (0)
+#define GUI_TA_VERTICAL   (3 << 2)
+#define GUI_TA_BOTTOM     (1 << 2)
+#define GUI_TA_BASELINE   (2 << 2)
+#define GUI_TA_VCENTER    (3 << 2)
+
+/* General alignment flags */
+#define GUI_ALIGN_LEFT       GUI_TA_LEFT
+#define GUI_ALIGN_HCENTER    GUI_TA_HCENTER
+#define GUI_ALIGN_RIGHT      GUI_TA_RIGHT
+#define GUI_ALIGN_TOP        GUI_TA_TOP
+#define GUI_ALIGN_VCENTER    GUI_TA_VCENTER
+#define GUI_ALIGN_BOTTOM     GUI_TA_BOTTOM
+#define GUI_ALIGN_HORIZONTAL GUI_TA_HORIZONTAL
+#define GUI_ALIGN_VERTICAL   GUI_TA_VERTICAL
 
 /* General orientation flags */
 #define GUI_MIRROR_X (1 << 0)

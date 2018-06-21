@@ -541,7 +541,7 @@ static void _DemoBarGraph(void)
     {
         return;
     }
-//  GUI_MEMDEV_CopyFromLCD(hMem);
+    GUI_MEMDEV_CopyFromLCD(hMem);
     for (i = 0; i < NumItems; i++)
     {
         aAdd[i] = (i & 1) * 2 - 1;

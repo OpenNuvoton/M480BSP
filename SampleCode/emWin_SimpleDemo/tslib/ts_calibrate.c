@@ -42,7 +42,8 @@ typedef struct
 static int palette [] =
 {
     /*0x000000, 0xffe080, 0xffffff, 0xe0c0a0*/
-    0x000000, 0x80e0ff, 0xffffff, 0xa0c0e0, 0x7F1F00, 0x20201F, 0x5F3F1F
+	/* GUI_USE_ARGB=1 */
+    GUI_MAKE_COLOR(0x000000), GUI_MAKE_COLOR(0x80e0ff), GUI_MAKE_COLOR(0xffffff), GUI_MAKE_COLOR(0xa0c0e0), GUI_MAKE_COLOR(0x7F1F00), GUI_MAKE_COLOR(0x20201F), GUI_MAKE_COLOR(0x5F3F1F)
 };
 #define NR_COLORS (sizeof (palette) / sizeof (palette [0]))
 

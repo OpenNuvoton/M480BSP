@@ -9,13 +9,13 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.46 - Graphical user interface for embedded applications **
+** emWin V5.48 - Graphical user interface for embedded applications **
 All  Intellectual Property rights in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product. This file may
 only be used in accordance with the following terms:
 
-The  software has  been licensed by SEGGER Software GmbH to Nuvoton Technology Corporationat the address: No. 4, Creation Rd. III, Hsinchu Science Park, Taiwan
+The  software has  been licensed by SEGGER Software GmbH to Nuvoton Technology Corporationat the address: No. 4, Creation Rd. III, Hsinchu Science Park, Taiwan
 for the purposes  of  creating  libraries  for its 
 Arm Cortex-M and  Arm9 32-bit microcontrollers, commercialized and distributed by Nuvoton Technology Corporation
 under  the terms and conditions  of  an  End  User  
@@ -481,6 +481,8 @@ char    WM_IsCompletelyVisible       (WM_HWIN hWin);    /* Is the window complet
 int     WM_IsFocusable               (WM_HWIN hWin);
 int     WM_IsVisible                 (WM_HWIN hWin);
 int     WM_IsWindow                  (WM_HWIN hWin);    /* Check validity */
+void    WM_Rect2Screen               (WM_HWIN hWin, GUI_RECT * pRect);
+void    WM_Rect2Client               (WM_HWIN hWin, GUI_RECT * pRect);
 void    WM_SetAnchor                 (WM_HWIN hWin, U16 AnchorFlags);
 void    WM_SetHasTrans               (WM_HWIN hWin);
 void    WM_SetId                     (WM_HWIN hObj, int Id);
@@ -489,6 +491,8 @@ void    WM_SetTransState             (WM_HWIN hWin, unsigned State);
 void    WM_ShowWindow                (WM_HWIN hWin);
 void    WM_ValidateRect              (WM_HWIN hWin, const GUI_RECT * pRect);
 void    WM_ValidateWindow            (WM_HWIN hWin);
+void    WM_XY2Screen                 (WM_HWIN hWin, int * px, int * py);
+void    WM_XY2Client                 (WM_HWIN hWin, int * px, int * py);
 
 #define WM_GetFocussedWindow WM_GetFocusedWindow
 #define WM_IsFocussable      WM_IsFocusable

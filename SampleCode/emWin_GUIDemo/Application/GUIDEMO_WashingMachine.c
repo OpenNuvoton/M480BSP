@@ -10963,7 +10963,7 @@ static GUI_MEMDEV_Handle _CreateBitmap(WM_HWIN hWin, int x0, int y0_, int x1, in
     {
         WM_SelectWindow(hWin);
         hOld = GUI_MEMDEV_Select(hMem);
-//    GUI_MEMDEV_CopyFromLCD(hMem);
+        GUI_MEMDEV_CopyFromLCD(hMem);
         _DrawGradientRoundBar(x0 + 2, y0_ + 2, x1 - 2, y1_ - 2, GUI_MAKE_COLOR(0xEEEEEE), GUI_MAKE_COLOR(0x737373));
         GUI_SetColor(GUI_MAKE_COLOR(0xff0000));
         GUI_SetPenSize(3);
@@ -11406,7 +11406,7 @@ static GUI_MEMDEV_Handle _CreateButton(WM_HWIN hWin, int x0, int y0_, int xSize,
     if (hMem)
     {
         hOld = GUI_MEMDEV_Select(hMem);
-//    GUI_MEMDEV_CopyFromLCD(hMem);
+        GUI_MEMDEV_CopyFromLCD(hMem);
         _DrawGradientRoundBar(x0 + 2, y0_ + 2, x0 + xSize - 2, y0_ + ySize - 2, Color0, Color1);
         GUI_SetColor(GUI_MAKE_COLOR(0xff0000));
         GUI_SetPenSize(3);
