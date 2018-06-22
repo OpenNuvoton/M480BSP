@@ -1,6 +1,6 @@
 /**************************************************************************//**
  * @file     main.c
- * @version  V1.00
+ * @version  V1.01
  * @brief    emWin demo application
  *
  * @copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
@@ -232,7 +232,6 @@ void GUI_X_InitOS   (void)
 
 WM_HWIN CreateFramewin(void);
 int ts_calibrate(int xsize, int ysize);
-void ts_test(int xsize, int ysize);
 volatile int g_enable_Touch;
 void MainTask(void);
 
@@ -342,8 +341,6 @@ int main(void)
         ts_readfile();
     }
     f_close(&hFile);
-
-    //ts_test(320, 240);
 
     g_enable_Touch = 1;
 #endif

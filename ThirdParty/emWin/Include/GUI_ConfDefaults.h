@@ -9,13 +9,13 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.46 - Graphical user interface for embedded applications **
+** emWin V5.48 - Graphical user interface for embedded applications **
 All  Intellectual Property rights in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product. This file may
 only be used in accordance with the following terms:
 
-The  software has  been licensed by SEGGER Software GmbH to Nuvoton Technology Corporationat the address: No. 4, Creation Rd. III, Hsinchu Science Park, Taiwan
+The  software has  been licensed by SEGGER Software GmbH to Nuvoton Technology Corporationat the address: No. 4, Creation Rd. III, Hsinchu Science Park, Taiwan
 for the purposes  of  creating  libraries  for its 
 Arm Cortex-M and  Arm9 32-bit microcontrollers, commercialized and distributed by Nuvoton Technology Corporation
 under  the terms and conditions  of  an  End  User  
@@ -86,11 +86,11 @@ Attention : Do not modify this file ! If you do, you will not
    ABGR to ARGB.
    
    It further swaps the meaning of a transparent pixel:
-   ABGR: 0x00 means opaque, 0xFF means transparent (default)
-   ARGB: 0x00 means transparent, 0xFF means opaque
+   ABGR: 0x00 means opaque, 0xFF means transparent
+   ARGB: 0x00 means transparent, 0xFF means opaque (default)
 */
 #ifndef GUI_USE_ARGB
-  #define GUI_USE_ARGB 0
+  #define GUI_USE_ARGB 1
 #endif
 
 /* Define "universal pointer". Normally, this is not needed (define will expand to nothing)

@@ -9,13 +9,13 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.46 - Graphical user interface for embedded applications **
+** emWin V5.48 - Graphical user interface for embedded applications **
 All  Intellectual Property rights in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product. This file may
 only be used in accordance with the following terms:
 
-The  software has  been licensed by SEGGER Software GmbH to Nuvoton Technology Corporationat the address: No. 4, Creation Rd. III, Hsinchu Science Park, Taiwan
+The  software has  been licensed by SEGGER Software GmbH to Nuvoton Technology Corporationat the address: No. 4, Creation Rd. III, Hsinchu Science Park, Taiwan
 for the purposes  of  creating  libraries  for its 
 Arm Cortex-M and  Arm9 32-bit microcontrollers, commercialized and distributed by Nuvoton Technology Corporation
 under  the terms and conditions  of  an  End  User  
@@ -191,6 +191,11 @@ extern const GUI_DEVICE_API GUIDRV_FlexColor_API;
   void GUIDRV_FlexColor_SetMode24bppC0B8 (GUI_DEVICE * pDevice);
 
   //
+  // Change orientation at runtime
+  //
+  int GUIDRV_FlexColor_SetOrientation(int Orientation, int LayerIndex);
+
+  //
   // User interface
   //
   void GUIDRV_FlexColor_SetFunc(GUI_DEVICE * pDevice, GUI_PORT_API * pHW_API, void (* pfFunc)(GUI_DEVICE *), void (* pfMode)(GUI_DEVICE *));
@@ -256,6 +261,11 @@ extern const GUI_DEVICE_API GUIDRV_FlexColor_API;
   //
   #define GUIDRV_FlexColor_SetFunc(pDevice, pHW_API, pfFunc, pfMode)
   #define GUIDRV_FlexColor_Config(pDevice, pConfig)
+
+  //
+  // Change orientation at runtime
+  //
+  #define GUIDRV_FlexColor_SetOrientation(Orientation, LayerIndex);
 
   //
   // Setting up hardware interface to be used

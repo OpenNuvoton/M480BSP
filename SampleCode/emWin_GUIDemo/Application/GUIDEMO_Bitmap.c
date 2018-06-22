@@ -55,7 +55,7 @@ Purpose     : Draws bitmaps with and without compression
 //
 // Config
 //
-#define SHOW_ALPHA       0
+#define SHOW_ALPHA       1
 #define SHOW_PALETTE     1
 #define SHOW_BMP_GIF_JPG 1
 #define SHOW_HIGH_COLOR  1

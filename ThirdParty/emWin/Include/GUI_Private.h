@@ -9,13 +9,13 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.46 - Graphical user interface for embedded applications **
+** emWin V5.48 - Graphical user interface for embedded applications **
 All  Intellectual Property rights in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product. This file may
 only be used in accordance with the following terms:
 
-The  software has  been licensed by SEGGER Software GmbH to Nuvoton Technology Corporationat the address: No. 4, Creation Rd. III, Hsinchu Science Park, Taiwan
+The  software has  been licensed by SEGGER Software GmbH to Nuvoton Technology Corporationat the address: No. 4, Creation Rd. III, Hsinchu Science Park, Taiwan
 for the purposes  of  creating  libraries  for its 
 Arm Cortex-M and  Arm9 32-bit microcontrollers, commercialized and distributed by Nuvoton Technology Corporation
 under  the terms and conditions  of  an  End  User  
@@ -384,7 +384,7 @@ int  GUI__BIDI_GetBaseDir        (void);
 
 #endif
 
-const char * GUI__BIDI_Log2VisBuffered(const char * s, int * pMaxNumChars);
+const char * GUI__BIDI_Log2VisBuffered(const char * s, int * pMaxNumChars, int Mode);
 
 extern int GUI__BIDI_Enabled;
 
@@ -396,7 +396,7 @@ extern int (* _pfGUI__BIDI_GetCharDir      )(const char * s, int NumChars, int I
 extern int (* _pfGUI__BIDI_IsNSM           )(U16 Char);
 
 /* BiDi-related function pointers */
-extern const char * (* GUI_CharLine_pfLog2Vis)(const char * s, int * pMaxNumChars);
+extern const char * (* GUI_CharLine_pfLog2Vis)(const char * s, int * pMaxNumChars, int Mode);
 
 extern int (* GUI__GetCursorPos_pfGetPosX)     (const char * s, int MaxNumChars, int Index);
 extern int (* GUI__GetCursorPos_pfGetPosChar)  (const char * s, int MaxNumChars, int x);
@@ -519,6 +519,10 @@ void GL_SetDefault       (void);
 //
 extern void * (* GUI__pfMemset)(void * pDest, int Fill, size_t Cnt);
 extern void * (* GUI__pfMemcpy)(void * pDest, const void * pSrc, size_t Cnt);
+
+extern int    (* GUI__pfStrcmp)(const char *, const char *);
+extern size_t (* GUI__pfStrlen)(const char *);
+extern char * (* GUI__pfStrcpy)(char *, const char *);
 //
 // Macros for typesave use of function pointers
 //

@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.46 - Graphical user interface for embedded applications **
+** emWin V5.48 - Graphical user interface for embedded applications **
 All  Intellectual Property rights in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product. This file may
@@ -546,8 +546,13 @@ void LCD_X_Config(void)
     //
     PortAPI.pfWrite16_A0  = LCD_WR_REG;
     PortAPI.pfWrite16_A1  = LCD_WR_DATA;
+    PortAPI.pfWriteM16_A0 = LcdWriteDataMultiple;
     PortAPI.pfWriteM16_A1 = LcdWriteDataMultiple;
+    PortAPI.pfRead16_A0   = LCD_RD_DATA;
+    PortAPI.pfRead16_A1   = LCD_RD_DATA;
+    PortAPI.pfReadM16_A0  = LcdReadDataMultiple;
     PortAPI.pfReadM16_A1  = LcdReadDataMultiple;
+    GUIDRV_FlexColor_SetReadFunc66709_B16(pDevice, GUIDRV_FLEXCOLOR_READ_FUNC_III);
     GUIDRV_FlexColor_SetFunc(pDevice, &PortAPI, GUIDRV_FLEXCOLOR_F66709, GUIDRV_FLEXCOLOR_M16C0B16);
     
 // LCD calibration
