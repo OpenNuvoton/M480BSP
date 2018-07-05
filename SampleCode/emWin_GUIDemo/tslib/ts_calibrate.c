@@ -26,11 +26,15 @@
 //#include "wbtypes.h"
 //#include "wblib.h"
 //#include "LCDconf.h"
+#include "NuMicro.h"
 #include "GUI.h"
 #include "M48XTouchPanel.h"
 //#include "nvtfat.h"
+
+#ifdef __USE_SD__
 #include "diskio.h"
 #include "ff.h"
+#endif
 
 typedef struct
 {
@@ -42,12 +46,14 @@ typedef struct
 static int palette [] =
 {
     /*0x000000, 0xffe080, 0xffffff, 0xe0c0a0*/
-	/* GUI_USE_ARGB=1 */
     GUI_MAKE_COLOR(0x000000), GUI_MAKE_COLOR(0x80e0ff), GUI_MAKE_COLOR(0xffffff), GUI_MAKE_COLOR(0xa0c0e0), GUI_MAKE_COLOR(0x7F1F00), GUI_MAKE_COLOR(0x20201F), GUI_MAKE_COLOR(0x5F3F1F)
 };
 #define NR_COLORS (sizeof (palette) / sizeof (palette [0]))
 
+#ifdef __USE_SD__
 extern FIL hFile;
+#endif
+
 int ts_writefile(void);
 int ts_readfile(void);
 
@@ -82,12 +88,12 @@ int perform_calibration(calibration *cal)
     nx2 = (int)x2;
     ny2 = (int)y2;
     nxy = (int)xy;
-    sysprintf("n=%d,x=%d,y=%d,x2=%d,y2=%d, xy=%d\n",nn,nx,ny,nx2,ny2,nxy);
+    printf("n=%d,x=%d,y=%d,x2=%d,y2=%d, xy=%d\n",nn,nx,ny,nx2,ny2,nxy);
 // Get determinant of matrix -- check if determinant is too small
     det = n*(x2*y2 - xy*xy) + x*(xy*y - x*y2) + y*(x*xy - y*x2);
     if(det < 0.1 && det > -0.1)
     {
-        sysprintf("ts_calibrate: determinant is too small -- %f\n",det);
+        printf("ts_calibrate: determinant is too small -- %f\n",det);
         return 0;
     }
 
@@ -119,7 +125,7 @@ int perform_calibration(calibration *cal)
 //  nn = (int)(a*z + b*zx + c*zy);
 //  nx = (int) (b*z + e*zx + f*zy);
 //  ny = (int) (c*z + f*zx + i*zy);
-    sysprintf("%d %d %d\n",nn,nx,ny);
+    printf("%d %d %d\n",nn,nx,ny);
 #endif
 // Get sums for y calibration
     z = zx = zy = 0;
@@ -141,7 +147,7 @@ int perform_calibration(calibration *cal)
     nn = (int)((a*z + b*zx + c*zy)*(scaling));
     nx = (int)((b*z + e*zx + f*zy)*(scaling));
     ny = (int)((c*z + f*zx + i*zy)*(scaling));
-    sysprintf("%d %d %d\n",nn,nx,ny);
+    printf("%d %d %d\n",nn,nx,ny);
 #endif
 // If we got here, we're OK, so assign scaling to a[6] and return
     cal->a[6] = (int)scaling;
@@ -205,7 +211,7 @@ int perform_calibration(calibration *cal)
     cal->a[1] = (int)((b*z + e*zx + f*zy)*(scaling));
     cal->a[2] = (int)((c*z + f*zx + i*zy)*(scaling));
 #if 0 //close
-    sysprintf("%f %f %f\n",(a*z + b*zx + c*zy),
+    printf("%f %f %f\n",(a*z + b*zx + c*zy),
               (b*z + e*zx + f*zy),
               (c*z + f*zx + i*zy));
 #endif
@@ -223,7 +229,7 @@ int perform_calibration(calibration *cal)
     cal->a[4] = (int)((b*z + e*zx + f*zy)*(scaling));
     cal->a[5] = (int)((c*z + f*zx + i*zy)*(scaling));
 #if 0  // closed
-    sysprintf("%f %f %f\n",(a*z + b*zx + c*zy),
+    printf("%f %f %f\n",(a*z + b*zx + c*zy),
               (b*z + e*zx + f*zy),
               (c*z + f*zx + i*zy));
 #endif
@@ -324,7 +330,7 @@ int linear_read(int *sumx, int *sumy)
 //  ret = dejitter_read(info->next, samp, nr);
     if ( Read_TouchPanel(sumx, sumy) > 0)
     {
-//sysprintf("Before X=%d, Y=%d\n",*sumx, *sumy);
+//printf("Before X=%d, Y=%d\n",*sumx, *sumy);
         xtemp = *sumx;
         ytemp = *sumy;
         *sumx = ( final_cal.a[2] +
@@ -333,7 +339,7 @@ int linear_read(int *sumx, int *sumy)
         *sumy = ( final_cal.a[5] +
                   final_cal.a[3]*xtemp +
                   final_cal.a[4]*ytemp ) / final_cal.a[6];
-//sysprintf("After X=%d, Y=%d\n",*sumx, *sumy);
+//printf("After X=%d, Y=%d\n",*sumx, *sumy);
         return 1;
     }
     else
@@ -356,12 +362,13 @@ int ts_phy2log(int *sumx, int *sumy)
     *sumy = ( final_cal.a[5] +
               final_cal.a[3]*xtemp +
               final_cal.a[4]*ytemp ) / final_cal.a[6];
-//sysprintf("After X=%d, Y=%d\n",*sumx, *sumy);
+//printf("After X=%d, Y=%d\n",*sumx, *sumy);
     return 1;
 }
 
 int ts_writefile(void)
 {
+#ifdef __USE_SD__
     size_t cnt;
     FRESULT res;
     res = f_lseek(&hFile, 0);
@@ -377,11 +384,22 @@ int ts_writefile(void)
         printf("CANNOT write the calibration into file, %d\n", cnt);
         return -1;
     }
+#else
+    FMC_Write(__DEMO_TSFILE_ADDR__ + 0x00, final_cal.a[0]);
+    FMC_Write(__DEMO_TSFILE_ADDR__ + 0x04, final_cal.a[1]);
+    FMC_Write(__DEMO_TSFILE_ADDR__ + 0x08, final_cal.a[2]);
+    FMC_Write(__DEMO_TSFILE_ADDR__ + 0x0C, final_cal.a[3]);
+    FMC_Write(__DEMO_TSFILE_ADDR__ + 0x10, final_cal.a[4]);
+    FMC_Write(__DEMO_TSFILE_ADDR__ + 0x14, final_cal.a[5]);
+    FMC_Write(__DEMO_TSFILE_ADDR__ + 0x18, final_cal.a[6]);
+    FMC_Write(__DEMO_TSFILE_ADDR__ + 0x1C, 0x55AAA55A);
+#endif
     return 0;
 }
 
 int ts_readfile(void)
 {
+#ifdef __USE_SD__
     size_t cnt;
     FRESULT res;
     res = f_lseek(&hFile, 0);
@@ -397,5 +415,14 @@ int ts_readfile(void)
         printf("CANNOT read the calibration into file, %d\n", cnt);
         return -1;
     }
+#else
+    final_cal.a[0] = FMC_Read(__DEMO_TSFILE_ADDR__ + 0x00);
+    final_cal.a[1] = FMC_Read(__DEMO_TSFILE_ADDR__ + 0x04);
+    final_cal.a[2] = FMC_Read(__DEMO_TSFILE_ADDR__ + 0x08);
+    final_cal.a[3] = FMC_Read(__DEMO_TSFILE_ADDR__ + 0x0C);
+    final_cal.a[4] = FMC_Read(__DEMO_TSFILE_ADDR__ + 0x10);
+    final_cal.a[5] = FMC_Read(__DEMO_TSFILE_ADDR__ + 0x14);
+    final_cal.a[6] = FMC_Read(__DEMO_TSFILE_ADDR__ + 0x18);
+#endif
     return 0;
 }

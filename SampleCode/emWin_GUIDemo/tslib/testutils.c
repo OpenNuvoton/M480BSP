@@ -23,7 +23,7 @@
 #include "tslib.h"
 #include "fbutils.h"
 #include "M48XTouchPanel.h"
-#include "gui.h"
+#include "GUI.h"
 
 static int sort_by_x(const void* a, const void *b)
 {
@@ -74,7 +74,7 @@ again:
             samp[index].pressure = 0;
         }
 
-//      sysprintf("%d %d %d\n", samp[index].x, samp[index].y , samp[index].pressure);
+//      printf("%d %d %d\n", samp[index].x, samp[index].y , samp[index].pressure);
     }
     while (samp[index].pressure > 0);
     //printf("Took %d samples...\n",index);
@@ -123,9 +123,9 @@ extern int ts_phy2log(int *sumx, int *sumy);
 static int palette [] =
 {
     /*0x000000, 0xffe080, 0xffffff, 0xe0c0a0, 0x304050, 0x80b8c0*/
-    0x000000, 0x80e0ff, 0xffffff, 0xa0c0e0, 0x504030, 0xc0b880,
-    0x7F1F00, 0x20201F, 0x5F3F1F, 0xAFBFCF, 0xF080D0, 0x3F477F,
-    207820
+    GUI_MAKE_COLOR(0x000000), GUI_MAKE_COLOR(0x80e0ff), GUI_MAKE_COLOR(0xffffff), GUI_MAKE_COLOR(0xa0c0e0), GUI_MAKE_COLOR(0x504030), GUI_MAKE_COLOR(0xc0b880),
+    GUI_MAKE_COLOR(0x7F1F00), GUI_MAKE_COLOR(0x20201F), GUI_MAKE_COLOR(0x5F3F1F), GUI_MAKE_COLOR(0xAFBFCF), GUI_MAKE_COLOR(0xF080D0), GUI_MAKE_COLOR(0x3F477F),
+    GUI_MAKE_COLOR(0x207820)
 };
 #define NR_COLORS (sizeof (palette) / sizeof (palette [0]))
 

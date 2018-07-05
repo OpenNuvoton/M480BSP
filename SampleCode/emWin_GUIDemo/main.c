@@ -1,7 +1,7 @@
 /**************************************************************************//**
  * @file     main.c
- * @version  V1.01
- * @brief    emWin demo application
+ * @version  V1.02
+ * @brief    To utilize emWin library to demonstrate  widgets feature.
  *
  * @copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
@@ -15,19 +15,25 @@
 
 #include "LCDConf.h"
 
+#ifdef __USE_SD__
 #include "diskio.h"
 #include "ff.h"
+#endif
+
 #include "M48XTouchPanel.h"
 
+#ifdef __USE_SD__
 //FATFS FatFs[_VOLUMES];      /* File system object for logical drive */
 
 __align(32) BYTE Buff[1024] ;       /* Working buffer */
 
 FIL hFile;
+#endif
 
 extern int ts_writefile(void);
 extern int ts_readfile(void);
 
+#ifdef __USE_SD__
 /*---------------------------------------------------------*/
 /* User Provided RTC Function for FatFs module             */
 /*---------------------------------------------------------*/
@@ -44,6 +50,7 @@ unsigned long get_fattime (void)
 
     return tmr;
 }
+#endif
 
 extern volatile GUI_TIMER_TIME OS_TimeMS;
 
@@ -102,6 +109,7 @@ static void _SYS_Init(void)
     CLK->AHBCLK |= (1 << 14);  // 128k~160k for SPIM
     outpw(0x40007004,0x16);  // control SPIM can write
 
+#ifdef __USE_SD__
     SYS->GPE_MFPL &= ~(SYS_GPE_MFPL_PE7MFP_Msk     | SYS_GPE_MFPL_PE6MFP_Msk     | SYS_GPE_MFPL_PE3MFP_Msk      | SYS_GPE_MFPL_PE2MFP_Msk);
     SYS->GPE_MFPL |=  (SYS_GPE_MFPL_PE7MFP_SD0_CMD | SYS_GPE_MFPL_PE6MFP_SD0_CLK | SYS_GPE_MFPL_PE3MFP_SD0_DAT1 | SYS_GPE_MFPL_PE2MFP_SD0_DAT0);
 
@@ -113,6 +121,7 @@ static void _SYS_Init(void)
 
     /* Enable IP clock */
     CLK->AHBCLK |= CLK_AHBCLK_SDH0CKEN_Msk; // SD Card driving clock.
+#endif
 
     /* Update System Core Clock */
     /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock. */
@@ -133,6 +142,7 @@ static void _SYS_Init(void)
     SYS_LockReg();
 }
 
+#ifdef __USE_SD__
 #define TEST_SDH    SDH0
 
 void SDH0_IRQHandler(void)
@@ -214,23 +224,8 @@ void SDH0_IRQHandler(void)
         TEST_SDH->INTSTS |= SDH_INTSTS_RTOIF_Msk;
     }
 }
+#endif
 
-// CFLi add these aviod build error
-void GUI_X_Unlock   (void)
-{
-}
-void GUI_X_Lock     (void)
-{
-}
-U32  GUI_X_GetTaskId(void)
-{
-    return 0;
-}
-void GUI_X_InitOS   (void)
-{
-}
-
-WM_HWIN CreateFramewin(void);
 int ts_calibrate(int xsize, int ysize);
 volatile int g_enable_Touch;
 void MainTask(void);
@@ -242,8 +237,8 @@ void MainTask(void);
 
 void TMR0_IRQHandler(void)
 {
-//    PA9 ^= 1;
     OS_TimeMS++;
+#if GUI_SUPPORT_TOUCH
     if ( OS_TimeMS % 10 == 0 )
     {
         if ( g_enable_Touch == 1 )
@@ -251,14 +246,14 @@ void TMR0_IRQHandler(void)
             GUI_TOUCH_Exec();
         }
     }
+#endif
     TIMER_ClearIntFlag(TIMER0);
 }
 
 
 void SysTick_Handler(void)
 {
-//  PA9 ^= 1;
-    //OS_TimeMS++;
+
 }
 
 /*********************************************************************
@@ -274,7 +269,10 @@ void SysTick_Handler(void)
 
 int main(void)
 {
+#ifdef __USE_SD__
     FRESULT     res;
+#endif
+
 //    uint32_t i;
 //    GUI_COLOR aColor[] = {GUI_RED, GUI_YELLOW};
 
@@ -287,9 +285,7 @@ int main(void)
     //
     UART_Open(UART0, 115200);
 
-#ifdef GUI_SUPPORT_TOUCH
     g_enable_Touch = 0;
-#endif
 
     // Enable Timer0 clock and select Timer0 clock source
     //
@@ -312,9 +308,12 @@ int main(void)
 //    SysTick_Config(SystemCoreClock / 1000);
     printf("\n\nCPU @ %d Hz\n", SystemCoreClock);
 
-#ifdef GUI_SUPPORT_TOUCH
+#if GUI_SUPPORT_TOUCH
+    GUI_Init();
+
     Init_TouchPanel();
 
+#ifdef __USE_SD__
     SDH_Open_Disk(TEST_SDH, CardDetect_From_GPIO);
     printf("rc=%d\n", (WORD)disk_initialize(0));
     disk_read(0, Buff, 2, 1);
@@ -332,7 +331,7 @@ int main(void)
             while(1);
         }
 
-        ts_calibrate(320, 240);
+        ts_calibrate(__DEMO_TS_WIDTH__, __DEMO_TS_HEIGHT__);
         //GUI_SetDrawMode(GUI_DRAWMODE_NORMAL);
         ts_writefile();
     }
@@ -341,9 +340,38 @@ int main(void)
         ts_readfile();
     }
     f_close(&hFile);
+#else
+    /* Unlock protected registers */
+    SYS_UnlockReg();
+
+    /* Enable FMC ISP function */
+    FMC_Open();
+
+    /* SPI flash 256KB + 0x1C marker address */
+    //if (FMC_Read(__DEMO_TSFILE_ADDR__ + 0x1C) != 0x55AAA55A)
+    if ( 1 )
+    {
+        FMC_ENABLE_AP_UPDATE();
+        ts_calibrate(__DEMO_TS_WIDTH__, __DEMO_TS_HEIGHT__);
+        // Erase page
+        FMC_Erase(__DEMO_TSFILE_ADDR__);
+        ts_writefile();
+        FMC_DISABLE_AP_UPDATE();
+    }
+    else
+    {
+        ts_readfile();
+    }
+
+    /* Disable FMC ISP function */
+    FMC_Close();
+
+    /* Lock protected registers */
+    SYS_LockReg();
+#endif
+#endif
 
     g_enable_Touch = 1;
-#endif
 
     //
     // Start application

@@ -24,6 +24,7 @@
 #include "fbutils.h"
 //#include "wbtypes.h"
 //#include "LCDconf.h"
+#include "M48XTouchPanel.h"
 #include "GUI.h"
 #if 0
 union multiptr
@@ -39,7 +40,7 @@ union multiptr
 static int bytes_per_pixel=2;
 static unsigned colormap [13];
 static unsigned colormap2[13];
-unsigned int xres=320, yres=240;
+unsigned int xres=__DEMO_TS_WIDTH__, yres=__DEMO_TS_HEIGHT__;
 
 int red_length = 5;
 int green_length = 6;
@@ -189,8 +190,8 @@ void pixel (int x, int y, unsigned colidx)
     unsigned color, color2;
     //union multiptr loc;
 
-    if ((x < 0) || (x >= 320) ||
-            (y < 0) || (y >= 240))
+    if ((x < 0) || (x >= __DEMO_TS_WIDTH__) ||
+            (y < 0) || (y >= __DEMO_TS_HEIGHT__))
         return;
 
     xormode = colidx & XORMODE;

@@ -477,7 +477,7 @@ static void _InitController(void)
 *
 **********************************************************************
 */
-
+#if GUI_SUPPORT_TOUCH
 extern int ts_phy2log(int *sumx, int *sumy);
 
 void GUI_TOUCH_X_ActivateX(void) {
@@ -511,7 +511,7 @@ int  GUI_TOUCH_X_MeasureY(void) {
 	}
 	return -1;
 }
-
+#endif
 /*********************************************************************
 *
 *       LCD_X_Config
@@ -554,13 +554,15 @@ void LCD_X_Config(void)
     PortAPI.pfReadM16_A1  = LcdReadDataMultiple;
     GUIDRV_FlexColor_SetReadFunc66709_B16(pDevice, GUIDRV_FLEXCOLOR_READ_FUNC_III);
     GUIDRV_FlexColor_SetFunc(pDevice, &PortAPI, GUIDRV_FLEXCOLOR_F66709, GUIDRV_FLEXCOLOR_M16C0B16);
-    
+
+#if GUI_SUPPORT_TOUCH
 // LCD calibration
 //
 // Calibrate touch screen
 //
-	GUI_TOUCH_Calibrate(GUI_COORD_X, 0, 320, 0, 320);
-    GUI_TOUCH_Calibrate(GUI_COORD_Y, 0, 240, 0, 240);
+    GUI_TOUCH_Calibrate(GUI_COORD_X, 0, (__DEMO_TS_WIDTH__ - 1), 0, (__DEMO_TS_WIDTH__ - 1));
+    GUI_TOUCH_Calibrate(GUI_COORD_Y, 0, (__DEMO_TS_HEIGHT__-  1), 0, (__DEMO_TS_HEIGHT__-  1));
+#endif
 }
 /*********************************************************************
 *
