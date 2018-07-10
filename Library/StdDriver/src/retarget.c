@@ -537,8 +537,8 @@ static void SendChar(int ch)
 
             for(i = 0; i < g_buf_len; i++)
                 SendChar_ToUART(g_buf[i]);
-            g_buf_len = 0;
 #endif
+            g_buf_len = 0;
         }
     }
 #else
