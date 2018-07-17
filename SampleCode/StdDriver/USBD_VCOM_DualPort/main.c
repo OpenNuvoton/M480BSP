@@ -152,7 +152,7 @@ void UART0_IRQHandler(void)
         /* Receiver FIFO threshold level is reached or Rx time out */
 
         /* Get all the input characters */
-        while (!(UART0->FIFOSTS & UART_FIFOSTS_TXEMPTY_Msk))
+        while (!(UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk))
         {
             /* Get the character from UART Buffer */
             bInChar = UART0->DAT;
@@ -216,7 +216,7 @@ void UART1_IRQHandler(void)
         /* Receiver FIFO threshold level is reached or Rx time out */
 
         /* Get all the input characters */
-        while (!(UART1->FIFOSTS & UART_FIFOSTS_TXEMPTY_Msk))
+        while (!(UART1->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk))
         {
             /* Get the character from UART Buffer */
             bInChar = UART1->DAT;

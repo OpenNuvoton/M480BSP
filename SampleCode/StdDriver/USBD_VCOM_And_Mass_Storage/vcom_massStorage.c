@@ -463,9 +463,9 @@ void VCOM_LineCoding(uint8_t port)
         u32Baud_Div = UART_BAUD_MODE0_DIVIDER(__HXT, gLineCoding.u32DTERate);
 
         if(u32Baud_Div > 0xFFFF)
-            UART0->BAUD = (UART_BAUD_MODE2 | UART_BAUD_MODE0_DIVIDER(__HXT, gLineCoding.u32DTERate));
+            UART0->BAUD = (UART_BAUD_MODE0 | UART_BAUD_MODE0_DIVIDER(__HXT, gLineCoding.u32DTERate));
         else
-            UART0->BAUD = (UART_BAUD_MODE0 | u32Baud_Div);
+            UART0->BAUD = (UART_BAUD_MODE2 | u32Baud_Div);
 
         // Set parity
         if(gLineCoding.u8ParityType == 0)
