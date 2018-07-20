@@ -472,12 +472,15 @@ void SYS_Init(void)
     /********************************************************************************/
     /* SDH0 */
     /* select multi-function pin */
-    SYS->GPE_MFPL &= ~(SYS_GPE_MFPL_PE6MFP_Msk|SYS_GPE_MFPL_PE5MFP_Msk|SYS_GPE_MFPL_PE4MFP_Msk|SYS_GPE_MFPL_PE3MFP_Msk|
-                       SYS_GPE_MFPL_PE2MFP_Msk|SYS_GPE_MFPL_PE7MFP_Msk);
-    SYS->GPD_MFPH &= ~SYS_GPD_MFPH_PD13MFP_Msk;
-    SYS->GPE_MFPL |= (SYS_GPE_MFPL_PE2MFP_SD0_DAT0|SYS_GPE_MFPL_PE3MFP_SD0_DAT1|SYS_GPE_MFPL_PE4MFP_SD0_DAT2|SYS_GPE_MFPL_PE5MFP_SD0_DAT3|
-                      SYS_GPE_MFPL_PE6MFP_SD0_CLK|SYS_GPE_MFPL_PE7MFP_SD0_CMD);
-    SYS->GPD_MFPH |= SYS_GPD_MFPH_PD13MFP_SD0_nCD;
+    SYS->GPE_MFPL &= ~(SYS_GPE_MFPL_PE7MFP_Msk     | SYS_GPE_MFPL_PE6MFP_Msk     | SYS_GPE_MFPL_PE3MFP_Msk      | SYS_GPE_MFPL_PE2MFP_Msk);
+    SYS->GPE_MFPL |=  (SYS_GPE_MFPL_PE7MFP_SD0_CMD | SYS_GPE_MFPL_PE6MFP_SD0_CLK | SYS_GPE_MFPL_PE3MFP_SD0_DAT1 | SYS_GPE_MFPL_PE2MFP_SD0_DAT0);
+
+    SYS->GPB_MFPL &= ~(SYS_GPB_MFPL_PB5MFP_Msk      | SYS_GPB_MFPL_PB4MFP_Msk);
+    SYS->GPB_MFPL |=  (SYS_GPB_MFPL_PB5MFP_SD0_DAT3 | SYS_GPB_MFPL_PB4MFP_SD0_DAT2);
+
+    SYS->GPD_MFPH &= ~(SYS_GPD_MFPH_PD13MFP_Msk);
+    SYS->GPD_MFPH |=  (SYS_GPD_MFPH_PD13MFP_SD0_nCD);
+
 
     /********************************************************************************/
     /* SDH1 */
