@@ -101,8 +101,8 @@ int32_t main(void)
     /* Set DAC 12-bit holding data */
     DAC_WRITE_DATA(DAC0, 0, 0x400);
 
-    /* Configure ACMP1. Enable ACMP1 and select band-gap voltage as the source of ACMP negative input. */
-    ACMP_Open(ACMP01, 1, ACMP_CTL_NEGSEL_VBG, ACMP_CTL_HYSTERESIS_DISABLE);
+    /* Configure ACMP1. Enable ACMP1 and select DAC0 output as the source of ACMP negative input. */
+    ACMP_Open(ACMP01, 1, ACMP_CTL_NEGSEL_DAC, ACMP_CTL_HYSTERESIS_DISABLE);
     /* Select P1 as ACMP positive input channel */
     ACMP_SELECT_P(ACMP01, 1, ACMP_CTL_POSSEL_P1);
     /* Enable interrupt */
