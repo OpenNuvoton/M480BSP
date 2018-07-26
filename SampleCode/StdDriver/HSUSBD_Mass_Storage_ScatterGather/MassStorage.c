@@ -290,6 +290,7 @@ void USBD20_IRQHandler(void)
         if (IrqSt & HSUSBD_CEPINTSTS_STSDONEIF_Msk)
         {
             HSUSBD_UpdateDeviceState();
+            HSUSBD->CEPCTL &= ~HSUSBD_CEPCTL_ZEROLEN;
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_STSDONEIF_Msk);
             HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_SETUPPKIEN_Msk);
             return;
