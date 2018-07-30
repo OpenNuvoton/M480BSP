@@ -58,7 +58,7 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 /*  GPIO Slew Rate Type Constant Definitions                                                               */
 /*---------------------------------------------------------------------------------------------------------*/
-#define GPIO_SLEWCTL_NORMAL         0x0UL           /*!< GPIO slew setting for nornal Mode \hideinitializer */
+#define GPIO_SLEWCTL_NORMAL         0x0UL           /*!< GPIO slew setting for normal Mode \hideinitializer */
 #define GPIO_SLEWCTL_HIGH           0x1UL           /*!< GPIO slew setting for high Mode \hideinitializer */
 #define GPIO_SLEWCTL_FAST           0x2UL           /*!< GPIO slew setting for fast Mode \hideinitializer */
 
