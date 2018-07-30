@@ -182,6 +182,7 @@ void USBD_GetDescriptor(void)
 {
     uint32_t u32Len;
 
+    g_usbd_CtrlInZeroFlag = (uint8_t)0ul;
     u32Len = 0ul;
     u32Len = g_usbd_SetupPacket[7];
     u32Len <<= 8ul;
@@ -205,7 +206,14 @@ void USBD_GetDescriptor(void)
         u32TotalLen = g_usbd_sInfo->gu8ConfigDesc[3];
         u32TotalLen = g_usbd_sInfo->gu8ConfigDesc[2] + (u32TotalLen << 8);
 
-        u32Len = USBD_Minimum(u32Len, u32TotalLen);
+        if (u32Len > u32TotalLen)
+        {
+            u32Len = u32TotalLen;
+            if ((u32Len % g_usbd_CtrlMaxPktSize) == 0ul)
+            {
+                g_usbd_CtrlInZeroFlag = (uint8_t)1ul;
+            }
+        }
         USBD_PrepareCtrlIn((uint8_t *)g_usbd_sInfo->gu8ConfigDesc, u32Len);
 
         break;
@@ -233,7 +241,14 @@ void USBD_GetDescriptor(void)
     /* Get Report Descriptor */
     case DESC_HID_RPT:
     {
-        u32Len = USBD_Minimum(u32Len, g_usbd_sInfo->gu32HidReportSize[g_usbd_SetupPacket[4]]);
+        if (u32Len > g_usbd_sInfo->gu32HidReportSize[g_usbd_SetupPacket[4]])
+        {
+            u32Len = g_usbd_sInfo->gu32HidReportSize[g_usbd_SetupPacket[4]];
+            if ((u32Len % g_usbd_CtrlMaxPktSize) == 0ul)
+            {
+                g_usbd_CtrlInZeroFlag = (uint8_t)1ul;
+            }
+        }
         USBD_PrepareCtrlIn((uint8_t *)g_usbd_sInfo->gu8HidReportDesc[g_usbd_SetupPacket[4]], u32Len);
         break;
     }
@@ -243,7 +258,14 @@ void USBD_GetDescriptor(void)
         /* Get String Descriptor */
         if(g_usbd_SetupPacket[2] < 4ul)
         {
-            u32Len = USBD_Minimum(u32Len, g_usbd_sInfo->gu8StringDesc[g_usbd_SetupPacket[2]][0]);
+            if (u32Len > g_usbd_sInfo->gu8StringDesc[g_usbd_SetupPacket[2]][0])
+            {
+                u32Len = g_usbd_sInfo->gu8StringDesc[g_usbd_SetupPacket[2]][0];
+                if ((u32Len % g_usbd_CtrlMaxPktSize) == 0ul)
+                {
+                    g_usbd_CtrlInZeroFlag = (uint8_t)1ul;
+                }
+            }
             USBD_PrepareCtrlIn((uint8_t *)g_usbd_sInfo->gu8StringDesc[g_usbd_SetupPacket[2]], u32Len);
 
 
@@ -502,10 +524,6 @@ void USBD_PrepareCtrlIn(uint8_t pu8Buf[], uint32_t u32Size)
         /* Data size <= MXPLD */
         g_usbd_CtrlInPointer = 0;
         g_usbd_CtrlInSize = 0ul;
-        if (u32Size == g_usbd_CtrlMaxPktSize)
-        {
-            g_usbd_CtrlInZeroFlag = (uint8_t)1ul;
-        }
         USBD_SET_DATA1(EP0);
         addr = USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0);
         USBD_MemCopy((uint8_t *)addr, pu8Buf, u32Size);
@@ -545,10 +563,6 @@ void USBD_CtrlIn(void)
             addr = USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0);
             USBD_MemCopy((uint8_t *)addr, (uint8_t *)g_usbd_CtrlInPointer, g_usbd_CtrlInSize);
             USBD_SET_PAYLOAD_LEN(EP0, g_usbd_CtrlInSize);
-            if(g_usbd_CtrlInSize == g_usbd_CtrlMaxPktSize)
-            {
-                g_usbd_CtrlInZeroFlag = (uint8_t)1ul;
-            }
             g_usbd_CtrlInPointer = 0;
             g_usbd_CtrlInSize = 0ul;
         }

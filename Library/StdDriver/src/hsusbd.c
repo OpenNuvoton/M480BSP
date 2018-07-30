@@ -189,10 +189,13 @@ int HSUSBD_GetDescriptor(void)
             u32TotalLen = g_hsusbd_sInfo->gu8ConfigDesc[3];
             u32TotalLen = g_hsusbd_sInfo->gu8ConfigDesc[2] + (u32TotalLen << 8);
 
-            u32Len = Minimum(u32Len, u32TotalLen);
-            if ((u32Len % g_hsusbd_CtrlMaxPktSize) == 0ul)
+            if (u32Len > u32TotalLen)
             {
-                g_hsusbd_CtrlZero = (uint8_t)1ul;
+                u32Len = u32TotalLen;
+                if ((u32Len % g_hsusbd_CtrlMaxPktSize) == 0ul)
+                {
+                    g_hsusbd_CtrlZero = (uint8_t)1ul;
+                }
             }
             HSUSBD_PrepareCtrlIn((uint8_t *)g_hsusbd_sInfo->gu8ConfigDesc, u32Len);
         }
@@ -201,12 +204,14 @@ int HSUSBD_GetDescriptor(void)
             u32TotalLen = g_hsusbd_sInfo->gu8FullConfigDesc[3];
             u32TotalLen = g_hsusbd_sInfo->gu8FullConfigDesc[2] + (u32TotalLen << 8);
 
-            u32Len = Minimum(u32Len, u32TotalLen);
-            if ((u32Len % g_hsusbd_CtrlMaxPktSize) == 0ul)
+            if (u32Len > u32TotalLen)
             {
-                g_hsusbd_CtrlZero = (uint8_t)1ul;
+                u32Len = u32TotalLen;
+                if ((u32Len % g_hsusbd_CtrlMaxPktSize) == 0ul)
+                {
+                    g_hsusbd_CtrlZero = (uint8_t)1ul;
+                }
             }
-
             HSUSBD_PrepareCtrlIn((uint8_t *)g_hsusbd_sInfo->gu8FullConfigDesc, u32Len);
         }
 
@@ -228,12 +233,14 @@ int HSUSBD_GetDescriptor(void)
             u32TotalLen = g_hsusbd_sInfo->gu8HSOtherConfigDesc[3];
             u32TotalLen = g_hsusbd_sInfo->gu8HSOtherConfigDesc[2] + (u32TotalLen << 8);
 
-            u32Len = Minimum(u32Len, u32TotalLen);
-            if ((u32Len % g_hsusbd_CtrlMaxPktSize) == 0ul)
+            if (u32Len > u32TotalLen)
             {
-                g_hsusbd_CtrlZero = (uint8_t)1ul;
+                u32Len = u32TotalLen;
+                if ((u32Len % g_hsusbd_CtrlMaxPktSize) == 0ul)
+                {
+                    g_hsusbd_CtrlZero = (uint8_t)1ul;
+                }
             }
-
             HSUSBD_PrepareCtrlIn((uint8_t *)g_hsusbd_sInfo->gu8HSOtherConfigDesc, u32Len);
         }
         else
@@ -241,12 +248,14 @@ int HSUSBD_GetDescriptor(void)
             u32TotalLen = g_hsusbd_sInfo->gu8FSOtherConfigDesc[3];
             u32TotalLen = g_hsusbd_sInfo->gu8FSOtherConfigDesc[2] + (u32TotalLen << 8);
 
-            u32Len = Minimum(u32Len, u32TotalLen);
-            if ((u32Len % g_hsusbd_CtrlMaxPktSize) == 0ul)
+            if (u32Len > u32TotalLen)
             {
-                g_hsusbd_CtrlZero = (uint8_t)1ul;
+                u32Len = u32TotalLen;
+                if ((u32Len % g_hsusbd_CtrlMaxPktSize) == 0ul)
+                {
+                    g_hsusbd_CtrlZero = (uint8_t)1ul;
+                }
             }
-
             HSUSBD_PrepareCtrlIn((uint8_t *)g_hsusbd_sInfo->gu8FSOtherConfigDesc, u32Len);
         }
 
@@ -263,19 +272,28 @@ int HSUSBD_GetDescriptor(void)
     /* Get Report Descriptor */
     case DESC_HID_RPT:
     {
-        if ((u32Len % g_hsusbd_CtrlMaxPktSize) == 0ul)
-        {
-            g_hsusbd_CtrlZero = (uint8_t)1ul;
-        }
-
         if ((HSUSBD->OPER & 0x04ul) == 0x04ul)
         {
-            u32Len = Minimum(u32Len, g_hsusbd_sInfo->gu32HidReportSize[gUsbCmd.wIndex & 0xfful]);
+            if (u32Len > g_hsusbd_sInfo->gu32HidReportSize[gUsbCmd.wIndex & 0xfful])
+            {
+                u32Len = g_hsusbd_sInfo->gu32HidReportSize[gUsbCmd.wIndex & 0xfful];
+                if ((u32Len % g_hsusbd_CtrlMaxPktSize) == 0ul)
+                {
+                    g_hsusbd_CtrlZero = (uint8_t)1ul;
+                }
+            }
             HSUSBD_PrepareCtrlIn((uint8_t *)g_hsusbd_sInfo->gu8HidReportDesc[gUsbCmd.wIndex & 0xfful], u32Len);
         }
         else
         {
-            u32Len = Minimum(u32Len, g_hsusbd_sInfo->gu32FSHidReportSize[gUsbCmd.wIndex & 0xfful]);
+            if (u32Len > g_hsusbd_sInfo->gu32FSHidReportSize[gUsbCmd.wIndex & 0xfful])
+            {
+                u32Len = g_hsusbd_sInfo->gu32FSHidReportSize[gUsbCmd.wIndex & 0xfful];
+                if ((u32Len % g_hsusbd_CtrlMaxPktSize) == 0ul)
+                {
+                    g_hsusbd_CtrlZero = (uint8_t)1ul;
+                }
+            }
             HSUSBD_PrepareCtrlIn((uint8_t *)g_hsusbd_sInfo->gu8FSHidReportDesc[gUsbCmd.wIndex & 0xfful], u32Len);
         }
         break;
@@ -285,10 +303,13 @@ int HSUSBD_GetDescriptor(void)
     {
         if((gUsbCmd.wValue & 0xfful) < 8ul)
         {
-            u32Len = Minimum(u32Len, g_hsusbd_sInfo->gu8StringDesc[gUsbCmd.wValue & 0xfful][0]);
-            if ((u32Len % g_hsusbd_CtrlMaxPktSize) == 0ul)
+            if (u32Len > g_hsusbd_sInfo->gu8StringDesc[gUsbCmd.wValue & 0xfful][0])
             {
-                g_hsusbd_CtrlZero = (uint8_t)1ul;
+                u32Len = g_hsusbd_sInfo->gu8StringDesc[gUsbCmd.wValue & 0xfful][0];
+                if ((u32Len % g_hsusbd_CtrlMaxPktSize) == 0ul)
+                {
+                    g_hsusbd_CtrlZero = (uint8_t)1ul;
+                }
             }
             HSUSBD_PrepareCtrlIn((uint8_t *)g_hsusbd_sInfo->gu8StringDesc[gUsbCmd.wValue & 0xfful], u32Len);
         }
