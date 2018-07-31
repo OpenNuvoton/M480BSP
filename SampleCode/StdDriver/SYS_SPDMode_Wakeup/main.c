@@ -223,7 +223,7 @@ void  WakeUpRTCAlarmFunction(uint32_t u32PDMode)
 }
 
 /*-----------------------------------------------------------------------------------------------------------*/
-/*  Function for System Entry to Power Down Mode and Wake up source by RTC Alarm                             */
+/*  Function for System Entry to Power Down Mode and Wake up source by RTC Tamper pins                       */
 /*-----------------------------------------------------------------------------------------------------------*/
 void  WakeUpRTCTamperFunction(uint32_t u32PDMode)
 {
