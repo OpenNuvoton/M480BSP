@@ -87,7 +87,7 @@ void EADC_FunctionTest()
     printf("+----------------------------------------------------------------------+\n");
 
     /* Set the EADC and enable the A/D converter */
-    EADC_Open(EADC, NULL);
+    EADC_Open(EADC, (uint32_t)NULL);
 
     while (1)
     {
