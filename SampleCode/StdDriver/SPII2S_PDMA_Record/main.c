@@ -134,7 +134,7 @@ int32_t main(void)
     printf("RX Buffer 1\tRX Buffer 2\n");
 
     /* Print the received data */
-    for(u32DataCount = 0; u32DataCount < 12; u32DataCount++)
+    for(u32DataCount = 0; u32DataCount < BUFF_LEN; u32DataCount++)
     {
         printf("0x%X\t\t0x%X\n", PcmRxBuff[0][u32DataCount], PcmRxBuff[1][u32DataCount]);
     }
