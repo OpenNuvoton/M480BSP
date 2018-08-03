@@ -406,7 +406,7 @@ int32_t main(void)
     I2C_SET_CONTROL_REG(I2C1, I2C_CTL_SI_AA);
 
     /* Clear Slave receive data buffer */
-    for(i = 0; i < 0x200; i++)
+    for(i = 0; i < 256; i++)
     {
         g_au8SlvData[i] = 0;
     }
