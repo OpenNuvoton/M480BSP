@@ -63,6 +63,7 @@ Purpose     : Introduction for emWin generic demo
 
 #define DIST_ANY_COMP      18
 
+volatile static char s_u8ShowNuvotonQRCodeFlag;
 /*********************************************************************
 *
 *       GUIDEMO_Intro
@@ -81,6 +82,22 @@ void GUIDEMO_Intro(void)
     xCenter = xSize / 2;
     GUIDEMO_DrawBk();
     GUI_SetTextMode(GUI_TM_TRANS);
+
+    //
+    // QR-Code for Nuvoton HMI www.nuvoton.com
+    //
+    if (s_u8ShowNuvotonQRCodeFlag)
+    {
+        GUI_SetBkColor(GUI_WHITE);
+        GUI_Clear();
+        GUI_DrawBitmap(&bmnuvoton_qrcode, (xSize - bmnuvoton_qrcode.XSize) >> 1, (ySize - bmnuvoton_qrcode.YSize) >> 1);
+        GUI_SetColor(GUI_RED);
+        GUI_SetFont(&GUI_FontRounded22);
+        GUI_DispStringHCenterAt("www.nuvoton.com", xCenter, 6);
+        GUIDEMO_Delay(3000);
+        GUIDEMO_DrawBk();
+    }
+    s_u8ShowNuvotonQRCodeFlag = 1;
     //
     // emWin
     //
@@ -112,13 +129,13 @@ void GUIDEMO_Intro(void)
     //
     // Logo
     //
-    GUI_DrawBitmap(&bmSeggerLogo, (xSize - bmSeggerLogo.XSize) >> 1, (FACTOR_LOGO * ySize) >> SCREEN_DIV);
+    GUI_DrawBitmap(&bmnuvoton_logo_140x70, (xSize - bmnuvoton_logo_140x70.XSize) >> 1, (FACTOR_LOGO * ySize) >> SCREEN_DIV);
     //
     // www.segger.com
     //
     GUI_SetColor(GUI_WHITE);
     GUI_SetFont(&GUI_FontRounded22);
-    GUI_DispStringHCenterAt("www.segger.com", xCenter, (FACTOR_WWW * ySize) >> SCREEN_DIV);
+    GUI_DispStringHCenterAt("www.nuvoton.com", xCenter - 4, (FACTOR_WWW * ySize) >> SCREEN_DIV);
     GUIDEMO_Delay(5000);
 }
 

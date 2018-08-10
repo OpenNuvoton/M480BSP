@@ -304,6 +304,7 @@ static void _DrawBk(void)
     ySize = LCD_GetYSize();
     GUI_DrawGradientV(0, 0, xSize, ySize, BK_COLOR_0, BK_COLOR_1);
     GUI_DrawBitmap(&bmSeggerLogo70x35, LOGO_DIST_BORDER, LOGO_DIST_BORDER);
+    GUI_DrawBitmap(&bmnuvoton_logo_70x35, LOGO_DIST_BORDER, LOGO_DIST_BORDER+bmnuvoton_logo_70x35.YSize);
 }
 #endif
 
@@ -362,6 +363,7 @@ static void _DrawBkCircle(void)
         // Putting logo into memory device avoids flickering effect
         //
         GUI_DrawBitmap(&bmSeggerLogo70x35, LOGO_DIST_BORDER, LOGO_DIST_BORDER);
+        GUI_DrawBitmap(&bmnuvoton_logo_70x35, LOGO_DIST_BORDER, LOGO_DIST_BORDER+bmnuvoton_logo_70x35.YSize);
         //
         // Delete helper devices
         //
@@ -382,6 +384,7 @@ static void _DrawBkSimple(void)
     GUI_SetBkColor(BK_COLOR_1);
     GUI_Clear();
     GUI_DrawBitmap(&bmSeggerLogo70x35, LOGO_DIST_BORDER, LOGO_DIST_BORDER);
+    GUI_DrawBitmap(&bmnuvoton_logo_70x35, LOGO_DIST_BORDER, LOGO_DIST_BORDER+bmnuvoton_logo_70x35.YSize);
 }
 
 /*********************************************************************

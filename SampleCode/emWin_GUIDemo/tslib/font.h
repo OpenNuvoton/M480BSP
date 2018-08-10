@@ -18,7 +18,7 @@ struct fbcon_font_desc
     int idx;
     char *name;
     int width, height;
-    unsigned char *data;
+    const unsigned char *data;
     int pref;
 };
 

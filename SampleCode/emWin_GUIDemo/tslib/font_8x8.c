@@ -8,7 +8,7 @@
 
 #define FONTDATAMAX 2048
 
-static unsigned char fontdata_8x8[FONTDATAMAX] =
+__align(4) static const unsigned char fontdata_8x8[FONTDATAMAX] =
 {
 
     /* 0 0x00 '^@' */

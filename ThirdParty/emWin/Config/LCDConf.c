@@ -447,6 +447,13 @@ void EBI_FuncPinInit(void)
 */
 static void _InitController(void)
 {
+    static uint8_t s_InitOnce = 0;
+
+    if (s_InitOnce == 0)
+        s_InitOnce = 1;
+    else
+        return;
+
     /* Configure DC/RESET/LED pins */
     EBI_FuncPinInit();
 
