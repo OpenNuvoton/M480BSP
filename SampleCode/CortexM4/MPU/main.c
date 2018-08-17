@@ -120,19 +120,19 @@ void MPU_Test(void)
     MPU->RASR = ((AP_Pri_RW_User_RW << MPU_RASR_AP_Pos)| ( Region_Size_16K << MPU_RASR_SIZE_Pos) | MPU_RASR_ENABLE_Msk);
 
     // Region 3 (Test Memory Space)
-    // Start address = 0x20003C00
-    // Permission = Read Only
+    // Start address = 0x20004000
+    // Permission = No Access
     // Size = 1KB
 
     // Base address = Base address :OR: Region number :OR: VALID bit
     MPU->RBAR = ((0x20004000 & MPU_RBAR_ADDR_Msk) | (0x3 & MPU_RBAR_REGION_Msk) | MPU_RBAR_VALID_Msk);
-    // Attribute = Read Only :OR: SRD = 0 :OR: Size = 16KB :OR: ENABLE
+    // Attribute = No Access :OR: SRD = 0 :OR: Size = 1KB :OR: ENABLE
     MPU->RASR = ((AP_No_Access << MPU_RASR_AP_Pos)| ( Region_Size_1K << MPU_RASR_SIZE_Pos) | MPU_RASR_ENABLE_Msk);
 
     // Enable MemFault enable bit
     SCB->SHCSR = SCB_SHCSR_MEMFAULTENA_Msk;
     // Enable MPU
-    MPU->CTRL = MPU_CTRL_ENABLE_Msk;
+    MPU->CTRL |= MPU_CTRL_PRIVDEFENA_Msk | MPU_CTRL_ENABLE_Msk;
 
     printf("\n Please Press '1' to read memory from region 1 (Flash Memory)");
 
