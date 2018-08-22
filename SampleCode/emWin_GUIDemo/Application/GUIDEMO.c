@@ -379,12 +379,18 @@ static void _DrawBkCircle(void)
 *
 *       _DrawBkSimple
 */
+volatile U8 g_u8GUIItem;
 static void _DrawBkSimple(void)
 {
     GUI_SetBkColor(BK_COLOR_1);
     GUI_Clear();
     GUI_DrawBitmap(&bmSeggerLogo70x35, LOGO_DIST_BORDER, LOGO_DIST_BORDER);
-    GUI_DrawBitmap(&bmnuvoton_logo_70x35, LOGO_DIST_BORDER, LOGO_DIST_BORDER+bmnuvoton_logo_70x35.YSize);
+    if (g_u8GUIItem == 1)
+        GUI_DrawBitmap(&bmnuvoton_logo_70x35, LOGO_DIST_BORDER+bmnuvoton_logo_70x35.XSize, LOGO_DIST_BORDER);
+    else if (g_u8GUIItem == 2)
+        GUI_DrawBitmap(&bmnuvoton_logo_70x35, (320 - bmnuvoton_logo_70x35.XSize), LOGO_DIST_BORDER);
+    else
+        GUI_DrawBitmap(&bmnuvoton_logo_70x35, LOGO_DIST_BORDER, LOGO_DIST_BORDER+bmnuvoton_logo_70x35.YSize);
 }
 
 /*********************************************************************
