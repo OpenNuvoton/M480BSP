@@ -427,6 +427,13 @@ int  write_file_to_flash(char *cmdline)
      */
     for (page_addr = faddr; page_addr < SPIM_FLASH_MAX_SIZE; page_addr += SPIM_FLASH_PAGE_SIZE)
     {
+        if (f_eof(&file))
+        {
+            printf("OK [%d]\n", res);
+            f_close(&file);             /* close file                                 */
+            return 0;                   /* done                                       */
+        }
+
         /* Erase SPIM flash */
         printf("Erase flash page 0x%x...\n", page_addr);
         SPIM_EraseBlock(page_addr, IS_4BYTES_ADDR, OPCODE_BE_64K, 1, 1);
