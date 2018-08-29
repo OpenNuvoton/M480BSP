@@ -126,7 +126,7 @@ typedef struct hub_dev_t
     uint16_t   sc_bitmap;              /*!< Hub and Port Status Change Bitmap     \hideinitializer */
     uint8_t    bNbrPorts;              /*!< Number of ports                       \hideinitializer */
     uint8_t    bPwrOn2PwrGood;         /*!< Hub power on to power good time       \hideinitializer */
-    char       pos_id[MAX_HUB_DEIVCE+1];   /*!< Hub position identifier           \hideinitializer */
+    char       pos_id[MAX_HUB_DEVICE+1];   /*!< Hub position identifier           \hideinitializer */
     int        (*port_reset)(struct hub_dev_t *hub, int port);/*!< Port reset function                   \hideinitializer */
     UDEV_T     *children;              /*!< Child device list.                    \hideinitializer */
 } HUB_DEV_T;

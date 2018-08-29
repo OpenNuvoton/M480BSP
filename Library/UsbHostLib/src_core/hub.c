@@ -23,14 +23,14 @@
 #define HUB_DBGMSG     printf
 //#define HUB_DBGMSG(...)
 
-static HUB_DEV_T  g_hub_dev[MAX_HUB_DEIVCE];
+static HUB_DEV_T  g_hub_dev[MAX_HUB_DEVICE];
 
 static int do_port_reset(HUB_DEV_T *hub, int port);
 
 static HUB_DEV_T *alloc_hub_device(void)
 {
     int     i;
-    for (i = 0; i < MAX_HUB_DEIVCE; i++)
+    for (i = 0; i < MAX_HUB_DEVICE; i++)
     {
         if (g_hub_dev[i].iface == NULL)
         {
@@ -45,7 +45,7 @@ static HUB_DEV_T *alloc_hub_device(void)
 static void  free_hub_device(HUB_DEV_T *hub_dev)
 {
     int     i;
-    for (i = 0; i < MAX_HUB_DEIVCE; i++)
+    for (i = 0; i < MAX_HUB_DEVICE; i++)
     {
         if (g_hub_dev[i].iface == hub_dev->iface)
         {
@@ -57,7 +57,7 @@ static void  free_hub_device(HUB_DEV_T *hub_dev)
 static HUB_DEV_T * find_hub_device(IFACE_T *iface)
 {
     int     i;
-    for (i = 0; i < MAX_HUB_DEIVCE; i++)
+    for (i = 0; i < MAX_HUB_DEVICE; i++)
     {
         if (g_hub_dev[i].iface == iface)
         {
@@ -567,7 +567,7 @@ static int  hub_polling(void)
 
     _hub_polling_mutex = 1;
 
-    for (i = 0; i < MAX_HUB_DEIVCE; i++)
+    for (i = 0; i < MAX_HUB_DEVICE; i++)
     {
         if ((g_hub_dev[i].iface != NULL) && (g_hub_dev[i].sc_bitmap))
         {
@@ -687,7 +687,7 @@ UDEV_T * usbh_find_device(char *hub_id, int port)
     HUB_DEV_T   *hub = NULL;
     UDEV_T      *udev;
 
-    for (i = 0; i < MAX_HUB_DEIVCE; i++)
+    for (i = 0; i < MAX_HUB_DEVICE; i++)
     {
         if ((g_hub_dev[i].iface != NULL) && (strcmp(g_hub_dev[i].pos_id, hub_id) == 0))
         {
