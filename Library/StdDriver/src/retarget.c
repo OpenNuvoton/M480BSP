@@ -674,7 +674,7 @@ int fputc(int ch, FILE *stream)
     return ch;
 }
 
-#if defined ( __GNUC__ )
+#if defined (__GNUC__) && !defined(__ARMCC_VERSION)
 
 int _write (int fd, char *ptr, int len)
 {

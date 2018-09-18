@@ -9,7 +9,7 @@
 #include "stdio.h"
 #include "NuMicro.h"
 
-#if defined (__GNUC__)
+#if defined (__GNUC__) && !defined(__ARMCC_VERSION) && defined(OS_USE_SEMIHOSTING)
 extern void initialise_monitor_handles(void);
 #endif
 
@@ -115,7 +115,7 @@ int32_t main(void)
     /* Init System, IP clock and multi-function I/O */
     SYS_Init();
 
-#if defined (__GNUC__)
+#if defined (__GNUC__) && !defined(__ARMCC_VERSION) && defined(OS_USE_SEMIHOSTING)
     initialise_monitor_handles();
 #endif
 
