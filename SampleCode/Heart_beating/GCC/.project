@@ -55,9 +55,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/main.c</locationURI>
 		</link>
 		<link>
-			<name>User/report.c</name>
+			<name>User/Report.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/report.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Report.c</locationURI>
 		</link>
 	</linkedResources>
 	<filteredResources>
