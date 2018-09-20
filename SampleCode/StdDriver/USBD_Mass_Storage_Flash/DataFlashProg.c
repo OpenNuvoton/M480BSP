@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "NuMicro.h"
-#include "DataFlashProg.h"
+#include "dataflashprog.h"
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* Macro, type and constant definitions                                                                    */

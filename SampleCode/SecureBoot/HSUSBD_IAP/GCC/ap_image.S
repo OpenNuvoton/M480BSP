@@ -18,7 +18,7 @@
     .text
 
 loaderImage1Base:
-    .incbin  "..\\..\\fwupdate_ld_iap.bin"
+    .incbin  "../../fwupdate_ld_iap.bin"
 loaderImage1Limit:
     .space   4
 

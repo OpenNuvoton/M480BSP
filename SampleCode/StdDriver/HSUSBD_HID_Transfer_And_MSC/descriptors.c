@@ -10,7 +10,7 @@
 
 /*!<Includes */
 #include "NuMicro.h"
-#include "hid_transfer_and_MSC.h"
+#include "hid_transfer_And_MSC.h"
 
 /*!<USB HID Report Descriptor */
 #ifdef __ICCARM__

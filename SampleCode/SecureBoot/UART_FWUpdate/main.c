@@ -9,7 +9,7 @@
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
-#include "bootisplib.h"
+#include "BootIspLib.h"
 
 void UART1_IRQHandler(void)
 {

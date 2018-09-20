@@ -8,7 +8,7 @@
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
-#include "bootisplib.h"
+#include "BootIspLib.h"
 
 
 void USBD20_IRQHandler(void)

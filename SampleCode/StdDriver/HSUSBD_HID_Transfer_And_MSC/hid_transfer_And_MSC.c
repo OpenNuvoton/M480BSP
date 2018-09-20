@@ -9,7 +9,7 @@
 /*!<Includes */
 #include <string.h>
 #include "NuMicro.h"
-#include "hid_transfer_and_MSC.h"
+#include "hid_transfer_And_MSC.h"
 #include "massstorage.h"
 
 uint8_t volatile g_u8EPAReady = 0;
