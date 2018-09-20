@@ -21,17 +21,17 @@
     .text
 
 VectorBase_CBC:
-    .incbin  "..\\..\\test_suite_aes.cbc.data"
+    .incbin  "../../test_suite_aes.cbc.data"
 VectorLimit_CBC:
     .space   4
 
 VectorBase_CFB:
-    .incbin  "..\\..\\test_suite_aes.cfb.data"
+    .incbin  "../../test_suite_aes.cfb.data"
 VectorLimit_CFB:
     .space   4
 
 VectorBase_ECB:
-    .incbin  "..\\..\\test_suite_aes.ecb.data"
+    .incbin  "../../test_suite_aes.ecb.data"
 VectorLimit_ECB:
     .space   4
 

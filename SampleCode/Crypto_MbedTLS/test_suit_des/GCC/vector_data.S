@@ -15,7 +15,7 @@
 	.text
         
 VectorBase_DES:
-    .incbin  "..\\..\\test_suite_des.data"
+    .incbin  "../../test_suite_des.data"
 VectorLimit_DES:
     .space   4
 
