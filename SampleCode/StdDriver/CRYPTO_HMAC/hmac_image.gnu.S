@@ -16,7 +16,7 @@
 	.text
         
 VectorDataBase:
-    .incbin  "..\\..\\HMAC_fips198a.rsp"
+    .incbin  "../../HMAC_fips198a.rsp"
 VectorDataLimit:
     .space   4
     
