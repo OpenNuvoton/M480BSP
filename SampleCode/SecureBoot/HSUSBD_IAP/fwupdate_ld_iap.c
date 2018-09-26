@@ -8,7 +8,7 @@
 *****************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
-#include "bootisplib.h"
+#include "BootIspLib.h"
 
 void SYS_Init(void)
 {
