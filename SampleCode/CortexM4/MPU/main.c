@@ -38,9 +38,13 @@ uint32_t ReadMemCore(uint32_t address)
 
 void MemManage_Handler(void)
 {
-    // Disable MPU to allow simple return from mem_manage handler
-    // Mem_manage typically indicates code failure, and would
-    // be resolved by reset or terminating faulty thread in OS.
+    /* NOTE1: Disable MPU to allow simple return from mem_manage handler
+              MemManage typically indicates code failure, and would
+              be resolved by reset or terminating faulty thread in OS.
+       NOTE2: The code set MPU->CTRL below will allow the code touch
+              illegal address to be executed after return from
+              MemManage_Handler(). If this line is comment out, this code
+              will keep enter MemManage_Handler() */
     MPU->CTRL = 0x0;
 
     // Clear Fault status register
