@@ -50,9 +50,9 @@
 			<locationURI>PARENT-4-PROJECT_LOC/Library/Device/Nuvoton/M480/Source</locationURI>
 		</link>
 		<link>
-			<name>DiskImage/diskimg.c</name>
+			<name>DiskImage/DiskImg.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/diskimg.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/DiskImg.c</locationURI>
 		</link>
 		<link>
 			<name>Library/Library</name>
