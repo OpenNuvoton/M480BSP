@@ -188,7 +188,7 @@ void SpiLoopTest_WithPDMA(void)
     /* Single request type. SPI only support PDMA single request type. */
     PDMA_SetBurstType(PDMA,SPI_SLAVE_RX_DMA_CH, PDMA_REQ_SINGLE, 0);
     /* Disable table interrupt */
-    PDMA->DSCT[SPI_MASTER_RX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
+    PDMA->DSCT[SPI_SLAVE_RX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
 
     /*=======================================================================
       SPI slave PDMA TX channel configuration:
