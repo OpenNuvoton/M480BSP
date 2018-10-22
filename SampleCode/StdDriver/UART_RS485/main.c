@@ -277,7 +277,7 @@ void RS485_9bitModeSlave()
 #endif
 
     /* Enable RDA\RLS\Time-out Interrupt  */
-    UART_ENABLE_INT(UART1, (UART_INTEN_RDAIEN_Msk | UART_INTEN_RLSIEN_Msk | UART_INTEN_RXTOIEN_Msk));
+    UART_ENABLE_INT(UART1, (UART_INTEN_RDAIEN_Msk | UART_INTEN_RLSIEN_Msk));
     NVIC_EnableIRQ(UART1_IRQn);
 
     printf("Ready to receive data...(Press any key to stop test)\n");
