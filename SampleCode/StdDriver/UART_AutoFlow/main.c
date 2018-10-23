@@ -237,7 +237,7 @@ void AutoFlow_FunctionTest()
         g_i32pointer = 0;
 
         /* Enable RDA\RLS\RTO Interrupt  */
-        UART_ENABLE_INT(UART1, (UART_INTEN_RDAIEN_Msk | UART_INTEN_RLSIEN_Msk));
+        UART_ENABLE_INT(UART1, (UART_INTEN_RDAIEN_Msk | UART_INTEN_RLSIEN_Msk | UART_INTEN_RXTOIEN_Msk));
 
         /* Set RX Trigger Level = 8 */
         UART1->FIFO = (UART1->FIFO &~ UART_FIFO_RFITL_Msk) | UART_FIFO_RFITL_8BYTES;
