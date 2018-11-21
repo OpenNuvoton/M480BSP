@@ -375,7 +375,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\ThirdParty\mbedtls-2.6.0\include</IncludePath>
+              <IncludePath>..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\ThirdParty\mbedtls-2.13.0\include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -482,72 +482,77 @@
             <File>
               <FileName>asn1parse.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\asn1parse.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\asn1parse.c</FilePath>
             </File>
             <File>
               <FileName>asn1write.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\asn1write.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\asn1write.c</FilePath>
             </File>
             <File>
               <FileName>bignum.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\bignum.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\bignum.c</FilePath>
             </File>
             <File>
               <FileName>ecdsa.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\ecdsa.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\ecdsa.c</FilePath>
             </File>
             <File>
               <FileName>ecp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\ecp.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\ecp.c</FilePath>
             </File>
             <File>
               <FileName>ecp_curves.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\ecp_curves.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\ecp_curves.c</FilePath>
             </File>
             <File>
               <FileName>hmac_drbg.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\hmac_drbg.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\hmac_drbg.c</FilePath>
             </File>
             <File>
               <FileName>md.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\md.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\md.c</FilePath>
             </File>
             <File>
               <FileName>md_wrap.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\md_wrap.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\md_wrap.c</FilePath>
             </File>
             <File>
               <FileName>md5.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\md5.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\md5.c</FilePath>
             </File>
             <File>
               <FileName>ripemd160.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\ripemd160.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\ripemd160.c</FilePath>
             </File>
             <File>
               <FileName>sha1.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\sha1.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\sha1.c</FilePath>
             </File>
             <File>
               <FileName>sha256.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\sha256.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\sha256.c</FilePath>
             </File>
             <File>
               <FileName>sha512.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\sha512.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\sha512.c</FilePath>
+            </File>
+            <File>
+              <FileName>platform_util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\platform_util.c</FilePath>
             </File>
           </Files>
         </Group>

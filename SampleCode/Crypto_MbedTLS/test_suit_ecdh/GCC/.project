@@ -1,7 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>test_suit_ecdh</name>
-	<comment />
+	<comment></comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -57,7 +57,7 @@
 		<link>
 			<name>Mbedtls Library/Mbedtls Library</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/ThirdParty/mbedtls-2.6.0/library</locationURI>
+			<locationURI>PARENT-4-PROJECT_LOC/ThirdParty/mbedtls-2.13.0/library</locationURI>
 		</link>
 		<link>
 			<name>User/main.c</name>
@@ -121,7 +121,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1521178511496</id>
+			<id>1542791416686</id>
 			<name>Mbedtls Library/Mbedtls Library</name>
 			<type>5</type>
 			<matcher>
@@ -130,7 +130,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1521178511505</id>
+			<id>1542791416714</id>
 			<name>Mbedtls Library/Mbedtls Library</name>
 			<type>5</type>
 			<matcher>
@@ -139,7 +139,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1521178511513</id>
+			<id>1542791416736</id>
 			<name>Mbedtls Library/Mbedtls Library</name>
 			<type>5</type>
 			<matcher>
@@ -148,12 +148,21 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1521178511523</id>
+			<id>1542791416759</id>
 			<name>Mbedtls Library/Mbedtls Library</name>
 			<type>5</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-false-false-ecp_curves.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1542791416811</id>
+			<name>Mbedtls Library/Mbedtls Library</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-platform_util.c</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>

@@ -375,7 +375,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\ThirdParty\mbedtls-2.6.0\include</IncludePath>
+              <IncludePath>..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\ThirdParty\mbedtls-2.13.0\include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -482,17 +482,22 @@
             <File>
               <FileName>sha1.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\sha1.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\sha1.c</FilePath>
             </File>
             <File>
               <FileName>sha256.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\sha256.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\sha256.c</FilePath>
             </File>
             <File>
               <FileName>sha512.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\sha512.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\sha512.c</FilePath>
+            </File>
+            <File>
+              <FileName>platform_util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\platform_util.c</FilePath>
             </File>
           </Files>
         </Group>

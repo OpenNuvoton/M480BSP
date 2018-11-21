@@ -375,7 +375,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\ThirdParty\mbedtls-2.6.0\include</IncludePath>
+              <IncludePath>..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\CMSIS\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\ThirdParty\mbedtls-2.13.0\include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -482,22 +482,27 @@
             <File>
               <FileName>bignum.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\bignum.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\bignum.c</FilePath>
             </File>
             <File>
               <FileName>ecdh.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\ecdh.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\ecdh.c</FilePath>
             </File>
             <File>
               <FileName>ecp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\ecp.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\ecp.c</FilePath>
             </File>
             <File>
               <FileName>ecp_curves.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.6.0\library\ecp_curves.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\ecp_curves.c</FilePath>
+            </File>
+            <File>
+              <FileName>platform_util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\ThirdParty\mbedtls-2.13.0\library\platform_util.c</FilePath>
             </File>
           </Files>
         </Group>

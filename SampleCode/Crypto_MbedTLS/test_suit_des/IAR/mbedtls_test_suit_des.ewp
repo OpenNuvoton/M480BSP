@@ -304,7 +304,7 @@
           <state>$PROJ_DIR$\..\..\..\..\Library\CMSIS\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\Device\Nuvoton\M480\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\Library\StdDriver\inc</state>
-          <state>$PROJ_DIR$\..\..\..\..\ThirdParty\mbedtls-2.6.0\include</state>
+          <state>$PROJ_DIR$\..\..\..\..\ThirdParty\mbedtls-2.13.0\include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -968,7 +968,10 @@
   <group>
     <name>Mbedtls Library</name>
     <file>
-      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\mbedtls-2.6.0\library\des.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\mbedtls-2.13.0\library\des.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\ThirdParty\mbedtls-2.13.0\library\platform_util.c</name>
     </file>
   </group>
   <group>
