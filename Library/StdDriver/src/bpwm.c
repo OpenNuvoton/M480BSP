@@ -186,18 +186,18 @@ uint32_t BPWM_ConfigOutputChannel(BPWM_T *bpwm, uint32_t u32ChannelNum, uint32_t
     if(u32DutyCycle)
     {
         BPWM_SET_CMR(bpwm, u32ChannelNum, u32DutyCycle * (u32CNR + 1UL) / 100UL - 1UL);
-        (bpwm)->WGCTL0 &= ~((BPWM_WGCTL0_PRDPCTLn_Msk | BPWM_WGCTL0_ZPCTLn_Msk) << (u32ChannelNum * 2U));
-        (bpwm)->WGCTL0 |= (BPWM_OUTPUT_LOW << ((u32ChannelNum * (2U)) + (uint32_t)BPWM_WGCTL0_PRDPCTLn_Pos));
-        (bpwm)->WGCTL1 &= ~((BPWM_WGCTL1_CMPDCTLn_Msk | BPWM_WGCTL1_CMPUCTLn_Msk) << (u32ChannelNum * 2U));
-        (bpwm)->WGCTL1 |= (BPWM_OUTPUT_HIGH << (u32ChannelNum * (2U) + (uint32_t)BPWM_WGCTL1_CMPDCTLn_Pos));
+        (bpwm)->WGCTL0 &= ~((BPWM_WGCTL0_PRDPCTL0_Msk | BPWM_WGCTL0_ZPCTL0_Msk) << (u32ChannelNum * 2U));
+        (bpwm)->WGCTL0 |= (BPWM_OUTPUT_LOW << ((u32ChannelNum * (2U)) + (uint32_t)BPWM_WGCTL0_PRDPCTL0_Pos));
+        (bpwm)->WGCTL1 &= ~((BPWM_WGCTL1_CMPDCTL0_Msk | BPWM_WGCTL1_CMPUCTL0_Msk) << (u32ChannelNum * 2U));
+        (bpwm)->WGCTL1 |= (BPWM_OUTPUT_HIGH << (u32ChannelNum * (2U) + (uint32_t)BPWM_WGCTL1_CMPDCTL0_Pos));
     }
     else
     {
         BPWM_SET_CMR(bpwm, u32ChannelNum, 0U);
-        (bpwm)->WGCTL0 &= ~((BPWM_WGCTL0_PRDPCTLn_Msk | BPWM_WGCTL0_ZPCTLn_Msk) << (u32ChannelNum * 2U));
-        (bpwm)->WGCTL0 |= (BPWM_OUTPUT_LOW << (u32ChannelNum * 2U + (uint32_t)BPWM_WGCTL0_ZPCTLn_Pos));
-        (bpwm)->WGCTL1 &= ~((BPWM_WGCTL1_CMPDCTLn_Msk | BPWM_WGCTL1_CMPUCTLn_Msk) << (u32ChannelNum * 2U));
-        (bpwm)->WGCTL1 |= (BPWM_OUTPUT_HIGH << (u32ChannelNum * 2U + (uint32_t)BPWM_WGCTL1_CMPDCTLn_Pos));
+        (bpwm)->WGCTL0 &= ~((BPWM_WGCTL0_PRDPCTL0_Msk | BPWM_WGCTL0_ZPCTL0_Msk) << (u32ChannelNum * 2U));
+        (bpwm)->WGCTL0 |= (BPWM_OUTPUT_LOW << (u32ChannelNum * 2U + (uint32_t)BPWM_WGCTL0_ZPCTL0_Pos));
+        (bpwm)->WGCTL1 &= ~((BPWM_WGCTL1_CMPDCTL0_Msk | BPWM_WGCTL1_CMPUCTL0_Msk) << (u32ChannelNum * 2U));
+        (bpwm)->WGCTL1 |= (BPWM_OUTPUT_HIGH << (u32ChannelNum * 2U + (uint32_t)BPWM_WGCTL1_CMPDCTL0_Pos));
     }
 
     return(i);
