@@ -591,11 +591,16 @@ static int ohci_int_xfer(UTR_T *utr)
     UDEV_T     *udev = utr->udev;
     EP_INFO_T  *ep = utr->ep;
     ED_T       *ed, *ied;
-    TD_T       *td, *td_p, *td_list = NULL;
+    TD_T       *td, *td_new;
     uint32_t   info;
-    uint32_t   data_len, xfer_len;
     int8_t     bIsNewED = 0;
-    uint8_t    *buff;
+
+    if (utr->data_len > 64)             /* USB 1.1 interrupt transfer maximum packet size is 64 */
+        return USBH_ERR_INVALID_PARAM;
+
+    td_new = alloc_ohci_TD(utr);        /* allocate a TD for dummy TD                     */
+    if (td_new == NULL)
+        return USBH_ERR_MEMORY_OUT;
 
     ied = get_int_tree_head_node(ep->bInterval);  /* get head node of this interval       */
 
@@ -620,67 +625,48 @@ static int ohci_int_xfer(UTR_T *utr)
         ed->Info = info;
         ed->HeadP = 0;
         ed->bInterval = ep->bInterval;
-    }
 
+        td = alloc_ohci_TD(NULL);           /* allocate the initial  dummy TD for ED      */
+        if (td == NULL)
+        {
+            free_ohci_ED(ed);
+            free_ohci_TD(td_new);
+            return USBH_ERR_MEMORY_OUT;
+        }
+        ed->HeadP = (uint32_t)td;           /* Let both HeadP and TailP point to dummy TD */
+        ed->TailP = ed->HeadP;
+    }
+    else
+    {
+        td = (TD_T *)(ed->TailP & ~0xf);    /* TailP always point to the dummy TD         */
+    }
     ep->hw_pipe = (void *)ed;
 
     /*------------------------------------------------------------------------------------*/
-    /*  Prepare TDs                                                                       */
+    /*  Prepare TD                                                                        */
     /*------------------------------------------------------------------------------------*/
-    utr->td_cnt = 0;
-    data_len = utr->data_len;
-    buff = utr->buff;
+    if ((ep->bEndpointAddress & EP_ADDR_DIR_MASK) == EP_ADDR_DIR_OUT)
+        info = (TD_CC | TD_R | TD_DP_OUT | TD_TYPE_INT);
+    else
+        info = (TD_CC | TD_R | TD_DP_IN | TD_TYPE_INT);
 
-    do
-    {
-        if ((ep->bEndpointAddress & EP_ADDR_DIR_MASK) == EP_ADDR_DIR_OUT)
-            info = (TD_CC | TD_R | TD_DP_OUT | TD_TYPE_INT);
-        else
-            info = (TD_CC | TD_R | TD_DP_IN | TD_TYPE_INT);
+    /* Keep data toggle                               */
+    info = (info & ~(1<<25)) | (td->Info & (1<<25));
 
-        info &= ~(1 << 25);                 /* Data toggle from ED toggleCarry bit        */
-
-        if (data_len > 4096)                /* maximum transfer length is 4K for each TD  */
-            xfer_len = 4096;
-        else
-            xfer_len = data_len;            /* remaining data length < 4K                 */
-
-        td = alloc_ohci_TD(utr);            /* allocate a TD                              */
-        if (td == NULL)
-            goto mem_out;
-        /* fill this TD                               */
-        write_td(td, info, buff, xfer_len);
-        td->ed = ed;
-
-        utr->td_cnt++;                      /* increase TD count, for recalim counter     */
-
-        buff += xfer_len;                   /* advanced buffer pointer                    */
-        data_len -= xfer_len;
-
-        /* chain to end of TD list */
-        if (td_list == NULL)
-        {
-            td_list = td;
-        }
-        else
-        {
-            td_p = td_list;
-            while (td_p->NextTD != 0)
-                td_p = (TD_T *)td_p->NextTD;
-            td_p->NextTD = (uint32_t)td;
-        }
-
-    }
-    while (data_len > 0);
+    /* fill this TD                                   */
+    write_td(td, info, utr->buff, utr->data_len);
+    td->ed = ed;
+    td->NextTD = (uint32_t)td_new;
+    td->utr = utr;
+    utr->td_cnt = 1;                    /* increase TD count, for recalim counter     */
+    utr->status = 0;
 
     /*------------------------------------------------------------------------------------*/
     /*  Hook ED and TD list to HCCA interrupt table                                       */
     /*------------------------------------------------------------------------------------*/
-    utr->status = 0;
     DISABLE_OHCI_IRQ();
 
-    ed->HeadP = (ed->HeadP & 0x2) | (uint32_t)td_list;   /* keep toggleCarry bit          */
-
+    ed->TailP = (uint32_t)td_new;
     if (bIsNewED)
     {
         /* Add to list of the same interval */
@@ -689,20 +675,11 @@ static int ohci_int_xfer(UTR_T *utr)
     }
 
     ENABLE_OHCI_IRQ();
-    ED_debug("Link INT ED 0x%x: 0x%x 0x%x 0x%x 0x%x\n", (int)ed, ed->Info, ed->TailP, ed->HeadP, ed->NextED);
+
+    //printf("Link INT ED 0x%x: 0x%x 0x%x 0x%x 0x%x\n", (int)ed, ed->Info, ed->TailP, ed->HeadP, ed->NextED);
+
     _ohci->HcControl |= USBH_HcControl_PLE_Msk;              /* periodic list enable      */
-
     return 0;
-
-mem_out:
-    while (td_list != NULL)
-    {
-        td = td_list;
-        td_list = (TD_T *)td_list->NextTD;
-        free_ohci_TD(td);
-    }
-    free_ohci_ED(ed);
-    return USBH_ERR_MEMORY_OUT;
 }
 
 static int ohci_iso_xfer(UTR_T *utr)
@@ -1146,6 +1123,7 @@ static void remove_ed()
                     if (utr->td_cnt == 0)
                     {
                         utr->status = USBH_ERR_ABORT;
+                        utr->bIsTransferDone = 1;
                         if (utr->func)
                             utr->func(utr);
                     }
@@ -1184,6 +1162,7 @@ void OHCI_IRQHandler(void)
 
     if (int_sts & USBH_HcInterruptStatus_WDH_Msk)
     {
+        //printf("!%02x\n", _ohci->HcFmNumber & 0xff);
         int_sts &= ~USBH_HcInterruptStatus_WDH_Msk;
         /*
          *  reverse done list
@@ -1231,8 +1210,8 @@ void dump_ohci_int_table()
     int    i;
     ED_T   *ed;
 
-//    for (i = 0; i < 32; i++)
-    for (i = 0; i < 1; i++)
+    for (i = 0; i < 32; i++)
+//    for (i = 0; i < 1; i++)
 
     {
         USB_debug("%02d: ", i);

@@ -62,7 +62,7 @@
    May allocate one or more units depend on hardware descriptor type.                                 */
 
 #define MEM_POOL_UNIT_SIZE     64      /*!< A fixed hard coding setting. Do not change it!            */
-#define MEM_POOL_UNIT_NUM      64      /*!< Increase this or heap size if memory allocate failed.     */
+#define MEM_POOL_UNIT_NUM     256      /*!< Increase this or heap size if memory allocate failed.     */
 
 /*----------------------------------------------------------------------------------------*/
 /*   Re-defined staff for various compiler                                                */

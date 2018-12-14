@@ -105,6 +105,7 @@ static int  review_itd(iTD_T *itd)
 
     if (utr->td_cnt == 0)                   /* All iTD of this UTR done                   */
     {
+        utr->bIsTransferDone = 1;
         if (utr->func)
             utr->func(utr);
     }
@@ -179,6 +180,7 @@ static int  review_sitd(siTD_T *sitd)
 
     if (utr->td_cnt == 0)                   /* All iTD of this UTR done                   */
     {
+        utr->bIsTransferDone = 1;
         if (utr->func)
             utr->func(utr);
     }
@@ -884,6 +886,7 @@ int ehci_quit_iso_xfer(UTR_T *utr, EP_INFO_T *ep)
 
         if (utr->td_cnt == 0)               /* All iTD of this UTR done                   */
         {
+            utr->bIsTransferDone = 1;
             if (utr->func)
                 utr->func(utr);
             utr->status = USBH_ERR_ABORT;
@@ -897,6 +900,7 @@ int ehci_quit_iso_xfer(UTR_T *utr, EP_INFO_T *ep)
      */
     remove_iso_ep_from_list(iso_ep);
     usbh_free_mem(iso_ep, sizeof(*iso_ep));      /* free this iso_ep                      */
+    ep->hw_pipe = NULL;
 
     if (iso_ep_list == NULL)
         _ehci->UCMDR &= ~HSUSBH_UCMDR_PSEN_Msk;

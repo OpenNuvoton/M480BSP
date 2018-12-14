@@ -27,12 +27,15 @@ typedef struct lbk_device_t
     EP_INFO_T    *ep_iso_in;
     EP_INFO_T    *ep_iso_out;
     INT_CB_FUNC  *int_in_func;
+    INT_CB_FUNC  *int_out_func;
     ISO_CB_FUNC  *iso_in_func;
     ISO_CB_FUNC  *iso_out_func;
-    UTR_T        *utr_int_in;
+    UTR_T        *utr_int_in[2];
+    uint8_t      buff_int_in[2][512];
+    UTR_T        *utr_int_out[2];
+    uint8_t      buff_int_out[2][512];
     UTR_T        *utr_iso_in[ISO_UTR_NUM];
     UTR_T        *utr_iso_out[ISO_UTR_NUM];
-    uint8_t      buff_int_in[64];
 }  LBK_DEV_T;
 
 volatile struct lbk_device_t  g_lbk_dev;
@@ -190,75 +193,21 @@ int lbk_bulk_read(uint8_t *data_buff, int data_len, int timeout_ticks)
     return ret;
 }
 
-/*
- *  Write a block of data to Vendor LBK device.
- *  Use interrupt-out transfer.
- */
-int lbk_interrupt_out(uint8_t *data_buff, int data_len, int timeout_ticks)
-{
-    UTR_T     *utr;
-    uint32_t  t0;
-    int       ret;
-
-    if ((g_lbk_dev.udev == NULL) || (g_lbk_dev.ep_bulk_in == NULL))
-        return -1;
-
-    if (data_len > g_lbk_dev.ep_int_out->wMaxPacketSize)
-        return -2;
-
-    utr = alloc_utr(g_lbk_dev.udev);
-    if (!utr)
-        return USBH_ERR_MEMORY_OUT;
-
-    utr->ep = g_lbk_dev.ep_int_out;
-    utr->buff = data_buff;
-    utr->data_len = data_len;
-    utr->xfer_len = 0;
-    utr->func = NULL;
-    utr->bIsTransferDone = 0;
-
-    ret = usbh_int_xfer(utr);
-    if (ret < 0)
-    {
-        printf("Error - failed to submit interrupt out transfer (%d)", ret);
-        free_utr(utr);
-        return ret;
-    }
-
-    t0 = get_ticks();
-    while (utr->bIsTransferDone == 0)
-    {
-        if (get_ticks() - t0 > timeout_ticks)
-        {
-            usbh_quit_utr(utr);
-            free_utr(utr);
-            return USBH_ERR_TIMEOUT;
-        }
-    }
-    ret = utr->status;
-    free_utr(utr);
-    return ret;
-}
-
 static void  int_in_done(UTR_T *utr)
 {
     int         ret;
 
     //printf("int_in_done. %d\n", utr->xfer_len);
     if (g_lbk_dev.int_in_func == NULL)
-    {
-        free_utr(g_lbk_dev.utr_int_in);
-        g_lbk_dev.utr_int_in = NULL;
-        return;
-    }
+        goto err_out;           /* interrupt-in stopped */
+
     if (utr->status != 0)
     {
-        printf("int_in_done - has error: 0x%x\n", utr->status);
-        g_lbk_dev.int_in_func(utr->status, utr->buff, 0);
-        free_utr(utr);
-        g_lbk_dev.utr_int_in = NULL;
-        return;
+        g_lbk_dev.int_in_func(utr->status, utr->buff, utr->xfer_len);
+        printf("int_in_done - stop or error: 0x%x\n", utr->status);
+        goto err_out;
     }
+
     if (g_lbk_dev.int_in_func && utr->xfer_len)
         g_lbk_dev.int_in_func(utr->status, utr->buff, utr->xfer_len);
 
@@ -268,8 +217,20 @@ static void  int_in_done(UTR_T *utr)
     {
         printf("int_in_done - failed to re-submit interrupt-in request (%d)", ret);
         g_lbk_dev.int_in_func(ret, utr->buff, 0);
-        free_utr(utr);
-        g_lbk_dev.utr_int_in = NULL;
+        goto err_out;
+    }
+    return;
+
+err_out:
+    if (utr == g_lbk_dev.utr_int_in[0])
+    {
+        free_utr(g_lbk_dev.utr_int_in[0]);
+        g_lbk_dev.utr_int_in[0] = NULL;
+    }
+    else if (utr == g_lbk_dev.utr_int_in[1])
+    {
+        free_utr(g_lbk_dev.utr_int_in[1]);
+        g_lbk_dev.utr_int_in[1] = NULL;
     }
 }
 
@@ -279,46 +240,153 @@ static void  int_in_done(UTR_T *utr)
 int lbk_interrupt_in_start(INT_CB_FUNC *func)
 {
     UTR_T     *utr;
-    int       ret;
+    int       i, ret;
 
-    if ((g_lbk_dev.udev == NULL) || (g_lbk_dev.ep_bulk_in == NULL) || (func == NULL))
+    if ((g_lbk_dev.udev == NULL) || (g_lbk_dev.ep_int_in == NULL) || (func == NULL))
         return -1;
 
-    utr = alloc_utr(g_lbk_dev.udev);
-    if (!utr)
-        return USBH_ERR_MEMORY_OUT;
-
-    utr->ep = g_lbk_dev.ep_int_in;
-    utr->buff = (uint8_t *)g_lbk_dev.buff_int_in;
-    utr->data_len = sizeof(g_lbk_dev.buff_int_in);
-    utr->xfer_len = 0;
-    utr->func = int_in_done;
-    g_lbk_dev.int_in_func = func;
-    g_lbk_dev.utr_int_in = utr;
-
-    ret = usbh_int_xfer(utr);
-    if (ret < 0)
+    for (i = 0; i < 2; i++)
     {
-        printf("Error - failed to submit interrupt-in transfer (%d)", ret);
-        free_utr(utr);
-        g_lbk_dev.utr_int_in = NULL;
-        return ret;
+        utr = alloc_utr(g_lbk_dev.udev);
+        if (!utr)
+            return USBH_ERR_MEMORY_OUT;
+
+        utr->ep = g_lbk_dev.ep_int_in;
+        utr->buff = (uint8_t *)g_lbk_dev.buff_int_in[i];
+        utr->data_len = utr->ep->wMaxPacketSize;
+        utr->xfer_len = 0;
+        utr->func = int_in_done;
+        g_lbk_dev.int_in_func = func;
+        g_lbk_dev.utr_int_in[i] = utr;
+
+        ret = usbh_int_xfer(utr);
+        if (ret < 0)
+        {
+            //printf("Error - failed to submit interrupt-in transfer (%d)\n", ret);
+            free_utr(utr);
+            g_lbk_dev.utr_int_in[i] = NULL;
+            return ret;
+        }
     }
     return 0;
 }
 
 void lbk_interrupt_in_stop(void)
 {
+    int   i;
+
     /* clear <int_in_func> to stop cascading transfers */
     g_lbk_dev.int_in_func = NULL;
     delay_us(32000);
 
-    if (g_lbk_dev.utr_int_in != NULL)
+    for (i = 0; i < 2; i++)
     {
-        usbh_quit_utr(g_lbk_dev.utr_int_in);    /* force to stop the transfer   */
-        delay_us(32000);
-        free_utr(g_lbk_dev.utr_int_in);
-        g_lbk_dev.utr_int_in = NULL;
+        if (g_lbk_dev.utr_int_in[i] != NULL)
+        {
+            usbh_quit_utr(g_lbk_dev.utr_int_in[i]);    /* force to stop the transfer   */
+            delay_us(32000);
+            free_utr(g_lbk_dev.utr_int_in[i]);
+            g_lbk_dev.utr_int_in[i] = NULL;
+        }
+    }
+}
+
+static void  int_out_done(UTR_T *utr)
+{
+    int         ret;
+
+    //printf("int_out_done. %d\n", utr->xfer_len);
+    if (g_lbk_dev.int_out_func == NULL)
+        goto err_out;              /* interrupt-out stopped */
+
+    if (utr->status != 0)
+    {
+        printf("int_out_done - stop or error: 0x%x\n", utr->status);
+        utr->data_len = g_lbk_dev.int_out_func(utr->status, utr->buff, utr->ep->wMaxPacketSize);
+        goto err_out;
+    }
+
+    /* callback to prepare data for next interrupt out trasnfer */
+    if (g_lbk_dev.int_out_func)
+        utr->data_len = g_lbk_dev.int_out_func(0, utr->buff, utr->ep->wMaxPacketSize);
+
+    utr->xfer_len = 0;
+    ret = usbh_int_xfer(utr);
+    if (ret != 0)
+    {
+        printf("int_out_done - failed to re-submit interrupt-out request (%d)", ret);
+        g_lbk_dev.int_out_func(-1, utr->buff, 0);
+        goto err_out;
+    }
+    return;
+
+err_out:
+    if (utr == g_lbk_dev.utr_int_out[0])
+    {
+        free_utr(g_lbk_dev.utr_int_out[0]);
+        g_lbk_dev.utr_int_out[0] = NULL;
+    }
+    else if (utr == g_lbk_dev.utr_int_out[1])
+    {
+        free_utr(g_lbk_dev.utr_int_out[1]);
+        g_lbk_dev.utr_int_out[1] = NULL;
+    }
+}
+
+/*
+ *  Start interrupt-in transfer on Vendor LBK device.
+ */
+int lbk_interrupt_out_start(INT_CB_FUNC *func)
+{
+    UTR_T     *utr;
+    int       i, ret;
+
+    if ((g_lbk_dev.udev == NULL) || (g_lbk_dev.ep_int_out == NULL) || (func == NULL))
+        return -1;
+
+    for (i = 0; i < 2; i++)
+    {
+        utr = alloc_utr(g_lbk_dev.udev);
+        if (!utr)
+            return USBH_ERR_MEMORY_OUT;
+
+        utr->ep = g_lbk_dev.ep_int_out;
+        utr->buff = (uint8_t *)g_lbk_dev.buff_int_out[i];
+        utr->xfer_len = 0;
+        utr->func = int_out_done;
+        g_lbk_dev.int_out_func = func;
+        g_lbk_dev.utr_int_out[i] = utr;
+        utr->data_len = g_lbk_dev.int_out_func(0, utr->buff, utr->ep->wMaxPacketSize);
+
+        ret = usbh_int_xfer(utr);
+        if (ret < 0)
+        {
+            //printf("Error - failed to submit interrupt-out transfer (%d)\n", ret);
+            free_utr(utr);
+            g_lbk_dev.utr_int_out[i] = NULL;
+            return ret;
+        }
+    }
+    return 0;
+}
+
+void lbk_interrupt_out_stop(void)
+{
+    int   i;
+
+    /* clear <int_in_func> to stop cascading transfers */
+    g_lbk_dev.int_out_func = NULL;
+    delay_us(32000);
+
+    for (i = 0; i < 2; i++)
+    {
+        if (g_lbk_dev.utr_int_out[i] != NULL)
+        {
+            usbh_quit_utr(g_lbk_dev.utr_int_out[i]);    /* force to stop the transfer   */
+            delay_us(32000);
+            free_utr(g_lbk_dev.utr_int_out[i]);
+            g_lbk_dev.utr_int_out[i] = NULL;
+        }
     }
 }
 
@@ -462,7 +530,6 @@ void lbk_isochronous_in_stop(void)
         if (g_lbk_dev.utr_iso_in[i])
             usbh_quit_utr(g_lbk_dev.utr_iso_in[i]);
     }
-    delay_us(ISO_UTR_NUM * IF_PER_UTR * 1000);    /* let scheduler run over dropped transfers   */
 
     if ((g_lbk_dev.utr_iso_in[0] != NULL) &&
             (g_lbk_dev.utr_iso_in[0]->buff != NULL))       /* free audio buffer                */
@@ -610,10 +677,8 @@ void lbk_isochronous_out_stop(void)
             usbh_quit_utr(g_lbk_dev.utr_iso_out[i]);
     }
 
-    delay_us(ISO_UTR_NUM * IF_PER_UTR * 1000);    /* let scheduler run over dropped transfers   */
-
     if ((g_lbk_dev.utr_iso_out[0] != NULL) &&
-            (g_lbk_dev.utr_iso_out[0]->buff != NULL))       /* free audio buffer                          */
+            (g_lbk_dev.utr_iso_out[0]->buff != NULL))       /* free transfer buffer           */
         usbh_free_mem(g_lbk_dev.utr_iso_out[0]->buff, g_lbk_dev.utr_iso_out[0]->data_len * ISO_UTR_NUM);
 
     for (i = 0; i < ISO_UTR_NUM; i++)           /* free all UTRs                              */
@@ -695,6 +760,7 @@ static void  lbk_disconnect(IFACE_T *iface)
     int   i;
 
     lbk_interrupt_in_stop();
+    lbk_interrupt_out_stop();
     lbk_isochronous_in_stop();
     lbk_isochronous_out_stop();
 
@@ -726,7 +792,12 @@ void usbh_lbk_init(void)
     usbh_register_driver(&lbk_driver);
 }
 
-int lbk_device_connected(void)
+/**
+  * @brief    Is the Vendor LBK device currently connected?
+  * @return   1: yes
+  *           0: no
+  */
+int lbk_device_is_connected(void)
 {
     usbh_pooling_hubs();
 
@@ -736,6 +807,31 @@ int lbk_device_connected(void)
         return 0;
 }
 
+/**
+  * @brief    Is the Vendor LBK device in high speed mode?
+  * @return   1: yes
+  *           0: no
+  *          -1: Not connected
+  */
+int lbk_device_is_high_speed(void)
+{
+    usbh_pooling_hubs();
+
+    if (g_lbk_dev.udev == NULL)
+        return -1;
+
+    if (g_lbk_dev.udev->speed == SPEED_HIGH)
+        return 1;
+    else
+        return 0;
+}
+
+int lbk_device_reset(void)
+{
+    if (g_lbk_dev.udev != NULL)
+        return usbh_reset_device(g_lbk_dev.udev);
+    return 0;
+}
 
 /*** (C) COPYRIGHT 2018 Nuvoton Technology Corp. ***/
 

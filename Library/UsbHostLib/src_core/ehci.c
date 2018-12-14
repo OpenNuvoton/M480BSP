@@ -217,9 +217,16 @@ static QH_T * get_int_tree_head_node(int interval)
     return _Iqh[NUM_IQH-1];
 }
 
-static int  make_int_s_mask(int interval)
+static int  make_int_s_mask(int bInterval)
 {
-    int   order;
+    int   order, interval;
+
+    interval = 1;
+    while (bInterval > 1)
+    {
+        interval *= 2;
+        bInterval--;
+    }
 
     if (interval < 2)
         return 0xFF;                        /* interval 1                                 */

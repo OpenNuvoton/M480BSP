@@ -20,7 +20,7 @@
 extern int kbhit(void);    /* in retarget.c */
 
 volatile int       has_error;
-volatile int       int_in_cnt;
+volatile int       int_in_cnt, int_out_cnt;
 volatile int       iso_in_cnt, iso_out_cnt;
 volatile uint32_t  g_tick_cnt;
 
@@ -220,7 +220,7 @@ void demo_ctrl_xfer(void)
 
         memset(buff_out, (loop & 0xff), sizeof(buff_out));
 
-        if (!lbk_device_connected())
+        if (!lbk_device_is_connected())
             return;
 
         if (lbk_vendor_set_data(buff_out) != 0)
@@ -229,7 +229,7 @@ void demo_ctrl_xfer(void)
             return;
         }
 
-        if (!lbk_device_connected())
+        if (!lbk_device_is_connected())
             return;
 
         if (lbk_vendor_get_data(buff_in) != 0)
@@ -253,11 +253,16 @@ void demo_ctrl_xfer(void)
 
 void demo_bulk_xfer(void)
 {
-    uint32_t   loop, msg_tick;
-    uint8_t    buff_out[64], buff_in[64];
+    uint32_t   loop, msg_tick, xfer_len;
+    uint8_t    buff_out[512], buff_in[512];
 
     printf("\nPress 'x' to stop loop...\n\n");
     msg_tick = get_ticks();
+
+    if (lbk_device_is_high_speed())
+        xfer_len = 512;
+    else
+        xfer_len = 64;
 
     for (loop = 1; ; loop++)
     {
@@ -267,29 +272,24 @@ void demo_bulk_xfer(void)
                 return;
         }
 
-        memset(buff_out, (loop & 0xff), sizeof(buff_out));
+        memset(buff_out, (loop & 0xff), xfer_len);
 
-        if (!lbk_device_connected())
+        if (!lbk_device_is_connected())
             return;
 
-        if (lbk_bulk_write(buff_out, sizeof(buff_out), 100) != 0)
+        if (lbk_bulk_write(buff_out, xfer_len, 100) != 0)
         {
             printf("Bulk-out transfer failed. Stop bulk transfer loop.\n");
             return;
         }
 
-        if (!lbk_device_connected())
+        if (!lbk_device_is_connected())
             return;
 
-        if (lbk_bulk_read(buff_in, sizeof(buff_out), 100) != 0)
+        if (lbk_bulk_read(buff_in, xfer_len, 100) != 0)
         {
             printf("Bulk-in transfer failed. Stop bulk transfer loop.\n");
             return;
-        }
-
-        if (memcmp(buff_out, buff_in, 64) != 0)
-        {
-            printf("Bulk transfer data compare error!\n");
         }
 
         if (get_ticks() - msg_tick >= 100)
@@ -300,30 +300,47 @@ void demo_bulk_xfer(void)
     }
 }
 
-void int_in_callback(int status, uint8_t *rdata, int data_len)
+int int_in_callback(int status, uint8_t *rdata, int data_len)
 {
     if (status < 0)
     {
         printf("Interrupt-in trnasfer error %d!\n", status);
         has_error = 1;
-        return;
+        return 0;
     }
     int_in_cnt++;
+    return 0;
+}
+
+int int_out_callback(int status, uint8_t *rdata, int data_len)
+{
+    if (status < 0)
+    {
+        printf("interrupt out transfer error.\n");
+        has_error = 1;
+        return 0;
+    }
+
+    /* add code here to send data to device */
+    /* ... */
+    memset(rdata, (int_out_cnt & 0xff), data_len);
+    int_out_cnt++;
+    return data_len;
 }
 
 void demo_interrupt_xfer(void)
 {
     uint32_t   loop, msg_tick;
-    int        int_out_cnt = 0;
-    uint8_t    buff_out[64];
 
     printf("\nPress 'x' to stop loop...\n\n");
     msg_tick = get_ticks();
 
     int_in_cnt = 0;
+    int_out_cnt = 0;
     has_error = 0;
 
     lbk_interrupt_in_start(int_in_callback);
+    lbk_interrupt_out_start(int_out_callback);
 
     for (loop = 1; ; loop++)
     {
@@ -332,22 +349,13 @@ void demo_interrupt_xfer(void)
             if (getchar() == 'x')
             {
                 lbk_interrupt_in_stop();
+                lbk_interrupt_out_stop();
                 return;
             }
         }
 
-        memset(buff_out, (loop & 0xff), sizeof(buff_out));
-
-        if (!lbk_device_connected() || has_error)
+        if (!lbk_device_is_connected() || has_error)
             return;
-
-        if (lbk_interrupt_out(buff_out, sizeof(buff_out), 100) != 0)
-        {
-            lbk_interrupt_in_stop();
-            printf("Interrupt-out transfer failed. Stop interrupt transfer loop.\n");
-            return;
-        }
-        int_out_cnt++;
 
         if (get_ticks() - msg_tick >= 100)
         {
@@ -410,7 +418,7 @@ void demo_isochronous_xfer(void)
             }
         }
 
-        if (!lbk_device_connected())
+        if (!lbk_device_is_connected())
             return;
 
         if (get_ticks() - msg_tick >= 100)
@@ -424,6 +432,10 @@ void demo_isochronous_xfer(void)
 void vendor_lbk_demo(void)
 {
     int   item;
+
+    usbh_pooling_hubs();
+    if (!lbk_device_is_connected())
+        return;
 
     while (1)
     {
@@ -443,7 +455,7 @@ void vendor_lbk_demo(void)
         item = getchar();
 
         usbh_pooling_hubs();
-        if (!lbk_device_connected())
+        if (!lbk_device_is_connected())
             return;
 
         switch (item)
@@ -466,7 +478,7 @@ void vendor_lbk_demo(void)
         }
 
         usbh_pooling_hubs();
-        if (!lbk_device_connected())
+        if (!lbk_device_is_connected())
             return;
     }
 }
@@ -491,14 +503,14 @@ int32_t main(void)
     usbh_install_conn_callback(connect_func, disconnect_func);
     usbh_pooling_hubs();
 
-    if (!lbk_device_connected())
+    if (!lbk_device_is_connected())
         printf("Waitng for M480 Vendor Loopback device be connected...\n");
 
     while (1)
     {
         usbh_pooling_hubs();
 
-        if (!lbk_device_connected())
+        if (!lbk_device_is_connected())
             continue;
 
         /* do not return unless LBK device disconnected */
