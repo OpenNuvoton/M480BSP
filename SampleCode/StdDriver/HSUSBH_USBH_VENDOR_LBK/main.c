@@ -16,7 +16,9 @@
 #include "hub.h"
 #include "lbk_driver.h"
 
-
+#ifdef DEBUG_ENABLE_SEMIHOST
+#error This sample cannot execute with semihost enabled
+#endif
 extern int kbhit(void);    /* in retarget.c */
 
 volatile int       has_error;

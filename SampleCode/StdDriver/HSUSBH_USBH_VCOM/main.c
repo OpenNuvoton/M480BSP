@@ -18,7 +18,9 @@
 char Line[64];             /* Console input buffer */
 
 static volatile int  g_rx_ready = 0;
-
+#ifdef DEBUG_ENABLE_SEMIHOST
+#error This sample cannot execute with semihost enabled
+#endif
 extern int kbhit(void);                        /* function in retarget.c                 */
 
 volatile uint32_t  g_tick_cnt;

@@ -329,12 +329,13 @@ int32_t main(void)
             update_hid_device_list(hdev_list);
             usbh_memory_used();
         }
-
+#ifndef DEBUG_ENABLE_SEMIHOST
         if (!kbhit())
         {
             getchar();
             usbh_memory_used();
         }
+#endif
     }
 }
 

@@ -37,7 +37,9 @@ HID_DEV_T   *g_hid_list[CONFIG_HID_MAX_DEV];
 static volatile int  au_in_cnt, au_out_cnt;
 
 static uint16_t  vol_max, vol_min, vol_res, vol_cur;
-
+#ifdef DEBUG_ENABLE_SEMIHOST
+#error This sample cannot execute with semihost enabled
+#endif
 extern int kbhit(void);                        /* function in retarget.c                 */
 
 

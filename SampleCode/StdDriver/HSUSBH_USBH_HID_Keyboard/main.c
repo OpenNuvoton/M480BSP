@@ -288,12 +288,13 @@ int32_t main(void)
             kbd_parse_report(hdev_ToDo, data_ToDo, 8);
             hdev_ToDo = NULL;
         }
-
+#ifndef DEBUG_ENABLE_SEMIHOST
         if (!kbhit())
         {
             getchar();
             usbh_memory_used();
         }
+#endif
     }
 }
 
