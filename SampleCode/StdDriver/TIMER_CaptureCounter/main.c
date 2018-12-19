@@ -136,7 +136,7 @@ int main(void)
     TIMER_Start(TIMER2);
 
     /* Check Timer2 capture trigger interrupt counts */
-    while(g_au32TMRINTCount[2] <= 10)
+    while(g_au32TMRINTCount[2] < 10)
     {
         if(g_au32TMRINTCount[2] != u32InitCount)
         {
