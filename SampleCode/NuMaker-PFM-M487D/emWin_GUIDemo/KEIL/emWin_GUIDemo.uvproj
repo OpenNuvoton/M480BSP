@@ -7,10 +7,10 @@
 
   <Targets>
     <Target>
-      <TargetName>emWin_SimpleDemo</TargetName>
+      <TargetName>emWin_GUIDemo</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060528::V5.06 update 5 (build 528)::ARMCC</pCCUsed>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -47,7 +47,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>emWin_SimpleDemo</OutputName>
+          <OutputName>emWin_GUIDemo</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -149,7 +149,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>19</TargetSelection>
+          <TargetSelection>15</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -223,6 +223,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -363,6 +364,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>1</v6Lang>
             <v6LangP>1</v6LangP>
@@ -375,7 +377,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\Library\StdDriver\inc;..\..\..\ThirdParty\emWin\Config;..\..\..\ThirdParty\emWin\Include;..\tslib;..\..\..\Library\CMSIS\Include</IncludePath>
+              <IncludePath>..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\ThirdParty\emWin\Config;..\..\..\..\ThirdParty\emWin\Include;..\tslib;..\..\..\..\Library\CMSIS\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -423,42 +425,37 @@
             <File>
               <FileName>system_M480.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\Device\Nuvoton\M480\Source\system_M480.c</FilePath>
+              <FilePath>..\..\..\..\Library\Device\Nuvoton\M480\Source\system_M480.c</FilePath>
             </File>
             <File>
               <FileName>startup_M480.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Library\Device\Nuvoton\M480\Source\ARM\startup_M480.s</FilePath>
-            </File>
-            <File>
-              <FileName>clk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\clk.c</FilePath>
+              <FilePath>..\..\..\..\Library\Device\Nuvoton\M480\Source\ARM\startup_M480.s</FilePath>
             </File>
             <File>
               <FileName>eadc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\eadc.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\eadc.c</FilePath>
             </File>
             <File>
               <FileName>ebi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\ebi.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\ebi.c</FilePath>
             </File>
             <File>
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\gpio.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\gpio.c</FilePath>
             </File>
             <File>
               <FileName>retarget.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\retarget.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\retarget.c</FilePath>
             </File>
             <File>
               <FileName>sdh.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\sdh.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\sdh.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -467,7 +464,7 @@
                   <RVCTOtherData>0</RVCTOtherData>
                   <ModuleSelection>0</ModuleSelection>
                   <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>0</AlwaysBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
                   <GenerateAssemblyFile>2</GenerateAssemblyFile>
                   <AssembleAssemblyFile>2</AssembleAssemblyFile>
                   <PublicsOnly>2</PublicsOnly>
@@ -492,6 +489,7 @@
                     <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
                     <uC99>2</uC99>
+                    <uGnu>2</uGnu>
                     <useXO>2</useXO>
                     <v6Lang>0</v6Lang>
                     <v6LangP>0</v6LangP>
@@ -513,22 +511,27 @@
             <File>
               <FileName>sys.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\sys.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\sys.c</FilePath>
             </File>
             <File>
               <FileName>timer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\timer.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\timer.c</FilePath>
             </File>
             <File>
               <FileName>uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\uart.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\uart.c</FilePath>
             </File>
             <File>
               <FileName>fmc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\fmc.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\fmc.c</FilePath>
+            </File>
+            <File>
+              <FileName>clk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Library\StdDriver\src\clk.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -538,22 +541,22 @@
             <File>
               <FileName>GUI_X.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\emWin\Config\GUI_X.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\emWin\Config\GUI_X.c</FilePath>
             </File>
             <File>
               <FileName>GUIConf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\emWin\Config\GUIConf.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\emWin\Config\GUIConf.c</FilePath>
             </File>
             <File>
               <FileName>LCDConf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\emWin\Config\LCDConf.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\emWin\Config\LCDConf.c</FilePath>
             </File>
             <File>
               <FileName>NUemWin_CM4_Keil.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>..\..\..\ThirdParty\emWin\Lib\NUemWin_CM4_Keil.lib</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\emWin\Lib\NUemWin_CM4_Keil.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -561,9 +564,129 @@
           <GroupName>Application</GroupName>
           <Files>
             <File>
-              <FileName>FramewinDLG.c</FileName>
+              <FileName>GUIDEMO.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Application\FramewinDLG.c</FilePath>
+              <FilePath>..\Application\GUIDEMO.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_AntialiasedText.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_AntialiasedText.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Automotive.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Automotive.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_BarGraph.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_BarGraph.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Bitmap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Bitmap.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_ColorBar.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_ColorBar.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Conf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Conf.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Cursor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Cursor.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Fading.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Fading.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Graph.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Graph.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_IconView.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_IconView.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_ImageFlow.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_ImageFlow.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Intro.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Intro.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Listview.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Listview.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_RadialMenu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_RadialMenu.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Resource.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Resource.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Skinning.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Skinning.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Speed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Speed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Speedometer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Speedometer.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Start.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Start.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_TransparentDialog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_TransparentDialog.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Treeview.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Treeview.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_VScreen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_VScreen.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_WashingMachine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_WashingMachine.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_ZoomAndRotate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_ZoomAndRotate.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -632,6 +755,7 @@
                     <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
                     <uC99>2</uC99>
+                    <uGnu>2</uGnu>
                     <useXO>2</useXO>
                     <v6Lang>0</v6Lang>
                     <v6LangP>0</v6LangP>
@@ -687,6 +811,7 @@
                     <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
                     <uC99>2</uC99>
+                    <uGnu>2</uGnu>
                     <useXO>2</useXO>
                     <v6Lang>0</v6Lang>
                     <v6LangP>0</v6LangP>
@@ -713,7 +838,7 @@
             <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\FatFs\source\ff.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\FatFs\source\ff.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -722,7 +847,7 @@
                   <RVCTOtherData>0</RVCTOtherData>
                   <ModuleSelection>0</ModuleSelection>
                   <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>0</AlwaysBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
                   <GenerateAssemblyFile>2</GenerateAssemblyFile>
                   <AssembleAssemblyFile>2</AssembleAssemblyFile>
                   <PublicsOnly>2</PublicsOnly>
@@ -747,6 +872,7 @@
                     <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
                     <uC99>2</uC99>
+                    <uGnu>2</uGnu>
                     <useXO>2</useXO>
                     <v6Lang>0</v6Lang>
                     <v6LangP>0</v6LangP>
@@ -780,10 +906,10 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>emWin_SimpleDemo_SD</TargetName>
+      <TargetName>emWin_GUIDemo_SD</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060528::V5.06 update 5 (build 528)::ARMCC</pCCUsed>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -820,7 +946,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>emWin_SimpleDemo_SD</OutputName>
+          <OutputName>emWin_GUIDemo_SD</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -922,7 +1048,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>19</TargetSelection>
+          <TargetSelection>15</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -996,6 +1122,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -1136,6 +1263,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>1</v6Lang>
             <v6LangP>1</v6LangP>
@@ -1148,7 +1276,7 @@
               <MiscControls></MiscControls>
               <Define>__USE_SD__</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\Library\StdDriver\inc;..\..\..\ThirdParty\emWin\Config;..\..\..\ThirdParty\emWin\Include;..\tslib;..\..\..\ThirdParty\FatFs\source;..\..\..\Library\CMSIS\Include</IncludePath>
+              <IncludePath>..\..\..\..\Library\Device\Nuvoton\M480\Include;..\..\..\..\Library\StdDriver\inc;..\..\..\..\ThirdParty\emWin\Config;..\..\..\..\ThirdParty\emWin\Include;..\tslib;..\..\..\..\ThirdParty\FatFs\source;..\..\..\..\Library\CMSIS\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1196,62 +1324,62 @@
             <File>
               <FileName>system_M480.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\Device\Nuvoton\M480\Source\system_M480.c</FilePath>
+              <FilePath>..\..\..\..\Library\Device\Nuvoton\M480\Source\system_M480.c</FilePath>
             </File>
             <File>
               <FileName>startup_M480.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\..\Library\Device\Nuvoton\M480\Source\ARM\startup_M480.s</FilePath>
-            </File>
-            <File>
-              <FileName>clk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\clk.c</FilePath>
+              <FilePath>..\..\..\..\Library\Device\Nuvoton\M480\Source\ARM\startup_M480.s</FilePath>
             </File>
             <File>
               <FileName>eadc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\eadc.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\eadc.c</FilePath>
             </File>
             <File>
               <FileName>ebi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\ebi.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\ebi.c</FilePath>
             </File>
             <File>
               <FileName>gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\gpio.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\gpio.c</FilePath>
             </File>
             <File>
               <FileName>retarget.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\retarget.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\retarget.c</FilePath>
             </File>
             <File>
               <FileName>sdh.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\sdh.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\sdh.c</FilePath>
             </File>
             <File>
               <FileName>sys.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\sys.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\sys.c</FilePath>
             </File>
             <File>
               <FileName>timer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\timer.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\timer.c</FilePath>
             </File>
             <File>
               <FileName>uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\uart.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\uart.c</FilePath>
             </File>
             <File>
               <FileName>fmc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Library\StdDriver\src\fmc.c</FilePath>
+              <FilePath>..\..\..\..\Library\StdDriver\src\fmc.c</FilePath>
+            </File>
+            <File>
+              <FileName>clk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Library\StdDriver\src\clk.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1261,22 +1389,22 @@
             <File>
               <FileName>GUI_X.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\emWin\Config\GUI_X.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\emWin\Config\GUI_X.c</FilePath>
             </File>
             <File>
               <FileName>GUIConf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\emWin\Config\GUIConf.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\emWin\Config\GUIConf.c</FilePath>
             </File>
             <File>
               <FileName>LCDConf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\emWin\Config\LCDConf.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\emWin\Config\LCDConf.c</FilePath>
             </File>
             <File>
               <FileName>NUemWin_CM4_Keil.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>..\..\..\ThirdParty\emWin\Lib\NUemWin_CM4_Keil.lib</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\emWin\Lib\NUemWin_CM4_Keil.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -1284,9 +1412,129 @@
           <GroupName>Application</GroupName>
           <Files>
             <File>
-              <FileName>FramewinDLG.c</FileName>
+              <FileName>GUIDEMO.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Application\FramewinDLG.c</FilePath>
+              <FilePath>..\Application\GUIDEMO.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_AntialiasedText.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_AntialiasedText.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Automotive.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Automotive.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_BarGraph.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_BarGraph.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Bitmap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Bitmap.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_ColorBar.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_ColorBar.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Conf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Conf.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Cursor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Cursor.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Fading.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Fading.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Graph.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Graph.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_IconView.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_IconView.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_ImageFlow.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_ImageFlow.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Intro.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Intro.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Listview.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Listview.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_RadialMenu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_RadialMenu.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Resource.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Resource.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Skinning.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Skinning.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Speed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Speed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Speedometer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Speedometer.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Start.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Start.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_TransparentDialog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_TransparentDialog.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_Treeview.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_Treeview.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_VScreen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_VScreen.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_WashingMachine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_WashingMachine.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDEMO_ZoomAndRotate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Application\GUIDEMO_ZoomAndRotate.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1336,7 +1584,7 @@
             <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\ThirdParty\FatFs\source\ff.c</FilePath>
+              <FilePath>..\..\..\..\ThirdParty\FatFs\source\ff.c</FilePath>
             </File>
           </Files>
         </Group>
