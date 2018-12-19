@@ -26,6 +26,13 @@
  * 1 tab == 4 spaces!
  */
 
+/* A UDP echo server which is implemented with LwIP under FreeRTOS.
+   The server listen to port 80, IP address could be configured
+   statically to 192.168.1.2 or assign by DHCP server. After
+   receiving any string from its peer, this sample code reply with
+   "Hello World!!" */
+
+
 #include <stdio.h>
 
 /* Kernel includes. */
@@ -53,30 +60,41 @@
 /* Hardware and starter kit includes. */
 #include "NuMicro.h"
 
-/* Priorities for the demo application tasks. */
-#define mainFLASH_TASK_PRIORITY             ( tskIDLE_PRIORITY + 1UL )
-#define mainQUEUE_POLL_PRIORITY             ( tskIDLE_PRIORITY + 2UL )
-#define mainSEM_TEST_PRIORITY               ( tskIDLE_PRIORITY + 1UL )
-#define mainBLOCK_Q_PRIORITY                ( tskIDLE_PRIORITY + 2UL )
-#define mainCREATOR_TASK_PRIORITY           ( tskIDLE_PRIORITY + 3UL )
-#define mainFLOP_TASK_PRIORITY              ( tskIDLE_PRIORITY )
-#define mainCHECK_TASK_PRIORITY             ( tskIDLE_PRIORITY + 3UL )
 
-#define mainCHECK_TASK_STACK_SIZE           ( configMINIMAL_STACK_SIZE )
+#include "lwip/netifapi.h"
+#include "lwip/tcpip.h"
+#include "netif/ethernetif.h"
+#include "udp_echoserver-netconn.h"
+
+/* Priorities for the demo application tasks. */
+#if 0
+#define mainFLASH_TASK_PRIORITY            ( tskIDLE_PRIORITY + 1UL )
+#define mainQUEUE_POLL_PRIORITY            ( tskIDLE_PRIORITY + 2UL )
+#define mainSEM_TEST_PRIORITY              ( tskIDLE_PRIORITY + 1UL )
+#define mainBLOCK_Q_PRIORITY               ( tskIDLE_PRIORITY + 2UL )
+#define mainCHECK_TASK_PRIORITY            ( tskIDLE_PRIORITY + 3UL )
+#else
+#define mainFLASH_TASK_PRIORITY            ( tskIDLE_PRIORITY + 1UL )
+#define mainQUEUE_POLL_PRIORITY            ( tskIDLE_PRIORITY + 1UL )
+#define mainSEM_TEST_PRIORITY              ( tskIDLE_PRIORITY + 1UL )
+#define mainCHECK_TASK_PRIORITY            ( tskIDLE_PRIORITY + 3UL )
+#endif
+
+#define mainCHECK_TASK_STACK_SIZE            ( configMINIMAL_STACK_SIZE )
 
 /* The time between cycles of the 'check' task. */
-#define mainCHECK_DELAY                     ( ( portTickType ) 5000 / portTICK_RATE_MS )
+#define mainCHECK_DELAY                        ( ( portTickType ) 5000 / portTICK_RATE_MS )
 
 /* The LED used by the check timer. */
-#define mainCHECK_LED                       ( 3UL )
+#define mainCHECK_LED                         ( 3UL )
 
 /* A block time of zero simply means "don't block". */
-#define mainDONT_BLOCK                      ( 0UL )
+#define mainDONT_BLOCK                        ( 0UL )
 
 /* The period after which the check timer will expire, in ms, provided no errors
 have been reported by any of the standard demo tasks.  ms are converted to the
 equivalent in ticks using the portTICK_RATE_MS constant. */
-#define mainCHECK_TIMER_PERIOD_MS           ( 3000UL / portTICK_RATE_MS )
+#define mainCHECK_TIMER_PERIOD_MS            ( 3000UL / portTICK_RATE_MS )
 
 /* The period at which the check timer will expire, in ms, if an error has been
 reported in one of the standard demo tasks.  ms are converted to the equivalent
@@ -88,10 +106,13 @@ Set mainCREATE_SIMPLE_LED_FLASHER_DEMO_ONLY to 0 to create a much more
 comprehensive test application.  See the comments at the top of this file, and
 the documentation page on the http://www.FreeRTOS.org web site for more
 information. */
-#define mainCREATE_SIMPLE_LED_FLASHER_DEMO_ONLY     0
+#define mainCREATE_SIMPLE_LED_FLASHER_DEMO_ONLY        0
 
-#define CHECK_TEST
+//#define USE_DHCP
 
+#ifdef USE_DHCP
+#include "lwip/dhcp.h"
+#endif
 /*-----------------------------------------------------------*/
 
 /*
@@ -100,34 +121,26 @@ information. */
 static void prvSetupHardware( void );
 /*-----------------------------------------------------------*/
 
-#ifdef CHECK_TEST
-static void vCheckTask( void *pvParameters );
-#endif
+
+
+unsigned char my_mac_addr[6] = {0x00, 0x00, 0x00, 0x55, 0x66, 0x77};
+struct netif netif;
+static void vUdpTask( void *pvParameters );
 
 int main(void)
 {
     /* Configure the hardware ready to run the test. */
     prvSetupHardware();
 
-
-#ifdef CHECK_TEST
-    xTaskCreate( vCheckTask, "Check", mainCHECK_TASK_STACK_SIZE, NULL, mainCHECK_TASK_PRIORITY, NULL );
-#endif
+    xTaskCreate( vUdpTask, "UdpTask", TCPIP_THREAD_STACKSIZE, NULL, mainCHECK_TASK_PRIORITY, NULL );
 
 
-    /* Start standard demo/test application flash tasks.  See the comments at
-    the top of this file.  The LED flash tasks are always created.  The other
-    tasks are only created if mainCREATE_SIMPLE_LED_FLASHER_DEMO_ONLY is set to
-    0 (at the top of this file).  See the comments at the top of this file for
-    more information. */
-    vStartLEDFlashTasks( mainFLASH_TASK_PRIORITY );
-
+    //vStartBlockingQueueTasks( mainBLOCK_Q_PRIORITY );
     vStartPolledQueueTasks( mainQUEUE_POLL_PRIORITY );
+    vStartSemaphoreTasks( mainSEM_TEST_PRIORITY );
+    vStartGenericQueueTasks( tskIDLE_PRIORITY );
+    vStartQueueSetTasks();
 
-    /* The following function will only create more tasks and timers if
-    mainCREATE_SIMPLE_LED_FLASHER_DEMO_ONLY is set to 0 (at the top of this
-    file).  See the comments at the top of this file for more information. */
-    //prvOptionallyCreateComprehensveTestApplication();
 
     printf("FreeRTOS is starting ...\n");
 
@@ -165,25 +178,37 @@ static void prvSetupHardware( void )
 
     /* Enable IP clock */
     CLK_EnableModuleClock(UART0_MODULE);
-    CLK_EnableModuleClock(TMR0_MODULE);
+    CLK_EnableModuleClock(EMAC_MODULE);
 
     /* Select IP clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
-    CLK_SetModuleClock(TMR0_MODULE, CLK_CLKSEL1_TMR0SEL_HXT, 0);
+
+    // Configure MDC clock rate to HCLK / (127 + 1) = 1.5 MHz if system is running at 192 MHz
+    CLK_SetModuleClock(EMAC_MODULE, 0, CLK_CLKDIV3_EMAC(127));
 
     /* Update System Core Clock */
     /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock. */
     SystemCoreClockUpdate();
 
 
+
     /* Set GPB multi-function pins for UART0 RXD and TXD */
     SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
     SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
+    // Configure RMII pins
+    SYS->GPA_MFPL |= SYS_GPA_MFPL_PA6MFP_EMAC_RMII_RXERR | SYS_GPA_MFPL_PA7MFP_EMAC_RMII_CRSDV;
+    SYS->GPC_MFPL |= SYS_GPC_MFPL_PC6MFP_EMAC_RMII_RXD1 | SYS_GPC_MFPL_PC7MFP_EMAC_RMII_RXD0;
+    SYS->GPC_MFPH |= SYS_GPC_MFPH_PC8MFP_EMAC_RMII_REFCLK;
+    SYS->GPE_MFPH |= SYS_GPE_MFPH_PE8MFP_EMAC_RMII_MDC |
+                     SYS_GPE_MFPH_PE9MFP_EMAC_RMII_MDIO |
+                     SYS_GPE_MFPH_PE10MFP_EMAC_RMII_TXD0 |
+                     SYS_GPE_MFPH_PE11MFP_EMAC_RMII_TXD1 |
+                     SYS_GPE_MFPH_PE12MFP_EMAC_RMII_TXEN;
 
-    PH->MODE = (PH->MODE & ~(GPIO_MODE_MODE0_Msk | GPIO_MODE_MODE1_Msk | GPIO_MODE_MODE2_Msk)) |
-               (GPIO_MODE_OUTPUT << GPIO_MODE_MODE0_Pos) |
-               (GPIO_MODE_OUTPUT << GPIO_MODE_MODE1_Pos) |
-               (GPIO_MODE_OUTPUT << GPIO_MODE_MODE2_Pos);  // Set to output mode
+    // Enable high slew rate on all RMII TX output pins
+    PE->SLEWCTL = (GPIO_SLEWCTL_HIGH << GPIO_SLEWCTL_HSREN10_Pos) |
+                  (GPIO_SLEWCTL_HIGH << GPIO_SLEWCTL_HSREN11_Pos) |
+                  (GPIO_SLEWCTL_HIGH << GPIO_SLEWCTL_HSREN12_Pos);
 
     /* Lock protected registers */
     SYS_LockReg();
@@ -252,24 +277,37 @@ void vApplicationTickHook( void )
     }
 #endif /* mainCREATE_SIMPLE_BLINKY_DEMO_ONLY */
 }
-/*-----------------------------------------------------------*/
-#ifdef CHECK_TEST
-static void vCheckTask( void *pvParameters )
+
+static void vUdpTask( void *pvParameters )
 {
-    portTickType xLastExecutionTime;
+    ip_addr_t ipaddr;
+    ip_addr_t netmask;
+    ip_addr_t gw;
 
-    xLastExecutionTime = xTaskGetTickCount();
+    IP4_ADDR(&gw, 192,168,0,1);
+    IP4_ADDR(&ipaddr, 192,168,0,2);
+    IP4_ADDR(&netmask, 255,255,255,0);
 
-    printf("Check Task is running ...\n");
+    printf("Local IP:192.168.0.2\n");
 
-    for( ;; )
-    {
-        /* Perform this check every mainCHECK_DELAY milliseconds. */
-        vTaskDelayUntil( &xLastExecutionTime, mainCHECK_DELAY );
-        if( xArePollingQueuesStillRunning() != pdTRUE )
-        {
-            printf( "ERROR IN POLL Q\n" );
-        }
-    }
-}
+    tcpip_init(NULL, NULL);
+
+    netif_add(&netif, &ipaddr, &netmask, &gw, NULL, ethernetif_init, tcpip_input);
+
+    netif_set_default(&netif);
+    netif_set_up(&netif);
+
+#ifdef USE_DHCP
+    dhcp_start(&netif);
 #endif
+
+    NVIC_SetPriority(EMAC_TX_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1);
+    NVIC_EnableIRQ(EMAC_TX_IRQn);
+    NVIC_SetPriority(EMAC_RX_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1);
+    NVIC_EnableIRQ(EMAC_RX_IRQn);
+
+    udp_echoserver_netconn_init();
+
+    vTaskSuspend( NULL );
+
+}
