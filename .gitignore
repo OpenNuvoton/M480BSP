@@ -64,6 +64,7 @@ Samplecode/*/packages/
 *.cout
 *.browse
 *.scc
+*.ncb
 
 #Large stuff
 *.zip
