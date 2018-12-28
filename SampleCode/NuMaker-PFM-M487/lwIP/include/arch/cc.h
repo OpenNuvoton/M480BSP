@@ -109,4 +109,5 @@ typedef u32_t sys_prot_t;
 extern TickType_t xTaskGetTickCount( void );
 
 #define TCP_MSS                         1000
+//#define TCP_MSS                         1460
 #endif /* __CC_H__ */

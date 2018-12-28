@@ -49,9 +49,11 @@
 #define LWIP_SOCKET_SET_ERRNO           0
 
 #define LWIP_RAND                       xTaskGetTickCount
+#define LWIP_DNS                        1
 //#define LWIP_DHCP                       1
-
-#ifdef __GNUC__
+#define LWIP_POSIX_SOCKETS_IO_NAMES     1
+#define SO_REUSE                        1
+#if defined ( __GNUC__ ) && !(__CC_ARM) && !(__ICCARM__)
 #define LWIP_TIMEVAL_PRIVATE            0
 #endif
 
@@ -63,6 +65,6 @@
 #define DEFAULT_UDP_RECVMBOX_SIZE       5
 #define DEFAULT_RAW_RECVMBOX_SIZE       5
 
-#define MEM_SIZE                        3000
+#define MEM_SIZE                        10000
 
 #endif /* __LWIPOPTS_H__ */
