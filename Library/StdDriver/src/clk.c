@@ -70,14 +70,25 @@ void CLK_EnableCKO(uint32_t u32ClkSrc, uint32_t u32ClkDiv, uint32_t u32ClkDivBy1
   */
 void CLK_PowerDown(void)
 {
+    uint32_t u32HIRCTRIMCTL;
+
     /* Set the processor uses deep sleep as its low power mode */
     SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
 
-    /* Set system Power-down enabled and Power-down entry condition */
-    CLK->PWRCTL |= CLK_PWRCTL_PDEN_Msk;
+    /* Set system Power-down enabled */
+    CLK->PWRCTL |= (CLK_PWRCTL_PDEN_Msk);
+
+    /* Store HIRC control register */
+    u32HIRCTRIMCTL = SYS->IRCTCTL;
+
+    /* Disable HIRC auto trim */
+    SYS->IRCTCTL &= (~SYS_IRCTCTL_FREQSEL_Msk);
 
     /* Chip enter Power-down mode after CPU run WFI instruction */
     __WFI();
+
+    /* Restore HIRC control register */
+    SYS->IRCTCTL = u32HIRCTRIMCTL;
 }
 
 /**
