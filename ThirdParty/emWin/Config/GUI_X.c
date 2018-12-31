@@ -15,8 +15,7 @@ emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product. This file may
 only be used in accordance with the following terms:
 
-The  software has  been licensed by SEGGER Software GmbH to Nuvoton Technology Corporation
-at the address: No. 4, Creation Rd. III, Hsinchu Science Park, Taiwan
+The  software has  been licensed by SEGGER Software GmbH to Nuvoton Technology Corporationat the address: No. 4, Creation Rd. III, Hsinchu Science Park, Taiwan
 for the purposes  of  creating  libraries  for its 
 Arm Cortex-M and  Arm9 32-bit microcontrollers, commercialized and distributed by Nuvoton Technology Corporation
 under  the terms and conditions  of  an  End  User  
@@ -110,5 +109,42 @@ Note:
 void GUI_X_Log     (const char *s) { GUI_USE_PARA(s); }
 void GUI_X_Warn    (const char *s) { GUI_USE_PARA(s); }
 void GUI_X_ErrorOut(const char *s) { GUI_USE_PARA(s); }
+
+/*********************************************************************
+*
+*      Multitasking:
+*
+*                 GUI_X_InitOS()
+*                 GUI_X_GetTaskId()
+*                 GUI_X_Lock()
+*                 GUI_X_Unlock()
+*
+* Note:
+*   The following routines are required only if emWin is used in a
+*   true multi task environment, which means you have more than one
+*   thread using the emWin API.
+*   In this case the
+*                       #define GUI_OS 1
+*  needs to be in GUIConf.h
+*/
+
+void GUI_X_InitOS(void)    {  }
+void GUI_X_Unlock(void)    {  }
+void GUI_X_Lock(void)      {  }
+U32  GUI_X_GetTaskId(void) { return 1; }
+
+
+/*********************************************************************
+*
+*      Event driving (optional with multitasking)
+*
+*                 GUI_X_WaitEvent()
+*                 GUI_X_WaitEventTimed()
+*                 GUI_X_SignalEvent()
+*/
+
+void GUI_X_WaitEvent(void)            {  }
+void GUI_X_SignalEvent(void)          {  }
+void GUI_X_WaitEventTimed(int Period) {  }
 
 /*************************** End of file ****************************/

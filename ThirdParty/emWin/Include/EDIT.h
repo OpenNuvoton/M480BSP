@@ -97,6 +97,7 @@ Purpose     : EDIT include
 //
 #define GUI_EDIT_SHOWCURSOR              (1 << 2)
 #define GUI_EDIT_CUSTCOLORMODE           (1 << 3)
+#define GUI_EDIT_CURSORBLINK             (1 << 4)
 
 //
 // Edit modes

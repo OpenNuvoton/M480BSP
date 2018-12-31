@@ -584,11 +584,6 @@
               <FilePath>..\tslib\testutils.c</FilePath>
             </File>
             <File>
-              <FileName>font_8x8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\tslib\font_8x8.c</FilePath>
-            </File>
-            <File>
               <FileName>fbutils.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\tslib\fbutils.c</FilePath>
@@ -1310,11 +1305,6 @@
               <FileName>testutils.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\tslib\testutils.c</FilePath>
-            </File>
-            <File>
-              <FileName>font_8x8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\tslib\font_8x8.c</FilePath>
             </File>
             <File>
               <FileName>fbutils.c</FileName>
