@@ -155,9 +155,12 @@ void button_draw (struct ts_button *button)
     fillrect(button->x + 1, button->y + 1,
              button->x + button->w - 2,
              button->y + button->h - 2, button_palette [s + 1]);
-    put_string_center(button->x + button->w / 2,
-                      button->y + button->h / 2,
-                      button->text, button_palette [s + 2]);
+//    put_string_center(button->x + button->w / 2,
+//                      button->y + button->h / 2,
+//                      button->text, button_palette [s + 2]);
+
+    GUI_SetColor(palette[button_palette [s + 2]]);
+    GUI_DispStringHCenterAt(button->text, button->x + button->w / 2, button->y + button->h / 2);
 }
 
 int button_handle (struct ts_button *button, int x, int y, unsigned int p)
@@ -196,9 +199,16 @@ static void refresh_screen(void)
 {
     int i;
 
-    fillrect (0, 0, xres - 1, yres - 1, 0);
-    put_string_center (xres/2, yres/4,   "Touchscreen test program", 1);
-    put_string_center (xres/2, yres/4+20,"Touch screen to move crosshair", 2);
+//    fillrect (0, 0, xres - 1, yres - 1, 0);
+    GUI_Clear();
+//    put_string_center (xres/2, yres/4,   "Touchscreen test program", 1);
+//    put_string_center (xres/2, yres/4+20,"Touch screen to move crosshair", 2);
+
+    GUI_SetColor(palette[1]);
+    GUI_DispStringHCenterAt("Touchscreen test program", xres / 2, yres / 4);
+
+    GUI_SetColor(palette[2]);
+    GUI_DispStringHCenterAt("Touch screen to move crosshair", xres / 2, yres / 4 + 20);
 
     for (i = 0; i < NR_BUTTONS; i++)
         button_draw (&buttons [i]);
@@ -292,7 +302,8 @@ int ts_test(int xsize, int ysize)
         if (quit_pressed)
             break;
     }
-    fillrect(0, 0, xres - 1, yres - 1, 0);
+//    fillrect(0, 0, xres - 1, yres - 1, 0);
+    GUI_Clear();
 
     return 0;
 }

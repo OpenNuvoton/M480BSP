@@ -96,6 +96,7 @@ struct EDIT_Obj_struct {
   EDIT_PROPS           Props;
   WM_HTIMER            hTimer;
   U8                   MinMaxMode;
+  int                  TimerPeriod;
 };
 
 /*********************************************************************

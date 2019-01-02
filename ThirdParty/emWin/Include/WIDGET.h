@@ -135,7 +135,11 @@ typedef struct {
   #define WIDGET_USE_PARENT_EFFECT 0
 #endif
 #ifndef   WIDGET_USE_FLEX_SKIN
-  #define WIDGET_USE_FLEX_SKIN     1
+  #if WM_SUPPORT_TRANSPARENCY
+    #define WIDGET_USE_FLEX_SKIN     1
+  #else
+    #define WIDGET_USE_FLEX_SKIN     0
+  #endif
 #endif
 #if !defined(WIDGET_USE_SCHEME_SMALL) && !defined(WIDGET_USE_SCHEME_MEDIUM) && !defined(WIDGET_USE_SCHEME_LARGE)
   #define WIDGET_USE_SCHEME_SMALL  1

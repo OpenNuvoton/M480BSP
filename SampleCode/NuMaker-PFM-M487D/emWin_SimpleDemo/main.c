@@ -1,6 +1,6 @@
 /**************************************************************************//**
  * @file     main.c
- * @version  V1.02
+ * @version  V2.0
  * @brief    To utilize emWin library to demonstrate interactive feature.
  *
  * @copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
@@ -25,7 +25,11 @@
 #ifdef __USE_SD__
 //FATFS FatFs[_VOLUMES];      /* File system object for logical drive */
 
-__align(32) BYTE Buff[1024] ;       /* Working buffer */
+#if defined (__GNUC__)
+BYTE Buff[1024] __attribute__ ((aligned(32)));       /* Working buffer */
+#else
+__align(32) BYTE Buff[1024];       /* Working buffer */
+#endif
 
 FIL hFile;
 #endif

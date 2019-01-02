@@ -20,7 +20,6 @@
 //#include <sys/ioctl.h>
 //#include <sys/mman.h>
 //#include <sys/time.h>
-#include "font.h"
 #include "fbutils.h"
 //#include "wbtypes.h"
 //#include "LCDconf.h"
@@ -77,7 +76,7 @@ void put_cross(int x, int y, unsigned colidx)
     line (x + 4, y + 4, x + 7, y + 7, colidx + 1);
 #endif
 }
-
+#if 0
 void put_char(int x, int y, int c, int colidx)
 {
     int i,j,bits;
@@ -104,7 +103,7 @@ void put_string_center(int x, int y, char *s, unsigned colidx)
     put_string (x - (sl / 2) * font_vga_8x8.width,
                 y - font_vga_8x8.height / 2, s, colidx);
 }
-
+#endif
 void setcolor(unsigned colidx, unsigned value)
 {
     unsigned res;
