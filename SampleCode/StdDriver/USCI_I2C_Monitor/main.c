@@ -197,68 +197,6 @@ void I2C1_Init(void)
     NVIC_EnableIRQ(I2C1_IRQn);
 }
 
-void UI2C0_INIT(uint32_t u32Clk)
-{
-    /* Globoal register settings */
-    /* Enable I2C protocol */
-    UI2C0->CTL &= ~UI2C_CTL_FUNMODE_Msk;
-    UI2C0->CTL = 4 << UI2C_CTL_FUNMODE_Pos;
-
-    //Data format configuration
-    // 8 bit data length
-    UI2C0->LINECTL &= ~UI2C_LINECTL_DWIDTH_Msk;
-    UI2C0->LINECTL |= 8 << UI2C_LINECTL_DWIDTH_Pos;
-
-    // MSB data format
-    UI2C0->LINECTL &= ~UI2C_LINECTL_LSB_Msk;
-
-#ifdef USCI0M_USCI1S
-    //USCI I2C INT Enable
-#ifdef ENABLE_STOP_INT
-    UI2C0->PROTIEN = 0x4E;
-#else
-    UI2C0->PROTIEN = 0x4A;
-#endif
-#else
-    UI2C0->PROTIEN = 0x4E;
-#endif
-    UI2C0->BRGEN &= ~UI2C_BRGEN_CLKDIV_Msk;
-    UI2C0->BRGEN |=  (u32Clk << UI2C_BRGEN_CLKDIV_Pos);
-    UI2C0->PROTCTL |=  UI2C_PROTCTL_PROTEN_Msk;
-}
-
-void UI2C1_INIT(uint32_t u32Clk)
-{
-    /* Enable I2C protocol */
-    UI2C1->CTL &= ~UI2C_CTL_FUNMODE_Msk;
-    UI2C1->CTL = 4 << UI2C_CTL_FUNMODE_Pos;
-
-    //Data format configuration
-    // 8 bit data length
-    UI2C1->LINECTL &= ~UI2C_LINECTL_DWIDTH_Msk;
-    UI2C1->LINECTL |= 8 << UI2C_LINECTL_DWIDTH_Pos;
-
-    // LSB data format
-    UI2C1->LINECTL &= ~UI2C_LINECTL_LSB_Msk;
-
-#ifdef USCI1M_USCI0S
-    //USCI I2C INT Enable
-#ifdef ENABLE_STOP_INT
-    UI2C1->PROTIEN = 0x4E;
-#else
-    UI2C1->PROTIEN = 0x4A;
-#endif
-#else
-    UI2C1->PROTIEN = 0x4E;
-#endif
-
-    UI2C1->BRGEN |= 0x00;
-    UI2C1->BRGEN &= ~UI2C_BRGEN_CLKDIV_Msk;
-
-    UI2C1->BRGEN |=  (u32Clk << UI2C_BRGEN_CLKDIV_Pos);
-    UI2C1->PROTCTL |=  UI2C_PROTCTL_PROTEN_Msk;
-}
-
 void SYS_Init(void)
 {
     /* Set XT1_OUT(PF.2) and XT1_IN(PF.3) to input mode */
