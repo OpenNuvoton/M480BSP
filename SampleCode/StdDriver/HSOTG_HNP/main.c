@@ -40,7 +40,6 @@ void SysTick_Handler(void)
 void enable_sys_tick(int ticks_per_second)
 {
     g_tick_cnt = 0;
-    SystemCoreClock = 12000000UL;
     if (SysTick_Config(SystemCoreClock / ticks_per_second))
     {
         /* Setup SysTick Timer for 1 second interrupts  */
@@ -189,9 +188,9 @@ void  int_read_callback(HID_DEV_T *hdev, uint16_t ep_addr, int status, uint8_t *
         printf("Interrupt in transfer failed! status: %d\n", status);
         return;
     }
-    printf("Device [0x%x,0x%x] ep 0x%x, %d bytes received =>\n",
-           hdev->idVendor, hdev->idProduct, ep_addr, data_len);
-    dump_buff_hex(rdata, data_len);
+//    printf("Device [0x%x,0x%x] ep 0x%x, %d bytes received =>\n",
+//           hdev->idVendor, hdev->idProduct, ep_addr, data_len);
+//    dump_buff_hex(rdata, data_len);
 
     intcount++;
 }
@@ -218,13 +217,13 @@ int  init_hid_device(HID_DEV_T *hdev)
      *  Example: GET_PROTOCOL request.
      */
     ret = usbh_hid_get_protocol(hdev, data_buff);
-    printf("[GET_PROTOCOL] ret = %d, protocol = %d\n", ret, data_buff[0]);
+    //printf("[GET_PROTOCOL] ret = %d, protocol = %d\n", ret, data_buff[0]);
 
     /*
      *  Example: SET_PROTOCOL request.
      */
     ret = usbh_hid_set_protocol(hdev, data_buff[0]);
-    printf("[SET_PROTOCOL] ret = %d, protocol = %d\n", ret, data_buff[0]);
+    //printf("[SET_PROTOCOL] ret = %d, protocol = %d\n", ret, data_buff[0]);
 
     /*
      *  Example: GET_REPORT request on report ID 0x1, report type FEATURE.
@@ -497,7 +496,7 @@ int32_t main(void)
 
                 if (gStartHNP)
                 {
-                    printf("do HMP...\n");
+                    printf("do HNP...\n");
                     /* do HNP */
                     OTG_SetFeature(0x3);
                     delay_us(100000);
@@ -507,11 +506,18 @@ int32_t main(void)
                     HSOTG->CTL &= ~HSOTG_CTL_BUSREQ_Msk;
                     usbh_suspend();
                     printf("A suspend\n");
+                    while(1)
+                    {
+                        if (otg_role_change)
+                        {
+                            printf("Role change: A->B  %d\n", otg_role_change);
+                            break;
+                        }
+                    }
                 }
 
                 if (otg_role_change)
                 {
-                    printf("Role change: A->B  %d\n", otg_role_change);
                     break;
                 }
             }
