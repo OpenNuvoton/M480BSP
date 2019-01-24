@@ -18,6 +18,7 @@ extern uint32_t PcmPlayBuff[PDMA_TXBUFFER_CNT][BUFF_LEN];
 extern uint8_t PcmRecBuff[PDMA_RXBUFFER_CNT][BUFF_LEN];
 extern uint8_t u8PcmRxBufFull[PDMA_RXBUFFER_CNT];
 extern volatile uint8_t u8TxDataCntInBuffer;
+extern volatile uint8_t u8RxDataCntInBuffer;
 extern volatile uint8_t u8PDMATxIdx;
 extern volatile uint8_t u8PDMARxIdx;
 
@@ -38,7 +39,8 @@ void PDMA_IRQHandler(void)
             PDMA_CLR_TD_FLAG(PDMA,PDMA_TDSTS_TDIF1_Msk);
 
             /* Decrease number of full buffer */
-            u8TxDataCntInBuffer --;
+            if (u8TxDataCntInBuffer > 0)
+                u8TxDataCntInBuffer --;
             /* Change to next buffer */
             u8PDMATxIdx ++;
             if(u8PDMATxIdx >= PDMA_TXBUFFER_CNT)
@@ -51,6 +53,7 @@ void PDMA_IRQHandler(void)
 
             /* Set PCM buffer full flag */
             u8PcmRxBufFull[u8PDMARxIdx] = 1;
+            u8RxDataCntInBuffer++;
 
             /* Change to next buffer */
             u8PDMARxIdx ++;

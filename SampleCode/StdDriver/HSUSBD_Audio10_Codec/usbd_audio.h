@@ -14,7 +14,7 @@
 #define USBD_VID        0x0416
 #define USBD_PID        0x1286
 
-#define AUDIO_RATE  AUDIO_RATE_48K
+#define AUDIO_RATE  AUDIO_RATE_96K
 
 #define AUDIO_RATE_48K   48000       /* The audo play sampling rate. The setting is 48KHz */
 #define AUDIO_RATE_96K   96000       /* The audo play sampling rate. The setting is 96KHz */

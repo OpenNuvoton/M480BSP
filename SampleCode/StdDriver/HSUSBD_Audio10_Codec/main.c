@@ -75,15 +75,18 @@ void SYS_Init(void)
 void I2C2_Init(void)
 {
     /* Open I2C2 and set clock to 100k */
-    I2C_Open(I2C2, 100000);
+    I2C_Open(I2C2, 400000);
 
     /* Get I2C2 Bus Clock */
     printf("I2C clock %d Hz\n", I2C_GetBusClockFreq(I2C2));
 }
 
+extern volatile uint8_t u8TxDataCntInBuffer;
+extern volatile uint8_t u8RxDataCntInBuffer;
 
 int32_t main (void)
 {
+    uint32_t volatile i;
     /* Init System, IP clock and multi-function I/O
        In the end of SYS_Init() will issue SYS_LockReg()
        to lock protected register. If user want to write
@@ -133,7 +136,7 @@ int32_t main (void)
     PDMA_Init();
 
     /* Configure TIMER0 for adjusting NAU88L25's PLL */
-    TIMER_Open(TIMER0, TIMER_PERIODIC_MODE, 500);
+    TIMER_Open(TIMER0, TIMER_PERIODIC_MODE, 100);
     TIMER_EnableInt(TIMER0);
     NVIC_SetPriority(TMR0_IRQn, 3);
     NVIC_EnableIRQ(TMR0_IRQn);
@@ -158,6 +161,11 @@ int32_t main (void)
         if ((g_usbd_UsbAudioState == UAC_START_AUDIO_RECORD) && g_usbd_txflag)
         {
             UAC_SendRecData();
+        }
+
+        if ((u8TxDataCntInBuffer != 0) && ((++i % 0x50000) == 0))
+        {
+            printf("%d <-> %d\n", u8TxDataCntInBuffer, u8RxDataCntInBuffer);
         }
     }
 }

@@ -265,6 +265,8 @@ void NAU88L25_ConfigSampleRate(uint32_t u32SampleRate)
 
     printf("[NAU88L25] Configure Sampling Rate to %d\n", u32SampleRate);
 
+    I2C_WriteNAU88L25(0x0003,  0x8053);
+    I2C_WriteNAU88L25(0x0004,  0x0001);
     if((u32SampleRate % 8) == 0)
     {
         I2C_WriteNAU88L25(0x0005, 0x3126); //12.288Mhz
@@ -290,6 +292,7 @@ void NAU88L25_ConfigSampleRate(uint32_t u32SampleRate)
         I2C_WriteNAU88L25(0x001D,  0x301A); //301A:Master, BCLK_DIV=12.288M/8=1.536M, LRC_DIV=1.536M/32=48K
         I2C_WriteNAU88L25(0x002B,  0x0012);
         I2C_WriteNAU88L25(0x002C,  0x0082);
+        HSUSBD_SET_MAX_PAYLOAD(EPA, 192);
         u32BuffLen = 768;
         u32RxBuffLen = 768;
         break;
@@ -302,6 +305,7 @@ void NAU88L25_ConfigSampleRate(uint32_t u32SampleRate)
         I2C_WriteNAU88L25(0x001D,  0x301A); //3019:Master, BCLK_DIV=MCLK/8=3.072M, LRC_DIV=3.072M/32=96K
         I2C_WriteNAU88L25(0x002B,  0x0001);
         I2C_WriteNAU88L25(0x002C,  0x0080);
+        HSUSBD_SET_MAX_PAYLOAD(EPA, 384);
         u32BuffLen = 768;
         u32RxBuffLen = 768;
         break;
@@ -413,7 +417,7 @@ void AdjustCodecPll(RESAMPLE_STATE_T r)
     /* 0.192   * 2^16 = 0x3126 */
     /* 0.23296 * 2^16 = 0x3BA3 */
     /* 0.15104 * 2^16 = 0x26AB */
-    static uint16_t tb0[3] = {0x3216, 0x3BA3, 0x26AB};
+    static uint16_t tb0[3] = {0x3126, 0x3BA3, 0x26AB};
 
     /* Sample rate = 44.1KHz only */
     /* 7.5264, 7.5264*1.005 = 7.5640, 7.5264*0.995 = 7.4887 */
