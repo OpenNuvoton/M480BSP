@@ -14,7 +14,7 @@
 #define USBD_VID        0x0416
 #define USBD_PID        0x1284
 
-#define AUDIO_RATE  AUDIO_RATE_441K
+#define AUDIO_RATE  AUDIO_RATE_48K
 
 #define AUDIO_RATE_48K   48000       /* The audo play sampling rate. The setting is 48KHz */
 #define AUDIO_RATE_96K   96000       /* The audo play sampling rate. The setting is 96KHz */
@@ -113,7 +113,7 @@ extern uint32_t volatile u32BuffLen, u32RxBuffLen;
 extern uint32_t g_usbd_UsbAudioState;
 extern volatile uint8_t u8AudioPlaying;
 extern volatile uint8_t u8TxDataCntInBuffer;
-extern uint32_t g_usbd_SampleRate;
+extern uint32_t volatile g_usbd_SampleRate;
 
 void UAC_DeviceEnable(uint32_t bIsPlay);
 void UAC_DeviceDisable(uint32_t bIsPlay);

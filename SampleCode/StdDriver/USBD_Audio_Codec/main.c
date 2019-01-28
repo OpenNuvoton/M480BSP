@@ -80,7 +80,7 @@ void SYS_Init(void)
 void I2C2_Init(void)
 {
     /* Open I2C2 and set clock to 100k */
-    I2C_Open(I2C2, 100000);
+    I2C_Open(I2C2, 400000);
 
     /* Get I2C2 Bus Clock */
     printf("I2C clock %d Hz\n", I2C_GetBusClockFreq(I2C2));

@@ -265,6 +265,8 @@ void NAU88L25_ConfigSampleRate(uint32_t u32SampleRate)
 
     printf("[NAU88L25] Configure Sampling Rate to %d\n", u32SampleRate);
 
+    I2C_WriteNAU88L25(0x0003,  0x8053);
+    I2C_WriteNAU88L25(0x0004,  0x0001);
     if((u32SampleRate % 8) == 0)
     {
         I2C_WriteNAU88L25(0x0005, 0x3126); //12.288Mhz
@@ -413,7 +415,7 @@ void AdjustCodecPll(RESAMPLE_STATE_T r)
     /* 0.192   * 2^16 = 0x3126 */
     /* 0.23296 * 2^16 = 0x3BA3 */
     /* 0.15104 * 2^16 = 0x26AB */
-    static uint16_t tb0[3] = {0x3216, 0x3BA3, 0x26AB};
+    static uint16_t tb0[3] = {0x3126, 0x3BA3, 0x26AB};
 
     /* Sample rate = 44.1KHz only */
     /* 7.5264, 7.5264*1.005 = 7.5640, 7.5264*0.995 = 7.4887 */

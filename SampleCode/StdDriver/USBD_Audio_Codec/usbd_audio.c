@@ -11,7 +11,7 @@
 #include "NuMicro.h"
 #include "usbd_audio.h"
 
-uint32_t g_usbd_SampleRate = AUDIO_RATE;
+uint32_t volatile g_usbd_SampleRate = AUDIO_RATE;
 /*--------------------------------------------------------------------------*/
 static volatile uint8_t bPlayVolumeLAdjust = FALSE;
 static volatile uint8_t bPlayVolumeRAdjust = FALSE;
@@ -242,7 +242,6 @@ void EP3_Handler(void)
 {
     /* ISO OUT transfer ACK */
     UAC_GetPlayData((uint8_t *)((uint32_t)USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP3)), (uint32_t)USBD_GET_PAYLOAD_LEN(EP3));
-
     USBD_SET_PAYLOAD_LEN(EP3, EP3_MAX_PKT_SIZE);
 }
 
@@ -498,11 +497,6 @@ void UAC_ClassRequest(void)
             if ((buf[0] & 0x0f) == 0x02)
             {
                 USBD_PrepareCtrlOut((uint8_t *)&g_usbd_SampleRate, buf[6]);
-                if (u8RecEn)
-                {
-                    UAC_DeviceDisable(0);
-                    AudioStartRecord(g_usbd_SampleRate);
-                }
                 /* Status stage */
                 USBD_SET_DATA1(EP0);
                 USBD_SET_PAYLOAD_LEN(EP0, 0);
@@ -626,16 +620,18 @@ void UAC_DeviceEnable(uint32_t bIsPlay)
     {
         /* Enable play hardware */
         u8PlayEn = 1;
+        TIMER_Start(TIMER0);
     }
     else
     {
         /* Enable record hardware */
         if(!u8RecEn)
+        {
             AudioStartRecord(g_usbd_SampleRate);
+        }
 
         u8RecEn = 1;
     }
-    TIMER_Start(TIMER0);
 }
 
 
@@ -774,18 +770,14 @@ void AudioStartPlay(uint32_t u32SampleRate)
   */
 void UAC_SendRecData(void)
 {
-    uint32_t *pBuff;
-
     /* when record buffer full, send data to host */
     if(u8PcmRxBufFull[u32BufRecIdx])
     {
-
         /* Set empty flag */
         u8PcmRxBufFull[u32BufRecIdx] = 0;
 
-        pBuff = (uint32_t *)&PcmRecBuff[u32BufRecIdx][0];
-        USBD_MemCopy((uint8_t *)((uint32_t)USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP2)), (void *)pBuff, u32RxBuffLen<<2);
-        USBD_SET_PAYLOAD_LEN(EP2, u32RxBuffLen<<2);
+        USBD_MemCopy((uint8_t *)((uint32_t)USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP2)), (void *)&PcmRecBuff[u32BufRecIdx][0], u32RxBuffLen);
+        USBD_SET_PAYLOAD_LEN(EP2, u32RxBuffLen);
 
         /* Change to next PCM buffer */
         u32BufRecIdx ++;
