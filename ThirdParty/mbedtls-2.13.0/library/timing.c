@@ -378,7 +378,11 @@ int mbedtls_timing_get_delay( void *data )
 
 unsigned long mbedtls_timing_hardclock( void )
 {
+#ifndef FREERTOS
     return(sysGetTicks(TIMER0));
+#else    
+    return xTaskGetTickCount();//clyu
+#endif
 }
 
 #endif  /* NUVOTON_PORT */
