@@ -348,6 +348,11 @@ void PDMA_SetTimeOut(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32OnOff, uint32_t u
     default:
         break;
     }
+
+    if (u32OnOff)
+        pdma->TOUTEN |= (1 << u32Ch);
+    else
+        pdma->TOUTEN &= ~(1 << u32Ch);
 }
 
 /**
