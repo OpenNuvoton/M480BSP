@@ -27,6 +27,9 @@
 
 #if defined (__GNUC__)
 BYTE Buff[1024] __attribute__ ((aligned(32)));       /* Working buffer */
+#elif defined ( __ICCARM__ )
+#pragma data_alignment=32
+BYTE Buff[1024];       /* Working buffer */
 #else
 __align(32) BYTE Buff[1024];       /* Working buffer */
 #endif
