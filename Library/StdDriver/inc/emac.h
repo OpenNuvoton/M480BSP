@@ -144,6 +144,12 @@ extern "C"
   */
 #define EMAC_CLR_ALARM_FLAG() (EMAC->INTSTS = EMAC_INTSTS_TSALMIF_Msk)
 
+/**
+  * @brief  Trigger EMAC Rx function
+  * @param  None
+  * @return None
+  */
+#define EMAC_TRIGGER_RX() do{EMAC->RXST = 0UL;}while(0)
 
 void EMAC_Open(uint8_t *pu8MacAddr);
 void EMAC_Close(void);

@@ -144,7 +144,7 @@ static uint32_t EMAC_Nsec2Subsec(uint32_t nsec);
   * @param  None
   * @return None
   */
-#define EMAC_TRIGGER_RX() do{EMAC->RXST = 0UL;}while(0)
+//#define EMAC_TRIGGER_RX() do{EMAC->RXST = 0UL;}while(0)
 
 /**
   * @brief  Trigger EMAC Tx function
