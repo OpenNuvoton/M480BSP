@@ -610,6 +610,7 @@ void CLK_DisableXtalRC(uint32_t u32ClkMask)
   *             - \ref HSUSBD_MODULE
   *             - \ref CRPT_MODULE
   *             - \ref SPIM_MODULE
+  *             - \ref FMCIDLE_MODULE
   *             - \ref USBH_MODULE
   *             - \ref SDH1_MODULE
   *             - \ref WDT_MODULE
@@ -683,6 +684,7 @@ void CLK_EnableModuleClock(uint32_t u32ModuleIdx)
   *             - \ref HSUSBD_MODULE
   *             - \ref CRPT_MODULE
   *             - \ref SPIM_MODULE
+  *             - \ref FMCIDLE_MODULE
   *             - \ref USBH_MODULE
   *             - \ref SDH1_MODULE
   *             - \ref WDT_MODULE
