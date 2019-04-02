@@ -120,15 +120,13 @@ void NAU8822_ConfigSampleRate(uint32_t u32SampleRate)
     case 48000:
         I2C_WriteNAU8822(6, 0x14D);    /* Divide by 2, 48K */
         I2C_WriteNAU8822(7, 0x000);    /* 48K for internal filter coefficients */
-        HSUSBD_SET_MAX_PAYLOAD(EPA, 24);
-        u32BuffLen = 768;
-        u32RxBuffLen = 768;
+        u32BuffLen = 384;
+        u32RxBuffLen = 384;
         break;
 
     case 96000:
         I2C_WriteNAU8822(6, 0x109);
         I2C_WriteNAU8822(72, 0x013);
-        HSUSBD_SET_MAX_PAYLOAD(EPA, 48);
         u32BuffLen = 768;
         u32RxBuffLen = 768;
         break;
@@ -292,8 +290,8 @@ void NAU88L25_ConfigSampleRate(uint32_t u32SampleRate)
         I2C_WriteNAU88L25(0x001D,  0x301A); //301A:Master, BCLK_DIV=12.288M/8=1.536M, LRC_DIV=1.536M/32=48K
         I2C_WriteNAU88L25(0x002B,  0x0012);
         I2C_WriteNAU88L25(0x002C,  0x0082);
-        u32BuffLen = 768;
-        u32RxBuffLen = 768;
+        u32BuffLen = 384;
+        u32RxBuffLen = 384;
         break;
 
     case 96000:
