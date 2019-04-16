@@ -448,7 +448,7 @@ static int spim_wait_write_done(uint32_t u32NBit)
     {
         SPIM_DBGMSG("spim_wait_write_done time-out!!\n");
     }
-    return -1;
+    return ret;
 }
 
 /**
