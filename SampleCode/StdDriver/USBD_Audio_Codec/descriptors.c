@@ -39,7 +39,7 @@ uint8_t gu8ConfigDescriptor[] =
 
     LEN_CONFIG,     /* bLength */
     DESC_CONFIG,    /* bDescriptorType */
-    0xC4, 0x00,         /* wTotalLength */
+    0xBE, 0x00,         /* wTotalLength */
                         /*
                            Configuration Descriptor                    (0x09)
                            Interface Descriptor (Audio Class)          (0x09)
@@ -301,7 +301,7 @@ uint8_t gu8ConfigDescriptor[] =
     0x01,0x00,          /* wFormatTag:0x0001 PCM */
 
     /* Audio Streaming Format Type Descriptor */
-    0x0E,               /* bLength */
+    0x0B,               /* bLength */
     0x24,               /* bDescriptorType:CS_INTERFACE */
     0x02,               /* bDescriptorSubType:FORMAT_TYPE */
     0x01,               /* bFormatType:FORMAT_TYPE_I */
@@ -309,17 +309,13 @@ uint8_t gu8ConfigDescriptor[] =
     0x02,               /* bNrChannels    :  2 Channels */
     0x02,               /* bSubFrameSize  :  2 bytes per sample */
     0x10,               /* bBitResolution : 16 bits  per sample */
-    0x02,               /* bSamFreqType :
+    0x01,               /* bSamFreqType :
                            0 Continuous sampling frequency
                            1 The number of discrete sampling frequencies */
     /* bSamFreqType  */
     (AUDIO_RATE_48K & 0xFF),
     ((AUDIO_RATE_48K >> 8) & 0xFF),
     ((AUDIO_RATE_48K >> 16) & 0xFF),
-
-    (AUDIO_RATE_96K & 0xFF),
-    ((AUDIO_RATE_96K >> 8) & 0xFF),
-    ((AUDIO_RATE_96K >> 16) & 0xFF),
 
     /* Endpoint Descriptor (ISO IN Audio Data Endpoint - alternate 1) */
     0x07,                             /* bLength */
@@ -374,7 +370,7 @@ uint8_t gu8ConfigDescriptor[] =
     0x01,0x00,          /* wFormatTag:0x0001 PCM */
 
     /* Audio Streaming Format Type Descriptor */
-    0x0E,               /* bLength */
+    0x0B,               /* bLength */
     0x24,               /* bDescriptorType:CS_INTERFACE */
     0x02,               /* bDescriptorSubType:FORMAT_TYPE */
     0x01,               /* bFormatType:FORMAT_TYPE_I */
@@ -382,17 +378,13 @@ uint8_t gu8ConfigDescriptor[] =
     0x02,               /* bNrChannels    :  2 Channels */
     0x02,               /* bSubFrameSize  :  2 bytes per sample */
     0x10,               /* bBitResolution : 16 bits  per sample */
-    0x02,               /* bSamFreqType :
+    0x01,               /* bSamFreqType :
                            0 Continuous sampling frequency
                            1 The number of discrete sampling frequencies */
     /* bSamFreqType  */
     (AUDIO_RATE_48K & 0xFF),
     ((AUDIO_RATE_48K >> 8) & 0xFF),
     ((AUDIO_RATE_48K >> 16) & 0xFF),
-
-    (AUDIO_RATE_96K & 0xFF),
-    ((AUDIO_RATE_96K >> 8) & 0xFF),
-    ((AUDIO_RATE_96K >> 16) & 0xFF),
 
     /* Endpoint Descriptor (ISO OUT Audio Data Endpoint - alternate 1) */
     0x09,                             /* bLength */
