@@ -262,12 +262,12 @@ void UAC_Init(void)
     if ((g_usbd_SampleRate % 8000) == 0)
     {
         u32BuffLen = 768;
-        u32RxBuffLen = (g_usbd_SampleRate / 1000);
+        u32RxBuffLen = (g_usbd_SampleRate / 1000) * 4;
     }
     else
     {
         u32BuffLen = 441;
-        u32RxBuffLen = (g_usbd_SampleRate / 1000);
+        u32RxBuffLen = 444;
     }
 
     /* Init setup packet buffer */
