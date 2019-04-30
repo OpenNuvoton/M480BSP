@@ -196,7 +196,7 @@ void ADC_Init()
     EADC_ENABLE_SAMPLE_MODULE_INT(EADC, 0, 0x1);
     /* Enable ADINT0 interrupt */
     EADC_ENABLE_INT(EADC, 0x1);
-    NVIC_EnableIRQ(ADC0_IRQn);
+    NVIC_EnableIRQ(EADC00_IRQn);
 
     /* Reset the EADC interrupt indicator and trigger sample module 0 to start A/D conversion */
     EADC_START_CONV(EADC, 0x1);
@@ -278,7 +278,7 @@ void TMR0_IRQHandler(void)
 /*---------------------------------------------------------------------------------------------------------*/
 /* EADC interrupt handler                                                                                  */
 /*---------------------------------------------------------------------------------------------------------*/
-void ADC00_IRQHandler(void)
+void EADC00_IRQHandler(void)
 {
 
     g_u32ADCValue_ch14 = EADC_GET_CONV_DATA(EADC, 0);

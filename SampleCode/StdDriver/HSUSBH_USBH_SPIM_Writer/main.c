@@ -671,6 +671,12 @@ int32_t main(void)
 
     UART0_Init();                           /* Initialize UART0                           */
 
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x1)
+    {
+        printf("M480LD does not support SPIM.\n");
+        while (1);
+    }
+
     enable_sys_tick(100);
 
     printf("\n\n");

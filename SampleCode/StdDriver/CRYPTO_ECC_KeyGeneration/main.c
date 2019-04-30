@@ -26,33 +26,6 @@ void CRYPTO_IRQHandler()
     ECC_Complete(CRPT);
 }
 
-
-void  dump_buff_hex(uint8_t *pucBuff, int nBytes)
-{
-    int     nIdx, i;
-
-    nIdx = 0;
-    while (nBytes > 0)
-    {
-        printf("0x%04X  ", nIdx);
-        for (i = 0; i < 16; i++)
-            printf("%02x ", pucBuff[nIdx + i]);
-        printf("  ");
-        for (i = 0; i < 16; i++)
-        {
-            if ((pucBuff[nIdx + i] >= 0x20) && (pucBuff[nIdx + i] < 127))
-                printf("%c", pucBuff[nIdx + i]);
-            else
-                printf(".");
-            nBytes--;
-        }
-        nIdx += 16;
-        printf("\n");
-    }
-    printf("\n");
-}
-
-
 void SYS_Init(void)
 {
     /* Unlock protected registers */
@@ -101,6 +74,26 @@ void UART0_Init(void)
 
     /* Configure UART0 and set UART0 baud rate */
     UART_Open(UART0, 115200);
+}
+
+
+void Init_TRNG(void)
+{
+#ifdef TRNG_USE_LXT32K
+    /* Basic Configuration */
+    CLK->PWRCTL |= CLK_PWRCTL_LXTEN_Msk;
+    while((CLK->STATUS & CLK_STATUS_LXTSTB_Msk) == 0);
+#else
+    /* Basic Configuration */
+    CLK->PWRCTL |= CLK_PWRCTL_LIRCEN_Msk;
+    while((CLK->STATUS & CLK_STATUS_LIRCSTB_Msk) == 0);
+    RTC->LXTCTL |= 0x81;
+#endif
+    /* Enable TRNG module clock */
+    CLK_EnableModuleClock(TRNG_MODULE);
+
+    TRNG_Open();
+    TRNG_SET_CLKP(0);                  /* PCLK is 96 MHz */
 }
 
 
@@ -156,12 +149,29 @@ int32_t main (void)
 
     printf("\n\nECC P-192 key pair generation =>\n");
 
-    init_adc_init();
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x1)
+    {
+        /* use H/W TRNG to generate true random number */
+        Init_TRNG();
+    }
+    else
+    {
+        /* use ADC bandgap to generate true random number */
+        init_adc_init();
+    }
+
     memset(d, 0, sizeof(d));
 
     for (i = 0; i < 192; i++)
     {
-        adc_trng_gen_key(d, 192-i);
+        if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x1)
+        {
+            TRNG_GenBignumHex(d, 192-i);
+        }
+        else
+        {
+            adc_trng_gen_key(d, 192-i);
+        }
 
         if (ECC_IsPrivateKeyValid(CRPT, CURVE_P_192, d))
         {
@@ -187,7 +197,14 @@ int32_t main (void)
     memset(d, 0, sizeof(d));
     for (i = 0; i < 256; i++)
     {
-        adc_trng_gen_key(d, 256-i);
+        if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x1)
+        {
+            TRNG_GenBignumHex(d, 256-i);
+        }
+        else
+        {
+            adc_trng_gen_key(d, 256-i);
+        }
 
         if (ECC_IsPrivateKeyValid(CRPT, CURVE_P_256, d))
         {

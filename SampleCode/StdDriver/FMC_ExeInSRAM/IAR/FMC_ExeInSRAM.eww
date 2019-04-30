@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\FMC_ExeInSRAM.ewp</path>
+    <path>$WS_DIR$\fmc_exeinsram.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

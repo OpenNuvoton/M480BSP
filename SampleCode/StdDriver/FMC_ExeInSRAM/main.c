@@ -1,18 +1,21 @@
-/**************************************************************************//**
+/****************************************************************************//**
  * @file     main.c
- * @version  V3.00
- * @brief
- *           Implement a code and execute in SRAM to program embedded Flash.
- *           (Support KEIL MDK Only)
- * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
- *****************************************************************************/
+ * @version  V0.10
+ * @brief    Implement a code and execute in SRAM to program embedded Flash.
+ *
+ * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+*****************************************************************************/
 #include <stdio.h>
-
+#include <string.h>
 #include "NuMicro.h"
 
-#define APROM_TEST_BASE             0x3000
-#define TEST_PATTERN                0x5A5A5A5A
+#define SRAM_CODE_EXE_ADDR  0x20010000
+#define SRAM_CODE_BASE      0x8000
+#define SRAM_CODE_SIZE      0x1000
 
+typedef void (FUNC_PTR)(void);
+
+extern int32_t FlashAccess_OnSRAM(void);
 
 void SYS_Init(void)
 {
@@ -56,9 +59,7 @@ void SYS_Init(void)
 
 int32_t main(void)
 {
-    uint32_t u32Data, u32RData;
-    uint32_t u32Addr;
-    uint32_t i;
+    FUNC_PTR    *func;                 /* function pointer */
 
     /* Unlock protected registers */
     SYS_UnlockReg();
@@ -66,7 +67,7 @@ int32_t main(void)
     /* Init System, IP clock and multi-function I/O. */
     SYS_Init();
 
-    /* Configure UART0: 115200, 8-bit word, no parity bit, 1 stop bit. */
+    /* Configure UART5: 115200, 8-bit word, no parity bit, 1 stop bit. */
     UART_Open(UART0, 115200);
 
     printf("\n\n");
@@ -76,55 +77,31 @@ int32_t main(void)
 
     /*
        This sample code is used to demonstrate how to implement a code to execute in SRAM.
-       By setting scatter loading file (scatter.scf),
-       RO code is placed to 0x20000000 ~ 0x20001fff with RW is placed to 0x20002000 ~ 0x20003fff.
+       exeinsram.o is moved to 0x20010000 ~ 0x20010fff and execute there.
     */
 
     /* Unlock protected registers */
     SYS_UnlockReg();
 
-    /* Enable FMC ISP functions */
-    FMC_Open();
+    printf("Execute demo code in APROM ==>\n");
 
-    /* Update APROM enabled */
-    FMC_ENABLE_AP_UPDATE();
+    FlashAccess_OnSRAM();
 
-    /* The ROM address for erase/write/read demo */
-    u32Addr = 0x20000;
-    FMC_Erase(u32Addr); /* Erase page */
-    for(i = 0; i < 0x100; i += 4)
-    {
+    memcpy((uint8_t *)SRAM_CODE_EXE_ADDR, (uint8_t *)SRAM_CODE_BASE, SRAM_CODE_SIZE);
 
-        /* Write Demo */
-        u32Data = i + 0x12345678;
-        FMC_Write(u32Addr + i, u32Data);
+    printf("Execute demo code in SRAM ==>\n");
 
-        if((i & 0xf) == 0)
-            printf(".");
+    func = (FUNC_PTR *)(SRAM_CODE_BASE+1);
 
-        /* Read Demo */
-        u32RData = FMC_Read(u32Addr + i);
-
-        if(u32Data != u32RData)
-        {
-            printf("[Read/Write FAIL]\n");
-            while(1);
-        }
-    }
-
-    printf("\nISP function run at SRAM finished\n");
-
-    /* Disable FMC ISP function */
-    FMC->ISPCTL &=  ~FMC_ISPCTL_ISPEN_Msk;
+    func();   /* branch to exeinsram.o in SRAM  */
 
     /* Lock protected registers */
     SYS_LockReg();
 
     printf("\nFMC Sample Code Completed.\n");
 
-    while(1);
+    while (1);
 
 }
-/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
 
-
+/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/

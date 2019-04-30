@@ -180,9 +180,15 @@ typedef struct
      * |        |          |0 = TMx (x= 0~3) pin de-bounce Disabled.
      * |        |          |1 = TMx (x= 0~3) pin de-bounce Enabled.
      * |        |          |Note: If this bit is enabled, the edge detection of TMx pin is detected with de-bounce circuit.
-     * |[8]     |ACMPSSEL  |ACMP Source Selection to Trigger Capture Function
-     * |        |          |0 = Capture Function source is from internal ACMP0 output signal.
-     * |        |          |1 = Capture Function source is from internal ACMP1 output signal.
+     * |[8:10]  |ICAPSEL   |Internal Capture Source Select
+     * |        |          |000 = Capture Function source is from internal ACMP0 output signal.
+     * |        |          |001 = Capture Function source is from internal ACMP1 output signal.
+     * |        |          |010 = Capture Function source is from HXT.
+     * |        |          |011 = Capture Function source is from LXT.
+     * |        |          |100 = Capture Function source is from HIRC.
+     * |        |          |101 = Capture Function source is from LIRC.
+     * |        |          |110 = Reserved.
+     * |        |          |111 = Reserved.
      * |        |          |Note: these bits only available when CAPSRC (TIMERx_CTL[22]) is 1.
      * |[14:12] |CAPEDGE   |Timer External Capture Pin Edge Detect
      * |        |          |When first capture event is generated, the CNT (TIMERx_CNT[23:0]) will be reset to 0 and first CAPDAT (TIMERx_CAP[23:0]) should be to 0.
@@ -196,7 +202,19 @@ typedef struct
      * |[16]    |ECNTSSEL  |Event Counter Source Selection to Trigger Event Counter Function
      * |        |          |0 = Event Counter input source is from TMx (x= 0~3) pin.
      * |        |          |1 = Event Counter input source is from USB internal SOF output signal.
-     * @var TIMER_T::EINTSTS
+     * |[31:28] |CAPDIVSCL |Timer Capture Source Divider
+     * |        |          |This bits indicate the divide scale for capture source divider
+     * |        |          |0000 = Capture source/1.
+     * |        |          |0001 = Capture source/2.
+     * |        |          |0010 = Capture source/4.
+     * |        |          |0011 = Capture source/8.
+     * |        |          |0100 = Capture source/16.
+     * |        |          |0101 = Capture source/32.
+     * |        |          |0110 = Capture source/64.
+     * |        |          |0111 = Capture source/128.
+     * |        |          |1000 = Capture source/256.
+     * |        |          |1001~1111 = Reserved.
+     * |        |          |Note: Sets INTERCAPSEL (TIMERx_EXTCTL[10:8]) and CAPSRC (TIMERx_CTL[22]) to select capture source.     * @var TIMER_T::EINTSTS
      * Offset: 0x18  Timer External Interrupt Status Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
@@ -217,13 +235,13 @@ typedef struct
      * |[0]     |TRGSSEL   |Trigger Source Select Bit
      * |        |          |This bit is used to select internal trigger source is form timer time-out interrupt signal or
      * |        |          |capture interrupt signal.
-     * |        |          |0 = Time-out interrupt signal is used to internal trigger EPWM, PDMA, DAC, and EADC.
-     * |        |          |1 = Capture interrupt signal is used to internal trigger EPWM, PDMA, DAC, and EADC.
-     * |[1]     |TRGEPWM   |Trigger EPWM Enable Bit
-     * |        |          |If this bit is set to 1, each timer time-out event or capture event can be as EPWM counter clock source.
-     * |        |          |0 = Timer interrupt trigger EPWM Disabled.
-     * |        |          |1 = Timer interrupt trigger EPWM Enabled.
-     * |        |          |Note: If TRGSSEL (TIMERx_TRGCTL[0]) = 0, time-out interrupt signal as EPWM counter clock source.
+     * |        |          |0 = Time-out interrupt signal is used to internal trigger EPWM, BPWM, PDMA, DAC, and EADC.
+     * |        |          |1 = Capture interrupt signal is used to internal trigger EPWM, BPWM, PDMA, DAC, and EADC.
+     * |[1]     |TRGEPWM   |Trigger EPWM and BPWM Enable Bit
+     * |        |          |If this bit is set to 1, each timer time-out event or capture event can be as EPWM and BPWM counter clock source.
+     * |        |          |0 = Timer interrupt trigger EPWM and BPWM Disabled.
+     * |        |          |1 = Timer interrupt trigger EPWM and BPWM Enabled.
+     * |        |          |Note: If TRGSSEL (TIMERx_TRGCTL[0]) = 0, time-out interrupt signal as EPWM and BPWM counter clock source.
      * |        |          |If TRGSSEL (TIMERx_TRGCTL[0]) = 1, capture interrupt signal as EPWM counter clock source.
      * |[2]     |TRGEADC   |Trigger EADC Enable Bit
      * |        |          |If this bit is set to 1, each timer time-out event or capture event can be triggered EADC conversion.
@@ -809,14 +827,17 @@ typedef struct
 #define TIMER_EXTCTL_CNTDBEN_Pos         (7)                                               /*!< TIMER_T::EXTCTL: CNTDBEN Position      */
 #define TIMER_EXTCTL_CNTDBEN_Msk         (0x1ul << TIMER_EXTCTL_CNTDBEN_Pos)               /*!< TIMER_T::EXTCTL: CNTDBEN Mask          */
 
-#define TIMER_EXTCTL_ACMPSSEL_Pos        (8)                                               /*!< TIMER_T::EXTCTL: ACMPSSEL Position     */
-#define TIMER_EXTCTL_ACMPSSEL_Msk        (0x1ul << TIMER_EXTCTL_ACMPSSEL_Pos)              /*!< TIMER_T::EXTCTL: ACMPSSEL Mask         */
+#define TIMER_EXTCTL_ICAPSEL_Pos         (8)                                               /*!< TIMER_T::EXTCTL: ICAPSEL Position      */
+#define TIMER_EXTCTL_ICAPSEL_Msk         (0x7ul << TIMER_EXTCTL_ICAPSEL_Pos)               /*!< TIMER_T::EXTCTL: ICAPSEL Mask          */
 
 #define TIMER_EXTCTL_CAPEDGE_Pos         (12)                                              /*!< TIMER_T::EXTCTL: CAPEDGE Position      */
 #define TIMER_EXTCTL_CAPEDGE_Msk         (0x7ul << TIMER_EXTCTL_CAPEDGE_Pos)               /*!< TIMER_T::EXTCTL: CAPEDGE Mask          */
 
 #define TIMER_EXTCTL_ECNTSSEL_Pos        (16)                                              /*!< TIMER_T::EXTCTL: ECNTSSEL Position     */
 #define TIMER_EXTCTL_ECNTSSEL_Msk        (0x1ul << TIMER_EXTCTL_ECNTSSEL_Pos)              /*!< TIMER_T::EXTCTL: ECNTSSEL Mask         */
+
+#define TIMER_EXTCTL_CAPDIVSCL_Pos       (28)                                              /*!< TIMER_T::EXTCTL: CAPDIVSCL Position     */
+#define TIMER_EXTCTL_CAPDIVSCL_Msk       (0xful << TIMER_EXTCTL_CAPDIVSCL_Pos)             /*!< TIMER_T::EXTCTL: CAPDIVSCL Mask         */
 
 #define TIMER_EINTSTS_CAPIF_Pos          (0)                                               /*!< TIMER_T::EINTSTS: CAPIF Position       */
 #define TIMER_EINTSTS_CAPIF_Msk          (0x1ul << TIMER_EINTSTS_CAPIF_Pos)                /*!< TIMER_T::EINTSTS: CAPIF Mask           */

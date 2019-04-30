@@ -102,7 +102,7 @@ int main(void)
     // Set capture source from ACMP
     TIMER0->CTL |= TIMER_CTL_CAPSRC_Msk;
     // Set capture source from ACMP1
-    TIMER0->EXTCTL |= TIMER_EXTCTL_ACMPSSEL_Msk;
+    TIMER0->EXTCTL |= (1 << TIMER_EXTCTL_ICAPSEL_Pos);
 
     // Start Timer 0
     TIMER_Start(TIMER0);

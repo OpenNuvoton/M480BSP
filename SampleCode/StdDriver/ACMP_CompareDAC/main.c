@@ -16,9 +16,9 @@ void ACMP01_IRQHandler(void)
     ACMP_CLR_INT_FLAG(ACMP01, 1);
     /* Check Comparator 0 Output Status */
     if(ACMP_GET_OUTPUT(ACMP01, 1))
-        printf("ACMP1_P voltage > Band-gap voltage (%d)\n", u32Cnt);
+        printf("ACMP1_P voltage > DAC voltage (%d)\n", u32Cnt);
     else
-        printf("ACMP1_P voltage <= Band-gap voltage (%d)\n", u32Cnt);
+        printf("ACMP1_P voltage <= DAC voltage (%d)\n", u32Cnt);
 
     u32Cnt++;
 }

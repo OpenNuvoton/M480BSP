@@ -34,6 +34,80 @@ void FMC_Close(void)
     FMC->ISPCTL &= ~FMC_ISPCTL_ISPEN_Msk;
 }
 
+/**
+  * @brief     Config XOM Region
+  * @param[in] u32XomNum    The XOM number(0~3)
+  * @param[in] u32XomBase   The XOM region base address.
+  * @param[in] u8XomPage   The XOM page number of region size.
+  *
+  * @retval   0   Success
+  * @retval   1   XOM is has already actived.
+  * @retval   -1  Program failed.
+  * @retval   -2  Invalid XOM number.
+  *
+  * @details  Program XOM base address and XOM size(page)
+  */
+int32_t FMC_ConfigXOM(uint32_t u32XomNum, uint32_t u32XomBase, uint8_t u8XomPage)
+{
+    int32_t  ret = 0;
+
+    if(u32XomNum >= 4UL)
+    {
+        ret = -2;
+    }
+
+    if(ret == 0)
+    {
+        ret = FMC_GetXOMState(u32XomNum);
+    }
+
+    if(ret == 0)
+    {
+        FMC->ISPCMD = FMC_ISPCMD_PROGRAM;
+        FMC->ISPADDR = FMC_XOM_BASE + (u32XomNum * 0x10u);
+        FMC->ISPDAT = u32XomBase;
+        FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
+        while(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) {}
+
+        if(FMC->ISPSTS & FMC_ISPSTS_ISPFF_Msk)
+        {
+            FMC->ISPSTS |= FMC_ISPSTS_ISPFF_Msk;
+            ret = -1;
+        }
+    }
+
+    if(ret == 0)
+    {
+        FMC->ISPCMD = FMC_ISPCMD_PROGRAM;
+        FMC->ISPADDR = FMC_XOM_BASE + (u32XomNum * 0x10u + 0x04u);
+        FMC->ISPDAT = u8XomPage;
+        FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
+        while(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) {}
+
+        if(FMC->ISPSTS & FMC_ISPSTS_ISPFF_Msk)
+        {
+            FMC->ISPSTS |= FMC_ISPSTS_ISPFF_Msk;
+            ret = -1;
+        }
+    }
+
+    if(ret == 0)
+    {
+        FMC->ISPCMD = FMC_ISPCMD_PROGRAM;
+        FMC->ISPADDR = FMC_XOM_BASE + (u32XomNum * 0x10u + 0x08u);
+        FMC->ISPDAT = 0u;
+        FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
+        while(FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) {}
+
+        if(FMC->ISPSTS & FMC_ISPSTS_ISPFF_Msk)
+        {
+            FMC->ISPSTS |= FMC_ISPSTS_ISPFF_Msk;
+            ret = -1;
+        }
+    }
+
+    return ret;
+}
 
 /**
   * @brief Execute FMC_ISPCMD_PAGE_ERASE command to erase a flash page. The page size is 4096 bytes.
@@ -147,21 +221,121 @@ int32_t FMC_Erase_Bank(uint32_t u32BankAddr)
 }
 
 /**
+  * @brief  Execute Erase XOM Region
+  *
+  * @param[in]  u32XomNum  The XOMRn(n=0~3)
+  *
+  * @return   XOM erase success or not.
+  * @retval    0  Success
+  * @retval   -1  Erase failed
+  * @retval   -2  Invalid XOM number.
+  *
+  * @details Execute FMC_ISPCMD_PAGE_ERASE command to erase XOM.
+  */
+int32_t FMC_EraseXOM(uint32_t u32XomNum)
+{
+    uint32_t u32Addr;
+    int32_t i32Active, err = 0;
+
+    if(u32XomNum >= 4UL)
+    {
+        err = -2;
+    }
+
+    if(err == 0)
+    {
+        i32Active = FMC_GetXOMState(u32XomNum);
+
+        if(i32Active)
+        {
+            switch(u32XomNum)
+            {
+            case 0u:
+                u32Addr = (FMC->XOMR0STS & 0xFFFFFF00u) >> 8u;
+                break;
+            case 1u:
+                u32Addr = (FMC->XOMR1STS & 0xFFFFFF00u) >> 8u;
+                break;
+            case 2u:
+                u32Addr = (FMC->XOMR2STS & 0xFFFFFF00u) >> 8u;
+                break;
+            case 3u:
+                u32Addr = (FMC->XOMR3STS & 0xFFFFFF00u) >> 8u;
+                break;
+            default:
+                break;
+            }
+            FMC->ISPCMD = FMC_ISPCMD_PAGE_ERASE;
+            FMC->ISPADDR = u32Addr;
+            FMC->ISPDAT = 0x55aa03u;
+            FMC->ISPTRG = 0x1u;
+#if ISBEN
+            __ISB();
+#endif
+            while(FMC->ISPTRG) {}
+
+            /* Check ISPFF flag to know whether erase OK or fail. */
+            if(FMC->ISPCTL & FMC_ISPCTL_ISPFF_Msk)
+            {
+                FMC->ISPCTL |= FMC_ISPCTL_ISPFF_Msk;
+                err = -1;
+            }
+        }
+        else
+        {
+            err = -1;
+        }
+    }
+    return err;
+}
+
+/**
+  * @brief  Check the XOM is actived or not.
+  *
+  * @param[in] u32XomNum    The xom number(0~3).
+  *
+  * @retval   1   XOM is actived.
+  * @retval   0   XOM is not actived.
+  * @retval   -2  Invalid XOM number.
+  *
+  * @details To get specify XOMRn(n=0~3) active status
+  */
+int32_t FMC_GetXOMState(uint32_t u32XomNum)
+{
+    uint32_t u32act;
+    int32_t  ret = 0;
+
+    if(u32XomNum >= 4UL)
+    {
+        ret = -2;
+    }
+
+    if(ret >= 0)
+    {
+        u32act = (((FMC->XOMSTS) & 0xful) & (1ul << u32XomNum)) >> u32XomNum;
+        ret = (int32_t)u32act;
+    }
+    return ret;
+}
+
+/**
   * @brief Get the current boot source.
   * @return The current boot source.
   * @retval   0  Is boot from APROM.
   * @retval   1  Is boot from LDROM.
+  * @retval   2  Is boot from Boot Loader.
   */
 int32_t FMC_GetBootSource (void)
 {
-    int32_t  ret = 0;
-
+    if (FMC->ISPCTL & FMC_ISPCTL_BL_Msk)
+    {
+        return 2;
+    }
     if (FMC->ISPCTL & FMC_ISPCTL_BS_Msk)
     {
-        ret = 1;
+        return 1;
     }
-
-    return ret;
+    return 0;
 }
 
 

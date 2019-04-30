@@ -12,8 +12,8 @@
 
 
 #define APROM_TEST_BASE             0x20000      /* APROM test start address                 */
-#define DATA_FLASH_TEST_BASE        0x40000      /* Data Flash test start address            */
-#define DATA_FLASH_TEST_END         0x80000      /* Data Flash test end address              */
+#define DATA_FLASH_TEST_BASE        0x30000      /* Data Flash test start address            */
+#define DATA_FLASH_TEST_END         0x40000      /* Data Flash test end address              */
 #define TEST_PATTERN                0x5A5A5A5A   /* Test pattern                             */
 
 

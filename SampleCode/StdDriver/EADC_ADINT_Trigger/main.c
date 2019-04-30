@@ -19,7 +19,7 @@ volatile uint32_t g_u32AdcIntFlag, g_u32COVNUMFlag = 0;
 /*---------------------------------------------------------------------------------------------------------*/
 /* EADC interrupt handler                                                                                  */
 /*---------------------------------------------------------------------------------------------------------*/
-void ADC00_IRQHandler(void)
+void EADC00_IRQHandler(void)
 {
     g_u32AdcIntFlag = 1;
     EADC_CLR_INT_FLAG(EADC, EADC_STATUS2_ADIF0_Msk);      /* Clear the A/D ADINT0 interrupt flag */
@@ -120,7 +120,7 @@ void EADC_FunctionTest()
             /* Enable the sample module 7 interrupt */
             EADC_ENABLE_INT(EADC, BIT0);//Enable sample module  A/D ADINT0 interrupt.
             EADC_ENABLE_SAMPLE_MODULE_INT(EADC, 0, BIT7);//Enable sample module 7 interrupt.
-            NVIC_EnableIRQ(ADC0_IRQn);
+            NVIC_EnableIRQ(EADC00_IRQn);
 
             /* Reset the ADC indicator and trigger sample module 7 to start A/D conversion */
             g_u32AdcIntFlag = 0;
@@ -163,7 +163,7 @@ void EADC_FunctionTest()
             /* Enable the sample module 7 interrupt */
             EADC_ENABLE_INT(EADC, BIT0);//Enable sample module A/D ADINT0 interrupt.
             EADC_ENABLE_SAMPLE_MODULE_INT(EADC, 0, BIT7);//Enable sample module 7 interrupt.
-            NVIC_EnableIRQ(ADC0_IRQn);
+            NVIC_EnableIRQ(EADC00_IRQn);
 
             /* Reset the ADC indicator and trigger sample module 7 to start A/D conversion */
             g_u32AdcIntFlag = 0;
@@ -218,7 +218,7 @@ int32_t main(void)
     CLK_DisableModuleClock(EADC_MODULE);
 
     /* Disable External Interrupt */
-    NVIC_DisableIRQ(ADC0_IRQn);
+    NVIC_DisableIRQ(EADC00_IRQn);
 
     printf("Exit EADC sample code\n");
 

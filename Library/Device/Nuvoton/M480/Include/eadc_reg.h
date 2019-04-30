@@ -563,7 +563,10 @@ typedef struct
     __IO uint32_t PWRM;                  /*!< [0x0110] ADC Power Management Register                                    */
     __IO uint32_t CALCTL;                /*!< [0x0114] ADC Calibration Control Register                                 */
     __IO uint32_t CALDWRD;               /*!< [0x0118] ADC Calibration Load Word Register                               */
-
+    /// @cond HIDDEN_SYMBOLS
+    __I  uint32_t RESERVE2[5];
+    /// @endcond //HIDDEN_SYMBOLS
+    __IO uint32_t PDMACTL;               /*!< [0x0130] ADC PDMA Control Register                                        */
 } EADC_T;
 
 /**

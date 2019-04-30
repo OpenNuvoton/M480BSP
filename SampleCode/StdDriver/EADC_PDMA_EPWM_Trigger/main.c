@@ -19,7 +19,7 @@ int16_t  g_i32ConversionData[6] = {0};
 uint32_t g_u32SampleModuleNum = 0;
 
 
-void ADC00_IRQHandler(void)
+void EADC00_IRQHandler(void)
 {
     g_u32AdcIntFlag = 1;
     EADC_CLR_INT_FLAG(EADC, EADC_STATUS2_ADIF0_Msk);      /* Clear the A/D ADINT0 interrupt flag */
@@ -128,7 +128,7 @@ void PDMA_Init()
     PDMA_SetTransferAddr(PDMA,2, (uint32_t)&EADC->DAT[g_u32SampleModuleNum], PDMA_SAR_FIX, (uint32_t)g_i32ConversionData, PDMA_DAR_INC);
 
     /* Select PDMA request source as ADC RX */
-    PDMA_SetTransferMode(PDMA,2, PDMA_ADC_RX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA,2, PDMA_EADC0_RX, FALSE, 0);
 
     /* Set PDMA as single request type for EADC */
     PDMA_SetBurstType(PDMA,2, PDMA_REQ_SINGLE, PDMA_BURST_4);
@@ -143,7 +143,7 @@ void ReloadPDMA()
     PDMA_SetTransferCnt(PDMA,2, PDMA_WIDTH_16, 6);
 
     /* Select PDMA request source as ADC RX */
-    PDMA_SetTransferMode(PDMA,2, PDMA_ADC_RX, FALSE, 0);
+    PDMA_SetTransferMode(PDMA,2, PDMA_EADC0_RX, FALSE, 0);
 }
 
 
@@ -175,7 +175,10 @@ void EADC_FunctionTest()
 
             /* Configure the sample module 0 for analog input channel 2 and enable EPWM0 trigger source */
             EADC_ConfigSampleModule(EADC, g_u32SampleModuleNum, EADC_PWM0TG0_TRIGGER, 2);
-            EADC_ENABLE_PDMA(EADC);
+            if (SYS->CSERVER & SYS_CSERVER_VERSION_Msk) /* M480LD */
+                EADC_ENABLE_SAMPLE_MODULE_PDMA(EADC, 1<<g_u32SampleModuleNum);
+            else /* M480 */
+                EADC_ENABLE_PDMA(EADC);
 
             printf("Conversion result of channel 2:\n");
 
@@ -203,7 +206,11 @@ void EADC_FunctionTest()
             EADC_Open(EADC, EADC_CTL_DIFFEN_DIFFERENTIAL);
             /* Configure the sample module 0 for analog input channel 2 and software trigger source.*/
             EADC_ConfigSampleModule(EADC, g_u32SampleModuleNum, EADC_PWM0TG0_TRIGGER, 2);
-            EADC_ENABLE_PDMA(EADC);
+            if (SYS->CSERVER & SYS_CSERVER_VERSION_Msk) /* M480LD */
+                EADC_ENABLE_SAMPLE_MODULE_PDMA(EADC, 1<<g_u32SampleModuleNum);
+            else /* M480 */
+                EADC_ENABLE_PDMA(EADC);
+
 
             printf("Conversion result of channel 2:\n");
 

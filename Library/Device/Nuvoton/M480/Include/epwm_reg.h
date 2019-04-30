@@ -1638,6 +1638,9 @@ typedef struct
      * |[15:0]  |IFACNT    |EPWM_CHn Interrupt Flag Counter
      * |        |          |The register sets the count number which defines how many times of EPWM_CHn period occurs to set bit IFAIFn to request the EPWM period interrupt.
      * |        |          |EPWM flag will be set in every IFACNT[15:0] times of EPWM period.
+     * |[24]    |STPMOD    |EPWM_CHn Interrupt Flag Accumulator Stop Mode Enable Bits
+     * |        |          |0 = EPWM_CHn interrupt flag accumulator stop mode disable.
+     * |        |          |1 = EPWM_CHn interrupt flag accumulator stop mode enable.
      * |[29:28] |IFASEL    |EPWM_CHn Interrupt Flag Accumulator Source Select
      * |        |          |00 = CNT equal to Zero in channel n.
      * |        |          |01 = CNT equal to PERIOD in channel n.
@@ -3288,6 +3291,9 @@ typedef struct
 #define EPWM_IFA0_IFACNT_Pos              (0)                                               /*!< EPWM_T::IFA0: IFACNT Position           */
 #define EPWM_IFA0_IFACNT_Msk              (0xfffful << EPWM_IFA0_IFACNT_Pos)                 /*!< EPWM_T::IFA0: IFACNT Mask               */
 
+#define EPWM_IFA0_STPMOD_Pos              (24)                                              /*!< EPWM_T::IFA0: STPMOD Position           */
+#define EPWM_IFA0_STPMOD_Msk              (0x1ul << EPWM_IFA0_STPMOD_Pos)                    /*!< EPWM_T::IFA0: STPMOD Mask               */
+
 #define EPWM_IFA0_IFASEL_Pos              (28)                                              /*!< EPWM_T::IFA0: IFASEL Position           */
 #define EPWM_IFA0_IFASEL_Msk              (0x3ul << EPWM_IFA0_IFASEL_Pos)                    /*!< EPWM_T::IFA0: IFASEL Mask               */
 
@@ -3296,6 +3302,9 @@ typedef struct
 
 #define EPWM_IFA1_IFACNT_Pos              (0)                                               /*!< EPWM_T::IFA1: IFACNT Position           */
 #define EPWM_IFA1_IFACNT_Msk              (0xfffful << EPWM_IFA1_IFACNT_Pos)                 /*!< EPWM_T::IFA1: IFACNT Mask               */
+
+#define EPWM_IFA1_STPMOD_Pos              (24)                                              /*!< EPWM_T::IFA1: STPMOD Position           */
+#define EPWM_IFA1_STPMOD_Msk              (0x1ul << EPWM_IFA1_STPMOD_Pos)                    /*!< EPWM_T::IFA1: STPMOD Mask               */
 
 #define EPWM_IFA1_IFASEL_Pos              (28)                                              /*!< EPWM_T::IFA1: IFASEL Position           */
 #define EPWM_IFA1_IFASEL_Msk              (0x3ul << EPWM_IFA1_IFASEL_Pos)                    /*!< EPWM_T::IFA1: IFASEL Mask               */
@@ -3306,6 +3315,9 @@ typedef struct
 #define EPWM_IFA2_IFACNT_Pos              (0)                                               /*!< EPWM_T::IFA2: IFACNT Position           */
 #define EPWM_IFA2_IFACNT_Msk              (0xfffful << EPWM_IFA2_IFACNT_Pos)                 /*!< EPWM_T::IFA2: IFACNT Mask               */
 
+#define EPWM_IFA2_STPMOD_Pos              (24)                                              /*!< EPWM_T::IFA2: STPMOD Position           */
+#define EPWM_IFA2_STPMOD_Msk              (0x1ul << EPWM_IFA2_STPMOD_Pos)                    /*!< EPWM_T::IFA2: STPMOD Mask               */
+
 #define EPWM_IFA2_IFASEL_Pos              (28)                                              /*!< EPWM_T::IFA2: IFASEL Position           */
 #define EPWM_IFA2_IFASEL_Msk              (0x3ul << EPWM_IFA2_IFASEL_Pos)                    /*!< EPWM_T::IFA2: IFASEL Mask               */
 
@@ -3314,6 +3326,9 @@ typedef struct
 
 #define EPWM_IFA3_IFACNT_Pos              (0)                                               /*!< EPWM_T::IFA3: IFACNT Position           */
 #define EPWM_IFA3_IFACNT_Msk              (0xfffful << EPWM_IFA3_IFACNT_Pos)                 /*!< EPWM_T::IFA3: IFACNT Mask               */
+
+#define EPWM_IFA3_STPMOD_Pos              (24)                                              /*!< EPWM_T::IFA3: STPMOD Position           */
+#define EPWM_IFA3_STPMOD_Msk              (0x1ul << EPWM_IFA3_STPMOD_Pos)                    /*!< EPWM_T::IFA3: STPMOD Mask               */
 
 #define EPWM_IFA3_IFASEL_Pos              (28)                                              /*!< EPWM_T::IFA3: IFASEL Position           */
 #define EPWM_IFA3_IFASEL_Msk              (0x3ul << EPWM_IFA3_IFASEL_Pos)                    /*!< EPWM_T::IFA3: IFASEL Mask               */
@@ -3324,6 +3339,9 @@ typedef struct
 #define EPWM_IFA4_IFACNT_Pos              (0)                                               /*!< EPWM_T::IFA4: IFACNT Position           */
 #define EPWM_IFA4_IFACNT_Msk              (0xfffful << EPWM_IFA4_IFACNT_Pos)                 /*!< EPWM_T::IFA4: IFACNT Mask               */
 
+#define EPWM_IFA4_STPMOD_Pos              (24)                                              /*!< EPWM_T::IFA4: STPMOD Position           */
+#define EPWM_IFA4_STPMOD_Msk              (0x1ul << EPWM_IFA4_STPMOD_Pos)                    /*!< EPWM_T::IFA4: STPMOD Mask               */
+
 #define EPWM_IFA4_IFASEL_Pos              (28)                                              /*!< EPWM_T::IFA4: IFASEL Position           */
 #define EPWM_IFA4_IFASEL_Msk              (0x3ul << EPWM_IFA4_IFASEL_Pos)                    /*!< EPWM_T::IFA4: IFASEL Mask               */
 
@@ -3332,6 +3350,9 @@ typedef struct
 
 #define EPWM_IFA5_IFACNT_Pos              (0)                                               /*!< EPWM_T::IFA5: IFACNT Position           */
 #define EPWM_IFA5_IFACNT_Msk              (0xfffful << EPWM_IFA5_IFACNT_Pos)                 /*!< EPWM_T::IFA5: IFACNT Mask               */
+
+#define EPWM_IFA5_STPMOD_Pos              (24)                                              /*!< EPWM_T::IFA5: STPMOD Position           */
+#define EPWM_IFA5_STPMOD_Msk              (0x1ul << EPWM_IFA5_STPMOD_Pos)                    /*!< EPWM_T::IFA5: STPMOD Mask               */
 
 #define EPWM_IFA5_IFASEL_Pos              (28)                                              /*!< EPWM_T::IFA5: IFASEL Position           */
 #define EPWM_IFA5_IFASEL_Msk              (0x3ul << EPWM_IFA5_IFASEL_Pos)                    /*!< EPWM_T::IFA5: IFASEL Mask               */

@@ -75,6 +75,7 @@ int32_t main(void)
     S_RTC_TIME_DATA_T sInitTime;
     uint32_t Spare_Data = 0;
     uint32_t i;
+    uint32_t Spare_Counter = 0;
 
     SYS_Init();
     UART0_Init();
@@ -93,18 +94,23 @@ int32_t main(void)
 
     printf("\n RTC Spare Register Read/Write Test: \n\n");
 
+    if(!(SYS->CSERVER & 0x1))
+        Spare_Counter = 20;
+    else
+        Spare_Counter = 5;
+
     // Enable spare register
     RTC_EnableSpareAccess();
 
     // Write spare register
-    for(i = 0; i < 20; i++)
+    for(i = 0; i < Spare_Counter; i++)
     {
         RTC_AccessEnable();
         RTC_WRITE_SPARE_REGISTER(i, i);
     }
 
     // Check spare register data
-    for(i = 0; i < 20; i++)
+    for(i = 0; i < Spare_Counter; i++)
     {
         RTC_AccessEnable();
         Spare_Data = RTC_READ_SPARE_REGISTER(i);

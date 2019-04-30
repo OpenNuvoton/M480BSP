@@ -146,6 +146,30 @@ typedef struct
 
 typedef struct
 {
+    /**
+     * @var REPEAT_T::AICTL
+     * Offset: 0x600  Address Interval Control Register of PDMA Channel n
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |SAICNT    |PDMA Source Address Interval Count
+     * |        |          |The 16-bit register defines the source address interval count of each row.
+     * |[31:16] |DAICNT    |PDMA Destination Address Interval Count
+     * |        |          |The 16-bit register defines the destination  address interval count of each row.
+     * @var REPEAT_T::RCNT
+     * Offset: 0x604  Repeat Count Register of PDMA Channe n
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |RCNT      |PDMA Repeat Count
+     * |        |          |The 16-bit register defines the repeat times of block transfer.
+     */
+    __IO uint32_t AICTL;         /*!< [0x0600] Address Interval Control Register of PDMA Channel 0                 */
+    __IO uint32_t RCNT;          /*!< [0x0604] Repeat Count Register of PDMA Channel 0                             */
+} REPEAT_T;
+
+typedef struct
+{
 
 
     /**
@@ -566,6 +590,10 @@ typedef struct
     __I  uint32_t RESERVE4[28];
     /// @endcond //HIDDEN_SYMBOLS
     STRIDE_T     STRIDE[6];
+    /// @cond HIDDEN_SYMBOLS
+    __IO uint32_t RESERVE5[52];
+    /// @endcond //HIDDEN_SYMBOLS
+    REPEAT_T    REPEAT[2];
 } PDMA_T;
 
 /**
@@ -836,6 +864,15 @@ typedef struct
 
 #define PDMA_ASOCRn_DASOL_Pos            (16)                                              /*!< PDMA_T::ASOCRn: DASOL Position         */
 #define PDMA_ASOCRn_DASOL_Msk            (0xfffful << PDMA_ASOCRn_DASOL_Pos)               /*!< PDMA_T::ASOCRn: DASOL Mask             */
+
+#define PDMA_RCNTn_RCNT_Pos              (0)                                               /*!< PDMA_T::RCNTn: RCNT Position            */
+#define PDMA_RCNTn_RCNT_Msk              (0xfffful << PDMA_STCRn_RCNT_Pos)                 /*!< PDMA_T::RCNTn: RCNT Mask                */
+
+#define PDMA_AICTLn_SAICNT_Pos           (0)                                               /*!< PDMA_T::AICTLn: SAICNT Position         */
+#define PDMA_AICTLn_SAICNT_Msk           (0xfffful << PDMA_ASOCRn_SASOL_Pos)               /*!< PDMA_T::AICTLn: SAICNT Mask             */
+
+#define PDMA_AICTLn_DAICNT_Pos           (16)                                              /*!< PDMA_T::AICTLn: DAICNT Position         */
+#define PDMA_AICTLn_DAICNT_Msk           (0xfffful << PDMA_ASOCRn_DASOL_Pos)               /*!< PDMA_T::AICTLn: DAICNT Mask             */
 
 /**@}*/ /* PDMA_CONST */
 /**@}*/ /* end of PDMA register group */

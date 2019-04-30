@@ -131,10 +131,10 @@ void EADC_FunctionTest()
         EADC_ENABLE_SAMPLE_MODULE_INT(EADC, 2, BIT0 << g_u32IntModule[2]);
         EADC_ENABLE_SAMPLE_MODULE_INT(EADC, 3, BIT0 << g_u32IntModule[3]);
 
-        NVIC_EnableIRQ(ADC0_IRQn);
-        NVIC_EnableIRQ(ADC1_IRQn);
-        NVIC_EnableIRQ(ADC2_IRQn);
-        NVIC_EnableIRQ(ADC3_IRQn);
+        NVIC_EnableIRQ(EADC00_IRQn);
+        NVIC_EnableIRQ(EADC01_IRQn);
+        NVIC_EnableIRQ(EADC02_IRQn);
+        NVIC_EnableIRQ(EADC03_IRQn);
 
         /* Reset the EADC interrupt indicator and trigger sample module to start A/D conversion */
         g_u32IntSequenceIndex = 0;
@@ -171,10 +171,10 @@ void EADC_FunctionTest()
         EADC_DISABLE_SAMPLE_MODULE_INT(EADC, 2, BIT0 << g_u32IntModule[2]);
         EADC_DISABLE_SAMPLE_MODULE_INT(EADC, 3, BIT0 << g_u32IntModule[3]);
 
-        NVIC_DisableIRQ(ADC0_IRQn);
-        NVIC_DisableIRQ(ADC1_IRQn);
-        NVIC_DisableIRQ(ADC2_IRQn);
-        NVIC_DisableIRQ(ADC3_IRQn);
+        NVIC_DisableIRQ(EADC00_IRQn);
+        NVIC_DisableIRQ(EADC01_IRQn);
+        NVIC_DisableIRQ(EADC02_IRQn);
+        NVIC_DisableIRQ(EADC03_IRQn);
     }   /* End of while(1) */
 
     /* Disable the A/D converter */
@@ -183,7 +183,7 @@ void EADC_FunctionTest()
 
 
 
-void ADC00_IRQHandler(void)
+void EADC00_IRQHandler(void)
 {
     g_u32EadcInt0Flag = 1;
     /* Clear the A/D ADINT0 interrupt flag */
@@ -193,7 +193,7 @@ void ADC00_IRQHandler(void)
     g_u32IntSequence[0] = g_u32IntSequenceIndex++;
 }
 
-void ADC01_IRQHandler(void)
+void EADC01_IRQHandler(void)
 {
     g_u32EadcInt1Flag = 1;
     /* Clear the A/D ADINT1 interrupt flag */
@@ -203,7 +203,7 @@ void ADC01_IRQHandler(void)
     g_u32IntSequence[1] = g_u32IntSequenceIndex++;
 }
 
-void ADC02_IRQHandler(void)
+void EADC02_IRQHandler(void)
 {
     g_u32EadcInt2Flag = 1;
     /* Clear the A/D ADINT2 interrupt flag */
@@ -213,7 +213,7 @@ void ADC02_IRQHandler(void)
     g_u32IntSequence[2] = g_u32IntSequenceIndex++;
 }
 
-void ADC03_IRQHandler(void)
+void EADC03_IRQHandler(void)
 {
     g_u32EadcInt3Flag = 1;
     /* Clear the A/D ADINT3 interrupt flag */
@@ -252,10 +252,10 @@ int32_t main(void)
     SYS_ResetModule(EADC_RST);
 
     /* Disable External Interrupt */
-    NVIC_DisableIRQ(ADC0_IRQn);
-    NVIC_DisableIRQ(ADC1_IRQn);
-    NVIC_DisableIRQ(ADC2_IRQn);
-    NVIC_DisableIRQ(ADC3_IRQn);
+    NVIC_DisableIRQ(EADC00_IRQn);
+    NVIC_DisableIRQ(EADC01_IRQn);
+    NVIC_DisableIRQ(EADC02_IRQn);
+    NVIC_DisableIRQ(EADC03_IRQn);
 
     printf("Exit EADC sample code\n");
 

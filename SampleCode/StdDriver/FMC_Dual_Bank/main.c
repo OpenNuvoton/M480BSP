@@ -268,6 +268,12 @@ int main()
 
     UART0_Init();                      /* Initialize UART0                               */
 
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x1)
+    {
+        printf("M480LD does not support dual bank!\n");
+        while (1);
+    }
+
     printf("+------------------------------------------+\n");
     printf("|    M480 FMC Dual Bank Sample Demo        |\n");
     printf("+------------------------------------------+\n");

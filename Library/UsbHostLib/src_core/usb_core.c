@@ -50,8 +50,11 @@ void  usbh_core_init()
 
     usbh_hub_init();
 
-    _ehci->USBPCR0 = 0x160;                /* enable PHY 0          */
-    _ehci->USBPCR1 = 0x520;                /* enable PHY 1          */
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)    /* Only M480MD has EHCI. */
+    {
+        _ehci->USBPCR0 = 0x160;                /* enable PHY 0          */
+        _ehci->USBPCR1 = 0x520;                /* enable PHY 1          */
+    }
 
     usbh_memory_init();
 
@@ -64,8 +67,11 @@ void  usbh_core_init()
 #endif
 
 #ifdef ENABLE_EHCI
-    ehci_driver.init();
-    ENABLE_EHCI_IRQ();
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)    /* Only M480MD has EHCI. */
+    {
+        ehci_driver.init();
+        ENABLE_EHCI_IRQ();
+    }
 #endif
 }
 
@@ -113,8 +119,12 @@ void usbh_suspend()
 
 #ifdef ENABLE_OHCI
     /* set port suspend if connected */
-    if (_ohci->HcRhPortStatus[0] & USBH_HcRhPortStatus_CCS_Msk)
-        _ohci->HcRhPortStatus[0] = USBH_HcRhPortStatus_PSS_Msk;    /* set port suspend    */
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
+    {
+        /* M480MD has port1, but M480LD has not port1 */
+        if (_ohci->HcRhPortStatus[0] & USBH_HcRhPortStatus_CCS_Msk)
+            _ohci->HcRhPortStatus[0] = USBH_HcRhPortStatus_PSS_Msk;    /* set port suspend    */
+    }
 
     if (_ohci->HcRhPortStatus[1] & USBH_HcRhPortStatus_CCS_Msk)
         _ohci->HcRhPortStatus[1] = USBH_HcRhPortStatus_PSS_Msk;    /* set port suspend    */
@@ -130,27 +140,30 @@ void usbh_suspend()
 #endif
 
 #ifdef ENABLE_EHCI
-    ehci_UCMDR = _ehci->UCMDR;
-
-    if (_ehci->UPSCR[0] & HSUSBH_UPSCR_PE_Msk)
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)    /* Only M480MD has EHCI. */
     {
-        _ehci->UPSCR[0] |= HSUSBH_UPSCR_SUSPEND_Msk;
-        delay_us(2000);         /* wait 2 ms */
-    }
+        ehci_UCMDR = _ehci->UCMDR;
 
-    _ehci->UCMDR &= ~(HSUSBH_UCMDR_PSEN_Msk | HSUSBH_UCMDR_ASEN_Msk | HSUSBH_UCMDR_RUN_Msk);
-    while (time_out > 0)
-    {
-        if (!(_ehci->UCMDR & HSUSBH_UCMDR_RUN_Msk) && (_ehci->USTSR & HSUSBH_USTSR_HCHalted_Msk))
+        if (_ehci->UPSCR[0] & HSUSBH_UPSCR_PE_Msk)
         {
-            break;
+            _ehci->UPSCR[0] |= HSUSBH_UPSCR_SUSPEND_Msk;
+            delay_us(2000);         /* wait 2 ms */
         }
+
+        _ehci->UCMDR &= ~(HSUSBH_UCMDR_PSEN_Msk | HSUSBH_UCMDR_ASEN_Msk | HSUSBH_UCMDR_RUN_Msk);
+        while (time_out > 0)
+        {
+            if (!(_ehci->UCMDR & HSUSBH_UCMDR_RUN_Msk) && (_ehci->USTSR & HSUSBH_USTSR_HCHalted_Msk))
+            {
+                break;
+            }
+        }
+        if (time_out == 0)
+        {
+            USB_error("usbh_suspend - RUN/HCHalted error!\n");
+        }
+        delay_us(100);
     }
-    if (time_out == 0)
-    {
-        USB_error("usbh_suspend - RUN/HCHalted error!\n");
-    }
-    delay_us(100);
 #endif
 }
 
@@ -162,26 +175,35 @@ void usbh_suspend()
 void usbh_resume(void)
 {
 #ifdef ENABLE_OHCI
-    _ohci->HcControl = (_ohci->HcControl & ~USBH_HcControl_HCFS_Msk) | (2 << USBH_HcControl_HCFS_Pos);
+    _ohci->HcControl = (_ohci->HcControl & ~USBH_HcControl_HCFS_Msk) | (1 << USBH_HcControl_HCFS_Pos);
 
-    if (_ohci->HcRhPortStatus[0] & USBH_HcRhPortStatus_PSS_Msk)
-        _ohci->HcRhPortStatus[0] = USBH_HcRhPortStatus_POCI_Msk;   /* clear suspend status */
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
+    {
+        if (_ohci->HcRhPortStatus[0] & USBH_HcRhPortStatus_PSS_Msk)
+            _ohci->HcRhPortStatus[0] = USBH_HcRhPortStatus_POCI_Msk;   /* clear suspend status */
+    }
     if (_ohci->HcRhPortStatus[1] & USBH_HcRhPortStatus_PSS_Msk)
         _ohci->HcRhPortStatus[1] = USBH_HcRhPortStatus_POCI_Msk;   /* clear suspend status */
 
     delay_us(30000);                       /* wait at least 20ms for Host to resume device */
+
+    /* enter operational state */
+    _ohci->HcControl = (_ohci->HcControl & ~USBH_HcControl_HCFS_Msk) | (2 << USBH_HcControl_HCFS_Pos);
 #endif
 
 #ifdef ENABLE_EHCI
-    _ehci->UCMDR = ehci_UCMDR;
-
-    if (_ehci->UPSCR[0] & HSUSBH_UPSCR_PE_Msk)
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)    /* Only M480MD has EHCI. */
     {
-        _ehci->UPSCR[0] |= HSUSBH_UPSCR_FPR_Msk;
-        delay_us(20000);                         /* keep resume signal for 20 ms */
-        _ehci->UPSCR[0] &= ~HSUSBH_UPSCR_FPR_Msk;
+        _ehci->UCMDR = ehci_UCMDR;
+
+        if (_ehci->UPSCR[0] & HSUSBH_UPSCR_PE_Msk)
+        {
+            _ehci->UPSCR[0] |= HSUSBH_UPSCR_FPR_Msk;
+            delay_us(20000);                         /* keep resume signal for 20 ms */
+            _ehci->UPSCR[0] &= ~HSUSBH_UPSCR_FPR_Msk;
+        }
+        delay_us(1000);
     }
-    delay_us(1000);
 #endif
 }
 

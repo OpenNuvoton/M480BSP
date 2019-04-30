@@ -30,7 +30,7 @@ static volatile    uint32_t    g_u32AdcIntFlag_TP;
 // ADC01 ISR
 //
 /*-----------------------------------------------*/
-void ADC01_IRQHandler(void)
+void EADC01_IRQHandler(void)
 {
     /* Clear the A/D ADINT1 interrupt flag */
     EADC_CLR_INT_FLAG(EADC, EADC_STATUS2_ADIF1_Msk);
@@ -70,7 +70,7 @@ uint16_t Get_TP_X(void)
     /* Enable the sample module 1 interrupt.  */
     EADC_ENABLE_INT(EADC, BIT1);    //Enable sample module A/D ADINT1 interrupt.
     EADC_ENABLE_SAMPLE_MODULE_INT(EADC, 1, BIT1);    //Enable sample module 1 interrupt.
-    NVIC_EnableIRQ(ADC1_IRQn);
+    NVIC_EnableIRQ(EADC01_IRQn);
 
     /* Reset the ADC interrupt indicator and trigger sample module 1 to start A/D conversion */
     g_u32AdcIntFlag_TP = 0;
@@ -115,7 +115,7 @@ uint16_t Get_TP_Y(void)
     /* Enable the sample module 2 interrupt.  */
     EADC_ENABLE_INT(EADC, BIT2);    //Enable sample module A/D ADINT1 interrupt.
     EADC_ENABLE_SAMPLE_MODULE_INT(EADC, 1, BIT2);    //Enable sample module 2 interrupt.
-    NVIC_EnableIRQ(ADC1_IRQn);
+    NVIC_EnableIRQ(EADC01_IRQn);
 
     /* Reset the ADC interrupt indicator and trigger sample module 2 to start A/D conversion */
     g_u32AdcIntFlag_TP = 0;

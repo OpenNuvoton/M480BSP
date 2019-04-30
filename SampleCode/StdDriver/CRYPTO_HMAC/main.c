@@ -142,6 +142,13 @@ int32_t main(void)
         if (get_next_pattern() < 0)
             break;
 
+        if (((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x1) &&
+                (g_sha_mode != SHA_MODE_SHA256))
+        {
+            printf("Skip. M480LD only supports SHA-256.\n");
+            continue;                  /* M480LD only support SHA-256 */
+        }
+
         HMAC_test();
     }
     close_test_file();

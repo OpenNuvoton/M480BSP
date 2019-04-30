@@ -151,6 +151,13 @@ extern "C"
   */
 #define EMAC_TRIGGER_RX() do{EMAC->RXST = 0UL;}while(0)
 
+/**
+  * @brief  Trigger EMAC Tx function
+  * @param  None
+  * @return None
+  */
+#define EMAC_TRIGGER_TX() do{EMAC->TXST = 0UL;}while(0)
+
 void EMAC_Open(uint8_t *pu8MacAddr);
 void EMAC_Close(void);
 void EMAC_SetMacAddr(uint8_t *pu8MacAddr);

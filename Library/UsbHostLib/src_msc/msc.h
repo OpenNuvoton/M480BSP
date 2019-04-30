@@ -1,5 +1,5 @@
 /**************************************************************************//**
- * @file     msc.h.c
+ * @file     msc.h
  * @version  V1.00
  * @brief    M480 MCU USB Host mass storage class header
  *

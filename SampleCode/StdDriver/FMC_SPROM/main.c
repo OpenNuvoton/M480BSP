@@ -72,6 +72,12 @@ int main()
 
     FMC_Open();                        /* Enable FMC ISP function                         */
 
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x1)
+    {
+        printf("M480LD does not support SPROM.\n");
+        while (1);
+    }
+
     while (1)
     {
         printf("\n\n\n");

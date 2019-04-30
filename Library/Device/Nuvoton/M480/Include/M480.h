@@ -5,7 +5,7 @@
  *           This file contains all the peripheral register's definitions,
  *           bits definitions and memory mapping for NuMicro M480 MCU.
  *
- * @copyright (C) 2017-2018 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2017-2019 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 /**
   \mainpage NuMicro M480 Driver Reference Guide
@@ -44,7 +44,7 @@
   *
   * <b>Copyright Notice</b>
   *
-  * Copyright (C) 2017-2018 Nuvoton Technology Corp. All rights reserved.
+  * Copyright (C) 2017-2019 Nuvoton Technology Corp. All rights reserved.
   */
 #ifndef __M480_H__
 #define __M480_H__
@@ -119,13 +119,14 @@ typedef enum IRQn
     I2C1_IRQn                     = 39,       /*!< I2C 1 Interrupt                                  */
     PDMA_IRQn                     = 40,       /*!< Peripheral DMA Interrupt                         */
     DAC_IRQn                      = 41,       /*!< DAC Interrupt                                    */
-    ADC0_IRQn                     = 42,       /*!< ADC0 Interrupt                                   */
-    ADC1_IRQn                     = 43,       /*!< ADC1 Interrupt                                   */
+    EADC00_IRQn                   = 42,       /*!< EADC00 Interrupt                                 */
+    EADC01_IRQn                   = 43,       /*!< EADC01 Interrupt                                 */
     ACMP01_IRQn                   = 44,       /*!< Analog Comparator 0 and 1 Interrupt              */
-    ADC2_IRQn                     = 46,       /*!< ADC2 Interrupt                                   */
-    ADC3_IRQn                     = 47,       /*!< ADC3 Interrupt                                   */
+    EADC02_IRQn                   = 46,       /*!< EADC02 Interrupt                                 */
+    EADC03_IRQn                   = 47,       /*!< EADC03 Interrupt                                 */
     UART2_IRQn                    = 48,       /*!< UART2 Interrupt                                  */
     UART3_IRQn                    = 49,       /*!< UART3 Interrupt                                  */
+    QSPI1_IRQn                    = 50,       /*!< QSPI1 Interrupt                                   */
     SPI1_IRQn                     = 51,       /*!< SPI1 Interrupt                                   */
     SPI2_IRQn                     = 52,       /*!< SPI2 Interrupt                                   */
     USBD_IRQn                     = 53,       /*!< USB device Interrupt                             */
@@ -153,6 +154,7 @@ typedef enum IRQn
     BPWM0_IRQn                    = 78,       /*!< BPWM0 Interrupt                                  */
     BPWM1_IRQn                    = 79,       /*!< BPWM1 Interrupt                                  */
     SPIM_IRQn                     = 80,       /*!< SPIM Interrupt                                   */
+    CCAP_IRQn                     = 81,       /*!< CCAP Interrupt                                   */
     I2C2_IRQn                     = 82,       /*!< I2C2 Interrupt                                   */
     QEI0_IRQn                     = 84,       /*!< QEI0 Interrupt                                   */
     QEI1_IRQn                     = 85,       /*!< QEI1 Interrupt                                   */
@@ -163,6 +165,14 @@ typedef enum IRQn
     SDH1_IRQn                     = 90,       /*!< Secure Digital Host Controller 1 Interrupt       */
     HSUSBH_IRQn                   = 92,       /*!< High speed USB host Interrupt                    */
     USBOTG20_IRQn                 = 93,       /*!< High speed USB OTG Interrupt                     */
+    TRNG_IRQn                     = 101,      /*!< TRNG Interrupt                                   */
+    UART6_IRQn                    = 102,      /*!< UART6 Interrupt                                  */
+    UART7_IRQn                    = 103,      /*!< UART7 Interrupt                                  */
+    EADC10_IRQn                   = 104,      /*!< EADC10 Interrupt                                 */
+    EADC11_IRQn                   = 105,      /*!< EADC11 Interrupt                                 */
+    EADC12_IRQn                   = 106,      /*!< EADC12 Interrupt                                 */
+    EADC13_IRQn                   = 107,      /*!< EADC13 Interrupt                                 */
+    CAN2_IRQn                     = 108,      /*!< CAN2 Interrupt                                   */
 }
 IRQn_Type;
 
@@ -237,10 +247,12 @@ IRQn_Type;
 #include "hsotg_reg.h"
 #include "crc_reg.h"
 #include "crypto_reg.h"
+#include "trng_reg.h"
 #include "eadc_reg.h"
 #include "dac_reg.h"
 #include "acmp_reg.h"
 #include "opa_reg.h"
+#include "ccap_reg.h"
 
 
 /** @addtogroup PERIPHERAL_MEM_MAP Peripheral Memory Base
@@ -278,6 +290,7 @@ IRQn_Type;
 #define SDH1_BASE              (AHBPERIPH_BASE + 0x0E000UL)
 #define EBI_BASE               (AHBPERIPH_BASE + 0x10000UL)
 #define HSUSBD_BASE            (AHBPERIPH_BASE + 0x19000UL)
+#define CCAP_BASE              (AHBPERIPH_BASE + 0x30000UL)
 #define CRC_BASE               (AHBPERIPH_BASE + 0x31000UL)
 #define TAMPER_BASE            (AHBPERIPH_BASE + 0xE1000UL)
 
@@ -286,6 +299,7 @@ IRQn_Type;
 #define WWDT_BASE             (APBPERIPH_BASE + 0x00100UL)
 #define OPA_BASE              (APBPERIPH_BASE + 0x06000UL)
 #define I2S_BASE              (APBPERIPH_BASE + 0x08000UL)
+#define EADC1_BASE            (APBPERIPH_BASE + 0x0B000UL)
 #define TIMER0_BASE           (APBPERIPH_BASE + 0x10000UL)
 #define TIMER1_BASE           (APBPERIPH_BASE + 0x10100UL)
 #define EPWM0_BASE            (APBPERIPH_BASE + 0x18000UL)
@@ -296,9 +310,11 @@ IRQn_Type;
 #define UART0_BASE            (APBPERIPH_BASE + 0x30000UL)
 #define UART2_BASE            (APBPERIPH_BASE + 0x32000UL)
 #define UART4_BASE            (APBPERIPH_BASE + 0x34000UL)
+#define UART6_BASE            (APBPERIPH_BASE + 0x36000UL)
 #define I2C0_BASE             (APBPERIPH_BASE + 0x40000UL)
 #define I2C2_BASE             (APBPERIPH_BASE + 0x42000UL)
 #define CAN0_BASE             (APBPERIPH_BASE + 0x60000UL)
+#define CAN2_BASE             (APBPERIPH_BASE + 0x62000UL)
 #define QEI0_BASE             (APBPERIPH_BASE + 0x70000UL)
 #define ECAP0_BASE            (APBPERIPH_BASE + 0x74000UL)
 #define USCI0_BASE            (APBPERIPH_BASE + 0x90000UL)
@@ -317,13 +333,16 @@ IRQn_Type;
 #define BPWM1_BASE            (APBPERIPH_BASE + 0x1B000UL)
 #define SPI0_BASE             (APBPERIPH_BASE + 0x21000UL)
 #define SPI2_BASE             (APBPERIPH_BASE + 0x23000UL)
+#define QSPI1_BASE            (APBPERIPH_BASE + 0x29000UL)
 #define UART1_BASE            (APBPERIPH_BASE + 0x31000UL)
 #define UART3_BASE            (APBPERIPH_BASE + 0x33000UL)
 #define UART5_BASE            (APBPERIPH_BASE + 0x35000UL)
+#define UART7_BASE            (APBPERIPH_BASE + 0x37000UL)
 #define I2C1_BASE             (APBPERIPH_BASE + 0x41000UL)
 #define CAN1_BASE             (APBPERIPH_BASE + 0x61000UL)
 #define QEI1_BASE             (APBPERIPH_BASE + 0x71000UL)
 #define ECAP1_BASE            (APBPERIPH_BASE + 0x75000UL)
+#define TRNG_BASE             (APBPERIPH_BASE + 0x79000UL)
 #define USCI1_BASE            (APBPERIPH_BASE + 0x91000UL)
 #define CRPT_BASE             (0x50080000UL)
 #define SPIM_BASE             (0x40007000UL)
@@ -379,6 +398,8 @@ IRQn_Type;
 #define WWDT                 ((WWDT_T *)  WWDT_BASE)
 #define RTC                  ((RTC_T *)   RTC_BASE)
 #define EADC                 ((EADC_T *)  EADC_BASE)
+#define EADC0                ((EADC_T *)  EADC_BASE)
+#define EADC1                ((EADC_T *)  EADC1_BASE)
 #define ACMP01               ((ACMP_T *)  ACMP01_BASE)
 
 #define I2S0                 ((I2S_T *)   I2S_BASE)
@@ -399,6 +420,7 @@ IRQn_Type;
 #define QEI0                 ((QEI_T *)   QEI0_BASE)
 #define QEI1                 ((QEI_T *)   QEI1_BASE)
 #define QSPI0                ((QSPI_T *)  QSPI0_BASE)
+#define QSPI1                ((QSPI_T *)  QSPI1_BASE)
 #define SPI0                 ((SPI_T *)   SPI0_BASE)
 #define SPI1                 ((SPI_T *)   SPI1_BASE)
 #define SPI2                 ((SPI_T *)   SPI2_BASE)
@@ -409,6 +431,8 @@ IRQn_Type;
 #define UART3                ((UART_T *)  UART3_BASE)
 #define UART4                ((UART_T *)  UART4_BASE)
 #define UART5                ((UART_T *)  UART5_BASE)
+#define UART6                ((UART_T *)  UART6_BASE)
+#define UART7                ((UART_T *)  UART7_BASE)
 #define I2C0                 ((I2C_T *)   I2C0_BASE)
 #define I2C1                 ((I2C_T *)   I2C1_BASE)
 #define I2C2                 ((I2C_T *)   I2C2_BASE)
@@ -417,7 +441,9 @@ IRQn_Type;
 #define SC2                  ((SC_T *)    SC2_BASE)
 #define CAN0                 ((CAN_T *)   CAN0_BASE)
 #define CAN1                 ((CAN_T *)   CAN1_BASE)
+#define CAN2                 ((CAN_T *)   CAN2_BASE)
 #define CRPT                 ((CRPT_T *)  CRPT_BASE)
+#define TRNG                 ((TRNG_T *)  TRNG_BASE)
 #define SPIM                 ((volatile SPIM_T *)  SPIM_BASE)
 #define DAC0                 ((DAC_T *)   DAC0_BASE)
 #define DAC1                 ((DAC_T *)   DAC1_BASE)
@@ -428,6 +454,7 @@ IRQn_Type;
 #define UI2C1                ((UI2C_T *) USCI1_BASE)                     /*!< UI2C1 Configuration Struct                       */
 #define UUART0               ((UUART_T *) USCI0_BASE)                    /*!< UUART0 Configuration Struct                      */
 #define UUART1               ((UUART_T *) USCI1_BASE)                    /*!< UUART1 Configuration Struct                      */
+#define CCAP                 ((CCAP_T *)  CCAP_BASE)
 
 /*@}*/ /* end of group ERIPHERAL_DECLARATION */
 
@@ -642,12 +669,14 @@ typedef volatile unsigned long  vu32;       ///< Define 32-bit unsigned volatile
 #include "uart.h"
 #include "usci_spi.h"
 #include "gpio.h"
+#include "ccap.h"
 #include "ecap.h"
 #include "qei.h"
 #include "timer.h"
 #include "timer_pwm.h"
 #include "pdma.h"
 #include "crypto.h"
+#include "trng.h"
 #include "fmc.h"
 #include "spim.h"
 #include "i2c.h"

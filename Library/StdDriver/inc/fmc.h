@@ -37,6 +37,11 @@ extern "C"
 #define FMC_LDROM_END           0x00101000UL    /*!< LDROM end address           \hideinitializer */
 #define FMC_SPROM_BASE          0x00200000UL    /*!< SPROM base address          \hideinitializer */
 #define FMC_SPROM_END           0x00201000UL    /*!< SPROM end address           \hideinitializer */
+#define FMC_XOM_BASE            0x00200000UL    /*!< XOM  Base Address           \hideinitializer */
+#define FMC_XOMR0_BASE          0x00200000UL    /*!< XOMR 0 Base Address         \hideinitializer */
+#define FMC_XOMR1_BASE          0x00200010UL    /*!< XOMR 1 Base Address         \hideinitializer */
+#define FMC_XOMR2_BASE          0x00200020UL    /*!< XOMR 2 Base Address         \hideinitializer */
+#define FMC_XOMR3_BASE          0x00200030UL    /*!< XOMR 3 Base Address         \hideinitializer */
 #define FMC_CONFIG_BASE         0x00300000UL    /*!< User Configuration address  \hideinitializer */
 #define FMC_USER_CONFIG_0       0x00300000UL    /*!< User Config 0 address       \hideinitializer */
 #define FMC_USER_CONFIG_1       0x00300004UL    /*!< User Config 1 address       \hideinitializer */
@@ -49,11 +54,24 @@ extern "C"
 #define FMC_MULTI_WORD_PROG_LEN 512             /*!< The maximum length of a multi-word program.  */
 
 #define FMC_APROM_SIZE          FMC_APROM_END   /*!< APROM Size                  \hideinitializer */
-#define FMC_BANK_SIZE           (FMC_APROM_SIZE/2UL) /*!< APROM Bank Size             \hideinitializer */
+#define FMC_BANK_SIZE           (FMC_APROM_SIZE/2UL) /*!< APROM Bank Size        \hideinitializer */
 #define FMC_LDROM_SIZE          0x1000UL        /*!< LDROM Size (4 Kbytes)       \hideinitializer */
 #define FMC_SPROM_SIZE          0x1000UL        /*!< SPROM Size (4 Kbytes)       \hideinitializer */
 #define FMC_OTP_ENTRY_CNT       256UL           /*!< OTP entry number            \hideinitializer */
 
+/*---------------------------------------------------------------------------------------------------------*/
+/*  XOM region number constant definitions                                                                 */
+/*---------------------------------------------------------------------------------------------------------*/
+#define XOMR0   0UL                             /*!< XOM region 0     */
+#define XOMR1   1UL                             /*!< XOM region 1     */
+#define XOMR2   2UL                             /*!< XOM region 2     */
+#define XOMR3   3UL                             /*!< XOM region 3     */
+
+/*---------------------------------------------------------------------------------------------------------*/
+/*  ISPCTL constant definitions                                                                            */
+/*---------------------------------------------------------------------------------------------------------*/
+#define IS_BOOT_FROM_LDROM      0x1UL           /*!< ISPCTL setting to select to boot from LDROM */
+#define IS_BOOT_FROM_APROM      0x0UL           /*!< ISPCTL setting to select to boot from APROM */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  ISPCMD constant definitions                                                                            */
@@ -74,9 +92,6 @@ extern "C"
 #define FMC_ISPCMD_VECMAP       0x2EUL          /*!< ISP Command: Vector Page Remap       \hideinitializer */
 #define FMC_ISPCMD_READ_64      0x40UL          /*!< ISP Command: Read double flash word  \hideinitializer */
 #define FMC_ISPCMD_PROGRAM_64   0x61UL          /*!< ISP Command: Write double flash word \hideinitializer */
-
-#define IS_BOOT_FROM_APROM      0UL             /*!< Is booting from APROM                \hideinitializer */
-#define IS_BOOT_FROM_LDROM      1UL             /*!< Is booting from LDROM                \hideinitializer */
 
 #define READ_ALLONE_YES         0xA11FFFFFUL    /*!< Check-all-one result is all one.     \hideinitializer */
 #define READ_ALLONE_NOT         0xA1100000UL    /*!< Check-all-one result is not all one. \hideinitializer */
@@ -242,18 +257,21 @@ __STATIC_INLINE void FMC_SetVectorPageAddr(uint32_t u32PageAddr)
 /*  Functions                                                                                              */
 /*---------------------------------------------------------------------------------------------------------*/
 
-extern void FMC_Close(void);
-extern int32_t FMC_Erase(uint32_t u32PageAddr);
-extern int32_t FMC_Erase_SPROM(void);
-extern int32_t FMC_Erase_Block(uint32_t u32BlockAddr);
-extern int32_t FMC_Erase_Bank(uint32_t u32BankAddr);
-extern int32_t FMC_GetBootSource(void);
-extern void FMC_Open(void);
+extern void     FMC_Close(void);
+extern int32_t  FMC_ConfigXOM(uint32_t xom_num, uint32_t xom_base, uint8_t xom_page);
+extern int32_t  FMC_Erase(uint32_t u32PageAddr);
+extern int32_t  FMC_Erase_SPROM(void);
+extern int32_t  FMC_Erase_Block(uint32_t u32BlockAddr);
+extern int32_t  FMC_Erase_Bank(uint32_t u32BankAddr);
+extern int32_t  FMC_EraseXOM(uint32_t xom_num);
+extern int32_t  FMC_GetXOMState(uint32_t xom_num);
+extern int32_t  FMC_GetBootSource(void);
+extern void     FMC_Open(void);
 extern uint32_t FMC_Read(uint32_t u32Addr);
-extern int32_t FMC_Read_64(uint32_t u32addr, uint32_t * u32data0, uint32_t * u32data1);
+extern int32_t  FMC_Read_64(uint32_t u32addr, uint32_t * u32data0, uint32_t * u32data1);
 extern uint32_t FMC_ReadDataFlashBaseAddr(void);
-extern void FMC_SetBootSource(int32_t i32BootSrc);
-extern void FMC_Write(uint32_t u32Addr, uint32_t u32Data);
+extern void     FMC_SetBootSource(int32_t i32BootSrc);
+extern void     FMC_Write(uint32_t u32Addr, uint32_t u32Data);
 extern int32_t  FMC_Write8Bytes(uint32_t u32addr, uint32_t u32data0, uint32_t u32data1);
 extern int32_t  FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len);
 extern int32_t  FMC_Write_OTP(uint32_t otp_num, uint32_t low_word, uint32_t high_word);

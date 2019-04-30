@@ -20,8 +20,6 @@ extern uint8_t  *_au8ShaData;
 extern uint8_t  _au8ShaDigest[64];
 extern int      _i32DataLen;
 
-static int  _i32DigestLength = 0;
-
 static volatile int g_SHA_done;
 
 
@@ -54,7 +52,7 @@ int  run_sha()
 {
     uint32_t  au32OutputDigest[8];
 
-    SHA_Open(CRPT, SHA_MODE_SHA1, SHA_IN_SWAP, 0);
+    SHA_Open(CRPT, SHA_MODE_SHA256, SHA_IN_SWAP, 0);
 
     SHA_SetDMATransfer(CRPT, (uint32_t)&_au8ShaData[0],  _i32DataLen/8);
 
@@ -69,7 +67,7 @@ int  run_sha()
     /*--------------------------------------------*/
     /*  Compare                                   */
     /*--------------------------------------------*/
-    if (do_compare((uint8_t *)&au32OutputDigest[0], &_au8ShaDigest[0], _i32DigestLength) < 0)
+    if (do_compare((uint8_t *)&au32OutputDigest[0], &_au8ShaDigest[0], 256/8) < 0)
     {
         printf("Compare error!\n");
         while (1);

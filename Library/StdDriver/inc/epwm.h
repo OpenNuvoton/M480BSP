@@ -584,6 +584,8 @@ void EPWM_ClearAccInt(EPWM_T *epwm, uint32_t u32ChannelNum);
 uint32_t EPWM_GetAccInt(EPWM_T *epwm, uint32_t u32ChannelNum);
 void EPWM_EnableAccPDMA(EPWM_T *epwm, uint32_t u32ChannelNum);
 void EPWM_DisableAccPDMA(EPWM_T *epwm, uint32_t u32ChannelNum);
+void EPWM_EnableAccStopMode(EPWM_T *epwm, uint32_t u32ChannelNum);
+void EPWM_DisableAccStopMode(EPWM_T *epwm, uint32_t u32ChannelNum);
 void EPWM_ClearFTDutyIntFlag(EPWM_T *epwm, uint32_t u32ChannelNum);
 uint32_t EPWM_GetFTDutyIntFlag(EPWM_T *epwm, uint32_t u32ChannelNum);
 void EPWM_EnableLoadMode(EPWM_T *epwm, uint32_t u32ChannelNum, uint32_t u32LoadMode);

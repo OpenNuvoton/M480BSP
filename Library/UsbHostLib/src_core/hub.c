@@ -638,17 +638,17 @@ int  usbh_pooling_hubs(void)
     int   ret, change = 0;
 
 #ifdef ENABLE_EHCI
-    _ehci->UPSCR[1] = HSUSBH_UPSCR_PP_Msk | HSUSBH_UPSCR_PO_Msk;     /* set port 2 owner to OHCI              */
-    do
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)    /* Only M480MD has EHCI. */
     {
-        ret = ehci_driver.rthub_polling();
-        if (ret)
-            change = 1;
+        _ehci->UPSCR[1] = HSUSBH_UPSCR_PP_Msk | HSUSBH_UPSCR_PO_Msk;     /* set port 2 owner to OHCI              */
+        do
+        {
+            ret = ehci_driver.rthub_polling();
+            if (ret)
+                change = 1;
+        }
+        while (ret == 1);
     }
-    while (ret == 1);
-
-    // scan_isochronous_list();
-
 #endif
 
 #ifdef ENABLE_OHCI

@@ -18,7 +18,7 @@ void TMR0_IRQHandler(void)
     {
         if(u32Toggle == 0)
         {
-            /* Set PWM period to generate output frequency 9000 Hz */
+            /* Set PWM period to generate output frequency 36000 Hz */
             TPWM_SET_PERIOD(TIMER0, ((gu32Period/2)-1));
 
             /* Set PWM duty, 40% */
@@ -91,7 +91,7 @@ int main(void)
     printf("+-----------------------------------------------+\n\n");
 
     printf("# Timer0 PWM_CH0 frequency of first period is 18000 Hz and duty is 50%%.\n");
-    printf("# Timer0 PWM_CH0 frequency of second period is 9000 Hz and duty is 40%%.\n");
+    printf("# Timer0 PWM_CH0 frequency of second period is 36000 Hz and duty is 40%%.\n");
     printf("# I/O configuration:\n");
     printf("    - Timer0 PWM_CH0 on PB.5\n\n");
 

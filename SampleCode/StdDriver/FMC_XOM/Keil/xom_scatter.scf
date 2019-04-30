@@ -1,0 +1,27 @@
+FLASH 0x00000000
+{
+    FLASH +0
+    {
+        startup_M480.o(RESET, +First)
+        * (+RO)    
+    }
+
+  SRAM1 0x20000000
+    {  
+        * (+RW)
+    }
+
+  ZI +0
+  {
+    *(+ZI)
+  }
+
+}
+
+FLASH1 0x10000
+{
+    FLASH1 +0
+    {
+         xom_add.o (+XO)      
+    }
+}

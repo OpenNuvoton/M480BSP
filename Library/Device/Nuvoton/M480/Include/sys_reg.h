@@ -129,6 +129,12 @@ typedef struct
      * |        |          |0 = CRC calculation controller normal operation.
      * |        |          |1 = CRC calculation controller reset.
      * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[8]     |CCAPRST   |CCAP Controller Reset (Write Protect)
+     * |        |          |Set this bit to 1 will generate a reset signal to the CCAP controller.
+     * |        |          |User needs to set this bit to 0 to release from the reset state.
+     * |        |          |0 = CCAP controller normal operation.
+     * |        |          |1 = CCAP controller reset.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
      * |[10]    |HSUSBDRST |HSUSBD Controller Reset (Write Protect)
      * |        |          |Setting this bit to 1 will generate a reset signal to the HSUSBD controller
      * |        |          |User needs to set this bit to 0 to release from the reset state.
@@ -284,6 +290,9 @@ typedef struct
      * |[27]    |ECAP1RST  |ECAP1 Controller Reset
      * |        |          |0 = ECAP1 controller normal operation.
      * |        |          |1 = ECAP1 controller reset.
+     * |[28]    |CAN2RST   |CAN2 Controller Reset
+     * |        |          |0 = CAN2 controller normal operation.
+     * |        |          |1 = CAN2 controller reset.
      * |[30]    |OPARST    |OP Amplifier (OPA) Controller Reset
      * |        |          |0 = OPA controller normal operation.
      * |        |          |1 = OPA controller reset.
@@ -1871,6 +1880,93 @@ typedef struct
      * |[20]    |USBBEND   |USB SRAM BIST Test Finish
      * |        |          |0 = USB SRAM BIST is active.
      * |        |          |1 = USB SRAM BIST test finish.
+     * @var SYS_T::HIRCTCTL
+     * Offset: 0xE4  HIRC48M Trim Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[1:0]   |FREQSEL   |Trim Frequency Selection
+     * |        |          |This field indicates the target frequency of 48 MHz internal high speed RC oscillator (HIRC) auto trim.
+     * |        |          |During auto trim operation, if clock error detected with CESTOPEN is set to 1 or trim retry limitation count reached, this field will be cleared to 00 automatically.
+     * |        |          |00 = Disable HIRC auto trim function.
+     * |        |          |01 = Enable HIRC auto trim function and trim HIRC to 48 MHz.
+     * |        |          |10 = Reserved..
+     * |        |          |11 = Reserved.
+     * |[5:4]   |LOOPSEL   |Trim Calculation Loop Selection
+     * |        |          |This field defines that trim value calculation is based on how many reference clocks.
+     * |        |          |00 = Trim value calculation is based on average difference in 4 clocks of reference clock.
+     * |        |          |01 = Trim value calculation is based on average difference in 8 clocks of reference clock.
+     * |        |          |10 = Trim value calculation is based on average difference in 16 clocks of reference clock.
+     * |        |          |11 = Trim value calculation is based on average difference in 32 clocks of reference clock.
+     * |        |          |Note: For example, if LOOPSEL is set as 00, auto trim circuit will calculate trim value based on the average frequency difference in 4 clocks of reference clock.
+     * |[7:6]   |RETRYCNT  |Trim Value Update Limitation Count
+     * |        |          |This field defines that how many times the auto trim circuit will try to update the HIRC trim value before the frequency of HIRC locked.
+     * |        |          |Once the HIRC locked, the internal trim value update counter will be reset.
+     * |        |          |If the trim value update counter reached this limitation value and frequency of HIRC still doesn't lock, the auto trim operation will be disabled and FREQSEL will be cleared to 00.
+     * |        |          |00 = Trim retry count limitation is 64 loops.
+     * |        |          |01 = Trim retry count limitation is 128 loops.
+     * |        |          |10 = Trim retry count limitation is 256 loops.
+     * |        |          |11 = Trim retry count limitation is 512 loops.
+     * |[8]     |CESTOPEN  |Clock Error Stop Enable Bit
+     * |        |          |0 = The trim operation is keep going if clock is inaccuracy.
+     * |        |          |1 = The trim operation is stopped if clock is inaccuracy.
+     * |[9]     |BOUNDEN   |Boundary Enable Bit
+     * |        |          |0 = Boundary function is disable.
+     * |        |          |1 = Boundary function is enable.
+     * |[10]    |REFCKSEL  |Reference Clock Selection
+     * |        |          |0 = HIRC trim reference from external 32.768 kHz crystal oscillator.
+     * |        |          |1 = HIRC trim reference from internal USB synchronous mode.
+     * |        |          |Note: HIRC trim reference clock is 20Khz in test mode.
+     * |[20:16  |BOUNDARY  |Boundary Selection
+     * |        |          |Fill the boundary range from 0x1 to 0x31, 0x0 is reserved.
+     * |        |          |Note1: This field is effective only when the BOUNDEN(SYS_HIRCTRIMCTL[9]) is enable.
+     * @var SYS_T::HIRCTIEN
+     * Offset: 0xE8  HIRC48M Trim Interrupt Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[1]     |TFAILIEN  |Trim Failure Interrupt Enable Bit
+     * |        |          |This bit controls if an interrupt will be triggered while HIRC trim value update limitation count reached and HIRC frequency still not locked on target frequency set by FREQSEL(SYS_HIRCTCTL[1:0]).
+     * |        |          |If this bit is high and TFAILIF(SYS_HIRCTISTS[1]) is set during auto trim operation, an interrupt will be triggered to notify that HIRC trim value update limitation count was reached.
+     * |        |          |0 = Disable TFAILIF(SYS_HIRCTISTS[1]) status to trigger an interrupt to CPU.
+     * |        |          |1 = Enable TFAILIF(SYS_HIRCTISTS[1]) status to trigger an interrupt to CPU.
+     * |[2]     |CLKEIEN   |Clock Error Interrupt Enable Bit
+     * |        |          |This bit controls if CPU would get an interrupt while clock is inaccuracy during auto trim operation.
+     * |        |          |If this bit is set to1, and CLKERRIF(SYS_HIRCTISTS[2]) is set during auto trim operation, an interrupt will be triggered to notify the clock frequency is inaccuracy.
+     * |        |          |0 = Disable CLKERRIF(SYS_HIRCTISTS[2]) status to trigger an interrupt to CPU.
+     * |        |          |1 = Enable CLKERRIF(SYS_HIRCTISTS[2]) status to trigger an interrupt to CPU.
+     * @var SYS_T::HIRCTISTS
+     * Offset: 0xEC  HIRC48M Trim Interrupt Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |FREQLOCK  |HIRC Frequency Lock Status
+     * |        |          |This bit indicates the HIRC frequency is locked.
+     * |        |          |This is a status bit and doesn't trigger any interrupt
+     * |        |          |Write 1 to clear this to 0
+     * |        |          |This bit will be set automatically, if the frequency is lock and the RC_TRIM is enabled.
+     * |        |          |0 = The internal high-speed oscillator frequency doesn't lock at 48 MHz yet.
+     * |        |          |1 = The internal high-speed oscillator frequency locked at 48 MHz.
+     * |[1]     |TFAILIF   |Trim Failure Interrupt Status
+     * |        |          |This bit indicates that HIRC trim value update limitation count reached and the HIRC clock frequency still doesn't be locked
+     * |        |          |Once this bit is set, the auto trim operation stopped and FREQSEL(SYS_HIRCTCTL[1:0]) will be cleared to 00 by hardware automatically.
+     * |        |          |If this bit is set and TFAILIEN(SYS_HIRCTIEN[1]) is high, an interrupt will be triggered to notify that HIRC trim value update limitation count was reached
+     * |        |          |Write 1 to clear this to 0.
+     * |        |          |0 = Trim value update limitation count does not reach.
+     * |        |          |1 = Trim value update limitation count reached and HIRC frequency still not locked.
+     * |[2]     |CLKERRIF  |Clock Error Interrupt Status
+     * |        |          |When the frequency of 32.768 kHz external low speed crystal oscillator (LXT) or 48MHz internal high speed RC oscillator (HIRC) is shift larger to unreasonable value, this bit will be set and to be an indicate that clock frequency is inaccuracy.
+     * |        |          |Once this bit is set to 1, the auto trim operation stopped and FREQSEL(SYS_HIRCTCL[1:0]) will be cleared to 00 by hardware automatically if CESTOPEN(SYS_HIRCTCTL[8]) is set to 1.
+     * |        |          |If this bit is set and CLKEIEN(SYS_HIRCTIEN[2]) is high, an interrupt will be triggered to notify the clock frequency is inaccuracy.
+     * |        |          |Write 1 to clear this to 0.
+     * |        |          |0 = Clock frequency is accurate.
+     * |        |          |1 = Clock frequency is inaccurate.
+     * |[3]     |OVBDIF    |Over Boundary Status
+     * |        |          |When the over boundary function is set, if there occurs the over boundary condition, this flag will be set.
+     * |        |          |Note1: Write 1 to clear this flag.
+     * |        |          |Note2: This function is only supported in M48xGC/M48xG8.
+     * |        |          |0 = Over boundary condition did not occur.
+     * |        |          |1 = Over boundary condition occurred.
      * @var SYS_T::IRCTCTL
      * Offset: 0xF0  HIRC Trim Control Register
      * ---------------------------------------------------------------------------------------------------
@@ -1944,8 +2040,8 @@ typedef struct
      * |        |          |Once this bit is set to 1, the auto trim operation stopped and FREQSEL(SYS_IRCTCL[1:0]) will be cleared to 00 by hardware automatically if CESTOPEN(SYS_IRCTCTL[8]) is set to 1.
      * |        |          |If this bit is set and CLKEIEN(SYS_IRCTIEN[2]) is high, an interrupt will be triggered to notify the clock frequency is inaccuracy.
      * |        |          |Write 1 to clear this to 0.
-     * |        |          |0 = Clock frequency is accuracy.
-     * |        |          |1 = Clock frequency is inaccuracy.
+     * |        |          |0 = Clock frequency is accurate.
+     * |        |          |1 = Clock frequency is inaccurate.
      * @var SYS_T::REGLCTL
      * Offset: 0x100  Register Lock Control Register
      * ---------------------------------------------------------------------------------------------------
@@ -1959,6 +2055,16 @@ typedef struct
      * |        |          |0 = Write-protection Enabled for writing protected registers
      * |        |          |Any write to the protected register is ignored.
      * |        |          |1 = Write-protection Disabled for writing protected registers.
+     * @var SYS_T::PORDISAN
+     * Offset: 0x1EC  Analog POR Disable Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |POROFFAN  |Power-on Reset Enable Bit (Write Protect)
+     * |        |          |After powered on, User can turn off internal analog POR circuit to save power by writing 0x5AA5 to this field.
+     * |        |          |The analog POR circuit will be active again when  this field is set to another value or chip is reset by other reset source, including:
+     * |        |          |nRESET, Watchdog, LVR reset, BOD reset, ICE reset command and the software-chip reset function.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
      * @var SYS_T::PLCTL
      * Offset: 0x1F8  Power Level Control Register
      * ---------------------------------------------------------------------------------------------------
@@ -2054,8 +2160,11 @@ typedef struct
     __IO uint32_t SRAM_BISTCTL;          /*!< [0x00d0] System SRAM BIST Test Control Register                           */
     __I  uint32_t SRAM_BISTSTS;          /*!< [0x00d4] System SRAM BIST Test Status Register                            */
     /** @cond HIDDEN_SYMBOLS */
-    __I  uint32_t RESERVE5[6];
+    __I  uint32_t RESERVE5[3];
     /** @endcond */
+    __IO uint32_t HIRCTCTL;              /*!< [0x00e4] HIRC48M Trim Control Register                                    */
+    __IO uint32_t HIRCTIEN;              /*!< [0x00e8] HIRC48M Trim Interrupt Enable Register                           */
+    __IO uint32_t HIRCTISTS;             /*!< [0x00ec] HIRC48M Trim Interrupt Status Register                           */
     __IO uint32_t IRCTCTL;               /*!< [0x00f0] HIRC Trim Control Register                                       */
     __IO uint32_t IRCTIEN;               /*!< [0x00f4] HIRC Trim Interrupt Enable Register                              */
     __IO uint32_t IRCTISTS;              /*!< [0x00f8] HIRC Trim Interrupt Status Register                              */
@@ -2064,12 +2173,17 @@ typedef struct
     /** @endcond */
     __IO uint32_t REGLCTL;               /*!< [0x0100] Register Lock Control Register                                   */
     /** @cond HIDDEN_SYMBOLS */
-    __I  uint32_t RESERVE7[61];
+    __I  uint32_t RESERVE7[58];
     /** @endcond */
+    __IO uint32_t PORDISAN;              /*!< [0x01ec] Analog POR Disable Control Register                              */
+    /** @cond HIDDEN_SYMBOLS */
+    __I  uint32_t RESERVE8;
+    /** @endcond */
+    __I  uint32_t CSERVER;               /*!< [0x01f4] Chip Series Version Register                                     */
     __IO uint32_t PLCTL;                 /*!< [0x01f8] Power Level Control Register                                     */
     __I  uint32_t PLSTS;                 /*!< [0x01fc] Power Level Status Register                                      */
     /** @cond HIDDEN_SYMBOLS */
-    __I  uint32_t RESERVE8[128];
+    __I  uint32_t RESERVE9[128];
     /** @endcond */
     __IO uint32_t AHBMCTL;               /*!< [0x0400] AHB Bus Matrix Priority Control Register                         */
 
@@ -2127,6 +2241,9 @@ typedef struct
 
 #define SYS_IPRST0_CRCRST_Pos            (7)                                               /*!< SYS_T::IPRST0: CRCRST Position         */
 #define SYS_IPRST0_CRCRST_Msk            (0x1ul << SYS_IPRST0_CRCRST_Pos)                  /*!< SYS_T::IPRST0: CRCRST Mask             */
+
+#define SYS_IPRST0_CCAPRST_Pos           (8)                                               /*!< SYS_T::IPRST0: CCAPRST Position        */
+#define SYS_IPRST0_CCAPRST_Msk           (0x1ul << SYS_IPRST0_CCAPRST_Pos)                 /*!< SYS_T::IPRST0: CCAPRST Mask            */
 
 #define SYS_IPRST0_HSUSBDRST_Pos         (10)                                              /*!< SYS_T::IPRST0: HSUSBDRST Position      */
 #define SYS_IPRST0_HSUSBDRST_Msk         (0x1ul << SYS_IPRST0_HSUSBDRST_Pos)               /*!< SYS_T::IPRST0: HSUSBDRST Mask          */
@@ -2200,11 +2317,20 @@ typedef struct
 #define SYS_IPRST1_UART5RST_Pos          (21)                                              /*!< SYS_T::IPRST1: UART5RST Position       */
 #define SYS_IPRST1_UART5RST_Msk          (0x1ul << SYS_IPRST1_UART5RST_Pos)                /*!< SYS_T::IPRST1: UART5RST Mask           */
 
+#define SYS_IPRST1_UART6RST_Pos          (22)                                              /*!< SYS_T::IPRST1: UART6RST Position       */
+#define SYS_IPRST1_UART6RST_Msk          (0x1ul << SYS_IPRST1_UART6RST_Pos)                /*!< SYS_T::IPRST1: UART6RST Mask           */
+
+#define SYS_IPRST1_UART7RST_Pos          (23)                                              /*!< SYS_T::IPRST1: UART7RST Position       */
+#define SYS_IPRST1_UART7RST_Msk          (0x1ul << SYS_IPRST1_UART7RST_Pos)                /*!< SYS_T::IPRST1: UART7RST Mask           */
+
 #define SYS_IPRST1_CAN0RST_Pos           (24)                                              /*!< SYS_T::IPRST1: CAN0RST Position        */
 #define SYS_IPRST1_CAN0RST_Msk           (0x1ul << SYS_IPRST1_CAN0RST_Pos)                 /*!< SYS_T::IPRST1: CAN0RST Mask            */
 
 #define SYS_IPRST1_CAN1RST_Pos           (25)                                              /*!< SYS_T::IPRST1: CAN1RST Position        */
 #define SYS_IPRST1_CAN1RST_Msk           (0x1ul << SYS_IPRST1_CAN1RST_Pos)                 /*!< SYS_T::IPRST1: CAN1RST Mask            */
+
+#define SYS_IPRST1_OTGRST_Pos            (26)                                              /*!< SYS_T::IPRST1: OTGRST Position         */
+#define SYS_IPRST1_OTGRST_Msk            (0x1ul << SYS_IPRST1_OTGRST_Pos)                  /*!< SYS_T::IPRST1: OTGRST Mask             */
 
 #define SYS_IPRST1_USBDRST_Pos           (27)                                              /*!< SYS_T::IPRST1: USBDRST Position        */
 #define SYS_IPRST1_USBDRST_Msk           (0x1ul << SYS_IPRST1_USBDRST_Pos)                 /*!< SYS_T::IPRST1: USBDRST Mask            */
@@ -2215,6 +2341,12 @@ typedef struct
 #define SYS_IPRST1_I2S0RST_Pos           (29)                                              /*!< SYS_T::IPRST1: I2S0RST Position        */
 #define SYS_IPRST1_I2S0RST_Msk           (0x1ul << SYS_IPRST1_I2S0RST_Pos)                 /*!< SYS_T::IPRST1: I2S0RST Mask            */
 
+#define SYS_IPRST1_HSOTGRST_Pos          (30)                                              /*!< SYS_T::IPRST1: HSOTGRST Position       */
+#define SYS_IPRST1_HSOTGRST_Msk          (0x1ul << SYS_IPRST1_HSOTGRST_Pos)                /*!< SYS_T::IPRST1: HSOTGRST Mask           */
+
+#define SYS_IPRST1_TRNGRST_Pos           (31)                                              /*!< SYS_T::IPRST1: TRNGRST Position        */
+#define SYS_IPRST1_TRNGRST_Msk           (0x1ul << SYS_IPRST1_TRNGRST_Pos)                 /*!< SYS_T::IPRST1: TRNGRST Mask            */
+
 #define SYS_IPRST2_SC0RST_Pos            (0)                                               /*!< SYS_T::IPRST2: SC0RST Position         */
 #define SYS_IPRST2_SC0RST_Msk            (0x1ul << SYS_IPRST2_SC0RST_Pos)                  /*!< SYS_T::IPRST2: SC0RST Mask             */
 
@@ -2223,6 +2355,9 @@ typedef struct
 
 #define SYS_IPRST2_SC2RST_Pos            (2)                                               /*!< SYS_T::IPRST2: SC2RST Position         */
 #define SYS_IPRST2_SC2RST_Msk            (0x1ul << SYS_IPRST2_SC2RST_Pos)                  /*!< SYS_T::IPRST2: SC2RST Mask             */
+
+#define SYS_IPRST2_QSPI1RST_Pos          (4)                                               /*!< SYS_T::IPRST2: QSPI1RST Position       */
+#define SYS_IPRST2_QSPI1RST_Msk          (0x1ul << SYS_IPRST2_QSPI1RST_Pos)                /*!< SYS_T::IPRST2: QSPI1RST Mask           */
 
 #define SYS_IPRST2_SPI3RST_Pos           (6)                                               /*!< SYS_T::IPRST2: SPI3RST Position        */
 #define SYS_IPRST2_SPI3RST_Msk           (0x1ul << SYS_IPRST2_SPI3RST_Pos)                 /*!< SYS_T::IPRST2: SPI3RST Mask            */
@@ -2260,8 +2395,14 @@ typedef struct
 #define SYS_IPRST2_ECAP1RST_Pos          (27)                                              /*!< SYS_T::IPRST2: ECAP1RST Position       */
 #define SYS_IPRST2_ECAP1RST_Msk          (0x1ul << SYS_IPRST2_ECAP1RST_Pos)                /*!< SYS_T::IPRST2: ECAP1RST Mask           */
 
+#define SYS_IPRST2_CAN2RST_Pos           (28)                                              /*!< SYS_T::IPRST2: CAN2RST Position        */
+#define SYS_IPRST2_CAN2RST_Msk           (0x1ul << SYS_IPRST2_CAN2RST_Pos)                 /*!< SYS_T::IPRST2: CAN2RST Mask            */
+
 #define SYS_IPRST2_OPARST_Pos            (30)                                              /*!< SYS_T::IPRST2: OPARST Position         */
 #define SYS_IPRST2_OPARST_Msk            (0x1ul << SYS_IPRST2_OPARST_Pos)                  /*!< SYS_T::IPRST2: OPARST Mask             */
+
+#define SYS_IPRST2_EADC1RST_Pos          (31)                                              /*!< SYS_T::IPRST2: EADC1RST Position       */
+#define SYS_IPRST2_EADC1RST_Msk          (0x1ul << SYS_IPRST2_EADC1RST_Pos)                /*!< SYS_T::IPRST2: EADC1RST Mask           */
 
 #define SYS_BODCTL_BODEN_Pos             (0)                                               /*!< SYS_T::BODCTL: BODEN Position          */
 #define SYS_BODCTL_BODEN_Msk             (0x1ul << SYS_BODCTL_BODEN_Pos)                   /*!< SYS_T::BODCTL: BODEN Mask              */
@@ -3184,6 +3325,45 @@ typedef struct
 #define SYS_SRAM_BISTSTS_USBBEND_Pos     (20)                                              /*!< SYS_T::SRAM_BISTSTS: USBBEND Position  */
 #define SYS_SRAM_BISTSTS_USBBEND_Msk     (0x1ul << SYS_SRAM_BISTSTS_USBBEND_Pos)           /*!< SYS_T::SRAM_BISTSTS: USBBEND Mask      */
 
+#define SYS_HIRCTCTL_FREQSEL_Pos         (0)                                               /*!< SYS_T::HIRCTCTL: FREQSEL Position      */
+#define SYS_HIRCTCTL_FREQSEL_Msk         (0x3ul << SYS_HIRCTCTL_FREQSEL_Pos)               /*!< SYS_T::HIRCTCTL: FREQSEL Mask          */
+
+#define SYS_HIRCTCTL_LOOPSEL_Pos         (4)                                               /*!< SYS_T::HIRCTCTL: LOOPSEL Position      */
+#define SYS_HIRCTCTL_LOOPSEL_Msk         (0x3ul << SYS_HIRCTCTL_LOOPSEL_Pos)               /*!< SYS_T::HIRCTCTL: LOOPSEL Mask          */
+
+#define SYS_HIRCTCTL_RETRYCNT_Pos        (6)                                               /*!< SYS_T::HIRCTCTL: RETRYCNT Position     */
+#define SYS_HIRCTCTL_RETRYCNT_Msk        (0x3ul << SYS_HIRCTCTL_RETRYCNT_Pos)              /*!< SYS_T::HIRCTCTL: RETRYCNT Mask         */
+
+#define SYS_HIRCTCTL_CESTOPEN_Pos        (8)                                               /*!< SYS_T::HIRCTCTL: CESTOPEN Position     */
+#define SYS_HIRCTCTL_CESTOPEN_Msk        (0x1ul << SYS_HIRCTCTL_CESTOPEN_Pos)              /*!< SYS_T::HIRCTCTL: CESTOPEN Mask         */
+
+#define SYS_HIRCTCTL_BOUNDEN_Pos         (9)                                               /*!< SYS_T::HIRCTCTL: BOUNDEN Position      */
+#define SYS_HIRCTCTL_BOUNDEN_Msk         (0x1ul << SYS_HIRCTCTL_BOUNDEN_Pos)               /*!< SYS_T::HIRCTCTL: BOUNDEN Mask          */  
+
+#define SYS_HIRCTCTL_REFCKSEL_Pos        (10)                                              /*!< SYS_T::HIRCTCTL: REFCKSEL Position     */
+#define SYS_HIRCTCTL_REFCKSEL_Msk        (0x1ul << SYS_HIRCTCTL_REFCKSEL_Pos)              /*!< SYS_T::HIRCTCTL: REFCKSEL Mask         */
+
+#define SYS_HIRCTCTL_BOUNDARY_Pos        (16)                                              /*!< SYS_T::HIRCTCTL: BOUNDARY Position     */
+#define SYS_HIRCTCTL_BOUNDARY_Msk        (0x1ful << SYS_HIRCTCTL_BOUNDARY_Pos)             /*!< SYS_T::HIRCTCTL: BOUNDARY Mask         */
+
+#define SYS_HIRCTIEN_TFAILIEN_Pos        (1)                                               /*!< SYS_T::HIRCTIEN: TFAILIEN Position     */
+#define SYS_HIRCTIEN_TFAILIEN_Msk        (0x1ul << SYS_HIRCTIEN_TFAILIEN_Pos)              /*!< SYS_T::HIRCTIEN: TFAILIEN Mask         */
+
+#define SYS_HIRCTIEN_CLKEIEN_Pos         (2)                                               /*!< SYS_T::HIRCTIEN: CLKEIEN Position      */
+#define SYS_HIRCTIEN_CLKEIEN_Msk         (0x1ul << SYS_HIRCTIEN_CLKEIEN_Pos)               /*!< SYS_T::HIRCTIEN: CLKEIEN Mask          */
+
+#define SYS_HIRCTISTS_FREQLOCK_Pos       (0)                                               /*!< SYS_T::HIRCTISTS: FREQLOCK Position    */
+#define SYS_HIRCTISTS_FREQLOCK_Msk       (0x1ul << SYS_HIRCTISTS_FREQLOCK_Pos)             /*!< SYS_T::HIRCTISTS: FREQLOCK Mask        */
+
+#define SYS_HIRCTISTS_TFAILIF_Pos        (1)                                               /*!< SYS_T::HIRCTISTS: TFAILIF Position     */
+#define SYS_HIRCTISTS_TFAILIF_Msk        (0x1ul << SYS_HIRCTISTS_TFAILIF_Pos)              /*!< SYS_T::HIRCTISTS: TFAILIF Mask         */
+
+#define SYS_HIRCTISTS_CLKERRIF_Pos       (2)                                               /*!< SYS_T::HIRCTISTS: CLKERRIF Position    */
+#define SYS_HIRCTISTS_CLKERRIF_Msk       (0x1ul << SYS_HIRCTISTS_CLKERRIF_Pos)             /*!< SYS_T::HIRCTISTS: CLKERRIF Mask        */
+
+#define SYS_HIRCTISTS_OVBDIF_Pos         (3)                                               /*!< SYS_T::HIRCTISTS: OVBDIF Position      */
+#define SYS_HIRCTISTS_OVBDIF_Msk         (0x1ul << SYS_HIRCTISTS_OVBDIF_Pos)               /*!< SYS_T::HIRCTISTS: OVBDIF Mask          */
+
 #define SYS_IRCTCTL_FREQSEL_Pos          (0)                                               /*!< SYS_T::IRCTCTL: FREQSEL Position       */
 #define SYS_IRCTCTL_FREQSEL_Msk          (0x3ul << SYS_IRCTCTL_FREQSEL_Pos)                /*!< SYS_T::IRCTCTL: FREQSEL Mask           */
 
@@ -3216,6 +3396,12 @@ typedef struct
 
 #define SYS_REGLCTL_REGLCTL_Pos          (0)                                               /*!< SYS_T::REGLCTL: REGLCTL Position       */
 #define SYS_REGLCTL_REGLCTL_Msk          (0x1ul << SYS_REGLCTL_REGLCTL_Pos)                /*!< SYS_T::REGLCTL: REGLCTL Mask           */
+
+#define SYS_PORDISAN_POROFFAN_Pos        (0)                                               /*!< SYS_T::PORDISAN: POROFFAN Position     */
+#define SYS_PORDISAN_POROFFAN_Msk        (0xfffful << SYS_PORDISAN_POROFFAN_Pos)           /*!< SYS_T::PORDISAN: POROFFAN Mask         */
+
+#define SYS_CSERVER_VERSION_Pos          (0)                                               /*!< SYS_T::CSERVER: VERSION Position       */
+#define SYS_CSERVER_VERSION_Msk          (0xfful << SYS_CSERVER_VERSION_Pos)               /*!< SYS_T::CSERVER: VERSION Mask           */
 
 #define SYS_PLCTL_PLSEL_Pos              (0)                                               /*!< SYS_T::PLCTL: PLSEL Position           */
 #define SYS_PLCTL_PLSEL_Msk              (0x3ul << SYS_PLCTL_PLSEL_Pos)                    /*!< SYS_T::PLCTL: PLSEL Mask               */

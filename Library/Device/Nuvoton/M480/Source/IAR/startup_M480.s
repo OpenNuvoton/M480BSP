@@ -87,15 +87,15 @@ __vector_table_0x1c
         DCD     I2C1_IRQHandler           ; 39: I2C1
         DCD     PDMA_IRQHandler           ; 40: Peripheral DMA
         DCD     DAC_IRQHandler            ; 41: DAC
-        DCD     ADC00_IRQHandler          ; 42: ADC0 interrupt source 0
-        DCD     ADC01_IRQHandler          ; 43: ADC0 interrupt source 1
+        DCD     EADC00_IRQHandler         ; 42: EADC0 interrupt source 0
+        DCD     EADC01_IRQHandler         ; 43: EADC0 interrupt source 1
         DCD     ACMP01_IRQHandler         ; 44: ACMP0 and ACMP1
         DCD     Default_Handler           ; 45: Reserved
-        DCD     ADC02_IRQHandler          ; 46: ADC0 interrupt source 2
-        DCD     ADC03_IRQHandler          ; 47: ADC0 interrupt source 3
+        DCD     EADC02_IRQHandler         ; 46: EADC0 interrupt source 2
+        DCD     EADC03_IRQHandler         ; 47: EADC0 interrupt source 3
         DCD     UART2_IRQHandler          ; 48: UART2
         DCD     UART3_IRQHandler          ; 49: UART3
-        DCD     Default_Handler           ; 50: Reserved
+        DCD     QSPI1_IRQHandler          ; 50: QSPI1
         DCD     SPI1_IRQHandler           ; 51: SPI1
         DCD     SPI2_IRQHandler           ; 52: SPI2
         DCD     USBD_IRQHandler           ; 53: USB device
@@ -139,6 +139,21 @@ __vector_table_0x1c
         DCD     Default_Handler           ; 91:
         DCD     EHCI_IRQHandler           ; 92: EHCI
         DCD     USBOTG20_IRQHandler       ; 93:
+        DCD     Default_Handler           ; 94:
+        DCD     Default_Handler           ; 95:
+        DCD     Default_Handler           ; 96:
+        DCD     Default_Handler           ; 97:
+        DCD     Default_Handler           ; 98:
+        DCD     Default_Handler           ; 99:
+        DCD     Default_Handler           ; 100:
+        DCD     TRNG_IRQHandler           ; 101: TRNG
+        DCD     UART6_IRQHandler          ; 102: UART6
+        DCD     UART7_IRQHandler          ; 103: UART7
+        DCD     EADC10_IRQHandler         ; 104: EADC1 interrupt source 0
+        DCD     EADC11_IRQHandler         ; 105: EADC1 interrupt source 1
+        DCD     EADC12_IRQHandler         ; 106: EADC1 interrupt source 2
+        DCD     EADC13_IRQHandler         ; 107: EADC1 interrupt source 3
+        DCD     CAN2_IRQHandler           ; 108: CAN2
 __Vectors_End
 
 __Vectors       EQU   __vector_table
@@ -275,13 +290,14 @@ SysTick_Handler
         PUBWEAK  I2C1_IRQHandler
         PUBWEAK  PDMA_IRQHandler
         PUBWEAK  DAC_IRQHandler
-        PUBWEAK  ADC00_IRQHandler
-        PUBWEAK  ADC01_IRQHandler
+        PUBWEAK  EADC00_IRQHandler
+        PUBWEAK  EADC01_IRQHandler
         PUBWEAK  ACMP01_IRQHandler
-        PUBWEAK  ADC02_IRQHandler
-        PUBWEAK  ADC03_IRQHandler
+        PUBWEAK  EADC02_IRQHandler
+        PUBWEAK  EADC03_IRQHandler
         PUBWEAK  UART2_IRQHandler
         PUBWEAK  UART3_IRQHandler
+        PUBWEAK  QSPI1_IRQHandler
         PUBWEAK  SPI1_IRQHandler
         PUBWEAK  SPI2_IRQHandler
         PUBWEAK  USBD_IRQHandler
@@ -319,6 +335,14 @@ SysTick_Handler
         PUBWEAK  SDH1_IRQHandler
         PUBWEAK  EHCI_IRQHandler
         PUBWEAK  USBOTG20_IRQHandler
+        PUBWEAK  TRNG_IRQHandler
+        PUBWEAK  UART6_IRQHandler
+        PUBWEAK  UART7_IRQHandler
+        PUBWEAK  EADC10_IRQHandler
+        PUBWEAK  EADC11_IRQHandler
+        PUBWEAK  EADC12_IRQHandler
+        PUBWEAK  EADC13_IRQHandler
+        PUBWEAK  CAN2_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
 
 BOD_IRQHandler
@@ -362,13 +386,14 @@ I2C0_IRQHandler
 I2C1_IRQHandler
 PDMA_IRQHandler
 DAC_IRQHandler
-ADC00_IRQHandler
-ADC01_IRQHandler
+EADC00_IRQHandler
+EADC01_IRQHandler
 ACMP01_IRQHandler
-ADC02_IRQHandler
-ADC03_IRQHandler
+EADC02_IRQHandler
+EADC03_IRQHandler
 UART2_IRQHandler
 UART3_IRQHandler
+QSPI1_IRQHandler
 SPI1_IRQHandler
 SPI2_IRQHandler
 USBD_IRQHandler
@@ -406,6 +431,14 @@ EINT7_IRQHandler
 SDH1_IRQHandler
 EHCI_IRQHandler
 USBOTG20_IRQHandler
+TRNG_IRQHandler
+UART6_IRQHandler
+UART7_IRQHandler
+EADC10_IRQHandler
+EADC11_IRQHandler
+EADC12_IRQHandler
+EADC13_IRQHandler
+CAN2_IRQHandler
 Default_Handler
         B Default_Handler
 

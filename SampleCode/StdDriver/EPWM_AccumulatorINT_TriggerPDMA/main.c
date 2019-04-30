@@ -192,8 +192,8 @@ int32_t main(void)
     /* Set source address as g_u32Count array(increment) and destination address as EPWM1 channel 0 period register(no increment) */
     PDMA_SetTransferAddr(PDMA,0, (uint32_t)&g_u32Period[0], PDMA_SAR_INC, (uint32_t)&(EPWM1->PERIOD[0]), PDMA_DAR_FIX);
 
-    /* Select PDMA request source as EPWM1_CH0_TX(EPWM1 channel 0 accumulator interrupt) */
-    PDMA_SetTransferMode(PDMA,0, EPWM1_CH0_TX, FALSE, 0);
+    /* Select PDMA request source as PDMA_EPWM1_CH0_TX(EPWM1 channel 0 accumulator interrupt) */
+    PDMA_SetTransferMode(PDMA,0, PDMA_EPWM1_CH0_TX, FALSE, 0);
 
     /* Set PDMA as single request type for EPWM */
     PDMA_SetBurstType(PDMA,0, PDMA_REQ_SINGLE, PDMA_BURST_1);

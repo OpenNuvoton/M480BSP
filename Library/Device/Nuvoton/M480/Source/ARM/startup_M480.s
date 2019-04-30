@@ -108,15 +108,15 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
                 DCD     I2C1_IRQHandler           ; 39: I2C1
                 DCD     PDMA_IRQHandler           ; 40: Peripheral DMA
                 DCD     DAC_IRQHandler            ; 41: DAC
-                DCD     ADC00_IRQHandler          ; 42: ADC0 interrupt source 0
-                DCD     ADC01_IRQHandler          ; 43: ADC0 interrupt source 1
+                DCD     EADC00_IRQHandler         ; 42: EADC0 interrupt source 0
+                DCD     EADC01_IRQHandler         ; 43: EADC0 interrupt source 1
                 DCD     ACMP01_IRQHandler         ; 44: ACMP0 and ACMP1
                 DCD     Default_Handler           ; 45: Reserved
-                DCD     ADC02_IRQHandler          ; 46: ADC0 interrupt source 2
-                DCD     ADC03_IRQHandler          ; 47: ADC0 interrupt source 3
+                DCD     EADC02_IRQHandler         ; 46: EADC0 interrupt source 2
+                DCD     EADC03_IRQHandler         ; 47: EADC0 interrupt source 3
                 DCD     UART2_IRQHandler          ; 48: UART2
                 DCD     UART3_IRQHandler          ; 49: UART3
-                DCD     Default_Handler           ; 50: Reserved
+                DCD     QSPI1_IRQHandler          ; 50: QSPI1
                 DCD     SPI1_IRQHandler           ; 51: SPI1
                 DCD     SPI2_IRQHandler           ; 52: SPI2
                 DCD     USBD_IRQHandler           ; 53: USB device
@@ -147,7 +147,7 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
                 DCD     BPWM0_IRQHandler          ; 78: BPWM0
                 DCD     BPWM1_IRQHandler          ; 79: BPWM1
                 DCD     SPIM_IRQHandler           ; 80: SPIM
-                DCD     Default_Handler           ; 81: ToDo: Add description to this Interrupt
+                DCD     CCAP_IRQHandler           ; 81: CCAP
                 DCD     I2C2_IRQHandler           ; 82: I2C2
                 DCD     Default_Handler           ; 83:
                 DCD     QEI0_IRQHandler           ; 84: QEI0
@@ -160,6 +160,21 @@ __Vectors       DCD     __initial_sp              ; Top of Stack
                 DCD     Default_Handler           ; 91:
                 DCD     EHCI_IRQHandler           ; 92: EHCI
                 DCD     USBOTG20_IRQHandler       ; 93:
+                DCD     Default_Handler           ; 94:
+                DCD     Default_Handler           ; 95:
+                DCD     Default_Handler           ; 96:
+                DCD     Default_Handler           ; 97:
+                DCD     Default_Handler           ; 98:
+                DCD     Default_Handler           ; 99:
+                DCD     Default_Handler           ; 100:
+                DCD     TRNG_IRQHandler           ; 101: TRNG
+                DCD     UART6_IRQHandler          ; 102: UART6
+                DCD     UART7_IRQHandler          ; 103: UART7
+                DCD     EADC10_IRQHandler         ; 104: EADC1 interrupt source 0
+                DCD     EADC11_IRQHandler         ; 105: EADC1 interrupt source 1
+                DCD     EADC12_IRQHandler         ; 106: EADC1 interrupt source 2
+                DCD     EADC13_IRQHandler         ; 107: EADC1 interrupt source 3
+                DCD     CAN2_IRQHandler           ; 108: CAN2
 
 
 __Vectors_End
@@ -308,13 +323,14 @@ Default_Handler PROC
                 EXPORT  I2C1_IRQHandler           [WEAK]
                 EXPORT  PDMA_IRQHandler           [WEAK]
                 EXPORT  DAC_IRQHandler            [WEAK]
-                EXPORT  ADC00_IRQHandler          [WEAK]
-                EXPORT  ADC01_IRQHandler          [WEAK]
+                EXPORT  EADC00_IRQHandler         [WEAK]
+                EXPORT  EADC01_IRQHandler         [WEAK]
                 EXPORT  ACMP01_IRQHandler         [WEAK]
-                EXPORT  ADC02_IRQHandler          [WEAK]
-                EXPORT  ADC03_IRQHandler          [WEAK]
+                EXPORT  EADC02_IRQHandler         [WEAK]
+                EXPORT  EADC03_IRQHandler         [WEAK]
                 EXPORT  UART2_IRQHandler          [WEAK]
                 EXPORT  UART3_IRQHandler          [WEAK]
+                EXPORT  QSPI1_IRQHandler          [WEAK]
                 EXPORT  SPI1_IRQHandler           [WEAK]
                 EXPORT  SPI2_IRQHandler           [WEAK]
                 EXPORT  USBD_IRQHandler           [WEAK]
@@ -342,6 +358,7 @@ Default_Handler PROC
                 EXPORT  BPWM0_IRQHandler          [WEAK]
                 EXPORT  BPWM1_IRQHandler          [WEAK]
                 EXPORT  SPIM_IRQHandler           [WEAK]
+                EXPORT  CCAP_IRQHandler           [WEAK]
                 EXPORT  I2C2_IRQHandler           [WEAK]
                 EXPORT  QEI0_IRQHandler           [WEAK]
                 EXPORT  QEI1_IRQHandler           [WEAK]
@@ -352,6 +369,14 @@ Default_Handler PROC
                 EXPORT  SDH1_IRQHandler           [WEAK]
                 EXPORT  EHCI_IRQHandler           [WEAK]
                 EXPORT  USBOTG20_IRQHandler       [WEAK]
+                EXPORT  TRNG_IRQHandler           [WEAK]
+                EXPORT  UART6_IRQHandler          [WEAK]
+                EXPORT  UART7_IRQHandler          [WEAK]
+                EXPORT  EADC10_IRQHandler         [WEAK]
+                EXPORT  EADC11_IRQHandler         [WEAK]
+                EXPORT  EADC12_IRQHandler         [WEAK]
+                EXPORT  EADC13_IRQHandler         [WEAK]
+                EXPORT  CAN2_IRQHandler           [WEAK]
 
 Default__IRQHandler
 BOD_IRQHandler
@@ -395,13 +420,14 @@ I2C0_IRQHandler
 I2C1_IRQHandler
 PDMA_IRQHandler
 DAC_IRQHandler
-ADC00_IRQHandler
-ADC01_IRQHandler
+EADC00_IRQHandler
+EADC01_IRQHandler
 ACMP01_IRQHandler
-ADC02_IRQHandler
-ADC03_IRQHandler
+EADC02_IRQHandler
+EADC03_IRQHandler
 UART2_IRQHandler
 UART3_IRQHandler
+QSPI1_IRQHandler
 SPI1_IRQHandler
 SPI2_IRQHandler
 USBD_IRQHandler
@@ -429,6 +455,7 @@ USCI1_IRQHandler
 BPWM0_IRQHandler
 BPWM1_IRQHandler
 SPIM_IRQHandler
+CCAP_IRQHandler
 I2C2_IRQHandler
 QEI0_IRQHandler
 QEI1_IRQHandler
@@ -439,6 +466,14 @@ EINT7_IRQHandler
 SDH1_IRQHandler
 EHCI_IRQHandler
 USBOTG20_IRQHandler
+TRNG_IRQHandler
+UART6_IRQHandler
+UART7_IRQHandler
+EADC10_IRQHandler
+EADC11_IRQHandler
+EADC12_IRQHandler
+EADC13_IRQHandler
+CAN2_IRQHandler
 
 
 

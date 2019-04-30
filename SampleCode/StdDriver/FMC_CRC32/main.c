@@ -1,7 +1,7 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V1.00
- * @brief    Demonstrate how to use FMC CRC32 ISP command to calculate the 
+ * @brief    Demonstrate how to use FMC CRC32 ISP command to calculate the
  *           CRC32 checksum of APROM, LDROM, and SPROM.
  *
  *
@@ -102,18 +102,20 @@ int main()
     }
     printf("0x%x\n", u32ChkSum);       /* print out LDROM CRC32 check sum value */
 
-    printf("\nSPROM (0x200000 ~ 0x200200) CRC32 checksum =>  ");
-
     /*
-     *  Request FMC hardware to run CRC32 calculation on SPROM.
+     *  Request FMC hardware to run CRC32 calculation on SPROM. (M480MD only)
      */
-    u32ChkSum = FMC_GetChkSum(FMC_SPROM_BASE, FMC_SPROM_SIZE);
-    if (u32ChkSum == 0xFFFFFFFF)
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
     {
-        printf("Failed on calculating SPROM CRC32 checksum!\n");
-        goto lexit;
+        printf("\nSPROM (0x200000 ~ 0x200200) CRC32 checksum =>  ");
+        u32ChkSum = FMC_GetChkSum(FMC_SPROM_BASE, FMC_SPROM_SIZE);
+        if (u32ChkSum == 0xFFFFFFFF)
+        {
+            printf("Failed on calculating SPROM CRC32 checksum!\n");
+            goto lexit;
+        }
+        printf("0x%x\n", u32ChkSum);       /* print out SPROM CRC32 check sum value */
     }
-    printf("0x%x\n", u32ChkSum);       /* print out SPROM CRC32 check sum value */
 
     printf("\nAPROM bank0 (0x0 ~ 0x40000) CRC32 checksum =>  ");
 
@@ -130,16 +132,19 @@ int main()
     printf("0x%x\n", u32ChkSum);       /* print out APROM CRC32 check sum value */
 
     /*
-     *  Request FMC hardware to run CRC32 calculation on APROM bank 1.
+     *  Request FMC hardware to run CRC32 calculation on APROM bank 1. (M480MD only)
      */
-    printf("\nAPROM bank1 (0x40000 ~ 0x80000) CRC32 checksum =>  ");
-    u32ChkSum = FMC_GetChkSum(FMC_APROM_BASE+0x40000, 0x40000);
-    if (u32ChkSum == 0xFFFFFFFF)
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
     {
-        printf("Failed on calculating APROM bank1 CRC32 checksum!\n");
-        goto lexit;
+        printf("\nAPROM bank1 (0x40000 ~ 0x80000) CRC32 checksum =>  ");
+        u32ChkSum = FMC_GetChkSum(FMC_APROM_BASE+0x40000, 0x40000);
+        if (u32ChkSum == 0xFFFFFFFF)
+        {
+            printf("Failed on calculating APROM bank1 CRC32 checksum!\n");
+            goto lexit;
+        }
+        printf("0x%x\n", u32ChkSum);       /* print out APROM CRC32 check sum value */
     }
-    printf("0x%x\n", u32ChkSum);       /* print out APROM CRC32 check sum value */
 
     printf("\nFMC CRC32 checksum test done.\n");
 

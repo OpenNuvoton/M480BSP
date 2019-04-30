@@ -237,6 +237,10 @@ int32_t main (void)
 
     for (p = 0; p < sizeof(pattern)/sizeof(ECDH_VECTOR_T); p++)
     {
+        if (((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x1) &&
+                (pattern[p].key_len > 256))  /* M480LD supports maximum ECC 256 bits. */
+            continue;
+
         printf("Run ECC CDH pattern %s => ", pattern[p].vecotr_name);
 
         if (ECC_GenerateSecretZ(CRPT, pattern[p].curve, (char *)pattern[p].d, (char *)pattern[p].Qx, (char *)pattern[p].Qy, my_z) < 0)

@@ -139,20 +139,6 @@ static uint32_t EMAC_Nsec2Subsec(uint32_t nsec);
   @{
 */
 
-/**
-  * @brief  Trigger EMAC Rx function
-  * @param  None
-  * @return None
-  */
-//#define EMAC_TRIGGER_RX() do{EMAC->RXST = 0UL;}while(0)
-
-/**
-  * @brief  Trigger EMAC Tx function
-  * @param  None
-  * @return None
-  */
-#define EMAC_TRIGGER_TX() do{EMAC->TXST = 0UL;}while(0)
-
 
 /**
   * @brief  Write PHY register

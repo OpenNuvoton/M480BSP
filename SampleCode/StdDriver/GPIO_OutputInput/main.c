@@ -69,22 +69,22 @@ int32_t main(void)
     printf("\n\nCPU @ %dHz\n", SystemCoreClock);
 
     printf("+-------------------------------------------------+\n");
-    printf("|    PB.3(Output) and PD.7(Input) Sample Code     |\n");
+    printf("|    PB.3(Output) and PD.8(Input) Sample Code     |\n");
     printf("+-------------------------------------------------+\n\n");
 
     /*-----------------------------------------------------------------------------------------------------*/
     /* GPIO Basic Mode Test --- Use Pin Data Input/Output to control GPIO pin                              */
     /*-----------------------------------------------------------------------------------------------------*/
-    printf("  >> Please connect PB.3 and PD.7 first << \n");
+    printf("  >> Please connect PB.3 and PD.8 first << \n");
     printf("     Press any key to start test by using [Pin Data Input/Output Control] \n\n");
     getchar();
 
-    /* Configure PB.3 as Output mode and PD.7 as Input mode then close it */
+    /* Configure PB.3 as Output mode and PD.8 as Input mode then close it */
     GPIO_SetMode(PB, BIT3, GPIO_MODE_OUTPUT);
-    GPIO_SetMode(PD, BIT7, GPIO_MODE_INPUT);
+    GPIO_SetMode(PD, BIT8, GPIO_MODE_INPUT);
 
     i32Err = 0;
-    printf("GPIO PB.3(output mode) connect to PD.7(input mode) ......");
+    printf("GPIO PB.3(output mode) connect to PD.8(input mode) ......");
 
     /* Use Pin Data Input/Output Control to pull specified I/O or get I/O pin status */
     /* Set PB.3 output pin value is low */
@@ -93,8 +93,8 @@ int32_t main(void)
     /* Set time out counter */
     i32TimeOutCnt = 100;
 
-    /* Wait for PD.7 input pin status is low for a while */
-    while(PD7 != 0)
+    /* Wait for PD.8 input pin status is low for a while */
+    while(PD8 != 0)
     {
         if(i32TimeOutCnt > 0)
         {
@@ -113,8 +113,8 @@ int32_t main(void)
     /* Set time out counter */
     i32TimeOutCnt = 100;
 
-    /* Wait for PD.7 input pin status is high for a while */
-    while(PD7 != 1)
+    /* Wait for PD.8 input pin status is high for a while */
+    while(PD8 != 1)
     {
         if(i32TimeOutCnt > 0)
         {
@@ -137,9 +137,9 @@ int32_t main(void)
         printf("  [OK].\n");
     }
 
-    /* Configure PB.3 and PD.7 to default Quasi-bidirectional mode */
+    /* Configure PB.3 and PD.8 to default Quasi-bidirectional mode */
     GPIO_SetMode(PB, BIT3, GPIO_MODE_QUASI);
-    GPIO_SetMode(PD, BIT7, GPIO_MODE_QUASI);
+    GPIO_SetMode(PD, BIT8, GPIO_MODE_QUASI);
 
     while(1);
 

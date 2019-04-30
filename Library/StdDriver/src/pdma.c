@@ -101,8 +101,28 @@ void PDMA_SetTransferCnt(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32Width, uint32
 void PDMA_SetStride(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32DestLen, uint32_t u32SrcLen, uint32_t u32TransCount)
 {
     pdma->DSCT[u32Ch].CTL |= PDMA_DSCT_CTL_STRIDEEN_Msk;
-    pdma->STRIDE[u32Ch].ASOCR =(u32DestLen<<16) | u32SrcLen;
-    pdma->STRIDE[u32Ch].STCR = u32TransCount;
+    pdma->STRIDE[u32Ch].ASOCR =((u32DestLen-1)<<16) | (u32SrcLen-1);
+    pdma->STRIDE[u32Ch].STCR = u32TransCount-1;
+}
+
+/**
+ * @brief       Set PDMA Repeat
+  *
+ * @param[in]   pdma                The pointer of the specified PDMA module
+ * @param[in]   u32Ch               The selected channel
+ * @param[in]   u32DestInterval     Destination address interval count
+ * @param[in]   u32SrcInterval      Source address interval count
+ * @param[in]   u32RepeatCount      Repeat count
+ *
+ * @return      None
+ *
+ * @details     This function set the selected repeat.
+ */
+void PDMA_SetRepeat(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32DestInterval, uint32_t u32SrcInterval, uint32_t u32RepeatCount)
+{
+    pdma->DSCT[u32Ch].CTL |= PDMA_DSCT_CTL_STRIDEEN_Msk;
+    pdma->REPEAT[u32Ch].AICTL =((u32DestInterval)<<16) | (u32SrcInterval);
+    pdma->REPEAT[u32Ch].RCNT = u32RepeatCount;
 }
 
 /**
@@ -184,9 +204,26 @@ void PDMA_SetTransferAddr(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32SrcAddr, uin
  *                - \ref PDMA_TMR1
  *                - \ref PDMA_TMR2
  *                - \ref PDMA_TMR3
- *                - \ref PDMA_ADC_RX
+ *                - \ref PDMA_EADC0_RX
  *                - \ref PDMA_DAC0_TX
  *                - \ref PDMA_DAC1_TX
+ *                - \ref PDMA_EPWM0_CH0_TX
+ *                - \ref PDMA_EPWM0_CH1_TX
+ *                - \ref PDMA_EPWM0_CH2_TX
+ *                - \ref PDMA_EPWM0_CH3_TX
+ *                - \ref PDMA_EPWM0_CH4_TX
+ *                - \ref PDMA_EPWM0_CH5_TX
+ *                - \ref PDMA_EPWM1_CH0_TX
+ *                - \ref PDMA_EPWM1_CH1_TX
+ *                - \ref PDMA_EPWM1_CH2_TX
+ *                - \ref PDMA_EPWM1_CH3_TX
+ *                - \ref PDMA_EPWM1_CH4_TX
+ *                - \ref PDMA_EPWM1_CH5_TX
+ *                - \ref PDMA_UART6_TX
+ *                - \ref PDMA_UART6_RX
+ *                - \ref PDMA_UART7_TX
+ *                - \ref PDMA_UART7_RX
+ *                - \ref PDMA_EADC1_RX
  * @param[in]   u32ScatterEn    Scatter-gather mode enable
  * @param[in]   u32DescAddr     Scatter-gather descriptor address
  *

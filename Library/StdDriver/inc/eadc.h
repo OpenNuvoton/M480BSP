@@ -120,6 +120,29 @@ extern "C"
 #define EADC_DISABLE_PDMA(eadc) ((eadc)->CTL &= (~EADC_CTL_PDMAEN_Msk))
 
 /**
+  * @brief Enable Sample Module PDMA transfer.
+  * @param[in] eadc The pointer of the specified EADC module.
+  * @param[in] u32ModuleMask the combination of sample module interrupt status bits. Each bit corresponds to a sample module interrupt status.
+  *                          This parameter decides which sample module interrupts will be disabled, valid range are between 1~0x7FFFF.
+  * @return None
+  * @details When A/D conversion is completed, the converted data is loaded into EADC_DATn (n: 0 ~ 18) register,
+  *         user can enable this bit to generate a PDMA data transfer request.
+  * \hideinitializer
+  */
+#define EADC_ENABLE_SAMPLE_MODULE_PDMA(eadc, u32ModuleMask) ((eadc)->PDMACTL |= u32ModuleMask)
+
+/**
+  * @brief Disable Sample Module PDMA transfer.
+  * @param[in] eadc The pointer of the specified EADC module.
+  * @param[in] u32ModuleMask the combination of sample module interrupt status bits. Each bit corresponds to a sample module interrupt status.
+  *                          This parameter decides which sample module interrupts will be disabled, valid range are between 1~0x7FFFF.
+  * @return None
+  * @details This macro is used to disable sample module PDMA transfer.
+  * \hideinitializer
+  */
+#define EADC_DISABLE_SAMPLE_MODULE_PDMA(eadc, u32ModuleMask) ((eadc)->PDMACTL &= (~u32ModuleMask))
+
+/**
   * @brief Enable double buffer mode.
   * @param[in] eadc The pointer of the specified EADC module.
   * @param[in] u32ModuleNum Decides the sample module number, valid value are from 0 to 3.

@@ -134,6 +134,12 @@ int32_t main (void)
 
     SYS_UnlockReg();                   /* Unlock register lock protect */
 
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x1)
+    {
+        printf("M480LD does not support DES/TDES!\n");
+        while (1);
+    }
+
     printf("+--------------------------------------------+\n");
     printf("|           Crypto TDES Driver Sample Code   |\n");
     printf("+--------------------------------------------+\n");

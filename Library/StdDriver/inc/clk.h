@@ -55,6 +55,12 @@ extern "C"
 #define CLK_CLKSEL0_STCLKSEL_HIRC_DIV2   (0x7UL << CLK_CLKSEL0_STCLKSEL_Pos)        /*!< Select SysTick clock source from HIRC/2 \hideinitializer */
 #define CLK_CLKSEL0_STCLKSEL_HCLK        (0x01UL << SysTick_CTRL_CLKSOURCE_Pos)     /*!< Select SysTick clock source from HCLK \hideinitializer */
 
+#define CLK_CLKSEL0_CCAPSEL_HXT         (0x0UL << CLK_CLKSEL0_CCAPSEL_Pos)          /*!< Select CCAP clock source from HXT \hideinitializer */
+#define CLK_CLKSEL0_CCAPSEL_PLL         (0x1UL << CLK_CLKSEL0_CCAPSEL_Pos)          /*!< Select CCAP clock source from PLL \hideinitializer */
+#define CLK_CLKSEL0_CCAPSEL_HCLK        (0x2UL << CLK_CLKSEL0_CCAPSEL_Pos)          /*!< Select CCAP clock source from HCLK \hideinitializer */
+#define CLK_CLKSEL0_CCAPSEL_HIRC        (0x3UL << CLK_CLKSEL0_CCAPSEL_Pos)          /*!< Select CCAP clock source from HIRC \hideinitializer */
+
+
 #if(0)
 #define CLK_CLKSEL0_PCLK0DIV1            (0x0UL << CLK_CLKSEL0_PCLK0SEL_Pos)        /*!< Select PCLK0 clock source from HCLK \hideinitializer */
 #define CLK_CLKSEL0_PCLK0DIV2            (0x1UL << CLK_CLKSEL0_PCLK0SEL_Pos)        /*!< Select PCLK0 clock source from 1/2 HCLK \hideinitializer */
@@ -62,6 +68,11 @@ extern "C"
 #define CLK_CLKSEL0_PCLK1DIV1            (0x0UL << CLK_CLKSEL0_PCLK1SEL_Pos)        /*!< Select PCLK1 clock source from HCLK \hideinitializer */
 #define CLK_CLKSEL0_PCLK1DIV2            (0x1UL << CLK_CLKSEL0_PCLK1SEL_Pos)        /*!< Select PCLK1 clock source from 1/2 HCLK \hideinitializer */
 #endif
+
+#define CLK_CLKSEL0_CCAPSEL_HXT          (0x0UL << CLK_CLKSEL0_CCAPSEL_Pos)         /*!< Select CCAP clock source from high speed crystal \hideinitializer */
+#define CLK_CLKSEL0_CCAPSEL_PLL          (0x1UL << CLK_CLKSEL0_CCAPSEL_Pos)         /*!< Select CCAP clock source from PLL \hideinitializer */
+#define CLK_CLKSEL0_CCAPSEL_HIRC         (0x3UL << CLK_CLKSEL0_CCAPSEL_Pos)         /*!< Select CCAP clock source from high speed oscillator \hideinitializer */
+#define CLK_CLKSEL0_CCAPSEL_HCLK         (0x2UL << CLK_CLKSEL0_CCAPSEL_Pos)         /*!< Select CCAP clock source from HCLK \hideinitializer */
 
 #define CLK_CLKSEL0_SDH0SEL_HXT          (0x0UL << CLK_CLKSEL0_SDH0SEL_Pos)         /*!< Select SDH0 clock source from high speed crystal \hideinitializer */
 #define CLK_CLKSEL0_SDH0SEL_PLL          (0x1UL << CLK_CLKSEL0_SDH0SEL_Pos)         /*!< Select SDH0 clock source from PLL \hideinitializer */
@@ -131,10 +142,10 @@ extern "C"
 /*---------------------------------------------------------------------------------------------------------*/
 /*  CLKSEL2 constant definitions.                                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
-#define CLK_CLKSEL2_QSPI0SEL_HXT          (0x0UL << CLK_CLKSEL2_QSPI0SEL_Pos)         /*!< Select QSPI0 clock source from high speed crystal \hideinitializer */
-#define CLK_CLKSEL2_QSPI0SEL_PLL          (0x1UL << CLK_CLKSEL2_QSPI0SEL_Pos)         /*!< Select QSPI0 clock source from PLL \hideinitializer */
-#define CLK_CLKSEL2_QSPI0SEL_HIRC         (0x3UL << CLK_CLKSEL2_QSPI0SEL_Pos)         /*!< Select QSPI0 clock source from high speed oscillator \hideinitializer */
-#define CLK_CLKSEL2_QSPI0SEL_PCLK0        (0x2UL << CLK_CLKSEL2_QSPI0SEL_Pos)         /*!< Select QSPI0 clock source from PCLK0 \hideinitializer */
+#define CLK_CLKSEL2_QSPI0SEL_HXT         (0x0UL << CLK_CLKSEL2_QSPI0SEL_Pos)        /*!< Select QSPI0 clock source from high speed crystal \hideinitializer */
+#define CLK_CLKSEL2_QSPI0SEL_PLL         (0x1UL << CLK_CLKSEL2_QSPI0SEL_Pos)        /*!< Select QSPI0 clock source from PLL \hideinitializer */
+#define CLK_CLKSEL2_QSPI0SEL_HIRC        (0x3UL << CLK_CLKSEL2_QSPI0SEL_Pos)        /*!< Select QSPI0 clock source from high speed oscillator \hideinitializer */
+#define CLK_CLKSEL2_QSPI0SEL_PCLK0       (0x2UL << CLK_CLKSEL2_QSPI0SEL_Pos)        /*!< Select QSPI0 clock source from PCLK0 \hideinitializer */
 
 #define CLK_CLKSEL2_SPI0SEL_HXT          (0x0UL << CLK_CLKSEL2_SPI0SEL_Pos)         /*!< Select SPI0 clock source from high speed crystal \hideinitializer */
 #define CLK_CLKSEL2_SPI0SEL_PLL          (0x1UL << CLK_CLKSEL2_SPI0SEL_Pos)         /*!< Select SPI0 clock source from PLL \hideinitializer */
@@ -190,6 +201,11 @@ extern "C"
 #define CLK_CLKSEL3_RTCSEL_LXT           (0x0UL << CLK_CLKSEL3_RTCSEL_Pos)          /*!< Select RTC clock source from low speed crystal \hideinitializer */
 #define CLK_CLKSEL3_RTCSEL_LIRC          (0x1UL << CLK_CLKSEL3_RTCSEL_Pos)          /*!< Select RTC clock source from low speed oscillator \hideinitializer */
 
+#define CLK_CLKSEL3_QSPI1SEL_HXT         (0x0UL << CLK_CLKSEL3_QSPI1SEL_Pos)        /*!< Select QSPI1 clock source from high speed crystal \hideinitializer */
+#define CLK_CLKSEL3_QSPI1SEL_PLL         (0x1UL << CLK_CLKSEL3_QSPI1SEL_Pos)        /*!< Select QSPI1 clock source from PLL \hideinitializer */
+#define CLK_CLKSEL3_QSPI1SEL_HIRC        (0x3UL << CLK_CLKSEL3_QSPI1SEL_Pos)        /*!< Select QSPI1 clock source from high speed oscillator \hideinitializer */
+#define CLK_CLKSEL3_QSPI1SEL_PCLK1       (0x2UL << CLK_CLKSEL3_QSPI1SEL_Pos)        /*!< Select QSPI1 clock source from PCLK1 \hideinitializer */
+
 #define CLK_CLKSEL3_I2S0SEL_HXT          (0x0UL << CLK_CLKSEL3_I2S0SEL_Pos)         /*!< Select I2S0 clock source from high speed crystal \hideinitializer */
 #define CLK_CLKSEL3_I2S0SEL_PLL          (0x1UL << CLK_CLKSEL3_I2S0SEL_Pos)         /*!< Select I2S0 clock source from PLL \hideinitializer */
 #define CLK_CLKSEL3_I2S0SEL_HIRC         (0x3UL << CLK_CLKSEL3_I2S0SEL_Pos)         /*!< Select I2S0 clock source from high speed oscillator \hideinitializer */
@@ -215,6 +231,15 @@ extern "C"
 #define CLK_CLKSEL3_UART5SEL_PLL         (0x1UL << CLK_CLKSEL3_UART5SEL_Pos)        /*!< Select UART5 clock source from PLL \hideinitializer */
 #define CLK_CLKSEL3_UART5SEL_HIRC        (0x3UL << CLK_CLKSEL3_UART5SEL_Pos)        /*!< Select UART5 clock source from high speed oscillator \hideinitializer */
 
+#define CLK_CLKSEL3_UART6SEL_HXT         (0x0UL << CLK_CLKSEL3_UART6SEL_Pos)        /*!< Select UART6 clock source from high speed crystal \hideinitializer */
+#define CLK_CLKSEL3_UART6SEL_LXT         (0x2UL << CLK_CLKSEL3_UART6SEL_Pos)        /*!< Select UART6 clock source from low speed crystal \hideinitializer */
+#define CLK_CLKSEL3_UART6SEL_PLL         (0x1UL << CLK_CLKSEL3_UART6SEL_Pos)        /*!< Select UART6 clock source from PLL \hideinitializer */
+#define CLK_CLKSEL3_UART6SEL_HIRC        (0x3UL << CLK_CLKSEL3_UART6SEL_Pos)        /*!< Select UART6 clock source from high speed oscillator \hideinitializer */
+
+#define CLK_CLKSEL3_UART7SEL_HXT         (0x0UL << CLK_CLKSEL3_UART7SEL_Pos)        /*!< Select UART7 clock source from high speed crystal \hideinitializer */
+#define CLK_CLKSEL3_UART7SEL_LXT         (0x2UL << CLK_CLKSEL3_UART7SEL_Pos)        /*!< Select UART7 clock source from low speed crystal \hideinitializer */
+#define CLK_CLKSEL3_UART7SEL_PLL         (0x1UL << CLK_CLKSEL3_UART7SEL_Pos)        /*!< Select UART7 clock source from PLL \hideinitializer */
+#define CLK_CLKSEL3_UART7SEL_HIRC        (0x3UL << CLK_CLKSEL3_UART7SEL_Pos)        /*!< Select UART7 clock source from high speed oscillator \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  CLKDIV0 constant definitions.                                                                          */
@@ -234,8 +259,16 @@ extern "C"
 #define CLK_CLKDIV1_SC2(x)               (((x) - 1UL) << CLK_CLKDIV1_SC2DIV_Pos)    /*!< CLKDIV1 Setting for SC2 clock divider. It could be 1~256 \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
+/*  CLKDIV2 constant definitions.                                                                          */
+/*---------------------------------------------------------------------------------------------------------*/
+#define CLK_CLKDIV2_I2S0(x)              (((x) - 1UL) << CLK_CLKDIV2_I2SDIV_Pos)    /*!< CLKDIV2 Setting for I2S0 clock divider. It could be 1~16 */
+#define CLK_CLKDIV2_EADC1(x)             (((x) - 1UL) << CLK_CLKDIV2_EADC1DIV_Pos)  /*!< CLKDIV2 Setting for EADC1 clock divider. It could be 1~256 */
+
+/*---------------------------------------------------------------------------------------------------------*/
 /*  CLKDIV3 constant definitions.                                                                          */
 /*---------------------------------------------------------------------------------------------------------*/
+#define CLK_CLKDIV3_CCAP(x)              (((x) - 1UL) << CLK_CLKDIV3_CCAPDIV_Pos)   /*!< CLKDIV3 Setting for CCAP clock divider. It could be 1~256 */
+#define CLK_CLKDIV3_VSENSE(x)            (((x) - 1UL) << CLK_CLKDIV3_VSENSEDIV_Pos) /*!< CLKDIV3 Setting for VSENSE clock divider. It could be 1~256 */
 #define CLK_CLKDIV3_EMAC(x)              (((x) - 1UL) << CLK_CLKDIV3_EMACDIV_Pos)   /*!< CLKDIV3 Setting for EMAC clock divider. It could be 1~256 \hideinitializer */
 #define CLK_CLKDIV3_SDH1(x)              (((x) - 1UL) << CLK_CLKDIV3_SDH1DIV_Pos)   /*!< CLKDIV3 Setting for SDH1 clock divider. It could be 1~256 \hideinitializer */
 
@@ -246,6 +279,8 @@ extern "C"
 #define CLK_CLKDIV4_UART3(x)             (((x) - 1UL) << CLK_CLKDIV4_UART3DIV_Pos)  /*!< CLKDIV4 Setting for UART3 clock divider. It could be 1~16 \hideinitializer */
 #define CLK_CLKDIV4_UART4(x)             (((x) - 1UL) << CLK_CLKDIV4_UART4DIV_Pos)  /*!< CLKDIV4 Setting for UART4 clock divider. It could be 1~16 \hideinitializer */
 #define CLK_CLKDIV4_UART5(x)             (((x) - 1UL) << CLK_CLKDIV4_UART5DIV_Pos)  /*!< CLKDIV4 Setting for UART5 clock divider. It could be 1~16 \hideinitializer */
+#define CLK_CLKDIV4_UART6(x)             (((x) - 1UL) << CLK_CLKDIV4_UART6DIV_Pos)  /*!< CLKDIV4 Setting for UART6 clock divider. It could be 1~16 */
+#define CLK_CLKDIV4_UART7(x)             (((x) - 1UL) << CLK_CLKDIV4_UART7DIV_Pos)  /*!< CLKDIV4 Setting for UART7 clock divider. It could be 1~16 */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  PCLKDIV constant definitions.                                                                          */
@@ -263,7 +298,7 @@ extern "C"
 #define CLK_PCLKDIV_PCLK1DIV16           (0x4UL << CLK_PCLKDIV_APB1DIV_Pos)  /*!< PCLKDIV Setting for PCLK1 = 1/16 HCLK \hideinitializer */
 #endif
 /*---------------------------------------------------------------------------------------------------------*/
-/*  PLLCTL constant definitions. PLL = FIN * 2 * NF / NR / NO                                                  */
+/*  PLLCTL constant definitions. PLL = FIN * 2 * NF / NR / NO                                              */
 /*---------------------------------------------------------------------------------------------------------*/
 #define CLK_PLLCTL_PLLSRC_HXT   0x00000000UL    /*!< For PLL clock source is HXT.  4MHz < FIN/NR < 8MHz \hideinitializer */
 #define CLK_PLLCTL_PLLSRC_HIRC  0x00080000UL    /*!< For PLL clock source is HIRC. 4MHz < FIN/NR < 8MHz \hideinitializer */
@@ -320,6 +355,8 @@ extern "C"
 #define EMAC_MODULE      ((0UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(2UL<<18)         |(0xFFUL<<10)      |(16UL<<5)        |(5UL<<0))  /*!< EMAC Module \hideinitializer */
 #define SDH0_MODULE      ((0UL<<30)|(0UL<<28)         |(0x3UL<<25)       |(20UL<<20)        |(0UL<<18)         |(0xFFUL<<10)      |(24UL<<5)        |(6UL<<0))  /*!< SDH0 Module \hideinitializer */
 #define CRC_MODULE       ((0UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(7UL<<0))  /*!< CRC Module \hideinitializer */
+#define CCAP_MODULE      ((0UL<<30)|(0UL<<28)         |(0x3UL<<25)       |(16UL<<20)        |(2UL<<18)         |(0xFFUL<<10)      |(0UL<<5)         |(8UL<<0))  /*!< CCAP Module \hideinitializer */
+#define SEN_MODULE       ((0UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(9UL<<0))  /*!< SEN Module \hideinitializer */
 #define HSUSBD_MODULE    ((0UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(10UL<<0)) /*!< HSUSBD Module \hideinitializer */
 #define CRPT_MODULE      ((0UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(12UL<<0)) /*!< CRPT Module \hideinitializer */
 #define SPIM_MODULE      ((0UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(14UL<<0)) /*!< SPIM Module \hideinitializer */
@@ -337,7 +374,7 @@ extern "C"
 #define I2C0_MODULE      ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(8UL<<0))  /*!< I2C0 Module \hideinitializer */
 #define I2C1_MODULE      ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(9UL<<0))  /*!< I2C1 Module \hideinitializer */
 #define I2C2_MODULE      ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(10UL<<0)) /*!< I2C2 Module \hideinitializer */
-#define QSPI0_MODULE      ((1UL<<30)|(2UL<<28)         |(0x3UL<<25)       |(2UL<<20)         |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(12UL<<0)) /*!< QSPI0 Module \hideinitializer */
+#define QSPI0_MODULE     ((1UL<<30)|(2UL<<28)         |(0x3UL<<25)       |(2UL<<20)         |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(12UL<<0)) /*!< QSPI0 Module \hideinitializer */
 #define SPI0_MODULE      ((1UL<<30)|(2UL<<28)         |(0x3UL<<25)       |(4UL<<20)         |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(13UL<<0)) /*!< SPI0 Module \hideinitializer */
 #define SPI1_MODULE      ((1UL<<30)|(2UL<<28)         |(0x3UL<<25)       |(6UL<<20)         |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(14UL<<0)) /*!< SPI1 Module \hideinitializer */
 #define SPI2_MODULE      ((1UL<<30)|(2UL<<28)         |(0x3UL<<25)       |(10UL<<20)        |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(15UL<<0)) /*!< SPI2 Module \hideinitializer */
@@ -347,29 +384,35 @@ extern "C"
 #define UART3_MODULE     ((1UL<<30)|(3UL<<28)         |(0x3UL<<25)       |(26UL<<20)        |(3UL<<18)         |(0xFUL<<10)       |(4UL<<5)         |(19UL<<0)) /*!< UART3 Module \hideinitializer */
 #define UART4_MODULE     ((1UL<<30)|(3UL<<28)         |(0x3UL<<25)       |(28UL<<20)        |(3UL<<18)         |(0xFUL<<10)       |(8UL<<5)         |(20UL<<0)) /*!< UART4 Module \hideinitializer */
 #define UART5_MODULE     ((1UL<<30)|(3UL<<28)         |(0x3UL<<25)       |(30UL<<20)        |(3UL<<18)         |(0xFUL<<10)       |(12UL<<5)        |(21UL<<0)) /*!< UART5 Module \hideinitializer */
+#define UART6_MODULE     ((1UL<<30)|(3UL<<28)         |(0x3UL<<25)       |(20UL<<20)        |(3UL<<18)         |(0xFUL<<10)       |(16UL<<5)        |(22UL<<0)) /*!< UART6 Module \hideinitializer */
+#define UART7_MODULE     ((1UL<<30)|(3UL<<28)         |(0x3UL<<25)       |(22UL<<20)        |(3UL<<18)         |(0xFUL<<10)       |(20UL<<5)        |(23UL<<0)) /*!< UART7 Module \hideinitializer */
 #define CAN0_MODULE      ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(24UL<<0)) /*!< CAN0 Module \hideinitializer */
 #define CAN1_MODULE      ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(25UL<<0)) /*!< CAN1 Module \hideinitializer */
 #define OTG_MODULE       ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(26UL<<0)) /*!< OTG Module \hideinitializer */
 #define USBD_MODULE      ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(27UL<<0)) /*!< USBD Module \hideinitializer */
 #define EADC_MODULE      ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(0UL<<18)         |(0xFFUL<<10)      |(16UL<<5)        |(28UL<<0)) /*!< EADC Module \hideinitializer */
-#define I2S0_MODULE      ((1UL<<30)|(3UL<<28)         |(0x3UL<<25)       |(16UL<<20)        |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(29UL<<0)) /*!< I2S0 Module \hideinitializer */
+#define I2S0_MODULE      ((1UL<<30)|(3UL<<28)         |(0x3UL<<25)       |(16UL<<20)        |(2UL<<18)         |(0xFUL<<10)       |(0UL<<5)         |(29UL<<0)) /*!< I2S0 Module \hideinitializer */
 #define HSOTG_MODULE     ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(30UL<<0)) /*!< HSOTG Module \hideinitializer */
 #define SC0_MODULE       ((2UL<<30)|(3UL<<28)         |(0x3UL<<25)       |(0UL<<20)         |(1UL<<18)         |(0xFFUL<<10)      |(0UL<<5)         |(0UL<<0))  /*!< SC0 Module \hideinitializer */
 #define SC1_MODULE       ((2UL<<30)|(3UL<<28)         |(0x3UL<<25)       |(2UL<<20)         |(1UL<<18)         |(0xFFUL<<10)      |(8UL<<5)         |(1UL<<0))  /*!< SC1 Module \hideinitializer */
 #define SC2_MODULE       ((2UL<<30)|(3UL<<28)         |(0x3UL<<25)       |(4UL<<20)         |(1UL<<18)         |(0xFFUL<<10)      |(16UL<<5)        |(2UL<<0))  /*!< SC2 Module \hideinitializer */
+#define QSPI1_MODULE     ((2UL<<30)|(3UL<<28)         |(0x3UL<<25)       |(12UL<<20)        |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(4UL<<0))  /*!< QSPI1 Module \hideinitializer */
 #define SPI3_MODULE      ((2UL<<30)|(2UL<<28)         |(0x3UL<<25)       |(12UL<<20)        |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(6UL<<0))  /*!< SPI3 Module \hideinitializer */
 #define USCI0_MODULE     ((2UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(8UL<<0))  /*!< USCI0 Module \hideinitializer */
 #define USCI1_MODULE     ((2UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(9UL<<0))  /*!< USCI1 Module \hideinitializer */
 #define DAC_MODULE       ((2UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(12UL<<0)) /*!< DAC Module \hideinitializer */
+#define CAN2_MODULE      ((2UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(28UL<<0)) /*!< CAN2 Module \hideinitializer */
 #define EPWM0_MODULE     ((2UL<<30)|(2UL<<28)         |(0x1UL<<25)       |(0UL<<20)         |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(16UL<<0)) /*!< EPWM0 Module \hideinitializer */
 #define EPWM1_MODULE     ((2UL<<30)|(2UL<<28)         |(0x1UL<<25)       |(1UL<<20)         |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(17UL<<0)) /*!< EPWM1 Module \hideinitializer */
 #define BPWM0_MODULE     ((2UL<<30)|(2UL<<28)         |(0x1UL<<25)       |(8UL<<20)         |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(18UL<<0)) /*!< BPWM0 Module \hideinitializer */
 #define BPWM1_MODULE     ((2UL<<30)|(2UL<<28)         |(0x1UL<<25)       |(9UL<<20)         |(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(19UL<<0)) /*!< BPWM1 Module \hideinitializer */
 #define QEI0_MODULE      ((2UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(22UL<<0)) /*!< QEI0 Module \hideinitializer */
 #define QEI1_MODULE      ((2UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(23UL<<0)) /*!< QEI1 Module \hideinitializer */
+#define TRNG_MODULE      ((2UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(25UL<<0)) /*!< TRNG Module \hideinitializer */
 #define ECAP0_MODULE     ((2UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(26UL<<0)) /*!< ECAP0 Module \hideinitializer */
 #define ECAP1_MODULE     ((2UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(27UL<<0)) /*!< ECAP1 Module \hideinitializer */
 #define OPA_MODULE       ((2UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(30UL<<0)) /*!< OPA Module \hideinitializer */
+#define EADC1_MODULE     ((2UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(2UL<<18)         |(0xFFUL<<10)      |(24UL<<5)        |(31UL<<0)) /*!< EADC1 Module \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  PDMSEL constant definitions.                                                                           */
@@ -392,7 +435,10 @@ extern "C"
 #define CLK_PMUCTL_WKTMRIS_8192         (0x5UL << CLK_PMUCTL_WKTMRIS_Pos)     /*!< Select Wake-up Timer Time-out Interval is 8192 OSC10K clocks (819.2ms) \hideinitializer */
 #define CLK_PMUCTL_WKTMRIS_16384        (0x6UL << CLK_PMUCTL_WKTMRIS_Pos)     /*!< Select Wake-up Timer Time-out Interval is 16384 OSC10K clocks (1638.4ms) \hideinitializer */
 #define CLK_PMUCTL_WKTMRIS_65536        (0x7UL << CLK_PMUCTL_WKTMRIS_Pos)     /*!< Select Wake-up Timer Time-out Interval is 65536 OSC10K clocks (6553.6ms) \hideinitializer */
-
+#define CLK_PMUCTL_WKTMRIS_131072       (0x8UL << CLK_PMUCTL_WKTMRIS_Pos)     /*!< Select Wake-up Timer Time-out Interval is 131072 OSC10K clocks (13107.2 ms) \hideinitializer */
+#define CLK_PMUCTL_WKTMRIS_262144       (0x9UL << CLK_PMUCTL_WKTMRIS_Pos)     /*!< Select Wake-up Timer Time-out Interval is 262144 OSC10K clocks (26214.4 ms) \hideinitializer */
+#define CLK_PMUCTL_WKTMRIS_524288       (0xaUL << CLK_PMUCTL_WKTMRIS_Pos)     /*!< Select Wake-up Timer Time-out Interval is 524288 OSC10K clocks (52428.8ms) \hideinitializer */
+#define CLK_PMUCTL_WKTMRIS_1048576      (0xbUL << CLK_PMUCTL_WKTMRIS_Pos)     /*!< Select Wake-up Timer Time-out Interval is 1048576 OSC10K clocks (104857.6ms) \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  SWKDBCLKSEL constant definitions.                                                                      */
@@ -422,6 +468,31 @@ extern "C"
 #define CLK_DPDWKPIN_FALLING     (0x2UL << CLK_PMUCTL_WKPINEN_Pos)     /*!< Enable Wake-up pin falling edge at Deep Power-down mode \hideinitializer */
 #define CLK_DPDWKPIN_BOTHEDGE    (0x3UL << CLK_PMUCTL_WKPINEN_Pos)     /*!< Enable Wake-up pin both edge at Deep Power-down mode \hideinitializer */
 
+#define CLK_DPDWKPIN0_DISABLE    (0x0UL << CLK_PMUCTL_WKPINEN_Pos)     /*!< Disable Wake-up pin0 (GPC.0) at Deep Power-down mode \hideinitializer */
+#define CLK_DPDWKPIN0_RISING     (0x1UL << CLK_PMUCTL_WKPINEN_Pos)     /*!< Enable Wake-up pin0 (GPC.0) rising edge at Deep Power-down mode \hideinitializer */
+#define CLK_DPDWKPIN0_FALLING    (0x2UL << CLK_PMUCTL_WKPINEN_Pos)     /*!< Enable Wake-up pin0 (GPC.0) falling edge at Deep Power-down mode \hideinitializer */
+#define CLK_DPDWKPIN0_BOTHEDGE   (0x3UL << CLK_PMUCTL_WKPINEN_Pos)     /*!< Enable Wake-up pin0 (GPC.0) both edge at Deep Power-down mode \hideinitializer */
+
+#define CLK_DPDWKPIN1_DISABLE    (0x0UL << CLK_PMUCTL_WKPINEN1_Pos)    /*!< Disable Wake-up pin1 (GPB.0) at Deep Power-down mode \hideinitializer */
+#define CLK_DPDWKPIN1_RISING     (0x1UL << CLK_PMUCTL_WKPINEN1_Pos)    /*!< Enable Wake-up pin1 (GPB.0) rising edge at Deep Power-down mode \hideinitializer */
+#define CLK_DPDWKPIN1_FALLING    (0x2UL << CLK_PMUCTL_WKPINEN1_Pos)    /*!< Enable Wake-up pin1 (GPB.0) falling edge at Deep Power-down mode \hideinitializer */
+#define CLK_DPDWKPIN1_BOTHEDGE   (0x3UL << CLK_PMUCTL_WKPINEN1_Pos)    /*!< Enable Wake-up pin1 (GPB.0) both edge at Deep Power-down mode \hideinitializer */
+
+#define CLK_DPDWKPIN2_DISABLE    (0x0UL << CLK_PMUCTL_WKPINEN2_Pos)    /*!< Disable Wake-up pin2 (GPB.2) at Deep Power-down mode \hideinitializer */
+#define CLK_DPDWKPIN2_RISING     (0x1UL << CLK_PMUCTL_WKPINEN2_Pos)    /*!< Enable Wake-up pin2 (GPB.2) rising edge at Deep Power-down mode \hideinitializer */
+#define CLK_DPDWKPIN2_FALLING    (0x2UL << CLK_PMUCTL_WKPINEN2_Pos)    /*!< Enable Wake-up pin2 (GPB.2) falling edge at Deep Power-down mode \hideinitializer */
+#define CLK_DPDWKPIN2_BOTHEDGE   (0x3UL << CLK_PMUCTL_WKPINEN2_Pos)    /*!< Enable Wake-up pin2 (GPB.2) both edge at Deep Power-down mode \hideinitializer */
+
+#define CLK_DPDWKPIN3_DISABLE    (0x0UL << CLK_PMUCTL_WKPINEN3_Pos)    /*!< Disable Wake-up pin3 (GPB.12) at Deep Power-down mode \hideinitializer */
+#define CLK_DPDWKPIN3_RISING     (0x1UL << CLK_PMUCTL_WKPINEN3_Pos)    /*!< Enable Wake-up pin3 (GPB.12) rising edge at Deep Power-down mode \hideinitializer */
+#define CLK_DPDWKPIN3_FALLING    (0x2UL << CLK_PMUCTL_WKPINEN3_Pos)    /*!< Enable Wake-up pin3 (GPB.12) falling edge at Deep Power-down mode \hideinitializer */
+#define CLK_DPDWKPIN3_BOTHEDGE   (0x3UL << CLK_PMUCTL_WKPINEN3_Pos)    /*!< Enable Wake-up pin3 (GPB.12) both edge at Deep Power-down mode \hideinitializer */
+
+#define CLK_DPDWKPIN4_DISABLE    (0x0UL << CLK_PMUCTL_WKPINEN4_Pos)    /*!< Disable Wake-up pin4 (GPF.6) at Deep Power-down mode \hideinitializer */
+#define CLK_DPDWKPIN4_RISING     (0x1UL << CLK_PMUCTL_WKPINEN4_Pos)    /*!< Enable Wake-up pin4 (GPF.6) rising edge at Deep Power-down mode \hideinitializer */
+#define CLK_DPDWKPIN4_FALLING    (0x2UL << CLK_PMUCTL_WKPINEN4_Pos)    /*!< Enable Wake-up pin4 (GPF.6) falling edge at Deep Power-down mode \hideinitializer */
+#define CLK_DPDWKPIN4_BOTHEDGE   (0x3UL << CLK_PMUCTL_WKPINEN4_Pos)    /*!< Enable Wake-up pin4 (GPF.6) both edge at Deep Power-down mode \hideinitializer */
+
 /*---------------------------------------------------------------------------------------------------------*/
 /*  SPD Pin Rising/Falling Edge Wake-up Enable constant definitions.                                       */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -431,9 +502,20 @@ extern "C"
 #define CLK_SPDWKPIN_DEBOUNCEEN     (0x1UL << 8)     /*!< Enable Standby power-down pin De-bounce function \hideinitializer */
 #define CLK_SPDWKPIN_DEBOUNCEDIS    (0x0UL << 8)     /*!< Disable Standby power-down pin De-bounce function \hideinitializer */
 
+#define CLK_SPDSRETSEL_NO           (0x0UL << CLK_PMUCTL_SRETSEL_Pos)     /*!< No SRAM retention when chip enter SPD mode \hideinitializer */
+#define CLK_SPDSRETSEL_16K          (0x1UL << CLK_PMUCTL_SRETSEL_Pos)     /*!< 16K SRAM retention when chip enter SPD mode \hideinitializer */
+#define CLK_SPDSRETSEL_32K          (0x2UL << CLK_PMUCTL_SRETSEL_Pos)     /*!< 32K SRAM retention when chip enter SPD mode \hideinitializer */
+#define CLK_SPDSRETSEL_64K          (0x3UL << CLK_PMUCTL_SRETSEL_Pos)     /*!< 64K SRAM retention when chip enter SPD mode \hideinitializer */
+#define CLK_SPDSRETSEL_128K         (0x4UL << CLK_PMUCTL_SRETSEL_Pos)     /*!< 128K SRAM retention when chip enter SPD mode \hideinitializer */
+
 #define CLK_DISABLE_WKTMR(void)       (CLK->PMUCTL &= ~CLK_PMUCTL_WKTMREN_Msk)    /*!< Disable Wake-up timer at Standby or Deep Power-down mode \hideinitializer */
 #define CLK_ENABLE_WKTMR(void)        (CLK->PMUCTL |= CLK_PMUCTL_WKTMREN_Msk)     /*!< Enable Wake-up timer at Standby or Deep Power-down mode \hideinitializer */
 #define CLK_DISABLE_DPDWKPIN(void)    (CLK->PMUCTL &= ~CLK_PMUCTL_WKPINEN_Msk)    /*!< Disable Wake-up pin at Deep Power-down mode \hideinitializer */
+#define CLK_DISABLE_DPDWKPIN0(void)   (CLK->PMUCTL &= ~CLK_PMUCTL_WKPINEN_Msk)    /*!< Disable Wake-up pin0 (GPC.0) at Deep Power-down mode \hideinitializer */
+#define CLK_DISABLE_DPDWKPIN1(void)   (CLK->PMUCTL &= ~CLK_PMUCTL_WKPINEN1_Msk)   /*!< Disable Wake-up pin1 (GPB.0) at Deep Power-down mode \hideinitializer */
+#define CLK_DISABLE_DPDWKPIN2(void)   (CLK->PMUCTL &= ~CLK_PMUCTL_WKPINEN2_Msk)   /*!< Disable Wake-up pin2 (GPB.2) at Deep Power-down mode \hideinitializer */
+#define CLK_DISABLE_DPDWKPIN3(void)   (CLK->PMUCTL &= ~CLK_PMUCTL_WKPINEN3_Msk)   /*!< Disable Wake-up pin3 (GPB.12) at Deep Power-down mode \hideinitializer */
+#define CLK_DISABLE_DPDWKPIN4(void)   (CLK->PMUCTL &= ~CLK_PMUCTL_WKPINEN4_Msk)   /*!< Disable Wake-up pin4 (GPF.6) at Deep Power-down mode \hideinitializer */
 #define CLK_DISABLE_SPDACMP(void)     (CLK->PMUCTL &= ~CLK_PMUCTL_ACMPSPWK_Msk)   /*!< Disable ACMP wake-up at Standby Power-down mode \hideinitializer */
 #define CLK_ENABLE_SPDACMP(void)      (CLK->PMUCTL |= CLK_PMUCTL_ACMPSPWK_Msk)    /*!< Enable ACMP wake-up at Standby Power-down mode \hideinitializer */
 #define CLK_DISABLE_RTCWK(void)       (CLK->PMUCTL &= ~CLK_PMUCTL_RTCWKEN_Msk)    /*!< Disable RTC Wake-up at Standby or Deep Power-down mode \hideinitializer */
@@ -457,6 +539,10 @@ extern "C"
  *                             - \ref CLK_PMUCTL_WKTMRIS_8192
  *                             - \ref CLK_PMUCTL_WKTMRIS_16384
  *                             - \ref CLK_PMUCTL_WKTMRIS_65536
+ *                             - \ref CLK_PMUCTL_WKTMRIS_131072
+ *                             - \ref CLK_PMUCTL_WKTMRIS_262144
+ *                             - \ref CLK_PMUCTL_WKTMRIS_524288
+ *                             - \ref CLK_PMUCTL_WKTMRIS_1048576
  *
  * @return      None
  *

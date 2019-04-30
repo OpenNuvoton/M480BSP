@@ -123,6 +123,7 @@ void SYS_ResetCPU(void)
   *             - \ref EMAC_RST
   *             - \ref SDH0_RST
   *             - \ref CRC_RST
+  *             - \ref CCAP_RST
   *             - \ref HSUSBD_RST
   *             - \ref CRPT_RST
   *             - \ref SPIM_RST
@@ -147,14 +148,20 @@ void SYS_ResetCPU(void)
   *             - \ref UART3_RST
   *             - \ref UART4_RST
   *             - \ref UART5_RST
+  *             - \ref UART6_RST
+  *             - \ref UART7_RST
   *             - \ref CAN0_RST
   *             - \ref CAN1_RST
+  *             - \ref OTG_RST
   *             - \ref USBD_RST
   *             - \ref EADC_RST
   *             - \ref I2S0_RST
+  *             - \ref HSOTG_RST
+  *             - \ref TRNG_RST
   *             - \ref SC0_RST
   *             - \ref SC1_RST
   *             - \ref SC2_RST
+  *             - \ref QSPI1_RST
   *             - \ref SPI3_RST
   *             - \ref USCI0_RST
   *             - \ref USCI1_RST
@@ -167,7 +174,9 @@ void SYS_ResetCPU(void)
   *             - \ref QEI1_RST
   *             - \ref ECAP0_RST
   *             - \ref ECAP1_RST
+  *             - \ref CAN2_RST
   *             - \ref OPA_RST
+  *             - \ref EADC1_RST
   * @return     None
   * @details    This function reset selected module.
   */

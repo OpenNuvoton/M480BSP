@@ -1,0 +1,19 @@
+#
+#  Secure Boot Maker tool will ignore lines with a leading '#' character.
+#
+#  CODE_EXE_ADDR          Secure boot image execution address.
+#  INFO_ADDR              Information block address.
+#  PRIVATE_KEY            The ECC private key.
+#  PUBLIC_KEY_1           The ECC public key 1.
+#  PUBLIC_KEY_2           The ECC public key 2.
+#
+#
+#
+
+CODE_EXE_ADDR = 0x8000
+INFO_ADDR     = 0x18000
+
+PRIVATE_KEY   = 380a67fcfc01ca7073da7c2c54296a61327f77262a7d4674c3d8e29a63e3fa20
+PUBLIC_KEY_1  = 755B3819F05A3E9F32D4D599062834AAC5220F75955378414A8F63716A152CE2
+PUBLIC_KEY_2  = 91C413F1915ED7B47473FD797647BA3D83E8224377909AF5B30C530EAAD79FD7
+

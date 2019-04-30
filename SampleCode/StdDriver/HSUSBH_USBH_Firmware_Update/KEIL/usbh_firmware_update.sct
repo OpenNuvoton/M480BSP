@@ -13,9 +13,9 @@ LOAD_ROM_1  0x100000
 	}
 }
 
-LOAD_ROM_2  0x50000
+LOAD_ROM_2  0x20000
 {
-	APROM_ISP.bin  0x50000
+	APROM_ISP.bin  0x20000
 	{
 		*.o (+RO)
 	}

@@ -102,6 +102,8 @@ extern "C"
 #define PDMA_SPI2_RX     27UL /*!<DMA Connect to SPI2_RX \hideinitializer */
 #define PDMA_SPI3_TX     28UL /*!<DMA Connect to SPI3_TX \hideinitializer */
 #define PDMA_SPI3_RX     29UL /*!<DMA Connect to SPI3_RX \hideinitializer */
+#define PDMA_QSPI1_TX     30UL /*!<DMA Connect to QSPI1_TX \hideinitializer */
+#define PDMA_QSPI1_RX     31UL /*!<DMA Connect to QSPI1_RX \hideinitializer */
 #define PDMA_EPWM0_P1_RX  32UL /*!<DMA Connect to EPWM0_P1 \hideinitializer */
 #define PDMA_EPWM0_P2_RX  33UL /*!<DMA Connect to EPWM0_P2 \hideinitializer */
 #define PDMA_EPWM0_P3_RX  34UL /*!<DMA Connect to EPWM0_P3 \hideinitializer */
@@ -120,23 +122,26 @@ extern "C"
 #define PDMA_TMR1        47UL /*!<DMA Connect to TMR1 \hideinitializer */
 #define PDMA_TMR2        48UL /*!<DMA Connect to TMR2 \hideinitializer */
 #define PDMA_TMR3        49UL /*!<DMA Connect to TMR3 \hideinitializer */
-#define PDMA_ADC_RX      50UL /*!<DMA Connect to ADC_RX \hideinitializer */
+#define PDMA_EADC0_RX    50UL /*!<DMA Connect to EADC0_RX \hideinitializer */
 #define PDMA_DAC0_TX     51UL /*!<DMA Connect to DAC0_TX \hideinitializer */
 #define PDMA_DAC1_TX     52UL /*!<DMA Connect to DAC1_TX \hideinitializer */
-#define EPWM0_CH0_TX      53UL /*!<DMA Connect to EPWM0_CH0_TX \hideinitializer */
-#define EPWM0_CH1_TX      54UL /*!<DMA Connect to EPWM0_CH1_TX \hideinitializer */
-#define EPWM0_CH2_TX      55UL /*!<DMA Connect to EPWM0_CH2_TX \hideinitializer */
-#define EPWM0_CH3_TX      56UL /*!<DMA Connect to EPWM0_CH3_TX \hideinitializer */
-#define EPWM0_CH4_TX      57UL /*!<DMA Connect to EPWM0_CH4_TX \hideinitializer */
-#define EPWM0_CH5_TX      58UL /*!<DMA Connect to EPWM0_CH5_TX \hideinitializer */
-#define EPWM1_CH0_TX      59UL /*!<DMA Connect to EPWM1_CH0_TX \hideinitializer */
-#define EPWM1_CH1_TX      60UL /*!<DMA Connect to EPWM1_CH1_TX \hideinitializer */
-#define EPWM1_CH2_TX      61UL /*!<DMA Connect to EPWM1_CH2_TX \hideinitializer */
-#define EPWM1_CH3_TX      62UL /*!<DMA Connect to EPWM1_CH3_TX \hideinitializer */
-#define EPWM1_CH4_TX      63UL /*!<DMA Connect to EPWM1_CH4_TX \hideinitializer */
-#define EPWM1_CH5_TX      64UL /*!<DMA Connect to EPWM1_CH5_TX \hideinitializer */
-
-
+#define PDMA_EPWM0_CH0_TX      53UL /*!<DMA Connect to EPWM0_CH0_TX \hideinitializer */
+#define PDMA_EPWM0_CH1_TX      54UL /*!<DMA Connect to EPWM0_CH1_TX \hideinitializer */
+#define PDMA_EPWM0_CH2_TX      55UL /*!<DMA Connect to EPWM0_CH2_TX \hideinitializer */
+#define PDMA_EPWM0_CH3_TX      56UL /*!<DMA Connect to EPWM0_CH3_TX \hideinitializer */
+#define PDMA_EPWM0_CH4_TX      57UL /*!<DMA Connect to EPWM0_CH4_TX \hideinitializer */
+#define PDMA_EPWM0_CH5_TX      58UL /*!<DMA Connect to EPWM0_CH5_TX \hideinitializer */
+#define PDMA_EPWM1_CH0_TX      59UL /*!<DMA Connect to EPWM1_CH0_TX \hideinitializer */
+#define PDMA_EPWM1_CH1_TX      60UL /*!<DMA Connect to EPWM1_CH1_TX \hideinitializer */
+#define PDMA_EPWM1_CH2_TX      61UL /*!<DMA Connect to EPWM1_CH2_TX \hideinitializer */
+#define PDMA_EPWM1_CH3_TX      62UL /*!<DMA Connect to EPWM1_CH3_TX \hideinitializer */
+#define PDMA_EPWM1_CH4_TX      63UL /*!<DMA Connect to EPWM1_CH4_TX \hideinitializer */
+#define PDMA_EPWM1_CH5_TX      64UL /*!<DMA Connect to EPWM1_CH5_TX \hideinitializer */
+#define PDMA_UART6_TX    66UL /*!<DMA Connect to UART6_TX \hideinitializer */
+#define PDMA_UART6_RX    67UL /*!<DMA Connect to UART6_RX \hideinitializer */
+#define PDMA_UART7_TX    68UL /*!<DMA Connect to UART7_TX \hideinitializer */
+#define PDMA_UART7_RX    69UL /*!<DMA Connect to UART7_RX \hideinitializer */
+#define PDMA_EADC1_RX    70UL /*!<DMA Connect to EADC1_RX \hideinitializer */
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Interrupt Type Constant Definitions                                                                    */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -367,6 +372,7 @@ void PDMA_Trigger(PDMA_T * pdma,uint32_t u32Ch);
 void PDMA_EnableInt(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32Mask);
 void PDMA_DisableInt(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32Mask);
 void PDMA_SetStride(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32DestLen, uint32_t u32SrcLen, uint32_t u32TransCount);
+void PDMA_SetRepeat(PDMA_T * pdma,uint32_t u32Ch, uint32_t u32DestInterval, uint32_t u32SrcInterval, uint32_t u32RepeatCount);
 
 
 /*@}*/ /* end of group PDMA_EXPORTED_FUNCTIONS */

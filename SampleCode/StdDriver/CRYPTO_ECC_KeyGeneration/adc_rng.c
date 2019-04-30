@@ -22,9 +22,17 @@ static int        oldest;
 
 static __inline uint32_t  get_adc_bg_val()
 {
-    EADC->SWTRG = (1 << 16);      //Trigger Band-gap
-    while ((EADC->STATUS1 & 1) != 1);
-    return (EADC->DAT[16] & 0xFFF);
+    uint32_t  val;
+
+    do
+    {
+        EADC->SWTRG = (1 << 16);      //Trigger Band-gap
+        while ((EADC->STATUS1 & 1) != 1);
+        val = (EADC->DAT[16] & 0xFFF);
+        //printf("%d\n", val);
+    }
+    while ((val > 1800) || (val < 1000));
+    return val;
 }
 
 int  adc_trng_gen_bit()

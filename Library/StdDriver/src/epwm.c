@@ -1056,6 +1056,34 @@ void EPWM_DisableAccPDMA(EPWM_T *epwm, uint32_t u32ChannelNum)
 }
 
 /**
+ * @brief Enable interrupt flag accumulator stop mode of selected channel
+ * @param[in] epwm The pointer of the specified EPWM module
+ *                - EPWM0 : EPWM Group 0
+ *                - EPWM1 : EPWM Group 1
+ * @param[in] u32ChannelNum EPWM channel number. Valid values are between 0~5
+ * @return None
+ * @details This function is used to enable interrupt flag accumulator stop mode of selected channel.
+ */
+void EPWM_EnableAccStopMode(EPWM_T *epwm, uint32_t u32ChannelNum)
+{
+    (epwm)->IFA[u32ChannelNum] |= EPWM_IFA0_STPMOD_Msk;
+}
+
+/**
+ * @brief Disable interrupt flag accumulator stop mode of selected channel
+ * @param[in] epwm The pointer of the specified EPWM module
+ *                - EPWM0 : EPWM Group 0
+ *                - EPWM1 : EPWM Group 1
+ * @param[in] u32ChannelNum EPWM channel number. Valid values are between 0~5
+ * @return None
+ * @details This function is used to disable interrupt flag accumulator stop mode of selected channel.
+ */
+void EPWM_DisableAccStopMode(EPWM_T *epwm, uint32_t u32ChannelNum)
+{
+    (epwm)->IFA[u32ChannelNum] &= ~EPWM_IFA0_STPMOD_Msk;
+}
+
+/**
  * @brief Clear free trigger duty interrupt flag of selected channel
  * @param[in] epwm The pointer of the specified EPWM module
  *                - EPWM0 : EPWM Group 0
@@ -1427,7 +1455,6 @@ void EPWM_ClearWrapAroundFlag(EPWM_T *epwm, uint32_t u32ChannelNum)
 {
     (epwm)->STATUS = (EPWM_STATUS_CNTMAXF0_Msk << u32ChannelNum);
 }
-
 
 /*@}*/ /* end of group EPWM_EXPORTED_FUNCTIONS */
 

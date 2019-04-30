@@ -23,7 +23,13 @@
 /*---------------------------------------------------------------------------------------------------------*/
 void WakeUpPinFunction(uint32_t u32PDMode)
 {
-    printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
+        printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    else
+        printf("Enter to SPD Power-Down mode......\n");
+
+    /* Check if all the debug messages are finished */
+    while(!UART_IS_TX_EMPTY(UART0));
 
     /* Select Power-down mode */
     CLK_SetPowerDownMode(u32PDMode);
@@ -47,7 +53,13 @@ void WakeUpPinFunction(uint32_t u32PDMode)
 void  WakeUpTimerFunction(uint32_t u32PDMode, uint32_t u32Interval)
 {
 
-    printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
+        printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    else
+        printf("Enter to SPD Power-Down mode......\n");
+
+    /* Check if all the debug messages are finished */
+    while(!UART_IS_TX_EMPTY(UART0));
 
     /* Select Power-down mode */
     CLK_SetPowerDownMode(u32PDMode);
@@ -75,18 +87,24 @@ void  WakeUpACMP0Function(uint32_t u32PDMode)
     CLK_EnableModuleClock(ACMP01_MODULE);
 
     /* Set PA11 multi-function pin for ACMP0 positive input pin */
-    SYS->GPA_MFPH = SYS_GPA_MFPH_PA11MFP_ACMP0_P0;
+    SYS->GPA_MFPH = (SYS->GPA_MFPH & (~SYS_GPA_MFPH_PA11MFP_Msk)) | SYS_GPA_MFPH_PA11MFP_ACMP0_P0;
 
     /* Set PB7 multi-function pin for ACMP0 output pin */
-    SYS->GPB_MFPL = SYS_GPB_MFPL_PB7MFP_ACMP0_O;
+    SYS->GPB_MFPL = (SYS->GPB_MFPL & (~SYS_GPB_MFPL_PB7MFP_Msk)) | SYS_GPB_MFPL_PB7MFP_ACMP0_O;
 
     /* Disable digital input path of analog pin ACMP0_P0 to prevent leakage */
-    GPIO_DISABLE_DIGITAL_PATH(PA, (1ul << 11));
+    GPIO_DISABLE_DIGITAL_PATH(PA, BIT11);
 
     printf("\nUsing ACMP0_P0(PA11) as ACMP0 positive input.\n");
     printf("Using internal band-gap voltage as the negative input.\n\n");
 
-    printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
+        printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    else
+        printf("Enter to SPD Power-Down mode......\n");
+
+    /* Check if all the debug messages are finished */
+    while(!UART_IS_TX_EMPTY(UART0));
 
     /* Configure ACMP0. Enable ACMP0 and select band-gap voltage as the source of ACMP negative input. */
     ACMP_Open(ACMP01, 0, ACMP_CTL_NEGSEL_VBG, ACMP_CTL_HYSTERESIS_DISABLE);
@@ -116,7 +134,13 @@ void  WakeUpACMP0Function(uint32_t u32PDMode)
 /*-----------------------------------------------------------------------------------------------------------*/
 void  WakeUpRTCTickFunction(uint32_t u32PDMode)
 {
-    printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
+        printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    else
+        printf("Enter to SPD Power-Down mode......\n");
+
+    /* Check if all the debug messages are finished */
+    while(!UART_IS_TX_EMPTY(UART0));
 
     /* enable RTC peripheral clock */
     CLK->APBCLK0 |= CLK_APBCLK0_RTCCKEN_Msk;
@@ -199,8 +223,14 @@ void  WakeUpRTCAlarmFunction(uint32_t u32PDMode)
     RTC_SetAlarmDateAndTime(&sWriteRTC);
 
     printf("# Set RTC current date/time: 2016/08/16 15:04:10.\n");
-    printf("# Set RTC alarm date/time:   2016/08/16 15:04:%d.\n", sWriteRTC.u32Second);
-    printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    printf("# Set RTC alarm   date/time: 2016/08/16 15:04:%d.\n", sWriteRTC.u32Second);
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
+        printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    else
+        printf("Enter to SPD Power-Down mode......\n");
+
+    /* Check if all the debug messages are finished */
+    while(!UART_IS_TX_EMPTY(UART0));
 
     RTC_WaitAccessEnable();
     /* clear alarm status */
@@ -227,7 +257,13 @@ void  WakeUpRTCAlarmFunction(uint32_t u32PDMode)
 /*-----------------------------------------------------------------------------------------------------------*/
 void  WakeUpRTCTamperFunction(uint32_t u32PDMode)
 {
-    printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
+        printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    else
+        printf("Enter to SPD Power-Down mode......\n");
+
+    /* Check if all the debug messages are finished */
+    while(!UART_IS_TX_EMPTY(UART0));
 
     /* enable RTC peripheral clock */
     CLK->APBCLK0 |= CLK_APBCLK0_RTCCKEN_Msk;
@@ -274,7 +310,13 @@ void  WakeUpRTCTamperFunction(uint32_t u32PDMode)
 /*---------------------------------------------------------------------------------------------------------*/
 void WakeUpLVRFunction(uint32_t u32PDMode)
 {
-    printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
+        printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    else
+        printf("Enter to SPD Power-Down mode......\n");
+
+    /* Check if all the debug messages are finished */
+    while(!UART_IS_TX_EMPTY(UART0));
 
     /* Select Power-down mode */
     CLK_SetPowerDownMode(u32PDMode);
@@ -291,7 +333,13 @@ void WakeUpLVRFunction(uint32_t u32PDMode)
 /*---------------------------------------------------------------------------------------------------------*/
 void WakeUpBODFunction(uint32_t u32PDMode)
 {
-    printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
+        printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    else
+        printf("Enter to SPD Power-Down mode......\n");
+
+    /* Check if all the debug messages are finished */
+    while(!UART_IS_TX_EMPTY(UART0));
 
     /* Select Power-down mode */
     CLK_SetPowerDownMode(u32PDMode);
@@ -338,6 +386,22 @@ void CheckPowerSource(void)
     /* Clear all wake-up flag */
     CLK->PMUSTS |= CLK_PMUSTS_CLRWK_Msk;
 
+    if(uRegRstsrc) {
+        if(M32(FLAG_ADDR) == SIGNATURE) {
+            if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
+                printf("System waken-up from SPD0 mode done!\n");
+            else
+                printf("System waken-up from SPD mode done! (16K SRAM retention)\n");
+            M32(FLAG_ADDR) = 0;
+            printf("Press any key to continue ...\n");
+            getchar();
+        } else {
+            if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
+                printf("System waken-up from SPD1 mode done!\n");
+            else
+                printf("System waken-up from SPD mode done! (No SRAM retention)\n");
+        }
+    }
 }
 
 /*-----------------------------------------------------------------------------------------------------------*/
@@ -463,37 +527,55 @@ int32_t main(void)
     /* Get power manager wake up source */
     CheckPowerSource();
 
-    if(M32(FLAG_ADDR) == SIGNATURE)
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
     {
-        printf("System waken-up from SPD0 mode done!\n");
-        M32(FLAG_ADDR) = 0;
-        printf("Press any key to continue ...\n");
-        getchar();
+        printf("+-----------------------------------------------------------------+\n");
+        printf("|    SPD Power-down Mode and Wake-up Sample Code                  |\n");
+        printf("|    Please Select Power Down Mode and Wake up source.            |\n");
+        printf("+-----------------------------------------------------------------+\n");
+        printf("|[1] SPD0 GPIO Wake-up pin(PA.0) and using rising edge wake up.   |\n");
+        printf("|[2] SPD0 Wake-up TIMER time-out interval is 1024 OSC10K clocks.  |\n");
+        printf("|[3] SPD0 Wake-up by ACMP0.(band-gap voltage)                     |\n");
+        printf("|[4] SPD0 Wake-up by RTC Tick.                                    |\n");
+        printf("|[5] SPD0 Wake-up by RTC Alarm.                                   |\n");
+        printf("|[6] SPD0 Wake-up by RTC Tamper0(PF.6), Low level.                |\n");
+        printf("|[7] SPD0 Wake-up by BOD.                                         |\n");
+        printf("|[8] SPD0 Wake-up by LVR.                                         |\n");
+        printf("|[a] SPD1 GPIO Wake-up pin(PA.0) and using rising edge wake up.   |\n");
+        printf("|[b] SPD1 Wake-up TIMER time-out interval is 1024 OSC10K clocks.  |\n");
+        printf("|[c] SPD1 Wake-up by ACMP0.(band-gap voltage)                     |\n");
+        printf("|[d] SPD1 Wake-up by RTC Tick.                                    |\n");
+        printf("|[e] SPD1 Wake-up by RTC Alarm.                                   |\n");
+        printf("|[f] SPD1 Wake-up by RTC Tamper0(PF.6), Low level.                |\n");
+        printf("|[g] SPD1 Wake-up by BOD.                                         |\n");
+        printf("|[h] SPD1 Wake-up by LVR.                                         |\n");
+        printf("+-----------------------------------------------------------------+\n");
     }
-    else
-        printf("System waken-up from SPD1 mode done!\n");
+    else // M480LD
+    {
+        printf("+-------------------------------------------------------------------------------------+\n");
+        printf("|    SPD Power-down Mode and Wake-up Sample Code.                                     |\n");
+        printf("|    Please Select Power Down Mode, SRAM retention range and Wake up source.          |\n");
+        printf("+-------------------------------------------------------------------------------------+\n");
+        printf("|[1] SPD (16K SRAM retention) GPIO Wake-up pin(PA.0) and using rising edge wake up.   |\n");
+        printf("|[2] SPD (16K SRAM retention) Wake-up TIMER time-out interval is 1024 OSC10K clocks.  |\n");
+        printf("|[3] SPD (16K SRAM retention) Wake-up by ACMP0.(band-gap voltage)                     |\n");
+        printf("|[4] SPD (16K SRAM retention) Wake-up by RTC Tick.                                    |\n");
+        printf("|[5] SPD (16K SRAM retention) Wake-up by RTC Alarm.                                   |\n");
+        printf("|[6] SPD (16K SRAM retention) Wake-up by RTC Tamper0(PF.6), Low level.                |\n");
+        printf("|[7] SPD (16K SRAM retention) Wake-up by BOD.                                         |\n");
+        printf("|[8] SPD (16K SRAM retention) Wake-up by LVR.                                         |\n");
+        printf("|[a] SPD ( No SRAM retention) GPIO Wake-up pin(PA.0) and using rising edge wake up.   |\n");
+        printf("|[b] SPD ( No SRAM retention) Wake-up TIMER time-out interval is 1024 OSC10K clocks.  |\n");
+        printf("|[c] SPD ( No SRAM retention) Wake-up by ACMP0.(band-gap voltage)                     |\n");
+        printf("|[d] SPD ( No SRAM retention) Wake-up by RTC Tick.                                    |\n");
+        printf("|[e] SPD ( No SRAM retention) Wake-up by RTC Alarm.                                   |\n");
+        printf("|[f] SPD ( No SRAM retention) Wake-up by RTC Tamper0(PF.6), Low level.                |\n");
+        printf("|[g] SPD ( No SRAM retention) Wake-up by BOD.                                         |\n");
+        printf("|[h] SPD ( No SRAM retention) Wake-up by LVR.                                         |\n");
+        printf("+-------------------------------------------------------------------------------------+\n");
+    }
 
-    printf("+-----------------------------------------------------------------+\n");
-    printf("|    SPD Power-down Mode and Wake-up Sample Code                  |\n");
-    printf("|    Please Select Power Down Mode and Wake up source.            |\n");
-    printf("+-----------------------------------------------------------------+\n");
-    printf("|[1] SPD0 GPIO Wake-up pin(PA.0) and using rising edge wake up.   |\n");
-    printf("|[2] SPD0 Wake-up TIMER time-out interval is 1024 OSC10K clocks.  |\n");
-    printf("|[3] SPD0 Wake-up by ACMP0.(band-gap voltage)                     |\n");
-    printf("|[4] SPD0 Wake-up by RTC Tick.                                    |\n");
-    printf("|[5] SPD0 Wake-up by RTC Alarm.                                   |\n");
-    printf("|[6] SPD0 Wake-up by RTC Tamper0, Low level.                      |\n");
-    printf("|[7] SPD0 Wake-up by BOD.                                         |\n");
-    printf("|[8] SPD0 Wake-up by LVR.                                         |\n");
-    printf("|[a] SPD1 GPIO Wake-up pin(PA.0) and using rising edge wake up.   |\n");
-    printf("|[b] SPD1 Wake-up TIMER time-out interval is 1024 OSC10K clocks.  |\n");
-    printf("|[c] SPD1 Wake-up by ACMP0.(band-gap voltage)                     |\n");
-    printf("|[d] SPD1 Wake-up by RTC Tick.                                    |\n");
-    printf("|[e] SPD1 Wake-up by RTC Alarm.                                   |\n");
-    printf("|[f] SPD1 Wake-up by RTC Tamper0, Low level.                      |\n");
-    printf("|[g] SPD1 Wake-up by BOD.                                         |\n");
-    printf("|[h] SPD1 Wake-up by LVR.                                         |\n");
-    printf("+-----------------------------------------------------------------+\n");
     u8Item = getchar();
 
     // SRAM retention test

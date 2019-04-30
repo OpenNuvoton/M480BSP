@@ -21,6 +21,8 @@
 
 /** @cond HIDDEN_SYMBOLS */
 
+#if defined(CAN2)
+static uint8_t gu8LockCanIf[3ul][2ul] = {0ul};    /* The chip has three CANs. */
 #if defined(CAN1)
 static uint8_t gu8LockCanIf[2ul][2ul] = {0ul};    /* The chip has two CANs. */
 #elif defined(CAN0) || defined(CAN)
@@ -62,7 +64,14 @@ static uint32_t LockIF(CAN_T *tCAN)
     uint32_t u32IntMask;
 
 #if defined(CAN1)
-    u32CanNo = (tCAN == CAN1) ? 1ul : 0ul;
+    if(tCAN == CAN0)
+        u32CanNo = 0ul;
+    else if(tCAN == CAN1)
+        u32CanNo = 1ul;
+    #if defined(CAN2)
+    else if(tCAN == CAN2)
+        u32CanNo = 2ul;
+    #endif
 #else /* defined(CAN0) || defined(CAN) */
     u32CanNo = 0ul;
 #endif
@@ -164,7 +173,14 @@ static void ReleaseIF(CAN_T *tCAN, uint32_t u32IfNo)
     else
     {
 #if defined(CAN1)
-        u32CanNo = (tCAN == CAN1) ? 1ul : 0ul;
+    if(tCAN == CAN0)
+        u32CanNo = 0ul;
+    else if(tCAN == CAN1)
+        u32CanNo = 1ul;
+    #if defined(CAN2)
+    else if(tCAN == CAN2)
+        u32CanNo = 2ul;
+    #endif
 #else /* defined(CAN0) || defined(CAN) */
         u32CanNo = 0ul;
 #endif
@@ -741,7 +757,7 @@ uint32_t CAN_SetBaudRate(CAN_T *tCAN, uint32_t u32BaudRate)
     CAN_EnterInitMode(tCAN, (uint8_t)0);
 
     SystemCoreClockUpdate();
-    if(tCAN == CAN0)
+    if((tCAN == CAN0) || (tCAN == CAN2))
     {
         u64PCLK_DIV = (uint64_t)(CLK->PCLKDIV & CLK_PCLKDIV_APB0DIV_Msk);
         u64PCLK_DIV = (uint64_t)(1 << u64PCLK_DIV);

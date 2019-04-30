@@ -109,17 +109,43 @@ void RTC_Close(void)
 void RTC_32KCalibration(int32_t i32FrequencyX10000)
 {
     uint64_t u64Compensate;
+    int32_t i32RegInt,i32RegFra ;
 
-    u64Compensate = (uint64_t)(0x2710000000000);
-    u64Compensate = (uint64_t)(u64Compensate / (uint64_t)i32FrequencyX10000);
-
-    if(u64Compensate >= (uint64_t)0x400000)
+    if(!(SYS->CSERVER & 0x1))
     {
-        u64Compensate = (uint64_t)0x3FFFFF;
+        u64Compensate = (uint64_t)(0x2710000000000);
+        u64Compensate = (uint64_t)(u64Compensate / (uint64_t)i32FrequencyX10000);
+
+        if(u64Compensate >= (uint64_t)0x400000)
+        {
+            u64Compensate = (uint64_t)0x3FFFFF;
+        }
+
+        RTC_WaitAccessEnable();
+        RTC->FREQADJ = (uint32_t)u64Compensate;
+    }
+    else
+    {
+        /* Compute Integer and Fraction for RTC register*/
+        i32RegInt = (i32FrequencyX10000/10000) - 32752;
+        i32RegFra = ((((i32FrequencyX10000%10000)) * 64) + 5000) / 10000;
+
+        if(i32RegFra >= 0x40)
+        {
+            i32RegFra = 0x0;
+            i32RegInt++;
+        }
+
+        /* Judge Integer part is reasonable */
+        if ( (i32RegInt < 0) | (i32RegInt > 31) )
+        {
+            return;
+        }
+
+        RTC_WaitAccessEnable();
+        RTC->FREQADJ = (uint32_t)((i32RegInt<<8) | i32RegFra);
     }
 
-    RTC_WaitAccessEnable();
-    RTC->FREQADJ = (uint32_t)u64Compensate;
 }
 
 /**
@@ -1055,6 +1081,7 @@ void RTC_DynamicTamperConfig(uint32_t u32ChangeRate, uint32_t u32SeedReload, uin
 
     RTC_WaitAccessEnable();
     RTC->TAMPSEED = u32Seed; /* need set seed value before re-load seed */
+    RTC_WaitAccessEnable();
     RTC->TAMPCTL = u32Reg;
 }
 

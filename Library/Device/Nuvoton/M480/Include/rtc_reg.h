@@ -59,10 +59,50 @@ typedef struct
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[21:0]  |FREQADJ   |Frequency Compensation Register
+     * |[21:0]  |FREQADJ   |Frequency Compensation Register (M480)
      * |        |          |User must to get actual LXT frequency for RTC application.
      * |        |          |FCR = 0x200000 * (32768 / LXT frequency).
      * |        |          |Note: This formula is suitable only when RTC clock source is from LXT, RTCSEL (CLK_CLKSEL3[8]) is 0.
+     * |[5:0]   |FRACTION  |Fraction Part (M480LD)
+     * |        |          |Formula: FRACTION = (fraction part of detected value) X 64.
+     * |        |          |Note: Digit in FCR must be expressed as hexadecimal number.
+     * |[12:8]  |INTEGER   |Integer Part (M480LD)
+     * |        |          |00000 = Integer part of detected value is 32752.
+     * |        |          |00001 = Integer part of detected value is 32753.
+     * |        |          |00010 = Integer part of detected value is 32754.
+     * |        |          |00011 = Integer part of detected value is 32755.
+     * |        |          |00100 = Integer part of detected value is 32756.
+     * |        |          |00101 = Integer part of detected value is 32757.
+     * |        |          |00110 = Integer part of detected value is 32758.
+     * |        |          |00111 = Integer part of detected value is 32759.
+     * |        |          |01000 = Integer part of detected value is 32760.
+     * |        |          |01001 = Integer part of detected value is 32761.
+     * |        |          |01010 = Integer part of detected value is 32762.
+     * |        |          |01011 = Integer part of detected value is 32763.
+     * |        |          |01100 = Integer part of detected value is 32764.
+     * |        |          |01101 = Integer part of detected value is 32765.
+     * |        |          |01110 = Integer part of detected value is 32766.
+     * |        |          |01111 = Integer part of detected value is 32767.
+     * |        |          |10000 = Integer part of detected value is 32768.
+     * |        |          |10001 = Integer part of detected value is 32769.
+     * |        |          |10010 = Integer part of detected value is 32770.
+     * |        |          |10011 = Integer part of detected value is 32771.
+     * |        |          |10100 = Integer part of detected value is 32772.
+     * |        |          |10101 = Integer part of detected value is 32773.
+     * |        |          |10110 = Integer part of detected value is 32774.
+     * |        |          |10111 = Integer part of detected value is 32775.
+     * |        |          |11000 = Integer part of detected value is 32776.
+     * |        |          |11001 = Integer part of detected value is 32777.
+     * |        |          |11010 = Integer part of detected value is 32778.
+     * |        |          |11011 = Integer part of detected value is 32779.
+     * |        |          |11100 = Integer part of detected value is 32780.
+     * |        |          |11101 = Integer part of detected value is 32781.
+     * |        |          |11110 = Integer part of detected value is 32782.
+     * |        |          |11111 = Integer part of detected value is 32783.
+     * |[31]    |FCR_BUSY  |Frequency Compensation Register Write Operation Busy (Read Only) (M480LD)
+     * |        |          |0 = The new register write operation is acceptable.
+     * |        |          |1 = The last write operation is in progress and new register write operation prohibited.
+     * |        |          |Note: This bit is only used when DYN_COMP_EN(RTC_CLKFMT[16]) enabled.
      * @var RTC_T::TIME
      * Offset: 0x0C  RTC Time Loading Register
      * ---------------------------------------------------------------------------------------------------
@@ -752,6 +792,15 @@ typedef struct
 
 #define RTC_FREQADJ_FREQADJ_Pos          (0)                                               /*!< RTC_T::FREQADJ: FREQADJ Position       */
 #define RTC_FREQADJ_FREQADJ_Msk          (0x3ffffful << RTC_FREQADJ_FREQADJ_Pos)           /*!< RTC_T::FREQADJ: FREQADJ Mask           */
+
+#define RTC_FREQADJ_FRACTION_Pos         (0)                                               /*!< RTC_T::FREQADJ: FRACTION Position      */
+#define RTC_FREQADJ_FRACTION_Msk         (0x3ful << RTC_FREQADJ_FRACTION_Pos)              /*!< RTC_T::FREQADJ: FRACTION Mask          */
+
+#define RTC_FREQADJ_INTEGER_Pos          (8)                                               /*!< RTC_T::FREQADJ: INTEGER Position       */
+#define RTC_FREQADJ_INTEGER_Msk          (0x1ful << RTC_FREQADJ_INTEGER_Pos)               /*!< RTC_T::FREQADJ: INTEGER Mask           */
+
+#define RTC_FREQADJ_FCR_BUSY_Pos         (31)                                              /*!< RTC_T::FREQADJ: FCR_BUSY Position      */
+#define RTC_FREQADJ_FCR_BUSY_Msk         (0x1ul << RTC_FREQADJ_FCR_BUSY_Pos)               /*!< RTC_T::FREQADJ: FCR_BUSY Mask          */
 
 #define RTC_TIME_SEC_Pos                 (0)                                               /*!< RTC_T::TIME: SEC Position              */
 #define RTC_TIME_SEC_Msk                 (0xful << RTC_TIME_SEC_Pos)                       /*!< RTC_T::TIME: SEC Mask                  */

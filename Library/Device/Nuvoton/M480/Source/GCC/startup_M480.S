@@ -107,15 +107,15 @@ __Vectors:
 	.long	I2C1_IRQHandler       /* 39: I2C1                       */
 	.long	PDMA_IRQHandler       /* 40: PDMA                       */
 	.long	DAC_IRQHandler        /* 41: DAC                        */
-	.long	ADC00_IRQHandler      /* 42: ADC00                      */
-	.long	ADC01_IRQHandler      /* 43: ADC01                      */
+	.long	EADC00_IRQHandler     /* 42: EADC00                     */
+	.long	EADC01_IRQHandler     /* 43: EADC01                     */
 	.long	ACMP01_IRQHandler     /* 44: ACMP                       */
 	.long	0                     /* 45: Reserved                   */
-	.long	ADC02_IRQHandler      /* 46: ADC02                      */
-	.long	ADC03_IRQHandler      /* 47: ADC03                      */
+	.long	EADC02_IRQHandler     /* 46: EADC02                     */
+	.long	EADC03_IRQHandler     /* 47: EADC03                     */
 	.long	UART2_IRQHandler      /* 48: UART2                      */
 	.long	UART3_IRQHandler      /* 49: UART3                      */
-	.long	0                     /* 50: Reserved                   */
+	.long	QSPI1_IRQHandler      /* 50: QSPI1                      */
 	.long	SPI1_IRQHandler       /* 51: SPI1                       */
 	.long	SPI2_IRQHandler       /* 52: SPI2                       */
 	.long	USBD_IRQHandler       /* 53: USBD                       */
@@ -159,6 +159,21 @@ __Vectors:
 	.long	0                     /* 91: Reserved                   */
 	.long	EHCI_IRQHandler       /* 92:  EHCI                      */
 	.long	USBOTG20_IRQHandler   /* 93:  HSOTG                     */
+	.long	0                     /* 94: Reserved                   */
+	.long	0                     /* 95: Reserved                   */
+	.long	0                     /* 96: Reserved                   */
+	.long	0                     /* 97: Reserved                   */
+	.long	0                     /* 98: Reserved                   */
+	.long	0                     /* 99: Reserved                   */
+	.long	0                     /* 100: Reserved                  */
+	.long	TRNG_IRQHandler       /* 101: TRNG                      */
+	.long	UART6_IRQHandler      /* 102: UART6                     */
+	.long	UART7_IRQHandler      /* 103: UART7                     */
+	.long	EADC10_IRQHandler     /* 104: EADC10                    */
+	.long	EADC11_IRQHandler     /* 105: EADC11                    */
+	.long	EADC12_IRQHandler     /* 106: EADC12                    */
+	.long	EADC13_IRQHandler     /* 107: EADC13                    */
+	.long	CAN2_IRQHandler       /* 108: CAN2                      */
 
 	.size	__Vectors, . - __Vectors
 
@@ -401,13 +416,14 @@ Default_Handler:
 	def_irq_handler	I2C1_IRQHandler
 	def_irq_handler	PDMA_IRQHandler
 	def_irq_handler	DAC_IRQHandler
-	def_irq_handler	ADC00_IRQHandler
-	def_irq_handler	ADC01_IRQHandler
+	def_irq_handler	EADC00_IRQHandler
+	def_irq_handler	EADC01_IRQHandler
 	def_irq_handler	ACMP01_IRQHandler
-	def_irq_handler	ADC02_IRQHandler
-	def_irq_handler	ADC03_IRQHandler
+	def_irq_handler	EADC02_IRQHandler
+	def_irq_handler	EADC03_IRQHandler
 	def_irq_handler	UART2_IRQHandler
 	def_irq_handler	UART3_IRQHandler
+	def_irq_handler	QSPI1_IRQHandler
 	def_irq_handler	SPI1_IRQHandler
 	def_irq_handler	SPI2_IRQHandler
 	def_irq_handler	USBD_IRQHandler
@@ -445,5 +461,13 @@ Default_Handler:
 	def_irq_handler	SDH1_IRQHandler
 	def_irq_handler	EHCI_IRQHandler
 	def_irq_handler	USBOTG20_IRQHandler
+	def_irq_handler	TRNG_IRQHandler
+	def_irq_handler	UART6_IRQHandler
+	def_irq_handler	UART7_IRQHandler
+	def_irq_handler	EADC10_IRQHandler
+	def_irq_handler	EADC11_IRQHandler
+	def_irq_handler	EADC12_IRQHandler
+	def_irq_handler	EADC13_IRQHandler
+	def_irq_handler	CAN2_IRQHandler
 
 	.end

@@ -1,0 +1,22 @@
+LOAD_ROM_1  0x0
+{
+	APROM.bin  0x0
+	{
+		startup_M480.o (RESET, +FIRST)
+		*.o (+RO)
+	}
+	
+	SRAM  0x20000000 0x10000
+	{
+		* (+RW, +ZI)
+	}
+}
+
+LOAD_ROM_2  0x8000
+{
+	exeinsram.bin  0x8000
+	{
+		exeinsram.o (+RO)
+	}
+}
+

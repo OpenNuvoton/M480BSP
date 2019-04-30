@@ -161,7 +161,11 @@ void usbh_firmware_update()
     /*  Try to open SPROM firmware image. If opened successfully, read and update SPROM.  */
     /*------------------------------------------------------------------------------------*/
     /* Try to open SPROM firmware image file      */
-    if (f_open(&file1, SPROM_FILE_NAME, FA_OPEN_EXISTING | FA_READ))
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x1)
+    {
+        /* M480LD has not SPROM. */
+    }
+    else if (f_open(&file1, SPROM_FILE_NAME, FA_OPEN_EXISTING | FA_READ))
     {
         printf("SPROM image [%s] not found.\n", SPROM_FILE_NAME);    /* File not found    */
     }

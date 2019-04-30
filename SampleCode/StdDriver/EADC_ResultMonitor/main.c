@@ -103,7 +103,7 @@ void EADC_FunctionTest()
     EADC_ENABLE_SAMPLE_MODULE_INT(EADC, 3, BIT0);
     /* Enable ADINT3 interrupt */
     EADC_ENABLE_INT(EADC, BIT3);
-    NVIC_EnableIRQ(ADC3_IRQn);
+    NVIC_EnableIRQ(EADC03_IRQn);
 
     /* Clear the EADC comparator 0 interrupt flag for safe */
     EADC_CLR_INT_FLAG(EADC, EADC_STATUS2_ADCMPF0_Msk);
@@ -144,7 +144,7 @@ void EADC_FunctionTest()
 
 }
 
-void ADC03_IRQHandler(void)
+void EADC03_IRQHandler(void)
 {
     if(EADC_GET_INT_FLAG(EADC, EADC_STATUS2_ADCMPF0_Msk))
     {
@@ -184,7 +184,7 @@ int32_t main(void)
     CLK_DisableModuleClock(EADC_MODULE);
 
     /* Disable External Interrupt */
-    NVIC_DisableIRQ(ADC3_IRQn);
+    NVIC_DisableIRQ(EADC03_IRQn);
 
     printf("Exit EADC sample code\n");
 

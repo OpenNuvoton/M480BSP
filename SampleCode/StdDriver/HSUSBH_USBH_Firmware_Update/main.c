@@ -16,8 +16,8 @@
 #include "diskio.h"
 
 
-#define DATA_FLASH_BASE              0x70000
-#define USB_UPDATER_BASE             0x50000
+#define DATA_FLASH_BASE              0x30000
+#define USB_UPDATER_BASE             0x20000
 
 /*
         This sample program assumed flash resource allocated like the following figure:

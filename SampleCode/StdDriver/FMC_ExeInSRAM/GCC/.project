@@ -50,9 +50,14 @@
 			<locationURI>PARENT-4-PROJECT_LOC/Library/StdDriver/src</locationURI>
 		</link>
 		<link>
-			<name>User/FMC_ExeInSRAM.ld</name>
+			<name>User/exeinsram.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/GCC/FMC_ExeInSRAM.ld</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/exeinsram.c</locationURI>
+		</link>
+		<link>
+			<name>User/gcc_arm.ld</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/gcc_arm.ld</locationURI>
 		</link>
 		<link>
 			<name>User/main.c</name>
@@ -62,7 +67,7 @@
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>1505358464452</id>
+			<id>1555983572297</id>
 			<name>CMSIS/CMSIS</name>
 			<type>9</type>
 			<matcher>
@@ -71,7 +76,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505359961905</id>
+			<id>1556584219651</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -80,7 +85,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505359961912</id>
+			<id>1556584219662</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -89,7 +94,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505359961919</id>
+			<id>1556584219672</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -98,7 +103,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505359961926</id>
+			<id>1556584219685</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -107,7 +112,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505359961933</id>
+			<id>1556584219695</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -116,4 +121,22 @@
 			</matcher>
 		</filter>
 	</filteredResources>
+	<variableList>
+		<variable>
+			<name>copy_PARENT</name>
+			<value>$%7BPARENT-3-PROJECT_LOC%7D/Project/M480LD/Git/bsp</value>
+		</variable>
+		<variable>
+			<name>copy_PARENT1</name>
+			<value>$%7Bcopy_PARENT%7D/SampleCode/StdDriver/FMC_ExeInSRAM</value>
+		</variable>
+		<variable>
+			<name>copy_PARENT12</name>
+			<value>$%7Bcopy_PARENT1%7D</value>
+		</variable>
+		<variable>
+			<name>copy_PROJECT_LOC</name>
+			<value>$%7Bcopy_PARENT%7D/SampleCode/StdDriver/FMC_ExeInSRAM/GCC</value>
+		</variable>
+	</variableList>
 </projectDescription>

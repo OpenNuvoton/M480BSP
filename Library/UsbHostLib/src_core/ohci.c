@@ -863,6 +863,9 @@ static int ohci_rh_polling(void)
 
     for (i = 0; i < 2; i++)
     {
+        if (((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x1) && (i == 0))
+            continue;                /* M480LD OHCI has no root hub port 0 */
+
         /* clear unwanted port change status */
         _ohci->HcRhPortStatus[i] = USBH_HcRhPortStatus_OCIC_Msk | USBH_HcRhPortStatus_PRSC_Msk |
                                    USBH_HcRhPortStatus_PSSC_Msk | USBH_HcRhPortStatus_PESC_Msk;
@@ -981,7 +984,10 @@ void td_done(TD_T *td)
         if ((cc != CC_NOERROR) && (cc != CC_DATA_UNDERRUN))
         {
             USB_error("TD error, CC = 0x%x\n", cc);
-            utr->status = USBH_ERR_TRANSFER;
+            if (cc == CC_STALL)
+                utr->status = USBH_ERR_STALL;
+            else
+                utr->status = USBH_ERR_TRANSFER;
         }
 
         switch (info & TD_TYPE_Msk)
