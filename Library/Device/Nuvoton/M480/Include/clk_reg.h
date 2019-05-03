@@ -589,10 +589,6 @@ typedef struct
      * |        |          |0 = PLL stable time is 6144 PLL source clock (suitable for source clock is equal to or less than 12 MHz).
      * |        |          |1 = PLL stable time is 12288 PLL source clock (suitable for source clock is larger than 12 MHz).
      * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[28]    |BANDSEL   |PLL Stable Counter Selection (Write Protect)
-     * |        |          |0 = PLL low band frequency select. (FVCO range is 200MHz ~ 400MHZ)
-     * |        |          |1 = PLL high band frequency select. (FVCO range is 400MHz ~ 500MHZ)
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
      * @var CLK_T::STATUS
      * Offset: 0x50  Clock Status Monitor Register
      * ---------------------------------------------------------------------------------------------------
@@ -1469,9 +1465,6 @@ typedef struct
 
 #define CLK_PLLCTL_STBSEL_Pos            (23)                                              /*!< CLK_T::PLLCTL: STBSEL Position         */
 #define CLK_PLLCTL_STBSEL_Msk            (0x1ul << CLK_PLLCTL_STBSEL_Pos)                  /*!< CLK_T::PLLCTL: STBSEL Mask             */
-
-#define CLK_PLLCTL_BANDSEL_Pos           (28)                                              /*!< CLK_T::PLLCTL: BANDSEL Position        */
-#define CLK_PLLCTL_BANDSEL_Msk           (0x1ul << CLK_PLLCTL_BANDSEL_Pos)                 /*!< CLK_T::PLLCTL: BANDSEL Mask            */
 
 #define CLK_STATUS_HXTSTB_Pos            (0)                                               /*!< CLK_T::STATUS: HXTSTB Position         */
 #define CLK_STATUS_HXTSTB_Msk            (0x1ul << CLK_STATUS_HXTSTB_Pos)                  /*!< CLK_T::STATUS: HXTSTB Mask             */
