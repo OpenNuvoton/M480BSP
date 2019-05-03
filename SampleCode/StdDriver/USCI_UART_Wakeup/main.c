@@ -46,7 +46,7 @@ void SYS_Init(void)
 
     /* Set core clock as PLL_CLOCK from PLL */
     CLK_SetCoreClock(192000000);
-    CLK->PCLKDIV = (CLK_PCLKDIV_PCLK0DIV2 | CLK_PCLKDIV_PCLK1DIV2); // PCLK divider set 2
+    CLK->PCLKDIV = (CLK_PCLKDIV_APB0DIV_DIV2 | CLK_PCLKDIV_APB1DIV_DIV2); // PCLK divider set 2
 
     /* Update System Core Clock */
     SystemCoreClockUpdate();
@@ -232,7 +232,7 @@ void USCI_UART_PowerDownWakeUpTest(void)
     {
         // switch HCLK to PLL
         CLK_SetCoreClock(192000000);
-        CLK->PCLKDIV = (CLK_PCLKDIV_PCLK0DIV2 | CLK_PCLKDIV_PCLK1DIV2);
+        CLK->PCLKDIV = (CLK_PCLKDIV_APB0DIV_DIV2 | CLK_PCLKDIV_APB1DIV_DIV2);
 
         /* Set UUART0 Line config */
         UUART_SetLine_Config(UUART0, 1200, UUART_WORD_LEN_8, UUART_PARITY_NONE, UUART_STOP_BIT_1);

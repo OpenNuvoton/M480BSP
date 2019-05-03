@@ -165,24 +165,23 @@ uint32_t CLK_GetPCLK0Freq(void)
     uint32_t u32Freq;
     SystemCoreClockUpdate();
 
-#if(1)
-    if((CLK->PCLKDIV & CLK_PCLKDIV_APB0DIV_Msk) == CLK_PCLKDIV_PCLK0DIV1)
+    if((CLK->PCLKDIV & CLK_PCLKDIV_APB0DIV_Msk) == CLK_PCLKDIV_APB0DIV_DIV1)
     {
         u32Freq = SystemCoreClock;
     }
-    else if((CLK->PCLKDIV & CLK_PCLKDIV_APB0DIV_Msk) == CLK_PCLKDIV_PCLK0DIV2)
+    else if((CLK->PCLKDIV & CLK_PCLKDIV_APB0DIV_Msk) == CLK_PCLKDIV_APB0DIV_DIV2)
     {
         u32Freq = SystemCoreClock / 2UL;
     }
-    else if((CLK->PCLKDIV & CLK_PCLKDIV_APB0DIV_Msk) == CLK_PCLKDIV_PCLK0DIV4)
+    else if((CLK->PCLKDIV & CLK_PCLKDIV_APB0DIV_Msk) == CLK_PCLKDIV_APB0DIV_DIV4)
     {
         u32Freq = SystemCoreClock / 4UL;
     }
-    else if((CLK->PCLKDIV & CLK_PCLKDIV_APB0DIV_Msk) == CLK_PCLKDIV_PCLK0DIV8)
+    else if((CLK->PCLKDIV & CLK_PCLKDIV_APB0DIV_Msk) == CLK_PCLKDIV_APB0DIV_DIV8)
     {
         u32Freq = SystemCoreClock / 8UL;
     }
-    else if((CLK->PCLKDIV & CLK_PCLKDIV_APB0DIV_Msk) == CLK_PCLKDIV_PCLK0DIV16)
+    else if((CLK->PCLKDIV & CLK_PCLKDIV_APB0DIV_Msk) == CLK_PCLKDIV_APB0DIV_DIV16)
     {
         u32Freq = SystemCoreClock / 16UL;
     }
@@ -190,22 +189,6 @@ uint32_t CLK_GetPCLK0Freq(void)
     {
         u32Freq = SystemCoreClock;
     }
-
-
-#else
-    if((CLK->CLKSEL0 & CLK_CLKSEL0_PCLK0SEL_Msk) == CLK_CLKSEL0_PCLK0DIV1)
-    {
-        u32Freq =  SystemCoreClock;
-    }
-    else if((CLK->CLKSEL0 & CLK_CLKSEL0_PCLK0SEL_Msk) == CLK_CLKSEL0_PCLK0DIV2)
-    {
-        u32Freq =  SystemCoreClock / 2UL;
-    }
-    else
-    {
-        u32Freq =  SystemCoreClock;
-    }
-#endif
 
     return u32Freq;
 }
@@ -222,24 +205,23 @@ uint32_t CLK_GetPCLK1Freq(void)
     uint32_t u32Freq;
     SystemCoreClockUpdate();
 
-#if(1)
-    if((CLK->PCLKDIV & CLK_PCLKDIV_APB1DIV_Msk) == CLK_PCLKDIV_PCLK1DIV1)
+    if((CLK->PCLKDIV & CLK_PCLKDIV_APB1DIV_Msk) == CLK_PCLKDIV_APB1DIV_DIV1)
     {
         u32Freq = SystemCoreClock;
     }
-    else if((CLK->PCLKDIV & CLK_PCLKDIV_APB1DIV_Msk) == CLK_PCLKDIV_PCLK1DIV2)
+    else if((CLK->PCLKDIV & CLK_PCLKDIV_APB1DIV_Msk) == CLK_PCLKDIV_APB1DIV_DIV2)
     {
         u32Freq = SystemCoreClock / 2UL;
     }
-    else if((CLK->PCLKDIV & CLK_PCLKDIV_APB1DIV_Msk) == CLK_PCLKDIV_PCLK1DIV4)
+    else if((CLK->PCLKDIV & CLK_PCLKDIV_APB1DIV_Msk) == CLK_PCLKDIV_APB1DIV_DIV4)
     {
         u32Freq = SystemCoreClock / 4UL;
     }
-    else if((CLK->PCLKDIV & CLK_PCLKDIV_APB1DIV_Msk) == CLK_PCLKDIV_PCLK1DIV8)
+    else if((CLK->PCLKDIV & CLK_PCLKDIV_APB1DIV_Msk) == CLK_PCLKDIV_APB1DIV_DIV8)
     {
         u32Freq = SystemCoreClock / 8UL;
     }
-    else if((CLK->PCLKDIV & CLK_PCLKDIV_APB1DIV_Msk) == CLK_PCLKDIV_PCLK1DIV16)
+    else if((CLK->PCLKDIV & CLK_PCLKDIV_APB1DIV_Msk) == CLK_PCLKDIV_APB1DIV_DIV16)
     {
         u32Freq = SystemCoreClock / 16UL;
     }
@@ -247,22 +229,6 @@ uint32_t CLK_GetPCLK1Freq(void)
     {
         u32Freq = SystemCoreClock;
     }
-
-
-#else
-    if((CLK->CLKSEL0 & CLK_CLKSEL0_PCLK1SEL_Msk) == CLK_CLKSEL0_PCLK1DIV1)
-    {
-        u32Freq =  SystemCoreClock;
-    }
-    else if((CLK->CLKSEL0 & CLK_CLKSEL0_PCLK1SEL_Msk) == CLK_CLKSEL0_PCLK1DIV2)
-    {
-        u32Freq =  SystemCoreClock / 2UL;
-    }
-    else
-    {
-        u32Freq =  SystemCoreClock;
-    }
-#endif
 
     return u32Freq;
 }

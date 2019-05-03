@@ -366,7 +366,7 @@ void SYS_Init(void)
     CLK_SetCoreClock(FREQ_192MHZ);
 
     /* Set both PCLK0 and PCLK1 as HCLK/2 */
-    CLK->PCLKDIV = CLK_PCLKDIV_PCLK0DIV2 | CLK_PCLKDIV_PCLK1DIV2;
+    CLK->PCLKDIV = CLK_PCLKDIV_APB0DIV_DIV2 | CLK_PCLKDIV_APB1DIV_DIV2;
 
     /* Enable UART module clock */
     CLK_EnableModuleClock(UART0_MODULE);

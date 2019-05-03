@@ -53,7 +53,7 @@ void SYS_Init(void)
     SystemCoreClock = PLL_CLOCK / HCLK_DIV;             // HCLK
     CyclesPerUs     = SystemCoreClock / 1000000;  // For SYS_SysTickDelay()
     /* Set both PCLK0 and PCLK1 as HCLK/2 */
-    CLK->PCLKDIV = CLK_PCLKDIV_PCLK0DIV2 | CLK_PCLKDIV_PCLK1DIV2;
+    CLK->PCLKDIV = CLK_PCLKDIV_APB0DIV_DIV2 | CLK_PCLKDIV_APB1DIV_DIV2;
     /* Select USBD */
     SYS->USBPHY = (SYS->USBPHY & ~SYS_USBPHY_USBROLE_Msk) | SYS_USBPHY_USBEN_Msk | SYS_USBPHY_SBO_Msk;
     /* Enable module clock */
