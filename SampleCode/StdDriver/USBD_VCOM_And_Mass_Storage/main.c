@@ -23,8 +23,7 @@ uint16_t gCtrlSignal = 0;     /* BIT0: DTR(Data Terminal Ready) , BIT1: RTS(Requ
 
 #define TX_FIFO_SIZE        16  /* TX Hardware FIFO size */
 
-#define CONFIG_BASE      0x00300000
-#define DATA_FLASH_BASE  0x00010000
+#define DATA_FLASH_BASE  0x40000
 /*---------------------------------------------------------------------------------------------------------*/
 /* Global variables                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -287,9 +286,9 @@ int32_t main (void)
         /* Reset Chip to reload new CONFIG value */
         SYS->IPRST0 = SYS_IPRST0_CHIPRST_Msk;
     }
-    SYS_LockReg();
 
     USBD_Open(&gsInfo, VCOM_ClassRequest, NULL);
+    USBD_SetConfigCallback(MSC_SetConfig);
     /* Endpoint configuration */
     VCOM_Init();
     USBD_Start();

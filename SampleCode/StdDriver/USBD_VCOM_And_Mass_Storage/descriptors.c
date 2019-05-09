@@ -30,7 +30,7 @@ uint8_t gu8DeviceDescriptor[] =
     0x00, 0x01,        /* bcdDevice */
     0x01,              /* iManufacture */
     0x02,              /* iProduct */
-    0x03,              /* iSerialNumber - no serial */
+    0x00,              /* iSerialNumber - no serial */
     0x01               /* bNumConfigurations */
 };
 
@@ -86,7 +86,7 @@ uint8_t gu8ConfigDescriptor[] =
     0x04,           /* Size of the descriptor, in bytes */
     0x24,           /* CS_INTERFACE descriptor type */
     0x02,           /* Abstract control management functional descriptor subtype */
-    0x02,           /* bmCapabilities       */
+    0x00,           /* bmCapabilities       */
 
     /* Communication Class Specified INTERFACE descriptor */
     0x05,           /* bLength              */
@@ -138,7 +138,7 @@ uint8_t gu8ConfigDescriptor[] =
     0x00,           // bAlternateSetting
     0x02,           // bNumEndpoints
     0x08,           // bInterfaceClass
-    0x06,           // bInterfaceSubClass
+    0x05,           /* bInterfaceSubClass */
     0x50,           // bInterfaceProtocol
     0x00,           // iInterface
 
