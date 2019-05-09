@@ -12,7 +12,7 @@
 #include "NuMicro.h"
 #include "VCOM_And_hid_keyboard.h"
 
-
+uint32_t volatile g_u32OutToggle = 0;
 uint8_t volatile g_u8EP5Ready;
 
 void USBD_IRQHandler(void)
@@ -163,11 +163,19 @@ void EP2_Handler(void)
 void EP3_Handler(void)
 {
     /* Bulk OUT */
-    gu32RxSize = USBD_GET_PAYLOAD_LEN(EP3);
-    gpu8RxBuf = (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP3));
+    if (g_u32OutToggle == (USBD->EPSTS0 & 0xf000))
+    {
+        USBD_SET_PAYLOAD_LEN(EP3, EP3_MAX_PKT_SIZE);
+    }
+    else
+    {
+        gu32RxSize = USBD_GET_PAYLOAD_LEN(EP3);
+        gpu8RxBuf = (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP3));
 
-    /* Set a flag to indicate bulk out ready */
-    gi8BulkOutReady = 1;
+        g_u32OutToggle = USBD->EPSTS0 & 0xf000;
+        /* Set a flag to indicate bulk out ready */
+        gi8BulkOutReady = 1;
+    }
 }
 
 void EP5_Handler(void)  /* Interrupt IN handler */

@@ -12,6 +12,9 @@
 #include "vcom_serial.h"
 #include "massstorage.h"
 
+uint32_t volatile g_u32OutToggle0 = 0;
+uint32_t volatile g_u32OutToggle = 0, g_u32OutSkip = 0;
+
 /*--------------------------------------------------------------------------*/
 /* Global variables for Control Pipe */
 int32_t g_TotalSectors = 0;
@@ -241,11 +244,19 @@ void EP2_Handler(void)
 void EP3_Handler(void)
 {
     /* Bulk OUT */
-    gu32RxSize = USBD_GET_PAYLOAD_LEN(EP3);
-    gpu8RxBuf = (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP3));
+    if (g_u32OutToggle0 == (USBD->EPSTS0 & 0xf000))
+    {
+        USBD_SET_PAYLOAD_LEN(EP3, EP3_MAX_PKT_SIZE);
+    }
+    else
+    {
+        gu32RxSize = USBD_GET_PAYLOAD_LEN(EP3);
+        gpu8RxBuf = (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP3));
 
-    /* Set a flag to indicate bulk out ready */
-    gi8BulkOutReady = 1;
+        g_u32OutToggle0 = USBD->EPSTS0 & 0xf000;
+        /* Set a flag to indicate bulk out ready */
+        gi8BulkOutReady = 1;
+    }
 }
 
 void EP5_Handler(void)
@@ -258,7 +269,17 @@ void EP5_Handler(void)
 void EP6_Handler(void)
 {
     /* Bulk OUT */
-    g_u8EP6Ready = 1;
+    if (g_u32OutToggle == (USBD->EPSTS0 & 0xf000000))
+    {
+        g_u32OutSkip = 1;
+        USBD_SET_PAYLOAD_LEN(EP6, EP6_MAX_PKT_SIZE);
+    }
+    else
+    {
+        g_u8EP6Ready = 1;
+        g_u32OutToggle = USBD->EPSTS0 & 0xf000000;
+        g_u32OutSkip = 0;
+    }
 }
 
 
@@ -351,8 +372,8 @@ void VCOM_ClassRequest(void)
         }
         case GET_MAX_LUN:
         {
-            /* Check interface number with cfg descriptor and check wValue = 0, wLength = 1 */
-            if ((((buf[3]<<8)+buf[2]) == 0) && (((buf[5]<<8)+buf[4]) == 0) && (((buf[7]<<8)+buf[6]) == 1))
+            /* Check interface number with cfg descriptor wIndex = interface number, check wValue = 0, wLength = 1 */
+            if ((((buf[3]<<8)+buf[2]) == 0) && (((buf[5]<<8)+buf[4]) == 2) && (((buf[7]<<8)+buf[6]) == 1))
             {
                 M8(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP0)) = 0;
                 /* Data stage */
@@ -407,26 +428,32 @@ void VCOM_ClassRequest(void)
         }
         case BULK_ONLY_MASS_STORAGE_RESET:
         {
-            // Check interface number with cfg descriptor and check wValue = 0, wLength = 0
-            // if ((((buf[3]<<8)+buf[2]) == 0) && (((buf[5]<<8)+buf[4]) == 0) && (((buf[7]<<8)+buf[6]) == 0))
-            /* CV3.0 Test Failed - BOT MSC Reset : Modify this command always Reset */
+            /* Check interface number with cfg descriptor and check wValue = 0, wLength = 0 */
+            if((buf[4] == gsInfo.gu8ConfigDesc[LEN_CONFIG + 2]) && (buf[2] + buf[3] + buf[6] + buf[7] == 0))
+            {
+
+                g_u32Length = 0; // Reset all read/write data transfer
+                USBD_LockEpStall(0);
+
+                /* Clear ready */
+                USBD->EP[EP5].CFGP |= USBD_CFGP_CLRRDY_Msk;
+                USBD->EP[EP6].CFGP |= USBD_CFGP_CLRRDY_Msk;
+
+                /* Prepare to receive the CBW */
+                g_u8EP6Ready = 0;
+                g_u8BulkState = BULK_CBW;
+
+                USBD_SET_DATA1(EP6);
+                USBD_SET_EP_BUF_ADDR(EP6, g_u32BulkBuf0);
+                USBD_SET_PAYLOAD_LEN(EP6, EP6_MAX_PKT_SIZE);
+            }
+            else     /* Invalid Reset command */
+            {
+                USBD_SET_EP_STALL(EP1);
+            }
+            /* Status stage */
             USBD_SET_DATA1(EP0);
             USBD_SET_PAYLOAD_LEN(EP0, 0);
-
-            USBD_LockEpStall(0);
-
-            /* Clear ready */
-            USBD->EP[EP5].CFGP |= USBD_CFGP_CLRRDY_Msk;
-            USBD->EP[EP6].CFGP |= USBD_CFGP_CLRRDY_Msk;
-
-            /* Prepare to receive the CBW */
-            g_u8EP6Ready = 0;
-            g_u8BulkState = BULK_CBW;
-
-            USBD_SET_DATA1(EP6);
-            USBD_SET_EP_BUF_ADDR(EP6, g_u32BulkBuf0);
-            USBD_SET_PAYLOAD_LEN(EP6, EP6_MAX_PKT_SIZE);
-
             break;
         }
         default:
@@ -534,20 +561,46 @@ void MSC_RequestSense(void)
 
 void MSC_ReadFormatCapacity(void)
 {
-    memset((uint8_t *)MassCMD_BUF, 0, 36);
+    uint8_t *pu8Desc;
 
-    *((uint8_t *)(MassCMD_BUF+3)) = 0x10;
-    *((uint8_t *)(MassCMD_BUF+4)) = *((uint8_t *)&g_TotalSectors+3);
-    *((uint8_t *)(MassCMD_BUF+5)) = *((uint8_t *)&g_TotalSectors+2);
-    *((uint8_t *)(MassCMD_BUF+6)) = *((uint8_t *)&g_TotalSectors+1);
-    *((uint8_t *)(MassCMD_BUF+7)) = *((uint8_t *)&g_TotalSectors+0);
-    *((uint8_t *)(MassCMD_BUF+8)) = 0x02;
-    *((uint8_t *)(MassCMD_BUF+10)) = 0x02;
-    *((uint8_t *)(MassCMD_BUF+12)) = *((uint8_t *)&g_TotalSectors+3);
-    *((uint8_t *)(MassCMD_BUF+13)) = *((uint8_t *)&g_TotalSectors+2);
-    *((uint8_t *)(MassCMD_BUF+14)) = *((uint8_t *)&g_TotalSectors+1);
-    *((uint8_t *)(MassCMD_BUF+15)) = *((uint8_t *)&g_TotalSectors+0);
-    *((uint8_t *)(MassCMD_BUF+18)) = 0x02;
+    pu8Desc = (uint8_t *)MassCMD_BUF;
+    memset(pu8Desc, 0, 36);
+
+    /*---------- Capacity List Header ----------*/
+    // Capacity List Length
+    pu8Desc[3] = 0x10;
+
+    /*---------- Current/Maximum Capacity Descriptor ----------*/
+    // Number of blocks (MSB first)
+    pu8Desc[4] = *((uint8_t *)&g_TotalSectors+3);
+    pu8Desc[5] = *((uint8_t *)&g_TotalSectors+2);
+    pu8Desc[6] = *((uint8_t *)&g_TotalSectors+1);
+    pu8Desc[7] = *((uint8_t *)&g_TotalSectors+0);
+
+    // Descriptor Code:
+    // 01b = Unformatted Media - Maximum formattable capacity for this cartridge
+    // 10b = Formatted Media - Current media capacity
+    // 11b = No Cartridge in Drive - Maximum formattable capacity for any cartridge
+    pu8Desc[8] = 0x02;
+
+
+    // Block Length. Fixed to be 512 (MSB first)
+    pu8Desc[ 9] = 0;
+    pu8Desc[10] = 0x02;
+    pu8Desc[11] = 0;
+
+    /*---------- Formattable Capacity Descriptor ----------*/
+    // Number of Blocks
+    pu8Desc[12] = *((uint8_t *)&g_TotalSectors+3);
+    pu8Desc[13] = *((uint8_t *)&g_TotalSectors+2);
+    pu8Desc[14] = *((uint8_t *)&g_TotalSectors+1);
+    pu8Desc[15] = *((uint8_t *)&g_TotalSectors+0);
+
+    // Block Length. Fixed to be 512 (MSB first)
+    pu8Desc[17] = 0;
+    pu8Desc[18] = 0x02;
+    pu8Desc[19] = 0;
+
 }
 
 void MSC_Read(void)
@@ -678,6 +731,25 @@ void MSC_ReadCapacity(void)
     *((uint8_t *)(MassCMD_BUF+6)) = 0x02;
 }
 
+void MSC_ReadCapacity16(void)
+{
+    uint32_t tmp;
+
+    memset((uint8_t *)MassCMD_BUF, 0, 36);
+
+    tmp = g_TotalSectors - 1;
+    *((uint8_t *)(MassCMD_BUF + 0)) = 0;
+    *((uint8_t *)(MassCMD_BUF + 1)) = 0;
+    *((uint8_t *)(MassCMD_BUF + 2)) = 0;
+    *((uint8_t *)(MassCMD_BUF + 3)) = 0;
+    *((uint8_t *)(MassCMD_BUF + 4)) = *((uint8_t *)&tmp + 3);
+    *((uint8_t *)(MassCMD_BUF + 5)) = *((uint8_t *)&tmp + 2);
+    *((uint8_t *)(MassCMD_BUF + 6)) = *((uint8_t *)&tmp + 1);
+    *((uint8_t *)(MassCMD_BUF + 7)) = *((uint8_t *)&tmp + 0);
+    *((uint8_t *)(MassCMD_BUF + 10)) = 0x02;
+}
+
+
 void MSC_ModeSense10(void)
 {
     uint8_t i,j;
@@ -760,55 +832,58 @@ void MSC_Write(void)
 {
     uint32_t lba, len;
 
-    if (g_u32Length > EP6_MAX_PKT_SIZE)
+    if (g_u32OutSkip == 0)
     {
-        if (USBD_GET_EP_BUF_ADDR(EP6) == g_u32BulkBuf0)
+        if (g_u32Length > EP6_MAX_PKT_SIZE)
         {
-            USBD_SET_EP_BUF_ADDR(EP6, g_u32BulkBuf1);
-            USBD_SET_PAYLOAD_LEN(EP6, EP6_MAX_PKT_SIZE);
-            USBD_MemCopy((uint8_t *)g_u32Address, (uint8_t *)((uint32_t)USBD_BUF_BASE + g_u32BulkBuf0), EP6_MAX_PKT_SIZE);
+            if (USBD_GET_EP_BUF_ADDR(EP6) == g_u32BulkBuf0)
+            {
+                USBD_SET_EP_BUF_ADDR(EP6, g_u32BulkBuf1);
+                USBD_SET_PAYLOAD_LEN(EP6, EP6_MAX_PKT_SIZE);
+                USBD_MemCopy((uint8_t *)g_u32Address, (uint8_t *)((uint32_t)USBD_BUF_BASE + g_u32BulkBuf0), EP6_MAX_PKT_SIZE);
+            }
+            else
+            {
+                USBD_SET_EP_BUF_ADDR(EP6, g_u32BulkBuf0);
+                USBD_SET_PAYLOAD_LEN(EP6, EP6_MAX_PKT_SIZE);
+                USBD_MemCopy((uint8_t *)g_u32Address, (uint8_t *)((uint32_t)USBD_BUF_BASE + g_u32BulkBuf1), EP6_MAX_PKT_SIZE);
+            }
+
+            g_u32Address += EP6_MAX_PKT_SIZE;
+            g_u32Length -= EP6_MAX_PKT_SIZE;
+
+            /* Buffer full. Writer it to storage first. */
+            if (g_u32Address >= (STORAGE_DATA_BUF + STORAGE_BUFFER_SIZE))
+            {
+                DataFlashWrite(g_u32DataFlashStartAddr, STORAGE_BUFFER_SIZE, (uint32_t)STORAGE_DATA_BUF);
+
+                g_u32Address = STORAGE_DATA_BUF;
+                g_u32DataFlashStartAddr += STORAGE_BUFFER_SIZE;
+            }
         }
         else
         {
-            USBD_SET_EP_BUF_ADDR(EP6, g_u32BulkBuf0);
-            USBD_SET_PAYLOAD_LEN(EP6, EP6_MAX_PKT_SIZE);
-            USBD_MemCopy((uint8_t *)g_u32Address, (uint8_t *)((uint32_t)USBD_BUF_BASE + g_u32BulkBuf1), EP6_MAX_PKT_SIZE);
+            if (USBD_GET_EP_BUF_ADDR(EP6) == g_u32BulkBuf0)
+                USBD_MemCopy((uint8_t *)g_u32Address, (uint8_t *)((uint32_t)USBD_BUF_BASE + g_u32BulkBuf0), g_u32Length);
+            else
+                USBD_MemCopy((uint8_t *)g_u32Address, (uint8_t *)((uint32_t)USBD_BUF_BASE + g_u32BulkBuf1), g_u32Length);
+            g_u32Address += g_u32Length;
+            g_u32Length = 0;
+
+
+            if ((g_sCBW.u8OPCode == UFI_WRITE_10) || (g_sCBW.u8OPCode == UFI_WRITE_12))
+            {
+                lba = get_be32(&g_sCBW.au8Data[0]);
+                len = g_sCBW.dCBWDataTransferLength;
+
+                len = lba * UDC_SECTOR_SIZE + g_sCBW.dCBWDataTransferLength - g_u32DataFlashStartAddr;
+                if (len)
+                    DataFlashWrite(g_u32DataFlashStartAddr, len, (uint32_t)STORAGE_DATA_BUF);
+            }
+
+            g_u8BulkState = BULK_IN;
+            MSC_AckCmd();
         }
-
-        g_u32Address += EP6_MAX_PKT_SIZE;
-        g_u32Length -= EP6_MAX_PKT_SIZE;
-
-        /* Buffer full. Writer it to storage first. */
-        if (g_u32Address >= (STORAGE_DATA_BUF + STORAGE_BUFFER_SIZE))
-        {
-            DataFlashWrite(g_u32DataFlashStartAddr, STORAGE_BUFFER_SIZE, (uint32_t)STORAGE_DATA_BUF);
-
-            g_u32Address = STORAGE_DATA_BUF;
-            g_u32DataFlashStartAddr += STORAGE_BUFFER_SIZE;
-        }
-    }
-    else
-    {
-        if (USBD_GET_EP_BUF_ADDR(EP6) == g_u32BulkBuf0)
-            USBD_MemCopy((uint8_t *)g_u32Address, (uint8_t *)((uint32_t)USBD_BUF_BASE + g_u32BulkBuf0), g_u32Length);
-        else
-            USBD_MemCopy((uint8_t *)g_u32Address, (uint8_t *)((uint32_t)USBD_BUF_BASE + g_u32BulkBuf1), g_u32Length);
-        g_u32Address += g_u32Length;
-        g_u32Length = 0;
-
-
-        if ((g_sCBW.u8OPCode == UFI_WRITE_10) || (g_sCBW.u8OPCode == UFI_WRITE_12))
-        {
-            lba = get_be32(&g_sCBW.au8Data[0]);
-            len = g_sCBW.dCBWDataTransferLength;
-
-            len = lba * UDC_SECTOR_SIZE + g_sCBW.dCBWDataTransferLength - g_u32DataFlashStartAddr;
-            if (len)
-                DataFlashWrite(g_u32DataFlashStartAddr, len, (uint32_t)STORAGE_DATA_BUF);
-        }
-
-        g_u8BulkState = BULK_IN;
-        MSC_AckCmd();
     }
 }
 
@@ -1357,8 +1432,29 @@ void MSC_WriteMedia(uint32_t addr, uint32_t size, uint8_t *buffer)
 {
 }
 
+void MSC_SetConfig(void)
+{
+    // Clear stall status and ready
+    USBD->EP[5].CFGP = 1;
+    USBD->EP[6].CFGP = 1;
+    /*****************************************************/
+    /* EP5 ==> Bulk IN endpoint, address 2 */
+    USBD_CONFIG_EP(EP5, USBD_CFG_EPMODE_IN | BULK_IN_EP_NUM_1);
+    /* Buffer range for EP5 */
+    USBD_SET_EP_BUF_ADDR(EP5, EP5_BUF_BASE);
+
+    /* EP6 ==> Bulk Out endpoint, address 3 */
+    USBD_CONFIG_EP(EP6, USBD_CFG_EPMODE_OUT | BULK_OUT_EP_NUM_1);
+    /* Buffer range for EP6 */
+    USBD_SET_EP_BUF_ADDR(EP6, EP6_BUF_BASE);
+
+    /* trigger to receive OUT data */
+    USBD_SET_PAYLOAD_LEN(EP6, EP6_MAX_PKT_SIZE);
 
 
+    USBD_LockEpStall(0);
 
+    g_u8BulkState = BULK_CBW;
 
+}
 
