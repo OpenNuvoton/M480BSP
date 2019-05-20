@@ -46,6 +46,7 @@ void USBD_IRQHandler(void)
             /* Bus reset */
             USBD_ENABLE_USB();
             USBD_SwReset();
+            g_u32OutToggle = 0;
         }
         if (u32State & USBD_STATE_SUSPEND)
         {

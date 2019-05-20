@@ -126,6 +126,7 @@ void USBD_IRQHandler(void)
             USBD_ENABLE_USB();
             USBD_SwReset();
             g_u8Remove = 0;
+			g_u32OutToggle0 = g_u32OutToggle = g_u32OutSkip = 0;
         }
         if (u32State & USBD_STATE_SUSPEND)
         {
