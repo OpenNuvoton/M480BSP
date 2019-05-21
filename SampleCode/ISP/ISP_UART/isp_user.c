@@ -21,7 +21,8 @@ static uint16_t Checksum(unsigned char *buf, int len)
     int i;
     uint16_t c;
 
-    for (c = 0, i = 0 ; i < len; i++) {
+    for (c = 0, i = 0 ; i < len; i++)
+    {
         c += buf[i];
     }
 
@@ -33,12 +34,16 @@ static uint16_t CalCheckSum(uint32_t start, uint32_t len)
     int i;
     register uint16_t lcksum = 0;
 
-    for (i = 0; i < len; i += FMC_FLASH_PAGE_SIZE) {
+    for (i = 0; i < len; i += FMC_FLASH_PAGE_SIZE)
+    {
         ReadData(start + i, start + i + FMC_FLASH_PAGE_SIZE, (uint32_t *)aprom_buf);
 
-        if (len - i >= FMC_FLASH_PAGE_SIZE) {
+        if (len - i >= FMC_FLASH_PAGE_SIZE)
+        {
             lcksum += Checksum(aprom_buf, FMC_FLASH_PAGE_SIZE);
-        } else {
+        }
+        else
+        {
             lcksum += Checksum(aprom_buf, len - i);
         }
     }
@@ -65,29 +70,41 @@ int ParseCmd(unsigned char *buffer, uint8_t len)
     regcnf0 = *(uint32_t *)(response + 8);
     security = regcnf0 & 0x2;
 
-    if (lcmd == CMD_SYNC_PACKNO) {
+    if (lcmd == CMD_SYNC_PACKNO)
+    {
         g_packno = inpw(pSrc);
     }
 
-    if ((lcmd) && (lcmd != CMD_RESEND_PACKET)) {
+    if ((lcmd) && (lcmd != CMD_RESEND_PACKET))
+    {
         gcmd = lcmd;
     }
 
-    if (lcmd == CMD_GET_FWVER) {
+    if (lcmd == CMD_GET_FWVER)
+    {
         response[8] = FW_VERSION;//version 2.3
-    } else if (lcmd == CMD_GET_DEVICEID) {
+    }
+    else if (lcmd == CMD_GET_DEVICEID)
+    {
         outpw(response + 8, SYS->PDID);
         goto out;
-    } else if (lcmd == CMD_RUN_APROM || lcmd == CMD_RUN_LDROM || lcmd == CMD_RESET) {
+    }
+    else if (lcmd == CMD_RUN_APROM || lcmd == CMD_RUN_LDROM || lcmd == CMD_RESET)
+    {
         outpw(&SYS->RSTSTS, 3);//clear bit
 
         /* Set BS */
-        if (lcmd == CMD_RUN_APROM) {
+        if (lcmd == CMD_RUN_APROM)
+        {
             i = (FMC->ISPCTL & 0xFFFFFFFC);
-        } else if (lcmd == CMD_RUN_LDROM) {
+        }
+        else if (lcmd == CMD_RUN_LDROM)
+        {
             i = (FMC->ISPCTL & 0xFFFFFFFC);
             i |= 0x00000002;
-        } else {
+        }
+        else
+        {
             i = (FMC->ISPCTL & 0xFFFFFFFE);//ISP disable
         }
 
@@ -96,34 +113,48 @@ int ParseCmd(unsigned char *buffer, uint8_t len)
 
         /* Trap the CPU */
         while (1);
-    } else if (lcmd == CMD_CONNECT) {
+    }
+    else if (lcmd == CMD_CONNECT)
+    {
         g_packno = 1;
         goto out;
-    } else if ((lcmd == CMD_UPDATE_APROM) || (lcmd == CMD_ERASE_ALL)) {
+    }
+    else if ((lcmd == CMD_UPDATE_APROM) || (lcmd == CMD_ERASE_ALL))
+    {
         EraseAP(FMC_APROM_BASE, (g_apromSize < g_dataFlashAddr) ? g_apromSize : g_dataFlashAddr); // erase APROM // g_dataFlashAddr, g_apromSize
 
-        if (lcmd == CMD_ERASE_ALL) { //erase data flash
+        if (lcmd == CMD_ERASE_ALL)   //erase data flash
+        {
             EraseAP(g_dataFlashAddr, g_dataFlashSize);
             *(uint32_t *)(response + 8) = regcnf0 | 0x02;
             UpdateConfig((uint32_t *)(response + 8), NULL);
         }
 
         bUpdateApromCmd = TRUE;
-    } else if (lcmd == CMD_GET_FLASHMODE) {
+    }
+    else if (lcmd == CMD_GET_FLASHMODE)
+    {
         //return 1: APROM, 2: LDROM
         outpw(response + 8, (FMC->ISPCTL & 0x2) ? 2 : 1);
     }
 
-    if ((lcmd == CMD_UPDATE_APROM) || (lcmd == CMD_UPDATE_DATAFLASH)) {
-        if (lcmd == CMD_UPDATE_DATAFLASH) {
+    if ((lcmd == CMD_UPDATE_APROM) || (lcmd == CMD_UPDATE_DATAFLASH))
+    {
+        if (lcmd == CMD_UPDATE_DATAFLASH)
+        {
             StartAddress = g_dataFlashAddr;
 
-            if (g_dataFlashSize) { //g_dataFlashAddr
+            if (g_dataFlashSize)   //g_dataFlashAddr
+            {
                 EraseAP(g_dataFlashAddr, g_dataFlashSize);
-            } else {
+            }
+            else
+            {
                 goto out;
             }
-        } else {
+        }
+        else
+        {
             StartAddress = 0;
         }
 
@@ -133,21 +164,27 @@ int ParseCmd(unsigned char *buffer, uint8_t len)
         srclen -= 8;
         StartAddress_bak = StartAddress;
         TotalLen_bak = TotalLen;
-    } else if (lcmd == CMD_UPDATE_CONFIG) {
-        if ((security == 0) && (!bUpdateApromCmd)) { //security lock
+    }
+    else if (lcmd == CMD_UPDATE_CONFIG)
+    {
+        if ((security == 0) && (!bUpdateApromCmd))   //security lock
+        {
             goto out;
         }
 
         UpdateConfig((uint32_t *)(pSrc), (uint32_t *)(response + 8));
         GetDataFlashInfo(&g_dataFlashAddr, &g_dataFlashSize);
         goto out;
-    } else if (lcmd == CMD_RESEND_PACKET) { //for APROM&Data flash only
+    }
+    else if (lcmd == CMD_RESEND_PACKET)     //for APROM&Data flash only
+    {
         uint32_t PageAddress;
         StartAddress -= LastDataLen;
         TotalLen += LastDataLen;
         PageAddress = StartAddress & (0x100000 - FMC_FLASH_PAGE_SIZE);
 
-        if (PageAddress >= Config0) {
+        if (PageAddress >= Config0)
+        {
             goto out;
         }
 
@@ -155,15 +192,18 @@ int ParseCmd(unsigned char *buffer, uint8_t len)
         FMC_Erase_User(PageAddress);
         WriteData(PageAddress, StartAddress, (uint32_t *)aprom_buf);
 
-        if ((StartAddress % FMC_FLASH_PAGE_SIZE) >= (FMC_FLASH_PAGE_SIZE - LastDataLen)) {
+        if ((StartAddress % FMC_FLASH_PAGE_SIZE) >= (FMC_FLASH_PAGE_SIZE - LastDataLen))
+        {
             FMC_Erase_User(PageAddress + FMC_FLASH_PAGE_SIZE);
         }
 
         goto out;
     }
 
-    if ((gcmd == CMD_UPDATE_APROM) || (gcmd == CMD_UPDATE_DATAFLASH)) {
-        if (TotalLen < srclen) {
+    if ((gcmd == CMD_UPDATE_APROM) || (gcmd == CMD_UPDATE_DATAFLASH))
+    {
+        if (TotalLen < srclen)
+        {
             srclen = TotalLen;//prevent last package from over writing
         }
 
@@ -174,7 +214,8 @@ int ParseCmd(unsigned char *buffer, uint8_t len)
         StartAddress += srclen;
         LastDataLen =  srclen;
 
-        if (TotalLen == 0) {
+        if (TotalLen == 0)
+        {
             lcksum = CalCheckSum(StartAddress_bak, TotalLen_bak);
             outps(response + 8, lcksum);
         }

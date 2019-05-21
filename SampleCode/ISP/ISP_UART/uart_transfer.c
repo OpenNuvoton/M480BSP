@@ -29,16 +29,21 @@ void UART0_IRQHandler(void)
     /*----- Determine interrupt source -----*/
     uint32_t u32IntSrc = UART0->INTSTS;
 
-    if (u32IntSrc & 0x11) { //RDA FIFO interrupt & RDA timeout interrupt
-        while (((UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0) && (bufhead < MAX_PKT_SIZE)) {    //RX fifo not empty
+    if (u32IntSrc & 0x11)   //RDA FIFO interrupt & RDA timeout interrupt
+    {
+        while (((UART0->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0) && (bufhead < MAX_PKT_SIZE))      //RX fifo not empty
+        {
             uart_rcvbuf[bufhead++] = UART0->DAT;
         }
     }
 
-    if (bufhead == MAX_PKT_SIZE) {
+    if (bufhead == MAX_PKT_SIZE)
+    {
         bUartDataReady = TRUE;
         bufhead = 0;
-    } else if (u32IntSrc & 0x10) {
+    }
+    else if (u32IntSrc & 0x10)
+    {
         bufhead = 0;
     }
 }
@@ -48,7 +53,8 @@ void PutString(void)
 {
     uint32_t i;
 
-    for (i = 0; i < MAX_PKT_SIZE; i++) {
+    for (i = 0; i < MAX_PKT_SIZE; i++)
+    {
         while ((UART0->FIFOSTS & UART_FIFOSTS_TXFULL_Msk));
 
         UART0->DAT = response_buff[i];
