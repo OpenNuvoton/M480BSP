@@ -251,6 +251,25 @@ void SYS_SetPowerLevel(uint32_t u32PowerLevel)
     SYS->PLCTL = (SYS->PLCTL & (~SYS_PLCTL_PLSEL_Msk)) | (u32PowerLevel);
 }
 
+/**
+  * @brief      Set Reference Voltage
+  * @param[in]  u32VRefCTL is reference voltage setting. Including :
+  *             - \ref SYS_VREFCTL_VREF_PIN
+  *             - \ref SYS_VREFCTL_VREF_1_6V
+  *             - \ref SYS_VREFCTL_VREF_2_0V
+  *             - \ref SYS_VREFCTL_VREF_2_5V
+  *             - \ref SYS_VREFCTL_VREF_3_0V
+  *             - \ref SYS_VREFCTL_VREF_AVDD
+  * @return     None
+  * @details    This function select reference voltage.
+  *             The register write-protection function should be disabled before using this function.
+  */
+void SYS_SetVRef(uint32_t u32VRefCTL)
+{
+    /* Set reference voltage */
+    SYS->VREFCTL = (SYS->VREFCTL & (~SYS_VREFCTL_VREFCTL_Msk)) | (u32VRefCTL);
+}
+
 /*@}*/ /* end of group SYS_EXPORTED_FUNCTIONS */
 
 /*@}*/ /* end of group SYS_Driver */

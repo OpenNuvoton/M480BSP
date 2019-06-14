@@ -52,6 +52,9 @@ void SYS_Init(void)
 
     /* Enable temperature sensor */
     SYS->IVSCTL |= SYS_IVSCTL_VTEMPEN_Msk;
+
+    /* Set reference voltage to external pin (3.3V) */
+    SYS_SetVRef(SYS_VREFCTL_VREF_PIN);
 }
 
 void UART0_Init()
@@ -72,8 +75,8 @@ void EADC_FunctionTest()
     /* Set input mode as single-end and enable the A/D converter */
     EADC_Open(EADC, EADC_CTL_DIFFEN_SINGLE_END);
 
-    /* Set sample module 17 external sampling time to 0xF */
-    EADC_SetExtendSampleTime(EADC, 17, 0xF);
+    /* Set sample module 17 external sampling time to 0x3F */
+    EADC_SetExtendSampleTime(EADC, 17, 0x3F);
 
     /* Clear the A/D ADINT0 interrupt flag for safe */
     EADC_CLR_INT_FLAG(EADC, EADC_STATUS2_ADIF0_Msk);
@@ -95,7 +98,14 @@ void EADC_FunctionTest()
 
     /* Get the conversion result of the sample module 17 */
     i32ConversionData = EADC_GET_CONV_DATA(EADC, 17);
-    printf("Conversion result of temperature sensor: 0x%X (%d)\n\n", i32ConversionData, i32ConversionData);
+    printf("Conversion result of temperature sensor: 0x%X (%d)\n", i32ConversionData, i32ConversionData);
+
+    /* The equation of converting to real temperature is as below
+     * (25+(((float)i32ConversionData/4095*3300)-675)/(-1.83)), 3300 means ADCVREF=3.3V
+     * If ADCREF set to 1.6V, the equation should be updated as below
+     * (25+(((float)i32ConversionData/4095*1600)-675)/(-1.83)), 1600 means ADCVREF=1.6V
+     */
+    printf("Current Temperature = %2.1f\n\n", (25+(((float)i32ConversionData/4095*3300)-675)/(-1.83)));
 }
 
 

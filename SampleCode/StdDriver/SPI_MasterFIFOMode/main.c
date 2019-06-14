@@ -59,6 +59,9 @@ void SYS_Init(void)
     /* Enable SPI0 clock pin (PA2) schmitt trigger */
     PA->SMTEN |= GPIO_SMTEN_SMTEN2_Msk;
 
+    /* Enable SPI0 I/O high slew rate */
+    GPIO_SetSlewCtl(PA, 0xF, GPIO_SLEWCTL_HIGH);
+
     /* Update System Core Clock */
     /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock and CyclesPerUs automatically. */
     SystemCoreClockUpdate();

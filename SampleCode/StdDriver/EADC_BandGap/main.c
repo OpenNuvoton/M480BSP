@@ -49,6 +49,9 @@ void SYS_Init(void)
     /* Set GPB multi-function pins for UART0 RXD and TXD */
     SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
     SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
+
+    /* Set reference voltage to external pin (3.3V) */
+    SYS_SetVRef(SYS_VREFCTL_VREF_PIN);
 }
 
 void UART0_Init()
@@ -94,6 +97,13 @@ void EADC_FunctionTest()
     /* Get the conversion result of the sample module 16 */
     i32ConversionData = EADC_GET_CONV_DATA(EADC, 16);
     printf("Conversion result of Band-gap: 0x%X (%d)\n\n", i32ConversionData, i32ConversionData);
+
+    /* The equation of converting to real temperature is as below
+     * i32ConversionData/4095*3.3, 3.3 means ADCVREF=3.3V
+     * If ADCREF set to 1.6V, the equation should be updated as below
+     * i32ConversionData/4095*1.6, 1.6 means ADCVREF=1.6V
+     */
+    printf("Band-gap = %.2f\n\n", ((float)i32ConversionData/4095)*(float)(3.3));
 }
 
 void EADC00_IRQHandler(void)
