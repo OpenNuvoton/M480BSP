@@ -23,7 +23,7 @@
 
 #if defined(CAN2)
 static uint8_t gu8LockCanIf[3ul][2ul] = {0ul};    /* The chip has three CANs. */
-#if defined(CAN1)
+#elif defined(CAN1)
 static uint8_t gu8LockCanIf[2ul][2ul] = {0ul};    /* The chip has two CANs. */
 #elif defined(CAN0) || defined(CAN)
 static uint8_t gu8LockCanIf[1ul][2ul] = {0ul};    /* The chip only has one CAN. */
