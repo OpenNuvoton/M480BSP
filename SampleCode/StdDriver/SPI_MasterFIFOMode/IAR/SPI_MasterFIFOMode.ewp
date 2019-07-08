@@ -586,7 +586,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>SPI_MasterFifoMode.bin</state>
+          <state>SPI_MasterFIFOMode.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -949,6 +949,9 @@
     <name>Library</name>
     <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\clk.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\gpio.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\retarget.c</name>

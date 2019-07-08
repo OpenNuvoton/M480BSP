@@ -951,6 +951,9 @@
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\clk.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\gpio.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\pdma.c</name>
     </file>
     <file>
