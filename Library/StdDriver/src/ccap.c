@@ -285,19 +285,6 @@ void CCAP_SetPacketStride(uint32_t u32Stride )
     CCAP->STRIDE = (CCAP->STRIDE & ~CCAP_STRIDE_PKTSTRIDE_Msk) | u32Stride;
 }
 
-/**
- * @brief     Set Planar Frame Output Pixel Stride Width.
- *
- * @param[in] u32Stride : set PLNSTRIDE register, It should be 0x0 ~ 0x3FFF
- *
- * @return    None
- *
- * @details  Set Planar Frame Output Pixel Stride Width
- */
-void CCAP_SetPlanarStride(uint32_t u32Stride )
-{
-    CCAP->STRIDE = (CCAP->STRIDE & ~CCAP_STRIDE_PLNSTRIDE_Msk) | u32Stride<<CCAP_STRIDE_PLNSTRIDE_Pos;
-}
 
 /*@}*/ /* end of group CCAP_EXPORTED_FUNCTIONS */
 
