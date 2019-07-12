@@ -27,8 +27,7 @@ typedef struct {
 
 
     /**
-     * CTL
-     * ===================================================================================================
+     * @var CCAP_T::CTL
      * Offset: 0x00  Camera Capture Interface Control Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
@@ -54,12 +53,7 @@ typedef struct {
      * |[24]    |VPRST     |Capture Interface Reset
      * |        |          |0 = Capture interface reset Disabled.
      * |        |          |1 = Capture interface reset Enabled.
-    */
-    __IO uint32_t CTL;
-
-    /**
-     * PAR
-     * ===================================================================================================
+     * @var CCAP_T::PAR
      * Offset: 0x04  Camera Capture Interface Parameter Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
@@ -103,12 +97,7 @@ typedef struct {
      * |        |          |Hardware will tag field0 or field1 by vertical blanking instead of FIELD flag in CCIR-656 mode.
      * |        |          |0 = Field by blank Disabled.
      * |        |          |1 = Field by blank Enabled.
-    */
-    __IO uint32_t PAR;
-
-    /**
-     * INT
-     * ===================================================================================================
+     * @var CCAP_T::INT
      * Offset: 0x08  Camera Capture Interface Interrupt Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
@@ -133,12 +122,7 @@ typedef struct {
      * |[19]    |ADDRMIEN  |Address Match Interrupt Enable
      * |        |          |0 = Address match interrupt Disabled.
      * |        |          |1 = Address match interrupt Enabled.
-    */
-    __IO uint32_t INT;
-
-    /**
-     * POSTERIZE
-     * ===================================================================================================
+     * @var CCAP_T::POSTERIZE
      * Offset: 0x0C  YUV Component Posterizing Factor Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
@@ -149,12 +133,7 @@ typedef struct {
      * |        |          |Final_U_Out = Original_U[7:0] & U_Posterizing_Factor.
      * |[16:23] |YCOMP     |Y Component Posterizing Factor
      * |        |          |Final_Y_Out = Original_Y[7:0] & Y_Posterizing_Factor.
-    */
-    __IO uint32_t POSTERIZE;
-
-    /**
-     * MD
-     * ===================================================================================================
+     * @var CCAP_T::MD
      * Offset: 0x10  Motion Detection Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
@@ -174,70 +153,40 @@ typedef struct {
      * |        |          |10 = Every 3 frame.
      * |        |          |11 = Every 4 frame.
      * |[16:20] |MDTHR     |Motion Detection Differential Threshold
-    */
-    __IO uint32_t MD;
-
-    /**
-     * MDADDR
-     * ===================================================================================================
+     * @var CCAP_T::MDADDR
      * Offset: 0x14  Motion Detection Output Address Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[0:31]  |MDADDR    |Motion Detection Output Address Register (Word Alignment)
-    */
-    __IO uint32_t MDADDR;
-
-    /**
-     * MDYADDR
-     * ===================================================================================================
+     * @var CCAP_T::MDYADDR
      * Offset: 0x18  Motion Detection Temp Y Output Address Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[0:31]  |MDYADDR   |Motion Detection Temp Y Output Address Register (Word Alignment)
-    */
-    __IO uint32_t MDYADDR;
-
-    /**
-     * SEPIA
-     * ===================================================================================================
+     * @var CCAP_T::SEPIA
      * Offset: 0x1C  Sepia Effect Control Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[0:7]   |VCOMP     |Define the constant V component while Sepia color effect is turned on.
      * |[8:15]  |UCOMP     |Define the constant U component while Sepia color effect is turned on.
-    */
-    __IO uint32_t SEPIA;
-
-    /**
-     * CWSP
-     * ===================================================================================================
+     * @var CCAP_T::CWSP
      * Offset: 0x20  Cropping Window Starting Address Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[0:11]  |CWSADDRH  |Cropping Window Horizontal Starting Address
      * |[16:26] |CWSADDRV  |Cropping Window Vertical Starting Address
-    */
-    __IO uint32_t CWSP;
-
-    /**
-     * CWS
-     * ===================================================================================================
+     * @var CCAP_T::CWS
      * Offset: 0x24  Cropping Window Size Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[0:11]  |CIWW      |Cropping Image Window Width
      * |[16:26] |CIWH      |Cropping Image Window Height
-    */
-    __IO uint32_t CWS;
-
-    /**
-     * PKTSL
-     * ===================================================================================================
+     * @var CCAP_T::PKTSL
      * Offset: 0x28  Packet Scaling Vertical/Horizontal Factor Register (LSB)
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
@@ -258,12 +207,7 @@ typedef struct {
      * |[24:31] |PKTSVNL   |Packet Scaling Vertical Factor N (Lower 8-Bit)
      * |        |          |Specify the lower 8-bit of numerator part (N) of the vertical scaling factor.
      * |        |          |The lower 8-bit will be cascaded with higher 8-bit (PKDSVNH) to form a 16-bit numerator of vertical factor
-    */
-    __IO uint32_t PKTSL;
-
-    /**
-     * PLNSL
-     * ===================================================================================================
+     * @var CCAP_T::PLNSL
      * Offset: 0x2C  Planar Scaling Vertical/Horizontal Factor Register (LSB)
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
@@ -284,12 +228,7 @@ typedef struct {
      * |[24:31] |PLNSVNL   |Planar Scaling Vertical Factor N (Lower 8-Bit)
      * |        |          |Specify the lower 8-bit of numerator part (N) of the vertical scaling factor.
      * |        |          |The lower 8-bit will be cascaded with higher 8-bit (PNDSVNH) to form a 16-bit numerator of vertical factor.
-    */
-    __IO uint32_t PLNSL;
-
-    /**
-     * FRCTL
-     * ===================================================================================================
+     * @var CCAP_T::FRCTL
      * Offset: 0x30  Scaling Frame Rate Factor Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
@@ -300,12 +239,7 @@ typedef struct {
      * |        |          |Note: The value of N must be equal to or less than M.
      * |[8:13]  |FRN       |Scaling Frame Rate Factor N
      * |        |          |Specify the denominator part (N) of the frame rate scaling factor.
-    */
-    __IO uint32_t FRCTL;
-
-    /**
-     * STRIDE
-     * ===================================================================================================
+     * @var CCAP_T::STRIDE
      * Offset: 0x34  Frame Output Pixel Stride Width Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
@@ -314,15 +248,7 @@ typedef struct {
      * |        |          |The output pixel stride size of packet pipe.
      * |[16:29] |PLNSTRIDE |Planar Frame Output Pixel Stride Width
      * |        |          |The output pixel stride size of planar pipe.
-    */
-    __IO uint32_t STRIDE;
-    /// @cond HIDDEN_SYMBOLS
-    uint32_t RESERVE0[1];
-    /// @endcond //HIDDEN_SYMBOLS
-
-    /**
-     * FIFOTH
-     * ===================================================================================================
+     * @var CCAP_T::FIFOTH
      * Offset: 0x3C  FIFO Threshold Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
@@ -332,34 +258,21 @@ typedef struct {
      * |[16:20] |PLNYFTH   |Planar Y FIFO Threshold
      * |[24:28] |PKTFTH    |Packet FIFO Threshold
      * |[31]    |OVF       |FIFO Overflow Flag
-    */
-    __IO uint32_t FIFOTH;
-
-    /**
-     * CMPADDR
-     * ===================================================================================================
+     * @var CCAP_T::CMPADDR
      * Offset: 0x40  Compare Memory Base Address Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[0:31]  |CMPADDR   |Compare Memory Base Address
      * |        |          |Word aligns address; ignore the bits [1:0].
-    */
-    __IO uint32_t CMPADDR;
-    /**
-     * LUMA_Y1_THD
-     * ===================================================================================================
+     * @var CCAP_T::LUMA_Y1_THD
      * Offset: 0x44  Luminance Y8 to Y1 Threshold Value Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field          |Descriptions
      * | :----: | :-----------: | :---- |
      * |[0:8]   |LUMA_Y1_THRESH |Luminance Y8 to Y1 Threshold Value
      * |        |               |Specify the 8-bit threshold value for the luminance Y bit-8 to the luminance Y 1-bit conversion.
-    */
-    __IO uint32_t LUMA_Y1_THD;
-    /**
-     * PKTSM
-     * ===================================================================================================
+     * @var CCAP_T::PKTSM
      * Offset: 0x48  Packet Scaling Vertical/Horizontal Factor Register (MSB)
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
@@ -376,21 +289,38 @@ typedef struct {
      * |[24:31] |PKTSVNH   |Packet Scaling Vertical Factor N (Higher 8-Bit)
      * |        |          |Specify the higher 8-bit of numerator part (N) of the vertical scaling factor.
      * |        |          |Please refer to the register CCAP_PKTSL?to check the cooperation between these two registers.
-    */
-    __IO uint32_t PKTSM;
-    /// @cond HIDDEN_SYMBOLS
-    uint32_t RESERVE2[5];
-    /// @endcond //HIDDEN_SYMBOLS
-    /**
-     * PKTBA0
-     * ===================================================================================================
+     * @var CCAP_T::PKTBA0
      * Offset: 0x60  System Memory Packet Base Address 0 Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[0:31]  |BASEADDR  |System Memory Packet Base Address 0
      * |        |          |Word aligns address; ignore the bits [1:0].
-    */
+     */
+    __IO uint32_t CTL;
+    __IO uint32_t PAR;
+    __IO uint32_t INT;
+    __IO uint32_t POSTERIZE;
+    __IO uint32_t MD;
+    __IO uint32_t MDADDR;
+    __IO uint32_t MDYADDR;
+    __IO uint32_t SEPIA;
+    __IO uint32_t CWSP;
+    __IO uint32_t CWS;
+    __IO uint32_t PKTSL;
+    __IO uint32_t PLNSL;
+    __IO uint32_t FRCTL;
+    __IO uint32_t STRIDE;
+    /// @cond HIDDEN_SYMBOLS
+    uint32_t RESERVE0[1];
+    /// @endcond //HIDDEN_SYMBOLS
+    __IO uint32_t FIFOTH;
+    __IO uint32_t CMPADDR;
+    __IO uint32_t LUMA_Y1_THD;
+    __IO uint32_t PKTSM;
+    /// @cond HIDDEN_SYMBOLS
+    uint32_t RESERVE2[5];
+    /// @endcond //HIDDEN_SYMBOLS
     __IO uint32_t PKTBA0;
 } CCAP_T;
 
