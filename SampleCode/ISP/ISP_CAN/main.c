@@ -14,8 +14,8 @@
 #define V6M_AIRCR_VECTKEY_DATA            0x05FA0000UL
 #define V6M_AIRCR_SYSRESETREQ             0x00000004UL
 #define CAN_BAUD_RATE                     500000
-#define Master_ISP_ID                     0x800
-#define Device0_ISP_ID                    0x802
+#define Master_ISP_ID                     0x487
+#define Device0_ISP_ID                    0x784
 #define CAN_ISP_DtatLength                0x08
 #define CAN_RETRY_COUNTS                  0x1fffffff
 
