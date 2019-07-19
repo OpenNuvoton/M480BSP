@@ -586,7 +586,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>I2C_Slave_PDMA.bin</state>
+          <state>i2c_pdma_trx.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -640,7 +640,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>I2C_Slave_PDMA.out</state>
+          <state>i2c_pdma_trx.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>

@@ -142,7 +142,7 @@
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="Release">
-			<resource resourceType="PROJECT" workspacePath="/I2C_PDMA"/>
+			<resource resourceType="PROJECT" workspacePath="/I2C_PDMA_TRX"/>
 		</configuration>
 	</storageModule>
 </cproject>

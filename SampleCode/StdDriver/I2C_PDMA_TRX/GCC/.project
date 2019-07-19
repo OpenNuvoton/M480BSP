@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>I2C_Slave_PDMA</name>
+	<name>I2C_PDMA_TRX</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -66,7 +66,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505117074015</id>
+			<id>1505116612627</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -75,7 +75,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505117074023</id>
+			<id>1505116612633</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -84,7 +84,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505117074030</id>
+			<id>1505116612639</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -93,7 +93,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505117074036</id>
+			<id>1505116612645</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -102,7 +102,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505117074043</id>
+			<id>1505116612651</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -111,12 +111,21 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1505117074051</id>
+			<id>1505116612657</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-true-false-pdma.c</arguments>
+				<arguments>1.0-name-matches-false-false-pdma.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1505116612665</id>
+			<name>Library/Library</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-gpio.c</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>

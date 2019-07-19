@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\i2c_pdma.ewp</path>
+    <path>$WS_DIR$\i2c_pdma_trx.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

@@ -121,7 +121,7 @@ void UART_TEST_HANDLE()
         printf("\nInput:");
 
         /* Get all the input characters */
-        while(UART_IS_RX_READY(UART0))
+        while(UART_GET_RX_EMPTY(UART0) == 0)
         {
             /* Get the character from UART Buffer */
             u8InChar = UART_READ(UART0);
