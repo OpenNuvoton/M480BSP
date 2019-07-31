@@ -630,9 +630,9 @@ void USBD_CtrlOut(void)
     uint32_t u32Size;
     uint32_t addr;
 
-    if (g_usbd_CtrlOutToggle != (USBD->EPSTS0 & 0xf0))
+    if (g_usbd_CtrlOutToggle != (USBD->EPSTS0 & USBD_EPSTS0_EPSTS1_Msk))
     {
-        g_usbd_CtrlOutToggle = USBD->EPSTS0 & 0xf0;
+        g_usbd_CtrlOutToggle = USBD->EPSTS0 & USBD_EPSTS0_EPSTS1_Msk;
         if (g_usbd_CtrlOutSize < g_usbd_CtrlOutSizeLimit)
         {
             u32Size = USBD_GET_PAYLOAD_LEN(EP1);

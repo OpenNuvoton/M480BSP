@@ -238,7 +238,7 @@ void EP2_Handler(void)
 void EP3_Handler(void)
 {
     /* Bulk OUT */
-    if (g_u32OutToggle == (USBD->EPSTS0 & 0xf000))
+    if (g_u32OutToggle == (USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk))
     {
         g_u32OutSkip = 1;
         USBD_SET_PAYLOAD_LEN(EP3, EP3_MAX_PKT_SIZE);
@@ -246,7 +246,7 @@ void EP3_Handler(void)
     else
     {
         g_u8EP3Ready = 1;
-        g_u32OutToggle = USBD->EPSTS0 & 0xf000;
+        g_u32OutToggle = USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk;
         g_u32OutSkip = 0;
     }
 }

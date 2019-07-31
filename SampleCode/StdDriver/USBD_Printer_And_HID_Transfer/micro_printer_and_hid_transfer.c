@@ -113,7 +113,7 @@ void USBD_IRQHandler(void)
         {
             /* Clear event flag */
             USBD_CLR_INT_FLAG(USBD_INTSTS_EP3);
-            if (g_u32OutToggle == (USBD->EPSTS0 & 0xf000))
+            if (g_u32OutToggle == (USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk))
             {
                 USBD_SET_PAYLOAD_LEN(EP3, EP3_MAX_PKT_SIZE);
             }
@@ -121,7 +121,7 @@ void USBD_IRQHandler(void)
             {
                 // Bulk Out -> receive printer data
                 PTR_Data_Receive();
-                g_u32OutToggle = USBD->EPSTS0 & 0xf000;
+                g_u32OutToggle = USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk;
             }
         }
 
