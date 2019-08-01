@@ -286,11 +286,6 @@ void UI2C_LB_SlaveTRx(uint32_t u32Status)
 
         UI2C_SET_CONTROL_REG(UI2C1, (UI2C_CTL_PTRG | UI2C_CTL_AA));
     }
-    else if((u32Status & UI2C_PROTSTS_STORIF_Msk) == UI2C_PROTSTS_STORIF_Msk)
-    {
-        UI2C_CLR_PROT_INT_FLAG(UI2C1, UI2C_PROTSTS_STORIF_Msk);               /* Clear STOP INT Flag */
-        UI2C_SET_CONTROL_REG(UI2C1, UI2C_CTL_PTRG);
-    }
 }
 
 void SYS_Init(void)
