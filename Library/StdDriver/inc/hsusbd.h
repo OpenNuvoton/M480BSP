@@ -116,7 +116,7 @@ typedef struct s_hsusbd_info
 
 /** @cond HIDDEN_SYMBOLS */
 extern uint32_t g_u32HsEpStallLock;
-extern uint8_t g_hsusbd_Configured;
+extern uint8_t volatile g_hsusbd_Configured;
 extern uint8_t g_hsusbd_ShortPacket;
 extern uint8_t g_hsusbd_CtrlZero;
 extern uint8_t g_hsusbd_UsbAddr;

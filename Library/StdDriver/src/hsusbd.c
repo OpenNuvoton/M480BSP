@@ -45,7 +45,7 @@ static uint8_t g_hsusbd_buf[12];
 static uint8_t g_hsusbd_buf[12] __attribute__((aligned(4)));
 #endif
 
-uint8_t g_hsusbd_Configured = 0ul;
+uint8_t volatile g_hsusbd_Configured = 0ul;
 uint8_t g_hsusbd_CtrlZero = 0ul;
 uint8_t g_hsusbd_UsbAddr = 0ul;
 uint8_t g_hsusbd_ShortPacket = 0ul;
