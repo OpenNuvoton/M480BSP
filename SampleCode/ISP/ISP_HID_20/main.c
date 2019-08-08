@@ -70,21 +70,7 @@ int32_t main(void)
         goto _APROM;
     }
 
-    HSUSBD_ENABLE_PHY();
-
-    /* wait PHY clock ready */
-    while (1)
-    {
-        HSUSBD->EP[EPA].EPMPS = 0x20ul;
-
-        if (HSUSBD->EP[EPA].EPMPS == 0x20ul)
-        {
-            break;
-        }
-    }
-
-    /* Force SE0, and then clear it to connect*/
-    HSUSBD_SET_SE0();
+    HSUSBD_Open(NULL, NULL, NULL);
     /* Endpoint configuration */
     HID_Init();
     /* Enable USBD interrupt */
