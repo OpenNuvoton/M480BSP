@@ -137,7 +137,7 @@ extern "C"
   */
 #define USPI_SET_SS_HIGH(uspi) \
     do{ \
-        (uspi)->LINECTL |= (USPI_LINECTL_CTLOINV_Msk); \
+        (uspi)->LINECTL &= ~(USPI_LINECTL_CTLOINV_Msk); \
         (uspi)->PROTCTL = ((uspi)->PROTCTL & ~(USPI_PROTCTL_AUTOSS_Msk | USPI_PROTCTL_SS_Msk)); \
     }while(0)
 
