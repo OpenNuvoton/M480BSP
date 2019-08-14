@@ -379,7 +379,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>Stack_Size=0x800 Heap_Size=0x1000</Define>
+              <Define>Stack_Size=0x800 Heap_Size=0x4000</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

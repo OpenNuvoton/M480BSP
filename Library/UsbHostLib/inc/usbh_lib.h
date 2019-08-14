@@ -88,7 +88,9 @@ extern "C"
 #define HID_RET_OUT_OF_MEMORY       -1084  /*!< Out of memory.                                  */
 #define HID_RET_NOT_SUPPORTED       -1085  /*!< Function not supported.                         */
 #define HID_RET_EP_NOT_FOUND        -1086  /*!< Endpoint not found.                             */
+#define HID_RET_PARSING             -1087  /*!< Failed to parse HID descriptor                  */
 #define HID_RET_XFER_IS_RUNNING     -1089  /*!< The transfer has been enabled.                  */
+#define HID_RET_REPORT_NOT_FOUND    -1090  /*!< The transfer has been enabled.                  */
 
 #define UAC_RET_OK                   0     /*!< Return with no errors.                          */
 #define UAC_RET_DEV_NOT_FOUND       -2001  /*!< Audio Class device not found or removed.        */

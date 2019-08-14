@@ -19,6 +19,11 @@
 
 /// @cond HIDDEN_SYMBOLS
 
+HID_MOUSE_FUNC *_mouse_callback = NULL;
+HID_KEYBOARD_FUNC  *_keyboard_callback = NULL;
+
+#include "hid_parser.c"
+
 #define USB_CTRL_TIMEOUT_MS        100
 
 
@@ -164,6 +169,63 @@ int32_t  usbh_hid_set_report(HID_DEV_T *hdev, int rtp_typ, int rtp_id,
     }
     return (int)xfer_len;
 }
+
+
+/// @cond HIDDEN_SYMBOLS
+
+static void  led_ctrl_irq(UTR_T *utr)
+{
+    // HID_DBGMSG("Set LED control xfer done.\n");
+    utr->bIsTransferDone = 1;
+}
+
+int32_t  usbh_hid_set_report_non_blocking(HID_DEV_T *hdev, int rtp_typ, int rtp_id,
+        uint8_t *data, int len)
+{
+    IFACE_T    *iface;
+    UTR_T      *utr;
+    int        status;
+
+    if (!hdev || !hdev->iface)
+        return USBH_ERR_NOT_FOUND;
+
+    iface = (IFACE_T *)hdev->iface;
+
+    utr = hdev->rpd.utr_led;
+    if (utr == NULL)
+    {
+        utr = alloc_utr(iface->udev);
+        if (utr == NULL)
+            return USBH_ERR_MEMORY_OUT;
+        hdev->rpd.utr_led = utr;
+    }
+    else
+    {
+        if (utr->bIsTransferDone == 0)
+            return HID_RET_IO_ERR;        /* unlikely! the last LED control trnasfer is not completed */
+    }
+
+    utr->setup.bmRequestType = REQ_TYPE_OUT | REQ_TYPE_CLASS_DEV | REQ_TYPE_TO_IFACE;
+    utr->setup.bRequest   = HID_REPORT_SET;
+    utr->setup.wValue     = rtp_id + (rtp_typ << 8);
+    utr->setup.wIndex     = iface->if_num;
+    utr->setup.wLength    = len;
+
+    utr->buff = data;
+    utr->data_len = len;
+    utr->func = led_ctrl_irq;
+    utr->bIsTransferDone = 0;
+
+    status = iface->udev->hc_driver->ctrl_xfer(utr);
+    if (status < 0)
+    {
+        iface->udev->ep0.hw_pipe = NULL;
+        return status;
+    }
+    return 0;
+}
+
+/// @endcond HIDDEN_SYMBOLS
 
 
 /**
@@ -342,8 +404,18 @@ static void  hid_read_irq(UTR_T *utr)
     if (utr->status != 0)
     {
         HID_DBGMSG("hid_read_irq - has error: 0x%x\n", utr->status);
-        hdev->read_func(hdev, utr->ep->bEndpointAddress, utr->status, utr->buff, 0);
+        if (hdev->read_func)
+            hdev->read_func(hdev, utr->ep->bEndpointAddress, utr->status, utr->buff, 0);
         return;
+    }
+
+    if (hdev->bSubClassCode == HID_SUBCLASS_BOOT_DEVICE)
+    {
+        if (hdev->bProtocolCode == HID_PROTOCOL_MOUSE)
+            hid_parse_mouse_reports(hdev, utr->buff, utr->xfer_len);
+
+        if (hdev->bProtocolCode == HID_PROTOCOL_KEYBOARD)
+            hid_parse_keyboard_reports(hdev, utr->buff, utr->xfer_len);
     }
 
     if (hdev->read_func && utr->xfer_len)
@@ -354,7 +426,8 @@ static void  hid_read_irq(UTR_T *utr)
     if (ret)
     {
         HID_DBGMSG("hid_read_irq - failed to submit interrupt-in request (%d)", ret);
-        hdev->read_func(hdev, utr->ep->bEndpointAddress, ret, utr->buff, 0);
+        if (hdev->read_func)
+            hdev->read_func(hdev, utr->ep->bEndpointAddress, ret, utr->buff, 0);
         usbh_free_mem(utr->buff, utr->data_len);
         free_utr(utr);
     }
@@ -678,7 +751,28 @@ int32_t usbh_hid_stop_int_write(HID_DEV_T *hdev, uint8_t ep_addr)
     return ret;
 }
 
+/**
+ * @brief  Register the mouse event callback function to HID class driver.
+ *         Any mouse reports will be sent to user application via this callback.
+ *
+ * @param[in] func       Mouse event callback function
+ * @return   None
+ */
+void  usbh_hid_regitser_mouse_callback(HID_MOUSE_FUNC *func)
+{
+    _mouse_callback = func;
+}
 
-/*** (C) COPYRIGHT 2017 Nuvoton Technology Corp. ***/
+/**
+ * @brief  Register the keyboard event callback function to HID class driver.
+ *         Any keyboard reports will be sent to user application via this callback.
+ *
+ * @param[in] func     Keyboard event callback function
+ * @return   None
+ */
+void  usbh_hid_regitser_keyboard_callback(HID_KEYBOARD_FUNC *func)
+{
+    _keyboard_callback = func;
+}
 
 

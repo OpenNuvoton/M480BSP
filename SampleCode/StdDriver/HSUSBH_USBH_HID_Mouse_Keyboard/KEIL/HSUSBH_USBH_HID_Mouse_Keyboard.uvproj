@@ -7,9 +7,11 @@
 
   <Targets>
     <Target>
-      <TargetName>HSUSBH_USBH_UAC_HID</TargetName>
+      <TargetName>HSUSBH_USBH_HID_Mouse_Keyboard</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>M487JIDAE</Device>
@@ -45,7 +47,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\obj\</OutputDirectory>
-          <OutputName>HSUSBH_USBH_UAC_HID</OutputName>
+          <OutputName>HSUSBH_USBH_HID_Mouse_Keyboard</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -82,6 +84,8 @@
             <UserProg2Name>fromelf --text -c ".\obj\@L.axf" --output ".\obj\@L.txt"</UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopA1X>0</nStopA1X>
+            <nStopA2X>0</nStopA2X>
           </AfterMake>
           <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString></SVCSIdString>
@@ -143,10 +147,9 @@
             <RestoreToolbox>1</RestoreToolbox>
             <RestoreTracepoints>0</RestoreTracepoints>
             <RestoreSysVw>1</RestoreSysVw>
-            <UsePdscDebugDescription>1</UsePdscDebugDescription>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>15</TargetSelection>
+          <TargetSelection>19</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -220,12 +223,14 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
             <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
+            <nSecure>0</nSecure>
             <RoSelD>3</RoSelD>
             <RwSelD>3</RwSelD>
             <CodeSel>0</CodeSel>
@@ -359,7 +364,15 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
+            <v6Lang>1</v6Lang>
+            <v6LangP>1</v6LangP>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
+            <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -377,9 +390,10 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
+            <uClangAs>0</uClangAs>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>Stack_Size=0x800 Heap_Size=0x8000</Define>
+              <Define>Stack_Size=0x800 Heap_Size=0x4000</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -426,6 +440,11 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>keycode_xlate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\keycode_xlate.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -486,26 +505,6 @@
               <FileName>usb_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\Library\UsbHostLib\src_core\usb_core.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>UsbHostLib_UAC</GroupName>
-          <Files>
-            <File>
-              <FileName>uac_core.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\UsbHostLib\src_uac\uac_core.c</FilePath>
-            </File>
-            <File>
-              <FileName>uac_driver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\UsbHostLib\src_uac\uac_driver.c</FilePath>
-            </File>
-            <File>
-              <FileName>uac_parser.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\Library\UsbHostLib\src_uac\uac_parser.c</FilePath>
             </File>
           </Files>
         </Group>
