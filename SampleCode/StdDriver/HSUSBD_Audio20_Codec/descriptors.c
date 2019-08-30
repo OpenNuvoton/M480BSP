@@ -415,6 +415,13 @@ uint32_t gu32UsbHidReportLen[3] =
     0,
 };
 
+uint32_t gu32ConfigHidDescIdx[3] =
+{
+    0,
+    0,
+    0
+};
+
 S_HSUSBD_INFO_T gsHSInfo =
 {
     gu8DeviceDescriptor,
@@ -426,7 +433,6 @@ S_HSUSBD_INFO_T gsHSInfo =
     gu8ConfigDescriptor,
     gu8UsbHidReport,
     gu32UsbHidReportLen,
-    0,
-    0,
+    gu32ConfigHidDescIdx,
 };
 
