@@ -9,12 +9,6 @@
 #include <string.h>
 #include "NuMicro.h"
 
-#define SRAM_CODE_EXE_ADDR  0x20010000
-#define SRAM_CODE_BASE      0x8000
-#define SRAM_CODE_SIZE      0x1000
-
-typedef void (FUNC_PTR)(void);
-
 extern int32_t FlashAccess_OnSRAM(void);
 
 void SYS_Init(void)
@@ -59,8 +53,6 @@ void SYS_Init(void)
 
 int32_t main(void)
 {
-    FUNC_PTR    *func;                 /* function pointer */
-
     /* Unlock protected registers */
     SYS_UnlockReg();
 
@@ -76,27 +68,12 @@ int32_t main(void)
     printf("+-----------------------------------------------------------+\n");
 
     /*
-       This sample code is used to demonstrate how to implement a code to execute in SRAM.
-       exeinsram.o is moved to 0x20010000 ~ 0x20010fff and execute there.
+       This sample code demonstrates how to make a sub-routine code executed in SRAM.
     */
 
-    /* Unlock protected registers */
-    SYS_UnlockReg();
-
-    printf("Execute demo code in APROM ==>\n");
+    printf("Will branch to address: 0x%x\n", (uint32_t)FlashAccess_OnSRAM);
 
     FlashAccess_OnSRAM();
-
-    memcpy((uint8_t *)SRAM_CODE_EXE_ADDR, (uint8_t *)SRAM_CODE_BASE, SRAM_CODE_SIZE);
-
-    printf("Execute demo code in SRAM ==>\n");
-
-    func = (FUNC_PTR *)(SRAM_CODE_EXE_ADDR+1);
-
-    func();   /* branch to exeinsram.o in SRAM  */
-
-    /* Lock protected registers */
-    SYS_LockReg();
 
     printf("\nFMC Sample Code Completed.\n");
 

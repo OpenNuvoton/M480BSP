@@ -50,14 +50,14 @@
 			<locationURI>PARENT-4-PROJECT_LOC/Library/StdDriver/src</locationURI>
 		</link>
 		<link>
+			<name>User/FMC_ExeInSRAM.ld</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/FMC_ExeInSRAM.ld</locationURI>
+		</link>
+		<link>
 			<name>User/exeinsram.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/exeinsram.c</locationURI>
-		</link>
-		<link>
-			<name>User/gcc_arm.ld</name>
-			<type>1</type>
-			<locationURI>PROJECT_LOC/gcc_arm.ld</locationURI>
 		</link>
 		<link>
 			<name>User/main.c</name>
