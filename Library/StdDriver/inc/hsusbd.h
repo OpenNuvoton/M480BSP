@@ -106,8 +106,7 @@ typedef struct s_hsusbd_info
     uint8_t *gu8FSOtherConfigDesc;  /*!< Other Speed Config descriptor */
     uint8_t **gu8HidReportDesc;     /*!< Pointer for HID Report descriptor */
     uint32_t *gu32HidReportSize;    /*!< Pointer for HID Report descriptor Size */
-    uint8_t **gu8FSHidReportDesc;   /*!< Pointer for HID Report descriptor */
-    uint32_t *gu32FSHidReportSize;  /*!< Pointer for HID Report descriptor Size */
+    uint32_t *gu32ConfigHidDescIdx; /*!< Pointer for HID Descriptor start index */
 
 } S_HSUSBD_INFO_T; /*!<USB Information Structure */
 

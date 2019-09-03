@@ -70,7 +70,7 @@ int32_t main (void)
     /* Init UART to 115200-8n1 for print message */
     UART_Open(UART0, 115200);
 
-    printf("M480 HSUSBD HID\n");
+    printf("M480 HSUSBD HID and MSC\n");
 
     HSUSBD_Open(&gsHSInfo, HID_ClassRequest, NULL);
     HSUSBD_SetVendorRequest(HID_VendorRequest);

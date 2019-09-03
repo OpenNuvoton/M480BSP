@@ -81,8 +81,8 @@ void I2C2_Init(void)
     printf("I2C clock %d Hz\n", I2C_GetBusClockFreq(I2C2));
 }
 
-extern volatile uint8_t u8TxDataCntInBuffer;
-extern volatile uint8_t u8RxDataCntInBuffer;
+//extern volatile uint8_t u8TxDataCntInBuffer;
+//extern volatile uint8_t u8RxDataCntInBuffer;
 
 int32_t main (void)
 {
@@ -96,6 +96,10 @@ int32_t main (void)
 
     /* Init UART to 115200-8n1 for print message */
     UART_Open(UART0, 115200);
+
+#ifdef __HID__
+    GPIO_Init();
+#endif
 
     printf("\n");
     printf("+---------------------------------------------------------+\n");
@@ -135,11 +139,13 @@ int32_t main (void)
     /* Configure PDMA */
     PDMA_Init();
 
+#ifndef __FEEDBACK__
     /* Configure TIMER0 for adjusting NAU88L25's PLL */
     TIMER_Open(TIMER0, TIMER_PERIODIC_MODE, 100);
     TIMER_EnableInt(TIMER0);
     NVIC_SetPriority(TMR0_IRQn, 3);
     NVIC_EnableIRQ(TMR0_IRQn);
+#endif
 
     HSUSBD_Open(&gsHSInfo, UAC_ClassRequest, UAC_SetInterface);
 
@@ -163,10 +169,13 @@ int32_t main (void)
             UAC_SendRecData();
         }
 
-        if ((u8TxDataCntInBuffer != 0) && ((++i % 0x50000) == 0))
-        {
-            printf("%d <-> %d\n", u8TxDataCntInBuffer, u8RxDataCntInBuffer);
-        }
+//        if ((u8TxDataCntInBuffer != 0) && ((++i % 0x50000) == 0))
+//        {
+//            printf("%d <-> %d\n", u8TxDataCntInBuffer, u8RxDataCntInBuffer);
+//        }
+#ifdef __HID__
+        HID_UpdateHidData();
+#endif
     }
 }
 
