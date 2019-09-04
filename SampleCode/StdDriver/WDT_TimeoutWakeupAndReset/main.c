@@ -17,8 +17,8 @@
 /* Global Interface Variables Declarations                                                                 */
 /*---------------------------------------------------------------------------------------------------------*/
 extern int IsDebugFifoEmpty(void);
-volatile uint32_t g_u32WDTINTCounts;
-volatile uint8_t g_u8IsWDTWakeupINT;
+volatile uint32_t g_u32WDTINTCounts = 0;
+volatile uint8_t g_u8IsWDTWakeupINT = 0;
 
 
 /**
@@ -102,6 +102,41 @@ int main(void)
     /* Init System, peripheral clock and multi-function I/O */
     SYS_Init();
 
+    /* For M480 series bug, system enters power-down mode (NPD/FWPD/LLPD),
+     * and reset by WDT. If any other NVIC is enabled and that interrupt occurs,
+     * CPU will trap in interrupt handler. Work around solution is as following:
+     * 1. Configure WDT
+     * 2. Enter power down and wake up by WDT time-out
+     */
+    /* To check if system has been reset by WDT time-out reset or not */
+    if(SYS_GetResetSrc() & SYS_RSTSTS_WDTRF_Msk)
+    {
+        /* Because of all bits can be written in WDT Control Register are write-protected;
+           To program it needs to disable register protection first. */
+        SYS_UnlockReg();
+
+        /* Configure WDT settings and start WDT counting */
+        WDT_Open(WDT_TIMEOUT_2POW4, WDT_RESET_DELAY_18CLK, TRUE, TRUE);
+
+        /* Enable WDT interrupt function */
+        WDT_EnableInt();
+
+        /* Enable WDT NVIC */
+        NVIC_EnableIRQ(WDT_IRQn);
+
+        /* If system has been reset by WDT time-out reset, remember to enter
+         * power-down and wait for WDT wake-up */
+        CLK_PowerDown();
+
+        /* Clear WDT reset flag */
+        WDT_CLEAR_RESET_FLAG();
+
+        /* Init UART0 for printf */
+        UART0_Init();
+        printf("*** System has been reset by WDT time-out event ***\n\n");
+        while(1);
+    }
+
     /* Lock protected registers */
     SYS_LockReg();
 
@@ -112,15 +147,6 @@ int main(void)
     printf("+----------------------------------------+\n");
     printf("|    WDT Time-out Wake-up Sample Code    |\n");
     printf("+----------------------------------------+\n\n");
-
-    /* To check if system has been reset by WDT time-out reset or not */
-    if(WDT_GET_RESET_FLAG() == 1)
-    {
-        WDT_CLEAR_RESET_FLAG();
-        printf("*** System has been reset by WDT time-out event ***\n\n");
-        while(1);
-    }
-
     printf("# WDT Settings:\n");
     printf("    - Clock source is LIRC                  \n");
     printf("    - Time-out interval is 2^14 * WDT clock \n");
