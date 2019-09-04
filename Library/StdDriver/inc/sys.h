@@ -400,6 +400,7 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPB_MFPL_PB2MFP_SC0_PWR           (0x09UL<<SYS_GPB_MFPL_PB2MFP_Pos)  /*!< SmartCard0 power pin. \hideinitializer */
 #define SYS_GPB_MFPL_PB2MFP_I2S0_DO           (0x0AUL<<SYS_GPB_MFPL_PB2MFP_Pos)  /*!< I2S0 data output. \hideinitializer */
 #define SYS_GPB_MFPL_PB2MFP_EPWM0_CH3         (0x0BUL<<SYS_GPB_MFPL_PB2MFP_Pos)  /*!< EPWM0 channel3 output/capture input. \hideinitializer */
+#define SYS_GPB_MFPL_PB2MFP_I2C1_SDA          (0x0CUL<<SYS_GPB_MFPL_PB2MFP_Pos)  /*!< I2C1 data input/output pin. */
 #define SYS_GPB_MFPL_PB2MFP_TM3               (0x0EUL<<SYS_GPB_MFPL_PB2MFP_Pos)  /*!< Timer3 event counter input / toggle output  \hideinitializer */
 #define SYS_GPB_MFPL_PB2MFP_INT3              (0x0FUL<<SYS_GPB_MFPL_PB2MFP_Pos)  /*!< External interrupt3 input pin. \hideinitializer */
 #define SYS_GPB_MFPL_PB3MFP_GPIO              (0x00UL<<SYS_GPB_MFPL_PB3MFP_Pos)  /*!< General purpose digital I/O pin. \hideinitializer */
@@ -416,6 +417,7 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPB_MFPL_PB3MFP_SC0_RST           (0x09UL<<SYS_GPB_MFPL_PB3MFP_Pos)  /*!< SmartCard0 reset pin. \hideinitializer */
 #define SYS_GPB_MFPL_PB3MFP_I2S0_DI           (0x0AUL<<SYS_GPB_MFPL_PB3MFP_Pos)  /*!< I2S0 data input. \hideinitializer */
 #define SYS_GPB_MFPL_PB3MFP_EPWM0_CH2         (0x0BUL<<SYS_GPB_MFPL_PB3MFP_Pos)  /*!< EPWM0 channel2 output/capture input. \hideinitializer */
+#define SYS_GPB_MFPL_PB3MFP_I2C1_SCL          (0x0CUL<<SYS_GPB_MFPL_PB3MFP_Pos)  /*!< I2C1 clock pin. */
 #define SYS_GPB_MFPL_PB3MFP_TM2               (0x0EUL<<SYS_GPB_MFPL_PB3MFP_Pos)  /*!< Timer2 event counter input / toggle output  \hideinitializer */
 #define SYS_GPB_MFPL_PB3MFP_INT2              (0x0FUL<<SYS_GPB_MFPL_PB3MFP_Pos)  /*!< External interrupt2 input pin. \hideinitializer */
 #define SYS_GPB_MFPL_PB4MFP_GPIO              (0x00UL<<SYS_GPB_MFPL_PB4MFP_Pos)  /*!< General purpose digital I/O pin. \hideinitializer */
@@ -534,7 +536,7 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPB_MFPH_PB11MFP_SPI0_I2SMCLK     (0x09UL<<SYS_GPB_MFPH_PB11MFP_Pos) /*!< SPI0 I2S master clock output pin. \hideinitializer */
 #define SYS_GPB_MFPH_PB11MFP_BPWM1_CH0        (0x0AUL<<SYS_GPB_MFPH_PB11MFP_Pos) /*!< BPWM1 channel0 output/capture input. \hideinitializer */
 #define SYS_GPB_MFPH_PB11MFP_SPI3_CLK         (0x0BUL<<SYS_GPB_MFPH_PB11MFP_Pos) /*!< SPI3 serial clock pin. \hideinitializer */
-#define SYS_GPB_MFPH_PB11MFP_CCAP_FIELD       (0x0CUL<<SYS_GPB_MFPH_PB11MFP_Pos) /*!< Even/Odd Field Flag input pin. \hideinitializer */
+#define SYS_GPB_MFPH_PB11MFP_CCAP_SFIELD      (0x0CUL<<SYS_GPB_MFPH_PB11MFP_Pos) /*!< Even/Odd Field Flag input pin. \hideinitializer */
 #define SYS_GPB_MFPH_PB11MFP_HSUSB_VBUS_ST    (0x0EUL<<SYS_GPB_MFPH_PB11MFP_Pos) /*!< Power supply from USB High speed host or HUB. \hideinitializer */
 #define SYS_GPB_MFPH_PB12MFP_GPIO             (0x00UL<<SYS_GPB_MFPH_PB12MFP_Pos) /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPB_MFPH_PB12MFP_ACMP0_P2         (0x01UL<<SYS_GPB_MFPH_PB12MFP_Pos) /*!< Analog comparator0 positive input pin. \hideinitializer */
@@ -550,7 +552,7 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPB_MFPH_PB12MFP_UART3_nCTS       (0x07UL<<SYS_GPB_MFPH_PB12MFP_Pos) /*!< Clear to Send input pin for UART3. \hideinitializer */
 #define SYS_GPB_MFPH_PB12MFP_I2C2_SDA         (0x08UL<<SYS_GPB_MFPH_PB12MFP_Pos) /*!< I2C2 data input/output pin. \hideinitializer */
 #define SYS_GPB_MFPH_PB12MFP_SD0_nCD          (0x09UL<<SYS_GPB_MFPH_PB12MFP_Pos) /*!< SD/SDIO 0 card detect. \hideinitializer */
-#define SYS_GPB_MFPH_PB12MFP_CCAP_CLKO        (0x0AUL<<SYS_GPB_MFPH_PB12MFP_Pos) /*!< Sensor pixel clock(to sensor) output pin. \hideinitializer */
+#define SYS_GPB_MFPH_PB12MFP_CCAP_SCLK        (0x0AUL<<SYS_GPB_MFPH_PB12MFP_Pos) /*!< Sensor pixel clock(to sensor) output pin. \hideinitializer */
 #define SYS_GPB_MFPH_PB12MFP_EPWM1_CH3        (0x0BUL<<SYS_GPB_MFPH_PB12MFP_Pos) /*!< EPWM1 channel3 output/capture input. \hideinitializer */
 #define SYS_GPB_MFPH_PB12MFP_ETM_TRACE_DATA3  (0x0CUL<<SYS_GPB_MFPH_PB12MFP_Pos) /*!< ETM Rx input bus bit3. \hideinitializer */
 #define SYS_GPB_MFPH_PB12MFP_TM3_EXT          (0x0DUL<<SYS_GPB_MFPH_PB12MFP_Pos) /*!< Timer3 event counter input / toggle output  \hideinitializer */
@@ -567,7 +569,7 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPB_MFPH_PB13MFP_UART0_TXD        (0x06UL<<SYS_GPB_MFPH_PB13MFP_Pos) /*!< Data transmitter output pin for UART0. \hideinitializer */
 #define SYS_GPB_MFPH_PB13MFP_UART3_nRTS       (0x07UL<<SYS_GPB_MFPH_PB13MFP_Pos) /*!< Request to Send output pin for UART3. \hideinitializer */
 #define SYS_GPB_MFPH_PB13MFP_I2C2_SCL         (0x08UL<<SYS_GPB_MFPH_PB13MFP_Pos) /*!< I2C2 clock pin. \hideinitializer */
-#define SYS_GPB_MFPH_PB13MFP_CCAP_PCLK        (0x0AUL<<SYS_GPB_MFPH_PB13MFP_Pos) /*!< Sensor pixel clock(from sensor) input pin. \hideinitializer */
+#define SYS_GPB_MFPH_PB13MFP_CCAP_PIXCLK      (0x0AUL<<SYS_GPB_MFPH_PB13MFP_Pos) /*!< Sensor pixel clock(from sensor) input pin. \hideinitializer */
 #define SYS_GPB_MFPH_PB13MFP_EPWM1_CH2        (0x0BUL<<SYS_GPB_MFPH_PB13MFP_Pos) /*!< EPWM1 channel2 output/capture input. \hideinitializer */
 #define SYS_GPB_MFPH_PB13MFP_ETM_TRACE_DATA2  (0x0CUL<<SYS_GPB_MFPH_PB13MFP_Pos) /*!< ETM Rx input bus bit2. \hideinitializer */
 #define SYS_GPB_MFPH_PB13MFP_TM2_EXT          (0x0DUL<<SYS_GPB_MFPH_PB13MFP_Pos) /*!< Timer2 event counter input / toggle output  \hideinitializer */
@@ -585,6 +587,7 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPB_MFPH_PB14MFP_ETM_TRACE_DATA1  (0x0CUL<<SYS_GPB_MFPH_PB14MFP_Pos) /*!< ETM Rx input bus bit1. \hideinitializer */
 #define SYS_GPB_MFPH_PB14MFP_TM1_EXT          (0x0DUL<<SYS_GPB_MFPH_PB14MFP_Pos) /*!< Timer1 event counter input / toggle output  \hideinitializer */
 #define SYS_GPB_MFPH_PB14MFP_CLKO             (0x0EUL<<SYS_GPB_MFPH_PB14MFP_Pos) /*!< Clock Output pin. \hideinitializer */
+#define SYS_GPB_MFPH_PB14MFP_USB_VBUS_ST      (0x0FUL<<SYS_GPB_MFPH_PB14MFP_Pos) /*!< Power supply from USB Full speed host or HUB. */
 #define SYS_GPB_MFPH_PB15MFP_GPIO             (0x00UL<<SYS_GPB_MFPH_PB15MFP_Pos) /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPB_MFPH_PB15MFP_EADC0_CH15       (0x01UL<<SYS_GPB_MFPH_PB15MFP_Pos) /*!< EADC0 channel1 analog input. \hideinitializer */
 #define SYS_GPB_MFPH_PB15MFP_EADC1_CH15       (0x01UL<<SYS_GPB_MFPH_PB15MFP_Pos) /*!< EADC1 channel1 analog input. \hideinitializer */
@@ -1041,6 +1044,7 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPE_MFPH_PE14MFP_UART2_TXD        (0x03UL<<SYS_GPE_MFPH_PE14MFP_Pos) /*!< Data transmitter output pin for UART2. \hideinitializer */
 #define SYS_GPE_MFPH_PE14MFP_CAN0_TXD         (0x04UL<<SYS_GPE_MFPH_PE14MFP_Pos) /*!< CAN0 bus transmitter output. \hideinitializer */
 #define SYS_GPE_MFPH_PE14MFP_SD1_nCD          (0x05UL<<SYS_GPE_MFPH_PE14MFP_Pos) /*!< SD/SDIO 1 card detect  \hideinitializer */
+#define SYS_GPE_MFPH_PE14MFP_UART6_TXD        (0x06UL<<SYS_GPE_MFPH_PE14MFP_Pos) /*!< Data transmitter output pin for UART6. */
 #define SYS_GPE_MFPH_PE15MFP_GPIO             (0x00UL<<SYS_GPE_MFPH_PE15MFP_Pos) /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPE_MFPH_PE15MFP_EBI_AD9          (0x02UL<<SYS_GPE_MFPH_PE15MFP_Pos) /*!< EBI address/data bus bit9. \hideinitializer */
 #define SYS_GPE_MFPH_PE15MFP_UART2_RXD        (0x03UL<<SYS_GPE_MFPH_PE15MFP_Pos) /*!< Data receiver input pin for UART2. \hideinitializer */
@@ -1113,6 +1117,7 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPF_MFPH_PF8MFP_SPI0_CLK          (0x05UL<<SYS_GPF_MFPH_PF8MFP_Pos)  /*!< SPI0 serial clock pin. \hideinitializer */
 #define SYS_GPF_MFPH_PF8MFP_UART5_nCTS        (0x06UL<<SYS_GPF_MFPH_PF8MFP_Pos)  /*!< Clear to Send input pin for UART5. \hideinitializer */
 #define SYS_GPF_MFPH_PF8MFP_CCAP_DATA1        (0x07UL<<SYS_GPF_MFPH_PF8MFP_Pos)  /*!< Sensor pixel data1 input pin. \hideinitializer */
+#define SYS_GPF_MFPH_PF8MFP_CAN1_RXD          (0x08UL<<SYS_GPF_MFPH_PF8MFP_Pos)  /*!< CAN1 bus receiver input. */
 #define SYS_GPF_MFPH_PF8MFP_TAMPER2           (0x0AUL<<SYS_GPF_MFPH_PF8MFP_Pos)  /*!< TAMPER detector loop pin2. \hideinitializer */
 #define SYS_GPF_MFPH_PF9MFP_GPIO              (0x00UL<<SYS_GPF_MFPH_PF9MFP_Pos)  /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPF_MFPH_PF9MFP_EBI_ADR16         (0x02UL<<SYS_GPF_MFPH_PF9MFP_Pos)  /*!< EBI address/data bus bit*. \hideinitializer */
@@ -1199,14 +1204,14 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPG_MFPH_PG9MFP_SD1_DAT3          (0x03UL<<SYS_GPG_MFPH_PG9MFP_Pos)  /*!< SD/SDIO 1 data line bit 3. \hideinitializer */
 #define SYS_GPG_MFPH_PG9MFP_SPIM_D2           (0x04UL<<SYS_GPG_MFPH_PG9MFP_Pos)  /*!< SPIM data 2 pin for Quad Mode I/O. \hideinitializer */
 #define SYS_GPG_MFPH_PG9MFP_QSPI1_MISO1       (0x05UL<<SYS_GPG_MFPH_PG9MFP_Pos)  /*!< 2nd QSPI1 MISO (Master In, Slave Out) pin. \hideinitializer */
-#define SYS_GPG_MFPH_PG9MFP_CCAP_PCLK         (0x07UL<<SYS_GPG_MFPH_PG9MFP_Pos)  /*!< Sensor pixel clock(from sensor) input pin. \hideinitializer */
+#define SYS_GPG_MFPH_PG9MFP_CCAP_PIXCLK       (0x07UL<<SYS_GPG_MFPH_PG9MFP_Pos)  /*!< Sensor pixel clock(from sensor) input pin. \hideinitializer */
 #define SYS_GPG_MFPH_PG9MFP_BPWM0_CH5         (0x0CUL<<SYS_GPG_MFPH_PG9MFP_Pos)  /*!< BPWM0 channel5 output/capture input. \hideinitializer */
 #define SYS_GPG_MFPH_PG10MFP_GPIO             (0x00UL<<SYS_GPG_MFPH_PG10MFP_Pos) /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPG_MFPH_PG10MFP_EBI_AD1          (0x02UL<<SYS_GPG_MFPH_PG10MFP_Pos) /*!< EBI address/data bus bit1. \hideinitializer */
 #define SYS_GPG_MFPH_PG10MFP_SD1_DAT2         (0x03UL<<SYS_GPG_MFPH_PG10MFP_Pos) /*!< SD/SDIO 1 data line bit 2. \hideinitializer */
 #define SYS_GPG_MFPH_PG10MFP_SPIM_D3          (0x04UL<<SYS_GPG_MFPH_PG10MFP_Pos) /*!< SPIM data 3 pin for Quad Mode I/O. \hideinitializer */
 #define SYS_GPG_MFPH_PG10MFP_QSPI1_MOSI1      (0x05UL<<SYS_GPG_MFPH_PG10MFP_Pos) /*!< 2nd QSPI1 MOSI (Master Out, Slave In) pin. \hideinitializer */
-#define SYS_GPG_MFPH_PG10MFP_CCAP_CLKO        (0x07UL<<SYS_GPG_MFPH_PG10MFP_Pos) /*!< Sensor pixel clock(to sensor) output pin. \hideinitializer */
+#define SYS_GPG_MFPH_PG10MFP_CCAP_SCLK        (0x07UL<<SYS_GPG_MFPH_PG10MFP_Pos) /*!< Sensor pixel clock(to sensor) output pin. \hideinitializer */
 #define SYS_GPG_MFPH_PG10MFP_BPWM0_CH4        (0x0CUL<<SYS_GPG_MFPH_PG10MFP_Pos) /*!< BPWM0 channel4 output/capture input. \hideinitializer */
 #define SYS_GPG_MFPH_PG11MFP_GPIO             (0x00UL<<SYS_GPG_MFPH_PG11MFP_Pos) /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPG_MFPH_PG11MFP_EBI_AD2          (0x02UL<<SYS_GPG_MFPH_PG11MFP_Pos) /*!< EBI address/data bus bit2. \hideinitializer */
@@ -1214,7 +1219,7 @@ Example 1: If user want to set PA.0 as SC0_CLK in initial function,
 #define SYS_GPG_MFPH_PG11MFP_SPIM_SS          (0x04UL<<SYS_GPG_MFPH_PG11MFP_Pos) /*!< 1st SPIM slave select pin. \hideinitializer */
 #define SYS_GPG_MFPH_PG11MFP_QSPI1_SS         (0x05UL<<SYS_GPG_MFPH_PG11MFP_Pos) /*!< 1st QSPI1 slave select pin. \hideinitializer */
 #define SYS_GPG_MFPH_PG11MFP_UART7_TXD        (0x06UL<<SYS_GPG_MFPH_PG11MFP_Pos) /*!< Data transmitter output pin for UART7. \hideinitializer */
-#define SYS_GPG_MFPH_PG11MFP_CCAP_FIELD       (0x07UL<<SYS_GPG_MFPH_PG11MFP_Pos) /*!< Even/Odd Field Flag input pin. \hideinitializer */
+#define SYS_GPG_MFPH_PG11MFP_CCAP_SFIELD      (0x07UL<<SYS_GPG_MFPH_PG11MFP_Pos) /*!< Even/Odd Field Flag input pin. \hideinitializer */
 #define SYS_GPG_MFPH_PG11MFP_BPWM0_CH3        (0x0CUL<<SYS_GPG_MFPH_PG11MFP_Pos) /*!< BPWM0 channel3 output/capture input. \hideinitializer */
 #define SYS_GPG_MFPH_PG12MFP_GPIO             (0x00UL<<SYS_GPG_MFPH_PG12MFP_Pos) /*!< General purpose digital I/O pin. \hideinitializer */
 #define SYS_GPG_MFPH_PG12MFP_EBI_AD3          (0x02UL<<SYS_GPG_MFPH_PG12MFP_Pos) /*!< EBI address/data bus bit3. \hideinitializer */
