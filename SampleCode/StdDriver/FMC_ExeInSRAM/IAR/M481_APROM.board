@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<flash_board>
+  <pass>
+    <range>CODE 0x00200000 0x00200FFF</range>
+    <loader>$TOOLKIT_DIR$\config\flashloader\Nuvoton\M481_SPROM.flash</loader>
+  </pass>
+  <pass>
+    <range>CODE 0x00000000 0x0007FFFF</range>
+    <loader>$TOOLKIT_DIR$\config\flashloader\Nuvoton\M481_APROM.flash</loader>
+  </pass>
+  <ignore>
+    CODE 0x20010000 0x2001FFFF
+  </ignore>
+</flash_board>

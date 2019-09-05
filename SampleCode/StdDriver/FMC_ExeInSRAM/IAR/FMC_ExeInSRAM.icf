@@ -1,6 +1,6 @@
 
 define memory mem with size = 4G;
-define region ROM_region   = mem:[from 0x0 size 0x8000] | mem:[from 0x8000 size 0x8000];
+define region ROM_region   = mem:[from 0x0 size 0x40000] | mem:[from 0x20010000 size 0x4000];
 define region RAM_region   = mem:[from 0x20000000 size 0x10000];
 
 define block CSTACK    with alignment = 8, size = 0x4000   { };
@@ -10,7 +10,7 @@ initialize by copy { readwrite };
 do not initialize  { section .noinit };
 
 place at address mem:0x0 { readonly section .intvec };
-place at address mem:0x8000 { readonly object exeinsram.o };
+place at address mem:0x20010000 { readonly object exeinsram.o };
 
 place in ROM_region   { readonly };
 place in RAM_region   { readwrite,

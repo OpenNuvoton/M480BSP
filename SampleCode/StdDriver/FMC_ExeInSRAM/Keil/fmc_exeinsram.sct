@@ -1,6 +1,6 @@
-LOAD_ROM_1  0x0
+LOAD_ROM  0x0
 {
-	APROM.bin  0x0
+	FLASH  +0
 	{
 		startup_M480.o (RESET, +FIRST)
 		*.o (+RO)
@@ -10,11 +10,8 @@ LOAD_ROM_1  0x0
 	{
 		* (+RW, +ZI)
 	}
-}
 
-LOAD_ROM_2  0x8000
-{
-	exeinsram.bin  0x8000
+	exeinsram.bin 0x20010000 0x4000
 	{
 		exeinsram.o (+RO)
 	}
