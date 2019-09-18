@@ -11,7 +11,7 @@
 
 /* Define the vendor id and product id */
 #define USBD_VID                       0x0416
-#define USBD_PID                       0x6666
+#define USBD_PID                       0xBDF0
 
 
 /* Define EP maximum packet size */
