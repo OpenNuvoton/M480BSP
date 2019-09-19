@@ -146,7 +146,7 @@ __Vectors:
 	.long	BPWM0_IRQHandler      /* 78: BPWM0                      */
 	.long	BPWM1_IRQHandler      /* 79: BPWM1                      */
 	.long	SPIM_IRQHandler       /* 80: SPIM                       */
-	.long	0                     /* 81: Reserved                   */
+	.long	CCAP_IRQHandler       /* 81: CCAP                       */
 	.long	I2C2_IRQHandler       /* 82: I2C2                       */
 	.long	0                     /* 83: Reserved                   */
 	.long	QEI0_IRQHandler       /* 84: QEI0                       */
@@ -451,6 +451,7 @@ Default_Handler:
 	def_irq_handler	BPWM0_IRQHandler
 	def_irq_handler	BPWM1_IRQHandler
 	def_irq_handler	SPIM_IRQHandler
+	def_irq_handler CCAP_IRQHandler
 	def_irq_handler	I2C2_IRQHandler
 	def_irq_handler	QEI0_IRQHandler
 	def_irq_handler	QEI1_IRQHandler

@@ -126,7 +126,7 @@ __vector_table_0x1c
         DCD     BPWM0_IRQHandler          ; 78: BPWM0
         DCD     BPWM1_IRQHandler          ; 79: BPWM1
         DCD     SPIM_IRQHandler           ; 80: SPIM
-        DCD     Default_Handler           ; 81: ToDo: Add description to this Interrupt
+        DCD     CCAP_IRQHandler           ; 81: CCAP
         DCD     I2C2_IRQHandler           ; 82: I2C2
         DCD     Default_Handler           ; 83:
         DCD     QEI0_IRQHandler           ; 84: QEI0
@@ -325,6 +325,7 @@ SysTick_Handler
         PUBWEAK  BPWM0_IRQHandler
         PUBWEAK  BPWM1_IRQHandler
         PUBWEAK  SPIM_IRQHandler
+        PUBWEAK  CCAP_IRQHandler
         PUBWEAK  I2C2_IRQHandler
         PUBWEAK  QEI0_IRQHandler
         PUBWEAK  QEI1_IRQHandler
