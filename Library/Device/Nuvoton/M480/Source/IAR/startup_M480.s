@@ -422,6 +422,7 @@ USCI1_IRQHandler
 BPWM0_IRQHandler
 BPWM1_IRQHandler
 SPIM_IRQHandler
+CCAP_IRQHandler
 I2C2_IRQHandler
 QEI0_IRQHandler
 QEI1_IRQHandler
