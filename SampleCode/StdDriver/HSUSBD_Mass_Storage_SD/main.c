@@ -2,7 +2,7 @@
  * @file     main.c
  * @version  V1.00
  * $Date: 16/08/02 5:11p $
- * @brief    Use internal SRAM as back end storage media to simulate a
+ * @brief    Use SD as back end storage media to simulate a
  *           30 KB USB pen drive
  *
  * @note
