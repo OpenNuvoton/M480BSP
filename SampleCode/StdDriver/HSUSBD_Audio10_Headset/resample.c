@@ -1,8 +1,8 @@
 /******************************************************************************
- * @file     hid.c
+ * @file     resample.c
  * @version  V0.10
  * @brief
- *           Demonstrate how to implement a USB hid class device.
+ *           Audio Codec Resample.
  *
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/

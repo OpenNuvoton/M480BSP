@@ -1,6 +1,6 @@
 /**************************************************************************//**
  * @file     usbd_audio.c
- * @brief    December series USBD driver Sample file
+ * @brief    NuMicro series USBD driver Sample file
  * @version  1.0.0
  *
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.

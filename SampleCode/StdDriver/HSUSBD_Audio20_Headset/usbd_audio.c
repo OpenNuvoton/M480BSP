@@ -367,6 +367,10 @@ void USBD20_IRQHandler(void)
     if (IrqStL & HSUSBD_GINTSTS_EPDIF_Msk)
     {
         IrqSt = HSUSBD->EP[EPD].EPINTSTS & HSUSBD->EP[EPD].EPINTEN;
+#ifdef __HID__
+        HSUSBD_ENABLE_EP_INT(EPD, 0);
+        EPD_Handler();
+#endif
         HSUSBD_CLR_EP_INT_FLAG(EPD, IrqSt);
     }
 
@@ -435,6 +439,13 @@ void EPB_IsoOutHandler(void)
     UAC_GetPlayData();
 }
 
+#ifdef __HID__
+void EPD_Handler(void)  /* Interrupt IN handler */
+{
+    g_u8EPDReady = 1;
+}
+#endif
+
 /*--------------------------------------------------------------------------*/
 /**
  * @brief       UAC Class Initial
@@ -461,7 +472,11 @@ void UAC_Init(void)
     /* Configure USB controller */
     HSUSBD->OPER = 2; /* High Speed */
     /* Enable USB BUS, CEP and EPA , EPB global interrupt */
+#ifdef __HID__
+    HSUSBD_ENABLE_USB_INT(HSUSBD_GINTEN_USBIEN_Msk|HSUSBD_GINTEN_CEPIEN_Msk|HSUSBD_GINTEN_EPAIEN_Msk|HSUSBD_GINTEN_EPBIEN_Msk|HSUSBD_GINTEN_EPDIEN_Msk|HSUSBD_GINTEN_EPEIEN_Msk);
+#else
     HSUSBD_ENABLE_USB_INT(HSUSBD_GINTEN_USBIEN_Msk|HSUSBD_GINTEN_CEPIEN_Msk|HSUSBD_GINTEN_EPAIEN_Msk|HSUSBD_GINTEN_EPBIEN_Msk|HSUSBD_GINTEN_EPEIEN_Msk);
+#endif
     /* Enable BUS interrupt */
     HSUSBD_ENABLE_BUS_INT(HSUSBD_BUSINTEN_DMADONEIEN_Msk|HSUSBD_BUSINTEN_RESUMEIEN_Msk|HSUSBD_BUSINTEN_RSTIEN_Msk|HSUSBD_BUSINTEN_VBUSDETIEN_Msk);
     /* Reset Address to 0 */
@@ -490,6 +505,15 @@ void UAC_Init(void)
     HSUSBD_SET_MAX_PAYLOAD(EPE, EPE_MAX_PKT_SIZE);
     HSUSBD_ConfigEp(EPE, ISO_FEEDBACK_ENDPOINT, HSUSBD_EP_CFG_TYPE_ISO, HSUSBD_EP_CFG_DIR_IN);
     HSUSBD_ENABLE_EP_INT(EPE, HSUSBD_EPINTEN_TXPKIEN_Msk);
+#ifdef __HID__
+    /*****************************************************/
+    /* EPD ==> Interrupt IN endpoint, address 4 */
+    HSUSBD_SetEpBufAddr(EPD, EPD_BUF_BASE, EPD_BUF_LEN);
+    HSUSBD_SET_MAX_PAYLOAD(EPD, EPD_MAX_PKT_SIZE);
+    HSUSBD_ConfigEp(EPD, HID_IN_EP_NUM, HSUSBD_EP_CFG_TYPE_INT, HSUSBD_EP_CFG_DIR_IN);
+
+    g_u8EPDReady = 1;
+#endif
 }
 
 
@@ -567,7 +591,7 @@ void UAC_ClassRequest(void)
                             {
                                 HSUSBD_PrepareCtrlIn((uint8_t *)&g_usbd_PlayMute, 1);
                             }
-                            
+
                             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_INTKIF_Msk);
                             HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_INTKIEN_Msk);
                             //printf("GET MUTE_CONTROL\n");
@@ -594,7 +618,7 @@ void UAC_ClassRequest(void)
                             HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_INTKIEN_Msk);
                             break;
                         }
-                        
+
                         default:
                         {
                             /* Setup error, stall the device */
@@ -620,7 +644,7 @@ void UAC_ClassRequest(void)
                             HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_INTKIEN_Msk  );
                             break;
                         }
-                        
+
                         default:
                             /* STALL control pipe */
                             HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_STALLEN_Msk);
@@ -634,13 +658,13 @@ void UAC_ClassRequest(void)
                         {
                             if (REC_FEATURE_UNITID == ((gUsbCmd.wIndex >> 8) & 0xff))
                             {
-                                HSUSBD_PrepareCtrlIn((uint8_t *)RecVolx, gUsbCmd.wLength);                              
+                                HSUSBD_PrepareCtrlIn((uint8_t *)RecVolx, gUsbCmd.wLength);
                             }
                             else if (PLAY_FEATURE_UNITID == ((gUsbCmd.wIndex >> 8) & 0xff))
                             {
-                                HSUSBD_PrepareCtrlIn((uint8_t *)PlayVolx, gUsbCmd.wLength);    
+                                HSUSBD_PrepareCtrlIn((uint8_t *)PlayVolx, gUsbCmd.wLength);
                             }
-                            
+
                             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_INTKIF_Msk);
                             HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_INTKIEN_Msk);
                             break;
@@ -652,6 +676,7 @@ void UAC_ClassRequest(void)
                 }
                 break;
             }
+
             default:
             {
                 /* Setup error, stall the device */
@@ -720,6 +745,29 @@ void UAC_ClassRequest(void)
                     }
                     break;
                 }
+
+#ifdef __HID__
+        case SET_REPORT:
+        {
+            if (((gUsbCmd.wValue >> 8) & 0xff) == 3)
+            {
+                /* Request Type = Feature */
+                HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_STSDONEIF_Msk);
+                HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_NAKCLR);
+                HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_STSDONEIEN_Msk);
+            }
+            break;
+        }
+        case SET_IDLE:
+        {
+            /* Status stage */
+            HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_STSDONEIF_Msk);
+            HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_NAKCLR);
+            HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_STSDONEIEN_Msk);
+            break;
+        }
+        case SET_PROTOCOL:
+#endif
                 default:
                 {
                     HSUSBD->CEPCTL = HSUSBD_CEPCTL_FLUSH_Msk;
@@ -1027,15 +1075,15 @@ void TMR0_IRQHandler(void)
     {
         if((i8TxDataCntInBuffer >= (PDMA_TXBUFFER_CNT/2)) && (i8TxDataCntInBuffer <= (PDMA_TXBUFFER_CNT/2+1)))
         {
-            u32AdjSample = 0x180000;
+            u32AdjSample = (u32PacketSize & 0xffff) << 16;
         }
         else if(i8TxDataCntInBuffer >= (PDMA_TXBUFFER_CNT-2))
         {
-            u32AdjSample = 0x17f000;
+            u32AdjSample = (((u32PacketSize - 1) & 0xffff) << 16) | 0xf000;
         }
         else
         {
-            u32AdjSample = 0x181000;
+            u32AdjSample = ((u32PacketSize & 0xffff) << 16) | 0x1000;
         }
     }
 #endif

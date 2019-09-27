@@ -72,7 +72,7 @@ int Resamples(RESAMPLE_MODE_T mode, short *x, int ch_num, int samples, short *y,
     int idx;
     int offset;
     int ii;
-    int f, r,s,d;
+    int f, r,s;
 
     switch(mode)
     {
@@ -99,7 +99,6 @@ int Resamples(RESAMPLE_MODE_T mode, short *x, int ch_num, int samples, short *y,
     }
     r = srt[s_idx].r;
     s = srt[s_idx].s;
-    d = srt[s_idx].d;
 
     offset = xt >> 13;
     i = 0;
@@ -126,8 +125,8 @@ int Resamples(RESAMPLE_MODE_T mode, short *x, int ch_num, int samples, short *y,
 
     if (xt > (s << 13))
     {
-        xt -= (s << 13);
-        yt -= r * d;
+        xt = 0;
+        yt = 0;
     }
 
     switch(mode)

@@ -1,10 +1,10 @@
 /***************************************************************************//**
  * @file     main.c
  * @version  1.0.0
- * @brief    This is an UAC1.0 sample and used to plays the sound send from PC
+ * @brief    This is an UAC2.0 sample and used to plays the sound send from PC
  *           through the USB interface
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
@@ -81,8 +81,6 @@ void I2C2_Init(void)
 }
 
 
-extern uint32_t volatile u32AdjSample;
-
 int32_t main (void)
 {
     uint32_t volatile i;
@@ -96,6 +94,10 @@ int32_t main (void)
 
     /* Init UART to 115200-8n1 for print message */
     UART_Open(UART0, 115200);
+
+#ifdef __HID__
+    GPIO_Init();
+#endif
 
     printf("\n");
     printf("+--------------------------------------------------------+\n");
@@ -149,14 +151,13 @@ int32_t main (void)
     HSUSBD_Start();
     while(1)
     {
-        if ((i8TxDataCntInBuffer != 0) && ((++i % 0x200000) == 0))
-        {
-            printf("%d <-> %d (0x%x)\n", i8TxDataCntInBuffer, i8RxDataCntInBuffer, u32AdjSample);
-        }
+#ifdef __HID__
+        HID_UpdateHidData();
+#endif
     }
 }
 
 
 
-/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2019 Nuvoton Technology Corp. ***/
 
