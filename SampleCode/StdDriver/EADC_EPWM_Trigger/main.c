@@ -130,7 +130,7 @@ void EADC_FunctionTest()
             EADC_Open(EADC, EADC_CTL_DIFFEN_SINGLE_END);
 
             /* Configure the sample module 0 for analog input channel 2 and enable EPWM0 trigger source */
-            EADC_ConfigSampleModule(EADC, 0, EADC_PWM0TG0_TRIGGER, 2);
+            EADC_ConfigSampleModule(EADC, 0, EADC_EPWM0TG0_TRIGGER, 2);
 
             /* Clear the A/D ADINT0 interrupt flag for safe */
             EADC_CLR_INT_FLAG(EADC, EADC_STATUS2_ADIF0_Msk);
@@ -178,7 +178,7 @@ void EADC_FunctionTest()
             /* Set input mode as differential and enable the A/D converter */
             EADC_Open(EADC, EADC_CTL_DIFFEN_DIFFERENTIAL);
             /* Configure the sample module 0 for analog input channel 2 and software trigger source.*/
-            EADC_ConfigSampleModule(EADC, 0, EADC_PWM0TG0_TRIGGER, 2);
+            EADC_ConfigSampleModule(EADC, 0, EADC_EPWM0TG0_TRIGGER, 2);
 
             /* Clear the A/D ADINT0 interrupt flag for safe */
             EADC_CLR_INT_FLAG(EADC, EADC_STATUS2_ADIF0_Msk);

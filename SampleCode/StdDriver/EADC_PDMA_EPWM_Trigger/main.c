@@ -174,7 +174,7 @@ void EADC_FunctionTest()
             EADC_Open(EADC, EADC_CTL_DIFFEN_SINGLE_END);
 
             /* Configure the sample module 0 for analog input channel 2 and enable EPWM0 trigger source */
-            EADC_ConfigSampleModule(EADC, g_u32SampleModuleNum, EADC_PWM0TG0_TRIGGER, 2);
+            EADC_ConfigSampleModule(EADC, g_u32SampleModuleNum, EADC_EPWM0TG0_TRIGGER, 2);
             if (SYS->CSERVER & SYS_CSERVER_VERSION_Msk) /* M480LD */
                 EADC_ENABLE_SAMPLE_MODULE_PDMA(EADC, 1<<g_u32SampleModuleNum);
             else /* M480 */
@@ -205,7 +205,7 @@ void EADC_FunctionTest()
             /* Set input mode as differential and enable the A/D converter */
             EADC_Open(EADC, EADC_CTL_DIFFEN_DIFFERENTIAL);
             /* Configure the sample module 0 for analog input channel 2 and software trigger source.*/
-            EADC_ConfigSampleModule(EADC, g_u32SampleModuleNum, EADC_PWM0TG0_TRIGGER, 2);
+            EADC_ConfigSampleModule(EADC, g_u32SampleModuleNum, EADC_EPWM0TG0_TRIGGER, 2);
             if (SYS->CSERVER & SYS_CSERVER_VERSION_Msk) /* M480LD */
                 EADC_ENABLE_SAMPLE_MODULE_PDMA(EADC, 1<<g_u32SampleModuleNum);
             else /* M480 */
