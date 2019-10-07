@@ -94,7 +94,7 @@ extern "C"
 #define EPWM_FB_EDGE_ACMP1                        (EPWM_BRKCTL0_1_CPO1EBEN_Msk)    /*!< Comparator 1 as edge-detect fault brake source \hideinitializer */
 #define EPWM_FB_EDGE_BKP0                         (EPWM_BRKCTL0_1_BRKP0EEN_Msk)    /*!< BKP0 pin as edge-detect fault brake source \hideinitializer */
 #define EPWM_FB_EDGE_BKP1                         (EPWM_BRKCTL0_1_BRKP1EEN_Msk)    /*!< BKP1 pin as edge-detect fault brake source \hideinitializer */
-#define EPWM_FB_EDGE_ADCRM                        (EPWM_BRKCTL0_1_ADCEBEN_Msk)     /*!< ADC Result Monitor (ADCRM) as edge-detect fault brake source \hideinitializer */
+#define EPWM_FB_EDGE_ADCRM                        (EPWM_BRKCTL0_1_EADCEBEN_Msk)     /*!< ADC Result Monitor (ADCRM) as edge-detect fault brake source \hideinitializer */
 #define EPWM_FB_EDGE_SYS_CSS                      (EPWM_BRKCTL0_1_SYSEBEN_Msk | EPWM_FAILBRK_CSSBRKEN_Msk)    /*!< System fail condition: clock security system detection as edge-detect fault brake source \hideinitializer */
 #define EPWM_FB_EDGE_SYS_BOD                      (EPWM_BRKCTL0_1_SYSEBEN_Msk | EPWM_FAILBRK_BODBRKEN_Msk)    /*!< System fail condition: brown-out detection as edge-detect fault brake source \hideinitializer */
 #define EPWM_FB_EDGE_SYS_RAM                      (EPWM_BRKCTL0_1_SYSEBEN_Msk | EPWM_FAILBRK_RAMBRKEN_Msk)    /*!< System fail condition: SRAM parity error detection as edge-detect fault brake source \hideinitializer */
@@ -104,7 +104,7 @@ extern "C"
 #define EPWM_FB_LEVEL_ACMP1                       (EPWM_BRKCTL0_1_CPO1LBEN_Msk)    /*!< Comparator 1 as level-detect fault brake source \hideinitializer */
 #define EPWM_FB_LEVEL_BKP0                        (EPWM_BRKCTL0_1_BRKP0LEN_Msk)    /*!< BKP0 pin as level-detect fault brake source \hideinitializer */
 #define EPWM_FB_LEVEL_BKP1                        (EPWM_BRKCTL0_1_BRKP1LEN_Msk)    /*!< BKP1 pin as level-detect fault brake source \hideinitializer */
-#define EPWM_FB_LEVEL_ADCRM                       (EPWM_BRKCTL0_1_ADCLBEN_Msk)     /*!< ADC Result Monitor (ADCRM) as level-detect fault brake source \hideinitializer */
+#define EPWM_FB_LEVEL_ADCRM                       (EPWM_BRKCTL0_1_EADCLBEN_Msk)     /*!< ADC Result Monitor (ADCRM) as level-detect fault brake source \hideinitializer */
 #define EPWM_FB_LEVEL_SYS_CSS                     (EPWM_BRKCTL0_1_SYSLBEN_Msk | EPWM_FAILBRK_CSSBRKEN_Msk)    /*!< System fail condition: clock security system detection as level-detect fault brake source \hideinitializer */
 #define EPWM_FB_LEVEL_SYS_BOD                     (EPWM_BRKCTL0_1_SYSLBEN_Msk | EPWM_FAILBRK_BODBRKEN_Msk)    /*!< System fail condition: brown-out detection as level-detect fault brake source \hideinitializer */
 #define EPWM_FB_LEVEL_SYS_RAM                     (EPWM_BRKCTL0_1_SYSLBEN_Msk | EPWM_FAILBRK_RAMBRKEN_Msk)    /*!< System fail condition: SRAM parity error detection as level-detect fault brake source \hideinitializer */
