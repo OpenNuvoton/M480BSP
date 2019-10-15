@@ -806,15 +806,6 @@ void MSC_ReceiveCBW(uint32_t u32Buf)
 
     g_hsusbd_DmaDone = 0;
     HSUSBD_ENABLE_DMA();
-
-    while(g_u8MscStart)
-    {
-        if (g_hsusbd_DmaDone == 1)
-            break;
-
-        if (!HSUSBD_IS_ATTACHED())
-            break;
-    }
 }
 
 void MSC_ProcessCmd(void)
