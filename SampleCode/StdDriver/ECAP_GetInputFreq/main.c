@@ -69,7 +69,7 @@ void ECAP0_IRQHandler(void)
     }
 
     /* Check input capture overflow flag */
-    if((u32Status & ECAP_STATUS_CAPTF2_Msk) == ECAP_STATUS_CAPTF2_Msk)
+    if((u32Status & ECAP_STATUS_CAPOVF_Msk) == ECAP_STATUS_CAPOVF_Msk)
     {
         /* Clear input capture overflow flag */
         ECAP_CLR_CAPTURE_FLAG(ECAP0,ECAP_STATUS_CAPOVF_Msk);
