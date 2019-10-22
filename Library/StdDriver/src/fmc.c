@@ -767,17 +767,36 @@ int32_t FMC_ReadConfig(uint32_t u32Config[], uint32_t u32Count)
   * @brief Execute ISP commands to erase then write User Configuration.
   * @param[in] u32Config   A two-word array.
   *            u32Config[0] holds CONFIG0, while u32Config[1] holds CONFIG1.
-  * @param[in] u32Count  Always be 2 in this BSP.
+  * @param[in] u32Count    The number of User Configuration words to be written.
   * @return Success or not.
-  * @retval   0  Success.
-  * @retval   -1  Invalid parameter.
+  * @retval   0   Success
+  * @retval   -1  Failed
   */
 int32_t FMC_WriteConfig(uint32_t u32Config[], uint32_t u32Count)
 {
+    int   i;
+
     FMC_ENABLE_CFG_UPDATE();
     FMC_Erase(FMC_CONFIG_BASE);
-    FMC_Write(FMC_CONFIG_BASE, u32Config[0]);
-    FMC_Write(FMC_CONFIG_BASE+4UL, u32Config[1]);
+
+    if ((FMC_Read(FMC_CONFIG_BASE) != 0xFFFFFFFF) || (FMC_Read(FMC_CONFIG_BASE+4) != 0xFFFFFFFF) ||
+            (FMC_Read(FMC_CONFIG_BASE+8) != 0xFFFF5A5A))
+    {
+        FMC_DISABLE_CFG_UPDATE();
+        return -1;
+    }
+
+    for (i = 0; i < u32Count; i++)
+    {
+        FMC_Write(FMC_CONFIG_BASE+i*4UL, u32Config[1]);
+
+        if (FMC_Read(FMC_CONFIG_BASE+i*4UL) != u32Config[1])
+        {
+            FMC_DISABLE_CFG_UPDATE();
+            return -1;
+        }
+    }
+
     FMC_DISABLE_CFG_UPDATE();
     return 0;
 }
