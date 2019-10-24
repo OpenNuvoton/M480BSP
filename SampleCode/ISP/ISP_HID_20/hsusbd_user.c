@@ -27,7 +27,7 @@
 S_HSUSBD_CMD_T gUsbCmd;
 
 HSUSBD_VENDOR_REQ g_hsusbd_pfnVendorRequest = NULL;
-HSUSBD_CLASS_REQ g_hsusbd_pfnClassRequest = NULL;
+HSUSBD_CLASS_REQ g_hsusbd_pfnClassRequest = HID_ClassRequest;
 HSUSBD_SET_INTERFACE_REQ g_hsusbd_pfnSetInterface = NULL;
 uint32_t g_u32HsEpStallLock = 0ul;       /* Bit map flag to lock specified EP when SET_FEATURE */
 
