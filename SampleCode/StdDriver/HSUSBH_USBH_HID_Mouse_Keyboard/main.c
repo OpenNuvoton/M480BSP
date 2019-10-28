@@ -119,9 +119,9 @@ void  int_read_callback(HID_DEV_T *hdev, uint16_t ep_addr, int status, uint8_t *
         printf("Interrupt in transfer failed! status: %d\n", status);
         return;
     }
-    //printf("Device [0x%x,0x%x] ep 0x%x, %d bytes received =>\n",
-    //       hdev->idVendor, hdev->idProduct, ep_addr, data_len);
-    //dump_buff_hex(rdata, data_len);
+    printf("Device [0x%x,0x%x] ep 0x%x, %d bytes received =>\n",
+           hdev->idVendor, hdev->idProduct, ep_addr, data_len);
+    dump_buff_hex(rdata, data_len);
 }
 
 
@@ -133,22 +133,8 @@ int  init_hid_device(HID_DEV_T *hdev)
     printf("  Init HID device : 0x%x\n", (int)hdev);
     printf("  VID: 0x%x, PID: 0x%x\n\n", hdev->idVendor, hdev->idProduct);
 
-    if ((hdev->bSubClassCode == HID_SUBCLASS_BOOT_DEVICE) && (hdev->bProtocolCode == HID_PROTOCOL_KEYBOARD))
-    {
-        uint8_t  leds;
-        /* turn-on keyboard NumLock, CapsLock, ScrollLock LEDs */
-        leds = 0x07;
-        ret = usbh_hid_set_report(hdev, RT_OUTPUT, 0, &leds, 1);
-        if (ret != 1)
-            printf("Failed to turn on LEDs! %d\n", ret);
-        delay_us(500000);       /* delay 0.5 conds */
 
-        /* turn-off all LEDs */
-        leds = 0x00;
-        ret = usbh_hid_set_report(hdev, RT_OUTPUT, 0, &leds, 1);
-        if (ret != 1)
-            printf("Failed to turn off LEDs! %d\n", ret);
-    }
+    printf("  bSubClassCode: 0x%x, bProtocolCode: 0x%x\n\n", hdev->bSubClassCode, hdev->bProtocolCode);
 
     printf("\nUSBH_HidStartIntReadPipe...\n");
     ret = usbh_hid_start_int_read(hdev, 0, int_read_callback);

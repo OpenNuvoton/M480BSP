@@ -107,7 +107,7 @@ static int hid_probe(IFACE_T *iface)
         p->next = hdev;
     }
 
-    HID_DBGMSG("usbhid_probe OK.\n");
+    HID_DBGMSG("usbhid_probe OK. hdev=0x%x\n", (int)hdev);
 
     return 0;
 }

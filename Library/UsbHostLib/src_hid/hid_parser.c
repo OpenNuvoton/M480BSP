@@ -121,10 +121,12 @@ static void read_main_item_status(uint8_t *buff)
     if (buff[0] & 0x01)
     {
         _rp_info.status.constant = 1;
+        _rp_info.status.variable = 0;
         HID_DBGMSG("Constant ");
     }
     if (buff[0] & 0x02)
     {
+        _rp_info.status.constant = 0;
         _rp_info.status.variable = 1;
         HID_DBGMSG("Variable ");
     }
@@ -295,6 +297,43 @@ int hid_parse_report_descriptor(HID_DEV_T *hdev, IFACE_T *iface)
     }
 
     usbh_free_mem(desc_buff, desc_buff_len);
+
+    /*------------------------------------------------------------------------------------*/
+    /*  For keyboard device, turn on all LEDs for 0.5 seconds and then turn off.          */
+    /*------------------------------------------------------------------------------------*/
+    if ((hdev->bSubClassCode == HID_SUBCLASS_BOOT_DEVICE) && (hdev->bProtocolCode == HID_PROTOCOL_KEYBOARD))
+    {
+        RP_INFO_T   *report;
+
+        for (report = hdev->rpd.report; report != NULL; report = report->next)
+        {
+            if ((report->usage_page == UP_LEDS) && (report->report_size == 1) && report->status.variable)
+            {
+                uint8_t  i, ret, leds = 0;
+
+                for (i = 0; (i < 8) && (i < report->report_count); i++)
+                    leds = (leds << 1) | 0x1;
+
+                /* turn-on keyboard NumLock, CapsLock, ScrollLock LEDs */
+                ret = usbh_hid_set_report(hdev, RT_OUTPUT, 0, &leds, 1);
+                if (ret != 1)
+                {
+                    HID_ERRMSG("Failed to turn on LEDs! 0x%x, %d\n", leds, ret);
+                }
+                else
+                {
+                    delay_us(500000);       /* delay 0.5 conds */
+
+                    /* turn-off all LEDs */
+                    leds = 0x00;
+                    ret = usbh_hid_set_report(hdev, RT_OUTPUT, 0, &leds, 1);
+                    if (ret != 1)
+                        HID_ERRMSG("Failed to turn off LEDs! %d\n", ret);
+                }
+            }
+        }
+    }
+
     return 0;
 }
 
@@ -309,7 +348,9 @@ static int hid_add_report(HID_DEV_T *hdev, uint8_t type)
         return USBH_ERR_MEMORY_OUT;
     }
     memcpy(report, &_rp_info, sizeof(RP_INFO_T));
-    HID_DBGMSG("\nCreate a report. %d x %d\n", report->report_count, report->report_size);
+    report->type = type;
+
+    HID_DBGMSG("\nCreate a report. %d x %d (%d)\n", report->report_count, report->report_size, report->report_id);
 
     if (hdev->rpd.report == NULL)
         hdev->rpd.report = report;
@@ -401,6 +442,11 @@ static int hid_parse_item(HID_DEV_T *hdev, uint8_t *buff)
     case TAG_OUTPUT:
         HID_DBGMSG("Output ");
         read_main_item_status(&buff[1]);
+        if (_rp_info.report_count > 0)
+        {
+            if (hid_add_report(hdev, TAG_OUTPUT) != 0)
+                return USBH_ERR_MEMORY_OUT;
+        }
         break;
 
     case TAG_FEATURE:
@@ -555,31 +601,33 @@ static int hid_parse_item(HID_DEV_T *hdev, uint8_t *buff)
 
 int hid_parse_keyboard_reports(HID_DEV_T *hdev, uint8_t *data, int data_len)
 {
-    RP_INFO_T   *rp, *report;
+    RP_INFO_T   *report;
     int         i, bit;
     int         byte_idx = 0, bit_idx = 0;
     int         has_kbd_event = 0;
+    int         report_id;
     static KEYBOARD_EVENT_T  _keyboard_event;
 
     memset(&_keyboard_event, 0, sizeof(_keyboard_event));
     _keyboard_event.lock_state = hdev->rpd.lock_state;
 
+    /*
+     *  Does this device use report ID?
+     */
+    if (hdev->rpd.has_report_id && (byte_idx == 0))
+    {
+        report_id = data[0];
+        bit_idx = 8;
+        byte_idx = 1;
+    }
+
     for (report = hdev->rpd.report; report != NULL; report = report->next)
     {
-        /*----------------------------------------------------------------------*/
-        /*  If report ID used, find the report with expected report ID.         */
-        /*----------------------------------------------------------------------*/
-        if (hdev->rpd.has_report_id)
-        {
-            for (rp = hdev->rpd.report; rp != NULL; rp = rp->next)
-            {
-                if (rp->report_id == data[byte_idx])
-                    break;
-            }
-            if (rp == NULL)
-                return HID_RET_REPORT_NOT_FOUND;
-            report = rp;
-        }
+        if (hdev->rpd.has_report_id && (report->report_id != report_id))
+            continue;
+
+        if (report->type != TAG_INPUT)
+            continue;
 
         /*----------------------------------------------------------------------*/
         /*  Extract keyboard report; only KeyCode reports are interested        */
@@ -715,29 +763,31 @@ int hid_parse_keyboard_reports(HID_DEV_T *hdev, uint8_t *data, int data_len)
 int hid_parse_mouse_reports(HID_DEV_T *hdev, uint8_t *data, int data_len)
 {
     int         byte_idx = 0, bit_idx = 0;
-    RP_INFO_T   *rp, *report;
+    RP_INFO_T   *report;
     int         i, bit;
     int         has_mouse_event = 0;
+    int         report_id;
     static MOUSE_EVENT_T  _mouse_event;
 
     memset(&_mouse_event, 0, sizeof(_mouse_event));
 
+    /*
+     *  Does this device use report ID?
+     */
+    if (hdev->rpd.has_report_id && (byte_idx == 0))
+    {
+        report_id = data[0];
+        bit_idx = 8;
+        byte_idx = 1;
+    }
+
     for (report = hdev->rpd.report; report != NULL; report = report->next)
     {
-        /*----------------------------------------------------------------------*/
-        /*  If report ID used, find the report with expected report ID.         */
-        /*----------------------------------------------------------------------*/
-        if (hdev->rpd.has_report_id)
-        {
-            for (rp = hdev->rpd.report; rp != NULL; rp = rp->next)
-            {
-                if (rp->report_id == data[byte_idx])
-                    break;
-            }
-            if (rp == NULL)
-                return HID_RET_REPORT_NOT_FOUND;
-            report = rp;
-        }
+        if (hdev->rpd.has_report_id && (report->report_id != report_id))
+            continue;
+
+        if (report->type != TAG_INPUT)
+            continue;
 
         /*----------------------------------------------------------------------*/
         /*  Extract mouse button report                                         */
@@ -771,7 +821,7 @@ int hid_parse_mouse_reports(HID_DEV_T *hdev, uint8_t *data, int data_len)
         /*----------------------------------------------------------------------*/
         else if ((report->usage_page == UP_GENERIC_DESKTOP) &&
                  ((report->app_usage == USAGE_ID_MOUSE) || (report->app_usage == USAGE_ID_POINTER) ||
-                  (report->app_usage == USAGE_ID_WHEEL)))
+                  (report->data_usage == USAGE_ID_WHEEL)))
         {
             signed int   usage_val = 0;
 
@@ -815,14 +865,6 @@ int hid_parse_mouse_reports(HID_DEV_T *hdev, uint8_t *data, int data_len)
             byte_idx = (bit_idx / 8);
         }
 
-        if (hdev->rpd.has_report_id)
-        {
-            if ((bit_idx % 8) != 0)
-            {
-                byte_idx++;
-                bit_idx = byte_idx * 8;
-            }
-        }
         if (byte_idx >= data_len)
             break;
     }
