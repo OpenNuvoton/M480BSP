@@ -442,12 +442,12 @@ static void SendChar_ToUART(int ch)
 {
     while(DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
 
-    DEBUG_PORT->DAT = ch;
     if(ch == '\n')
     {
         while(DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
         DEBUG_PORT->DAT = '\r';
     }
+    DEBUG_PORT->DAT = ch;
 }
 
 #else
