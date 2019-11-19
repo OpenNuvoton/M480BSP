@@ -33,6 +33,7 @@ uint8_t Buff_Pool[BUFF_SIZE] __attribute__((aligned(4)));       /* Working buffe
 #endif
 uint8_t  *Buff;
 uint32_t volatile gSec = 0;
+uint32_t volatile gSdInit = 0;
 void TMR0_IRQHandler(void)
 {
     gSec++;
@@ -324,8 +325,9 @@ void SDH0_IRQHandler(void)
         else
         {
             printf("***** card insert !\n");
-            SDH_Open(SDH0, CardDetect_From_GPIO);
-            SDH_Probe(SDH0);
+            gSdInit = 1;
+//            SDH_Open(SDH0, CardDetect_From_GPIO);
+//            SDH_Probe(SDH0);
         }
 
         SDH0->INTSTS = SDH_INTSTS_CDIF_Msk;
@@ -477,6 +479,11 @@ int32_t main(void)
         if(!(SDH_CardDetection(SDH0)))
             continue;
 
+        if (gSdInit)
+        {
+            SDH_Open_Disk(SDH0, CardDetect_From_GPIO);
+            gSdInit = 0;
+        }
         printf(_T(">"));
         ptr = Line;
         get_line(ptr, sizeof(Line));

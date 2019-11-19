@@ -13,7 +13,7 @@
 
 #define PLLCON_SETTING          CLK_PLLCTL_192MHz_HXT
 #define PLL_CLOCK               192000000
-#define HCLK_DIV                        2
+#define HCLK_DIV                        1
 #define USBD_DIV                        4
 
 uint32_t CLK_GetPLLClockFreq(void)
@@ -44,7 +44,7 @@ void SYS_Init(void)
     CLK->CLKDIV0 |= CLK_CLKDIV0_HCLK(HCLK_DIV);
     CLK->CLKDIV0 &= ~CLK_CLKDIV0_USBDIV_Msk;
     CLK->CLKDIV0 |= CLK_CLKDIV0_USB(USBD_DIV);
-    CLK->CLKSEL0 &= (~CLK_CLKSEL0_HCLKSEL_Msk) | CLK_CLKSEL0_HCLKSEL_PLL;
+    CLK->CLKSEL0 = (CLK->CLKSEL0 & (~CLK_CLKSEL0_HCLKSEL_Msk)) | CLK_CLKSEL0_HCLKSEL_PLL;
 
     /* Update System Core Clock */
     /* User can use SystemCoreClockUpdate() to calculate PllClock, SystemCoreClock and CycylesPerUs automatically. */
