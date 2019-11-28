@@ -283,12 +283,6 @@ void RS485_9bitModeSlave()
     printf("Ready to receive data...(Press any key to stop test)\n");
     getchar();
 
-    /* Flush FIFO */
-    while(UART_GET_RX_EMPTY(UART1) != 1)
-    {
-        UART_READ(UART1);
-    }
-
     UART_DISABLE_INT(UART1, (UART_INTEN_RDAIEN_Msk | UART_INTEN_RLSIEN_Msk | UART_INTEN_RXTOIEN_Msk));
 
     /* Set UART Function */
