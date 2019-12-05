@@ -53,7 +53,7 @@ void SYS_Init(void)
     /* Set PB.12 and PB.13 to input mode */
     PB->MODE &= ~(GPIO_MODE_MODE12_Msk | GPIO_MODE_MODE13_Msk);
     /* Set PB multi-function pins for DAC voltage output */
-    SYS->GPB_MFPL |= SYS_GPB_MFPH_PB12MFP_DAC0_OUT | SYS_GPB_MFPH_PB13MFP_DAC1_OUT;
+    SYS->GPB_MFPH |= SYS_GPB_MFPH_PB12MFP_DAC0_OUT | SYS_GPB_MFPH_PB13MFP_DAC1_OUT;
 
     /* Disable digital input path of analog pin DAC0_OUT to prevent leakage */
     GPIO_DISABLE_DIGITAL_PATH(PB, (1ul << 12));
