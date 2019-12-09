@@ -888,6 +888,34 @@ int SPIM_Enable_4Bytes_Mode(int isEn, uint32_t u32NBit)
     return ret;
 }
 
+
+void SPIM_WinbondUnlock(uint32_t u32NBit)
+{
+    uint8_t   idBuf[3];
+    uint8_t   dataBuf[4];
+
+    SPIM_ReadJedecId(idBuf, sizeof (idBuf), u32NBit);
+
+    if ((idBuf[0] != MFGID_WINBOND) || (idBuf[1] != 0x40) || (idBuf[2] != 0x16))
+    {
+        SPIM_DBGMSG("SPIM_WinbondUnlock - Not W25Q32, do nothing.\n");
+        return;
+    }
+
+    SPIM_ReadStatusRegister(&dataBuf[0], 1UL, u32NBit);
+    SPIM_ReadStatusRegister2(&dataBuf[1], 1UL, u32NBit);
+    SPIM_DBGMSG("Status Register: 0x%x - 0x%x\n", dataBuf[0], dataBuf[1]);
+    dataBuf[1] &= ~0x40;    /* clear Status Register-1 SEC bit */
+
+    spim_set_write_enable(1, u32NBit);   /* Write Enable.    */
+    SPIM_WriteStatusRegister2(dataBuf, sizeof (dataBuf), u32NBit);
+    spim_wait_write_done(u32NBit);
+
+    SPIM_ReadStatusRegister(&dataBuf[0], 1UL, u32NBit);
+    SPIM_ReadStatusRegister2(&dataBuf[1], 1UL, u32NBit);
+    SPIM_DBGMSG("Status Register (after unlock): 0x%x - 0x%x\n", dataBuf[0], dataBuf[1]);
+}
+
 /**
   * @brief      Erase whole chip.
   * @param      u32NBit     N-bit transmit/receive.
@@ -910,6 +938,7 @@ void SPIM_ChipErase(uint32_t u32NBit, int isSync)
         spim_wait_write_done(u32NBit);
     }
 }
+
 
 /**
   * @brief      Erase one block.

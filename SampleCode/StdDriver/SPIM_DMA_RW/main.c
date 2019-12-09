@@ -241,15 +241,13 @@ int main()
     }
     printf("[OK].\n");
 
-#if 0
     printf("\n[Fast Read Quad Output] 3-bytes address mode, Fast Read Quad command...");
-    if (dma_read_write(0, CMD_DMA_FAST_QUAD_READ, CMD_NORMAL_PAGE_PROGRAM, 8) < 0)
+    if (dma_read_write(0, CMD_DMA_FAST_QUAD_READ, CMD_NORMAL_PAGE_PROGRAM, 4) < 0)
     {
         printf("  FAILED!!\n");
         goto lexit;
     }
     printf("[OK].\n");
-#endif
 
 #if 0  /* W25Q20 does not support 4-bytes address mode. */
     printf("\n[Fast Read Dual I/O] 4-bytes address mode, dual read...");

@@ -89,6 +89,7 @@ void UART0_Init(void)
     UART_Open(UART0, 115200);
 }
 
+
 int main()
 {
     uint32_t    i, offset;             /* variables */
@@ -120,6 +121,8 @@ int main()
 
     SPIM_ReadJedecId(idBuf, sizeof (idBuf), 1);
     printf("SPIM get JEDEC ID=0x%02X, 0x%02X, 0x%02X\n", idBuf[0], idBuf[1], idBuf[2]);
+
+    SPIM_WinbondUnlock(1);
 
     SPIM_Enable_4Bytes_Mode(USE_4_BYTES_MODE, 1);
 

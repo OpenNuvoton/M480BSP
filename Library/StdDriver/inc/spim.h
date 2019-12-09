@@ -616,6 +616,8 @@ void SPIM_ExitDirectMapMode(void);
 
 void SPIM_SetQuadEnable(int isEn, uint32_t u32NBit);
 
+void SPIM_WinbondUnlock(uint32_t u32NBit);
+
 /*@}*/ /* end of group SPIM_EXPORTED_FUNCTIONS */
 
 /*@}*/ /* end of group SPIM_Driver */
