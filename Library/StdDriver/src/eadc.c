@@ -58,24 +58,26 @@ void EADC_Close(EADC_T *eadc)
   *                            - \ref EADC_FALLING_EDGE_TRIGGER          : STADC pin falling edge trigger
   *                            - \ref EADC_RISING_EDGE_TRIGGER           : STADC pin rising edge trigger
   *                            - \ref EADC_FALLING_RISING_EDGE_TRIGGER   : STADC pin both falling and rising edge trigger
-  *                            - \ref EADC_ADINT0_TRIGGER                : ADC ADINT0 interrupt EOC pulse trigger
-  *                            - \ref EADC_ADINT1_TRIGGER                : ADC ADINT1 interrupt EOC pulse trigger
+  *                            - \ref EADC_ADINT0_TRIGGER                : EADC ADINT0 interrupt EOC pulse trigger
+  *                            - \ref EADC_ADINT1_TRIGGER                : EADC ADINT1 interrupt EOC pulse trigger
   *                            - \ref EADC_TIMER0_TRIGGER                : Timer0 overflow pulse trigger
   *                            - \ref EADC_TIMER1_TRIGGER                : Timer1 overflow pulse trigger
   *                            - \ref EADC_TIMER2_TRIGGER                : Timer2 overflow pulse trigger
   *                            - \ref EADC_TIMER3_TRIGGER                : Timer3 overflow pulse trigger
-  *                            - \ref EADC_PWM0TG0_TRIGGER               : PWM0TG0 trigger
-  *                            - \ref EADC_PWM0TG1_TRIGGER               : PWM0TG1 trigger
-  *                            - \ref EADC_PWM0TG2_TRIGGER               : PWM0TG2 trigger
-  *                            - \ref EADC_PWM0TG3_TRIGGER               : PWM0TG3 trigger
-  *                            - \ref EADC_PWM0TG4_TRIGGER               : PWM0TG4 trigger
-  *                            - \ref EADC_PWM0TG5_TRIGGER               : PWM0TG5 trigger
-  *                            - \ref EADC_PWM1TG0_TRIGGER               : PWM1TG0 trigger
-  *                            - \ref EADC_PWM1TG1_TRIGGER               : PWM1TG1 trigger
-  *                            - \ref EADC_PWM1TG2_TRIGGER               : PWM1TG2 trigger
-  *                            - \ref EADC_PWM1TG3_TRIGGER               : PWM1TG3 trigger
-  *                            - \ref EADC_PWM1TG4_TRIGGER               : PWM1TG4 trigger
-  *                            - \ref EADC_PWM1TG5_TRIGGER               : PWM1TG5 trigger
+  *                            - \ref EADC_EPWM0TG0_TRIGGER              : EPWM0TG0 trigger
+  *                            - \ref EADC_EPWM0TG1_TRIGGER              : EPWM0TG1 trigger
+  *                            - \ref EADC_EPWM0TG2_TRIGGER              : EPWM0TG2 trigger
+  *                            - \ref EADC_EPWM0TG3_TRIGGER              : EPWM0TG3 trigger
+  *                            - \ref EADC_EPWM0TG4_TRIGGER              : EPWM0TG4 trigger
+  *                            - \ref EADC_EPWM0TG5_TRIGGER              : EPWM0TG5 trigger
+  *                            - \ref EADC_EPWM1TG0_TRIGGER              : EPWM1TG0 trigger
+  *                            - \ref EADC_EPWM1TG1_TRIGGER              : EPWM1TG1 trigger
+  *                            - \ref EADC_EPWM1TG2_TRIGGER              : EPWM1TG2 trigger
+  *                            - \ref EADC_EPWM1TG3_TRIGGER              : EPWM1TG3 trigger
+  *                            - \ref EADC_EPWM1TG4_TRIGGER              : EPWM1TG4 trigger
+  *                            - \ref EADC_EPWM1TG5_TRIGGER              : EPWM1TG5 trigger
+  *                            - \ref EADC_BPWM0TG_TRIGGER               : BPWM0TG trigger
+  *                            - \ref EADC_BPWM1TG_TRIGGER               : BPWM1TG trigger
   * @param[in] u32Channel Specifies the sample module channel, valid value are from 0 to 15.
   * @return None
   * @details Each of ADC control logic modules 0~15 which is configurable for ADC converter channel EADC_CH0~15 and trigger source.
