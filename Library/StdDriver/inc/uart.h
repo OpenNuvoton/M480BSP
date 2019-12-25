@@ -35,8 +35,8 @@ extern "C"
 #define UART1_FIFO_SIZE 16ul /*!< UART1 supports separated receive/transmit 16/16 bytes entry FIFO \hideinitializer */
 #define UART2_FIFO_SIZE 16ul /*!< UART2 supports separated receive/transmit 16/16 bytes entry FIFO \hideinitializer */
 #define UART3_FIFO_SIZE 16ul /*!< UART3 supports separated receive/transmit 16/16 bytes entry FIFO \hideinitializer */
-#define UART4_FIFO_SIZE 16ul /*!< UART3 supports separated receive/transmit 16/16 bytes entry FIFO \hideinitializer */
-#define UART5_FIFO_SIZE 16ul /*!< UART3 supports separated receive/transmit 16/16 bytes entry FIFO \hideinitializer */
+#define UART4_FIFO_SIZE 16ul /*!< UART4 supports separated receive/transmit 16/16 bytes entry FIFO \hideinitializer */
+#define UART5_FIFO_SIZE 16ul /*!< UART5 supports separated receive/transmit 16/16 bytes entry FIFO \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* UART_FIFO constants definitions                                                                         */

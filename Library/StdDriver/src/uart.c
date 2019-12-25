@@ -27,7 +27,7 @@
  *    @param[in]    uart                The pointer of the specified UART module.
  *    @param[in]    u32InterruptFlag    The specified interrupt of UART module.
  *                                      - \ref UART_INTSTS_LININT_Msk    : LIN bus interrupt
- *                                      - \ref UART_INTEN_WKIEN_Msk      : Wake-up interrupt
+ *                                      - \ref UART_INTSTS_WKIF_Msk      : Wake-up interrupt
  *                                      - \ref UART_INTSTS_BUFERRINT_Msk : Buffer Error interrupt
  *                                      - \ref UART_INTSTS_MODEMINT_Msk  : Modem Status interrupt
  *                                      - \ref UART_INTSTS_RLSINT_Msk    : Receive Line Status interrupt
