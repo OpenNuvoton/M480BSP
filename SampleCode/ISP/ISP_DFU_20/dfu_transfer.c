@@ -257,6 +257,7 @@ void DFU_ClassRequest(void)
                         {
                             dfu_status.bState = STATE_dfuIDLE;
                             HSUSBD->CEPCTL |= HSUSBD_CEPCTL_ZEROLEN_Msk;
+                            while (HSUSBD->CEPCTL & HSUSBD_CEPCTL_ZEROLEN_Msk);
                             /* Status stage */
                             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_STSDONEIF_Msk);
                             HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_NAKCLR);
