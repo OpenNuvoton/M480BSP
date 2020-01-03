@@ -23,7 +23,7 @@
 /**
  * @brief       Set GPIO operation mode
  *
- * @param[in]   port        GPIO port. It could be It could be PA, PB, PC, PD, PE, PF, PG or PH.
+ * @param[in]   port        GPIO port. It could be PA, PB, PC, PD, PE, PF, PG or PH.
  * @param[in]   u32PinMask  The single or multiple pins of specified GPIO port.
  *                          It could be BIT0 ~ BIT15 for PA, PB, PC, PD, PF and PH GPIO port.
  *                          It could be BIT0 ~ BIT13 for PE GPIO port.
@@ -51,7 +51,7 @@ void GPIO_SetMode(GPIO_T *port, uint32_t u32PinMask, uint32_t u32Mode)
 /**
  * @brief       Enable GPIO interrupt
  *
- * @param[in]   port        GPIO port. It could be It could be PA, PB, PC, PD, PE, PF, PG or PH.
+ * @param[in]   port        GPIO port. It could be PA, PB, PC, PD, PE, PF, PG or PH.
  * @param[in]   u32Pin      The pin of specified GPIO port.
  *                          It could be 0 ~ 15 for PA, PB, PC, PD, PF and PH GPIO port.
  *                          It could be 0 ~ 13 for PE GPIO port.
@@ -73,7 +73,7 @@ void GPIO_EnableInt(GPIO_T *port, uint32_t u32Pin, uint32_t u32IntAttribs)
 /**
  * @brief       Disable GPIO interrupt
  *
- * @param[in]   port        GPIO port. It could be It could be PA, PB, PC, PD, PE, PF, PG or PH.
+ * @param[in]   port        GPIO port. It could be PA, PB, PC, PD, PE, PF, PG or PH.
  * @param[in]   u32Pin      The pin of specified GPIO port.
  *                          It could be 0 ~ 15 for PA, PB, PC, PD, PF and PH GPIO port.
  *                          It could be 0 ~ 13 for PE GPIO port.
