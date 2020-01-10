@@ -18,6 +18,7 @@
 
 #define PLL_CLOCK       192000000
 
+void GpioPinSetting(void);
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Function for System Entry to Power Down Mode and Wake up source by GPIO Wake-up pin                    */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -30,6 +31,14 @@ void WakeUpPinFunction(uint32_t u32PDMode)
 
     /* Check if all the debug messages are finished */
     while(!UART_IS_TX_EMPTY(UART0));
+
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) != 0x0) // M480LD
+    {
+        /* Set IO State and all IPs clock disable for power consumption */
+        GpioPinSetting();
+        /* PA.0 Pull-up Enable */
+        GPIO_SetPullCtl(PA, 0, GPIO_PUSEL_PULL_UP);
+    }
 
     /* Select Power-down mode */
     CLK_SetPowerDownMode(u32PDMode);
@@ -61,6 +70,12 @@ void  WakeUpTimerFunction(uint32_t u32PDMode, uint32_t u32Interval)
     /* Check if all the debug messages are finished */
     while(!UART_IS_TX_EMPTY(UART0));
 
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) != 0x0) // M480LD
+    {
+        /* Set IO State and all IPs clock disable for power consumption */
+        GpioPinSetting();
+    }
+
     /* Select Power-down mode */
     CLK_SetPowerDownMode(u32PDMode);
 
@@ -83,6 +98,23 @@ void  WakeUpTimerFunction(uint32_t u32PDMode, uint32_t u32Interval)
 /*-----------------------------------------------------------------------------------------------------------*/
 void  WakeUpACMP0Function(uint32_t u32PDMode)
 {
+    printf("\nUsing ACMP0_P0(PA11) as ACMP0 positive input.\n");
+    printf("Using internal band-gap voltage as the negative input.\n\n");
+
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
+        printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
+    else
+        printf("Enter to SPD Power-Down mode......\n");
+
+    /* Check if all the debug messages are finished */
+    while(!UART_IS_TX_EMPTY(UART0));
+
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) != 0x0) // M480LD
+    {
+        /* Set IO State and all IPs clock disable for power consumption */
+        GpioPinSetting();
+    }
+
     /* Enable ACMP01 peripheral clock */
     CLK_EnableModuleClock(ACMP01_MODULE);
 
@@ -94,17 +126,6 @@ void  WakeUpACMP0Function(uint32_t u32PDMode)
 
     /* Disable digital input path of analog pin ACMP0_P0 to prevent leakage */
     GPIO_DISABLE_DIGITAL_PATH(PA, BIT11);
-
-    printf("\nUsing ACMP0_P0(PA11) as ACMP0 positive input.\n");
-    printf("Using internal band-gap voltage as the negative input.\n\n");
-
-    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
-        printf("Enter to SPD%d Power-Down mode......\n", (u32PDMode - 4));
-    else
-        printf("Enter to SPD Power-Down mode......\n");
-
-    /* Check if all the debug messages are finished */
-    while(!UART_IS_TX_EMPTY(UART0));
 
     /* Configure ACMP0. Enable ACMP0 and select band-gap voltage as the source of ACMP negative input. */
     ACMP_Open(ACMP01, 0, ACMP_CTL_NEGSEL_VBG, ACMP_CTL_HYSTERESIS_DISABLE);
@@ -141,6 +162,12 @@ void  WakeUpRTCTickFunction(uint32_t u32PDMode)
 
     /* Check if all the debug messages are finished */
     while(!UART_IS_TX_EMPTY(UART0));
+
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) != 0x0) // M480LD
+    {
+        /* Set IO State and all IPs clock disable for power consumption */
+        GpioPinSetting();
+    }
 
     /* enable RTC peripheral clock */
     CLK->APBCLK0 |= CLK_APBCLK0_RTCCKEN_Msk;
@@ -232,6 +259,12 @@ void  WakeUpRTCAlarmFunction(uint32_t u32PDMode)
     /* Check if all the debug messages are finished */
     while(!UART_IS_TX_EMPTY(UART0));
 
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) != 0x0) // M480LD
+    {
+        /* Set IO State and all IPs clock disable for power consumption */
+        GpioPinSetting();
+    }
+
     RTC_WaitAccessEnable();
     /* clear alarm status */
     RTC_CLEAR_ALARM_INT_FLAG();
@@ -264,6 +297,12 @@ void  WakeUpRTCTamperFunction(uint32_t u32PDMode)
 
     /* Check if all the debug messages are finished */
     while(!UART_IS_TX_EMPTY(UART0));
+
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) != 0x0) // M480LD
+    {
+        /* Set IO State and all IPs clock disable for power consumption */
+        GpioPinSetting();
+    }
 
     /* enable RTC peripheral clock */
     CLK->APBCLK0 |= CLK_APBCLK0_RTCCKEN_Msk;
@@ -318,6 +357,12 @@ void WakeUpLVRFunction(uint32_t u32PDMode)
     /* Check if all the debug messages are finished */
     while(!UART_IS_TX_EMPTY(UART0));
 
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) != 0x0) // M480LD
+    {
+        /* Set IO State and all IPs clock disable for power consumption */
+        GpioPinSetting();
+    }
+
     /* Select Power-down mode */
     CLK_SetPowerDownMode(u32PDMode);
 
@@ -340,6 +385,12 @@ void WakeUpBODFunction(uint32_t u32PDMode)
 
     /* Check if all the debug messages are finished */
     while(!UART_IS_TX_EMPTY(UART0));
+
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) != 0x0) // M480LD
+    {
+        /* Set IO State and all IPs clock disable for power consumption */
+        GpioPinSetting();
+    }
 
     /* Select Power-down mode */
     CLK_SetPowerDownMode(u32PDMode);
@@ -503,8 +554,12 @@ int32_t main(void)
     /* Release I/O hold status */
     CLK->IOPDCTL = 1;
 
-    /* Set IO State and all IPs clock disable for power consumption */
-    GpioPinSetting();
+    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0) // M480MD
+    {
+        /* Set IO State and all IPs clock disable for power consumption */
+        GpioPinSetting();
+    }
+
 
     CLK->APBCLK1 = 0x00000000;
     CLK->APBCLK0 = 0x00000000;
