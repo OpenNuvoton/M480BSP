@@ -119,6 +119,21 @@ extern "C"
   */
 #define TIMER_SELECT_TOUT_PIN(timer, u32ToutSel)    ((timer)->CTL = ((timer)->CTL & ~TIMER_CTL_TGLPINSEL_Msk) | (u32ToutSel))
 
+/**
+  * @brief      Select Timer operating mode
+  *
+  * @param[in]  timer       The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
+  * @param[in]  u32Mode     Operation mode. Possible options are
+  *                         - \ref TIMER_ONESHOT_MODE
+  *                         - \ref TIMER_PERIODIC_MODE
+  *                         - \ref TIMER_TOGGLE_MODE
+  *                         - \ref TIMER_CONTINUOUS_MODE
+  *
+  * @return     None
+  * \hideinitializer
+  */
+#define TIMER_SET_OPMODE(timer, u32OpMode)   ((timer)->CTL = ((timer)->CTL & ~TIMER_CTL_OPMODE_Msk) | (u32OpMode))
+
 /* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */
 __STATIC_INLINE void TIMER_Start(TIMER_T *timer);
 __STATIC_INLINE void TIMER_Stop(TIMER_T *timer);
