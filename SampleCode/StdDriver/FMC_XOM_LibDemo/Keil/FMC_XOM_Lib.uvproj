@@ -149,7 +149,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>19</TargetSelection>
+          <TargetSelection>20</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -411,7 +411,8 @@
             <ScatterFile>.\xom_lib_scatter.scf</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc>--map --first='startup_M480.o(RESET)' --datacompressor=off --info=inline --entry Reset_Handler --keep=xom_entry.o(*)</Misc>
+            <Misc>--map --first='startup_M480.o(RESET)' --datacompressor=off --info=inline --entry Reset_Handler
+</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings>6340</DisabledWarnings>
           </LDads>
@@ -510,8 +511,8 @@
                   <ModuleSelection>0</ModuleSelection>
                   <IncludeInBuild>2</IncludeInBuild>
                   <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>1</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>1</AssembleAssemblyFile>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
                   <PublicsOnly>2</PublicsOnly>
                   <StopOnExitCode>11</StopOnExitCode>
                   <CustomArgument></CustomArgument>
@@ -524,7 +525,7 @@
                     <Optim>0</Optim>
                     <oTime>2</oTime>
                     <SplitLS>2</SplitLS>
-                    <OneElfS>0</OneElfS>
+                    <OneElfS>2</OneElfS>
                     <Strict>2</Strict>
                     <EnumInt>2</EnumInt>
                     <PlainCh>2</PlainCh>

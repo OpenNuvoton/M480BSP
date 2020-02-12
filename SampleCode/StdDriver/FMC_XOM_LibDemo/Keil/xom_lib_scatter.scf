@@ -20,9 +20,13 @@ AP_DUMMY 0x00000000
 
 XOM1 0x10000
 {
-    XOM1 +0
+    XOM_ENTRY +0
     {
-    	xom_entry.o (+XO, +First)
+    	xom_entry.o (+XO)
+    }
+
+    XOM_FUNC +0
+    {
     	xom_lib.o (+XO)
     }
 }

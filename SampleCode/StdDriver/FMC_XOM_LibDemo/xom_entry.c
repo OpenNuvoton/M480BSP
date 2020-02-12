@@ -28,6 +28,7 @@ int32_t XOM_Mul(int32_t a, int32_t b);
 int32_t XOM_Div(int32_t a, int32_t b);
 int32_t XOM_Sum(int32_t *pbuf, int32_t n);
 
+int32_t XOM_Dispatch(int32_t id, int32_t arg1, int32_t arg2, void *output) __attribute__((used));
 
 int32_t XOM_Dispatch(int32_t id, int32_t arg1, int32_t arg2, void *output)
 {
