@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include "NuMicro.h"
 
-#define PLL_CLOCK       192000000
+#define PLL_CLOCK       160000000
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* Define global variables and constants                                                                   */
@@ -44,9 +44,9 @@ void SYS_Init(void)
     CLK_EnableModuleClock(EADC_MODULE);
     CLK_EnableModuleClock(EADC1_MODULE);
 
-    /* EADC clock source is 96MHz, set divider to 8, EADC clock is 96/8 MHz */
-    CLK_SetModuleClock(EADC_MODULE, 0, CLK_CLKDIV0_EADC(8));
-    CLK_SetModuleClock(EADC1_MODULE, 0, CLK_CLKDIV2_EADC1(8));
+    /* EADC clock source is PCLK, that is 80MHz */
+    CLK_SetModuleClock(EADC_MODULE, 0, CLK_CLKDIV0_EADC(1));
+    CLK_SetModuleClock(EADC1_MODULE, 0, CLK_CLKDIV2_EADC1(1));
 
     /* Enable Timer 0 module clock */
     CLK_EnableModuleClock(TMR0_MODULE);
