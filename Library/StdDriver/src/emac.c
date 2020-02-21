@@ -112,7 +112,7 @@ typedef struct
 /** Tx/Rx buffer structure */
 typedef struct
 {
-    uint8_t au8Buf[1520];
+    uint8_t au8Buf[EMAC_MAX_PKT_SIZE];
 } EMAC_FRAME_T;
 
 /*@}*/ /* end of group EMAC_EXPORTED_TYPEDEF */
@@ -129,7 +129,6 @@ static uint32_t s_u32EnableTs = 0UL;
 
 static void EMAC_MdioWrite(uint32_t u32Reg, uint32_t u32Addr, uint32_t u32Data);
 static uint32_t EMAC_MdioRead(uint32_t u32Reg, uint32_t u32Addr);
-static void EMAC_PhyInit(void);
 static void EMAC_TxDescInit(void);
 static void EMAC_RxDescInit(void);
 static uint32_t EMAC_Subsec2Nsec(uint32_t subsec);
@@ -153,8 +152,9 @@ static void EMAC_MdioWrite(uint32_t u32Reg, uint32_t u32Addr, uint32_t u32Data)
     EMAC->MIIMDAT = u32Data ;
     /* Set PHY address, PHY register address, busy bit and write bit */
     EMAC->MIIMCTL = u32Reg | (u32Addr << 8) | EMAC_MIIMCTL_BUSY_Msk | EMAC_MIIMCTL_WRITE_Msk | EMAC_MIIMCTL_MDCON_Msk;
+
     /* Wait write complete by polling busy bit. */
-    while(EMAC->MIIMCTL & EMAC_MIIMCTL_BUSY_Msk)
+    while (EMAC->MIIMCTL & EMAC_MIIMCTL_BUSY_Msk)
     {
         ;
     }
@@ -171,11 +171,13 @@ static uint32_t EMAC_MdioRead(uint32_t u32Reg, uint32_t u32Addr)
 {
     /* Set PHY address, PHY register address, busy bit */
     EMAC->MIIMCTL = u32Reg | (u32Addr << EMAC_MIIMCTL_PHYADDR_Pos) | EMAC_MIIMCTL_BUSY_Msk | EMAC_MIIMCTL_MDCON_Msk;
+
     /* Wait read complete by polling busy bit */
-    while(EMAC->MIIMCTL & EMAC_MIIMCTL_BUSY_Msk)
+    while (EMAC->MIIMCTL & EMAC_MIIMCTL_BUSY_Msk)
     {
         ;
     }
+
     /* Get return data */
     return EMAC->MIIMDAT;
 }
@@ -185,7 +187,7 @@ static uint32_t EMAC_MdioRead(uint32_t u32Reg, uint32_t u32Addr)
   * @param  None
   * @return None
   */
-static void EMAC_PhyInit(void)
+void EMAC_PhyInit(void)
 {
     uint32_t reg;
     uint32_t i = 0UL;
@@ -197,14 +199,16 @@ static void EMAC_PhyInit(void)
     while (1)
     {
         reg = EMAC_MdioRead(PHY_CNTL_REG, EMAC_PHY_ADDR) ;
-        if ((reg & PHY_CNTL_RESET_PHY)==0UL)
+
+        if ((reg & PHY_CNTL_RESET_PHY) == 0UL)
         {
             break;
         }
     }
-    while(!(EMAC_MdioRead(PHY_STATUS_REG, EMAC_PHY_ADDR) & PHY_STATUS_LINK_VALID))
+
+    while (!(EMAC_MdioRead(PHY_STATUS_REG, EMAC_PHY_ADDR) & PHY_STATUS_LINK_VALID))
     {
-        if(i++ > 80000UL)       /* Cable not connected */
+        if (i++ > 80000UL)      /* Cable not connected */
         {
             EMAC->CTL &= ~EMAC_CTL_OPMODE_Msk;
             EMAC->CTL &= ~EMAC_CTL_FUDUP_Msk;
@@ -212,7 +216,7 @@ static void EMAC_PhyInit(void)
         }
     }
 
-    if(i <= 80000UL)
+    if (i <= 80000UL)
     {
         /* Configure auto negotiation capability */
         EMAC_MdioWrite(PHY_ANA_REG, EMAC_PHY_ADDR, PHY_ANA_DR100_TX_FULL |
@@ -224,18 +228,20 @@ static void EMAC_PhyInit(void)
         EMAC_MdioWrite(PHY_CNTL_REG, EMAC_PHY_ADDR, EMAC_MdioRead(PHY_CNTL_REG, EMAC_PHY_ADDR) | PHY_CNTL_RESTART_AN);
 
         /* Wait for auto-negotiation complete */
-        while(!(EMAC_MdioRead(PHY_STATUS_REG, EMAC_PHY_ADDR) & PHY_STATUS_AN_COMPLETE))
+        while (!(EMAC_MdioRead(PHY_STATUS_REG, EMAC_PHY_ADDR) & PHY_STATUS_AN_COMPLETE))
         {
             ;
         }
+
         /* Check link valid again. Some PHYs needs to check result after link valid bit set */
-        while(!(EMAC_MdioRead(PHY_STATUS_REG, EMAC_PHY_ADDR) & PHY_STATUS_LINK_VALID))
+        while (!(EMAC_MdioRead(PHY_STATUS_REG, EMAC_PHY_ADDR) & PHY_STATUS_LINK_VALID))
         {
             ;
         }
 
         /* Check link partner capability */
         reg = EMAC_MdioRead(PHY_ANLPA_REG, EMAC_PHY_ADDR) ;
+
         if (reg & PHY_ANLPA_DR100_TX_FULL)
         {
             EMAC->CTL |= EMAC_CTL_OPMODE_Msk;
@@ -272,10 +278,10 @@ static void EMAC_TxDescInit(void)
     EMAC->TXDSA = (uint32_t)&tx_desc[0];
     u32NextTxDesc = u32CurrentTxDesc = (uint32_t)&tx_desc[0];
 
-    for(i = 0UL; i < EMAC_TX_DESC_SIZE; i++)
+    for (i = 0UL; i < EMAC_TX_DESC_SIZE; i++)
     {
 
-        if(s_u32EnableTs)
+        if (s_u32EnableTs)
         {
             tx_desc[i].u32Status1 = EMAC_TXFD_PADEN | EMAC_TXFD_CRCAPP | EMAC_TXFD_INTEN;
         }
@@ -283,6 +289,7 @@ static void EMAC_TxDescInit(void)
         {
             tx_desc[i].u32Status1 = EMAC_TXFD_PADEN | EMAC_TXFD_CRCAPP | EMAC_TXFD_INTEN | EMAC_TXFD_TTSEN;
         }
+
         tx_desc[i].u32Data = (uint32_t)((uint32_t)&tx_buf[i]);
         tx_desc[i].u32Backup1 = tx_desc[i].u32Data;
         tx_desc[i].u32Status2 = 0UL;
@@ -308,7 +315,7 @@ static void EMAC_RxDescInit(void)
     EMAC->RXDSA = (uint32_t)&rx_desc[0];
     u32CurrentRxDesc = (uint32_t)&rx_desc[0];
 
-    for(i = 0UL; i < EMAC_RX_DESC_SIZE; i++)
+    for (i = 0UL; i < EMAC_RX_DESC_SIZE; i++)
     {
         rx_desc[i].u32Status1 = EMAC_DESC_OWN_EMAC;
         rx_desc[i].u32Data = (uint32_t)((uint32_t)&rx_buf[i]);
@@ -331,7 +338,7 @@ static uint32_t EMAC_Subsec2Nsec(uint32_t subsec)
     uint64_t i;
     i = 1000000000ull * (uint64_t)subsec;
     i >>= 31;
-    return((uint32_t)i);
+    return ((uint32_t)i);
 }
 
 /**
@@ -345,7 +352,7 @@ static uint32_t EMAC_Nsec2Subsec(uint32_t nsec)
     uint64_t i;
     i = (1ull << 31) * nsec;
     i /= 1000000000ull;
-    return((uint32_t)i);
+    return ((uint32_t)i);
 }
 
 
@@ -400,8 +407,7 @@ void EMAC_Open(uint8_t *pu8MacAddr)
                     EMAC_CAMCTL_ABP_Msk;
 
     /* Limit the max receive frame length to 1514 + 4 */
-    EMAC->MRFL = 1518;
-    EMAC_PhyInit();
+    EMAC->MRFL = EMAC_MAX_PKT_SIZE;
 }
 
 /**
@@ -413,7 +419,8 @@ void EMAC_Open(uint8_t *pu8MacAddr)
 void EMAC_Close(void)
 {
     EMAC->CTL |= EMAC_CTL_RST_Msk;
-    while(EMAC->CTL & EMAC_CTL_RST_Msk) {}
+
+    while (EMAC->CTL & EMAC_CTL_RST_Msk) {}
 }
 
 /**
@@ -439,9 +446,9 @@ void EMAC_EnableCamEntry(uint32_t u32Entry, uint8_t pu8MacAddr[])
     uint32_t reg;
     u32Lsw = (uint32_t)(((uint32_t)pu8MacAddr[4] << 24) |
                         ((uint32_t)pu8MacAddr[5] << 16));
-    u32Msw = (uint32_t)(((uint32_t)pu8MacAddr[0] << 24)|
-                        ((uint32_t)pu8MacAddr[1] << 16)|
-                        ((uint32_t)pu8MacAddr[2] << 8)|
+    u32Msw = (uint32_t)(((uint32_t)pu8MacAddr[0] << 24) |
+                        ((uint32_t)pu8MacAddr[1] << 16) |
+                        ((uint32_t)pu8MacAddr[2] << 8) |
                         (uint32_t)pu8MacAddr[3]);
 
     reg = (uint32_t)&EMAC->CAM0M + u32Entry * 2UL * 4UL;
@@ -485,7 +492,7 @@ uint32_t EMAC_RecvPkt(uint8_t *pu8Data, uint32_t *pu32Size)
     if (reg & EMAC_INTSTS_RXBEIF_Msk)
     {
         /* Bus error occurred, this is usually a bad sign about software bug and will occur again... */
-        while(1) {}
+        while (1) {}
     }
     else
     {
@@ -500,7 +507,7 @@ uint32_t EMAC_RecvPkt(uint8_t *pu8Data, uint32_t *pu32Size)
             status = desc->u32Status1 >> 16;
 
             /* If Rx frame is good, process received frame */
-            if(status & EMAC_RXFD_RXGD)
+            if (status & EMAC_RXFD_RXGD)
             {
                 /* lower 16 bit in descriptor status1 stores the Rx packet length */
                 *pu32Size = desc->u32Status1 & 0xFFFFUL;
@@ -511,13 +518,17 @@ uint32_t EMAC_RecvPkt(uint8_t *pu8Data, uint32_t *pu32Size)
             {
                 /* Save Error status if necessary */
                 if (status & EMAC_RXFD_RP) {}
+
                 if (status & EMAC_RXFD_ALIE) {}
+
                 if (status & EMAC_RXFD_PTLE) {}
+
                 if (status & EMAC_RXFD_CRCE) {}
             }
         }
     }
-    return(u32Count);
+
+    return (u32Count);
 }
 
 /**
@@ -546,7 +557,7 @@ uint32_t EMAC_RecvPktTS(uint8_t *pu8Data, uint32_t *pu32Size, uint32_t *pu32Sec,
     if (reg & EMAC_INTSTS_RXBEIF_Msk)
     {
         /* Bus error occurred, this is usually a bad sign about software bug and will occur again... */
-        while(1) {}
+        while (1) {}
     }
     else
     {
@@ -555,7 +566,7 @@ uint32_t EMAC_RecvPktTS(uint8_t *pu8Data, uint32_t *pu32Size, uint32_t *pu32Sec,
         desc = (EMAC_DESCRIPTOR_T *)u32CurrentRxDesc;
 
         /* If we reach last recv Rx descriptor, leave the loop */
-        if(EMAC->CRXDSA != (uint32_t)desc)
+        if (EMAC->CRXDSA != (uint32_t)desc)
         {
             if ((desc->u32Status1 | EMAC_DESC_OWN_EMAC) != EMAC_DESC_OWN_EMAC)   /* ownership=CPU */
             {
@@ -563,7 +574,7 @@ uint32_t EMAC_RecvPktTS(uint8_t *pu8Data, uint32_t *pu32Size, uint32_t *pu32Sec,
                 status = desc->u32Status1 >> 16;
 
                 /* If Rx frame is good, process received frame */
-                if(status & EMAC_RXFD_RXGD)
+                if (status & EMAC_RXFD_RXGD)
                 {
                     /* lower 16 bit in descriptor status1 stores the Rx packet length */
                     *pu32Size = desc->u32Status1 & 0xFFFFUL;
@@ -578,14 +589,18 @@ uint32_t EMAC_RecvPktTS(uint8_t *pu8Data, uint32_t *pu32Size, uint32_t *pu32Sec,
                 {
                     /* Save Error status if necessary */
                     if (status & EMAC_RXFD_RP) {}
+
                     if (status & EMAC_RXFD_ALIE) {}
+
                     if (status & EMAC_RXFD_PTLE) {}
+
                     if (status & EMAC_RXFD_CRCE) {}
                 }
             }
         }
     }
-    return(u32Count);
+
+    return (u32Count);
 }
 
 /**
@@ -638,7 +653,7 @@ uint32_t EMAC_SendPkt(uint8_t *pu8Data, uint32_t u32Size)
     status = desc->u32Status1;
 
     /* Check descriptor ownership */
-    if((status & EMAC_DESC_OWN_EMAC) != EMAC_DESC_OWN_EMAC)
+    if ((status & EMAC_DESC_OWN_EMAC) != EMAC_DESC_OWN_EMAC)
     {
         memcpy((uint8_t *)desc->u32Data, pu8Data, u32Size);
 
@@ -655,7 +670,8 @@ uint32_t EMAC_SendPkt(uint8_t *pu8Data, uint32_t u32Size)
         EMAC_TRIGGER_TX();
         ret = 1UL;
     }
-    return(ret);
+
+    return (ret);
 }
 
 
@@ -681,7 +697,7 @@ uint32_t EMAC_SendPktDone(void)
     if (reg & EMAC_INTSTS_TXBEIF_Msk)
     {
         /* Bus error occurred, this is usually a bad sign about software bug and will occur again... */
-        while(1) {}
+        while (1) {}
     }
     else
     {
@@ -689,15 +705,18 @@ uint32_t EMAC_SendPktDone(void)
         last_tx_desc = EMAC->CTXDSA ;
         /* Get our first descriptor to process */
         desc = (EMAC_DESCRIPTOR_T *) u32CurrentTxDesc;
+
         do
         {
             /* Descriptor ownership is still EMAC, so this packet haven't been send. */
-            if(desc->u32Status1 & EMAC_DESC_OWN_EMAC)
+            if (desc->u32Status1 & EMAC_DESC_OWN_EMAC)
             {
                 break;
             }
+
             /* Get Tx status stored in descriptor */
             status = desc->u32Status2 >> 16UL;
+
             if (status & EMAC_TXFD_TXCP)
             {
                 u32Count++;
@@ -706,12 +725,19 @@ uint32_t EMAC_SendPktDone(void)
             {
                 /* Do nothing here on error. */
                 if (status & EMAC_TXFD_TXABT) {}
+
                 if (status & EMAC_TXFD_DEF) {}
+
                 if (status & EMAC_TXFD_PAU) {}
+
                 if (status & EMAC_TXFD_EXDEF) {}
+
                 if (status & EMAC_TXFD_NCS) {}
+
                 if (status & EMAC_TXFD_SQE) {}
+
                 if (status & EMAC_TXFD_LC) {}
+
                 if (status & EMAC_TXFD_TXHA) {}
             }
 
@@ -720,12 +746,13 @@ uint32_t EMAC_SendPktDone(void)
             desc->u32Next = desc->u32Backup2;
             /* go to next descriptor in link */
             desc = (EMAC_DESCRIPTOR_T *)desc->u32Next;
-        }
-        while (last_tx_desc != (uint32_t)desc);      /* If we reach last sent Tx descriptor, leave the loop */
+        } while (last_tx_desc != (uint32_t)desc);    /* If we reach last sent Tx descriptor, leave the loop */
+
         /* Save last processed Tx descriptor */
         u32CurrentTxDesc = (uint32_t)desc;
     }
-    return(u32Count);
+
+    return (u32Count);
 }
 
 /**
@@ -753,7 +780,7 @@ uint32_t EMAC_SendPktDoneTS(uint32_t *pu32Sec, uint32_t *pu32Nsec)
     if (reg & EMAC_INTSTS_TXBEIF_Msk)
     {
         /* Bus error occurred, this is usually a bad sign about software bug and will occur again... */
-        while(1) {}
+        while (1) {}
     }
     else
     {
@@ -762,10 +789,11 @@ uint32_t EMAC_SendPktDoneTS(uint32_t *pu32Sec, uint32_t *pu32Nsec)
         desc = (EMAC_DESCRIPTOR_T *) u32CurrentTxDesc;
 
         /* Descriptor ownership is still EMAC, so this packet haven't been send. */
-        if((desc->u32Status1 & EMAC_DESC_OWN_EMAC) != EMAC_DESC_OWN_EMAC)
+        if ((desc->u32Status1 & EMAC_DESC_OWN_EMAC) != EMAC_DESC_OWN_EMAC)
         {
             /* Get Tx status stored in descriptor */
             status = desc->u32Status2 >> 16UL;
+
             if (status & EMAC_TXFD_TXCP)
             {
                 u32Count = 1UL;
@@ -776,12 +804,19 @@ uint32_t EMAC_SendPktDoneTS(uint32_t *pu32Sec, uint32_t *pu32Nsec)
             {
                 /* Do nothing here on error. */
                 if (status & EMAC_TXFD_TXABT) {}
+
                 if (status & EMAC_TXFD_DEF) {}
+
                 if (status & EMAC_TXFD_PAU) {}
+
                 if (status & EMAC_TXFD_EXDEF) {}
+
                 if (status & EMAC_TXFD_NCS) {}
+
                 if (status & EMAC_TXFD_SQE) {}
+
                 if (status & EMAC_TXFD_LC) {}
+
                 if (status & EMAC_TXFD_TXHA) {}
             }
 
@@ -796,7 +831,7 @@ uint32_t EMAC_SendPktDoneTS(uint32_t *pu32Sec, uint32_t *pu32Nsec)
         }
     }
 
-    return(u32Count);
+    return (u32Count);
 }
 
 /**
@@ -905,10 +940,12 @@ void EMAC_UpdateTime(uint32_t u32Neg, uint32_t u32Sec, uint32_t u32Nsec)
 {
     EMAC->UPDSEC = u32Sec;
     EMAC->UPDSUBSEC = EMAC_Nsec2Subsec(u32Nsec);
-    if(u32Neg)
+
+    if (u32Neg)
     {
         EMAC->UPDSUBSEC |= BIT31;   /* Set bit 31 indicates this is a negative value */
     }
+
     EMAC->TSCTL |= EMAC_TSCTL_TSUPDATE_Msk;
 
 }
@@ -929,10 +966,11 @@ uint32_t EMAC_CheckLinkStatus(void)
     uint32_t reg, ret = EMAC_LINK_DOWN;
 
     /* Check link valid again */
-    if(EMAC_MdioRead(PHY_STATUS_REG, EMAC_PHY_ADDR) & PHY_STATUS_LINK_VALID)
+    if (EMAC_MdioRead(PHY_STATUS_REG, EMAC_PHY_ADDR) & PHY_STATUS_LINK_VALID)
     {
         /* Check link partner capability */
         reg = EMAC_MdioRead(PHY_ANLPA_REG, EMAC_PHY_ADDR) ;
+
         if (reg & PHY_ANLPA_DR100_TX_FULL)
         {
             EMAC->CTL |= EMAC_CTL_OPMODE_Msk;
@@ -958,7 +996,174 @@ uint32_t EMAC_CheckLinkStatus(void)
             ret = EMAC_LINK_10H;
         }
     }
+
     return ret;
+}
+
+/**
+  * @brief  Fill a MAC address to list and enable.
+  * @param  A MAC address
+  * @return The CAM index
+  * @retval -1 Failed to fill the MAC address.
+  * @retval 0~(EMAC_CAMENTRY_NB-1) The index number of entry location.
+  */
+int32_t EMAC_FillCamEntry(uint8_t pu8MacAddr[])
+{
+    uint32_t *EMAC_CAMxM;
+    uint32_t *EMAC_CAMxL;
+    int32_t index;
+    uint8_t mac[6];
+
+    for (index = 0; index < EMAC_CAMENTRY_NB; index ++)
+    {
+        EMAC_CAMxM = (uint32_t *)((uint32_t)&EMAC->CAM0M + (index * 8));
+        EMAC_CAMxL = (uint32_t *)((uint32_t)&EMAC->CAM0L + (index * 8));
+
+        mac[0] = (*EMAC_CAMxM >> 24) & 0xff;
+        mac[1] = (*EMAC_CAMxM >> 16) & 0xff;
+        mac[2] = (*EMAC_CAMxM >> 8) & 0xff;
+        mac[3] = (*EMAC_CAMxM) & 0xff;
+        mac[4] = (*EMAC_CAMxL >> 24) & 0xff;
+        mac[5] = (*EMAC_CAMxL >> 16) & 0xff;
+
+        if (memcmp(mac, pu8MacAddr, sizeof(mac)) == 0)
+        {
+            goto exit_emac_fillcamentry;
+        }
+
+        if (*EMAC_CAMxM == 0 && *EMAC_CAMxL == 0)
+        {
+            break;
+        }
+    }
+
+    if (index < EMAC_CAMENTRY_NB)
+    {
+        EMAC_EnableCamEntry(index, pu8MacAddr);
+        goto exit_emac_fillcamentry;
+    }
+
+    return -1;
+
+exit_emac_fillcamentry:
+
+    return index;
+}
+
+/**
+  * @brief Send an Ethernet packet
+  * @param[in] u32Size Packet size (without 4 byte CRC).
+  * @return Packet transmit success or not
+  * @retval 0 Transmit failed due to descriptor unavailable.
+  * @retval 1 Triggered to transmit.
+  * @note Return 1 doesn't guarantee the packet will be sent and received successfully.
+  */
+uint32_t EMAC_SendPktWoCopy(uint32_t u32Size)
+{
+    EMAC_DESCRIPTOR_T *desc;
+    uint32_t status;
+    uint32_t ret = 0UL;
+    /* Get Tx frame descriptor & data pointer */
+    desc = (EMAC_DESCRIPTOR_T *)u32NextTxDesc;
+
+    status = desc->u32Status1;
+
+    /* Check descriptor ownership */
+    if ((status & EMAC_DESC_OWN_EMAC) != EMAC_DESC_OWN_EMAC)
+    {
+        /* Set Tx descriptor transmit byte count */
+        desc->u32Status2 = u32Size;
+
+        /* Change descriptor ownership to EMAC */
+        desc->u32Status1 |= EMAC_DESC_OWN_EMAC;
+
+        /* Get next Tx descriptor */
+        u32NextTxDesc = (uint32_t)(desc->u32Next);
+
+        /* Trigger EMAC to send the packet */
+        EMAC_TRIGGER_TX();
+        ret = 1UL;
+    }
+
+    return (ret);
+}
+
+/**
+  * @brief  Get avaiable TX buffer address
+  * @param  None
+  * @return An avaiable TX buffer.
+  * @note   This API should be called before EMAC_SendPkt_WoCopy calling. Caller will do data-copy.
+  */
+uint8_t *EMAC_ClaimFreeTXBuf(void)
+{
+    EMAC_DESCRIPTOR_T *desc = (EMAC_DESCRIPTOR_T *)u32NextTxDesc;
+
+    if (desc->u32Status1 & EMAC_DESC_OWN_EMAC)
+    {
+        return (NULL);
+    }
+    else
+    {
+        return (uint8_t *)desc->u32Data;
+    }
+}
+
+/**
+  * @brief  Get data length of avaiable RX buffer.
+  * @param  None
+  * @return An data length of avaiable RX buffer.
+  * @note   This API should be called before EMAC_RecvPktDone_WoTrigger calling. Caller will do data-copy.
+  */
+uint32_t EMAC_GetAvailRXBufSize(void)
+{
+    EMAC_DESCRIPTOR_T *desc = (EMAC_DESCRIPTOR_T *)u32CurrentRxDesc;
+
+    if ((desc->u32Status1 & EMAC_DESC_OWN_EMAC) != EMAC_DESC_OWN_EMAC)   /* ownership=CPU */
+    {
+        uint32_t status = desc->u32Status1 >> 16;
+
+        /* It is good and no CRC error. */
+        if ((status & EMAC_RXFD_RXGD) && !(status & EMAC_RXFD_CRCE))
+        {
+            return desc->u32Status1 & 0xFFFFUL;
+        }
+        else
+        {
+            // Drop it
+            EMAC_RecvPktDone();
+        }
+    }
+
+    return 0;
+}
+
+
+/**
+  * @brief Clean up process after a packet is received.
+  * @param None
+  * @return None
+  * @details Caller must call the function to release the resource.
+  * @note Application can only call this function once every time \ref EMAC_RecvPkt or \ref EMAC_RecvPktTS returns 1
+  * @note This function is without doing EMAC_TRIGGER_RX.
+  */
+void EMAC_RecvPktDoneWoRxTrigger(void)
+{
+    EMAC_DESCRIPTOR_T *desc;
+    /* Get Rx Frame Descriptor */
+    desc = (EMAC_DESCRIPTOR_T *)u32CurrentRxDesc;
+
+    /* Restore descriptor link list and data pointer they will be overwrite if time stamp enabled */
+    desc->u32Data = desc->u32Backup1;
+    desc->u32Next = desc->u32Backup2;
+
+    /* Change ownership to DMA for next use */
+    desc->u32Status1 |= EMAC_DESC_OWN_EMAC;
+
+    /* Get Next Frame Descriptor pointer to process */
+    desc = (EMAC_DESCRIPTOR_T *)desc->u32Next;
+
+    /* Save last processed Rx descriptor */
+    u32CurrentRxDesc = (uint32_t)desc;
 }
 
 

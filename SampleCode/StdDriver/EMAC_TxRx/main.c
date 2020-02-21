@@ -129,6 +129,9 @@ int main(void)
     // Select RMII interface by default
     EMAC_Open(g_au8MacAddr);
 
+    // Init phy
+    EMAC_PhyInit();
+
     NVIC_EnableIRQ(EMAC_TX_IRQn);
     NVIC_EnableIRQ(EMAC_RX_IRQn);
 

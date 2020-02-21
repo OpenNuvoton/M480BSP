@@ -119,6 +119,9 @@ int main(void)
     // But still connect Ethernet cable to pass auto-negotiation.
     EMAC_Open(g_au8MacAddr);
 
+    // Init phy
+    EMAC_PhyInit();
+
     // Init time stamp and set current time to 1000s:0ns
     EMAC_EnableTS(1000, 0);
 

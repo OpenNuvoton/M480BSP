@@ -181,6 +181,10 @@ int main(void)
 
     // Select RMII interface by default
     EMAC_Open(ethaddr.addr);
+
+    // Init phy
+    EMAC_PhyInit();
+
     NVIC_EnableIRQ(EMAC_TX_IRQn);
     NVIC_EnableIRQ(EMAC_RX_IRQn);
     EMAC_ENABLE_RX();
