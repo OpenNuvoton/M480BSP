@@ -1,20 +1,19 @@
 /**************************************************************************//**
- * @file     nu_emac.h
+ * @file     emac.h
  * @version  V1.00
  * @brief    M480 EMAC driver header file
  *
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
-#ifndef __NU_EMAC_H__
-#define __NU_EMAC_H__
-
-#include <stdint.h>
+#ifndef __EMAC_H__
+#define __EMAC_H__
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
+#include <stdint.h>
 
 /** @addtogroup Standard_Driver Standard Driver
   @{
