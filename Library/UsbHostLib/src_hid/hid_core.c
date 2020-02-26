@@ -494,15 +494,6 @@ int32_t usbh_hid_start_int_read(HID_DEV_T *hdev, uint8_t ep_addr, HID_IR_FUNC *f
     if (!func)
         return HID_RET_INVALID_PARAMETER;
 
-    for (i = 0; i < CONFIG_HID_DEV_MAX_PIPE; i++)
-    {
-        utr = hdev->utr_list[i];
-        if ((utr != NULL) && (utr->ep != NULL) && (utr->ep->bEndpointAddress == ep_addr))
-        {
-            return HID_RET_XFER_IS_RUNNING;      /* transfer of this pipe is running      */
-        }
-    }
-
     if (ep_addr == 0)
         ep = usbh_iface_find_ep(iface, 0, EP_ADDR_DIR_IN | EP_ATTR_TT_INT);
     else
@@ -523,7 +514,6 @@ int32_t usbh_hid_start_int_read(HID_DEV_T *hdev, uint8_t ep_addr, HID_IR_FUNC *f
     }
 
     hdev->read_func = func;
-
     utr->context = hdev;
     utr->ep = ep;
     utr->data_len = ep->wMaxPacketSize;
@@ -632,15 +622,6 @@ int32_t usbh_hid_start_int_write(HID_DEV_T *hdev, uint8_t ep_addr, HID_IW_FUNC *
 
     if (!func)
         return HID_RET_INVALID_PARAMETER;
-
-    for (i = 0; i < CONFIG_HID_DEV_MAX_PIPE; i++)
-    {
-        utr = hdev->utr_list[i];
-        if ((utr != NULL) && (utr->ep != NULL) && (utr->ep->bEndpointAddress == ep_addr))
-        {
-            return HID_RET_XFER_IS_RUNNING;      /* transfer of this pipe is running      */
-        }
-    }
 
     if (ep_addr == 0)
         ep = usbh_iface_find_ep(iface, 0, EP_ADDR_DIR_OUT | EP_ATTR_TT_INT);

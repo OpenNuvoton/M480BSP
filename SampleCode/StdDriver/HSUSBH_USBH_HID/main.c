@@ -18,6 +18,7 @@
 
 // #define HAVE_INT_OUT
 
+
 #ifdef __ICCARM__
 #pragma data_alignment=32
 uint8_t  g_buff_pool[1024];
@@ -30,6 +31,8 @@ HID_DEV_T   *g_hid_list[CONFIG_HID_MAX_DEV];
 extern int kbhit(void);                        /* function in retarget.c                 */
 
 volatile uint32_t  g_tick_cnt;
+
+volatile int  int_cnt = 0;
 
 void SysTick_Handler(void)
 {
@@ -129,6 +132,7 @@ void  int_read_callback(HID_DEV_T *hdev, uint16_t ep_addr, int status, uint8_t *
     printf("Device [0x%x,0x%x] ep 0x%x, %d bytes received =>\n",
            hdev->idVendor, hdev->idProduct, ep_addr, data_len);
     dump_buff_hex(rdata, data_len);
+    int_cnt++;
 }
 
 #ifdef HAVE_INT_OUT
@@ -188,11 +192,18 @@ int  init_hid_device(HID_DEV_T *hdev)
     }
 
     printf("\nUSBH_HidStartIntReadPipe...\n");
-    ret = usbh_hid_start_int_read(hdev, 0, int_read_callback);
-    if (ret != HID_RET_OK)
-        printf("usbh_hid_start_int_read failed! %d\n", ret);
-    else
-        printf("Interrupt in transfer started...\n");
+    for (i = 0; i < 2; i++)
+    {
+        /* use ping-pong buffer transfer */
+        ret = usbh_hid_start_int_read(hdev, 0, int_read_callback);
+        if (ret != HID_RET_OK)
+        {
+            printf("usbh_hid_start_int_read failed! %d\n", ret);
+            while (1);
+        }
+        else
+            printf("Interrupt in transfer %d started...\n", i);
+    }
 
 #ifdef HAVE_INT_OUT
     ret = usbh_hid_start_int_write(hdev, 0, int_write_callback);
@@ -287,6 +298,7 @@ void UART0_Init(void)
 int32_t main(void)
 {
     HID_DEV_T    *hdev, *hdev_list;
+    uint32_t     t0;
 
     SYS_Init();                        /* Init System, IP clock and multi-function I/O */
 
@@ -306,7 +318,7 @@ int32_t main(void)
     usbh_memory_used();
 
     memset(g_hid_list, 0, sizeof(g_hid_list));
-
+    t0 = g_tick_cnt;
     while (1)
     {
         if (usbh_pooling_hubs())             /* USB Host port detect polling and management */
@@ -329,6 +341,14 @@ int32_t main(void)
             update_hid_device_list(hdev_list);
             usbh_memory_used();
         }
+
+        if (g_tick_cnt - t0 >= 100)
+        {
+            t0 = g_tick_cnt;
+            printf("%d \n", int_cnt);
+            int_cnt = 0;
+        }
+
 #ifndef DEBUG_ENABLE_SEMIHOST
         if (!kbhit())
         {

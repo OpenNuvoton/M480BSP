@@ -260,7 +260,7 @@ static int  ehci_init(void)
     _ehci->UCMDR = UCMDR_INT_THR_CTRL | HSUSBH_UCMDR_RUN_Msk;
 
     _ghost_qtd = alloc_ehci_qTD(NULL);
-    _ghost_qtd->Token = 0x11197B7F;    //QTD_STS_HALT;  visit_qtd() will not remove a qTD with this mark. It represents a qhost qTD.
+    _ghost_qtd->Token = 0x11197B3F;    //QTD_STS_HALT;  visit_qtd() will not remove a qTD with this mark. It represents a qhost qTD.
 
     /*------------------------------------------------------------------------------------*/
     /*  Initialize asynchronous list                                                      */
@@ -753,22 +753,26 @@ static int ehci_int_xfer(UTR_T *utr)
     UDEV_T     *udev = utr->udev;
     EP_INFO_T  *ep = utr->ep;
     QH_T       *qh, *iqh;
-    qTD_T      *qtd;
+    qTD_T      *qtd, *dummy_qtd;
     uint32_t   token;
-    int8_t     is_new_qh = 0;
+
+    dummy_qtd = alloc_ehci_qTD(NULL);     /* allocate a new dummy qTD                    */
+    if (dummy_qtd == NULL)
+        return USBH_ERR_MEMORY_OUT;
+    dummy_qtd->Token &= ~(QTD_STS_ACTIVE | QTD_STS_HALT);
 
     if (ep->hw_pipe != NULL)
     {
         qh = (QH_T *)ep->hw_pipe ;
-        if (qh->qtd_list)
-            return USBH_ERR_EHCI_QH_BUSY;
     }
     else
     {
         qh = alloc_ehci_QH();
         if (qh == NULL)
+        {
+            free_ehci_qTD(dummy_qtd);
             return USBH_ERR_MEMORY_OUT;
-        is_new_qh = 1;
+        }
         write_qh(udev, ep, qh);
         qh->Chrst &= ~0xF0000000;
 
@@ -781,57 +785,57 @@ static int ehci_int_xfer(UTR_T *utr)
             qh->Cap = (0x1 << QH_MULT_Pos) | (qh->Cap & ~(QH_C_MASK_Msk | QH_S_MASK_Msk)) | 0x7802;
         }
         ep->hw_pipe = (void *)qh;           /* associate QH with endpoint                 */
-    }
 
-    /*------------------------------------------------------------------------------------*/
-    /*  Prepare qTD                                                                       */
-    /*------------------------------------------------------------------------------------*/
-    qtd = alloc_ehci_qTD(utr);
-    if (qtd == NULL)                    /* failed to allocate a qTD                   */
-    {
-        if (is_new_qh)
+        /*
+         *  Allocate another dummy qTD
+         */
+        qtd = alloc_ehci_qTD(NULL);    /* allocate a new dummy qTD                   */
+        if (qtd == NULL)
         {
+            free_ehci_qTD(dummy_qtd);
             free_ehci_QH(qh);
-            ep->hw_pipe = NULL;
+            return USBH_ERR_MEMORY_OUT;
         }
-        return USBH_ERR_MEMORY_OUT;
-    }
+        qtd->Token &= ~(QTD_STS_ACTIVE | QTD_STS_HALT);
 
-    if ((ep->bEndpointAddress & EP_ADDR_DIR_MASK) == EP_ADDR_DIR_OUT)
-        token = QTD_ERR_COUNTER | QTD_PID_OUT | QTD_STS_ACTIVE;
-    else
-        token = QTD_ERR_COUNTER | QTD_PID_IN | QTD_STS_ACTIVE;
+        qh->dummy = dummy_qtd;
+        qh->OL_Next_qTD = (uint32_t)dummy_qtd;
+        qh->OL_Token = 0;    /* !Active & !Halted */
 
-    qtd->qh = qh;
-    qtd->Next_qTD = QTD_LIST_END; //(uint32_t)_ghost_qtd;
-    qtd->Alt_Next_qTD = QTD_LIST_END; //(uint32_t)_ghost_qtd;
-    write_qtd_bptr(qtd, (uint32_t)utr->buff, utr->data_len);
-    append_to_qtd_list_of_QH(qh, qtd);
-    qtd->Token = QTD_IOC | (utr->data_len << 16) | token;
-
-    DISABLE_EHCI_IRQ();
-
-    //qh->Curr_qTD = 0; //(uint32_t)qtd;
-    qh->OL_Next_qTD = (uint32_t)qtd;
-    //qh->OL_Alt_Next_qTD = QTD_LIST_END;
-
-    // printf("ehci_int_xfer - qh: 0x%x, 0x%x, 0x%x\n", (int)qh, (int)qh->Chrst, (int)qh->Cap);
-
-    if (is_new_qh)
-    {
-        memcpy(&(qh->OL_Bptr[0]), &(qtd->Bptr[0]), 20);
-        qh->Curr_qTD = (uint32_t)qtd;
-        qh->OL_Token = qtd->Token;
-
+        /*
+         *  link QH
+         */
         if (udev->speed == SPEED_HIGH)      /* get head node of this interval             */
             iqh = get_int_tree_head_node(ep->bInterval);
         else
             iqh = get_int_tree_head_node(ep->bInterval * 8);
         qh->HLink = iqh->HLink;             /* Add to list of the same interval           */
         iqh->HLink = QH_HLNK_QH(qh);
+
+        dummy_qtd = qtd;
     }
 
-    ENABLE_EHCI_IRQ();
+    qtd = qh->dummy;                        /* use the current dummy qTD                  */
+    qtd->Next_qTD = (uint32_t)dummy_qtd;
+    qtd->utr = utr;
+    qh->dummy = dummy_qtd;                  /* give the new dummy qTD                     */
+
+    /*------------------------------------------------------------------------------------*/
+    /*  Prepare qTD                                                                       */
+    /*------------------------------------------------------------------------------------*/
+
+    if ((ep->bEndpointAddress & EP_ADDR_DIR_MASK) == EP_ADDR_DIR_OUT)
+        token = QTD_ERR_COUNTER | QTD_PID_OUT;
+    else
+        token = QTD_ERR_COUNTER | QTD_PID_IN;
+
+    qtd->qh = qh;
+    qtd->Alt_Next_qTD = QTD_LIST_END;
+    write_qtd_bptr(qtd, (uint32_t)utr->buff, utr->data_len);
+    append_to_qtd_list_of_QH(qh, qtd);
+    qtd->Token = QTD_IOC | (utr->data_len << 16) | token | QTD_STS_ACTIVE;
+
+    // printf("ehci_int_xfer - qh: 0x%x, 0x%x, 0x%x\n", (int)qh, (int)qh->Chrst, (int)qh->Cap);
 
     _ehci->UCMDR |= HSUSBH_UCMDR_PSEN_Msk;      /* periodic list enable                   */
     return 0;
@@ -883,7 +887,7 @@ static int ehci_quit_xfer(UTR_T *utr, EP_INFO_T *ep)
 
 static int visit_qtd(qTD_T *qtd)
 {
-    if ((qtd->Token == 0x11197B7F) || (qtd->Token == 0x1197B7F))
+    if ((qtd->Token == 0x11197B3F) || (qtd->Token == 0x1197B3F))
         return 0;                    /* A Dummy qTD or qTD on writing, don't touch it.    */
 
     // USB_debug("Visit qtd 0x%x - 0x%x\n", (int)qtd, qtd->Token);
@@ -970,7 +974,7 @@ static void scan_asynchronous_list()
 static void scan_periodic_frame_list()
 {
     QH_T    *qh;
-    qTD_T   *qtd;
+    qTD_T   *qtd, *qNext;
     UTR_T   *utr;
 
     /*------------------------------------------------------------------------------------*/
@@ -979,7 +983,7 @@ static void scan_periodic_frame_list()
     qh =  _Iqh[NUM_IQH-1];
     while (qh != NULL)
     {
-        qtd = qh->qtd_list;                 /* There's only one qTD in list at most.      */
+        qtd = qh->qtd_list;
 
         if (qtd == NULL)
         {
@@ -988,17 +992,22 @@ static void scan_periodic_frame_list()
             continue;
         }
 
-        if (visit_qtd(qtd))                 /* if TRUE, reclaim this qtd                  */
+        while (qtd != NULL)
         {
-            qtd->next = qh->done_list;      /* push qTD into the done list                */
-            qh->done_list = qtd;            /* move qTD to done list                      */
-            qh->qtd_list = NULL;            /* qtd_list becomes empty                     */
+            qNext = qtd->next;
+
+            if (visit_qtd(qtd))                 /* if TRUE, reclaim this qtd                  */
+            {
+                qh->qtd_list = qtd->next;       /* proceed to next qTD or NULL                */
+                qtd->next = qh->done_list;      /* push qTD into the done list                */
+                qh->done_list = qtd;            /* move qTD to done list                      */
+            }
+            qtd = qNext;
         }
 
         qtd = qh->done_list;
 
-        /* If all TDs are done, call-back to requester and then remove this QH.           */
-        if ((qtd != NULL) && (qh->qtd_list == NULL))
+        while (qtd != NULL)
         {
             utr = qtd->utr;
 
@@ -1012,6 +1021,8 @@ static void scan_periodic_frame_list()
                 utr->func(utr);
 
             _ehci->UCMDR |= HSUSBH_UCMDR_IAAD_Msk;   /* trigger IAA to reclaim done_list  */
+
+            qtd = qtd->next;
         }
 
         qh = QH_PTR(qh->HLink);                  /* advance to the next QH                */

@@ -100,6 +100,7 @@ typedef struct qh_t
     /*
      * The following members are used by USB Host libary.
      */
+    qTD_T       *dummy;                     /* point to the inactive dummy qTD            */
     qTD_T       *qtd_list;                  /* currently linked qTD transfers             */
     qTD_T       *done_list;                 /* currently linked qTD transfers             */
     struct qh_t *next;                      /* point to the next QH in remove list        */
