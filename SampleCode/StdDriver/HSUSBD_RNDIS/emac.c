@@ -191,7 +191,7 @@ static uint32_t EMAC_MdioRead(uint32_t u32Reg, uint32_t u32Addr)
   * @param  None
   * @return None
   */
-static void EMAC_PhyInit(void)
+static void _EMAC_PhyInit(void)
 {
     uint32_t reg;
     uint32_t i = 0UL;
@@ -353,7 +353,7 @@ void EMAC_Open(uint8_t *pu8MacAddr)
 
     /* Limit the max receive frame length to 1514 + 4 */
     EMAC->MRFL = 1518;
-    EMAC_PhyInit();
+    _EMAC_PhyInit();
 }
 
 /**
