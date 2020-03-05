@@ -123,7 +123,7 @@ extern "C"
   * @brief      Select Timer operating mode
   *
   * @param[in]  timer       The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
-  * @param[in]  u32Mode     Operation mode. Possible options are
+  * @param[in]  u32OpMode   Operation mode. Possible options are
   *                         - \ref TIMER_ONESHOT_MODE
   *                         - \ref TIMER_PERIODIC_MODE
   *                         - \ref TIMER_TOGGLE_MODE

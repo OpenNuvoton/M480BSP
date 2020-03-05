@@ -1002,7 +1002,7 @@ uint32_t EMAC_CheckLinkStatus(void)
 
 /**
   * @brief  Fill a MAC address to list and enable.
-  * @param  A MAC address
+  * @param  pu8MacAddr A MAC address
   * @return The CAM index
   * @retval -1 Failed to fill the MAC address.
   * @retval 0~(EMAC_CAMENTRY_NB-1) The index number of entry location.
