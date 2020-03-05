@@ -130,7 +130,7 @@ static uint32_t u32NextTxDesc, u32CurrentRxDesc;
 
 static void EMAC_MdioWrite(uint32_t u32Reg, uint32_t u32Addr, uint32_t u32Data);
 static uint32_t EMAC_MdioRead(uint32_t u32Reg, uint32_t u32Addr);
-static void EMAC_PhyInit(void);
+static void _EMAC_PhyInit(void);
 static void EMAC_TxDescInit(void);
 static void EMAC_RxDescInit(void);
 
