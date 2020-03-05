@@ -20,7 +20,7 @@
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">M480 BSP
-   &#160;<span id="projectnumber">V3.04.000</span>
+   &#160;<span id="projectnumber">V3.05.000</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -93,6 +93,18 @@ Macros</h2></td></tr>
 <tr class="memitem:gafa2e1cfa98e0f7e4e8028f57211ab8d0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gafa2e1cfa98e0f7e4e8028f57211ab8d0">EMAC_TRIGGER_TX</a>()&#160;&#160;&#160;do{<a class="el" href="group___p_e_r_i_p_h_e_r_a_l___d_e_c_l_a_r_a_t_i_o_n.html#gacf7eb4e68245708b80f67e9e9f8d6921">EMAC</a>-&gt;TXST = 0UL;}while(0)</td></tr>
 <tr class="memdesc:gafa2e1cfa98e0f7e4e8028f57211ab8d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trigger EMAC Tx function.  <a href="#gafa2e1cfa98e0f7e4e8028f57211ab8d0">More...</a><br /></td></tr>
 <tr class="separator:gafa2e1cfa98e0f7e4e8028f57211ab8d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ca361cbc3bcea55f56952c88310fdd5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga5ca361cbc3bcea55f56952c88310fdd5">EMAC_ENABLE_INT</a>(emac,  u32eIntSel)</td></tr>
+<tr class="memdesc:ga5ca361cbc3bcea55f56952c88310fdd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable specified EMAC interrupt.  <a href="#ga5ca361cbc3bcea55f56952c88310fdd5">More...</a><br /></td></tr>
+<tr class="separator:ga5ca361cbc3bcea55f56952c88310fdd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadcf60122d3ce3d3effe84f4254179423"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gadcf60122d3ce3d3effe84f4254179423">EMAC_DISABLE_INT</a>(emac,  u32eIntSel)</td></tr>
+<tr class="memdesc:gadcf60122d3ce3d3effe84f4254179423"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable specified EMAC interrupt.  <a href="#gadcf60122d3ce3d3effe84f4254179423">More...</a><br /></td></tr>
+<tr class="separator:gadcf60122d3ce3d3effe84f4254179423"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga43741b1e2e11fe24eb3e9c49a6167703"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga43741b1e2e11fe24eb3e9c49a6167703">EMAC_GET_INT_FLAG</a>(emac,  u32eIntTypeFlag)</td></tr>
+<tr class="memdesc:ga43741b1e2e11fe24eb3e9c49a6167703"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get specified interrupt flag/status.  <a href="#ga43741b1e2e11fe24eb3e9c49a6167703">More...</a><br /></td></tr>
+<tr class="separator:ga43741b1e2e11fe24eb3e9c49a6167703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1c2aa92b3cdff388c99ff335c3a8d60"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gad1c2aa92b3cdff388c99ff335c3a8d60">EMAC_CLEAR_INT_FLAG</a>(emac,  u32eIntTypeFlag)</td></tr>
+<tr class="memdesc:gad1c2aa92b3cdff388c99ff335c3a8d60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear specified interrupt flag/status.  <a href="#gad1c2aa92b3cdff388c99ff335c3a8d60">More...</a><br /></td></tr>
+<tr class="separator:gad1c2aa92b3cdff388c99ff335c3a8d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -153,10 +165,99 @@ Functions</h2></td></tr>
 <tr class="memitem:ga0294bca3d915a78b118f367864813115"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga0294bca3d915a78b118f367864813115">EMAC_CheckLinkStatus</a> (void)</td></tr>
 <tr class="memdesc:ga0294bca3d915a78b118f367864813115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check Ethernet link status.  <a href="#ga0294bca3d915a78b118f367864813115">More...</a><br /></td></tr>
 <tr class="separator:ga0294bca3d915a78b118f367864813115"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga18461974e7f50d8c73bffe4f48ebf440"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga18461974e7f50d8c73bffe4f48ebf440">EMAC_PhyInit</a> (void)</td></tr>
+<tr class="separator:ga18461974e7f50d8c73bffe4f48ebf440"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac36ee4c6d8d5a18cae7fc344d013212a"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gac36ee4c6d8d5a18cae7fc344d013212a">EMAC_FillCamEntry</a> (uint8_t pu8MacAddr[])</td></tr>
+<tr class="memdesc:gac36ee4c6d8d5a18cae7fc344d013212a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill a MAC address to list and enable.  <a href="#gac36ee4c6d8d5a18cae7fc344d013212a">More...</a><br /></td></tr>
+<tr class="separator:gac36ee4c6d8d5a18cae7fc344d013212a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga279cc7371062b9e10748451a1ea856f2"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga279cc7371062b9e10748451a1ea856f2">EMAC_ClaimFreeTXBuf</a> (void)</td></tr>
+<tr class="memdesc:ga279cc7371062b9e10748451a1ea856f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get avaiable TX buffer address.  <a href="#ga279cc7371062b9e10748451a1ea856f2">More...</a><br /></td></tr>
+<tr class="separator:ga279cc7371062b9e10748451a1ea856f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1350c6a8ae77f99905e618aecdfcaf7f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga1350c6a8ae77f99905e618aecdfcaf7f">EMAC_GetAvailRXBufSize</a> (void)</td></tr>
+<tr class="memdesc:ga1350c6a8ae77f99905e618aecdfcaf7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data length of avaiable RX buffer.  <a href="#ga1350c6a8ae77f99905e618aecdfcaf7f">More...</a><br /></td></tr>
+<tr class="separator:ga1350c6a8ae77f99905e618aecdfcaf7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafb25fa17329fa81ca5351749cf8e2c89"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gafb25fa17329fa81ca5351749cf8e2c89">EMAC_SendPktWoCopy</a> (uint32_t u32Size)</td></tr>
+<tr class="memdesc:gafb25fa17329fa81ca5351749cf8e2c89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send an Ethernet packet.  <a href="#gafb25fa17329fa81ca5351749cf8e2c89">More...</a><br /></td></tr>
+<tr class="separator:gafb25fa17329fa81ca5351749cf8e2c89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a2f5e36f748976d26042e2f51b186fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga4a2f5e36f748976d26042e2f51b186fe">EMAC_RecvPktDoneWoRxTrigger</a> (void)</td></tr>
+<tr class="memdesc:ga4a2f5e36f748976d26042e2f51b186fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean up process after a packet is received.  <a href="#ga4a2f5e36f748976d26042e2f51b186fe">More...</a><br /></td></tr>
+<tr class="separator:ga4a2f5e36f748976d26042e2f51b186fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>HIDDEN_SYMBOLS </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="gad1c2aa92b3cdff388c99ff335c3a8d60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad1c2aa92b3cdff388c99ff335c3a8d60">&#9670;&nbsp;</a></span>EMAC_CLEAR_INT_FLAG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define EMAC_CLEAR_INT_FLAG</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">emac, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">u32eIntTypeFlag&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clear specified interrupt flag/status. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">emac</td><td>The pointer of the specified EMAC module </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32eIntTypeFlag</td><td>Interrupt Type Flag, should be<ul>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga3a5c0909acc97e22c953ccb6a07a8c50">EMAC_INTSTS_RXIF_Msk</a> : Receive</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga1ae4cedbb583e6b6057b8d0606230fa7">EMAC_INTSTS_CRCEIF_Msk</a> : CRC Error</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga0f40184a84acc370cf572fc0d215ad46">EMAC_INTSTS_RXOVIF_Msk</a> : Receive FIFO Overflow</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gad8f05230db9d360a00e256891088d13a">EMAC_INTSTS_LPIF_Msk</a> : Long Packet</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gaf6dacb9be07af067fc28b3a5c3a79d5b">EMAC_INTSTS_RXGDIF_Msk</a> : Receive Good</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gad016d1f00f3636619278b07942162f10">EMAC_INTSTS_ALIEIF_Msk</a> : Alignment Error</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gabf6b4f83ce46f24b98d701c52a1c4939">EMAC_INTSTS_RPIF_Msk</a> : Runt Packet</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga36f151abc869822630f42a0fc36f24cc">EMAC_INTSTS_MPCOVIF_Msk</a> : Missed Packet Counter</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gad178e45db3098e23c0e006e8f0a9dc05">EMAC_INTSTS_MFLEIF_Msk</a> : Maximum Frame Length Exceed</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga7d129e1f6c3a06402b7bb059ee6dac7f">EMAC_INTSTS_DENIF_Msk</a> : DMA Early Notification</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga5cbfaff60cc7e096d5f4ef59ffb088f8">EMAC_INTSTS_RDUIF_Msk</a> : Receive Descriptor Unavailable</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga0f94ebc54ce6a35b58bb676424917a98">EMAC_INTSTS_RXBEIF_Msk</a> : Receive Bus Error</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga79516db0db500fc1454e16a749823891">EMAC_INTSTS_CFRIF_Msk</a> : Control Frame Receive</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gae652594fd168dd6f1a8d324a3ce29b1a">EMAC_INTSTS_WOLIF_Msk</a> : Wake on LAN</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga88a664391b28a717dd8ed70cff7ece2c">EMAC_INTSTS_TXIF_Msk</a> : Transmit</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gacf768a60201ba8e1cd91118f28649c9c">EMAC_INTSTS_TXUDIF_Msk</a> : Transmit FIFO Underflow</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga2ce4372d84e2077feb0ce78634d53dc2">EMAC_INTSTS_TXCPIF_Msk</a> : Transmit Completion</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gaa866a7904de27976c8a3f6a0f251e99a">EMAC_INTSTS_EXDEFIF_Msk</a> : Defer Exceed</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga09d2ab68813c23b3498fdf41576946d8">EMAC_INTSTS_NCSIF_Msk</a> : No Carrier Sense</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga335dda9c490177397b578fa3519d91d7">EMAC_INTSTS_TXABTIF_Msk</a> : Transmit Abort</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga50669a11201a42b9c0c4b59253a2e5b9">EMAC_INTSTS_LCIF_Msk</a> : Late Collision</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga2f5b8e20f54a849947667532c69c5977">EMAC_INTSTS_TDUIF_Msk</a> : Transmit Descriptor Unavailable</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga54153d368232282864eb6b67b46b9312">EMAC_INTSTS_TXBEIF_Msk</a> : Transmit Bus Error</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gabefff556e078590d5ed3fddf1b866d67">EMAC_INTSTS_TSALMIF_Msk</a> : Time Stamp Alarm</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>The specified interrupt is not happened. 1 The specified interrupt is happened.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This macro clear specified interrupt flag or interrupt indicator status. </p>
+
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00311">311</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+
+</div>
+</div>
 <a id="ga2bcac4d4b3b860ca120cf54ceb9981ec"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga2bcac4d4b3b860ca120cf54ceb9981ec">&#9670;&nbsp;</a></span>EMAC_CLR_ALARM_FLAG</h2>
 
@@ -181,7 +282,74 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00145">145</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00148">148</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+
+</div>
+</div>
+<a id="gadcf60122d3ce3d3effe84f4254179423"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadcf60122d3ce3d3effe84f4254179423">&#9670;&nbsp;</a></span>EMAC_DISABLE_INT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define EMAC_DISABLE_INT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">emac, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">u32eIntSel&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable specified EMAC interrupt. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">emac</td><td>The pointer of the specified EMAC module </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32eIntSel</td><td>Interrupt type select<ul>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gaa6b533d124edc7203c9ca640fe733f76">EMAC_INTEN_RXIEN_Msk</a> : Receive</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga1eaa41594b9655e7ab9aecb365920c9d">EMAC_INTEN_CRCEIEN_Msk</a> : CRC Error</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gae353428d8de9b81b719bfd8d7ad2d962">EMAC_INTEN_RXOVIEN_Msk</a> : Receive FIFO Overflow</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga876d0b6c51335b30035f9b304321ddfe">EMAC_INTEN_LPIEN_Msk</a> : Long Packet</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga8fecfb1de2f8f2cd95839b9ffe0c6010">EMAC_INTEN_RXGDIEN_Msk</a> : Receive Good</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga534d38cef305c640597d11a1b7ea41dc">EMAC_INTEN_ALIEIEN_Msk</a> : Alignment Error</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga9664e2308504ca6f086544c544d815cd">EMAC_INTEN_RPIEN_Msk</a> : Runt Packet</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gaf2fab7c083425713e98d7849d0682411">EMAC_INTEN_MPCOVIEN_Msk</a> : Miss Packet Counter Overrun</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga4c6668119454c5c489b82eb08d237d9a">EMAC_INTEN_MFLEIEN_Msk</a> : Maximum Frame Length Exceed</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga2952f7a397141edfc0b5da7b2ab61f51">EMAC_INTEN_DENIEN_Msk</a> : DMA Early Notification</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gaffd51842122c7a8f46c6ad84f147fa83">EMAC_INTEN_RDUIEN_Msk</a> : Receive Descriptor Unavailable</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga01becd1768339e45340150274fc7205f">EMAC_INTEN_RXBEIEN_Msk</a> : Receive Bus Error</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gacdaea77ed099bd843bf05c38af413409">EMAC_INTEN_CFRIEN_Msk</a> : Control Frame Receive</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gaff23385856931bab40c416e757e649ec">EMAC_INTEN_WOLIEN_Msk</a> : Wake on LAN Interrupt</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gaa0e104213fc67efd9d8c198bcb8a34a2">EMAC_INTEN_TXIEN_Msk</a> : Transmit</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga9124aa658e81afdf85804b95ba15097c">EMAC_INTEN_TXUDIEN_Msk</a> : Transmit FIFO Underflow</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga41dfb5d373353c3281ac39f4165958d0">EMAC_INTEN_TXCPIEN_Msk</a> : Transmit Completion</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga82b93b561e66626f5aa4a3b476b64cb6">EMAC_INTEN_EXDEFIEN_Msk</a> : Defer Exceed</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga3d1b48a603b6af833fd54478937bcaa3">EMAC_INTEN_NCSIEN_Msk</a> : No Carrier Sense</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga8c8ad270f622397659ffb46a7f792dc1">EMAC_INTEN_TXABTIEN_Msk</a> : Transmit Abort</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga184b097a20d6d816647955fbe719a4ac">EMAC_INTEN_LCIEN_Msk</a> : Late Collision</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga6a924a6382cecd4203a07e9b16c14237">EMAC_INTEN_TDUIEN_Msk</a> : Transmit Descriptor Unavailable</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga650117511a2e959cb75740c786335a71">EMAC_INTEN_TXBEIEN_Msk</a> : Transmit Bus Error</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga3deb0ab14452e825f0ddc07a376a712a">EMAC_INTEN_TSALMIEN_Msk</a> : Time Stamp Alarm</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>This macro disable specified EMAC interrupt. </p>
+
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00236">236</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
 
 </div>
 </div>
@@ -209,7 +377,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00095">95</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00098">98</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
 
 </div>
 </div>
@@ -237,7 +405,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00111">111</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00114">114</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
 
 </div>
 </div>
@@ -265,7 +433,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00127">127</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00130">130</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
 
 </div>
 </div>
@@ -293,7 +461,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00079">79</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00082">82</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
 
 </div>
 </div>
@@ -321,7 +489,74 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00070">70</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00073">73</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+
+</div>
+</div>
+<a id="ga5ca361cbc3bcea55f56952c88310fdd5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5ca361cbc3bcea55f56952c88310fdd5">&#9670;&nbsp;</a></span>EMAC_ENABLE_INT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define EMAC_ENABLE_INT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">emac, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">u32eIntSel&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable specified EMAC interrupt. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">emac</td><td>The pointer of the specified EMAC module </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32eIntSel</td><td>Interrupt type select<ul>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gaa6b533d124edc7203c9ca640fe733f76">EMAC_INTEN_RXIEN_Msk</a> : Receive</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga1eaa41594b9655e7ab9aecb365920c9d">EMAC_INTEN_CRCEIEN_Msk</a> : CRC Error</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gae353428d8de9b81b719bfd8d7ad2d962">EMAC_INTEN_RXOVIEN_Msk</a> : Receive FIFO Overflow</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga876d0b6c51335b30035f9b304321ddfe">EMAC_INTEN_LPIEN_Msk</a> : Long Packet</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga8fecfb1de2f8f2cd95839b9ffe0c6010">EMAC_INTEN_RXGDIEN_Msk</a> : Receive Good</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga534d38cef305c640597d11a1b7ea41dc">EMAC_INTEN_ALIEIEN_Msk</a> : Alignment Error</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga9664e2308504ca6f086544c544d815cd">EMAC_INTEN_RPIEN_Msk</a> : Runt Packet</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gaf2fab7c083425713e98d7849d0682411">EMAC_INTEN_MPCOVIEN_Msk</a> : Miss Packet Counter Overrun</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga4c6668119454c5c489b82eb08d237d9a">EMAC_INTEN_MFLEIEN_Msk</a> : Maximum Frame Length Exceed</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga2952f7a397141edfc0b5da7b2ab61f51">EMAC_INTEN_DENIEN_Msk</a> : DMA Early Notification</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gaffd51842122c7a8f46c6ad84f147fa83">EMAC_INTEN_RDUIEN_Msk</a> : Receive Descriptor Unavailable</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga01becd1768339e45340150274fc7205f">EMAC_INTEN_RXBEIEN_Msk</a> : Receive Bus Error</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gacdaea77ed099bd843bf05c38af413409">EMAC_INTEN_CFRIEN_Msk</a> : Control Frame Receive</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gaff23385856931bab40c416e757e649ec">EMAC_INTEN_WOLIEN_Msk</a> : Wake on LAN Interrupt</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gaa0e104213fc67efd9d8c198bcb8a34a2">EMAC_INTEN_TXIEN_Msk</a> : Transmit</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga9124aa658e81afdf85804b95ba15097c">EMAC_INTEN_TXUDIEN_Msk</a> : Transmit FIFO Underflow</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga41dfb5d373353c3281ac39f4165958d0">EMAC_INTEN_TXCPIEN_Msk</a> : Transmit Completion</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga82b93b561e66626f5aa4a3b476b64cb6">EMAC_INTEN_EXDEFIEN_Msk</a> : Defer Exceed</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga3d1b48a603b6af833fd54478937bcaa3">EMAC_INTEN_NCSIEN_Msk</a> : No Carrier Sense</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga8c8ad270f622397659ffb46a7f792dc1">EMAC_INTEN_TXABTIEN_Msk</a> : Transmit Abort</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga184b097a20d6d816647955fbe719a4ac">EMAC_INTEN_LCIEN_Msk</a> : Late Collision</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga6a924a6382cecd4203a07e9b16c14237">EMAC_INTEN_TDUIEN_Msk</a> : Transmit Descriptor Unavailable</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga650117511a2e959cb75740c786335a71">EMAC_INTEN_TXBEIEN_Msk</a> : Transmit Bus Error</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga3deb0ab14452e825f0ddc07a376a712a">EMAC_INTEN_TSALMIEN_Msk</a> : Time Stamp Alarm</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>This macro enable specified EMAC interrupt. </p>
+
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00199">199</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
 
 </div>
 </div>
@@ -349,7 +584,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00087">87</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00090">90</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
 
 </div>
 </div>
@@ -377,7 +612,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00103">103</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00106">106</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
 
 </div>
 </div>
@@ -405,7 +640,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00119">119</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00122">122</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
 
 </div>
 </div>
@@ -433,7 +668,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00062">62</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00065">65</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
 
 </div>
 </div>
@@ -461,7 +696,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00053">53</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00056">56</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
 
 </div>
 </div>
@@ -496,7 +731,74 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00137">137</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00140">140</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+
+</div>
+</div>
+<a id="ga43741b1e2e11fe24eb3e9c49a6167703"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga43741b1e2e11fe24eb3e9c49a6167703">&#9670;&nbsp;</a></span>EMAC_GET_INT_FLAG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define EMAC_GET_INT_FLAG</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">emac, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">u32eIntTypeFlag&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get specified interrupt flag/status. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">emac</td><td>The pointer of the specified EMAC module </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32eIntTypeFlag</td><td>Interrupt Type Flag, should be<ul>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga3a5c0909acc97e22c953ccb6a07a8c50">EMAC_INTSTS_RXIF_Msk</a> : Receive</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga1ae4cedbb583e6b6057b8d0606230fa7">EMAC_INTSTS_CRCEIF_Msk</a> : CRC Error</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga0f40184a84acc370cf572fc0d215ad46">EMAC_INTSTS_RXOVIF_Msk</a> : Receive FIFO Overflow</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gad8f05230db9d360a00e256891088d13a">EMAC_INTSTS_LPIF_Msk</a> : Long Packet</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gaf6dacb9be07af067fc28b3a5c3a79d5b">EMAC_INTSTS_RXGDIF_Msk</a> : Receive Good</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gad016d1f00f3636619278b07942162f10">EMAC_INTSTS_ALIEIF_Msk</a> : Alignment Error</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gabf6b4f83ce46f24b98d701c52a1c4939">EMAC_INTSTS_RPIF_Msk</a> : Runt Packet</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga36f151abc869822630f42a0fc36f24cc">EMAC_INTSTS_MPCOVIF_Msk</a> : Missed Packet Counter</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gad178e45db3098e23c0e006e8f0a9dc05">EMAC_INTSTS_MFLEIF_Msk</a> : Maximum Frame Length Exceed</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga7d129e1f6c3a06402b7bb059ee6dac7f">EMAC_INTSTS_DENIF_Msk</a> : DMA Early Notification</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga5cbfaff60cc7e096d5f4ef59ffb088f8">EMAC_INTSTS_RDUIF_Msk</a> : Receive Descriptor Unavailable</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga0f94ebc54ce6a35b58bb676424917a98">EMAC_INTSTS_RXBEIF_Msk</a> : Receive Bus Error</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga79516db0db500fc1454e16a749823891">EMAC_INTSTS_CFRIF_Msk</a> : Control Frame Receive</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gae652594fd168dd6f1a8d324a3ce29b1a">EMAC_INTSTS_WOLIF_Msk</a> : Wake on LAN</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga88a664391b28a717dd8ed70cff7ece2c">EMAC_INTSTS_TXIF_Msk</a> : Transmit</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gacf768a60201ba8e1cd91118f28649c9c">EMAC_INTSTS_TXUDIF_Msk</a> : Transmit FIFO Underflow</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga2ce4372d84e2077feb0ce78634d53dc2">EMAC_INTSTS_TXCPIF_Msk</a> : Transmit Completion</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gaa866a7904de27976c8a3f6a0f251e99a">EMAC_INTSTS_EXDEFIF_Msk</a> : Defer Exceed</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga09d2ab68813c23b3498fdf41576946d8">EMAC_INTSTS_NCSIF_Msk</a> : No Carrier Sense</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga335dda9c490177397b578fa3519d91d7">EMAC_INTSTS_TXABTIF_Msk</a> : Transmit Abort</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga50669a11201a42b9c0c4b59253a2e5b9">EMAC_INTSTS_LCIF_Msk</a> : Late Collision</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga2f5b8e20f54a849947667532c69c5977">EMAC_INTSTS_TDUIF_Msk</a> : Transmit Descriptor Unavailable</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga54153d368232282864eb6b67b46b9312">EMAC_INTSTS_TXBEIF_Msk</a> : Transmit Bus Error</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gabefff556e078590d5ed3fddf1b866d67">EMAC_INTSTS_TSALMIF_Msk</a> : Time Stamp Alarm</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>This macro get specified interrupt flag or interrupt indicator status. </p>
+
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00273">273</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
 
 </div>
 </div>
@@ -524,7 +826,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00152">152</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00155">155</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
 
 </div>
 </div>
@@ -552,7 +854,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00159">159</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8h_source.html#l00162">162</a> of file <a class="el" href="emac_8h_source.html">emac.h</a>.</p>
 
 </div>
 </div>
@@ -590,7 +892,37 @@ Functions</h2></td></tr>
 </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>This API should be called regularly to sync EMAC setting with real connection status </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00927">927</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00964">964</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+
+</div>
+</div>
+<a id="ga279cc7371062b9e10748451a1ea856f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga279cc7371062b9e10748451a1ea856f2">&#9670;&nbsp;</a></span>EMAC_ClaimFreeTXBuf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t * EMAC_ClaimFreeTXBuf </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get avaiable TX buffer address. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">None</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An avaiable TX buffer. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This API should be called before EMAC_SendPkt_WoCopy calling. Caller will do data-copy. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l01097">1097</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -619,7 +951,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00413">413</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00419">419</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -648,7 +980,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00890">890</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00925">925</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -677,7 +1009,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00460">460</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00467">467</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -706,7 +1038,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00836">836</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00871">871</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -746,7 +1078,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00876">876</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00911">911</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -786,7 +1118,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00436">436</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00443">443</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -826,7 +1158,73 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00808">808</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00843">843</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+
+</div>
+</div>
+<a id="gac36ee4c6d8d5a18cae7fc344d013212a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac36ee4c6d8d5a18cae7fc344d013212a">&#9670;&nbsp;</a></span>EMAC_FillCamEntry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t EMAC_FillCamEntry </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>pu8MacAddr</em>[]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fill a MAC address to list and enable. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pu8MacAddr</td><td>A MAC address </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The CAM index </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">-1</td><td>Failed to fill the MAC address. </td></tr>
+    <tr><td class="paramname">0~(EMAC_CAMENTRY_NB-1)</td><td>The index number of entry location. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l01010">1010</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+
+</div>
+</div>
+<a id="ga1350c6a8ae77f99905e618aecdfcaf7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1350c6a8ae77f99905e618aecdfcaf7f">&#9670;&nbsp;</a></span>EMAC_GetAvailRXBufSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t EMAC_GetAvailRXBufSize </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get data length of avaiable RX buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">None</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An data length of avaiable RX buffer. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This API should be called before EMAC_RecvPktDone_WoTrigger calling. Caller will do data-copy. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l01117">1117</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -866,7 +1264,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00847">847</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00882">882</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -898,7 +1296,25 @@ Functions</h2></td></tr>
 <dd>
 Receive(RX) and transmit(TX) are not enabled yet, application must call <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaee25f6cae74883af1ac97f1deebcc84b">EMAC_ENABLE_RX</a> and <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga0f434cec3ae3d84986efe5756ac2e02d">EMAC_ENABLE_TX</a> to enable receive and transmit function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00373">373</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00380">380</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+
+</div>
+</div>
+<a id="ga18461974e7f50d8c73bffe4f48ebf440"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga18461974e7f50d8c73bffe4f48ebf440">&#9670;&nbsp;</a></span>EMAC_PhyInit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EMAC_PhyInit </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -946,7 +1362,7 @@ Receive(RX) and transmit(TX) are not enabled yet, application must call <a class
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Return 0 doesn't guarantee the packet will be sent and received successfully. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00475">475</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00482">482</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -976,7 +1392,39 @@ Receive(RX) and transmit(TX) are not enabled yet, application must call <a class
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>EMAC Rx interrupt service routine <b>must</b> call this API to release the resource use by receive process </p><dl class="section note"><dt>Note</dt><dd>Application can only call this function once every time <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gab2c70acac54838afc9ef108fce5df2c4">EMAC_RecvPkt</a> or <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga836ca37712be00395831ddad5213af9b">EMAC_RecvPktTS</a> returns 1 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00598">598</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00613">613</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+
+</div>
+</div>
+<a id="ga4a2f5e36f748976d26042e2f51b186fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4a2f5e36f748976d26042e2f51b186fe">&#9670;&nbsp;</a></span>EMAC_RecvPktDoneWoRxTrigger()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EMAC_RecvPktDoneWoRxTrigger </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clean up process after a packet is received. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">None</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>Caller must call the function to release the resource. </p><dl class="section note"><dt>Note</dt><dd>Application can only call this function once every time <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gab2c70acac54838afc9ef108fce5df2c4">EMAC_RecvPkt</a> or <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga836ca37712be00395831ddad5213af9b">EMAC_RecvPktTS</a> returns 1 </dd>
+<dd>
+This function is without doing EMAC_TRIGGER_RX. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l01149">1149</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -1040,7 +1488,7 @@ Receive(RX) and transmit(TX) are not enabled yet, application must call <a class
 <dd>
 Largest Ethernet packet is 1514 bytes after stripped CRC, application must give a buffer large enough to store such packet </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00536">536</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00547">547</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -1088,7 +1536,7 @@ Largest Ethernet packet is 1514 bytes after stripped CRC, application must give 
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Return 1 doesn't guarantee the packet will be sent and received successfully. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00630">630</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00645">645</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -1118,7 +1566,7 @@ Largest Ethernet packet is 1514 bytes after stripped CRC, application must give 
 <dl class="section return"><dt>Returns</dt><dd>Number of packet sent between two function calls</dd></dl>
 <p>EMAC Tx interrupt service routine <b>must</b> call this API or <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga1f81ac40537fa5df6fb0e5da41c87ca2">EMAC_SendPktDoneTS</a> to release the resource use by transmit process </p>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00669">669</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00685">685</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -1166,7 +1614,44 @@ Largest Ethernet packet is 1514 bytes after stripped CRC, application must give 
 </dl>
 <p>EMAC Tx interrupt service routine <b>must</b> call this API or <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga6cb9578e855cee7d8e5dcbfd95ac879b">EMAC_SendPktDone</a> to release the resource use by transmit process </p>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00741">741</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00768">768</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+
+</div>
+</div>
+<a id="gafb25fa17329fa81ca5351749cf8e2c89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafb25fa17329fa81ca5351749cf8e2c89">&#9670;&nbsp;</a></span>EMAC_SendPktWoCopy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t EMAC_SendPktWoCopy </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32Size</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Send an Ethernet packet. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32Size</td><td>Packet size (without 4 byte CRC). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Packet transmit success or not </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>Transmit failed due to descriptor unavailable. </td></tr>
+    <tr><td class="paramname">1</td><td>Triggered to transmit. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Return 1 doesn't guarantee the packet will be sent and received successfully. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l01061">1061</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -1195,7 +1680,7 @@ Largest Ethernet packet is 1514 bytes after stripped CRC, application must give 
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00424">424</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00431">431</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -1235,7 +1720,7 @@ Largest Ethernet packet is 1514 bytes after stripped CRC, application must give 
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00860">860</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00895">895</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
@@ -1282,14 +1767,14 @@ Largest Ethernet packet is 1514 bytes after stripped CRC, application must give 
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00904">904</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="emac_8c_source.html#l00939">939</a> of file <a class="el" href="emac_8c_source.html">emac.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 12 2019 13:15:16 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 5 2020 13:49:09 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>

@@ -20,7 +20,7 @@
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">M480 BSP
-   &#160;<span id="projectnumber">V3.04.000</span>
+   &#160;<span id="projectnumber">V3.05.000</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -63,6 +63,9 @@ Macros</h2></td></tr>
 <tr class="memitem:gaa7547c42e7f0dda1997e18a7d361cf67"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_i_m_e_r___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaa7547c42e7f0dda1997e18a7d361cf67">TIMER_SELECT_TOUT_PIN</a>(timer,  u32ToutSel)</td></tr>
 <tr class="memdesc:gaa7547c42e7f0dda1997e18a7d361cf67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select Toggle-output Pin.  <a href="#gaa7547c42e7f0dda1997e18a7d361cf67">More...</a><br /></td></tr>
 <tr class="separator:gaa7547c42e7f0dda1997e18a7d361cf67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8fd6ba6f877c5e8e95be010fc47f7075"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___t_i_m_e_r___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga8fd6ba6f877c5e8e95be010fc47f7075">TIMER_SET_OPMODE</a>(timer,  u32OpMode)</td></tr>
+<tr class="memdesc:ga8fd6ba6f877c5e8e95be010fc47f7075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select Timer operating mode.  <a href="#ga8fd6ba6f877c5e8e95be010fc47f7075">More...</a><br /></td></tr>
+<tr class="separator:ga8fd6ba6f877c5e8e95be010fc47f7075"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -301,6 +304,52 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga8fd6ba6f877c5e8e95be010fc47f7075"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8fd6ba6f877c5e8e95be010fc47f7075">&#9670;&nbsp;</a></span>TIMER_SET_OPMODE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TIMER_SET_OPMODE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">timer, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">u32OpMode&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Select Timer operating mode. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer</td><td>The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32OpMode</td><td>Operation mode. Possible options are<ul>
+<li><a class="el" href="group___t_i_m_e_r___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga72feaa98c11709d47e90b45a32677b92">TIMER_ONESHOT_MODE</a></li>
+<li><a class="el" href="group___t_i_m_e_r___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga41103f29e7760dcf1747b06d93e1cc59">TIMER_PERIODIC_MODE</a></li>
+<li><a class="el" href="group___t_i_m_e_r___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#gad177f87a38087cb248943f9539af9550">TIMER_TOGGLE_MODE</a></li>
+<li><a class="el" href="group___t_i_m_e_r___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#gaea824dab491cf5c772b2695ac91b4220">TIMER_CONTINUOUS_MODE</a></li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00135">135</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+
+</div>
+</div>
 <a id="ga221a29b6c59e6a5bd198050ec97355ab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga221a29b6c59e6a5bd198050ec97355ab">&#9670;&nbsp;</a></span>TIMER_SET_PRESCALE_VALUE</h2>
 
@@ -370,7 +419,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function clears timer capture trigger interrupt flag to 0. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00398">398</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00413">413</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -400,7 +449,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function clears timer time-out interrupt flag to 0. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00369">369</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00384">384</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -430,7 +479,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function clears the timer wake-up system flag to 0. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00427">427</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00442">442</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -563,7 +612,7 @@ This API use polling mode. So there is no need to enable interrupt for the timer
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable the detect de-bounce function of capture pin. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00256">256</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00271">271</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -593,7 +642,7 @@ This API use polling mode. So there is no need to enable interrupt for the timer
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable the timer capture trigger interrupt function. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00340">340</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00355">355</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -653,7 +702,7 @@ This API use polling mode. So there is no need to enable interrupt for the timer
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable the detect de-bounce function of counter pin. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00284">284</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00299">299</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -712,7 +761,7 @@ This API use polling mode. So there is no need to enable interrupt for the timer
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable the timer time-out interrupt function. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00312">312</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00327">327</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -742,7 +791,7 @@ This API use polling mode. So there is no need to enable interrupt for the timer
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable the timer interrupt wake-up function. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00200">200</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00215">215</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -831,7 +880,7 @@ This API use polling mode. So there is no need to enable interrupt for the timer
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable the detect de-bounce function of capture pin. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00242">242</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00257">257</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -861,7 +910,7 @@ This API use polling mode. So there is no need to enable interrupt for the timer
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable the timer capture trigger interrupt function. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00326">326</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00341">341</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -938,7 +987,7 @@ While using event counter function, <a class="el" href="group___t_i_m_e_r___e_x_
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable the detect de-bounce function of counter pin. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00270">270</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00285">285</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -1023,7 +1072,7 @@ While using event counter function, <a class="el" href="group___t_i_m_e_r___e_x_
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable the timer time-out interrupt function. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00298">298</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00313">313</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -1054,7 +1103,7 @@ While using event counter function, <a class="el" href="group___t_i_m_e_r___e_x_
 <p>This function is used to enable the timer interrupt wake-up function and interrupt source could be time-out interrupt, <br />
  counter event interrupt or capture trigger interrupt. </p><dl class="section note"><dt>Note</dt><dd>To wake the system from Power-down mode, timer clock source must be ether LXT or LIRC. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00186">186</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00201">201</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -1084,7 +1133,7 @@ While using event counter function, <a class="el" href="group___t_i_m_e_r___e_x_
 <dl class="section return"><dt>Returns</dt><dd>24-bit Capture Value</dd></dl>
 <p>This function reports the current 24-bit timer capture value. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00441">441</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00456">456</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -1120,7 +1169,7 @@ While using event counter function, <a class="el" href="group___t_i_m_e_r___e_x_
 </dl>
 <p>This function indicates timer capture trigger interrupt occurred or not. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00384">384</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00399">399</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -1150,7 +1199,7 @@ While using event counter function, <a class="el" href="group___t_i_m_e_r___e_x_
 <dl class="section return"><dt>Returns</dt><dd>24-bit Counter Value</dd></dl>
 <p>This function reports the current 24-bit timer counter value. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00455">455</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00470">470</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -1186,7 +1235,7 @@ While using event counter function, <a class="el" href="group___t_i_m_e_r___e_x_
 </dl>
 <p>This function indicates timer time-out interrupt occurred or not. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00355">355</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00370">370</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -1252,7 +1301,7 @@ While using event counter function, <a class="el" href="group___t_i_m_e_r___e_x_
 </dl>
 <p>This function indicates timer interrupt event has waked up system or not. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00413">413</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00428">428</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -1336,7 +1385,7 @@ While using event counter function, <a class="el" href="group___t_i_m_e_r___e_x_
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to reset current counter value and internal prescale counter value. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00469">469</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00484">484</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -1456,7 +1505,7 @@ While using event counter function, <a class="el" href="group___t_i_m_e_r___e_x_
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to start Timer counting. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00156">156</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00171">171</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -1486,7 +1535,7 @@ While using event counter function, <a class="el" href="group___t_i_m_e_r___e_x_
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to start Timer capture function. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00214">214</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00229">229</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -1516,7 +1565,7 @@ While using event counter function, <a class="el" href="group___t_i_m_e_r___e_x_
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to stop/suspend Timer counting. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00170">170</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00185">185</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
@@ -1546,14 +1595,14 @@ While using event counter function, <a class="el" href="group___t_i_m_e_r___e_x_
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to stop Timer capture function. </p>
 
-<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00228">228</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timer_8h_source.html#l00243">243</a> of file <a class="el" href="timer_8h_source.html">timer.h</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 12 2019 13:15:17 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 5 2020 13:49:11 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>

@@ -20,7 +20,7 @@
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">M480 BSP
-   &#160;<span id="projectnumber">V3.04.000</span>
+   &#160;<span id="projectnumber">V3.05.000</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -105,6 +105,12 @@ Macros</h2></td></tr>
 <tr class="memitem:ga60ec8016ded1868a689c9065088a815c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga60ec8016ded1868a689c9065088a815c">UART_RS485_GET_ADDR_FLAG</a>(uart)</td></tr>
 <tr class="memdesc:ga60ec8016ded1868a689c9065088a815c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get RS-485 Address Byte Detection Flag.  <a href="#ga60ec8016ded1868a689c9065088a815c">More...</a><br /></td></tr>
 <tr class="separator:ga60ec8016ded1868a689c9065088a815c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf33021961bb8337e5b56f47f7016681b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaf33021961bb8337e5b56f47f7016681b">UART_PDMA_ENABLE</a>(uart,  u32FuncSel)</td></tr>
+<tr class="memdesc:gaf33021961bb8337e5b56f47f7016681b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable specified UART PDMA function.  <a href="#gaf33021961bb8337e5b56f47f7016681b">More...</a><br /></td></tr>
+<tr class="separator:gaf33021961bb8337e5b56f47f7016681b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf77b2009c26c885e67d01b032f3a7552"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaf77b2009c26c885e67d01b032f3a7552">UART_PDMA_DISABLE</a>(uart,  u32FuncSel)</td></tr>
+<tr class="memdesc:gaf77b2009c26c885e67d01b032f3a7552"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable specified UART PDMA function.  <a href="#gaf77b2009c26c885e67d01b032f3a7552">More...</a><br /></td></tr>
+<tr class="separator:gaf77b2009c26c885e67d01b032f3a7552"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -703,6 +709,94 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="gaf77b2009c26c885e67d01b032f3a7552"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf77b2009c26c885e67d01b032f3a7552">&#9670;&nbsp;</a></span>UART_PDMA_DISABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define UART_PDMA_DISABLE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">uart, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">u32FuncSel&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable specified UART PDMA function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">uart</td><td>The pointer of the specified UART module </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32FuncSel</td><td>Combination of following functions<ul>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gaa62605843de7ccc7e7fee8d294d3f8d6">UART_INTEN_TXPDMAEN_Msk</a></li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga7c6249c0fb244493ee7672b970fb5900">UART_INTEN_RXPDMAEN_Msk</a></li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="uart_8h_source.html#l00473">473</a> of file <a class="el" href="uart_8h_source.html">uart.h</a>.</p>
+
+</div>
+</div>
+<a id="gaf33021961bb8337e5b56f47f7016681b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf33021961bb8337e5b56f47f7016681b">&#9670;&nbsp;</a></span>UART_PDMA_ENABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define UART_PDMA_ENABLE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">uart, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">u32FuncSel&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable specified UART PDMA function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">uart</td><td>The pointer of the specified UART module </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32FuncSel</td><td>Combination of following functions<ul>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gaa62605843de7ccc7e7fee8d294d3f8d6">UART_INTEN_TXPDMAEN_Msk</a></li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga7c6249c0fb244493ee7672b970fb5900">UART_INTEN_RXPDMAEN_Msk</a></li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="uart_8h_source.html#l00460">460</a> of file <a class="el" href="uart_8h_source.html">uart.h</a>.</p>
+
+</div>
+</div>
 <a id="ga7e15d2e6ae8b6bc0971dd35431c7a736"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga7e15d2e6ae8b6bc0971dd35431c7a736">&#9670;&nbsp;</a></span>UART_READ</h2>
 
@@ -933,7 +1027,7 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">uart</td><td>The pointer of the specified UART module. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">u32InterruptFlag</td><td>The specified interrupt of UART module.<ul>
 <li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga963bf8f433ad7567afc5f8a7b76296af">UART_INTSTS_LININT_Msk</a> : LIN bus interrupt</li>
-<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga8c3989089c549f18341a7a67230aab1f">UART_INTEN_WKIEN_Msk</a> : Wake-up interrupt</li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga97161e0f199614bb215ca6d977f6321a">UART_INTSTS_WKIF_Msk</a> : Wake-up interrupt</li>
 <li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga2b30c6e0ba91b71d951b1b7c363aaad7">UART_INTSTS_BUFERRINT_Msk</a> : Buffer Error interrupt</li>
 <li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga7382176491b27d9bfb83e6f5c8835553">UART_INTSTS_MODEMINT_Msk</a> : Modem Status interrupt</li>
 <li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga8e5dafbfd86ef8033ed6b34c2a8604e5">UART_INTSTS_RLSINT_Msk</a> : Receive Line Status interrupt</li>
@@ -1589,7 +1683,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 12 2019 13:15:18 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 5 2020 13:49:11 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>

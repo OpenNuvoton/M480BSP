@@ -20,7 +20,7 @@
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">M480 BSP
-   &#160;<span id="projectnumber">V3.04.000</span>
+   &#160;<span id="projectnumber">V3.05.000</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -104,6 +104,9 @@ $(function() {
 <li>EMAC_CheckLinkStatus()
 : <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga0294bca3d915a78b118f367864813115">emac.h</a>
 </li>
+<li>EMAC_ClaimFreeTXBuf()
+: <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga279cc7371062b9e10748451a1ea856f2">emac.h</a>
+</li>
 <li>EMAC_Close()
 : <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga2836b94959c66bee1309370b32218be6">emac.h</a>
 </li>
@@ -125,17 +128,29 @@ $(function() {
 <li>EMAC_EnableTS()
 : <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaf44ae41597ba26a0100555afdb2f7ff7">emac.h</a>
 </li>
+<li>EMAC_FillCamEntry()
+: <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gac36ee4c6d8d5a18cae7fc344d013212a">emac.h</a>
+</li>
+<li>EMAC_GetAvailRXBufSize()
+: <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga1350c6a8ae77f99905e618aecdfcaf7f">emac.h</a>
+</li>
 <li>EMAC_GetTime()
 : <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaa722a730de02b810d6b5087a4b98514c">emac.h</a>
 </li>
 <li>EMAC_Open()
 : <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga94b0a2dd7f2dc535b43e1744e8772d38">emac.h</a>
 </li>
+<li>EMAC_PhyInit()
+: <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga18461974e7f50d8c73bffe4f48ebf440">emac.h</a>
+</li>
 <li>EMAC_RecvPkt()
 : <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gab2c70acac54838afc9ef108fce5df2c4">emac.h</a>
 </li>
 <li>EMAC_RecvPktDone()
 : <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga51bb2c9f6a02e6eb5062ff27327c83b8">emac.h</a>
+</li>
+<li>EMAC_RecvPktDoneWoRxTrigger()
+: <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga4a2f5e36f748976d26042e2f51b186fe">emac.h</a>
 </li>
 <li>EMAC_RecvPktTS()
 : <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga836ca37712be00395831ddad5213af9b">emac.h</a>
@@ -148,6 +163,9 @@ $(function() {
 </li>
 <li>EMAC_SendPktDoneTS()
 : <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga1f81ac40537fa5df6fb0e5da41c87ca2">emac.h</a>
+</li>
+<li>EMAC_SendPktWoCopy()
+: <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gafb25fa17329fa81ca5351749cf8e2c89">emac.h</a>
 </li>
 <li>EMAC_SetMacAddr()
 : <a class="el" href="group___e_m_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga75565b63b7326b9abf8f88201f8a5e87">emac.h</a>
@@ -378,7 +396,7 @@ $(function() {
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 12 2019 13:15:20 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 5 2020 13:49:14 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>

@@ -20,7 +20,7 @@
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">M480 BSP
-   &#160;<span id="projectnumber">V3.04.000</span>
+   &#160;<span id="projectnumber">V3.05.000</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -120,6 +120,12 @@ Macros</h2></td></tr>
 <tr class="memitem:gab18174acc26e965ae70dfcd8585e1100"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_c_i___u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gab18174acc26e965ae70dfcd8585e1100">UUART_CLR_WAKEUP_FLAG</a>(uuart)</td></tr>
 <tr class="memdesc:gab18174acc26e965ae70dfcd8585e1100"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear wakeup flag.  <a href="#gab18174acc26e965ae70dfcd8585e1100">More...</a><br /></td></tr>
 <tr class="separator:gab18174acc26e965ae70dfcd8585e1100"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac6a8787d9fca77792f70ce34101558f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_c_i___u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gac6a8787d9fca77792f70ce34101558f2">UUART_PDMA_ENABLE</a>(uuart,  u32FuncSel)</td></tr>
+<tr class="memdesc:gac6a8787d9fca77792f70ce34101558f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable specified USCI_UART PDMA function.  <a href="#gac6a8787d9fca77792f70ce34101558f2">More...</a><br /></td></tr>
+<tr class="separator:gac6a8787d9fca77792f70ce34101558f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga95f8a846d7de9566f01b4a4d4ea77309"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_c_i___u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga95f8a846d7de9566f01b4a4d4ea77309">UUART_PDMA_DISABLE</a>(uuart,  u32FuncSel)</td></tr>
+<tr class="memdesc:ga95f8a846d7de9566f01b4a4d4ea77309"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable specified USCI_UART PDMA function.  <a href="#ga95f8a846d7de9566f01b4a4d4ea77309">More...</a><br /></td></tr>
+<tr class="separator:ga95f8a846d7de9566f01b4a4d4ea77309"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -949,6 +955,96 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga95f8a846d7de9566f01b4a4d4ea77309"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga95f8a846d7de9566f01b4a4d4ea77309">&#9670;&nbsp;</a></span>UUART_PDMA_DISABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define UUART_PDMA_DISABLE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">uuart, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">u32FuncSel&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable specified USCI_UART PDMA function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">uuart</td><td>The pointer of the specified USCI_UART module </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32FuncSel</td><td>Combination of following functions<ul>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga8308ef60f1c6d5483b9378bd3af01670">UUART_PDMACTL_TXPDMAEN_Msk</a></li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gac90f5a7efbcb09a25c34478638340ac3">UUART_PDMACTL_RXPDMAEN_Msk</a></li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga9ceef01ffbc2bf3797f1af1b2055ddbf">UUART_PDMACTL_PDMAEN_Msk</a></li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="usci__uart_8h_source.html#l00438">438</a> of file <a class="el" href="usci__uart_8h_source.html">usci_uart.h</a>.</p>
+
+</div>
+</div>
+<a id="gac6a8787d9fca77792f70ce34101558f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac6a8787d9fca77792f70ce34101558f2">&#9670;&nbsp;</a></span>UUART_PDMA_ENABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define UUART_PDMA_ENABLE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">uuart, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">u32FuncSel&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable specified USCI_UART PDMA function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">uuart</td><td>The pointer of the specified USCI_UART module </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32FuncSel</td><td>Combination of following functions<ul>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga8308ef60f1c6d5483b9378bd3af01670">UUART_PDMACTL_TXPDMAEN_Msk</a></li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#gac90f5a7efbcb09a25c34478638340ac3">UUART_PDMACTL_RXPDMAEN_Msk</a></li>
+<li><a class="el" href="group___r_e_g_i_s_t_e_r.html#ga9ceef01ffbc2bf3797f1af1b2055ddbf">UUART_PDMACTL_PDMAEN_Msk</a></li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="usci__uart_8h_source.html#l00423">423</a> of file <a class="el" href="usci__uart_8h_source.html">usci_uart.h</a>.</p>
+
+</div>
+</div>
 <a id="gaf59551ec92d7243ae2f0ab53ddeac162"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaf59551ec92d7243ae2f0ab53ddeac162">&#9670;&nbsp;</a></span>UUART_READ</h2>
 
@@ -1633,7 +1729,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 12 2019 13:15:18 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 5 2020 13:49:11 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>

@@ -20,7 +20,7 @@
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">M480 BSP
-   &#160;<span id="projectnumber">V3.04.000</span>
+   &#160;<span id="projectnumber">V3.05.000</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -66,39 +66,45 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga5e1ebc9d159adeb7910725bab78a928c"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga5e1ebc9d159adeb7910725bab78a928c">usbh_hid_get_report_descriptor</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#gac846be5983adcf1a92e91c9ca7edc4f3">HID_DEV_T</a> *hdev, uint8_t *desc_buf, int buf_max_len)</td></tr>
-<tr class="memdesc:ga5e1ebc9d159adeb7910725bab78a928c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read report descriptor from HID device.  <a href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga5e1ebc9d159adeb7910725bab78a928c">More...</a><br /></td></tr>
-<tr class="separator:ga5e1ebc9d159adeb7910725bab78a928c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab384655be659964962ccf6a1a935f000"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gab384655be659964962ccf6a1a935f000">usbh_hid_get_report</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#gac846be5983adcf1a92e91c9ca7edc4f3">HID_DEV_T</a> *hdev, int rtp_typ, int rtp_id, uint8_t *data, int len)</td></tr>
-<tr class="memdesc:gab384655be659964962ccf6a1a935f000"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issue a HID class GET_REPORT request.  <a href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gab384655be659964962ccf6a1a935f000">More...</a><br /></td></tr>
-<tr class="separator:gab384655be659964962ccf6a1a935f000"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae1cfeadc9bb5d734b72fbd167d1f94dc"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gae1cfeadc9bb5d734b72fbd167d1f94dc">usbh_hid_set_report</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#gac846be5983adcf1a92e91c9ca7edc4f3">HID_DEV_T</a> *hdev, int rtp_typ, int rtp_id, uint8_t *data, int len)</td></tr>
-<tr class="memdesc:gae1cfeadc9bb5d734b72fbd167d1f94dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issue a HID class SET_REPORT request. The Set_Report request allows the host to send a report to the device, possibly setting the state of input, output, or feature controls.  <a href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gae1cfeadc9bb5d734b72fbd167d1f94dc">More...</a><br /></td></tr>
-<tr class="separator:gae1cfeadc9bb5d734b72fbd167d1f94dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaa8bc4348cb541977ef6d64d038f7a68"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaaa8bc4348cb541977ef6d64d038f7a68">usbh_hid_get_idle</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#gac846be5983adcf1a92e91c9ca7edc4f3">HID_DEV_T</a> *hdev, int rtp_id, uint8_t *idle_rate)</td></tr>
-<tr class="memdesc:gaaa8bc4348cb541977ef6d64d038f7a68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issue a HID class GET_IDLE request. The GET_IDLE request reads the current idle rate for a particular Input report.  <a href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaaa8bc4348cb541977ef6d64d038f7a68">More...</a><br /></td></tr>
-<tr class="separator:gaaa8bc4348cb541977ef6d64d038f7a68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad7feaa6017a6f74c37c7a30912ada4be"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gad7feaa6017a6f74c37c7a30912ada4be">usbh_hid_set_idle</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#gac846be5983adcf1a92e91c9ca7edc4f3">HID_DEV_T</a> *hdev, int rtp_id, uint8_t idle_rate)</td></tr>
-<tr class="memdesc:gad7feaa6017a6f74c37c7a30912ada4be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issue a HID class SET_IDLE request. The SET_IDLE request silences a particular report on the Interrupt In pipe until a new event occurs or the specified amount of time passes.  <a href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gad7feaa6017a6f74c37c7a30912ada4be">More...</a><br /></td></tr>
-<tr class="separator:gad7feaa6017a6f74c37c7a30912ada4be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga25fcc6a235605e0bd2f1a23297bbeedf"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga25fcc6a235605e0bd2f1a23297bbeedf">usbh_hid_get_protocol</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#gac846be5983adcf1a92e91c9ca7edc4f3">HID_DEV_T</a> *hdev, uint8_t *protocol)</td></tr>
-<tr class="memdesc:ga25fcc6a235605e0bd2f1a23297bbeedf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issue a HID class GET_PROTOCOL request. The GET_PROTOCOL request reads which protocol is currently active (either the boot protocol or the report protocol.)  <a href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga25fcc6a235605e0bd2f1a23297bbeedf">More...</a><br /></td></tr>
-<tr class="separator:ga25fcc6a235605e0bd2f1a23297bbeedf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga261bedaf076d78958332037d1c0ced96"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga261bedaf076d78958332037d1c0ced96">usbh_hid_set_protocol</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#gac846be5983adcf1a92e91c9ca7edc4f3">HID_DEV_T</a> *hdev, uint8_t protocol)</td></tr>
-<tr class="memdesc:ga261bedaf076d78958332037d1c0ced96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issue a HID class SET_PROTOCOL request. The SET_PROTOCOL switches between the boot protocol and the report protocol (or vice versa).  <a href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga261bedaf076d78958332037d1c0ced96">More...</a><br /></td></tr>
-<tr class="separator:ga261bedaf076d78958332037d1c0ced96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7bf80fd7c7bf0c8fdb4c50092526ea8c"><td class="memItemLeft" align="right" valign="top">HIDDEN_SYMBOLS int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga7bf80fd7c7bf0c8fdb4c50092526ea8c">usbh_hid_start_int_read</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#gac846be5983adcf1a92e91c9ca7edc4f3">HID_DEV_T</a> *hdev, uint8_t ep_addr, <a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___t_y_p_e_d_e_f.html#ga31ccd0dcc1f60ff491ee287813a58bb3">HID_IR_FUNC</a> *func)</td></tr>
-<tr class="memdesc:ga7bf80fd7c7bf0c8fdb4c50092526ea8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start purge the USB interrupt in transfer.  <a href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga7bf80fd7c7bf0c8fdb4c50092526ea8c">More...</a><br /></td></tr>
-<tr class="separator:ga7bf80fd7c7bf0c8fdb4c50092526ea8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga118e3aed5d115e25665f4d7b761b7c2d"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga118e3aed5d115e25665f4d7b761b7c2d">usbh_hid_stop_int_read</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#gac846be5983adcf1a92e91c9ca7edc4f3">HID_DEV_T</a> *hdev, uint8_t ep_addr)</td></tr>
-<tr class="memdesc:ga118e3aed5d115e25665f4d7b761b7c2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop purge the USB interrupt in transfer.  <a href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga118e3aed5d115e25665f4d7b761b7c2d">More...</a><br /></td></tr>
-<tr class="separator:ga118e3aed5d115e25665f4d7b761b7c2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga19469d582f68930ce7074f66f8ca913b"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga19469d582f68930ce7074f66f8ca913b">usbh_hid_start_int_write</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#gac846be5983adcf1a92e91c9ca7edc4f3">HID_DEV_T</a> *hdev, uint8_t ep_addr, <a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___t_y_p_e_d_e_f.html#gabaa3927325526737028004ba7a43052c">HID_IW_FUNC</a> *func)</td></tr>
-<tr class="memdesc:ga19469d582f68930ce7074f66f8ca913b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start purge the USB interrupt out transfer.  <a href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga19469d582f68930ce7074f66f8ca913b">More...</a><br /></td></tr>
-<tr class="separator:ga19469d582f68930ce7074f66f8ca913b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf41659ec6725fa37f209c3da25581a06"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaf41659ec6725fa37f209c3da25581a06">usbh_hid_stop_int_write</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#gac846be5983adcf1a92e91c9ca7edc4f3">HID_DEV_T</a> *hdev, uint8_t ep_addr)</td></tr>
-<tr class="memdesc:gaf41659ec6725fa37f209c3da25581a06"><td class="mdescLeft">&#160;</td><td class="mdescRight">stop purge the USB interrupt out transfer.  <a href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaf41659ec6725fa37f209c3da25581a06">More...</a><br /></td></tr>
-<tr class="separator:gaf41659ec6725fa37f209c3da25581a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dcc8495031097fd312e8cd352e89f44"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hid__core_8c.html#a6dcc8495031097fd312e8cd352e89f44">usbh_hid_get_report_descriptor</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *hdev, uint8_t *desc_buf, int buf_max_len)</td></tr>
+<tr class="memdesc:a6dcc8495031097fd312e8cd352e89f44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read report descriptor from HID device.  <a href="#a6dcc8495031097fd312e8cd352e89f44">More...</a><br /></td></tr>
+<tr class="separator:a6dcc8495031097fd312e8cd352e89f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c9740053a621817093ee754aa09ee56"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hid__core_8c.html#a2c9740053a621817093ee754aa09ee56">usbh_hid_get_report</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *hdev, int rtp_typ, int rtp_id, uint8_t *data, int len)</td></tr>
+<tr class="memdesc:a2c9740053a621817093ee754aa09ee56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issue a HID class GET_REPORT request.  <a href="#a2c9740053a621817093ee754aa09ee56">More...</a><br /></td></tr>
+<tr class="separator:a2c9740053a621817093ee754aa09ee56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f9f9672e6d85ae218958234a88ae268"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hid__core_8c.html#a1f9f9672e6d85ae218958234a88ae268">usbh_hid_set_report</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *hdev, int rtp_typ, int rtp_id, uint8_t *data, int len)</td></tr>
+<tr class="memdesc:a1f9f9672e6d85ae218958234a88ae268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issue a HID class SET_REPORT request. The Set_Report request allows the host to send a report to the device, possibly setting the state of input, output, or feature controls.  <a href="#a1f9f9672e6d85ae218958234a88ae268">More...</a><br /></td></tr>
+<tr class="separator:a1f9f9672e6d85ae218958234a88ae268"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae074a125482adadec1bffddf39a95047"><td class="memItemLeft" align="right" valign="top">HIDDEN_SYMBOLS int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hid__core_8c.html#ae074a125482adadec1bffddf39a95047">usbh_hid_get_idle</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *hdev, int rtp_id, uint8_t *idle_rate)</td></tr>
+<tr class="memdesc:ae074a125482adadec1bffddf39a95047"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issue a HID class GET_IDLE request. The GET_IDLE request reads the current idle rate for a particular Input report.  <a href="#ae074a125482adadec1bffddf39a95047">More...</a><br /></td></tr>
+<tr class="separator:ae074a125482adadec1bffddf39a95047"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fecfbefaf66b5cafbba8cd5b08601a1"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hid__core_8c.html#a9fecfbefaf66b5cafbba8cd5b08601a1">usbh_hid_set_idle</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *hdev, int rtp_id, uint8_t idle_rate)</td></tr>
+<tr class="memdesc:a9fecfbefaf66b5cafbba8cd5b08601a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issue a HID class SET_IDLE request. The SET_IDLE request silences a particular report on the Interrupt In pipe until a new event occurs or the specified amount of time passes.  <a href="#a9fecfbefaf66b5cafbba8cd5b08601a1">More...</a><br /></td></tr>
+<tr class="separator:a9fecfbefaf66b5cafbba8cd5b08601a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7022339d1efd07b1cbe5aaad1e0ab39"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hid__core_8c.html#aa7022339d1efd07b1cbe5aaad1e0ab39">usbh_hid_get_protocol</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *hdev, uint8_t *protocol)</td></tr>
+<tr class="memdesc:aa7022339d1efd07b1cbe5aaad1e0ab39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issue a HID class GET_PROTOCOL request. The GET_PROTOCOL request reads which protocol is currently active (either the boot protocol or the report protocol.)  <a href="#aa7022339d1efd07b1cbe5aaad1e0ab39">More...</a><br /></td></tr>
+<tr class="separator:aa7022339d1efd07b1cbe5aaad1e0ab39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a051239525cda693be668e5b9a0156d5b"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hid__core_8c.html#a051239525cda693be668e5b9a0156d5b">usbh_hid_set_protocol</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *hdev, uint8_t protocol)</td></tr>
+<tr class="memdesc:a051239525cda693be668e5b9a0156d5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issue a HID class SET_PROTOCOL request. The SET_PROTOCOL switches between the boot protocol and the report protocol (or vice versa).  <a href="#a051239525cda693be668e5b9a0156d5b">More...</a><br /></td></tr>
+<tr class="separator:a051239525cda693be668e5b9a0156d5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f02339e90d3abc4fe987a7f8f0238c3"><td class="memItemLeft" align="right" valign="top">HIDDEN_SYMBOLS int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hid__core_8c.html#a2f02339e90d3abc4fe987a7f8f0238c3">usbh_hid_start_int_read</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *hdev, uint8_t ep_addr, <a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___t_y_p_e_d_e_f.html#ga31ccd0dcc1f60ff491ee287813a58bb3">HID_IR_FUNC</a> *func)</td></tr>
+<tr class="memdesc:a2f02339e90d3abc4fe987a7f8f0238c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start purge the USB interrupt in transfer.  <a href="#a2f02339e90d3abc4fe987a7f8f0238c3">More...</a><br /></td></tr>
+<tr class="separator:a2f02339e90d3abc4fe987a7f8f0238c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e9f0926e1b599e10c5092ebf3cd3fdd"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hid__core_8c.html#a1e9f0926e1b599e10c5092ebf3cd3fdd">usbh_hid_stop_int_read</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *hdev, uint8_t ep_addr)</td></tr>
+<tr class="memdesc:a1e9f0926e1b599e10c5092ebf3cd3fdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop purge the USB interrupt in transfer.  <a href="#a1e9f0926e1b599e10c5092ebf3cd3fdd">More...</a><br /></td></tr>
+<tr class="separator:a1e9f0926e1b599e10c5092ebf3cd3fdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af128bb198c9ae0dba368dfeaa6043471"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hid__core_8c.html#af128bb198c9ae0dba368dfeaa6043471">usbh_hid_start_int_write</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *hdev, uint8_t ep_addr, <a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___t_y_p_e_d_e_f.html#gabaa3927325526737028004ba7a43052c">HID_IW_FUNC</a> *func)</td></tr>
+<tr class="memdesc:af128bb198c9ae0dba368dfeaa6043471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start purge the USB interrupt out transfer.  <a href="#af128bb198c9ae0dba368dfeaa6043471">More...</a><br /></td></tr>
+<tr class="separator:af128bb198c9ae0dba368dfeaa6043471"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a040717a0a0401e10f53a6d88d18571b6"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hid__core_8c.html#a040717a0a0401e10f53a6d88d18571b6">usbh_hid_stop_int_write</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *hdev, uint8_t ep_addr)</td></tr>
+<tr class="memdesc:a040717a0a0401e10f53a6d88d18571b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">stop purge the USB interrupt out transfer.  <a href="#a040717a0a0401e10f53a6d88d18571b6">More...</a><br /></td></tr>
+<tr class="separator:a040717a0a0401e10f53a6d88d18571b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga761adcb096c4fc7c04ab0298bedcd248"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga761adcb096c4fc7c04ab0298bedcd248">usbh_hid_regitser_mouse_callback</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga6f9f86213715a39c0d7e29621017e43e">HID_MOUSE_FUNC</a> *func)</td></tr>
+<tr class="memdesc:ga761adcb096c4fc7c04ab0298bedcd248"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register the mouse event callback function to HID class driver. Any mouse reports will be sent to user application via this callback.  <a href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga761adcb096c4fc7c04ab0298bedcd248">More...</a><br /></td></tr>
+<tr class="separator:ga761adcb096c4fc7c04ab0298bedcd248"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8f8b1d7ca7d3a4dff4e562c3a96f244f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga8f8b1d7ca7d3a4dff4e562c3a96f244f">usbh_hid_regitser_keyboard_callback</a> (<a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga525c0d862fa8d61ac3a3a0f7685f6310">HID_KEYBOARD_FUNC</a> *func)</td></tr>
+<tr class="memdesc:ga8f8b1d7ca7d3a4dff4e562c3a96f244f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register the keyboard event callback function to HID class driver. Any keyboard reports will be sent to user application via this callback.  <a href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga8f8b1d7ca7d3a4dff4e562c3a96f244f">More...</a><br /></td></tr>
+<tr class="separator:ga8f8b1d7ca7d3a4dff4e562c3a96f244f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>M480 USB Host HID driver. </p>
@@ -106,10 +112,615 @@ Functions</h2></td></tr>
 <dl class="section copyright"><dt>Copyright</dt><dd>(C) 2017 Nuvoton Technology Corp. All rights reserved. </dd></dl>
 
 <p class="definition">Definition in file <a class="el" href="hid__core_8c_source.html">hid_core.c</a>.</p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="ae074a125482adadec1bffddf39a95047"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae074a125482adadec1bffddf39a95047">&#9670;&nbsp;</a></span>usbh_hid_get_idle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">HIDDEN_SYMBOLS int32_t usbh_hid_get_idle </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *&#160;</td>
+          <td class="paramname"><em>hdev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>rtp_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>idle_rate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Issue a HID class GET_IDLE request. The GET_IDLE request reads the current idle rate for a particular Input report. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hdev</td><td>HID device pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rtp_id</td><td>Report ID </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">idle_rate</td><td>An one byte buffer holds the reported idle rate. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Success or not. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>Success </td></tr>
+    <tr><td class="paramname">Otherwise</td><td>Failed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="hid__core_8c_source.html#l00242">242</a> of file <a class="el" href="hid__core_8c_source.html">hid_core.c</a>.</p>
+
+</div>
+</div>
+<a id="aa7022339d1efd07b1cbe5aaad1e0ab39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7022339d1efd07b1cbe5aaad1e0ab39">&#9670;&nbsp;</a></span>usbh_hid_get_protocol()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t usbh_hid_get_protocol </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *&#160;</td>
+          <td class="paramname"><em>hdev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>protocol</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Issue a HID class GET_PROTOCOL request. The GET_PROTOCOL request reads which protocol is currently active (either the boot protocol or the report protocol.) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hdev</td><td>HID device pointer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">protocol</td><td>An one byte buffer holds the protocol code. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Success or not. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>Success </td></tr>
+    <tr><td class="paramname">Otherwise</td><td>Failed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="hid__core_8c_source.html#l00322">322</a> of file <a class="el" href="hid__core_8c_source.html">hid_core.c</a>.</p>
+
+</div>
+</div>
+<a id="a2c9740053a621817093ee754aa09ee56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c9740053a621817093ee754aa09ee56">&#9670;&nbsp;</a></span>usbh_hid_get_report()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t usbh_hid_get_report </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *&#160;</td>
+          <td class="paramname"><em>hdev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>rtp_typ</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>rtp_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Issue a HID class GET_REPORT request. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hdev</td><td>HID device pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rtp_typ</td><td>Report type. Valid values are:<ul>
+<li><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#gab443864c39f72678b88a40c4e7e62471">RT_INPUT</a></li>
+<li><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga8cdd5364960a3346e54b9e52b9af6af2">RT_OUTPUT</a></li>
+<li><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga7740df2a021f78d795d062f263a5ef8b">RT_FEATURE</a> </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rtp_id</td><td>Report ID </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>Buffer to store data retrieved from this report ID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Report length. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Report length or error code. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">&gt;=0</td><td>The actual length of data obtained from this report ID. </td></tr>
+    <tr><td class="paramname">Otherwise</td><td>Failed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="hid__core_8c_source.html#l00101">101</a> of file <a class="el" href="hid__core_8c_source.html">hid_core.c</a>.</p>
+
+</div>
+</div>
+<a id="a6dcc8495031097fd312e8cd352e89f44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6dcc8495031097fd312e8cd352e89f44">&#9670;&nbsp;</a></span>usbh_hid_get_report_descriptor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t usbh_hid_get_report_descriptor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *&#160;</td>
+          <td class="paramname"><em>hdev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>desc_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>buf_max_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read report descriptor from HID device. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hdev</td><td>HID device pointer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">desc_buf</td><td>Data buffer for report descriptor read from HID device. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf_max_len</td><td>The maximum length of desc_buf. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Report descriptor length or error code. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">&lt;0</td><td>Failed </td></tr>
+    <tr><td class="paramname">Otherwise</td><td>Length of report descriptor read. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="hid__core_8c_source.html#l00055">55</a> of file <a class="el" href="hid__core_8c_source.html">hid_core.c</a>.</p>
+
+</div>
+</div>
+<a id="a9fecfbefaf66b5cafbba8cd5b08601a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fecfbefaf66b5cafbba8cd5b08601a1">&#9670;&nbsp;</a></span>usbh_hid_set_idle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t usbh_hid_set_idle </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *&#160;</td>
+          <td class="paramname"><em>hdev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>rtp_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>idle_rate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Issue a HID class SET_IDLE request. The SET_IDLE request silences a particular report on the Interrupt In pipe until a new event occurs or the specified amount of time passes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hdev</td><td>HID device </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rtp_id</td><td>Report ID </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">idle_rate</td><td>The idle rate to be set. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Success or not. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>Success </td></tr>
+    <tr><td class="paramname">Otherwise</td><td>Failed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="hid__core_8c_source.html#l00282">282</a> of file <a class="el" href="hid__core_8c_source.html">hid_core.c</a>.</p>
+
+</div>
+</div>
+<a id="a051239525cda693be668e5b9a0156d5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a051239525cda693be668e5b9a0156d5b">&#9670;&nbsp;</a></span>usbh_hid_set_protocol()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t usbh_hid_set_protocol </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *&#160;</td>
+          <td class="paramname"><em>hdev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>protocol</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Issue a HID class SET_PROTOCOL request. The SET_PROTOCOL switches between the boot protocol and the report protocol (or vice versa). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hdev</td><td>HID device pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">protocol</td><td>The protocol to be set. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Success or not. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>Success </td></tr>
+    <tr><td class="paramname">Otherwise</td><td>Failed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="hid__core_8c_source.html#l00361">361</a> of file <a class="el" href="hid__core_8c_source.html">hid_core.c</a>.</p>
+
+</div>
+</div>
+<a id="a1f9f9672e6d85ae218958234a88ae268"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f9f9672e6d85ae218958234a88ae268">&#9670;&nbsp;</a></span>usbh_hid_set_report()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t usbh_hid_set_report </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *&#160;</td>
+          <td class="paramname"><em>hdev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>rtp_typ</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>rtp_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Issue a HID class SET_REPORT request. The Set_Report request allows the host to send a report to the device, possibly setting the state of input, output, or feature controls. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hdev</td><td>HID device pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rtp_typ</td><td>Report type. Valid values are:<ul>
+<li><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#gab443864c39f72678b88a40c4e7e62471">RT_INPUT</a></li>
+<li><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga8cdd5364960a3346e54b9e52b9af6af2">RT_OUTPUT</a></li>
+<li><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga7740df2a021f78d795d062f263a5ef8b">RT_FEATURE</a> </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rtp_id</td><td>Report ID </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>Buffer store data to be send. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Report length. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Written length or error code. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">&gt;=0</td><td>The actual length of data written to this report ID. </td></tr>
+    <tr><td class="paramname">Otherwise</td><td>Failed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="hid__core_8c_source.html#l00146">146</a> of file <a class="el" href="hid__core_8c_source.html">hid_core.c</a>.</p>
+
+</div>
+</div>
+<a id="a2f02339e90d3abc4fe987a7f8f0238c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f02339e90d3abc4fe987a7f8f0238c3">&#9670;&nbsp;</a></span>usbh_hid_start_int_read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">HIDDEN_SYMBOLS int32_t usbh_hid_start_int_read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *&#160;</td>
+          <td class="paramname"><em>hdev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>ep_addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___t_y_p_e_d_e_f.html#ga31ccd0dcc1f60ff491ee287813a58bb3">HID_IR_FUNC</a> *&#160;</td>
+          <td class="paramname"><em>func</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Start purge the USB interrupt in transfer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hdev</td><td>HID device pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ep_addr</td><td>Endpoint address. If ep_addr is 0, it will use the first found interrupt-in endpoint. If ep_addr is not 0, it will use the specified endpoint if found. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">func</td><td>The interrupt in data receiver callback function. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Success or not. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>Success </td></tr>
+    <tr><td class="paramname">Otherwise</td><td>Failed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="hid__core_8c_source.html#l00484">484</a> of file <a class="el" href="hid__core_8c_source.html">hid_core.c</a>.</p>
+
+</div>
+</div>
+<a id="af128bb198c9ae0dba368dfeaa6043471"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af128bb198c9ae0dba368dfeaa6043471">&#9670;&nbsp;</a></span>usbh_hid_start_int_write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t usbh_hid_start_int_write </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *&#160;</td>
+          <td class="paramname"><em>hdev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>ep_addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___t_y_p_e_d_e_f.html#gabaa3927325526737028004ba7a43052c">HID_IW_FUNC</a> *&#160;</td>
+          <td class="paramname"><em>func</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Start purge the USB interrupt out transfer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hdev</td><td>HID device pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ep_addr</td><td>Endpoint address. If ep_addr is 0, it will use the first found interrupt-out endpoint. If ep_addr is not 0, it will use the specified endpoint if found. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">func</td><td>The interrupt in data transfer callback function. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Success or not. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>Success </td></tr>
+    <tr><td class="paramname">Otherwise</td><td>Failed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="hid__core_8c_source.html#l00613">613</a> of file <a class="el" href="hid__core_8c_source.html">hid_core.c</a>.</p>
+
+</div>
+</div>
+<a id="a1e9f0926e1b599e10c5092ebf3cd3fdd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e9f0926e1b599e10c5092ebf3cd3fdd">&#9670;&nbsp;</a></span>usbh_hid_stop_int_read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t usbh_hid_stop_int_read </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *&#160;</td>
+          <td class="paramname"><em>hdev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>ep_addr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stop purge the USB interrupt in transfer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hdev</td><td>HID device pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ep_addr</td><td>Endpoint address. If ep_addr is 0, it will use the first found interrupt-in endpoint. If ep_addr is not 0, it will use the specified endpoint if found. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Success or not. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>Success </td></tr>
+    <tr><td class="paramname">Otherwise</td><td>Failed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="hid__core_8c_source.html#l00558">558</a> of file <a class="el" href="hid__core_8c_source.html">hid_core.c</a>.</p>
+
+</div>
+</div>
+<a id="a040717a0a0401e10f53a6d88d18571b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a040717a0a0401e10f53a6d88d18571b6">&#9670;&nbsp;</a></span>usbh_hid_stop_int_write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t usbh_hid_stop_int_write </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___s_t_r_u_c_t_u_r_e_s.html#ga9426e9980934bc0c487508d88ea86b56">HID_DEV_T</a> *&#160;</td>
+          <td class="paramname"><em>hdev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>ep_addr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>stop purge the USB interrupt out transfer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hdev</td><td>HID device pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ep_addr</td><td>Endpoint address. If ep_addr is 0, it will use the first found interrupt-out endpoint. If ep_addr is not 0, it will use the specified endpoint if found. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Success or not. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>Success </td></tr>
+    <tr><td class="paramname">Otherwise</td><td>Failed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="hid__core_8c_source.html#l00690">690</a> of file <a class="el" href="hid__core_8c_source.html">hid_core.c</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 12 2019 13:15:14 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 5 2020 13:49:07 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>

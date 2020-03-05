@@ -20,7 +20,7 @@
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">M480 BSP
-   &#160;<span id="projectnumber">V3.04.000</span>
+   &#160;<span id="projectnumber">V3.05.000</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -70,29 +70,27 @@ Data Fields</h2></td></tr>
 <tr class="separator:ac9cf921bd192d0907a4d941599b576a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcf991463f4694553b2f508bdb689eb1"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structs__hsusbd__info.html#adcf991463f4694553b2f508bdb689eb1">gu32HidReportSize</a></td></tr>
 <tr class="separator:adcf991463f4694553b2f508bdb689eb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a249eacbe0fef767eb57fb87c309b35d9"><td class="memItemLeft" align="right" valign="top">uint8_t **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structs__hsusbd__info.html#a249eacbe0fef767eb57fb87c309b35d9">gu8FSHidReportDesc</a></td></tr>
-<tr class="separator:a249eacbe0fef767eb57fb87c309b35d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6f6b0869a9e9ff3a06eb67dd4d973a9"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structs__hsusbd__info.html#aa6f6b0869a9e9ff3a06eb67dd4d973a9">gu32FSHidReportSize</a></td></tr>
-<tr class="separator:aa6f6b0869a9e9ff3a06eb67dd4d973a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a820982836aec95cbe4f7e461d391bc3e"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structs__hsusbd__info.html#a820982836aec95cbe4f7e461d391bc3e">gu32ConfigHidDescIdx</a></td></tr>
+<tr class="separator:a820982836aec95cbe4f7e461d391bc3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
 <p class="definition">Definition at line <a class="el" href="hsusbd_8h_source.html#l00098">98</a> of file <a class="el" href="hsusbd_8h_source.html">hsusbd.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="aa6f6b0869a9e9ff3a06eb67dd4d973a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6f6b0869a9e9ff3a06eb67dd4d973a9">&#9670;&nbsp;</a></span>gu32FSHidReportSize</h2>
+<a id="a820982836aec95cbe4f7e461d391bc3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a820982836aec95cbe4f7e461d391bc3e">&#9670;&nbsp;</a></span>gu32ConfigHidDescIdx</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t* s_hsusbd_info::gu32FSHidReportSize</td>
+          <td class="memname">uint32_t* s_hsusbd_info::gu32ConfigHidDescIdx</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer for HID Report descriptor Size </p>
+<p>Pointer for HID Descriptor start index </p>
 
-<p class="definition">Definition at line <a class="el" href="hsusbd_8h_source.html#l00110">110</a> of file <a class="el" href="hsusbd_8h_source.html">hsusbd.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="hsusbd_8h_source.html#l00109">109</a> of file <a class="el" href="hsusbd_8h_source.html">hsusbd.h</a>.</p>
 
 </div>
 </div>
@@ -144,23 +142,6 @@ Data Fields</h2></td></tr>
 <p>Device descriptor </p>
 
 <p class="definition">Definition at line <a class="el" href="hsusbd_8h_source.html#l00100">100</a> of file <a class="el" href="hsusbd_8h_source.html">hsusbd.h</a>.</p>
-
-</div>
-</div>
-<a id="a249eacbe0fef767eb57fb87c309b35d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a249eacbe0fef767eb57fb87c309b35d9">&#9670;&nbsp;</a></span>gu8FSHidReportDesc</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t** s_hsusbd_info::gu8FSHidReportDesc</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer for HID Report descriptor </p>
-
-<p class="definition">Definition at line <a class="el" href="hsusbd_8h_source.html#l00109">109</a> of file <a class="el" href="hsusbd_8h_source.html">hsusbd.h</a>.</p>
 
 </div>
 </div>
@@ -272,7 +253,7 @@ Data Fields</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Jul 12 2019 13:15:18 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 5 2020 13:49:12 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>
