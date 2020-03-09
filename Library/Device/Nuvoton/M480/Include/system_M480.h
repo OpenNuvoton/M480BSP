@@ -20,9 +20,18 @@ extern "C" {
   Define clocks
  *----------------------------------------------------------------------------*/
 
+#ifndef __HSI
 #define __HSI       (12000000UL)    /*!< PLL default output is 50MHz */
+#endif
+
+#ifndef __HXT
 #define __HXT       (12000000UL)    /*!< External Crystal Clock Frequency     */
+#endif
+
+#ifndef __LXT
 #define __LXT       (32768UL)       /*!< External Crystal Clock Frequency 32.768KHz */
+#endif
+
 #define __HIRC      (12000000UL)    /*!< Internal 12M RC Oscillator Frequency */
 #define __LIRC      (10000UL)       /*!< Internal 10K RC Oscillator Frequency */
 #define __SYS_OSC_CLK     (    ___HSI)    /* Main oscillator frequency        */
