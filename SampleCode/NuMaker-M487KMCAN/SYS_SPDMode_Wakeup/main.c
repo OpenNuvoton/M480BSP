@@ -17,7 +17,7 @@
 #define SIGNATURE       0x125ab234
 #define FLAG_ADDR       0x20000FFC
 
-#define PLL_CLOCK       160000000
+#define PLL_CLOCK       192000000
 
 void GpioPinSetting(void);
 void spim_routine(void);

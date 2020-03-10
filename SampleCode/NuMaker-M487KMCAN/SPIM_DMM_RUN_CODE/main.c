@@ -35,10 +35,7 @@ void SYS_Init(void)
     /* Switch HCLK clock source to HXT */
     CLK_SetHCLK(CLK_CLKSEL0_HCLKSEL_HXT,CLK_CLKDIV0_HCLK(1));
 
-    /* Set core clock (HCLK) as 160MHz from PLL. SPIM clock run at 80 MHz.            */
-    /* The maximum frequency of W25Q20 SPI flash is 80 MHz.                           */
-    /* SPIM clock source is HCLK. This will configue SPIM clock as HCLK divided by 2. */
-    CLK_SetCoreClock(FREQ_160MHZ);
+    CLK_SetCoreClock(FREQ_192MHZ);
 
     /* Set both PCLK0 and PCLK1 as HCLK/2 */
     CLK->PCLKDIV = CLK_PCLKDIV_APB0DIV_DIV2 | CLK_PCLKDIV_APB1DIV_DIV2;

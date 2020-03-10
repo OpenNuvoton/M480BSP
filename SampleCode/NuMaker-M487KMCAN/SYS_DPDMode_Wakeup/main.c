@@ -13,7 +13,7 @@
 
 #define USE_4_BYTES_MODE    0            /* W25Q20 does not support 4-bytes address mode. */
 
-#define PLL_CLOCK       160000000
+#define PLL_CLOCK       192000000
 
 void spim_routine(void);
 
