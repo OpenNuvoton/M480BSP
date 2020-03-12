@@ -64,6 +64,21 @@
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/spim_code.c</locationURI>
 		</link>
+		<link>
+			<name>Library/Library/acmp.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Library/StdDriver/src/acmp.c</locationURI>
+		</link>
+		<link>
+			<name>Library/Library/gpio.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Library/StdDriver/src/gpio.c</locationURI>
+		</link>
+		<link>
+			<name>Library/Library/rtc.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Library/StdDriver/src/rtc.c</locationURI>
+		</link>
 	</linkedResources>
 	<filteredResources>
 		<filter>
@@ -119,6 +134,6 @@
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-false-false-spim.c</arguments>
 			</matcher>
-		</filter>		
+		</filter>
 	</filteredResources>
 </projectDescription>
