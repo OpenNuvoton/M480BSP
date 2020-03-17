@@ -80,6 +80,11 @@ void I2C_Close(I2C_T *i2c)
         SYS->IPRST1 |= SYS_IPRST1_I2C1RST_Msk;
         SYS->IPRST1 &= ~SYS_IPRST1_I2C1RST_Msk;
     }
+    else if((uint32_t)i2c == I2C2_BASE)
+    {
+        SYS->IPRST1 |= SYS_IPRST1_I2C2RST_Msk;
+        SYS->IPRST1 &= ~SYS_IPRST1_I2C2RST_Msk;
+    }
 
     /* Disable I2C */
     i2c->CTL0 &= ~I2C_CTL0_I2CEN_Msk;
