@@ -788,9 +788,9 @@ int32_t FMC_WriteConfig(uint32_t u32Config[], uint32_t u32Count)
 
     for (i = 0; i < u32Count; i++)
     {
-        FMC_Write(FMC_CONFIG_BASE+i*4UL, u32Config[1]);
+        FMC_Write(FMC_CONFIG_BASE+i*4UL, u32Config[i]);
 
-        if (FMC_Read(FMC_CONFIG_BASE+i*4UL) != u32Config[1])
+        if (FMC_Read(FMC_CONFIG_BASE+i*4UL) != u32Config[i])
         {
             FMC_DISABLE_CFG_UPDATE();
             return -1;
