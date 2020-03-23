@@ -1159,7 +1159,7 @@ uint32_t SPII2S_Open(SPI_T *i2s, uint32_t u32MasterSlave, uint32_t u32SampleRate
     /* Configure I2S controller */
     i2s->I2SCTL = u32MasterSlave | u32WordWidth | u32Channels | u32DataFormat;
     /* Set TX FIFO threshold to 2 and RX FIFO threshold to 1 */
-    i2s->FIFOCTL = SPII2S_FIFO_TX_LEVEL_WORD_2 | SPII2S_FIFO_RX_LEVEL_WORD_2;
+    SPI_SetFIFO(i2s, 2, 1);
 
     if(u32MasterSlave == SPI_MASTER)
     {
