@@ -491,8 +491,8 @@ uint32_t SPI_SetBusClock(SPI_T *spi, uint32_t u32BusClock)
 /**
   * @brief  Configure FIFO threshold setting.
   * @param[in]  spi The pointer of the specified SPI module.
-  * @param[in]  u32TxThreshold Decides the TX FIFO threshold. It could be 0 ~ 7.
-  * @param[in]  u32RxThreshold Decides the RX FIFO threshold. It could be 0 ~ 7.
+  * @param[in]  u32TxThreshold Decides the TX FIFO threshold. It could be 0 ~ 3. If data width is 8~16 bits, it could be 0 ~ 7.
+  * @param[in]  u32RxThreshold Decides the RX FIFO threshold. It could be 0 ~ 3. If data width is 8~16 bits, it could be 0 ~ 7.
   * @return None
   * @details Set TX FIFO threshold and RX FIFO threshold configurations.
   */

@@ -151,7 +151,7 @@ int main(void)
     printf("\n");
 
     /* Set TX FIFO threshold, enable TX FIFO threshold interrupt and RX FIFO time-out interrupt */
-    SPI_SetFIFO(SPI0, 4, 4);
+    SPI_SetFIFO(SPI0, 2, 2);
     SPI_EnableInt(SPI0, SPI_FIFO_TXTH_INT_MASK | SPI_FIFO_RXTO_INT_MASK);
 
     g_u32TxDataCount = 0;
