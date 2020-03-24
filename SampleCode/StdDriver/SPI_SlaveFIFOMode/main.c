@@ -118,7 +118,7 @@ int main(void)
     printf("\n");
 
     /* Set TX FIFO threshold and enable FIFO mode. */
-    SPI_SetFIFO(SPI0, 4, 4);
+    SPI_SetFIFO(SPI0, 2, 2);
 
     /* Access TX and RX FIFO */
     while(u32RxDataCount < TEST_COUNT)
