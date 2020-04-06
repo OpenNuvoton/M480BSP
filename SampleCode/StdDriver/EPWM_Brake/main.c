@@ -26,8 +26,12 @@ void BRAKE0_IRQHandler(void)
     printf("Press any key to unlock brake state. (EPWM0 channel 0 output will toggle again)\n");
     getchar();
 
+    /* Unlock protected registers */
+    SYS_UnlockReg();
     // Clear brake interrupt flag
     EPWM_ClearFaultBrakeIntFlag(EPWM0, EPWM_FB_EDGE);
+    /* Lock protected registers */
+    SYS_LockReg();
 }
 
 void SYS_Init(void)
@@ -122,6 +126,7 @@ int main(void)
     /* Lock protected registers */
     SYS_LockReg();
 
+    NVIC_ClearPendingIRQ(BRAKE0_IRQn);
     NVIC_EnableIRQ(BRAKE0_IRQn);
 
     // Start

@@ -68,7 +68,7 @@ void SYS_Init(void)
                       SYS_GPB_MFPL_PB2MFP_EADC0_CH2 | SYS_GPB_MFPL_PB3MFP_EADC0_CH3);
 
     /* Disable the GPB0 - GPB3 digital input path to avoid the leakage current. */
-    GPIO_DISABLE_DIGITAL_PATH(PB, BIT13|BIT12|BIT11|BIT10);
+    GPIO_DISABLE_DIGITAL_PATH(PB, BIT3|BIT2|BIT1|BIT0);
 
 }
 
