@@ -302,7 +302,7 @@ void SDH0_IRQHandler(void)
     if (isr & SDH_INTSTS_BLKDIF_Msk)
     {
         // block down
-        g_u8SDDataReadyFlag = TRUE;
+        SD0.DataReadyFlag = TRUE;
         SDH0->INTSTS = SDH_INTSTS_BLKDIF_Msk;
     }
 
@@ -343,7 +343,7 @@ void SDH0_IRQHandler(void)
         }
         else if (!(isr & SDH_INTSTS_CRC7_Msk))
         {
-            if (!g_u8R3Flag)
+            if (!SD0.R3Flag)
             {
                 //printf("***** ISR sdioIntHandler(): CRC_7 error !\n");
                 // handle CRC error

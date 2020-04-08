@@ -73,19 +73,21 @@ extern "C"
 */
 typedef struct SDH_info_t
 {
+    unsigned char   IsCardInsert;   /*!< Card insert state */
+    unsigned char   R3Flag;
+    unsigned char   R7Flag;
+    unsigned char volatile DataReadyFlag;
     unsigned int    CardType;       /*!< SDHC, SD, or MMC */
     unsigned int    RCA;            /*!< Relative card address */
-    unsigned char   IsCardInsert;   /*!< Card insert state */
     unsigned int    totalSectorN;   /*!< Total sector number */
     unsigned int    diskSize;       /*!< Disk size in K bytes */
     int             sectorSize;     /*!< Sector size in bytes */
+    unsigned char   *dmabuf;
 } SDH_INFO_T;                       /*!< Structure holds SD card info */
 
 /*@}*/ /* end of group SDH_EXPORTED_TYPEDEF */
 
 /** @cond HIDDEN_SYMBOLS */
-extern uint8_t g_u8R3Flag;
-extern uint8_t volatile g_u8SDDataReadyFlag;
 extern SDH_INFO_T SD0, SD1;
 /** @endcond HIDDEN_SYMBOLS */
 
