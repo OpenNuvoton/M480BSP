@@ -74,13 +74,18 @@ void HSUSBD_Open(S_HSUSBD_INFO_T *param, HSUSBD_CLASS_REQ pfnClassReq, HSUSBD_SE
     g_hsusbd_CtrlMaxPktSize = g_hsusbd_sInfo->gu8DevDesc[7];
 
     /* Initial USB engine */
-    HSUSBD->PHYCTL |= (HSUSBD_PHYCTL_PHYEN_Msk | HSUSBD_PHYCTL_DPPUEN_Msk);
+    //HSUSBD->PHYCTL |= (HSUSBD_PHYCTL_PHYEN_Msk | HSUSBD_PHYCTL_DPPUEN_Msk);
+    HSUSBD_ENABLE_PHY();
+    while((HSUSBD->BUSINTSTS & HSUSBD_BUSINTEN_PHYCLKVLDIEN_Msk) != HSUSBD_BUSINTEN_PHYCLKVLDIEN_Msk ){}
+    HSUSBD_CLR_SE0();
+
     /* wait PHY clock ready */
     while (1)
     {
         HSUSBD->EP[EPA].EPMPS = 0x20ul;
         if (HSUSBD->EP[EPA].EPMPS == 0x20ul)
         {
+            HSUSBD->EP[EPA].EPMPS = 0x0ul;
             break;
         }
     }

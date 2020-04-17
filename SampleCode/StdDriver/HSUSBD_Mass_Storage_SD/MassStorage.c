@@ -29,6 +29,8 @@ uint32_t g_u32MSCMaxLun = 0;
 uint32_t g_u32LbaAddress;
 uint32_t g_u32DataTransferSector;
 uint32_t g_u32MassBase, g_u32StorageBase;
+uint8_t gMassBuf[256];
+uint8_t gStorageBuf[USBD_MAX_SD_LEN];
 
 uint32_t g_u32EpMaxPacketSize;
 uint32_t g_u32CbwSize = 0;
@@ -398,8 +400,8 @@ void MSC_Init(void)
         g_au8SenseKey[1] = 0x30;
         g_au8SenseKey[2] = 0x01;
     }
-    g_u32MassBase = 0x20001000;
-    g_u32StorageBase = 0x20002000;
+    g_u32MassBase = (uint32_t)gMassBuf;
+    g_u32StorageBase = (uint32_t)gStorageBuf;
 
     printf("total %d\n", g_TotalSectors);
 }
