@@ -84,6 +84,8 @@ extern "C"
 #define CLK_CLKSEL0_SDH1SEL_HIRC         (0x3UL << CLK_CLKSEL0_SDH1SEL_Pos)         /*!< Select SDH1 clock source from high speed oscillator \hideinitializer */
 #define CLK_CLKSEL0_SDH1SEL_HCLK         (0x2UL << CLK_CLKSEL0_SDH1SEL_Pos)         /*!< Select SDH1 clock source from HCLK \hideinitializer */
 
+#define CLK_CLKSEL0_USBSEL_RC48M         (0x0UL << CLK_CLKSEL0_USBSEL_Pos)          /*!< Select USB clock source from RC48M \hideinitializer */
+#define CLK_CLKSEL0_USBSEL_PLL           (0x1UL << CLK_CLKSEL0_USBSEL_Pos)          /*!< Select USB clock source from PLL \hideinitializer */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  CLKSEL1 constant definitions.                                                                          */
@@ -399,7 +401,7 @@ extern "C"
 #define CAN0_MODULE      ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(24UL<<0)) /*!< CAN0 Module \hideinitializer */
 #define CAN1_MODULE      ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(25UL<<0)) /*!< CAN1 Module \hideinitializer */
 #define OTG_MODULE       ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(26UL<<0)) /*!< OTG Module \hideinitializer */
-#define USBD_MODULE      ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(27UL<<0)) /*!< USBD Module \hideinitializer */
+#define USBD_MODULE      ((1UL<<30)|(MODULE_NoMsk<<28)|(1UL<<25)         |(8UL<<20)         |(MODULE_NoMsk<<18)|(0xFUL<<10)       |(4UL<<5)         |(27UL<<0)) /*!< USBD Module \hideinitializer */
 #define EADC_MODULE      ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(0UL<<18)         |(0xFFUL<<10)      |(16UL<<5)        |(28UL<<0)) /*!< EADC Module \hideinitializer */
 #define I2S0_MODULE      ((1UL<<30)|(3UL<<28)         |(0x3UL<<25)       |(16UL<<20)        |(2UL<<18)         |(0xFUL<<10)       |(0UL<<5)         |(29UL<<0)) /*!< I2S0 Module \hideinitializer */
 #define HSOTG_MODULE     ((1UL<<30)|(MODULE_NoMsk<<28)|(MODULE_NoMsk<<25)|(MODULE_NoMsk<<20)|(MODULE_NoMsk<<18)|(MODULE_NoMsk<<10)|(MODULE_NoMsk<<5)|(30UL<<0)) /*!< HSOTG Module \hideinitializer */
