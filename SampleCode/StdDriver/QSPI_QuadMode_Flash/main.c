@@ -230,7 +230,7 @@ void SpiFlash_NormalPageProgram(uint32_t StartAddress, uint8_t *u8DataBuffer)
         if(!QSPI_GET_TX_FIFO_FULL_FLAG(QSPI_FLASH_PORT))
         {
             QSPI_WRITE_TX(QSPI_FLASH_PORT, u8DataBuffer[i++]);
-            if(i >= 255) break;
+            if(i > 255) break;
         }
     }
 

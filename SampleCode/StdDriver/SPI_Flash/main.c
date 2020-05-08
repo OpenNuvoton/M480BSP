@@ -183,7 +183,7 @@ void SpiFlash_NormalPageProgram(uint32_t StartAddress, uint8_t *u8DataBuffer)
         if(!SPI_GET_TX_FIFO_FULL_FLAG(SPI_FLASH_PORT))
         {
             SPI_WRITE_TX(SPI_FLASH_PORT, u8DataBuffer[i++]);
-            if(i >= 255) break;
+            if(i > 255) break;
         }
     }
 
