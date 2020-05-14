@@ -3,7 +3,8 @@
  * @version  V1.10
  * @brief   USB Host library OHCI (USB 1.1) host controller driver.
  *
- * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2017-2020 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>

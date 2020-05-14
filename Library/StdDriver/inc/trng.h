@@ -3,7 +3,8 @@
  * @version  V1.10
  * @brief    TRNG driver header file
  *
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __TRNG_H__
 #define __TRNG_H__

@@ -3,7 +3,8 @@
  * @version  V2.00
  * @brief    M480 Series CAN Driver Header File
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __CAN_H__
 #define __CAN_H__

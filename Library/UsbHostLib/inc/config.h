@@ -3,7 +3,8 @@
  * @version  V1.00
  * @brief    This header file defines the configuration of USB Host library.
  *
- * @copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2017-2020 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
 #ifndef  _USBH_CONFIG_H_

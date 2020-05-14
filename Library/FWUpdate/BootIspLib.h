@@ -6,7 +6,8 @@
  *           connect with a PC executing firmware update tool via ether HSUSBD
  *           or UART1 to update firmware.
  *
- * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2017-2020 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __BLISPLIB_H__
 #define __BLISPLIB_H__

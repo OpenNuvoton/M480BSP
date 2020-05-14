@@ -3,7 +3,8 @@
  * @version  V1.10
  * @brief    USB Host CDC(Communication Device Class) driver header file.
  *
- * @copyright (C) 2018 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2017-2020 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef  _USBH_CDC_H_
 #define  _USBH_CDC_H_
