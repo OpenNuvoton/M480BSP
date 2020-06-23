@@ -20,6 +20,8 @@
 /* To run CCAPInterruptHandler, when CAP frame end interrupt                                */
 /*------------------------------------------------------------------------------------------*/
 volatile uint32_t u32FramePass = 0;
+static uint32_t u32EscapeFrame = 0;
+
 void CCAPInterruptHandler(void)
 {
     u32FramePass++;
