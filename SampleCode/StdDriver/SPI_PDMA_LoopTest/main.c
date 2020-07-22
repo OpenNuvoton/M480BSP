@@ -216,11 +216,9 @@ void SpiLoopTest_WithPDMA(void)
     PDMA->DSCT[SPI_SLAVE_TX_DMA_CH].CTL |= PDMA_DSCT_CTL_TBINTDIS_Msk;
 
     /* Enable SPI slave DMA function */
-    SPI_TRIGGER_RX_PDMA(SPI1);
-    SPI_TRIGGER_TX_PDMA(SPI1);
+    SPI_TRIGGER_TX_RX_PDMA(SPI1);
     /* Enable SPI master DMA function */
-    QSPI_TRIGGER_TX_PDMA(QSPI0);
-    QSPI_TRIGGER_RX_PDMA(QSPI0);
+    QSPI_TRIGGER_TX_RX_PDMA(QSPI0);
 
     i32Err = 0;
     for(u32TestCycle = 0; u32TestCycle < 10000; u32TestCycle++)
@@ -245,9 +243,8 @@ void SpiLoopTest_WithPDMA(void)
                     /* Clear the PDMA transfer done flags */
                     PDMA_CLR_TD_FLAG(PDMA,(1 << SPI_MASTER_TX_DMA_CH) | (1 << SPI_MASTER_RX_DMA_CH) | (1 << SPI_SLAVE_TX_DMA_CH) | (1 << SPI_SLAVE_RX_DMA_CH));
 
-                    /* Disable SPI master's PDMA transfer function */
-                    QSPI_DISABLE_TX_PDMA(QSPI0);
-                    QSPI_DISABLE_RX_PDMA(QSPI0);
+                    /* Disable QSPI master's PDMA transfer function */
+                    QSPI_DISABLE_TX_RX_PDMA(QSPI0);
 
                     /* Check the transfer data */
                     for(u32DataCount = 0; u32DataCount < TEST_COUNT; u32DataCount++)
@@ -299,8 +296,7 @@ void SpiLoopTest_WithPDMA(void)
                     PDMA_SetTransferMode(PDMA,SPI_MASTER_RX_DMA_CH, PDMA_QSPI0_RX, FALSE, 0);
 
                     /* Enable master's DMA transfer function */
-                    QSPI_TRIGGER_TX_PDMA(QSPI0);
-                    QSPI_TRIGGER_RX_PDMA(QSPI0);
+                    QSPI_TRIGGER_TX_RX_PDMA(QSPI0);
                     break;
                 }
             }
@@ -315,10 +311,10 @@ void SpiLoopTest_WithPDMA(void)
                 break;
             }
             /* Check the DMA time-out interrupt flag */
-            if(u32RegValue & 0x00000300)
+            if(u32RegValue & (PDMA_INTSTS_REQTOF0_Msk|PDMA_INTSTS_REQTOF1_Msk))
             {
                 /* Clear the time-out flag */
-                PDMA->INTSTS = u32RegValue & 0x00000300;
+                PDMA->INTSTS = u32RegValue & (PDMA_INTSTS_REQTOF0_Msk|PDMA_INTSTS_REQTOF1_Msk);
                 i32Err = 1;
                 break;
             }
@@ -368,7 +364,7 @@ int main(void)
     printf("    QSPI0_SS  (PA3) <--> SPI1_SS(PH7)\n    QSPI0_CLK(PA2)  <--> SPI1_CLK(PH6)\n");
     printf("    QSPI0_MISO(PA1) <--> SPI1_MISO(PH4)\n    QSPI0_MOSI(PA0) <--> SPI1_MOSI(PH5)\n\n");
     printf("Please connect QSPI0 with SPI1, and press any key to start transmission ...");
-    //getchar();
+    getchar();
     printf("\n");
 
     SpiLoopTest_WithPDMA();
