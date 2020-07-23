@@ -163,7 +163,7 @@ uint8_t gu8ConfigDescriptor[] =
     0x01,           /* Call management functional descriptor */
     0x00,           /* BIT0: Whether device handle call management itself. */
     /* BIT1: Whether device can send/receive call management information over a Data Class Interface 0 */
-    0x01,           /* Interface number of data class interface optionally used for call management */
+    0x03,           /* Interface number of data class interface optionally used for call management */
 
     /* Communication Class Specified INTERFACE descriptor */
     0x04,           /* Size of the descriptor, in bytes */
@@ -175,8 +175,8 @@ uint8_t gu8ConfigDescriptor[] =
     0x05,           /* bLength              */
     0x24,           /* bDescriptorType: CS_INTERFACE descriptor type */
     0x06,           /* bDescriptorSubType   */
-    0x00,           /* bMasterInterface     */
-    0x01,           /* bSlaveInterface0     */
+    0x02,           /* bMasterInterface     */
+    0x03,           /* bSlaveInterface0     */
 
     /* ENDPOINT descriptor */
     LEN_ENDPOINT,                   /* bLength          */
