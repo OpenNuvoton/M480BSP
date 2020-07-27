@@ -15,7 +15,7 @@ uint8_t gu8DeviceDescriptor[] =
 {
     LEN_DEVICE,         /* bLength */
     DESC_DEVICE,        /* bDescriptorType */
-    0x00, 0x02,           /* bcdUSB */
+    0x10, 0x01,         /* bcdUSB */
     0xEF,               /* bDeviceClass: IAD*/
     0x02,               /* bDeviceSubClass */
     0x01,               /* bDeviceProtocol */
