@@ -111,10 +111,4 @@
 			</matcher>
 		</filter>
 	</filteredResources>
-	<variableList>
-		<variable>
-			<name>copy_PARENT</name>
-			<value>$%7BPARENT-3-PROJECT_LOC%7D/BPWM_Capture</value>
-		</variable>
-	</variableList>
 </projectDescription>

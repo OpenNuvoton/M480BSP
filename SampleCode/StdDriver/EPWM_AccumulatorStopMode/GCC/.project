@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>FMC_CRC32</name>
+	<name>EPWM_AccumulatorStopMode</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -52,12 +52,12 @@
 		<link>
 			<name>User/main.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/main.c</locationURI>
+			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/main.c</locationURI>
 		</link>
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>1505294982012</id>
+			<id>0</id>
 			<name>CMSIS/CMSIS</name>
 			<type>9</type>
 			<matcher>
@@ -66,7 +66,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1546513438370</id>
+			<id>1597827001412</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -75,7 +75,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1546513438404</id>
+			<id>1597827001460</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -84,7 +84,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1546513438430</id>
+			<id>1597827001479</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -93,7 +93,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1546513438484</id>
+			<id>1597827001487</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
@@ -102,7 +102,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1546513438588</id>
+			<id>1597827001500</id>
 			<name>Library/Library</name>
 			<type>5</type>
 			<matcher>
