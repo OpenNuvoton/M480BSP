@@ -31,8 +31,15 @@
 int MQTTSerialize_publishLength(int qos, MQTTString topicName, int payloadlen)
 {
 	int len = 0;
-
+#ifdef __ICCARM__
+	if (topicName.cstring)
+		len = strlen(topicName.cstring);
+	else
+		len = topicName.lenstring.len;
+        len += 2 + payloadlen;
+#else
 	len += 2 + MQTTstrlen(topicName) + payloadlen;
+#endif
 	if (qos > 0)
 		len += 2; /* packetid */
 	return len;

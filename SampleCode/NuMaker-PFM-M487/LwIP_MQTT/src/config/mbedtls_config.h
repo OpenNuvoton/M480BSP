@@ -191,7 +191,7 @@ extern volatile int g_Crypto_Int_done;
  */
 #define MBEDTLS_PLATFORM_MEMORY//clyu
 
-extern void * platform_alt_calloc(uint32_t , uint32_t );
+extern void * platform_alt_calloc(size_t , size_t );
 extern void platform_alt_free(void *);
 #define MBEDTLS_PLATFORM_CALLOC_MACRO(x, y)		platform_alt_calloc(x, y)//clyu
 #define MBEDTLS_PLATFORM_FREE_MACRO(x)				platform_alt_free(x)//clyu

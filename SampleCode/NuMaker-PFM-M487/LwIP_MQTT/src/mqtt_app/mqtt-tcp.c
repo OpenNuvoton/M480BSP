@@ -17,12 +17,20 @@
 #include "mbedtls/ssl.h"
 #endif
 
+#define TRACE(...) {printf(__VA_ARGS__);printf("\n");}//clyu
+
 extern void dns_clear(char * hostname);
 
 static _E_MQTT_TCP_ERRORS __map_tcp_err(err_t err);
 static struct netconn * __connect(const char * hostname, uint32_t port_no, _E_MQTT_TCP_ERRORS * mqtt_err);
 static _E_MQTT_TCP_ERRORS __map_ssl_err(int32_t err);
-__inline static uint32_t __tick_divider(uint32_t original, uint32_t divider);
+
+#ifdef __CC_ARM
+__inline static uint32_t __tick_divider(uint32_t original_value, uint32_t divider);
+#else
+static inline uint32_t __tick_divider(uint32_t original_value, uint32_t divider);
+#endif
+
 
 static uint32_t tick_wait_divider = 1;
 
@@ -447,7 +455,11 @@ static struct netconn * __connect(const char * hostname, uint32_t port_no, _E_MQ
     return conn;
 }
 
+#ifdef __CC_ARM
 __inline static uint32_t __tick_divider(uint32_t original_value, uint32_t divider)
+#else
+static inline uint32_t __tick_divider(uint32_t original_value, uint32_t divider)
+#endif
 {
     if(divider > 1)
     {

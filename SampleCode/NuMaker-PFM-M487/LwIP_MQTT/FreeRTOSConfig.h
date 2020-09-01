@@ -48,8 +48,7 @@
 extern uint32_t SystemCoreClock;
 #endif
 
-#define TRACE(...) {printf(__VA_ARGS__);printf("\n");}//clyu
-
+//#define TRACE(...) {printf(__VA_ARGS__);printf("\n");}//clyu
 
 #define configUSE_PREEMPTION            1
 #define configUSE_IDLE_HOOK             1

@@ -10,6 +10,7 @@
 #include "mbedtls/threading.h"
 #include "FreeRTOS.h"
 #include "semphr.h"
+#include "threading_alt.h"
 
 static void threading_alt_mutex_init(mbedtls_threading_mutex_t * m);
 static void threading_alt_mutex_free(mbedtls_threading_mutex_t * m);

@@ -17,6 +17,8 @@
 #include "mqtt-tcp.h"
 #include "MQTTPacket.h"
 
+#define TRACE(...) {printf(__VA_ARGS__);printf("\n");}//clyu
+
 typedef enum
 {
 #define DEF_MQTT_ERROR(type, str)   MQTT_ERROR_##type,

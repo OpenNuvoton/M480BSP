@@ -20,16 +20,34 @@
 #include <string.h>
 #include <stdlib.h>
 
+#ifdef __CC_ARM
 __inline static _E_MQTT_ERRORS __tcp_connect(_S_MQTT_CLIENT_INFO * info, const char * hostname, uint32_t port, tls_configuration_t * conf);
+#else
+static inline _E_MQTT_ERRORS __tcp_connect(_S_MQTT_CLIENT_INFO * info, const char * hostname, uint32_t port, tls_configuration_t * conf);
+#endif
+#ifdef __ICCARM__
+__noreturn static void _mqtt_recv_process(void * pv);
+#else
 static void _mqtt_recv_process(void * pv) __attribute__((noreturn));
+#endif
+#ifdef __CC_ARM
 __inline static _E_MQTT_ERRORS __map_connack_error(uint32_t err);
+#else
+static inline _E_MQTT_ERRORS __map_connack_error(uint32_t err);
+#endif
+
 static struct netbuf * __get_received_netbuf(_S_MQTT_CLIENT_INFO * info);
 static _E_MQTT_ERRORS _get_transmit_control(_S_MQTT_CLIENT_INFO * info, uint32_t wait_ms);
 static void _release_transmit_control(_S_MQTT_CLIENT_INFO * info);
 static _E_MQTT_ERRORS _transmit_data(_S_MQTT_CLIENT_INFO * info, void * data, uint32_t data_len, uint32_t retry);
 static void __fillup_mqttstring(MQTTString * s, const char * data);
 static uint8_t __packet_id(uint8_t * pkt_id);
+#ifdef __CC_ARM
 __inline static uint32_t __tick_divider(uint32_t tick, uint32_t divider);
+
+#else
+static inline uint32_t __tick_divider(uint32_t tick, uint32_t divider);
+#endif
 
 int MQTTPacket_get_type(unsigned char *data, int len);
 static uint32_t tick_wait_divider = 1;
@@ -839,8 +857,13 @@ const char * mqtt_client_error_to_string(_E_MQTT_ERRORS err)
     return "MQTT error undefined";
 }
 
+#ifdef __CC_ARM
 __inline static _E_MQTT_ERRORS __tcp_connect(_S_MQTT_CLIENT_INFO * info, const char * hostname, uint32_t port,
+         tls_configuration_t * conf)
+#else
+static inline _E_MQTT_ERRORS __tcp_connect(_S_MQTT_CLIENT_INFO * info, const char * hostname, uint32_t port,
         tls_configuration_t * conf)
+#endif
 {
     _E_MQTT_TCP_ERRORS err;
 
@@ -1297,7 +1320,11 @@ static void _release_transmit_control(_S_MQTT_CLIENT_INFO * info)
     xSemaphoreGive(info->tx_control);
 }
 
+#ifdef __CC_ARM
 __inline _E_MQTT_ERRORS __map_connack_error(uint32_t err)
+#else
+inline _E_MQTT_ERRORS __map_connack_error(uint32_t err)
+#endif
 {
     switch (err)
     {
@@ -1383,7 +1410,11 @@ static uint8_t __packet_id(uint8_t * pkt_id)
     return id;
 }
 
+#ifdef __CC_ARM
 __inline static uint32_t __tick_divider(uint32_t original_value, uint32_t divider)
+#else
+static inline uint32_t __tick_divider(uint32_t original_value, uint32_t divider)
+#endif
 {
     if(divider > 1)
     {

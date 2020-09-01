@@ -8,7 +8,7 @@
 #include "mbedtls/platform.h"
 #include "FreeRTOS.h"
 #include <string.h>
-
+#define TRACE(...) {printf(__VA_ARGS__);printf("\n");}//clyu
 void * platform_alt_calloc(size_t obj_count, size_t obj_size)
 {
     void * spc;//clyu

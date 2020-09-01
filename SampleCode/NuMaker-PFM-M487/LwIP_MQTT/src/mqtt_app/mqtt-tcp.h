@@ -248,7 +248,11 @@ extern ip_addr_t mqtt_get_interface_ip(ip_addr_t * dest_ip);
     @param  e               tcp error that has occured
     @return 1 if the error is critical, else 0
 */
+#ifdef __CC_ARM
 __inline static uint32_t mqtt_tcp_error_is_fatal(_E_MQTT_TCP_ERRORS e)
+#else
+static inline uint32_t mqtt_tcp_error_is_fatal(_E_MQTT_TCP_ERRORS e)
+#endif
 {
     if((e < MQTT_TCP_ERROR_UNDEFINED) && (e > MQTT_TCP_ERROR_VAL))
     {

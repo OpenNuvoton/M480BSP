@@ -226,7 +226,7 @@ static void __mqtt_test(void * pv)
 }
 #elif 1//SSL without CA
 //static const _S_MQTT_COMMON mc = {1883, "mqtt.flespi.io", 0, "FlespiToken QILc0P0LwrdSmJvZl2SXBaWXlzFrczlS8XSWAGyWVzE780WhQD4gDO3Mby1dVdTR", 0};
-static const _S_MQTT_COMMON mc = {8883, "mqtt.flespi.io", 1, "FlespiToken goP6bYxBYy7oMJUo2wd5jJcDzWVyYJN3WqXXdim1GjejQYxIkyCt8CUvmFUbdv2Z", 0};
+static const _S_MQTT_COMMON mc = {8883, "mqtt.flespi.io", 1, "FlespiToken 4eWuTXTFZFRWsAUGfJVjJdHNZenukiydmix55fyVIgH0GrvJ1eSyhna6pnpzvLCG", 0};
 static void __mqtt_test(void * pv)
 {
     tls_configuration_t * conf = lwip_tls_new_conf(TLS_AUTH_SSL_VERIFY_NONE, ENDNODE_CLIENT);

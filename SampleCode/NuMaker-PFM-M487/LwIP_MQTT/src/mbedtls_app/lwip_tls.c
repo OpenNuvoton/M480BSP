@@ -16,6 +16,8 @@
 #include "mbedtls/ssl_internal.h"//clyu
 #include <string.h>
 
+#define TRACE(...) {printf(__VA_ARGS__);printf("\n");}//clyu
+
 typedef struct {
 	struct netconn * conn;
 	struct netbuf * last_buf;
