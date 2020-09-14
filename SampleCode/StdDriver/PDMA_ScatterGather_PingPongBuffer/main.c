@@ -14,9 +14,9 @@
 #define PLL_CLOCK           192000000
 
 uint32_t PDMA_TEST_COUNT = 50;
-uint32_t g_au32SrcArray0[1] = {0x55555555};
-uint32_t g_au32SrcArray1[1] = {0xAAAAAAAA};
-uint32_t g_au32DestArray[1];
+__attribute__((aligned(4))) uint32_t g_au32SrcArray0[1] = {0x55555555};
+__attribute__((aligned(4))) uint32_t g_au32SrcArray1[1] = {0xAAAAAAAA};
+__attribute__((aligned(4))) uint32_t g_au32DestArray[1];
 uint32_t volatile g_u32IsTestOver = 0;
 uint32_t volatile g_u32TransferredCount = 0;
 uint32_t g_u32DMAConfig = 0;

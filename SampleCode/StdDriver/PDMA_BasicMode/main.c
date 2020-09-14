@@ -19,8 +19,8 @@
 /* Global variables                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
 uint32_t PDMA_TEST_LENGTH = 64;
-uint8_t au8SrcArray[256];
-uint8_t au8DestArray[256];
+__attribute__((aligned(4))) uint8_t au8SrcArray[256];
+__attribute__((aligned(4))) uint8_t au8DestArray[256];
 uint32_t volatile g_u32IsTestOver = 0;
 
 /**

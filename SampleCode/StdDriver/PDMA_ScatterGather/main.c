@@ -14,9 +14,9 @@
 #define PLL_CLOCK           192000000
 
 uint32_t PDMA_TEST_LENGTH = 64;
-uint8_t au8SrcArray[256];
-uint8_t au8DestArray0[256];
-uint8_t au8DestArray1[256];
+__attribute__((aligned(4))) uint8_t au8SrcArray[256];
+__attribute__((aligned(4))) uint8_t au8DestArray0[256];
+__attribute__((aligned(4))) uint8_t au8DestArray1[256];
 
 typedef struct dma_desc_t
 {
