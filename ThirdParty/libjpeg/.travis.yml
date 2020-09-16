@@ -1,0 +1,68 @@
+language: c
+sudo: false
+matrix:
+    include:
+        - os: linux
+          compiler: gcc
+          env: BUILD_TYPE=normal
+        - os: linux
+          compiler: clang
+          env: BUILD_TYPE=normal
+        - os: linux
+          compiler: gcc
+          env: BUILD_TYPE=coverage
+        - os: linux
+          compiler: clang
+          env: BUILD_TYPE=ubsan
+        - os: linux
+          compiler: clang
+          env: BUILD_TYPE=asan
+        - os: linux
+          compiler: clang
+          env: BUILD_TYPE=lsan
+        - os: linux
+          compiler: clang
+          env: BUILD_TYPE=msan
+        - os: osx
+          compiler: gcc
+          env: BUILD_TYPE=normal
+        - os: osx
+          compiler: clang
+          env: BUILD_TYPE=normal
+install:
+    - pip install --user 'requests[security]'
+    - pip install --user cpp-coveralls
+before_script:
+    - |
+        if [ "$BUILD_TYPE" = "coverage" ]; then
+             export CFLAGS="-fprofile-arcs -ftest-coverage"
+             export LDFLAGS="-fprofile-arcs -ftest-coverage"
+        fi
+    - |
+         if [ "$BUILD_TYPE" = "asan" ]; then
+             export CFLAGS=-fsanitize=address
+             export LDFLAGS=-fsanitize=address
+         fi
+    - |
+         if [ "$BUILD_TYPE" = "lsan" ]; then
+             export CFLAGS=-fsanitize=leak
+             export LDFLAGS=-fsanitize=leak
+         fi
+    - |
+         if [ "$BUILD_TYPE" = "msan" ]; then
+             export CFLAGS=-fsanitize=memory
+             export LDFLAGS=-fsanitize=memory
+         fi
+    - |
+         if [ "$BUILD_TYPE" = "ubsan" ]; then
+             # Use all the parts of UBSAN except shift checks
+             export UBSAN_FLAGS="-fsanitize=alignment -fsanitize=bool -fsanitize=bounds -fsanitize=enum -fsanitize=float-cast-overflow -fsanitize=float-divide-by-zero -fsanitize=function -fsanitize=integer-divide-by-zero -fsanitize=null -fsanitize=object-size -fsanitize=return -fsanitize=signed-integer-overflow -fsanitize=unreachable -fsanitize=unsigned-integer-overflow"
+             export CFLAGS=$UBSAN_FLAGS
+             export LDFLAGS=$UBSAN_FLAGS
+         fi
+script:
+    - ./configure && make && make check
+    - |
+          if [ "$BUILD_TYPE" = "coverage" ]; then
+              cpp-coveralls --gcov-options '\-lp'
+          fi
