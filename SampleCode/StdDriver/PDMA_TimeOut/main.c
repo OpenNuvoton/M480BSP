@@ -16,8 +16,14 @@
 /*---------------------------------------------------------------------------------------------------------*/
 /* Global variables                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
+#ifdef __ICCARM__
+#pragma data_alignment=4
 static uint8_t g_u8Tx_Buffer[PDMA_TEST_LENGTH];
 static uint8_t g_u8Rx_Buffer[PDMA_TEST_LENGTH];
+#else
+__attribute__((aligned(4))) static uint8_t g_u8Tx_Buffer[PDMA_TEST_LENGTH];
+__attribute__((aligned(4))) static uint8_t g_u8Rx_Buffer[PDMA_TEST_LENGTH];
+#endif
 
 volatile uint32_t u32IsTxTestOver = 0;
 volatile uint32_t u32IsRxTestOver = 0;
