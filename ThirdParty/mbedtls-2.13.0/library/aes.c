@@ -536,7 +536,7 @@ static int nvt_aes_setkey(const unsigned char *key,  int nr)
     int        i;
     uint32_t   *aes_key = (uint32_t *)&CRPT->AES0_KEY[0];
 
-    CRPT->AES_CTL |= ( ((nr-10)/2) << CRPT_AES_CTL_KEYSZ_Pos); 
+    CRPT->AES_CTL = (CRPT->AES_CTL & ~CRPT_AES_CTL_KEYSZ_Msk) | (((nr-10)/2) << CRPT_AES_CTL_KEYSZ_Pos); 
 
     for( i = 0; i < 8; i++ )
     {

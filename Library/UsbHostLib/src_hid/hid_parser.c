@@ -824,7 +824,8 @@ int hid_parse_mouse_reports(HID_DEV_T *hdev, uint8_t *data, int data_len)
                  ((report->app_usage == USAGE_ID_MOUSE) || (report->app_usage == USAGE_ID_POINTER) ||
                   (report->data_usage == USAGE_ID_WHEEL)))
         {
-            signed int   usage_val = 0;
+            uint32_t   usage_val = 0;
+            signed     s_val;
 
             for (i = 0; i < report->report_size; i++)
             {
@@ -835,24 +836,30 @@ int hid_parse_mouse_reports(HID_DEV_T *hdev, uint8_t *data, int data_len)
             }
 
             if (report->report_size <= 8)
-                usage_val = (signed char)usage_val;
+                s_val = (signed char)usage_val;
             else if (report->report_size <= 16)
-                usage_val = (signed short)usage_val;
+                s_val = (signed short)usage_val;
 
             if (report->data_usage == USAGE_ID_X)
             {
-                _mouse_event.X = usage_val;
+                _mouse_event.X = s_val;
+                _mouse_event.X_raw = usage_val;
+                _mouse_event.X_bits = report->report_size;
                 _mouse_event.axis_relative = report->status.relative;
                 _mouse_event.axis_min = report->logical_min;
                 _mouse_event.axis_max = report->logical_max;
             }
             else if (report->data_usage == USAGE_ID_Y)
             {
-                _mouse_event.Y = usage_val;
+                _mouse_event.Y = s_val;
+                _mouse_event.Y_raw = usage_val;
+                _mouse_event.Y_bits = report->report_size;
             }
             else if (report->data_usage == USAGE_ID_WHEEL)
             {
-                _mouse_event.wheel = usage_val;
+                _mouse_event.wheel = s_val;
+                _mouse_event.wheel_raw = usage_val;
+                _mouse_event.wheel_bits = report->report_size;
                 _mouse_event.wheel_relative = report->status.relative;
                 _mouse_event.wheel_min = report->logical_min;
                 _mouse_event.wheel_max = report->logical_max;

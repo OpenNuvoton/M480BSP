@@ -135,6 +135,9 @@ int  init_hid_device(HID_DEV_T *hdev)
 
 
     printf("  bSubClassCode: 0x%x, bProtocolCode: 0x%x\n\n", hdev->bSubClassCode, hdev->bProtocolCode);
+    //ret = usbh_hid_set_idle(hdev, 0, 0);
+    //if (ret != HID_RET_OK)
+    //  printf("HID Set_Idle command failed! %d\n", ret);
 
     printf("\nUSBH_HidStartIntReadPipe...\n");
     ret = usbh_hid_start_int_read(hdev, 0, int_read_callback);
