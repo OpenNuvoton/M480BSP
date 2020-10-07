@@ -20,7 +20,7 @@
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">M480 BSP
-   &#160;<span id="projectnumber">V3.05.000</span>
+   &#160;<span id="projectnumber">V3.05.001</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -3074,6 +3074,9 @@ $(function() {
 <li>USPI_DISABLE_TX_PDMA
 : <a class="el" href="group___u_s_c_i___s_p_i___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga16d61be99d6830358b3e1dbf91c4b129">usci_spi.h</a>
 </li>
+<li>USPI_DISABLE_TX_RX_PDMA
+: <a class="el" href="group___u_s_c_i___s_p_i___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gad68c76f2a142f88579c744caafc3f473">usci_spi.h</a>
+</li>
 <li>USPI_ENABLE_3WIRE_MODE
 : <a class="el" href="group___u_s_c_i___s_p_i___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gad24472f07cc14425a013f1957c5b01fa">usci_spi.h</a>
 </li>
@@ -3419,6 +3422,9 @@ $(function() {
 <li>USPI_TRIGGER_TX_PDMA
 : <a class="el" href="group___u_s_c_i___s_p_i___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaa5560efa7c66e9691d7e82a637ecc711">usci_spi.h</a>
 </li>
+<li>USPI_TRIGGER_TX_RX_PDMA
+: <a class="el" href="group___u_s_c_i___s_p_i___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga8e16e18ec986b6985a69216205d6e6b8">usci_spi.h</a>
+</li>
 <li>USPI_TX_EMPTY_MASK
 : <a class="el" href="group___u_s_c_i___s_p_i___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga1e48ae7afb739134d9e4d080c7bbebbf">usci_spi.h</a>
 </li>
@@ -3650,8 +3656,14 @@ $(function() {
 <li>UUART_DISABLE_PROT_INT
 : <a class="el" href="group___u_s_c_i___u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga8fda5cd7ceb4ad6e53c7bf199ee10cae">usci_uart.h</a>
 </li>
+<li>UUART_DISABLE_RX_PDMA
+: <a class="el" href="group___u_s_c_i___u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga24773a9f0856423138ccab7c8cbb4f6f">usci_uart.h</a>
+</li>
 <li>UUART_DISABLE_TRANS_INT
 : <a class="el" href="group___u_s_c_i___u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga3d44edec020a542031a4f263e07dba16">usci_uart.h</a>
+</li>
+<li>UUART_DISABLE_TX_PDMA
+: <a class="el" href="group___u_s_c_i___u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga0e93d30b896540a0d1db76841635704c">usci_uart.h</a>
 </li>
 <li>UUART_ENABLE_BUF_INT
 : <a class="el" href="group___u_s_c_i___u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga6263d91ea714b4901cdb826b6666317e">usci_uart.h</a>
@@ -3974,6 +3986,12 @@ $(function() {
 <li>UUART_STOP_BIT_2
 : <a class="el" href="group___u_s_c_i___u_a_r_t___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga43611efee71a6f1a3372f368391c5634">usci_uart.h</a>
 </li>
+<li>UUART_TRIGGER_RX_PDMA
+: <a class="el" href="group___u_s_c_i___u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gac055b58f1a8fc50567fbf635759fcb1c">usci_uart.h</a>
+</li>
+<li>UUART_TRIGGER_TX_PDMA
+: <a class="el" href="group___u_s_c_i___u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaa17a644e9e629826c2a2a07bb0fb827d">usci_uart.h</a>
+</li>
 <li>UUART_TXDAT_TXDAT_Msk
 : <a class="el" href="group___r_e_g_i_s_t_e_r.html#gadea6c36d80a141e5275df81a7b54c409">uuart_reg.h</a>
 </li>
@@ -4026,7 +4044,7 @@ $(function() {
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 5 2020 13:49:15 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Oct 7 2020 09:26:23 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>

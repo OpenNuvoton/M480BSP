@@ -20,7 +20,7 @@
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">M480 BSP
-   &#160;<span id="projectnumber">V3.05.000</span>
+   &#160;<span id="projectnumber">V3.05.001</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -150,6 +150,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf7a324dcd0d3fc4b1fc3d1c9bf0dbcd6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaf7a324dcd0d3fc4b1fc3d1c9bf0dbcd6">EPWM_DisableADCTrigger</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
 <tr class="memdesc:gaf7a324dcd0d3fc4b1fc3d1c9bf0dbcd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable selected channel to trigger ADC.  <a href="#gaf7a324dcd0d3fc4b1fc3d1c9bf0dbcd6">More...</a><br /></td></tr>
 <tr class="separator:gaf7a324dcd0d3fc4b1fc3d1c9bf0dbcd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga307aaf1e6763b54bdd2b2570aa847168"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga307aaf1e6763b54bdd2b2570aa847168">EPWM_EnableADCTriggerPrescale</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum, uint32_t u32Prescale, uint32_t u32PrescaleCnt)</td></tr>
+<tr class="memdesc:ga307aaf1e6763b54bdd2b2570aa847168"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable and configure trigger ADC prescale.  <a href="#ga307aaf1e6763b54bdd2b2570aa847168">More...</a><br /></td></tr>
+<tr class="separator:ga307aaf1e6763b54bdd2b2570aa847168"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8d406492bf90da76969808ca14cfa9f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga8d406492bf90da76969808ca14cfa9f7">EPWM_DisableADCTriggerPrescale</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga8d406492bf90da76969808ca14cfa9f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable Trigger ADC prescale function.  <a href="#ga8d406492bf90da76969808ca14cfa9f7">More...</a><br /></td></tr>
+<tr class="separator:ga8d406492bf90da76969808ca14cfa9f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6e61f7d20c486a4c1b78bb623a237a62"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga6e61f7d20c486a4c1b78bb623a237a62">EPWM_ClearADCTriggerFlag</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum, uint32_t u32Condition)</td></tr>
 <tr class="memdesc:ga6e61f7d20c486a4c1b78bb623a237a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear selected channel trigger ADC flag.  <a href="#ga6e61f7d20c486a4c1b78bb623a237a62">More...</a><br /></td></tr>
 <tr class="separator:ga6e61f7d20c486a4c1b78bb623a237a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -345,6 +351,42 @@ Functions</h2></td></tr>
 <tr class="memitem:ga8131a6b3e270cacff4d69d3c6670de6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga8131a6b3e270cacff4d69d3c6670de6f">EPWM_ClearWrapAroundFlag</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
 <tr class="memdesc:ga8131a6b3e270cacff4d69d3c6670de6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the time-base counter reached its maximum value flag of selected channel.  <a href="#ga8131a6b3e270cacff4d69d3c6670de6f">More...</a><br /></td></tr>
 <tr class="separator:ga8131a6b3e270cacff4d69d3c6670de6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b6042b6466777299f6e49313f90615c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga8b6042b6466777299f6e49313f90615c">EPWM_EnableFaultDetect</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum, uint32_t u32AfterPrescaler, uint32_t u32ClkSel)</td></tr>
+<tr class="memdesc:ga8b6042b6466777299f6e49313f90615c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable fault detect of selected channel.  <a href="#ga8b6042b6466777299f6e49313f90615c">More...</a><br /></td></tr>
+<tr class="separator:ga8b6042b6466777299f6e49313f90615c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga64c0cf8818a34c4f369ec43a8863a199"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga64c0cf8818a34c4f369ec43a8863a199">EPWM_DisableFaultDetect</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga64c0cf8818a34c4f369ec43a8863a199"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable fault detect of selected channel.  <a href="#ga64c0cf8818a34c4f369ec43a8863a199">More...</a><br /></td></tr>
+<tr class="separator:ga64c0cf8818a34c4f369ec43a8863a199"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga595db0027df775102f4b877e3f06fedd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga595db0027df775102f4b877e3f06fedd">EPWM_EnableFaultDetectOutput</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga595db0027df775102f4b877e3f06fedd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable fault detect output of selected channel.  <a href="#ga595db0027df775102f4b877e3f06fedd">More...</a><br /></td></tr>
+<tr class="separator:ga595db0027df775102f4b877e3f06fedd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga884fd0a7e3a19f3d616c68508ac88132"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga884fd0a7e3a19f3d616c68508ac88132">EPWM_DisableFaultDetectOutput</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga884fd0a7e3a19f3d616c68508ac88132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable fault detect output of selected channel.  <a href="#ga884fd0a7e3a19f3d616c68508ac88132">More...</a><br /></td></tr>
+<tr class="separator:ga884fd0a7e3a19f3d616c68508ac88132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga37e32590670079adbf77b1babc023168"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga37e32590670079adbf77b1babc023168">EPWM_EnableFaultDetectDeglitch</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum, uint32_t u32DeglitchSmpCycle)</td></tr>
+<tr class="memdesc:ga37e32590670079adbf77b1babc023168"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable fault detect deglitch function of selected channel.  <a href="#ga37e32590670079adbf77b1babc023168">More...</a><br /></td></tr>
+<tr class="separator:ga37e32590670079adbf77b1babc023168"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48034767bf0b680e66595a77bf9b2b66"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga48034767bf0b680e66595a77bf9b2b66">EPWM_DisableFaultDetectDeglitch</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga48034767bf0b680e66595a77bf9b2b66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable fault detect deglitch function of selected channel.  <a href="#ga48034767bf0b680e66595a77bf9b2b66">More...</a><br /></td></tr>
+<tr class="separator:ga48034767bf0b680e66595a77bf9b2b66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga986e7643d05012c3d4cf4194da1ac637"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga986e7643d05012c3d4cf4194da1ac637">EPWM_EnableFaultDetectMask</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum, uint32_t u32MaskCnt)</td></tr>
+<tr class="memdesc:ga986e7643d05012c3d4cf4194da1ac637"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable fault detect mask function of selected channel.  <a href="#ga986e7643d05012c3d4cf4194da1ac637">More...</a><br /></td></tr>
+<tr class="separator:ga986e7643d05012c3d4cf4194da1ac637"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0c8a593e788b13917f772d473043dc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaf0c8a593e788b13917f772d473043dc0">EPWM_DisableFaultDetectMask</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:gaf0c8a593e788b13917f772d473043dc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable fault detect mask function of selected channel.  <a href="#gaf0c8a593e788b13917f772d473043dc0">More...</a><br /></td></tr>
+<tr class="separator:gaf0c8a593e788b13917f772d473043dc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga66807a6281341b4e1ce31360e4724c0f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga66807a6281341b4e1ce31360e4724c0f">EPWM_EnableFaultDetectInt</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga66807a6281341b4e1ce31360e4724c0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable fault detect interrupt of selected channel.  <a href="#ga66807a6281341b4e1ce31360e4724c0f">More...</a><br /></td></tr>
+<tr class="separator:ga66807a6281341b4e1ce31360e4724c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga729ec126123e485315f16e60fb2f07e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga729ec126123e485315f16e60fb2f07e1">EPWM_DisableFaultDetectInt</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga729ec126123e485315f16e60fb2f07e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable fault detect interrupt of selected channel.  <a href="#ga729ec126123e485315f16e60fb2f07e1">More...</a><br /></td></tr>
+<tr class="separator:ga729ec126123e485315f16e60fb2f07e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga43570af326f0d8e85ba31fcc5778d75a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga43570af326f0d8e85ba31fcc5778d75a">EPWM_ClearFaultDetectInt</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga43570af326f0d8e85ba31fcc5778d75a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear fault detect interrupt of selected channel.  <a href="#ga43570af326f0d8e85ba31fcc5778d75a">More...</a><br /></td></tr>
+<tr class="separator:ga43570af326f0d8e85ba31fcc5778d75a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02018ba49bc60f746bd6b64b2f541254"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga02018ba49bc60f746bd6b64b2f541254">EPWM_GetFaultDetectInt</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga02018ba49bc60f746bd6b64b2f541254"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get fault detect interrupt of selected channel.  <a href="#ga02018ba49bc60f746bd6b64b2f541254">More...</a><br /></td></tr>
+<tr class="separator:ga02018ba49bc60f746bd6b64b2f541254"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -385,7 +427,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to clear counter of specified channel(s). </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00462">462</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00471">471</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -415,7 +457,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to disable complementary mode of EPWM module. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00216">216</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00225">225</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -445,7 +487,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to disable group mode of EPWM module. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00234">234</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00243">243</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -486,7 +528,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to disable timer synchronous start counting function of specified channel(s). </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00261">261</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00270">270</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -516,7 +558,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to enable complementary mode of EPWM module. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00207">207</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00216">216</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -546,7 +588,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to enable group mode of EPWM module. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00225">225</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00234">234</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -587,7 +629,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to enable output inverter of specified channel(s). </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00289">289</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00298">298</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -641,7 +683,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to enable timer synchronous start counting function of specified channel(s). </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00250">250</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00259">259</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -682,7 +724,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to get captured falling data of specified channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00309">309</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00318">318</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -723,7 +765,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to get captured rising data of specified channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00299">299</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00308">308</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -764,7 +806,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Return the comparator of specified channel. Valid values are between 0~0xFFFF</dd></dl>
 <p>This macro is used to get the comparator of specified channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00373">373</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00382">382</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -805,7 +847,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Return the period of specified channel. Valid values are between 0~0xFFFF</dd></dl>
 <p>This macro is used to get the period of specified channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00408">408</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00417">417</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -846,7 +888,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Return Clock prescaler of specified channel. Valid values are between 0 ~ 0xFFF</dd></dl>
 <p>This macro is used to get the prescaler of specified channel. </p><dl class="section note"><dt>Note</dt><dd>Every even channel N, and channel (N + 1) share a prescaler. So if channel 0 prescaler changed, channel 1 will also be affected. The clock of EPWM counter is divided by (u32Prescaler + 1). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00351">351</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00360">360</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -894,7 +936,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to mask output logic to high or low of specified channel(s). </p><dl class="section note"><dt>Note</dt><dd>If u32ChannelMask parameter is 0, then mask function will be disabled. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00322">322</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00331">331</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -946,7 +988,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to set the EPWM aligned type of specified channel(s). </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00422">422</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00431">431</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -994,7 +1036,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to set the comparator of specified channel. </p><dl class="section note"><dt>Note</dt><dd>This new setting will take effect on next EPWM period. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00363">363</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00372">372</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -1044,7 +1086,7 @@ Functions</h2></td></tr>
 <dd>
 EPWM counter will stop if period length set to 0. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00398">398</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00407">407</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -1092,7 +1134,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to set Dead zone clock source. Every two channels share the same setting. </p><dl class="section note"><dt>Note</dt><dd>The write-protection function should be disabled before using this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00530">530</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00539">539</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -1140,7 +1182,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to set the free trigger comparator of specified channel. </p><dl class="section note"><dt>Note</dt><dd>This new setting will take effect on next EPWM period. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00385">385</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00394">394</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -1181,7 +1223,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to set load window of window loading mode for specified channel(s). </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00440">440</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00449">449</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -1274,7 +1316,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to Set output level at zero, compare up, period(center) and compare down of specified channel(s). </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00493">493</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00502">502</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -1322,7 +1364,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to set the prescaler of specified channel. </p><dl class="section note"><dt>Note</dt><dd>Every even channel N, and channel (N + 1) share a prescaler. So if channel 0 prescaler changed, channel 1 will also be affected. The clock of EPWM counter is divided by (u32Prescaler + 1). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00339">339</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00348">348</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -1374,7 +1416,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to trigger brake event from specified channel(s). </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00518">518</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00527">527</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -1415,7 +1457,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to trigger synchronous event from specified channel(s). </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00451">451</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00460">460</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -1445,7 +1487,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to make selected EPWM0 and EPWM1 channel(s) start counting at the same time. To configure synchronous start counting channel(s) by <a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga6ce213d7e98664076332e82ad7b871fa" title="Enable timer synchronous start counting function of specified channel(s)">EPWM_ENABLE_TIMER_SYNC()</a> and <a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaf909a8c7753c99c357c1707273d963e8" title="Disable timer synchronous start counting function of specified channel(s)">EPWM_DISABLE_TIMER_SYNC()</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00278">278</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8h_source.html#l00287">287</a> of file <a class="el" href="epwm_8h_source.html">epwm.h</a>.</p>
 
 </div>
 </div>
@@ -1491,7 +1533,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to clear interrupt flag accumulator interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01010">1010</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01064">1064</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -1543,7 +1585,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to clear selected channel trigger ADC flag. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00324">324</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00378">378</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -1599,7 +1641,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to clear capture interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00675">675</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00729">729</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -1651,7 +1693,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to clear selected channel trigger DAC flag. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00388">388</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00442">442</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -1696,7 +1738,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to clear duty interrupt flag of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00737">737</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00791">791</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -1741,7 +1783,52 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to clear fault brake interrupt of selected source. The write-protection function should be disabled before using this function. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00800">800</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00854">854</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+
+</div>
+</div>
+<a id="ga43570af326f0d8e85ba31fcc5778d75a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga43570af326f0d8e85ba31fcc5778d75a">&#9670;&nbsp;</a></span>EPWM_ClearFaultDetectInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EPWM_ClearFaultDetectInt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *&#160;</td>
+          <td class="paramname"><em>epwm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32ChannelNum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clear fault detect interrupt of selected channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">epwm</td><td>The pointer of the specified EPWM module.<ul>
+<li>EPWM0 : EPWM Group 0</li>
+<li>EPWM1 : EPWM Group 1 </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32ChannelNum</td><td>EPWM channel number. Valid values are between 0~5. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>This function is used to clear fault detect interrupt of selected channel. </p>
+
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01673">1673</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -1786,7 +1873,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to clear free trigger duty interrupt flag of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01095">1095</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01149">1149</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -1831,7 +1918,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to clear period interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00859">859</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00913">913</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -1876,7 +1963,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to clear the time-base counter reached its maximum value flag of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01454">1454</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01508">1508</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -1921,7 +2008,7 @@ EPWM counter will stop if period length set to 0. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to clear zero interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00917">917</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00971">971</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2117,7 +2204,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to configure synchronization phase of selected channel. </p><dl class="section note"><dt>Note</dt><dd>Every two channels share the same setting. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01171">1171</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01225">1225</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2162,7 +2249,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to Disable interrupt flag accumulator of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00968">968</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01022">1022</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2207,7 +2294,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable interrupt flag accumulator interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00996">996</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01050">1050</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2252,7 +2339,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable accumulator interrupt trigger PDMA of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01053">1053</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01107">1107</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2297,7 +2384,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable interrupt flag accumulator stop mode of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01081">1081</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01135">1135</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2346,6 +2433,51 @@ This function is used for initial stage. To change duty cycle later, it should g
 
 </div>
 </div>
+<a id="ga8d406492bf90da76969808ca14cfa9f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8d406492bf90da76969808ca14cfa9f7">&#9670;&nbsp;</a></span>EPWM_DisableADCTriggerPrescale()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EPWM_DisableADCTriggerPrescale </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *&#160;</td>
+          <td class="paramname"><em>epwm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32ChannelNum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable Trigger ADC prescale function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">epwm</td><td>The pointer of the specified EPWM module<ul>
+<li>EPWM0 : EPWM Group 0</li>
+<li>EPWM1 : EPWM Group 1 </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32ChannelNum</td><td>EPWM channel number. Valid values are between 0~5 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>This function is used to disable trigger ADC prescale. </p>
+
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00363">363</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+
+</div>
+</div>
 <a id="gaec4f3a20e1bab8c50489a72591c89bab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaec4f3a20e1bab8c50489a72591c89bab">&#9670;&nbsp;</a></span>EPWM_DisableBrakeNoiseFilter()</h2>
 
@@ -2387,7 +2519,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable EPWM brake noise filter function. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01348">1348</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01402">1402</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2432,7 +2564,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable EPWM brake pin inverse function. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01376">1376</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01430">1430</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2477,7 +2609,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable capture of selected channel(s). </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00520">520</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00574">574</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2533,7 +2665,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable capture interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00658">658</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00712">712</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2578,7 +2710,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable selected channel to trigger DAC. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00372">372</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00426">426</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2623,7 +2755,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable Dead zone of selected channel. The write-protection function should be disabled before using this function. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00623">623</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00677">677</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2668,7 +2800,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable duty interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00723">723</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00777">777</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2713,7 +2845,232 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable fault brake interrupt. The write-protection function should be disabled before using this function. </p><dl class="section note"><dt>Note</dt><dd>Every two channels share the same setting. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00785">785</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00839">839</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+
+</div>
+</div>
+<a id="ga64c0cf8818a34c4f369ec43a8863a199"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga64c0cf8818a34c4f369ec43a8863a199">&#9670;&nbsp;</a></span>EPWM_DisableFaultDetect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EPWM_DisableFaultDetect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *&#160;</td>
+          <td class="paramname"><em>epwm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32ChannelNum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable fault detect of selected channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">epwm</td><td>The pointer of the specified EPWM module.<ul>
+<li>EPWM0 : EPWM Group 0</li>
+<li>EPWM1 : EPWM Group 1 </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32ChannelNum</td><td>EPWM channel number. Valid values are between 0~5. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>This function is used to disable fault detect of selected channel. </p>
+
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01544">1544</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+
+</div>
+</div>
+<a id="ga48034767bf0b680e66595a77bf9b2b66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga48034767bf0b680e66595a77bf9b2b66">&#9670;&nbsp;</a></span>EPWM_DisableFaultDetectDeglitch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EPWM_DisableFaultDetectDeglitch </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *&#160;</td>
+          <td class="paramname"><em>epwm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32ChannelNum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable fault detect deglitch function of selected channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">epwm</td><td>The pointer of the specified EPWM module.<ul>
+<li>EPWM0 : EPWM Group 0</li>
+<li>EPWM1 : EPWM Group 1 </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32ChannelNum</td><td>EPWM channel number. Valid values are between 0~5. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>This function is used to disable fault detect deglitch function of selected channel. </p>
+
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01602">1602</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+
+</div>
+</div>
+<a id="ga729ec126123e485315f16e60fb2f07e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga729ec126123e485315f16e60fb2f07e1">&#9670;&nbsp;</a></span>EPWM_DisableFaultDetectInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EPWM_DisableFaultDetectInt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *&#160;</td>
+          <td class="paramname"><em>epwm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32ChannelNum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable fault detect interrupt of selected channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">epwm</td><td>The pointer of the specified EPWM module.<ul>
+<li>EPWM0 : EPWM Group 0</li>
+<li>EPWM1 : EPWM Group 1 </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32ChannelNum</td><td>EPWM channel number. Valid values are between 0~5. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>This function is used to disable fault detect interrupt of selected channel. </p>
+
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01659">1659</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+
+</div>
+</div>
+<a id="gaf0c8a593e788b13917f772d473043dc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf0c8a593e788b13917f772d473043dc0">&#9670;&nbsp;</a></span>EPWM_DisableFaultDetectMask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EPWM_DisableFaultDetectMask </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *&#160;</td>
+          <td class="paramname"><em>epwm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32ChannelNum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable fault detect mask function of selected channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">epwm</td><td>The pointer of the specified EPWM module.<ul>
+<li>EPWM0 : EPWM Group 0</li>
+<li>EPWM1 : EPWM Group 1 </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32ChannelNum</td><td>EPWM channel number. Valid values are between 0~5. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>This function is used to disable fault detect mask function of selected channel. </p>
+
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01631">1631</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+
+</div>
+</div>
+<a id="ga884fd0a7e3a19f3d616c68508ac88132"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga884fd0a7e3a19f3d616c68508ac88132">&#9670;&nbsp;</a></span>EPWM_DisableFaultDetectOutput()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EPWM_DisableFaultDetectOutput </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *&#160;</td>
+          <td class="paramname"><em>epwm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32ChannelNum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable fault detect output of selected channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">epwm</td><td>The pointer of the specified EPWM module.<ul>
+<li>EPWM0 : EPWM Group 0</li>
+<li>EPWM1 : EPWM Group 1 </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32ChannelNum</td><td>EPWM channel number. Valid values are between 0~5. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>This function is used to disable fault detect output of selected channel. </p>
+
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01572">1572</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2770,7 +3127,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable load mode of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01147">1147</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01201">1201</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2815,7 +3172,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable EPWM output generation of selected channel(s). </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00551">551</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00605">605</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2860,7 +3217,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable PDMA transfer of selected channel(s) for EPWM capture. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00589">589</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00643">643</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2905,7 +3262,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable period interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00845">845</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00899">899</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2939,7 +3296,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to Disable EPWM SYNC_IN noise filter function. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01260">1260</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01314">1314</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -2984,7 +3341,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable SYNC phase of selected channel(s). </p><dl class="section note"><dt>Note</dt><dd>Every two channels share the same setting. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01215">1215</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01269">1269</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3018,7 +3375,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to Disable EPWM SYNC input pin inverse function. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01286">1286</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01340">1340</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3063,7 +3420,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to disable zero interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00903">903</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00957">957</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3128,7 +3485,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable interrupt flag accumulator of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00953">953</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01007">1007</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3173,7 +3530,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable interrupt flag accumulator interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00982">982</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01036">1036</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3218,7 +3575,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable accumulator interrupt trigger PDMA of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01039">1039</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01093">1093</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3263,7 +3620,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable interrupt flag accumulator stop mode of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01067">1067</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01121">1121</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3337,6 +3694,73 @@ This function is used for initial stage. To change duty cycle later, it should g
 
 </div>
 </div>
+<a id="ga307aaf1e6763b54bdd2b2570aa847168"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga307aaf1e6763b54bdd2b2570aa847168">&#9670;&nbsp;</a></span>EPWM_EnableADCTriggerPrescale()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t EPWM_EnableADCTriggerPrescale </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *&#160;</td>
+          <td class="paramname"><em>epwm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32ChannelNum</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32Prescale</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32PrescaleCnt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable and configure trigger ADC prescale. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">epwm</td><td>The pointer of the specified EPWM module<ul>
+<li>EPWM0 : EPWM Group 0</li>
+<li>EPWM1 : EPWM Group 1 </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32ChannelNum</td><td>EPWM channel number. Valid values are between 0~5. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32Prescale</td><td>ADC prescale. Valid values are between 0 to 0xF. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32PrescaleCnt</td><td>ADC prescale counter. Valid values are between 0 to 0xF. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>Success. </td></tr>
+    <tr><td class="paramname">-1</td><td>Failed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function is used to enable and configure trigger ADC prescale. </p><dl class="section note"><dt>Note</dt><dd>User can configure only when ADC trigger prescale is disabled. </dd>
+<dd>
+ADC prescale counter must less than ADC prescale. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00328">328</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+
+</div>
+</div>
 <a id="ga8985c2b1c99705f251a511555c8d1892"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga8985c2b1c99705f251a511555c8d1892">&#9670;&nbsp;</a></span>EPWM_EnableBrakeNoiseFilter()</h2>
 
@@ -3402,7 +3826,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable EPWM brake noise filter function. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01333">1333</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01387">1387</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3447,7 +3871,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable EPWM brake pin inverse function. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01362">1362</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01416">1416</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3492,7 +3916,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable capture of selected channel(s). </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00504">504</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00558">558</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3548,7 +3972,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable capture interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00641">641</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00695">695</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3606,7 +4030,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable selected channel to trigger DAC. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00358">358</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00412">412</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3658,7 +4082,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable Dead zone of selected channel. The write-protection function should be disabled before using this function. </p><dl class="section note"><dt>Note</dt><dd>Every two channels share the same setting. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00606">606</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00660">660</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3714,7 +4138,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable duty interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00709">709</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00763">763</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3793,7 +4217,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable fault brake of selected channel(s). The write-protection function should be disabled before using this function. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00439">439</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00493">493</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3838,7 +4262,266 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable fault brake interrupt. The write-protection function should be disabled before using this function. </p><dl class="section note"><dt>Note</dt><dd>Every two channels share the same setting. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00769">769</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00823">823</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+
+</div>
+</div>
+<a id="ga8b6042b6466777299f6e49313f90615c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8b6042b6466777299f6e49313f90615c">&#9670;&nbsp;</a></span>EPWM_EnableFaultDetect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EPWM_EnableFaultDetect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *&#160;</td>
+          <td class="paramname"><em>epwm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32ChannelNum</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32AfterPrescaler</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32ClkSel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable fault detect of selected channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">epwm</td><td>The pointer of the specified EPWM module.<ul>
+<li>EPWM0 : EPWM Group 0</li>
+<li>EPWM1 : EPWM Group 1 </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32ChannelNum</td><td>EPWM channel number. Valid values are between 0~5. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32AfterPrescaler</td><td>Fault Detect Clock Source is from prescaler output. Valid values are TRUE (after prescaler) or FALSE (before prescaler). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32ClkSel</td><td>Fault Detect Clock Select.<ul>
+<li><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#gad955363aafd0f6d6c571975e6d92cbc2">EPWM_FDCTL_FDCKSEL_CLK_DIV_1</a></li>
+<li><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#gabb9add22f22c8804a23781c25aab85c8">EPWM_FDCTL_FDCKSEL_CLK_DIV_2</a></li>
+<li><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga910a3aa02836b36b74aefb39126f986b">EPWM_FDCTL_FDCKSEL_CLK_DIV_4</a></li>
+<li><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#gabaa7c5a74cdc1d00c743491939007196">EPWM_FDCTL_FDCKSEL_CLK_DIV_8</a> </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>This function is used to enable fault detect of selected channel. </p>
+
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01528">1528</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+
+</div>
+</div>
+<a id="ga37e32590670079adbf77b1babc023168"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga37e32590670079adbf77b1babc023168">&#9670;&nbsp;</a></span>EPWM_EnableFaultDetectDeglitch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EPWM_EnableFaultDetectDeglitch </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *&#160;</td>
+          <td class="paramname"><em>epwm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32ChannelNum</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32DeglitchSmpCycle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable fault detect deglitch function of selected channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">epwm</td><td>The pointer of the specified EPWM module.<ul>
+<li>EPWM0 : EPWM Group 0</li>
+<li>EPWM1 : EPWM Group 1 </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32ChannelNum</td><td>EPWM channel number. Valid values are between 0~5. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32DeglitchSmpCycle</td><td>Deglitch Sampling Cycle. Valid values are between 0~7. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>This function is used to enable fault detect deglitch function of selected channel. </p>
+
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01587">1587</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+
+</div>
+</div>
+<a id="ga66807a6281341b4e1ce31360e4724c0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga66807a6281341b4e1ce31360e4724c0f">&#9670;&nbsp;</a></span>EPWM_EnableFaultDetectInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EPWM_EnableFaultDetectInt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *&#160;</td>
+          <td class="paramname"><em>epwm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32ChannelNum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable fault detect interrupt of selected channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">epwm</td><td>The pointer of the specified EPWM module.<ul>
+<li>EPWM0 : EPWM Group 0</li>
+<li>EPWM1 : EPWM Group 1 </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32ChannelNum</td><td>EPWM channel number. Valid values are between 0~5. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>This function is used to enable fault detect interrupt of selected channel. </p>
+
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01645">1645</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+
+</div>
+</div>
+<a id="ga986e7643d05012c3d4cf4194da1ac637"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga986e7643d05012c3d4cf4194da1ac637">&#9670;&nbsp;</a></span>EPWM_EnableFaultDetectMask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EPWM_EnableFaultDetectMask </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *&#160;</td>
+          <td class="paramname"><em>epwm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32ChannelNum</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32MaskCnt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable fault detect mask function of selected channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">epwm</td><td>The pointer of the specified EPWM module.<ul>
+<li>EPWM0 : EPWM Group 0</li>
+<li>EPWM1 : EPWM Group 1 </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32ChannelNum</td><td>EPWM channel number. Valid values are between 0~5. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32MaskCnt</td><td>Transition mask counter. Valid values are between 0~0x7F. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>This function is used to enable fault detect mask function of selected channel. </p>
+
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01617">1617</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+
+</div>
+</div>
+<a id="ga595db0027df775102f4b877e3f06fedd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga595db0027df775102f4b877e3f06fedd">&#9670;&nbsp;</a></span>EPWM_EnableFaultDetectOutput()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EPWM_EnableFaultDetectOutput </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *&#160;</td>
+          <td class="paramname"><em>epwm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32ChannelNum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable fault detect output of selected channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">epwm</td><td>The pointer of the specified EPWM module.<ul>
+<li>EPWM0 : EPWM Group 0</li>
+<li>EPWM1 : EPWM Group 1 </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32ChannelNum</td><td>EPWM channel number. Valid values are between 0~5. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
+<p>This function is used to enable fault detect output of selected channel. </p>
+
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01558">1558</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3895,7 +4578,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable load mode of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01129">1129</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01183">1183</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -3940,7 +4623,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable EPWM output generation of selected channel(s). </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00536">536</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00590">590</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4004,7 +4687,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable PDMA transfer of selected channel(s) for EPWM capture. </p><dl class="section note"><dt>Note</dt><dd>This function can only selects even or odd channel of pairs to do PDMA transfer. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00571">571</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00625">625</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4056,7 +4739,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable period interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00831">831</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00885">885</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4118,7 +4801,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable EPWM SYNC_IN noise filter function. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01246">1246</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01300">1300</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4163,7 +4846,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable SYNC phase of selected channel(s). </p><dl class="section note"><dt>Note</dt><dd>Every two channels share the same setting. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01192">1192</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01246">1246</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4197,7 +4880,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable EPWM SYNC input pin inverse function. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01273">1273</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01327">1327</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4242,7 +4925,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to enable zero interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00889">889</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00943">943</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4338,7 +5021,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 </dl>
 <p>This function is used to Get interrupt flag accumulator interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01025">1025</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01079">1079</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4389,7 +5072,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 </dl>
 <p>This function is used to get EPWM trigger ADC to start of conversion flag for specified channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00339">339</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00393">393</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4442,7 +5125,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 </dl>
 <p>This function is used to get capture interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00692">692</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00746">746</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4493,7 +5176,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 </dl>
 <p>This function is used to get selected channel trigger DAC flag. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00403">403</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00457">457</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4545,7 +5228,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 </dl>
 <p>This function is used to get duty interrupt flag of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00753">753</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00807">807</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4597,7 +5280,58 @@ This function is used for initial stage. To change duty cycle later, it should g
 </dl>
 <p>This function is used to get fault brake interrupt flag of selected source. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00816">816</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00870">870</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+
+</div>
+</div>
+<a id="ga02018ba49bc60f746bd6b64b2f541254"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga02018ba49bc60f746bd6b64b2f541254">&#9670;&nbsp;</a></span>EPWM_GetFaultDetectInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t EPWM_GetFaultDetectInt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *&#160;</td>
+          <td class="paramname"><em>epwm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>u32ChannelNum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get fault detect interrupt of selected channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">epwm</td><td>The pointer of the specified EPWM module.<ul>
+<li>EPWM0 : EPWM Group 0</li>
+<li>EPWM1 : EPWM Group 1 </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32ChannelNum</td><td>EPWM channel number. Valid values are between 0~5. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">0</td><td>Fault detect interrupt did not occur. </td></tr>
+    <tr><td class="paramname">1</td><td>Fault detect interrupt occurred.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function is used to Get fault detect interrupt of selected channel. </p>
+
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01688">1688</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4649,7 +5383,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 </dl>
 <p>This function is used to get free trigger duty interrupt flag of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01111">1111</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01165">1165</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4701,7 +5435,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 </dl>
 <p>This function is used to get period interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00875">875</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00929">929</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4753,7 +5487,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 </dl>
 <p>This function is used to get the time-base counter reached its maximum value flag of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01440">1440</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01494">1494</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4805,7 +5539,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 </dl>
 <p>This function is used to get zero interrupt of selected channel. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00933">933</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l00987">987</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4857,7 +5591,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to set EPWM brake pin source. </p>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01391">1391</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01445">1445</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -4918,7 +5652,7 @@ This function is used for initial stage. To change duty cycle later, it should g
 <dd>
 If the clock source of EPWM counter is selected from TIMERn interrupt events, the TRGEPWM(TIMERn_TRGCTL[1], n=0,1..3) bit must be set as 1. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01308">1308</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01362">1362</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -5002,7 +5736,7 @@ If the clock source of EPWM counter is selected from TIMERn interrupt events, th
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is used to configure EPWM leading edge blanking function that blank the false trigger from ACMP brake source which may cause by EPWM output transition. </p><dl class="section note"><dt>Note</dt><dd>EPWM leading edge blanking function is only used for brake source from ACMP. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01422">1422</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="epwm_8c_source.html#l01476">1476</a> of file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 
 </div>
 </div>
@@ -5099,7 +5833,7 @@ If the clock source of EPWM counter is selected from TIMERn interrupt events, th
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 5 2020 13:49:09 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Oct 7 2020 09:26:18 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>

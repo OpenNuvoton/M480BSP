@@ -20,7 +20,7 @@
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">M480 BSP
-   &#160;<span id="projectnumber">V3.05.000</span>
+   &#160;<span id="projectnumber">V3.05.001</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -81,6 +81,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf7a324dcd0d3fc4b1fc3d1c9bf0dbcd6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaf7a324dcd0d3fc4b1fc3d1c9bf0dbcd6">EPWM_DisableADCTrigger</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
 <tr class="memdesc:gaf7a324dcd0d3fc4b1fc3d1c9bf0dbcd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable selected channel to trigger ADC.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaf7a324dcd0d3fc4b1fc3d1c9bf0dbcd6">More...</a><br /></td></tr>
 <tr class="separator:gaf7a324dcd0d3fc4b1fc3d1c9bf0dbcd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga307aaf1e6763b54bdd2b2570aa847168"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga307aaf1e6763b54bdd2b2570aa847168">EPWM_EnableADCTriggerPrescale</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum, uint32_t u32Prescale, uint32_t u32PrescaleCnt)</td></tr>
+<tr class="memdesc:ga307aaf1e6763b54bdd2b2570aa847168"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable and configure trigger ADC prescale.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga307aaf1e6763b54bdd2b2570aa847168">More...</a><br /></td></tr>
+<tr class="separator:ga307aaf1e6763b54bdd2b2570aa847168"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8d406492bf90da76969808ca14cfa9f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga8d406492bf90da76969808ca14cfa9f7">EPWM_DisableADCTriggerPrescale</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga8d406492bf90da76969808ca14cfa9f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable Trigger ADC prescale function.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga8d406492bf90da76969808ca14cfa9f7">More...</a><br /></td></tr>
+<tr class="separator:ga8d406492bf90da76969808ca14cfa9f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6e61f7d20c486a4c1b78bb623a237a62"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga6e61f7d20c486a4c1b78bb623a237a62">EPWM_ClearADCTriggerFlag</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum, uint32_t u32Condition)</td></tr>
 <tr class="memdesc:ga6e61f7d20c486a4c1b78bb623a237a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear selected channel trigger ADC flag.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga6e61f7d20c486a4c1b78bb623a237a62">More...</a><br /></td></tr>
 <tr class="separator:ga6e61f7d20c486a4c1b78bb623a237a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -276,19 +282,54 @@ Functions</h2></td></tr>
 <tr class="memitem:ga8131a6b3e270cacff4d69d3c6670de6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga8131a6b3e270cacff4d69d3c6670de6f">EPWM_ClearWrapAroundFlag</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
 <tr class="memdesc:ga8131a6b3e270cacff4d69d3c6670de6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the time-base counter reached its maximum value flag of selected channel.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga8131a6b3e270cacff4d69d3c6670de6f">More...</a><br /></td></tr>
 <tr class="separator:ga8131a6b3e270cacff4d69d3c6670de6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b6042b6466777299f6e49313f90615c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga8b6042b6466777299f6e49313f90615c">EPWM_EnableFaultDetect</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum, uint32_t u32AfterPrescaler, uint32_t u32ClkSel)</td></tr>
+<tr class="memdesc:ga8b6042b6466777299f6e49313f90615c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable fault detect of selected channel.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga8b6042b6466777299f6e49313f90615c">More...</a><br /></td></tr>
+<tr class="separator:ga8b6042b6466777299f6e49313f90615c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga64c0cf8818a34c4f369ec43a8863a199"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga64c0cf8818a34c4f369ec43a8863a199">EPWM_DisableFaultDetect</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga64c0cf8818a34c4f369ec43a8863a199"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable fault detect of selected channel.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga64c0cf8818a34c4f369ec43a8863a199">More...</a><br /></td></tr>
+<tr class="separator:ga64c0cf8818a34c4f369ec43a8863a199"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga595db0027df775102f4b877e3f06fedd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga595db0027df775102f4b877e3f06fedd">EPWM_EnableFaultDetectOutput</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga595db0027df775102f4b877e3f06fedd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable fault detect output of selected channel.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga595db0027df775102f4b877e3f06fedd">More...</a><br /></td></tr>
+<tr class="separator:ga595db0027df775102f4b877e3f06fedd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga884fd0a7e3a19f3d616c68508ac88132"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga884fd0a7e3a19f3d616c68508ac88132">EPWM_DisableFaultDetectOutput</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga884fd0a7e3a19f3d616c68508ac88132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable fault detect output of selected channel.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga884fd0a7e3a19f3d616c68508ac88132">More...</a><br /></td></tr>
+<tr class="separator:ga884fd0a7e3a19f3d616c68508ac88132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga37e32590670079adbf77b1babc023168"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga37e32590670079adbf77b1babc023168">EPWM_EnableFaultDetectDeglitch</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum, uint32_t u32DeglitchSmpCycle)</td></tr>
+<tr class="memdesc:ga37e32590670079adbf77b1babc023168"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable fault detect deglitch function of selected channel.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga37e32590670079adbf77b1babc023168">More...</a><br /></td></tr>
+<tr class="separator:ga37e32590670079adbf77b1babc023168"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48034767bf0b680e66595a77bf9b2b66"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga48034767bf0b680e66595a77bf9b2b66">EPWM_DisableFaultDetectDeglitch</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga48034767bf0b680e66595a77bf9b2b66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable fault detect deglitch function of selected channel.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga48034767bf0b680e66595a77bf9b2b66">More...</a><br /></td></tr>
+<tr class="separator:ga48034767bf0b680e66595a77bf9b2b66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga986e7643d05012c3d4cf4194da1ac637"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga986e7643d05012c3d4cf4194da1ac637">EPWM_EnableFaultDetectMask</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum, uint32_t u32MaskCnt)</td></tr>
+<tr class="memdesc:ga986e7643d05012c3d4cf4194da1ac637"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable fault detect mask function of selected channel.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga986e7643d05012c3d4cf4194da1ac637">More...</a><br /></td></tr>
+<tr class="separator:ga986e7643d05012c3d4cf4194da1ac637"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0c8a593e788b13917f772d473043dc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaf0c8a593e788b13917f772d473043dc0">EPWM_DisableFaultDetectMask</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:gaf0c8a593e788b13917f772d473043dc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable fault detect mask function of selected channel.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaf0c8a593e788b13917f772d473043dc0">More...</a><br /></td></tr>
+<tr class="separator:gaf0c8a593e788b13917f772d473043dc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga66807a6281341b4e1ce31360e4724c0f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga66807a6281341b4e1ce31360e4724c0f">EPWM_EnableFaultDetectInt</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga66807a6281341b4e1ce31360e4724c0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable fault detect interrupt of selected channel.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga66807a6281341b4e1ce31360e4724c0f">More...</a><br /></td></tr>
+<tr class="separator:ga66807a6281341b4e1ce31360e4724c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga729ec126123e485315f16e60fb2f07e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga729ec126123e485315f16e60fb2f07e1">EPWM_DisableFaultDetectInt</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga729ec126123e485315f16e60fb2f07e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable fault detect interrupt of selected channel.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga729ec126123e485315f16e60fb2f07e1">More...</a><br /></td></tr>
+<tr class="separator:ga729ec126123e485315f16e60fb2f07e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga43570af326f0d8e85ba31fcc5778d75a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga43570af326f0d8e85ba31fcc5778d75a">EPWM_ClearFaultDetectInt</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga43570af326f0d8e85ba31fcc5778d75a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear fault detect interrupt of selected channel.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga43570af326f0d8e85ba31fcc5778d75a">More...</a><br /></td></tr>
+<tr class="separator:ga43570af326f0d8e85ba31fcc5778d75a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02018ba49bc60f746bd6b64b2f541254"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga02018ba49bc60f746bd6b64b2f541254">EPWM_GetFaultDetectInt</a> (<a class="el" href="struct_e_p_w_m___t.html">EPWM_T</a> *epwm, uint32_t u32ChannelNum)</td></tr>
+<tr class="memdesc:ga02018ba49bc60f746bd6b64b2f541254"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get fault detect interrupt of selected channel.  <a href="group___e_p_w_m___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga02018ba49bc60f746bd6b64b2f541254">More...</a><br /></td></tr>
+<tr class="separator:ga02018ba49bc60f746bd6b64b2f541254"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>M480 series EPWM driver source file. </p>
 <dl class="section version"><dt>Version</dt><dd>V3.00 </dd></dl>
 <dl class="section rcs"><dt>Revision</dt><dd>3 </dd></dl>
-<dl class="section rcs"><dt>Date</dt><dd>16/06/23 11:14a </dd></dl>
-<dl class="section copyright"><dt>Copyright</dt><dd>(C) 2016 Nuvoton Technology Corp. All rights reserved. </dd></dl>
+<p>SPDX-License-Identifier: Apache-2.0 </p><dl class="section copyright"><dt>Copyright</dt><dd>(C) 2016-2020 Nuvoton Technology Corp. All rights reserved. </dd></dl>
 
 <p class="definition">Definition in file <a class="el" href="epwm_8c_source.html">epwm.c</a>.</p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 5 2020 13:49:06 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Oct 7 2020 09:26:16 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>

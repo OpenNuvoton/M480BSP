@@ -20,7 +20,7 @@
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">M480 BSP
-   &#160;<span id="projectnumber">V3.05.000</span>
+   &#160;<span id="projectnumber">V3.05.001</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -1025,11 +1025,11 @@ $(function() {
 <li>SCUART_PARITY_ODD
 : <a class="el" href="group___s_c_u_a_r_t___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga78fd700049b5b8202a03a8bd57ed102f">scuart.h</a>
 </li>
-<li>SCUART_Read()
-: <a class="el" href="group___s_c_u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga6d3a46e5ea2e36647e551ebb9183455c">scuart.h</a>
-</li>
 <li>SCUART_READ
 : <a class="el" href="group___s_c_u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga88bae72589f1b3169b6f44141624547a">scuart.h</a>
+</li>
+<li>SCUART_Read()
+: <a class="el" href="group___s_c_u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga6d3a46e5ea2e36647e551ebb9183455c">scuart.h</a>
 </li>
 <li>SCUART_SetLineConfig()
 : <a class="el" href="group___s_c_u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga99195e1a1d2f0b780a9ec769c5a6825a">scuart.h</a>
@@ -1046,11 +1046,11 @@ $(function() {
 <li>SCUART_WAIT_TX_EMPTY
 : <a class="el" href="group___s_c_u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gade9c698ba0339eb2d33e55dfc0a10b34">scuart.h</a>
 </li>
-<li>SCUART_WRITE
-: <a class="el" href="group___s_c_u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gadd0a4f5138328de77a59dc96d1fd6b05">scuart.h</a>
-</li>
 <li>SCUART_Write()
 : <a class="el" href="group___s_c_u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga3a5a69b73545e7d20df9a0b38a5a9c05">scuart.h</a>
+</li>
+<li>SCUART_WRITE
+: <a class="el" href="group___s_c_u_a_r_t___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gadd0a4f5138328de77a59dc96d1fd6b05">scuart.h</a>
 </li>
 <li>SD_FREQ
 : <a class="el" href="group___s_d_h___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga0d07909c78744b893f55ae0512798202">sdh.h</a>
@@ -1832,6 +1832,9 @@ $(function() {
 <li>SPI_DISABLE_TX_PDMA
 : <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga866db4a52212324cdd89fc9b6d5b1da7">spi.h</a>
 </li>
+<li>SPI_DISABLE_TX_RX_PDMA
+: <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga272ce8ce0ba2f19747c2737fdc003a97">spi.h</a>
+</li>
 <li>SPI_DisableAutoSS()
 : <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga58b7eef9f93f8c3d3818d1a4b74f5be6">spi.h</a>
 </li>
@@ -2435,6 +2438,9 @@ $(function() {
 <li>SPI_TRIGGER_TX_PDMA
 : <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga82e6b47e118d5bf3333e49a77ea5bd11">spi.h</a>
 </li>
+<li>SPI_TRIGGER_TX_RX_PDMA
+: <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga5cf9f37bc4bccc886c2dd5c5b4848d42">spi.h</a>
+</li>
 <li>SPI_TX_EMPTY_MASK
 : <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga8ea891bf8449231ee8f69e0ca13a2c44">spi.h</a>
 </li>
@@ -2531,18 +2537,6 @@ $(function() {
 <li>SPII2S_EnableMCLK()
 : <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga10c7876531bbc5c0bb193530965540e6">spi.h</a>
 </li>
-<li>SPII2S_FIFO_RX_LEVEL_WORD_1
-: <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga18e994d2557e23d7aa223d3621b14ed3">spi.h</a>
-</li>
-<li>SPII2S_FIFO_RX_LEVEL_WORD_2
-: <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga3ed5258ed45a3970c56094b29ca0ea5d">spi.h</a>
-</li>
-<li>SPII2S_FIFO_RX_LEVEL_WORD_3
-: <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga7e1aac8c56a45e6130d47f3eadd3ad8f">spi.h</a>
-</li>
-<li>SPII2S_FIFO_RX_LEVEL_WORD_4
-: <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga6d4eaa861ae1711fcd3b87df12ed6ee0">spi.h</a>
-</li>
 <li>SPII2S_FIFO_RXOV_INT_MASK
 : <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga478cd91508eb30119030de823cad1d17">spi.h</a>
 </li>
@@ -2551,18 +2545,6 @@ $(function() {
 </li>
 <li>SPII2S_FIFO_RXTO_INT_MASK
 : <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga663e910e23b0c70b786239569783a58b">spi.h</a>
-</li>
-<li>SPII2S_FIFO_TX_LEVEL_WORD_0
-: <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#gae99096a04236a2be28b9273848971fce">spi.h</a>
-</li>
-<li>SPII2S_FIFO_TX_LEVEL_WORD_1
-: <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga02e658d7ca9ad2f4f2502a81265f6ed5">spi.h</a>
-</li>
-<li>SPII2S_FIFO_TX_LEVEL_WORD_2
-: <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga93400bf101f2862e78012da57010dcf9">spi.h</a>
-</li>
-<li>SPII2S_FIFO_TX_LEVEL_WORD_3
-: <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga0f5d8798a6ef7ccdddd39e2fa40ecfef">spi.h</a>
 </li>
 <li>SPII2S_FIFO_TXTH_INT_MASK
 : <a class="el" href="group___s_p_i___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#gafba9e96e2c2ff9f59f90e5fc499e5d4e">spi.h</a>
@@ -9291,8 +9273,8 @@ $(function() {
 : <a class="el" href="group___r_e_g_i_s_t_e_r.html#ga532edcd6d174d3b7c9bba6773627660f">sys_reg.h</a>
 </li>
 <li>SystemCoreClock
-: <a class="el" href="system___m480_8h.html#aa3cd3e43291e81e795d642b79b6088e6">system_M480.h</a>
-, <a class="el" href="system___m480_8c.html#aa3cd3e43291e81e795d642b79b6088e6">system_M480.c</a>
+: <a class="el" href="system___m480_8c.html#aa3cd3e43291e81e795d642b79b6088e6">system_M480.c</a>
+, <a class="el" href="system___m480_8h.html#aa3cd3e43291e81e795d642b79b6088e6">system_M480.h</a>
 </li>
 <li>SystemCoreClockUpdate()
 : <a class="el" href="system___m480_8c.html#ae0c36a9591fe6e9c45ecb21a794f0f0f">system_M480.c</a>
@@ -9309,7 +9291,7 @@ $(function() {
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 5 2020 13:49:14 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Oct 7 2020 09:26:22 for M480 BSP by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.15
 </small></address>
