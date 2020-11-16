@@ -124,23 +124,21 @@ int32_t FMC_Erase(uint32_t u32PageAddr)
 
     if (u32PageAddr == FMC_SPROM_BASE)
     {
-        ret = FMC_Erase_SPROM();
+        return FMC_Erase_SPROM();
     }
 
-    if (ret == 0)
+    FMC->ISPCMD = FMC_ISPCMD_PAGE_ERASE;
+    FMC->ISPADDR = u32PageAddr;
+    FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
+
+    while (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) { }
+
+    if (FMC->ISPCTL & FMC_ISPCTL_ISPFF_Msk)
     {
-        FMC->ISPCMD = FMC_ISPCMD_PAGE_ERASE;
-        FMC->ISPADDR = u32PageAddr;
-        FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
-
-        while (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) { }
-
-        if (FMC->ISPCTL & FMC_ISPCTL_ISPFF_Msk)
-        {
-            FMC->ISPCTL |= FMC_ISPCTL_ISPFF_Msk;
-            ret = -1;
-        }
+        FMC->ISPCTL |= FMC_ISPCTL_ISPFF_Msk;
+        ret = -1;
     }
+
     return ret;
 }
 
