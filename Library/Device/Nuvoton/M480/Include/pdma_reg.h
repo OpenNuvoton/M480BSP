@@ -81,7 +81,7 @@ typedef struct
      * |        |          |0 = Stride transfer mode Disabled.
      * |        |          |1 = Stride transfer mode Enabled.
      * |[31:16] |TXCNT     |Transfer Count
-     * |        |          |The TXCNT represents the required number of PDMA transfer, the real transfer count is (TXCNT + 1); The maximum transfer count is 16384 , every transfer may be byte, half-word or word that is dependent on TXWIDTH field.
+     * |        |          |The TXCNT represents the required number of PDMA transfer, the real transfer count is (TXCNT + 1); The maximum transfer count is 32768, every transfer may be byte, half-word or word that is dependent on TXWIDTH field.
      * |        |          |Note: When PDMA finish each transfer data, this field will be decrease immediately.
      * @var DSCT_T::SA
      * Offset: 0x04  Source Address Register of PDMA Channel n
