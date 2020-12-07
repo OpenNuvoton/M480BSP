@@ -1289,16 +1289,17 @@ void MSC_ProcessCmd(void)
                 g_u32BytesInStorageBuf = g_u32Length;
 
                 i = g_u32Length;
-                if (i > STORAGE_BUFFER_SIZE)
-                    i = STORAGE_BUFFER_SIZE;
-
-                if(g_u32LbaAddress >= (16 * CDROM_BLOCK_SIZE))
+                if (g_u32LbaAddress >= (16 * CDROM_BLOCK_SIZE))
                 {
+                    if (i > MSC_ImageSize)
+                        i = MSC_ImageSize;
                     g_u32Address = (uint32_t)(&eprom[g_u32LbaAddress - 32768]);
                     g_u32LbaAddress += i;
                 }
                 else
                 {
+                    if (i > STORAGE_BUFFER_SIZE)
+                        i = STORAGE_BUFFER_SIZE;
                     memset((uint32_t*)Storage_Block, 0, i);
                     g_u32Address = STORAGE_DATA_BUF;
                 }
