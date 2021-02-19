@@ -47,6 +47,8 @@ void SYS_Init(void)
     CLK_EnableModuleClock(UART0_MODULE);
     /* Enable ACMP01 peripheral clock */
     CLK_EnableModuleClock(ACMP01_MODULE);
+    /* Enable DAC module clock */
+    CLK_EnableModuleClock(DAC_MODULE);
 
     /* Update System Core Clock */
     /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock and CyclesPerUs automatically. */
