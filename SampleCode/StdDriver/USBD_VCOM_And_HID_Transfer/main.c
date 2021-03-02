@@ -161,7 +161,7 @@ void UART0_IRQHandler(void)
     if(u32IntStatus & UART_INTSTS_THREIF_Msk)
     {
 
-        if(comTbytes)
+        if (comTbytes && (UART0->INTEN & UART_INTEN_THREIEN_Msk))
         {
             /* Fill the Tx FIFO */
             size = comTbytes;
@@ -259,9 +259,7 @@ void VCOM_TransferData(void)
             if(comThead >= TXBUFSIZE)
                 comThead = 0;
 
-            __set_PRIMASK(1);
             comTbytes--;
-            __set_PRIMASK(0);
 
             /* Enable Tx Empty Interrupt. (Trigger first one) */
             UART0->INTEN |= UART_INTEN_THREIEN_Msk;
