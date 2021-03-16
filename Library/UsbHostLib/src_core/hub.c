@@ -421,7 +421,7 @@ static int do_port_reset(HUB_DEV_T *hub, int port)
             if (((wPortStatus & PORT_S_CONNECTION) == 0) ||
                     ((wPortStatus & (PORT_S_CONNECTION | PORT_S_ENABLE)) == (PORT_S_CONNECTION | PORT_S_ENABLE)))
             {
-                clear_port_feature(hub, PORT_C_ENABLE, port); /* clear port enable change */
+                clear_port_feature(hub, FS_C_PORT_ENABLE, port); /* clear port enable change */
                 return USBH_OK;
             }
         }
@@ -546,7 +546,7 @@ static int  port_status_change(HUB_DEV_T *hub, int port)
             return ret;                     /* class command failed                       */
     }
 
-    if (wPortChange & FS_C_PORT_RESET)     /* have port reset change?                     */
+    if (wPortChange & PORT_C_RESET)         /* have port reset change?                     */
     {
         ret = clear_port_feature(hub, FS_C_PORT_RESET, port);        /* clear port change */
         if (ret < 0)
