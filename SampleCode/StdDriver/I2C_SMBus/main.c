@@ -593,9 +593,6 @@ void SYS_Init(void)
     SYS->GPB_MFPH = (SYS->GPB_MFPH & ~(SYS_GPB_MFPH_PB8MFP_Msk | SYS_GPB_MFPH_PB9MFP_Msk)) |
                     (SYS_GPB_MFPH_PB8MFP_I2C1_SMBSUS | SYS_GPB_MFPH_PB9MFP_I2C1_SMBAL);
 
-    /* I2C clock pin enable schmitt trigger */
-    PA->SMTEN |= GPIO_SMTEN_SMTEN5_Msk;
-    PB->SMTEN |= GPIO_SMTEN_SMTEN11_Msk;
 }
 
 void UART0_Init(void)

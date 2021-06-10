@@ -50,8 +50,8 @@ void SYS_Init(void)
     /* Set I2C1 multi-function pins */
     SYS->GPE_MFPL = (SYS->GPE_MFPL & ~(SYS_GPE_MFPL_PE0MFP_Msk | SYS_GPE_MFPL_PE1MFP_Msk)) |
                     (SYS_GPE_MFPL_PE0MFP_I2C1_SDA | SYS_GPE_MFPL_PE1MFP_I2C1_SCL);
-    /* I2C clock pin enable schmitt trigger */
-    PE->SMTEN |= GPIO_SMTEN_SMTEN1_Msk;
+    /* I2C pin enable schmitt trigger */
+    PE->SMTEN |= GPIO_SMTEN_SMTEN0_Msk | GPIO_SMTEN_SMTEN1_Msk;
 }
 
 int main(void)
