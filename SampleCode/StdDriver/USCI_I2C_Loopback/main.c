@@ -332,9 +332,9 @@ void SYS_Init(void)
     SYS->GPB_MFPL = (SYS->GPB_MFPL & ~(SYS_GPB_MFPL_PB1MFP_Msk | SYS_GPB_MFPL_PB2MFP_Msk)) |
                     (SYS_GPB_MFPL_PB1MFP_USCI1_CLK|SYS_GPB_MFPL_PB2MFP_USCI1_DAT0);
 
-    /* USCI_I2C clock pin enable schmitt trigger */
-    PA->SMTEN |= GPIO_SMTEN_SMTEN11_Msk;
-    PB->SMTEN |= GPIO_SMTEN_SMTEN1_Msk;
+    /* USCI_I2C pin enable schmitt trigger */
+    PA->SMTEN |= GPIO_SMTEN_SMTEN10_Msk | GPIO_SMTEN_SMTEN11_Msk;
+    PB->SMTEN |= GPIO_SMTEN_SMTEN1_Msk | GPIO_SMTEN_SMTEN2_Msk;
 }
 
 void UI2C0_Init(uint32_t u32ClkSpeed)

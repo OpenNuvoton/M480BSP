@@ -245,9 +245,9 @@ void SYS_Init(void)
     SYS->GPB_MFPL &= ~(SYS_GPB_MFPL_PB1MFP_Msk | SYS_GPB_MFPL_PB2MFP_Msk);
     SYS->GPB_MFPL |= (SYS_GPB_MFPL_PB1MFP_USCI1_CLK|SYS_GPB_MFPL_PB2MFP_USCI1_DAT0);
 
-    /* USCI_I2C clock pin enable schmitt trigger */
-    PA->SMTEN |= GPIO_SMTEN_SMTEN11_Msk;
-    PB->SMTEN |= GPIO_SMTEN_SMTEN1_Msk;
+    /* USCI_I2C pin enable schmitt trigger */
+    PA->SMTEN |= GPIO_SMTEN_SMTEN10_Msk | GPIO_SMTEN_SMTEN11_Msk;
+    PB->SMTEN |= GPIO_SMTEN_SMTEN1_Msk | GPIO_SMTEN_SMTEN2_Msk;
 
     /* Set I2C0 multi-function pins */
     SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA4MFP_Msk | SYS_GPA_MFPL_PA5MFP_Msk);
@@ -256,9 +256,9 @@ void SYS_Init(void)
     SYS->GPA_MFPL &= ~(SYS_GPA_MFPL_PA2MFP_Msk | SYS_GPA_MFPL_PA3MFP_Msk);
     SYS->GPA_MFPL |= (SYS_GPA_MFPL_PA2MFP_I2C1_SDA | SYS_GPA_MFPL_PA3MFP_I2C1_SCL);
 
-    /* I2C clock pin enable schmitt trigger */
-    PA->SMTEN |= GPIO_SMTEN_SMTEN5_Msk;
-    PA->SMTEN |= GPIO_SMTEN_SMTEN3_Msk;
+    /* I2C pin enable schmitt trigger */
+    PA->SMTEN |= GPIO_SMTEN_SMTEN4_Msk | GPIO_SMTEN_SMTEN5_Msk;
+    PA->SMTEN |= GPIO_SMTEN_SMTEN2_Msk | GPIO_SMTEN_SMTEN3_Msk;
 }
 
 void UI2C0_Init(uint32_t u32ClkSpeed)

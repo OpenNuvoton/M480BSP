@@ -231,8 +231,8 @@ void SYS_Init(void)
     SYS->GPA_MFPH = (SYS->GPA_MFPH & ~(SYS_GPA_MFPH_PA11MFP_Msk | SYS_GPA_MFPH_PA10MFP_Msk)) |
                     (SYS_GPA_MFPH_PA11MFP_USCI0_CLK | SYS_GPA_MFPH_PA10MFP_USCI0_DAT0);
 
-    /* USCI_I2C clock pin enable schmitt trigger */
-    PA->SMTEN |= GPIO_SMTEN_SMTEN11_Msk;
+    /* USCI_I2C pin enable schmitt trigger */
+    PA->SMTEN |= GPIO_SMTEN_SMTEN10_Msk | GPIO_SMTEN_SMTEN11_Msk;
 }
 
 void UI2C0_Init(void)
