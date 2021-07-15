@@ -383,7 +383,7 @@ int32_t main(void)
 
     if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x1) {
         CLK->IOPDCTL = 1;
-        CLK->PMUCTL &= ~(CLK_PMUCTL_DPDHOLDEN_Msk) | CLK_PMUCTL_DPDHOLDEN_Msk;
+        CLK->PMUCTL |= CLK_PMUCTL_DPDHOLDEN_Msk;
     }
 
     /* Init System, peripheral clock and multi-function I/O */
