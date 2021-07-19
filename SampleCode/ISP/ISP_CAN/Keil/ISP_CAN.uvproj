@@ -446,6 +446,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\Library\StdDriver\src\fmc.c</FilePath>
             </File>
+            <File>
+              <FileName>clk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\Library\StdDriver\src\clk.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

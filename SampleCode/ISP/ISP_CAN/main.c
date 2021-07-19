@@ -86,11 +86,6 @@ void CAN1_IRQHandler(void)
 #define PLL_CLOCK               160000000
 #define HCLK_DIV                        1
 
-uint32_t CLK_GetPLLClockFreq(void)
-{
-    return PLL_CLOCK;
-}
-
 #define GPIO_SETMODE(port, pin, u32Mode) port->MODE = (port->MODE & ~(0x3ul << (pin << 1))) | (u32Mode << (pin << 1));
 
 void SYS_Init(void)
