@@ -317,12 +317,23 @@ uint32_t CAN_GetCANBitRate(CAN_T *tCAN)
 {
     uint32_t u32Tseg1, u32Tseg2;
     uint32_t u32Bpr;
+    uint32_t u32Clock = (uint32_t)0;
+
+    SystemCoreClockUpdate();
+    if((tCAN == CAN0) || (tCAN == CAN2))
+    {
+        u32Clock = CLK_GetPCLK0Freq();
+    }
+    else if(tCAN == CAN1)
+    {
+        u32Clock = CLK_GetPCLK1Freq();
+    }
 
     u32Tseg1 = (tCAN->BTIME & CAN_BTIME_TSEG1_Msk) >> CAN_BTIME_TSEG1_Pos;
     u32Tseg2 = (tCAN->BTIME & CAN_BTIME_TSEG2_Msk) >> CAN_BTIME_TSEG2_Pos;
     u32Bpr   = (tCAN->BTIME & CAN_BTIME_BRP_Msk) | (tCAN->BRPE << 6ul);
 
-    return (SystemCoreClock / (u32Bpr + 1ul) / (u32Tseg1 + u32Tseg2 + 3ul));
+    return (u32Clock / (u32Bpr + 1ul) / (u32Tseg1 + u32Tseg2 + 3ul));
 }
 
 /**
