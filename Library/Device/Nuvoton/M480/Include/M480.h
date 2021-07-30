@@ -464,9 +464,10 @@ IRQn_Type;
   @{
  */
 
-typedef volatile unsigned char  vu8;        ///< Define 8-bit unsigned volatile data type
-typedef volatile unsigned short vu16;       ///< Define 16-bit unsigned volatile data type
-typedef volatile unsigned long  vu32;       ///< Define 32-bit unsigned volatile data type
+typedef volatile uint8_t  vu8;        ///< Define 8-bit unsigned volatile data type
+typedef volatile uint16_t vu16;       ///< Define 16-bit unsigned volatile data type
+typedef volatile uint32_t vu32;       ///< Define 32-bit unsigned volatile data type
+typedef volatile uint64_t vu64;       ///< Define 64-bit unsigned volatile data type
 
 /**
   * @brief Get a 8-bit unsigned value from specified address
