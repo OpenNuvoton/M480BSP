@@ -10,18 +10,13 @@
 #include <stdio.h>
 #include "NuMicro.h"
 
-#define PLL_CLOCK           192000000
-
-uint32_t slave_buff_addr;
-uint8_t g_u8SlvData[256];
-uint8_t g_au8RxData[3];
 /*---------------------------------------------------------------------------------------------------------*/
 /* Global variables                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
-uint8_t g_u8DeviceAddr;
-uint8_t g_au8TxData[3];
-uint8_t g_u8RxData;
 uint8_t g_u8DataLen;
+uint32_t slave_buff_addr;
+uint8_t g_u8SlvData[256];
+uint8_t g_au8RxData[3];
 
 typedef void (*I2C_FUNC)(uint32_t u32Status);
 

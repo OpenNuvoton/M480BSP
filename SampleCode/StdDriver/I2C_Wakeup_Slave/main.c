@@ -11,8 +11,6 @@
 
 #define DEBUG_PORT   UART0
 
-#define PLL_CLOCK       192000000
-
 uint32_t slave_buff_addr;
 uint8_t g_au8SlvData[256];
 uint8_t g_au8SlvRxData[3];

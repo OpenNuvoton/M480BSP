@@ -13,8 +13,6 @@
 #include <stdio.h>
 #include "NuMicro.h"
 
-#define PLL_CLOCK           192000000
-
 #define SMBUS_ALERT_RESPONSE_ADDRESS 0x0C
 #define SMBUS_DEFAULT_ADDRESS        0x61
 #define ARP_COMMAND 0x01
@@ -138,60 +136,6 @@ void I2C1_IRQHandler(void)
     {
         if(s_I2C1HandlerFn != NULL)
             s_I2C1HandlerFn(u32Status);
-    }
-}
-
-/*---------------------------------------------------------------------------------------------------------*/
-/*  I2C Master Rx Callback Function                                                                        */
-/*---------------------------------------------------------------------------------------------------------*/
-void I2C_MasterRx(uint32_t u32Status)
-{
-    if(u32Status == 0x08)                            /* START has been transmitted and prepare SLA+W */
-    {
-        I2C_SET_DATA(I2C0, g_u8DeviceAddr << 1);     /* Write SLA+W to Register I2CDAT */
-        I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
-    }
-    else if(u32Status == 0x18)                       /* SLA+W has been transmitted and ACK has been received */
-    {
-        I2C_SET_DATA(I2C0, g_au8TxData[g_u8DataLen0++]);
-        I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
-    }
-    else if(u32Status == 0x20)                       /* SLA+W has been transmitted and NACK has been received */
-    {
-        I2C_STOP(I2C0);
-        I2C_START(I2C0);
-    }
-    else if(u32Status == 0x28)                       /* DATA has been transmitted and ACK has been received */
-    {
-        if(g_u8DataLen0 != 2)
-        {
-            I2C_SET_DATA(I2C0, g_au8TxData[g_u8DataLen0++]);
-            I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
-        }
-        else
-        {
-            I2C_SET_CONTROL_REG(I2C0, I2C_CTL_STA_SI);
-        }
-    }
-    else if(u32Status == 0x10)                  /* Repeat START has been transmitted and prepare SLA+R */
-    {
-        I2C_SET_DATA(I2C0, ((g_u8DeviceAddr << 1) | 0x01));   /* Write SLA+R to Register I2CDAT */
-        I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
-    }
-    else if(u32Status == 0x40)                  /* SLA+R has been transmitted and ACK has been received */
-    {
-        I2C_SET_CONTROL_REG(I2C0, I2C_CTL_SI);
-    }
-    else if(u32Status == 0x58)                  /* DATA has been received and NACK has been returned */
-    {
-        g_u8RxData = (unsigned char) I2C_GET_DATA(I2C0);
-        I2C_SET_CONTROL_REG(I2C0, I2C_CTL_STO_SI);
-        g_u8EndFlag = 1;
-    }
-    else
-    {
-        /* TO DO */
-        printf("Status 0x%x is NOT processed\n", u32Status);
     }
 }
 
@@ -621,16 +565,6 @@ void I2C0_Init(void)
 
     /* Get I2C0 Bus Clock */
     printf("I2C0 clock %d Hz\n", I2C_GetBusClockFreq(I2C0));
-
-    /* Set I2C0 4 Slave addresses */
-    /* Slave address : 0x15 */
-    I2C_SetSlaveAddr(I2C0, 0, 0x15, 0);   /* Slave Address : 0x15 */
-    /* Slave address : 0x35 */
-    I2C_SetSlaveAddr(I2C0, 1, 0x35, 0);   /* Slave Address : 0x35 */
-    /* Slave address : 0x55 */
-    I2C_SetSlaveAddr(I2C0, 2, 0x55, 0);   /* Slave Address : 0x55 */
-    /* Slave address : 0x75 */
-    I2C_SetSlaveAddr(I2C0, 3, 0x75, 0);   /* Slave Address : 0x75 */
 
     /* Enable I2C0 interrupt */
     I2C_EnableInt(I2C0);
