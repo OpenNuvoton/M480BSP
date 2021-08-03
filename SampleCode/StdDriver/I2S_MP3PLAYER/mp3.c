@@ -60,11 +60,13 @@ unsigned char MadInputBuffer[FILE_IO_BUFFER_SIZE+MAD_BUFFER_GUARD];
 volatile uint8_t aPCMBuffer_Full[2]= {0,0};
 // audio information structure
 struct AudioInfoObject audioInfo;
+extern volatile uint8_t u8PCMBuffer_Playing;
 
 // Parse MP3 header and get some informations
 void MP3_ParseHeaderInfo(uint8_t *pFileName)
 {
     FRESULT res;
+    uint32_t fptr;
 
     res = f_open(&mp3FileObject, (void *)pFileName, FA_OPEN_EXISTING | FA_READ);
     if (res == FR_OK)
@@ -73,14 +75,30 @@ void MP3_ParseHeaderInfo(uint8_t *pFileName)
         f_stat((void *)pFileName, &Finfo);
         audioInfo.playFileSize = Finfo.fsize;
 
-        res = f_read(&mp3FileObject, (char *)(&MadInputBuffer[0]), FILE_IO_BUFFER_SIZE, &ReturnSize);
+        while(1)
+        {
+            res = f_read(&mp3FileObject, (char *)(&MadInputBuffer[0]), FILE_IO_BUFFER_SIZE, &ReturnSize);
 
-        //parsing MP3 header
-        mp3CountV1L3Headers((unsigned char *)(&MadInputBuffer[0]), ReturnSize);
+            //parsing MP3 header
+            mp3CountV1L3Headers((unsigned char *)(&MadInputBuffer[0]), ReturnSize);
+            if (audioInfo.mp3SampleRate != 0)
+                // Got the header and sampling rate
+                break;
+        
+            // ID3 may too long, try to parse following data
+            // but only forward file point to half of buffer to prevent the header is
+            // just right at the boundry of buffer
+            fptr += FILE_IO_BUFFER_SIZE/2;
+            if (fptr >= audioInfo.playFileSize)
+                // Fail to find header
+                break;
+                
+            f_lseek(&mp3FileObject, fptr);
+        }
     }
     else
     {
-        printf("Open File Error\r\n");
+        //printf("Open File Error\r\n");
         return;
     }
     f_close(&mp3FileObject);
@@ -133,7 +151,11 @@ void MP3Player(void)
     uint16_t sampleL, sampleR;
 
     pcmbuf_idx = 0;
+    u8PCMBuffer_Playing = 0;
     memset((void *)&audioInfo, 0, sizeof(audioInfo));
+    memset((void *)MadInputBuffer, 0, sizeof(MadInputBuffer));
+    memset((void *)aPCMBuffer, 0, sizeof(aPCMBuffer));
+    memset((void *)aPCMBuffer_Full, 0, sizeof(aPCMBuffer_Full));
 
     /* Parse MP3 header */
     MP3_ParseHeaderInfo(MP3_FILE);
@@ -147,7 +169,7 @@ void MP3Player(void)
     res = f_open(&mp3FileObject, MP3_FILE, FA_OPEN_EXISTING | FA_READ);
     if (res != FR_OK)
     {
-        printf("Open file error \r\n");
+        //printf("Open file error \r\n");
         return;
     }
 

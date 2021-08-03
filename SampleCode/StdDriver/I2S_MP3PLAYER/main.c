@@ -27,6 +27,7 @@ DMA_DESC_T DMA_DESC[2] __attribute__((aligned(32)));
 
 uint8_t bAudioPlaying = 0;
 extern signed int aPCMBuffer[2][PCM_BUFFER_SIZE];
+extern uint32_t volatile sd_init_ok;
 
 /*---------------------------------------------------------*/
 /* User Provided RTC Function for FatFs module             */
@@ -224,7 +225,7 @@ void PDMA_Init(void)
 
 int32_t main (void)
 {
-    TCHAR       sd_path[] = { '0', ':', 0 };    /* SD drive started from 0 */
+    TCHAR sd_path[] = { '0', ':', 0 };    /* SD drive started from 0 */
 
     /* Init System, IP clock and multi-function I/O */
     SYS_Init();
@@ -240,7 +241,12 @@ int32_t main (void)
     printf("+------------------------------------------------------------------------+\n");
     printf(" Please put MP3 files on SD card \n");
 
-    SDH_Open_Disk(SDH0, CardDetect_From_GPIO);
+    printf(" Please insert SD card... \n");
+    while(1)
+    {
+        if (SDH_Open_Disk(SDH0, CardDetect_From_GPIO) == Successful)
+            break;
+    }
     f_chdrive(sd_path);          /* set default path */
 
     /* Init I2C2 to access WAU88L25 */
@@ -249,9 +255,12 @@ int32_t main (void)
     // select source from HXT(12MHz)
     CLK_SetModuleClock(I2S0_MODULE, CLK_CLKSEL3_I2S0SEL_HXT, 0);
 
-    MP3Player();
-
-    while(1);
+    while(1)
+    {
+        /* play mp3 */
+        if (SD0.IsCardInsert == TRUE)
+            MP3Player();
+    }
 }
 
 /*** (C) COPYRIGHT 2014 Nuvoton Technology Corp. ***/
