@@ -1102,10 +1102,11 @@ void CLK_EnableDPDWKPin(uint32_t u32TriggerType)
 
     if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x1) // M480LD
     {
-        u32Pin1 = (((u32TriggerType) & 0x03UL) >> CLK_PMUCTL_WKPINEN1_Pos);
-        u32Pin2 = (((u32TriggerType) & 0x03UL) >> CLK_PMUCTL_WKPINEN2_Pos);
-        u32Pin3 = (((u32TriggerType) & 0x03UL) >> CLK_PMUCTL_WKPINEN3_Pos);
-        u32Pin4 = (((u32TriggerType) & 0x03UL) >> CLK_PMUCTL_WKPINEN4_Pos);
+
+        u32Pin1 = ((u32TriggerType) & CLK_PMUCTL_WKPINEN1_Msk);
+        u32Pin2 = ((u32TriggerType) & CLK_PMUCTL_WKPINEN2_Msk);
+        u32Pin3 = ((u32TriggerType) & CLK_PMUCTL_WKPINEN3_Msk);
+        u32Pin4 = ((u32TriggerType) & CLK_PMUCTL_WKPINEN4_Msk);
 
         if(u32Pin1)
         {
