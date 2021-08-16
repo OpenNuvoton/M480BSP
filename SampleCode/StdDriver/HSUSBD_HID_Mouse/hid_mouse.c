@@ -453,7 +453,7 @@ void HID_UpdateMouseData(void)
 
         if (mouse_mode)
         {
-            if (move_len > 14)
+            if (move_len > 8)
             {
                 /* Update new report data */
                 buf[0] = 0x00;
@@ -463,17 +463,13 @@ void HID_UpdateMouseData(void)
                 mouse_idx++;
                 move_len = 0;
             }
-        }
-        else
-        {
-            buf[0] = buf[1] = buf[2] = buf[3] = 0;
+            /* Set transfer length and trigger IN transfer */
+            for (i=0; i<4; i++)
+                HSUSBD->EP[EPA].EPDAT_BYTE = buf[i];
+            HSUSBD->EP[EPA].EPTXCNT = 4;
         }
         move_len++;
         g_u8EPAReady = 0;
-        /* Set transfer length and trigger IN transfer */
-        for (i=0; i<4; i++)
-            HSUSBD->EP[EPA].EPDAT_BYTE = buf[i];
-        HSUSBD->EP[EPA].EPRSPCTL = HSUSBD_EP_RSPCTL_SHORTTXEN;
         HSUSBD_ENABLE_EP_INT(EPA, HSUSBD_EPINTEN_INTKIEN_Msk);
     }
 }

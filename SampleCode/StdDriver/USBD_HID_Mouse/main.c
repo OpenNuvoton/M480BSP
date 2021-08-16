@@ -150,7 +150,15 @@ int32_t main(void)
                 USBD->INTSTS = USBD_INTSTS_SOFIF_Msk;
             }
         }
-        HID_UpdateMouseData();
+        {
+            /* update mouse data per 1 ms */
+            int volatile delay = 192000UL;
+            for(; delay > 0UL; delay--)
+            {
+                __NOP();
+            }
+            HID_UpdateMouseData();
+        }
     }
 }
 

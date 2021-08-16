@@ -255,14 +255,14 @@ void HID_UpdateMouseData(void)
 {
     uint8_t *buf;
 
-    if(g_u8EP2Ready)
+    //if (g_u8EP2Ready)
     {
         buf = (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP2));
         mouse_mode ^= 1;
 
-        if(mouse_mode)
+        if (mouse_mode)
         {
-            if(move_len > 14)
+            if (move_len > 6)
             {
                 /* Update new report data */
                 buf[0] = 0x00;
@@ -272,15 +272,11 @@ void HID_UpdateMouseData(void)
                 mouse_idx++;
                 move_len = 0;
             }
-        }
-        else
-        {
-            buf[0] = buf[1] = buf[2] = buf[3] = 0;
+            g_u8EP2Ready = 0;
+            /* Set transfer length and trigger IN transfer */
+            USBD_SET_PAYLOAD_LEN(EP2, 4);
         }
         move_len++;
-        g_u8EP2Ready = 0;
-        /* Set transfer length and trigger IN transfer */
-        USBD_SET_PAYLOAD_LEN(EP2, 4);
     }
 }
 
