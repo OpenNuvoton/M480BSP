@@ -13,12 +13,22 @@
 uint32_t Pclk0;
 uint32_t Pclk1;
 
-__weak uint32_t CLK_GetPLLClockFreq(void)
+#ifdef __ICCARM__
+#pragma weak CLK_GetPLLClockFreq
+uint32_t CLK_GetPLLClockFreq(void)
+#else
+__attribute__((weak)) uint32_t CLK_GetPLLClockFreq(void)
+#endif
 {
     return FREQ_192MHZ;
 }
 
-__weak uint32_t TIMER_Open(TIMER_T *timer, uint32_t u32Mode, uint32_t u32Freq)
+#ifdef __ICCARM__
+#pragma weak TIMER_Open
+uint32_t TIMER_Open(TIMER_T *timer, uint32_t u32Mode, uint32_t u32Freq)
+#else
+__attribute__((weak)) uint32_t TIMER_Open(TIMER_T *timer, uint32_t u32Mode, uint32_t u32Freq)
+#endif
 {
     uint32_t u32Clk = __HXT; // TIMER_GetModuleClock(timer);
     uint32_t u32Cmpr = 0UL, u32Prescale = 0UL;

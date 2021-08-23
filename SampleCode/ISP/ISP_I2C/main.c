@@ -15,7 +15,12 @@
 uint32_t Pclk0;
 uint32_t Pclk1;
 
-__weak uint32_t CLK_GetPLLClockFreq(void)
+#ifdef __ICCARM__
+#pragma weak CLK_GetPLLClockFreq
+uint32_t CLK_GetPLLClockFreq(void)
+#else
+__attribute__((weak)) uint32_t CLK_GetPLLClockFreq(void)
+#endif
 {
     return FREQ_192MHZ;
 }

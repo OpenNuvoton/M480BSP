@@ -11,8 +11,15 @@
 #include "string.h"
 #include "isp_user.h"
 
-__align(4) uint8_t response_buff[64];
-__align(4) static uint8_t aprom_buf[FMC_FLASH_PAGE_SIZE];
+#ifdef __ICCARM__
+#pragma data_alignment=4
+uint8_t response_buff[64];
+#pragma data_alignment=4
+static uint8_t aprom_buf[FMC_FLASH_PAGE_SIZE];
+#else
+__attribute__((aligned(4))) uint8_t response_buff[64];
+__attribute__((aligned(4))) static uint8_t aprom_buf[FMC_FLASH_PAGE_SIZE];
+#endif
 uint32_t bUpdateApromCmd;
 uint32_t g_apromSize, g_dataFlashAddr, g_dataFlashSize;
 
