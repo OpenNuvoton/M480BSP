@@ -18,7 +18,7 @@ IPATH= \
 	../../../../Library/CMSIS/Include \
 	../../../../Library/Device/Nuvoton/M480/Include \
 	../../../../Library/StdDriver/inc \
-	User
+	../User
 SRC=$(wildcard \
 	../*.c \
 	../../../../Library/Device/Nuvoton/M480/Source/*.c \
