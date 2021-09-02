@@ -66,7 +66,7 @@ extern volatile uint8_t u8PCMBuffer_Playing;
 void MP3_ParseHeaderInfo(uint8_t *pFileName)
 {
     FRESULT res;
-    uint32_t fptr;
+    uint32_t fptr = 0;
 
     res = f_open(&mp3FileObject, (void *)pFileName, FA_OPEN_EXISTING | FA_READ);
     if (res == FR_OK)
