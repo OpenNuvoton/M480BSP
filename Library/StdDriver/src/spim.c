@@ -834,6 +834,7 @@ int SPIM_Enable_4Bytes_Mode(int isEn, uint32_t u32NBit)
     int  isSupt = 0L, ret = -1;
     uint8_t idBuf[3];
     uint8_t cmdBuf[1];                           /* 1-byte Enter/Exit 4-Byte Mode command. */
+    uint32_t  tout;
 
     SPIM_ReadJedecId(idBuf, sizeof (idBuf), u32NBit);
 
@@ -873,18 +874,26 @@ int SPIM_Enable_4Bytes_Mode(int isEn, uint32_t u32NBit)
          * FIXME: Per test, 4BYTE Indicator bit doesn't set after EN4B, which
          * doesn't match spec(MX25L25635E), so skip the check below.
          */
+        ret = 0;
         if (idBuf[0] != MFGID_MXIC)
         {
+            /*
+             *  About over 100 instrucsions executed, just want to give
+             *  a time-out about 1 seconds to avoid infinite loop
+             */
+            tout = (SystemCoreClock)/100;
+
             if (isEn)
             {
-                while (! SPIM_Is4ByteModeEnable(u32NBit)) { }
+                while ((tout-- > 0) && !SPIM_Is4ByteModeEnable(u32NBit)) { }
             }
             else
             {
-                while (SPIM_Is4ByteModeEnable(u32NBit)) { }
+                while ((tout-- > 0) && SPIM_Is4ByteModeEnable(u32NBit)) { }
             }
+            if (tout == 0)
+                ret = -1;
         }
-        ret = 0;
     }
     return ret;
 }

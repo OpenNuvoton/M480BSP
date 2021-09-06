@@ -76,15 +76,37 @@ int main()
     FMC_Open();                        /* Enable FMC ISP function */
 
     u32Data = FMC_ReadCID();           /* Read company ID. Should be 0xDA. */
+    if (g_FMC_i32ErrCode != 0)
+    {
+        printf("FMC_ReadCID failed!\n");
+        goto lexit;
+    }
+
     printf("  Company ID ............................ [0x%08x]\n", u32Data);
 
     u32Data = FMC_ReadPID();           /* Read product ID. */
+    if (g_FMC_i32ErrCode != 0)
+    {
+        printf("FMC_ReadPID failed!\n");
+        goto lexit;
+    }
     printf("  Product ID ............................ [0x%08x]\n", u32Data);
 
     /* Read User Configuration CONFIG0 */
     printf("  User Config 0 ......................... [0x%08x]\n", FMC_Read(FMC_CONFIG_BASE));
+    if (g_FMC_i32ErrCode != 0)
+    {
+        printf("FMC_Read(FMC_CONFIG_BASE) failed!\n");
+        goto lexit;
+    }
+
     /* Read User Configuration CONFIG1 */
     printf("  User Config 1 ......................... [0x%08x]\n", FMC_Read(FMC_CONFIG_BASE+4));
+    if (g_FMC_i32ErrCode != 0)
+    {
+        printf("FMC_Read(FMC_CONFIG_BASE+4) failed!\n");
+        goto lexit;
+    }
 
     /* Read Data Flash base address */
     printf("  Data Flash Base Address ............... [0x%08x]\n", FMC_ReadDataFlashBaseAddr());

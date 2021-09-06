@@ -100,12 +100,20 @@ int32_t main (void)
     printf("+--------------------------------------------+\n");
 
     printf("TRNG generate an 32 bits word:\n");
-    TRNG_GenWord(&data32);
+    if (TRNG_GenWord(&data32) != 0)
+    {
+        printf("TRNG_GenWord failed!\n");
+        while (1);
+    }
     printf("    0x%x\n", data32);
 
     memset(bignumHex, 0, sizeof(bignumHex));
     printf("TRNG generate an 256 bits big number:\n");
-    TRNG_GenBignumHex(bignumHex, 256);
+    if (TRNG_GenBignumHex(bignumHex, 256) != 0)
+    {
+        printf("TRNG_GenBignumHex failed!\n");
+        while (1);
+    }
     printf("    %s\n", bignumHex);
 
     printf("\nAll done.\n");

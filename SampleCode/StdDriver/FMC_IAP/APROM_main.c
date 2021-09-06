@@ -83,8 +83,12 @@ static int  set_IAP_boot_mode(void)
     {
         FMC_ENABLE_CFG_UPDATE();       /* Enable User Configuration update. */
         au32Config[0] &= ~0x40;        /* Select IAP boot mode. */
-        FMC_WriteConfig(au32Config, 2);/* Update User Configuration CONFIG0 and CONFIG1. */
 
+        if (FMC_WriteConfig(au32Config, 2) != 0) /* Update User Configuration CONFIG0 and CONFIG1. */
+        {
+            printf("FMC_WriteConfig failed!\n");
+            return -1;
+        }
         SYS->IPRST0 = SYS_IPRST0_CHIPRST_Msk;    /* Perform chip reset to make new User Config take effect. */
     }
     return 0;                          /* success */
@@ -125,11 +129,18 @@ static int  load_image_to_flash(uint32_t image_base, uint32_t image_limit, uint3
     pu32Loader = (uint32_t *)image_base;
     for (i = 0; i < u32ImageSize; i += FMC_FLASH_PAGE_SIZE)
     {
-
-        FMC_Erase(flash_addr + i);     /* erase a flash page */
+        if (FMC_Erase(flash_addr + i) != 0)    /* erase a flash page */
+        {
+            printf("FMC_Erase address 0x%x failed!\n", flash_addr + i);
+            return -1;
+        }
         for (j = 0; j < FMC_FLASH_PAGE_SIZE; j += 4)                 /* program image to this flash page */
         {
-            FMC_Write(flash_addr + i + j, pu32Loader[(i + j) / 4]);
+            if (FMC_Write(flash_addr + i + j, pu32Loader[(i + j) / 4]) != 0)
+            {
+                printf("FMC_Write address 0x%x failed!\n", flash_addr + i + j);
+                return -1;
+            }
         }
     }
     printf("OK.\nVerify ...");
@@ -140,6 +151,11 @@ static int  load_image_to_flash(uint32_t image_base, uint32_t image_limit, uint3
         for (j = 0; j < FMC_FLASH_PAGE_SIZE; j += 4)
         {
             u32Data = FMC_Read(flash_addr + i + j);        /* read a word from flash memory */
+            if (g_FMC_i32ErrCode != 0)
+            {
+                printf("FMC_Read address 0x%x failed!\n", flash_addr + i + j);
+                return -1;
+            }
 
             if (u32Data != pu32Loader[(i+j)/4])            /* check if the word read from flash be matched with original image */
             {
@@ -161,11 +177,11 @@ int main()
     uint8_t     u8Item;                /* menu item */
     uint32_t    u32Data;               /* temporary data word */
     FUNC_PTR    *func;                 /* function pointer */
+    uint32_t    tout;
 
     SYS_Init();                        /* Init System, IP clock and multi-function I/O */
 
     UART0_Init();                      /* Initialize UART0 */
-
 
     printf("\n\n");
     printf("+----------------------------------------+\n");
@@ -199,15 +215,36 @@ int main()
     }
 
     u32Data = FMC_ReadCID();           /* get company ID */
+    if (g_FMC_i32ErrCode != 0)
+    {
+        printf("FMC_ReadCID failed!\n");
+        goto lexit;
+    }
     printf("  Company ID ............................ [0x%08x]\n", u32Data);
 
     u32Data = FMC_ReadPID();           /* get product ID */
+    if (g_FMC_i32ErrCode != 0)
+    {
+        printf("FMC_ReadPID failed!\n");
+        goto lexit;
+    }
     printf("  Product ID ............................ [0x%08x]\n", u32Data);
 
     /* Read User Configuration CONFIG0 */
     printf("  User Config 0 ......................... [0x%08x]\n", FMC_Read(FMC_CONFIG_BASE));
+    if (g_FMC_i32ErrCode != 0)
+    {
+        printf("FMC_Read(FMC_CONFIG_BASE) failed!\n");
+        goto lexit;
+    }
+
     /* Read User Configuration CONFIG1 */
     printf("  User Config 1 ......................... [0x%08x]\n", FMC_Read(FMC_CONFIG_BASE+4));
+    if (g_FMC_i32ErrCode != 0)
+    {
+        printf("FMC_Read(FMC_CONFIG_BASE+4) failed!\n");
+        goto lexit;
+    }
 
     do
     {
@@ -250,10 +287,20 @@ int main()
              */
 
             /* FMC_SetVectorPageAddr(FMC_LDROM_BASE) */
+            tout = FMC_TIMEOUT_WRITE;
             FMC->ISPCMD = FMC_ISPCMD_VECMAP;              /* ISP command */
             FMC->ISPADDR = FMC_LDROM_BASE;                /* Vector remap address */
             FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;           /* Trigger ISP command */
-            while (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk) ;  /* Wait for ISP command done. */
+            while (tout-- > 0)
+            {
+                if ((FMC->ISPTRG &  FMC_ISPTRG_ISPGO_Msk) == 0)  /* Waiting for ISP Done */
+                    break;
+            }
+            if (tout == 0)
+            {
+                printf("FMC_ISPCMD_VECMAP time-out!\n");
+                goto lexit;
+            }
 
             /*
              *  The reset handler address of an executable image is located at offset 0x4.

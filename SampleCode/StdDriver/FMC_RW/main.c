@@ -96,15 +96,20 @@ static int  set_data_flash_base(uint32_t u32DFBA)
 }
 
 
-void fill_data_pattern(uint32_t u32StartAddr, uint32_t u32EndAddr, uint32_t u32Pattern)
+int32_t fill_data_pattern(uint32_t u32StartAddr, uint32_t u32EndAddr, uint32_t u32Pattern)
 {
     uint32_t u32Addr;                  /* flash address */
 
     /* Fill flash range from u32StartAddr to u32EndAddr with data word u32Pattern. */
     for (u32Addr = u32StartAddr; u32Addr < u32EndAddr; u32Addr += 4)
     {
-        FMC_Write(u32Addr, u32Pattern);          /* Program flash */
+        if (FMC_Write(u32Addr, u32Pattern) != 0)          /* Program flash */
+        {
+            printf("FMC_Write address 0x%x failed!\n", u32Addr);
+            return -1;
+        }
     }
+    return 0;
 }
 
 
@@ -117,6 +122,12 @@ int32_t  verify_data(uint32_t u32StartAddr, uint32_t u32EndAddr, uint32_t u32Pat
     for (u32Addr = u32StartAddr; u32Addr < u32EndAddr; u32Addr += 4)
     {
         u32data = FMC_Read(u32Addr);   /* Read a flash word from address u32Addr. */
+
+        if (g_FMC_i32ErrCode != 0)
+        {
+            printf("FMC_Read address 0x%x failed!\n", u32Addr);
+            return -1;
+        }
 
         if (u32data != u32Pattern)     /* Verify if data matched. */
         {
@@ -136,7 +147,11 @@ int32_t  flash_test(uint32_t u32StartAddr, uint32_t u32EndAddr, uint32_t u32Patt
     {
         printf("    Flash test address: 0x%x    \r", u32Addr);       /* information message */
 
-        FMC_Erase(u32Addr);            /* Erase page */
+        if (FMC_Erase(u32Addr) != 0)            /* Erase page */
+        {
+            printf("FMC_Erase address 0x%x failed!\n", u32Addr);
+            return -1;
+        }
 
         /* Verify if page contents are all 0xFFFFFFFF */
         if (verify_data(u32Addr, u32Addr + FMC_FLASH_PAGE_SIZE, 0xFFFFFFFF) < 0)
@@ -146,7 +161,8 @@ int32_t  flash_test(uint32_t u32StartAddr, uint32_t u32EndAddr, uint32_t u32Patt
         }
 
         /* Write test pattern to fill the whole page. */
-        fill_data_pattern(u32Addr, u32Addr + FMC_FLASH_PAGE_SIZE, u32Pattern);
+        if (fill_data_pattern(u32Addr, u32Addr + FMC_FLASH_PAGE_SIZE, u32Pattern) != 0)
+            return -1;
 
         /* Verify if page contents are all equal to test pattern */
         if (verify_data(u32Addr, u32Addr + FMC_FLASH_PAGE_SIZE, u32Pattern) < 0)
@@ -156,7 +172,11 @@ int32_t  flash_test(uint32_t u32StartAddr, uint32_t u32EndAddr, uint32_t u32Patt
         }
 
         /* Erase page */
-        FMC_Erase(u32Addr);
+        if (FMC_Erase(u32Addr) != 0)
+        {
+            printf("FMC_Erase address 0x%x failed!\n", u32Addr);
+            return -1;
+        }
 
         /* Verify if page contents are all 0xFFFFFFFF after erased. */
         if (verify_data(u32Addr, u32Addr + FMC_FLASH_PAGE_SIZE, 0xFFFFFFFF) < 0)
@@ -206,27 +226,58 @@ int main()
     }
 
     u32Data = FMC_ReadCID();           /* Get company ID, should be 0xDA. */
+    if (g_FMC_i32ErrCode != 0)
+    {
+        printf("FMC_ReadCID failed!\n");
+        goto lexit;
+    }
     printf("  Company ID ............................ [0x%08x]\n", u32Data);   /* information message */
 
     u32Data = FMC_ReadPID();           /* Get product ID. */
+    if (g_FMC_i32ErrCode != 0)
+    {
+        printf("FMC_ReadPID failed!\n");
+        goto lexit;
+    }
     printf("  Product ID ............................ [0x%08x]\n", u32Data);   /* information message */
 
     for (i = 0; i < 3; i++)            /* Get 96-bits UID. */
     {
         u32Data = FMC_ReadUID(i);
+        if (g_FMC_i32ErrCode != 0)
+        {
+            printf("FMC_ReadUID %d failed!\n", i);
+            goto lexit;
+        }
         printf("  Unique ID %d ........................... [0x%08x]\n", i, u32Data);  /* information message */
     }
 
     for (i = 0; i < 4; i++)            /* Get 4 words UCID. */
     {
         u32Data = FMC_ReadUCID(i);
+        if (g_FMC_i32ErrCode != 0)
+        {
+            printf("FMC_ReadUCID %d failed!\n", i);
+            goto lexit;
+        }
         printf("  Unique Customer ID %d .................. [0x%08x]\n", i, u32Data);  /* information message */
     }
 
     /* Read User Configuration CONFIG0 */
     printf("  User Config 0 ......................... [0x%08x]\n", FMC_Read(FMC_CONFIG_BASE));
+    if (g_FMC_i32ErrCode != 0)
+    {
+        printf("FMC_Read(FMC_CONFIG_BASE) failed!\n");
+        goto lexit;
+    }
+
     /* Read User Configuration CONFIG1 */
     printf("  User Config 1 ......................... [0x%08x]\n", FMC_Read(FMC_CONFIG_BASE+4));
+    if (g_FMC_i32ErrCode != 0)
+    {
+        printf("FMC_Read(FMC_CONFIG_BASE+4) failed!\n");
+        goto lexit;
+    }
 
     /* Read Data Flash base address */
     u32Data = FMC_ReadDataFlashBaseAddr();
