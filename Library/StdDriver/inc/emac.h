@@ -4,7 +4,7 @@
  * @brief    M480 EMAC driver header file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016-2021 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #ifndef __EMAC_H__
 #define __EMAC_H__
@@ -40,8 +40,12 @@ extern "C"
 #define EMAC_LINK_10F     3UL    /*!<  Ethernet link is 10Mbps full duplex \hideinitializer */
 #define EMAC_LINK_10H     4UL    /*!<  Ethernet link is 10Mbps half duplex \hideinitializer */
 
+#define EMAC_TIMEOUT_ERR  (-1L)  /*!<  Ethernet operation abort due to timeout error \hideinitializer */
+#define EMAC_BUS_ERR      (-2L)  /*!<  Ethernet operation abort due to bus error \hideinitializer */
+
 /*@}*/ /* end of group EMAC_EXPORTED_CONSTANTS */
 
+extern int32_t g_EMAC_i32ErrCode;
 
 /** @addtogroup EMAC_EXPORTED_FUNCTIONS EMAC Exported Functions
   @{
@@ -312,7 +316,7 @@ extern "C"
 #define EMAC_CLEAR_INT_FLAG(emac, u32eIntTypeFlag)    ((emac)->INTSTS |= (u32eIntTypeFlag))
 
 void EMAC_Open(uint8_t *pu8MacAddr);
-void EMAC_Close(void);
+int32_t EMAC_Close(void);
 void EMAC_SetMacAddr(uint8_t *pu8MacAddr);
 void EMAC_EnableCamEntry(uint32_t u32Entry, uint8_t pu8MacAddr[]);
 void EMAC_DisableCamEntry(uint32_t u32Entry);
@@ -335,7 +339,7 @@ void EMAC_DisableAlarm(void);
 
 uint32_t EMAC_CheckLinkStatus(void);
 
-void EMAC_PhyInit(void);
+int32_t EMAC_PhyInit(void);
 int32_t EMAC_FillCamEntry(uint8_t pu8MacAddr[]);
 uint8_t *EMAC_ClaimFreeTXBuf(void);
 uint32_t EMAC_GetAvailRXBufSize(void);
@@ -353,5 +357,3 @@ void EMAC_RecvPktDoneWoRxTrigger(void);
 #endif
 
 #endif /* __NU_EMAC_H__ */
-
-/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

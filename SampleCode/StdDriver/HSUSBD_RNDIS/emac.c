@@ -359,13 +359,21 @@ void EMAC_Open(uint8_t *pu8MacAddr)
 /**
   * @brief  This function stop all receive and transmit activity and disable MAC interface
   * @param None
-  * @return None
+  * @return Disable EMAC success or not
+  * @retval 0 Disable EMAC success
+  * @retval -1 Disable EMAC failed because reset EMAC state machine takes longer than expected
   */
 
-void EMAC_Close(void)
+int32_t EMAC_Close(void)
 {
+    // It takes a few ECLK for the reset bit to be auto-cleared. Add a small counter if something goes wrong.
+    uint32_t u32Delay = 10;
     EMAC->CTL |= EMAC_CTL_RST_Msk;
-    while(EMAC->CTL & EMAC_CTL_RST_Msk) {}
+    while ((EMAC->CTL & EMAC_CTL_RST_Msk) && (--u32Delay))
+    {
+        ;
+    }
+    return u32Delay > 0 ? 0 : -1;
 }
 
 /**
