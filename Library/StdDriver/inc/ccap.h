@@ -88,10 +88,11 @@ extern "C"
 #define CCAP_INVALID_BUF               ((int32_t)(0xFFFFFFFF-2))
 #define CCAP_INVALID_PIPE              ((int32_t)(0xFFFFFFFF-3))
 
+#define CCAP_TIMEOUT_ERR    (-1)    /*!< CCAP operation abort due to timeout error \hideinitializer */
 
 /*@}*/ /* end of group NUC472_442_CCAP_EXPORTED_CONSTANTS */
 
-
+extern int32_t g_CCAP_i32ErrCode;
 
 /** @addtogroup CCAP_EXPORTED_FUNCTIONS CCAP Exported Functions
   @{
