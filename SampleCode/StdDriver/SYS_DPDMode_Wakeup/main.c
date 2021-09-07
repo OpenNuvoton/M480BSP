@@ -76,6 +76,8 @@ void  WakeUpTimerFunction(uint32_t u32PDMode, uint32_t u32Interval)
 /*-----------------------------------------------------------------------------------------------------------*/
 void WakeUpRTCTickFunction(uint32_t u32PDMode)
 {
+    uint32_t u32TimeOutCnt = SystemCoreClock;// 1 second timeout
+
     printf("Enter to DPD Power-down mode......\n");
 
     /* Check if all the debug messages are finished */
@@ -91,7 +93,14 @@ void WakeUpRTCTickFunction(uint32_t u32PDMode)
     RTC->INIT = RTC_INIT_KEY;
     if(RTC->INIT != RTC_INIT_ACTIVE_Msk) {
         RTC->INIT = RTC_INIT_KEY;
-        while(RTC->INIT != RTC_INIT_ACTIVE_Msk);
+        while(RTC->INIT != RTC_INIT_ACTIVE_Msk)
+        {
+            if(--u32TimeOutCnt == 0)
+            {
+                printf("Initialize RTC module and start counting failed\n");
+                while(1);
+            }
+        }
     }
 
     /* Clear tick status */
@@ -125,6 +134,7 @@ void WakeUpRTCTickFunction(uint32_t u32PDMode)
 void  WakeUpRTCAlarmFunction(uint32_t u32PDMode)
 {
     S_RTC_TIME_DATA_T sWriteRTC;
+    uint32_t u32TimeOutCnt = SystemCoreClock;// 1 second timeout
 
     /* Enable RTC peripheral clock */
     CLK->APBCLK0 |= CLK_APBCLK0_RTCCKEN_Msk;
@@ -136,7 +146,14 @@ void  WakeUpRTCAlarmFunction(uint32_t u32PDMode)
     RTC->INIT = RTC_INIT_KEY;
     if(RTC->INIT != RTC_INIT_ACTIVE_Msk) {
         RTC->INIT = RTC_INIT_KEY;
-        while(RTC->INIT != RTC_INIT_ACTIVE_Msk);
+        while(RTC->INIT != RTC_INIT_ACTIVE_Msk)
+        {
+            if(--u32TimeOutCnt == 0)
+            {
+                printf("Initialize RTC module and start counting failed\n");
+                while(1);
+            }
+        }
     }
 
     /* Open RTC */
@@ -195,6 +212,8 @@ void  WakeUpRTCAlarmFunction(uint32_t u32PDMode)
 /*-----------------------------------------------------------------------------------------------------------*/
 void  WakeUpRTCTamperFunction(uint32_t u32PDMode)
 {
+    uint32_t u32TimeOutCnt = SystemCoreClock;// 1 second timeout
+
     printf("Enter to DPD Power-down mode......\n");
 
     /* Check if all the debug messages are finished */
@@ -210,7 +229,14 @@ void  WakeUpRTCTamperFunction(uint32_t u32PDMode)
     RTC->INIT = RTC_INIT_KEY;
     if(RTC->INIT != RTC_INIT_ACTIVE_Msk) {
         RTC->INIT = RTC_INIT_KEY;
-        while(RTC->INIT != RTC_INIT_ACTIVE_Msk);
+        while(RTC->INIT != RTC_INIT_ACTIVE_Msk)
+        {
+            if(--u32TimeOutCnt == 0)
+            {
+                printf("Initialize RTC module and start counting failed\n");
+                while(1);
+            }
+        }
     }
 
     /* Set RTC Tamper 0 as low level detect */
