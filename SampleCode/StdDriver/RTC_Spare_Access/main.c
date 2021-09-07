@@ -90,7 +90,12 @@ int32_t main(void)
     sInitTime.u32DayOfWeek  = RTC_MONDAY;
     sInitTime.u32TimeScale  = RTC_CLOCK_24;
 
-    RTC_Open(&sInitTime);
+    if(RTC_Open(&sInitTime) != 0)
+    {
+        printf("\n RTC initial fail!!");
+        printf("\n Please check h/w setting!!");
+        while(1);
+    }
 
     printf("\n RTC Spare Register Read/Write Test: \n\n");
 

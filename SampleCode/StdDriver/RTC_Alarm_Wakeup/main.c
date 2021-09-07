@@ -119,7 +119,12 @@ int main(void)
     sWriteRTC.u32Minute     = 59;
     sWriteRTC.u32Second     = 50;
     sWriteRTC.u32TimeScale  = RTC_CLOCK_24;
-    RTC_Open(&sWriteRTC);
+    if(RTC_Open(&sWriteRTC) != 0)
+    {
+        printf("\n RTC initial fail!!");
+        printf("\n Please check h/w setting!!");
+        while(1);
+    }
 
     /* Set RTC alarm date/time */
     sWriteRTC.u32Year       = 2017;
