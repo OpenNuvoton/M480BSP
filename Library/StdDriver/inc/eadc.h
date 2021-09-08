@@ -84,7 +84,15 @@ extern "C"
 #define EADC_CMP_ADCMPIE_ENABLE             (EADC_CMP_ADCMPIE_Msk)   /*!< A/D result compare interrupt enable \hideinitializer */
 #define EADC_CMP_ADCMPIE_DISABLE            (~EADC_CMP_ADCMPIE_Msk)  /*!< A/D result compare interrupt disable \hideinitializer */
 
+
+/*---------------------------------------------------------------------------------------------------------*/
+/* Define Error Code                                                                           */
+/*---------------------------------------------------------------------------------------------------------*/
+#define EADC_TIMEOUT_ERR                    (-1)                     /*!< EADC operation abort due to timeout error \hideinitializer */
+
 /*@}*/ /* end of group EADC_EXPORTED_CONSTANTS */
+
+extern int32_t g_EADC_i32ErrCode;
 
 /** @addtogroup EADC_EXPORTED_FUNCTIONS EADC Exported Functions
   @{
