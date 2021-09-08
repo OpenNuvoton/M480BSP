@@ -3,7 +3,7 @@
  * @version  V1.00
  * @brief    MP3 player sample plays MP3 files stored on SD memory card
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2021 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/
 #include <stdio.h>
@@ -71,10 +71,13 @@ void SDH0_IRQHandler(void)
     if (isr & SDH_INTSTS_CDIF_Msk)   // port 0 card detect
     {
         //----- SD interrupt status
-        // it is work to delay 50 times for SD_CLK = 200KHz
+        // delay 10 us to sync the GPIO and SDH
         {
-            int volatile i;         // delay 30 fail, 50 OK
-            for (i=0; i<0x500; i++);  // delay to make sure got updated value from REG_SDISR.
+            int volatile delay = SystemCoreClock / 1000000 * 10;
+            for(; delay > 0UL; delay--)
+            {
+                __NOP();
+            }
             isr = SDH0->INTSTS;
         }
 
@@ -179,6 +182,10 @@ void SYS_Init(void)
 
     /* Select UART module clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
+
+    /* Update System Core Clock */
+    /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock. */
+    SystemCoreClockUpdate();
 
     /* Set GPB multi-function pins for UART0 RXD and TXD */
     SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);

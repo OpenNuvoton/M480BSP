@@ -995,7 +995,11 @@ void SDH_Open(SDH_T *sdh, uint32_t u32CardDetSrc)
  *
  *  @param[in]    sdh    Select SDH0 or SDH1.
  *
- *  @return None
+ *  @retval   SDH_ERR_DEVICE unknown device.
+ *  @retval   SDH_NO_SD_CARD SD card be removed.
+ *  @retval   SDH_CRC_ERROR  CRC error happen.
+ *  @retval   SDH_CRC7_ERROR CRC7 error happen.
+ *  @retval   Successful SD card initial success.
  *
  *  @details This function is used to initial SD card.
  *           SD initial state needs 400KHz clock output, driver will use HIRC for SD initial clock source.
@@ -1114,10 +1118,6 @@ uint32_t SDH_Read(SDH_T *sdh, uint8_t *pu8BufAddr, uint32_t u32StartSec, uint32_
 
         while(!pSD->DataReadyFlag)
         {
-            if(pSD->DataReadyFlag)
-            {
-                break;
-            }
             if (pSD->IsCardInsert == FALSE)
             {
                 return SDH_NO_SD_CARD;
@@ -1203,11 +1203,11 @@ uint32_t SDH_Read(SDH_T *sdh, uint8_t *pu8BufAddr, uint32_t u32StartSec, uint32_
  *  @param[in]    u32StartSec   The start write sector address.
  *  @param[in]    u32SecCount   The the write sector number of data.
  *
- *  @return   \ref SDH_SELECT_ERROR : u32SecCount is zero. \n
- *            \ref SDH_NO_SD_CARD : SD card be removed. \n
- *            \ref SDH_CRC_ERROR : CRC error happen. \n
- *            \ref SDH_CRC7_ERROR : CRC7 error happen. \n
- *            \ref Successful : Write data to SD card success.
+ *  @retval   SDH_SELECT_ERROR u32SecCount is zero.
+ *  @retval   SDH_NO_SD_CARD SD card be removed.
+ *  @retval   SDH_CRC_ERROR CRC error happen.
+ *  @retval   SDH_CRC7_ERROR CRC7 error happen.
+ *  @retval   Successful Write data to SD card success.
  */
 uint32_t SDH_Write(SDH_T *sdh, uint8_t *pu8BufAddr, uint32_t u32StartSec, uint32_t u32SecCount)
 {

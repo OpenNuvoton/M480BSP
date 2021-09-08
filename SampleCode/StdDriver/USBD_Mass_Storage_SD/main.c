@@ -42,10 +42,13 @@ void SDH0_IRQHandler(void)
     if (isr & SDH_INTSTS_CDIF_Msk) // card detect
     {
         //----- SD interrupt status
-        // it is work to delay 50 times for SD_CLK = 200KHz
+        // delay 10 us to sync the GPIO and SDH
         {
-            int volatile i;         // delay 30 fail, 50 OK
-            for (i=0; i<0x500; i++);  // delay to make sure got updated value from REG_SDISR.
+            int volatile delay = SystemCoreClock / 1000000 * 10;
+            for(; delay > 0UL; delay--)
+            {
+                __NOP();
+            }
             isr = SDH0->INTSTS;
         }
 
@@ -158,6 +161,10 @@ void SYS_Init(void)
     CLK_EnableModuleClock(SDH0_MODULE);
     CLK_EnableModuleClock(UART0_MODULE);
 
+    /* Update System Core Clock */
+    /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock. */
+    SystemCoreClockUpdate();
+
     /* Set PA.12 ~ PA.14 to input mode */
     PA->MODE &= ~(GPIO_MODE_MODE12_Msk | GPIO_MODE_MODE13_Msk | GPIO_MODE_MODE14_Msk);
     SYS->GPA_MFPH &= ~(SYS_GPA_MFPH_PA12MFP_Msk|SYS_GPA_MFPH_PA13MFP_Msk|SYS_GPA_MFPH_PA14MFP_Msk|SYS_GPA_MFPH_PA15MFP_Msk);
@@ -199,7 +206,7 @@ int32_t main(void)
 
     /* initial SD card */
     SDH_Open(SDH0, CardDetect_From_GPIO);
-    if (SDH_Probe(SDH0))
+    if (SDH_Probe(SDH0) != 0)
     {
         g_u8SdInitFlag = 0;
         printf("SD initial fail!!\n");

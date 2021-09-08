@@ -308,18 +308,21 @@ void SDH0_IRQHandler(void)
     if (isr & SDH_INTSTS_CDIF_Msk)   // card detect
     {
         //----- SD interrupt status
-        // it is work to delay 50 times for SD_CLK = 200KHz
+        // delay 10 us to sync the GPIO and SDH
         {
-            int volatile i;         // delay 30 fail, 50 OK
-            for (i=0; i<0x500; i++);  // delay to make sure got updated value from REG_SDISR.
+            int volatile delay = SystemCoreClock / 1000000 * 10;
+            for(; delay > 0UL; delay--)
+            {
+                __NOP();
+            }
             isr = SDH0->INTSTS;
         }
 
         if (isr & SDH_INTSTS_CDSTS_Msk)
         {
             printf("\n***** card remove !\n");
-            SD1.IsCardInsert = FALSE;   // SDISR_CD_Card = 1 means card remove for GPIO mode
-            memset(&SD1, 0, sizeof(SDH_INFO_T));
+            SD0.IsCardInsert = FALSE;   // SDISR_CD_Card = 1 means card remove for GPIO mode
+            memset(&SD0, 0, sizeof(SDH_INFO_T));
         }
         else
         {
@@ -389,10 +392,13 @@ void SDH1_IRQHandler(void)
     if (isr & SDH_INTSTS_CDIF_Msk)   // card detect
     {
         //----- SD interrupt status
-        // it is work to delay 50 times for SD_CLK = 200KHz
+        // delay 10 us to sync the GPIO and SDH
         {
-            int volatile i;         // delay 30 fail, 50 OK
-            for (i=0; i<0x500; i++);  // delay to make sure got updated value from REG_SDISR.
+            int volatile delay = SystemCoreClock / 1000000 * 10;
+            for(; delay > 0UL; delay--)
+            {
+                __NOP();
+            }
             isr = SDH1->INTSTS;
         }
 
