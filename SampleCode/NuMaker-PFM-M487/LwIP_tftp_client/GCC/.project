@@ -105,15 +105,6 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1545805345866</id>
-			<name>Library/Library</name>
-			<type>5</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-retarget.c</arguments>
-			</matcher>
-		</filter>
-		<filter>
 			<id>1519972746530</id>
 			<name>Library/Library</name>
 			<type>5</type>
@@ -128,7 +119,7 @@
 			<type>5</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-retarget,c</arguments>
+				<arguments>1.0-name-matches-false-false-retarget.c</arguments>
 			</matcher>
 		</filter>
 		<filter>
