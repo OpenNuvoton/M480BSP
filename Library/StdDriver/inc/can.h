@@ -44,6 +44,12 @@ extern "C"
 #define    CAN_REMOTE_FRAME    0ul    /*!< CAN frame select remote frame \hideinitializer */
 #define    CAN_DATA_FRAME    1ul      /*!< CAN frame select data frame \hideinitializer */
 
+/*---------------------------------------------------------------------------------------------------------*/
+/* Mask Bit Definitions                                                                 */
+/*---------------------------------------------------------------------------------------------------------*/
+#define CAN_MASK_MSG_DIR    (0x1ul << 30) /*!< CAN mask direction bit \hideinitializer */
+#define CAN_MASK_EXT_ID_BIT (0x1ul << 31) /*!< CAN mask extended id bit \hideinitializer */
+
 /*@}*/ /* end of group CAN_EXPORTED_CONSTANTS */
 
 
@@ -82,6 +88,28 @@ typedef struct
 /** @addtogroup CAN_EXPORTED_FUNCTIONS CAN Exported Functions
   @{
 */
+
+/**
+ * @brief Specifies the standard identifier mask used for acceptance filtering
+ *
+ * @param[in] mask_bit The standard id mask bits.
+ *
+ * @return Mask ID bit.
+ *
+ *  \hideinitializer
+ */
+#define CAN_STD_ID_MASK(mask_bit) (mask_bit << 18)
+
+/**
+ * @brief Specifies the extended identifier mask used for acceptance filtering
+ *
+ * @param[in] mask_bit The extended id mask bits.
+ *
+ * @return Mask ID bit.
+ *
+*  \hideinitializer
+ */
+#define CAN_EXT_ID_MASK(mask_bit) (mask_bit)
 
 /**
  * @brief Get interrupt status.
