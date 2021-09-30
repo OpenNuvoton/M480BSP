@@ -4,7 +4,7 @@
  * @brief    Implement WDT time-out interrupt event to wake up system and generate
  *           time-out reset system event while WDT time-out reset delay period expired.
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 ~ 2021 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
@@ -93,49 +93,39 @@ void UART0_Init()
     UART_Open(UART0, 115200);
 }
 
-
 int main(void)
 {
     /* Unlock protected registers */
     SYS_UnlockReg();
 
-    /* Init System, peripheral clock and multi-function I/O */
-    SYS_Init();
-
-    /* For M480 series bug, system enters power-down mode (NPD/FWPD/LLPD),
-     * and reset by WDT. If any other NVIC is enabled and that interrupt occurs,
-     * CPU will trap in interrupt handler. Work around solution is as following:
-     * 1. Configure WDT
-     * 2. Enter power down and wake up by WDT time-out
+    /*
+     * There is a M480 issue that wakeup interrupt controller (WIC) will stay
+     * in a wrong state if the system is reset by WDT from NPD/FWPD/LLPD mode.
+     * So it is recommended to disable WDT reset function before enter power
+     * down mode and re-enable after wakeup.
+     *
+     * If keep WDT reset function during power down is required, force M480 to
+     * execute a deep power down / wake up cycle before enable interrupt can
+     * recover the WIC from the wrong state if the system is reset by WDT from
+     * power down mode.
+     *
+     * Please check the section "WDT reset under Power-down mode" in M480 errata
+     * for the detailed description of this issue.
      */
-    /* To check if system has been reset by WDT time-out reset or not */
-    if(SYS_GetResetSrc() & SYS_RSTSTS_WDTRF_Msk)
-    {
-        /* Because of all bits can be written in WDT Control Register are write-protected;
-           To program it needs to disable register protection first. */
-        SYS_UnlockReg();
+    if (SYS_IS_WDT_RST()) {
+        /* Set up DPD power down mode */
+        CLK->PMUSTS |= CLK_PMUSTS_CLRWK_Msk;
+        CLK_SetPowerDownMode(CLK_PMUCTL_PDMSEL_DPD);
 
-        /* Configure WDT settings and start WDT counting */
-        WDT_Open(WDT_TIMEOUT_2POW4, WDT_RESET_DELAY_18CLK, TRUE, TRUE);
+        CLK_SET_WKTMR_INTERVAL(CLK_PMUCTL_WKTMRIS_128);
+        CLK_ENABLE_WKTMR();
 
-        /* Enable WDT interrupt function */
-        WDT_EnableInt();
-
-        /* Enable WDT NVIC */
-        NVIC_EnableIRQ(WDT_IRQn);
-
-        /* If system has been reset by WDT time-out reset, remember to enter
-         * power-down and wait for WDT wake-up */
         CLK_PowerDown();
 
-        /* Clear WDT reset flag */
-        WDT_CLEAR_RESET_FLAG();
-
-        /* Init UART0 for printf */
-        UART0_Init();
-        printf("*** System has been reset by WDT time-out event ***\n\n");
-        while(1);
     }
+
+    /* Init System, peripheral clock and multi-function I/O */
+    SYS_Init();
 
     /* Lock protected registers */
     SYS_LockReg();
@@ -199,4 +189,4 @@ int main(void)
     }
 }
 
-/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2021 Nuvoton Technology Corp. ***/
