@@ -20,7 +20,12 @@
 #define REVEIVE_MODE            (0)
 #define TRANSMIT_MODE           (1)
 
-__weak uint32_t CLK_GetPLLClockFreq(void)
+#ifdef __ICCARM__
+#pragma weak CLK_GetPLLClockFreq
+uint32_t CLK_GetPLLClockFreq(void)
+#else
+__attribute__((weak)) uint32_t CLK_GetPLLClockFreq(void)
+#endif
 {
     return PLL_CLOCK;
 }
