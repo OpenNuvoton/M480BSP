@@ -4,7 +4,7 @@
  * @brief    M480 EMAC driver source file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016-2021 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
@@ -19,6 +19,7 @@
   @{
 */
 
+int32_t g_EMAC_i32ErrCode = 0;       /*!< EMAC global error code */
 
 /* Below are structure, definitions, static variables used locally by EMAC driver and does not want to parse by doxygen unless HIDDEN_SYMBOLS is defined */
 /** @cond HIDDEN_SYMBOLS */
@@ -146,20 +147,24 @@ static uint32_t EMAC_Nsec2Subsec(uint32_t nsec);
   * @param[in]  u32Addr PHY address, this address is board dependent
   * @param[in] u32Data data to write to PHY register
   * @return None
+  * @note This function sets g_EMAC_i32ErrCode to EMAC_TIMEOUT_ERR if EMAC_MIIMCTL_BUSY_Msk
+  *       busy bit does not auto clear after transfer done.
   */
 static void EMAC_MdioWrite(uint32_t u32Reg, uint32_t u32Addr, uint32_t u32Data)
 {
+    /* From preamble to idle is 64-bit transfer, MDC shouldn't be slower than 1MHz */
+    uint32_t u32Delay = SystemCoreClock / 1000000 * 64;
     /* Set data register */
     EMAC->MIIMDAT = u32Data ;
     /* Set PHY address, PHY register address, busy bit and write bit */
     EMAC->MIIMCTL = u32Reg | (u32Addr << 8) | EMAC_MIIMCTL_BUSY_Msk | EMAC_MIIMCTL_WRITE_Msk | EMAC_MIIMCTL_MDCON_Msk;
 
     /* Wait write complete by polling busy bit. */
-    while (EMAC->MIIMCTL & EMAC_MIIMCTL_BUSY_Msk)
+    while ((EMAC->MIIMCTL & EMAC_MIIMCTL_BUSY_Msk) && (--u32Delay))
     {
         ;
     }
-
+    g_EMAC_i32ErrCode = u32Delay > 0 ? 0 :EMAC_TIMEOUT_ERR;
 }
 
 /**
@@ -167,18 +172,23 @@ static void EMAC_MdioWrite(uint32_t u32Reg, uint32_t u32Addr, uint32_t u32Data)
   * @param[in]  u32Reg PHY register number
   * @param[in]  u32Addr PHY address, this address is board dependent
   * @return Value read from PHY register
+  * @note This function sets g_EMAC_i32ErrCode to EMAC_TIMEOUT_ERR if EMAC_MIIMCTL_BUSY_Msk
+  *       busy bit does not auto clear after transfer done.
   */
 static uint32_t EMAC_MdioRead(uint32_t u32Reg, uint32_t u32Addr)
 {
+
+    /* From preamble to idle is 64-bit transfer, MDC shouldn't be slower than 1MHz */
+    uint32_t u32Delay = SystemCoreClock / 1000000 * 64;
     /* Set PHY address, PHY register address, busy bit */
     EMAC->MIIMCTL = u32Reg | (u32Addr << EMAC_MIIMCTL_PHYADDR_Pos) | EMAC_MIIMCTL_BUSY_Msk | EMAC_MIIMCTL_MDCON_Msk;
 
     /* Wait read complete by polling busy bit */
-    while (EMAC->MIIMCTL & EMAC_MIIMCTL_BUSY_Msk)
+    while ((EMAC->MIIMCTL & EMAC_MIIMCTL_BUSY_Msk) && (--u32Delay))
     {
         ;
     }
-
+    g_EMAC_i32ErrCode = u32Delay > 0 ? 0 :EMAC_TIMEOUT_ERR;
     /* Get return data */
     return EMAC->MIIMDAT;
 }
@@ -186,84 +196,107 @@ static uint32_t EMAC_MdioRead(uint32_t u32Reg, uint32_t u32Addr)
 /**
   * @brief  Initialize PHY chip, check for the auto-negotiation result.
   * @param  None
-  * @return None
+  * @return Initial PHY and auto-negotiation success or not
+  * @retval 0 Initial PHY and auto-negotiation success
+  * @retval EMAC_TIMEOUT_ERR Initial PHY and auto-negotiation failed due to timeout error
   */
-void EMAC_PhyInit(void)
+int32_t EMAC_PhyInit(void)
 {
-    uint32_t reg;
-    uint32_t i = 0UL;
+    uint32_t u32Reg;
+    uint32_t u32Delay;
+
+    g_EMAC_i32ErrCode = 0;
 
     /* Reset Phy Chip */
     EMAC_MdioWrite(PHY_CNTL_REG, EMAC_PHY_ADDR, PHY_CNTL_RESET_PHY);
 
-    /* Wait until reset complete */
-    while (1)
+    /* Wait until PHY reset complete.
+       Report error if the reset status is not cleared for more than 0.1 second */
+    u32Delay = SystemCoreClock / 10;
+    while (--u32Delay)
     {
-        reg = EMAC_MdioRead(PHY_CNTL_REG, EMAC_PHY_ADDR) ;
+        u32Reg = EMAC_MdioRead(PHY_CNTL_REG, EMAC_PHY_ADDR) ;
 
-        if ((reg & PHY_CNTL_RESET_PHY) == 0UL)
+        if ((u32Reg & PHY_CNTL_RESET_PHY) == 0UL)
         {
             break;
         }
     }
+    if(u32Delay == 0)
+    {
+        goto error;
+    }
 
+    u32Delay = SystemCoreClock;  // Wait 1 second. Report error if link valid is not set
     while (!(EMAC_MdioRead(PHY_STATUS_REG, EMAC_PHY_ADDR) & PHY_STATUS_LINK_VALID))
     {
-        if (i++ > 80000UL)      /* Cable not connected */
+        if (--u32Delay == 0)      /* Cable not connected */
         {
-            EMAC->CTL &= ~EMAC_CTL_OPMODE_Msk;
-            EMAC->CTL &= ~EMAC_CTL_FUDUP_Msk;
-            break;
+            goto error;
         }
     }
 
-    if (i <= 80000UL)
+    /* Configure auto negotiation capability */
+    EMAC_MdioWrite(PHY_ANA_REG, EMAC_PHY_ADDR, PHY_ANA_DR100_TX_FULL |
+                   PHY_ANA_DR100_TX_HALF |
+                   PHY_ANA_DR10_TX_FULL |
+                   PHY_ANA_DR10_TX_HALF |
+                   PHY_ANA_IEEE_802_3_CSMA_CD);
+    /* Restart auto negotiation */
+    EMAC_MdioWrite(PHY_CNTL_REG, EMAC_PHY_ADDR, EMAC_MdioRead(PHY_CNTL_REG, EMAC_PHY_ADDR) | PHY_CNTL_RESTART_AN);
+
+    /* Wait for auto-negotiation complete
+       Report error if auto-negotiation is not complete in 2 seconds */
+    u32Delay = SystemCoreClock * 2;
+    while (!(EMAC_MdioRead(PHY_STATUS_REG, EMAC_PHY_ADDR) & PHY_STATUS_AN_COMPLETE))
     {
-        /* Configure auto negotiation capability */
-        EMAC_MdioWrite(PHY_ANA_REG, EMAC_PHY_ADDR, PHY_ANA_DR100_TX_FULL |
-                       PHY_ANA_DR100_TX_HALF |
-                       PHY_ANA_DR10_TX_FULL |
-                       PHY_ANA_DR10_TX_HALF |
-                       PHY_ANA_IEEE_802_3_CSMA_CD);
-        /* Restart auto negotiation */
-        EMAC_MdioWrite(PHY_CNTL_REG, EMAC_PHY_ADDR, EMAC_MdioRead(PHY_CNTL_REG, EMAC_PHY_ADDR) | PHY_CNTL_RESTART_AN);
-
-        /* Wait for auto-negotiation complete */
-        while (!(EMAC_MdioRead(PHY_STATUS_REG, EMAC_PHY_ADDR) & PHY_STATUS_AN_COMPLETE))
+        if (--u32Delay == 0)
         {
-            ;
-        }
-
-        /* Check link valid again. Some PHYs needs to check result after link valid bit set */
-        while (!(EMAC_MdioRead(PHY_STATUS_REG, EMAC_PHY_ADDR) & PHY_STATUS_LINK_VALID))
-        {
-            ;
-        }
-
-        /* Check link partner capability */
-        reg = EMAC_MdioRead(PHY_ANLPA_REG, EMAC_PHY_ADDR) ;
-
-        if (reg & PHY_ANLPA_DR100_TX_FULL)
-        {
-            EMAC->CTL |= EMAC_CTL_OPMODE_Msk;
-            EMAC->CTL |= EMAC_CTL_FUDUP_Msk;
-        }
-        else if (reg & PHY_ANLPA_DR100_TX_HALF)
-        {
-            EMAC->CTL |= EMAC_CTL_OPMODE_Msk;
-            EMAC->CTL &= ~EMAC_CTL_FUDUP_Msk;
-        }
-        else if (reg & PHY_ANLPA_DR10_TX_FULL)
-        {
-            EMAC->CTL &= ~EMAC_CTL_OPMODE_Msk;
-            EMAC->CTL |= EMAC_CTL_FUDUP_Msk;
-        }
-        else
-        {
-            EMAC->CTL &= ~EMAC_CTL_OPMODE_Msk;
-            EMAC->CTL &= ~EMAC_CTL_FUDUP_Msk;
+            goto error;
         }
     }
+
+    /* Check link valid again. There're some PHY chips need to re-check link valid
+       bit set after auto-t-negotiation complete before check partner capability.
+       Report error if link valid is not set after 1 second */
+    u32Delay = SystemCoreClock;
+    while (!(EMAC_MdioRead(PHY_STATUS_REG, EMAC_PHY_ADDR) & PHY_STATUS_LINK_VALID))
+    {
+        if (--u32Delay == 0)
+        {
+            goto error;
+        }
+    }
+
+    /* Check link partner capability */
+    u32Reg = EMAC_MdioRead(PHY_ANLPA_REG, EMAC_PHY_ADDR) ;
+
+    if (u32Reg & PHY_ANLPA_DR100_TX_FULL)
+    {
+        EMAC->CTL |= EMAC_CTL_OPMODE_Msk;
+        EMAC->CTL |= EMAC_CTL_FUDUP_Msk;
+    }
+    else if (u32Reg & PHY_ANLPA_DR100_TX_HALF)
+    {
+        EMAC->CTL |= EMAC_CTL_OPMODE_Msk;
+        EMAC->CTL &= ~EMAC_CTL_FUDUP_Msk;
+    }
+    else if (u32Reg & PHY_ANLPA_DR10_TX_FULL)
+    {
+        EMAC->CTL &= ~EMAC_CTL_OPMODE_Msk;
+        EMAC->CTL |= EMAC_CTL_FUDUP_Msk;
+    }
+    else
+    {
+        EMAC->CTL &= ~EMAC_CTL_OPMODE_Msk;
+        EMAC->CTL &= ~EMAC_CTL_FUDUP_Msk;
+    }
+    return 0;
+
+error:
+    EMAC->CTL &= ~EMAC_CTL_OPMODE_Msk;
+    EMAC->CTL &= ~EMAC_CTL_FUDUP_Msk;
+    return EMAC_TIMEOUT_ERR;
 }
 
 /**
@@ -414,14 +447,22 @@ void EMAC_Open(uint8_t *pu8MacAddr)
 /**
   * @brief  This function stop all receive and transmit activity and disable MAC interface
   * @param None
-  * @return None
+  * @return Disable EMAC success or not
+  * @retval 0 Disable EMAC success
+  * @retval EMAC_TIMEOUT_ERR Disable EMAC failed because reset EMAC state machine takes longer than expected
   */
 
-void EMAC_Close(void)
+int32_t EMAC_Close(void)
 {
+    // It takes a few ECLK for the reset bit to be auto-cleared. Add a small counter if something goes wrong.
+    uint32_t u32Delay = 10;
     EMAC->CTL |= EMAC_CTL_RST_Msk;
 
-    while (EMAC->CTL & EMAC_CTL_RST_Msk) {}
+    while ((EMAC->CTL & EMAC_CTL_RST_Msk) && (--u32Delay))
+    {
+        ;
+    }
+    return u32Delay > 0 ? 0 : EMAC_TIMEOUT_ERR;
 }
 
 /**
@@ -478,6 +519,7 @@ void EMAC_DisableCamEntry(uint32_t u32Entry)
   * @return Packet receive success or not
   * @retval 0 No packet available for receive
   * @retval 1 A packet is received
+  * @retval EMAC_BUS_ERR Bus error
   * @note Return 0 doesn't guarantee the packet will be sent and received successfully.
   */
 uint32_t EMAC_RecvPkt(uint8_t *pu8Data, uint32_t *pu32Size)
@@ -493,7 +535,7 @@ uint32_t EMAC_RecvPkt(uint8_t *pu8Data, uint32_t *pu32Size)
     if (reg & EMAC_INTSTS_RXBEIF_Msk)
     {
         /* Bus error occurred, this is usually a bad sign about software bug and will occur again... */
-        while (1) {}
+        return (uint32_t)EMAC_BUS_ERR;
     }
     else
     {
@@ -541,6 +583,7 @@ uint32_t EMAC_RecvPkt(uint8_t *pu8Data, uint32_t *pu32Size)
   * @return Packet receive success or not
   * @retval 0 No packet available for receive
   * @retval 1 A packet is received
+  * @retval EMAC_BUS_ERR Bus error
   * @note Return 0 doesn't guarantee the packet will be sent and received successfully.
   * @note Largest Ethernet packet is 1514 bytes after stripped CRC, application must give
   *       a buffer large enough to store such packet
@@ -558,7 +601,7 @@ uint32_t EMAC_RecvPktTS(uint8_t *pu8Data, uint32_t *pu32Size, uint32_t *pu32Sec,
     if (reg & EMAC_INTSTS_RXBEIF_Msk)
     {
         /* Bus error occurred, this is usually a bad sign about software bug and will occur again... */
-        while (1) {}
+        return (uint32_t)EMAC_BUS_ERR;
     }
     else
     {
@@ -680,6 +723,8 @@ uint32_t EMAC_SendPkt(uint8_t *pu8Data, uint32_t u32Size)
   * @brief Clean up process after packet(s) are sent
   * @param None
   * @return Number of packet sent between two function calls
+  * @retval EMAC_BUS_ERR Bus error
+  * @retval Otherwise Number of packet sent between two function calls
   * @details EMAC Tx interrupt service routine \b must call this API or \ref EMAC_SendPktDoneTS to
   *          release the resource use by transmit process
   */
@@ -698,7 +743,7 @@ uint32_t EMAC_SendPktDone(void)
     if (reg & EMAC_INTSTS_TXBEIF_Msk)
     {
         /* Bus error occurred, this is usually a bad sign about software bug and will occur again... */
-        while (1) {}
+        return (uint32_t)EMAC_BUS_ERR;
     }
     else
     {
@@ -763,6 +808,7 @@ uint32_t EMAC_SendPktDone(void)
   * @return If a packet sent successfully
   * @retval 0 No packet sent successfully, and the value in *pu32Sec and *pu32Nsec are meaningless
   * @retval 1 A packet sent successfully, and the value in *pu32Sec and *pu32Nsec is the time stamp while packet sent
+  * @retval EMAC_BUS_ERR Bus error
   * @details EMAC Tx interrupt service routine \b must call this API or \ref EMAC_SendPktDone to
   *          release the resource use by transmit process
   */
@@ -781,7 +827,7 @@ uint32_t EMAC_SendPktDoneTS(uint32_t *pu32Sec, uint32_t *pu32Nsec)
     if (reg & EMAC_INTSTS_TXBEIF_Msk)
     {
         /* Bus error occurred, this is usually a bad sign about software bug and will occur again... */
-        while (1) {}
+        return (uint32_t)EMAC_BUS_ERR;
     }
     else
     {
@@ -1173,5 +1219,3 @@ void EMAC_RecvPktDoneWoRxTrigger(void)
 /*@}*/ /* end of group EMAC_Driver */
 
 /*@}*/ /* end of group Standard_Driver */
-
-/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/

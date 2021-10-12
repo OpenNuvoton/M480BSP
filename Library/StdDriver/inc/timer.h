@@ -4,7 +4,7 @@
  * @brief    M480 series Timer Controller(Timer) driver header file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016-2021 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __TIMER_H__
 #define __TIMER_H__
@@ -54,6 +54,9 @@ extern "C"
 #define TIMER_TRG_TO_EADC                       (TIMER_TRGCTL_TRGEADC_Msk)        /*!< Each timer event to start ADC conversion \hideinitializer */
 #define TIMER_TRG_TO_DAC                        (TIMER_TRGCTL_TRGDAC_Msk)         /*!< Each timer event to start DAC conversion \hideinitializer */
 #define TIMER_TRG_TO_PDMA                       (TIMER_TRGCTL_TRGPDMA_Msk)        /*!< Each timer event to trigger PDMA transfer \hideinitializer */
+
+#define TIMER_TIMEOUT_ERR                       (-1L)                             /*!< TIMER operation abort due to timeout error \hideinitializer */
+
 
 /*@}*/ /* end of group TIMER_EXPORTED_CONSTANTS */
 
@@ -158,7 +161,6 @@ __STATIC_INLINE uint32_t TIMER_GetWakeupFlag(TIMER_T *timer);
 __STATIC_INLINE void TIMER_ClearWakeupFlag(TIMER_T *timer);
 __STATIC_INLINE uint32_t TIMER_GetCaptureData(TIMER_T *timer);
 __STATIC_INLINE uint32_t TIMER_GetCounter(TIMER_T *timer);
-__STATIC_INLINE void TIMER_ResetCounter(TIMER_T *timer);
 
 /**
   * @brief      Start Timer Counting
@@ -473,28 +475,9 @@ __STATIC_INLINE uint32_t TIMER_GetCounter(TIMER_T *timer)
     return timer->CNT;
 }
 
-/**
-  * @brief      Reset Counter
-  *
-  * @param[in]  timer       The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
-  *
-  * @return     None
-  *
-  * @details    This function is used to reset current counter value and internal prescale counter value.
-  */
-__STATIC_INLINE void TIMER_ResetCounter(TIMER_T *timer)
-{
-    timer->CNT = 0UL;
-    while((timer->CNT&TIMER_CNT_RSTACT_Msk) == TIMER_CNT_RSTACT_Msk)
-    {
-        ;
-    }
-}
-
-
 uint32_t TIMER_Open(TIMER_T *timer, uint32_t u32Mode, uint32_t u32Freq);
 void TIMER_Close(TIMER_T *timer);
-void TIMER_Delay(TIMER_T *timer, uint32_t u32Usec);
+int32_t TIMER_Delay(TIMER_T *timer, uint32_t u32Usec);
 void TIMER_EnableCapture(TIMER_T *timer, uint32_t u32CapMode, uint32_t u32Edge);
 void TIMER_DisableCapture(TIMER_T *timer);
 void TIMER_EnableEventCounter(TIMER_T *timer, uint32_t u32Edge);
@@ -507,6 +490,7 @@ void TIMER_EnableFreqCounter(TIMER_T *timer,
 void TIMER_DisableFreqCounter(TIMER_T *timer);
 void TIMER_SetTriggerSource(TIMER_T *timer, uint32_t u32Src);
 void TIMER_SetTriggerTarget(TIMER_T *timer, uint32_t u32Mask);
+int32_t TIMER_ResetCounter(TIMER_T *timer);
 
 /*@}*/ /* end of group TIMER_EXPORTED_FUNCTIONS */
 
@@ -519,5 +503,3 @@ void TIMER_SetTriggerTarget(TIMER_T *timer, uint32_t u32Mask);
 #endif
 
 #endif /* __TIMER_H__ */
-
-
