@@ -1,7 +1,7 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V1.00
- * @brief    Use lminance 8-bit to 1-bit conversion to
+ * @brief    Use luminance 8-bit to 1-bit conversion to
  *           store captured image from HM01B0 sensor to SRAM.
  *
  * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
@@ -233,7 +233,7 @@ int32_t main (void)
     /* Init Engine clock and Sensor clock */
     CCAP_SetFreq(12000000,12000000);
 
-    /* Using Picket format to Image down scale */
+    /* Using Packet format to Image down scale */
     PacketFormatDownScale();
 
     while(1);

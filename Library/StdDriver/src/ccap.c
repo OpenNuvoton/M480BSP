@@ -16,6 +16,7 @@
   @{
 */
 
+int32_t g_CCAP_i32ErrCode = 0;       /*!< CCAP global error code */
 
 /** @addtogroup CCAP_EXPORTED_FUNCTIONS CCAP Exported Functions
   @{
@@ -175,7 +176,7 @@ void CCAP_EnableMono(uint32_t u32Interface)
  */
 void CCAP_DisableMono(void)
 {
-    CCAP->CTL |= CCAP_CTL_MONO_Msk;
+    CCAP->CTL &= ~CCAP_CTL_MONO_Msk;
 }
 
 /**
@@ -221,16 +222,28 @@ void CCAP_Start(void)
  *             FALSE: Stop Capture module now
  * @return    None
  *
- * @details   if u32FrameComplete is set to TRUE then get a new frame and disable CCAP module
+ * @details   if u32FrameComplete is set to TRUE then get a new frame and disable CCAP module.
+ * @note      This function sets g_CCAP_i32ErrCode to CCAP_TIMEOUT_ERR if the CCAP_IS_STOPPED()
+ *            longer than expected.
  */
 void CCAP_Stop(uint32_t u32FrameComplete)
 {
+    uint32_t u32Delay = SystemCoreClock * 2;  /* 2 second */
+
+    g_CCAP_i32ErrCode = 0;
     if(u32FrameComplete==FALSE)
         CCAP->CTL &= ~CCAP_CTL_CCAPEN;
     else
     {
         CCAP->CTL |= CCAP_CTL_SHUTTER_Msk;
-        while(CCAP_IS_STOPPED());
+        while(!CCAP_IS_STOPPED())
+        {
+            u32Delay--;
+            if(u32Delay == 0){
+                g_CCAP_i32ErrCode = CCAP_TIMEOUT_ERR;
+                break;
+            }
+        }
     }
 }
 

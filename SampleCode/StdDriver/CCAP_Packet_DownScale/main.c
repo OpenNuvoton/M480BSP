@@ -229,7 +229,7 @@ int32_t main (void)
     /* Init Engine clock and Sensor clock */
     CCAPSetFreq(12000000,12000000);
 
-    /* Using Picket format to Image down scale */
+    /* Using Packet format to Image down scale */
     PacketFormatDownScale();
 
     while(1);

@@ -238,7 +238,7 @@ int32_t main (void)
     /* Init Engine clock and Sensor clock */
     CCAPSetFreq(12000000,12000000);
 
-    /* Using Picket format to Image down scale */
+    /* Using Packet format to Image down scale */
     if(PacketFormatDownScale()>=0){
         /* jpeg encode */
         JpegEncode(u8FrameBuffer, u8JpegBuffer, &u32JpegSize, SYSTEM_WIDTH, SYSTEM_HEIGHT);
