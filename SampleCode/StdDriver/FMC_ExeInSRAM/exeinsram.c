@@ -44,18 +44,30 @@ int32_t FlashAccess_OnSRAM(void)
     u32Addr = APROM_TEST_BASE;
     FMC_Erase(u32Addr); /* Erase page */
 
-    for (u32Cnt = 0; u32Cnt < FMC_FLASH_PAGE_SIZE; u32Cnt += 4) {
+    for (u32Cnt = 0; u32Cnt < FMC_FLASH_PAGE_SIZE; u32Cnt += 4)
+    {
         /* Write Demo */
         u32Data = u32Cnt + 0x12345678;
-        FMC_Write(u32Addr + u32Cnt, u32Data);
+
+        if (FMC_Write(u32Addr + u32Cnt, u32Data) != 0)
+        {
+            printf("FMC_Write failed!\n");
+            while (1);
+        }
 
         if ((u32Cnt & 0xf) == 0)
             printf(".");
 
         /* Read Demo */
         u32RData = FMC_Read(u32Addr + u32Cnt);
+        if (g_FMC_i32ErrCode != 0)
+        {
+            printf("FMC_Read failed!\n");
+            while (1);
+        }
 
-        if (u32Data != u32RData) {
+        if (u32Data != u32RData)
+        {
             printf("[Read/Write FAIL]\n");
             while (1);
         }
@@ -64,7 +76,6 @@ int32_t FlashAccess_OnSRAM(void)
     printf("\nCurrent program counter: 0x%x\n", __get_PC());
 
     printf("\nISP function demo done.\n");
-
 
     FMC_DISABLE_AP_UPDATE();
     SYS_LockReg();

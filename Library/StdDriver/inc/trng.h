@@ -32,8 +32,8 @@ extern "C"
 /*----------------------------------------------------------------------------------------------*/
 
 /**
-  * @brief  Let TRNG engine know the currrent PCLK frequency. The CLKPSC is the peripheral 
-  *         clock frequency range for the selected value , the CLKPSC setting must be higher 
+  * @brief  Let TRNG engine know the currrent PCLK frequency. The CLKPSC is the peripheral
+  *         clock frequency range for the selected value , the CLKPSC setting must be higher
   *         than or equal to the actual peripheral clock frequency (for correct random generation).
   * @param  clkpsc   0: PCLK is 80~100 MHz
   *                  1: PCLK is 60~80 MHz
@@ -64,7 +64,7 @@ extern "C"
 /*  Functions                                                                                      */
 /*---------------------------------------------------------------------------------------------------------*/
 
-void TRNG_Open(void);
+int32_t TRNG_Open(void);
 int32_t TRNG_GenWord(uint32_t *u32RndNum);
 int32_t TRNG_GenBignum(uint8_t u8BigNum[], int32_t i32Len);
 int32_t TRNG_GenBignumHex(char cBigNumHex[], int32_t i32Len);

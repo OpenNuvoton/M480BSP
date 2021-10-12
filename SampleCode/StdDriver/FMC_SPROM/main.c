@@ -62,6 +62,7 @@ void UART0_Init(void)
 
 int main()
 {
+    int32_t  ret;
     char     chr;                      /* user input character                            */
 
     SYS_Init();                        /* Init System, IP clock and multi-function I/O    */
@@ -113,7 +114,12 @@ int main()
                  * effective until next chip boot. Because FMC check SPROM secure
                  * byte only when chip booting.
                  */
-                FMC_Write(FMC_SPROM_END-4, 0x33333333);
+                if (FMC_Write(FMC_SPROM_END-4, 0x33333333) != 0)
+                {
+                    printf("FMC_Write address FMC_SPROM_END-4 failed!\n");
+                    while (1);
+                }
+
                 /*
                  * Issued a chip reset to make SPROM secure mode take effects.
                  */
@@ -129,8 +135,13 @@ int main()
             if ((chr == 'y') || (chr == 'Y'))
             {
                 FMC_ENABLE_SP_UPDATE();      /* enable SPROM update                   */
-                FMC_Erase_SPROM();           /* erase SPROM                           */
+                ret = FMC_Erase_SPROM();     /* erase SPROM                           */
                 FMC_DISABLE_SP_UPDATE();     /* disable SPROM update                  */
+                if (ret != 0)
+                {
+                    printf("FMC_Erase_SPROM failed!\n");
+                    while (1);
+                }
                 printf("\n\nSPROM is erased.\n");
             }
             break;

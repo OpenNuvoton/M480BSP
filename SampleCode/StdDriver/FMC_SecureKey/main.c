@@ -1,7 +1,7 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V1.00
- * @brief    This sample shows how to setup the secure key (KPROM) and how 
+ * @brief    This sample shows how to setup the secure key (KPROM) and how
  *           to perform secure key comparison.
  *
  *
@@ -93,10 +93,11 @@ void dump_key_status()
 
 int main()
 {
+    int32_t   ret;
+
     SYS_Init();                        /* Init System, IP clock and multi-function I/O */
 
     UART0_Init();                      /* Initialize UART0 */
-
 
     printf("+-----------------------------------------+\n");
     printf("|   FMC Secure Key (KPROM) Sample Demo    |\n");
@@ -116,20 +117,39 @@ int main()
     printf("The security key status after key setup:\n");
     dump_key_status();                 /* Dump FMC security key status. */
 
-    FMC_CompareSPKey(bad_key);         /* Enter a wrong key for key comparison. */
+    ret = FMC_CompareSPKey(bad_key);   /* Enter a wrong key for key comparison. */
     printf("The security key status after enter a wrong key:\n");
     dump_key_status();                 /* Dump FMC security key status. */
+    if (ret != -3)
+    {
+        printf("Unexpected error on comparing a bad key!\n");
+        while (1);
+    }
 
-    FMC_CompareSPKey(bad_key);         /* Enter a wrong key for key comparison. */
+    ret = FMC_CompareSPKey(bad_key);   /* Enter a wrong key for key comparison. */
     printf("The security key status after enter a wrong key second time:\n");
     dump_key_status();                 /* Dump FMC security key status. */
+    if (ret != -3)
+    {
+        printf("Unexpected error on comparing a bad key!\n");
+        while (1);
+    }
 
-    FMC_CompareSPKey(good_key);        /* Enter the right key for key comparison. */
+    ret = FMC_CompareSPKey(good_key);  /* Enter the right key for key comparison. */
     printf("The security key status after enter a good key.\n");
     dump_key_status();                 /* Dump FMC security key status. */
+    if (ret != 0)
+    {
+        printf("Unexpected error on comparing a good key!\n");
+        while (1);
+    }
 
     printf("Erase KPROM key.\n");
-    FMC_Erase(FMC_KPROM_BASE);
+    if (FMC_Erase(FMC_KPROM_BASE) != 0)
+    {
+        printf("FMC_Erase FMC_KPROM_BASE failed!\n");
+        while (1);
+    }
 
     printf("Test done.\n");
     while (1);

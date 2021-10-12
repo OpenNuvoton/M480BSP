@@ -21,6 +21,8 @@
 #define CRPT_DBGMSG(...)   do { } while (0)       /* disable debug */
 #endif
 
+#define TIMEOUT_ECC        SystemCoreClock    /* 1 second time-out */
+
 /** @endcond HIDDEN_SYMBOLS */
 
 /** @addtogroup Standard_Driver Standard Driver
@@ -889,7 +891,7 @@ static ECC_CURVE  Curve_Copy;
 
 static ECC_CURVE * get_curve(E_ECC_CURVE ecc_curve);
 static int32_t ecc_init_curve(CRPT_T *crpt, E_ECC_CURVE ecc_curve);
-static void run_ecc_codec(CRPT_T *crpt, uint32_t mode);
+static int32_t run_ecc_codec(CRPT_T *crpt, uint32_t mode);
 
 static char  temp_hex_str[160];
 
@@ -1034,52 +1036,49 @@ static ECC_CURVE * get_curve(E_ECC_CURVE ecc_curve)
 
 static int32_t ecc_init_curve(CRPT_T *crpt, E_ECC_CURVE ecc_curve)
 {
-    int32_t  i, ret = 0;
+    int32_t  i;
 
     pCurve = get_curve(ecc_curve);
     if (pCurve == NULL)
     {
         CRPT_DBGMSG("Cannot find curve %d!!\n", ecc_curve);
-        ret = -1;
+        return -2;
     }
 
-    if (ret == 0)
+    for (i = 0; i < 18; i++)
     {
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_A[i] = 0UL;
-            crpt->ECC_B[i] = 0UL;
-            crpt->ECC_X1[i] = 0UL;
-            crpt->ECC_Y1[i] = 0UL;
-            crpt->ECC_N[i] = 0UL;
-        }
+        crpt->ECC_A[i] = 0UL;
+        crpt->ECC_B[i] = 0UL;
+        crpt->ECC_X1[i] = 0UL;
+        crpt->ECC_Y1[i] = 0UL;
+        crpt->ECC_N[i] = 0UL;
+    }
 
-        Hex2Reg(pCurve->Ea, crpt->ECC_A);
-        Hex2Reg(pCurve->Eb, crpt->ECC_B);
-        Hex2Reg(pCurve->Px, crpt->ECC_X1);
-        Hex2Reg(pCurve->Py, crpt->ECC_Y1);
+    Hex2Reg(pCurve->Ea, crpt->ECC_A);
+    Hex2Reg(pCurve->Eb, crpt->ECC_B);
+    Hex2Reg(pCurve->Px, crpt->ECC_X1);
+    Hex2Reg(pCurve->Py, crpt->ECC_Y1);
 
-        CRPT_DBGMSG("Key length = %d\n", pCurve->key_len);
-        dump_ecc_reg("CRPT_ECC_CURVE_A", crpt->ECC_A, 10);
-        dump_ecc_reg("CRPT_ECC_CURVE_B", crpt->ECC_B, 10);
-        dump_ecc_reg("CRPT_ECC_POINT_X1", crpt->ECC_X1, 10);
-        dump_ecc_reg("CRPT_ECC_POINT_Y1", crpt->ECC_Y1, 10);
+    CRPT_DBGMSG("Key length = %d\n", pCurve->key_len);
+    dump_ecc_reg("CRPT_ECC_CURVE_A", crpt->ECC_A, 10);
+    dump_ecc_reg("CRPT_ECC_CURVE_B", crpt->ECC_B, 10);
+    dump_ecc_reg("CRPT_ECC_POINT_X1", crpt->ECC_X1, 10);
+    dump_ecc_reg("CRPT_ECC_POINT_Y1", crpt->ECC_Y1, 10);
 
-        if (pCurve->GF == (int)CURVE_GF_2M)
-        {
-            crpt->ECC_N[0] = 0x1UL;
-            crpt->ECC_N[(pCurve->key_len) / 32] |= (1UL << ((pCurve->key_len) % 32));
-            crpt->ECC_N[(pCurve->irreducible_k1) / 32] |= (1UL << ((pCurve->irreducible_k1) % 32));
-            crpt->ECC_N[(pCurve->irreducible_k2) / 32] |= (1UL << ((pCurve->irreducible_k2) % 32));
-            crpt->ECC_N[(pCurve->irreducible_k3) / 32] |= (1UL << ((pCurve->irreducible_k3) % 32));
-        }
-        else
-        {
-            Hex2Reg(pCurve->Pp, crpt->ECC_N);
-        }
+    if (pCurve->GF == (int)CURVE_GF_2M)
+    {
+        crpt->ECC_N[0] = 0x1UL;
+        crpt->ECC_N[(pCurve->key_len) / 32] |= (1UL << ((pCurve->key_len) % 32));
+        crpt->ECC_N[(pCurve->irreducible_k1) / 32] |= (1UL << ((pCurve->irreducible_k1) % 32));
+        crpt->ECC_N[(pCurve->irreducible_k2) / 32] |= (1UL << ((pCurve->irreducible_k2) % 32));
+        crpt->ECC_N[(pCurve->irreducible_k3) / 32] |= (1UL << ((pCurve->irreducible_k3) % 32));
+    }
+    else
+    {
+        Hex2Reg(pCurve->Pp, crpt->ECC_N);
     }
     dump_ecc_reg("CRPT_ECC_CURVE_N", crpt->ECC_N, 10);
-    return ret;
+    return 0;
 }
 
 static int  get_nibble_value(char c)
@@ -1160,7 +1159,7 @@ void ECC_Complete(CRPT_T *crpt)
   * @param[in]  private_k   The input private key.
   * @return  1    Is valid.
   * @return  0    Is not valid.
-  * @return  -1   Invalid curve.
+  * @return  -2   Invalid curve.
   */
 int ECC_IsPrivateKeyValid(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char private_k[])
 {
@@ -1170,7 +1169,7 @@ int ECC_IsPrivateKeyValid(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char private_k[])
     pCurve = get_curve(ecc_curve);
     if (pCurve == NULL)
     {
-        ret = -1;
+        ret = -2;
     }
 
     if (strlen(private_k) < strlen(pCurve->Eorder))
@@ -1207,49 +1206,50 @@ int ECC_IsPrivateKeyValid(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char private_k[])
   * @param[out] public_k1   The output public key 1.
   * @param[out] public_k2   The output public key 2.
   * @return  0    Success.
-  * @return  -1   "ecc_curve" value is invalid.
+  * @return  -1   H/W error or time-out
+  * @return  -2   "ecc_curve" value is invalid.
   */
 int32_t  ECC_GeneratePublicKey(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *private_k, char public_k1[], char public_k2[])
 {
-    int32_t  i, ret = 0;
+    uint32_t  tout;
+    int32_t   i;
 
     if (ecc_init_curve(crpt, ecc_curve) != 0)
     {
-        ret = -1;
+        return -2;
     }
 
-    if (ret == 0)
+    for (i = 0; i < 18; i++)
     {
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_K[i] = 0UL;
-        }
-        Hex2Reg(private_k, crpt->ECC_K);
+        crpt->ECC_K[i] = 0UL;
+    }
+    Hex2Reg(private_k, crpt->ECC_K);
 
-        /* set FSEL (Field selection) */
-        if (pCurve->GF == (int)CURVE_GF_2M)
-        {
-            crpt->ECC_CTL = 0UL;
-        }
-        else
-        {
-            /*  CURVE_GF_P */
-            crpt->ECC_CTL = CRPT_ECC_CTL_FSEL_Msk;
-        }
-
-        g_ECC_done = g_ECCERR_done = 0UL;
-        crpt->ECC_CTL |= ((uint32_t)pCurve->key_len << CRPT_ECC_CTL_CURVEM_Pos) |
-                         ECCOP_POINT_MUL | CRPT_ECC_CTL_START_Msk;
-
-        while ((g_ECC_done | g_ECCERR_done) == 0UL)
-        {
-        }
-
-        Reg2Hex(pCurve->Echar, crpt->ECC_X1, public_k1);
-        Reg2Hex(pCurve->Echar, crpt->ECC_Y1, public_k2);
+    /* set FSEL (Field selection) */
+    if (pCurve->GF == (int)CURVE_GF_2M)
+    {
+        crpt->ECC_CTL = 0UL;
+    }
+    else
+    {
+        /*  CURVE_GF_P */
+        crpt->ECC_CTL = CRPT_ECC_CTL_FSEL_Msk;
     }
 
-    return ret;
+    g_ECC_done = g_ECCERR_done = 0UL;
+    crpt->ECC_CTL |= ((uint32_t)pCurve->key_len << CRPT_ECC_CTL_CURVEM_Pos) |
+                     ECCOP_POINT_MUL | CRPT_ECC_CTL_START_Msk;
+
+    tout = TIMEOUT_ECC;
+    while ((tout-- > 0) && ((g_ECC_done | g_ECCERR_done) == 0UL))
+    {
+    }
+    if ((tout == 0) || g_ECCERR_done)
+        return -1;
+
+    Reg2Hex(pCurve->Echar, crpt->ECC_X1, public_k1);
+    Reg2Hex(pCurve->Echar, crpt->ECC_Y1, public_k2);
+    return 0;
 }
 
 /**
@@ -1262,53 +1262,54 @@ int32_t  ECC_GeneratePublicKey(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *privat
   * @param[out] x2          The x-coordinate of output point.
   * @param[out] y2          The y-coordinate of output point.
   * @return  0    Success.
-  * @return  -1   "ecc_curve" value is invalid.
+  * @return  -1   H/W error or time-out
+  * @return  -2   "ecc_curve" value is invalid.
   */
 int32_t  ECC_Mutiply(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char x1[], char y1[], char *k, char x2[], char y2[])
 {
-    int32_t  i, ret = 0;
+    uint32_t  tout;
+    int32_t   i;
 
     if (ecc_init_curve(crpt, ecc_curve) != 0)
     {
-        ret = -1;
+        return -2;
     }
 
-    if (ret == 0)
+    for (i = 0; i < 18; i++)
     {
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_X1[i] = 0UL;
-            crpt->ECC_Y1[i] = 0UL;
-            crpt->ECC_K[i] = 0UL;
-        }
-        Hex2Reg(x1, crpt->ECC_X1);
-        Hex2Reg(y1, crpt->ECC_Y1);
-        Hex2Reg(k, crpt->ECC_K);
+        crpt->ECC_X1[i] = 0UL;
+        crpt->ECC_Y1[i] = 0UL;
+        crpt->ECC_K[i] = 0UL;
+    }
+    Hex2Reg(x1, crpt->ECC_X1);
+    Hex2Reg(y1, crpt->ECC_Y1);
+    Hex2Reg(k, crpt->ECC_K);
 
-        /* set FSEL (Field selection) */
-        if (pCurve->GF == (int)CURVE_GF_2M)
-        {
-            crpt->ECC_CTL = 0UL;
-        }
-        else
-        {
-            /*  CURVE_GF_P */
-            crpt->ECC_CTL = CRPT_ECC_CTL_FSEL_Msk;
-        }
-
-        g_ECC_done = g_ECCERR_done = 0UL;
-        crpt->ECC_CTL |= ((uint32_t)pCurve->key_len << CRPT_ECC_CTL_CURVEM_Pos) |
-                         ECCOP_POINT_MUL | CRPT_ECC_CTL_START_Msk;
-
-        while ((g_ECC_done | g_ECCERR_done) == 0UL)
-        {
-        }
-
-        Reg2Hex(pCurve->Echar, crpt->ECC_X1, x2);
-        Reg2Hex(pCurve->Echar, crpt->ECC_Y1, y2);
+    /* set FSEL (Field selection) */
+    if (pCurve->GF == (int)CURVE_GF_2M)
+    {
+        crpt->ECC_CTL = 0UL;
+    }
+    else
+    {
+        /*  CURVE_GF_P */
+        crpt->ECC_CTL = CRPT_ECC_CTL_FSEL_Msk;
     }
 
-    return ret;
+    g_ECC_done = g_ECCERR_done = 0UL;
+    crpt->ECC_CTL |= ((uint32_t)pCurve->key_len << CRPT_ECC_CTL_CURVEM_Pos) |
+                     ECCOP_POINT_MUL | CRPT_ECC_CTL_START_Msk;
+
+    tout = TIMEOUT_ECC;
+    while ((tout-- > 0) && ((g_ECC_done | g_ECCERR_done) == 0UL))
+    {
+    }
+    if ((tout == 0) || g_ECCERR_done)
+        return -1;
+
+    Reg2Hex(pCurve->Echar, crpt->ECC_X1, x2);
+    Reg2Hex(pCurve->Echar, crpt->ECC_Y1, y2);
+    return 0;
 }
 
 /**
@@ -1320,72 +1321,75 @@ int32_t  ECC_Mutiply(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char x1[], char y1[], 
   * @param[in]  public_k2   The other party's publick key 2.
   * @param[out] secret_z    The ECC CDH secret Z.
   * @return  0    Success.
-  * @return  -1   "ecc_curve" value is invalid.
+  * @return  -1   H/W error or time-out
+  * @return  -2   "ecc_curve" value is invalid.
   */
 int32_t  ECC_GenerateSecretZ(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *private_k, char public_k1[], char public_k2[], char secret_z[])
 {
-    int32_t  i, ret = 0;
+    uint32_t  tout;
+    int32_t   i;
 
     if (ecc_init_curve(crpt, ecc_curve) != 0)
     {
-        ret = -1;
+        return -2;
     }
 
-    if (ret == 0)
+    for (i = 0; i < 18; i++)
     {
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_K[i] = 0UL;
-            crpt->ECC_X1[i] = 0UL;
-            crpt->ECC_Y1[i] = 0UL;
-        }
-
-        if ((ecc_curve == CURVE_B_163) || (ecc_curve == CURVE_B_233) || (ecc_curve == CURVE_B_283) ||
-                (ecc_curve == CURVE_B_409) || (ecc_curve == CURVE_B_571) || (ecc_curve == CURVE_K_163))
-        {
-            Hex2RegEx(private_k, crpt->ECC_K, 1);
-        }
-        else if ((ecc_curve == CURVE_K_233) || (ecc_curve == CURVE_K_283) ||
-                 (ecc_curve == CURVE_K_409) || (ecc_curve == CURVE_K_571))
-        {
-            Hex2RegEx(private_k, crpt->ECC_K, 2);
-        }
-        else
-        {
-            Hex2Reg(private_k, crpt->ECC_K);
-        }
-
-        Hex2Reg(public_k1, crpt->ECC_X1);
-        Hex2Reg(public_k2, crpt->ECC_Y1);
-
-        /* set FSEL (Field selection) */
-        if (pCurve->GF == (int)CURVE_GF_2M)
-        {
-            crpt->ECC_CTL = 0UL;
-        }
-        else
-        {
-            /*  CURVE_GF_P */
-            crpt->ECC_CTL = CRPT_ECC_CTL_FSEL_Msk;
-        }
-        g_ECC_done = g_ECCERR_done = 0UL;
-        crpt->ECC_CTL |= ((uint32_t)pCurve->key_len << CRPT_ECC_CTL_CURVEM_Pos) |
-                         ECCOP_POINT_MUL | CRPT_ECC_CTL_START_Msk;
-
-        while ((g_ECC_done | g_ECCERR_done) == 0UL)
-        {
-        }
-
-        Reg2Hex(pCurve->Echar, crpt->ECC_X1, secret_z);
+        crpt->ECC_K[i] = 0UL;
+        crpt->ECC_X1[i] = 0UL;
+        crpt->ECC_Y1[i] = 0UL;
     }
 
-    return ret;
+    if ((ecc_curve == CURVE_B_163) || (ecc_curve == CURVE_B_233) || (ecc_curve == CURVE_B_283) ||
+            (ecc_curve == CURVE_B_409) || (ecc_curve == CURVE_B_571) || (ecc_curve == CURVE_K_163))
+    {
+        Hex2RegEx(private_k, crpt->ECC_K, 1);
+    }
+    else if ((ecc_curve == CURVE_K_233) || (ecc_curve == CURVE_K_283) ||
+             (ecc_curve == CURVE_K_409) || (ecc_curve == CURVE_K_571))
+    {
+        Hex2RegEx(private_k, crpt->ECC_K, 2);
+    }
+    else
+    {
+        Hex2Reg(private_k, crpt->ECC_K);
+    }
+
+    Hex2Reg(public_k1, crpt->ECC_X1);
+    Hex2Reg(public_k2, crpt->ECC_Y1);
+
+    /* set FSEL (Field selection) */
+    if (pCurve->GF == (int)CURVE_GF_2M)
+    {
+        crpt->ECC_CTL = 0UL;
+    }
+    else
+    {
+        /*  CURVE_GF_P */
+        crpt->ECC_CTL = CRPT_ECC_CTL_FSEL_Msk;
+    }
+    g_ECC_done = g_ECCERR_done = 0UL;
+    crpt->ECC_CTL |= ((uint32_t)pCurve->key_len << CRPT_ECC_CTL_CURVEM_Pos) |
+                     ECCOP_POINT_MUL | CRPT_ECC_CTL_START_Msk;
+
+    tout = TIMEOUT_ECC;
+    while ((tout-- > 0) && ((g_ECC_done | g_ECCERR_done) == 0UL))
+    {
+    }
+    if ((tout == 0) || g_ECCERR_done)
+        return -1;
+
+    Reg2Hex(pCurve->Echar, crpt->ECC_X1, secret_z);
+    return 0;
 }
 
 /** @cond HIDDEN_SYMBOLS */
 
-static void run_ecc_codec(CRPT_T *crpt, uint32_t mode)
+static int32_t run_ecc_codec(CRPT_T *crpt, uint32_t mode)
 {
+    uint32_t  tout;
+
     if ((mode & CRPT_ECC_CTL_ECCOP_Msk) == ECCOP_MODULE)
     {
         crpt->ECC_CTL = CRPT_ECC_CTL_FSEL_Msk;
@@ -1406,13 +1410,22 @@ static void run_ecc_codec(CRPT_T *crpt, uint32_t mode)
 
     g_ECC_done = g_ECCERR_done = 0UL;
     crpt->ECC_CTL |= ((uint32_t)pCurve->key_len << CRPT_ECC_CTL_CURVEM_Pos) | mode | CRPT_ECC_CTL_START_Msk;
-    while ((g_ECC_done | g_ECCERR_done) == 0UL)
-    {
-    }
 
-    while (crpt->ECC_STS & CRPT_ECC_STS_BUSY_Msk)
+    tout = TIMEOUT_ECC;
+    while ((tout-- > 0) && ((g_ECC_done | g_ECCERR_done) == 0UL))
     {
     }
+    if ((tout == 0) || g_ECCERR_done)
+        return -1;
+
+    tout = TIMEOUT_ECC;
+    while ((tout-- > 0) && (crpt->ECC_STS & CRPT_ECC_STS_BUSY_Msk))
+    {
+    }
+    if (tout == 0)
+        return -1;
+    else
+        return 0;
 }
 /** @endcond HIDDEN_SYMBOLS */
 
@@ -1426,227 +1439,229 @@ static void run_ecc_codec(CRPT_T *crpt, uint32_t mode)
   * @param[out] R           R of the (R,S) pair digital signature
   * @param[out] S           S of the (R,S) pair digital signature
   * @return  0    Success.
-  * @return  -1   "ecc_curve" value is invalid.
+  * @return  -1   H/W error or time-out
+  * @return  -2   "ecc_curve" value is invalid.
   */
 int32_t  ECC_GenerateSignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message,
                                char *d, char *k, char *R, char *S)
 {
     uint32_t volatile temp_result1[18], temp_result2[18];
-    int32_t  i, ret = 0;
+    int32_t  i;
 
     if (ecc_init_curve(crpt, ecc_curve) != 0)
     {
-        ret = -1;
+        return -2;
     }
 
-    if (ret == 0)
+    /*
+     *   1. Calculate e = HASH(m), where HASH is a cryptographic hashing algorithm, (i.e. SHA-1)
+     *      (1) Use SHA to calculate e
+     */
+
+    /*   2. Select a random integer k form [1, n-1]
+     *      (1) Notice that n is order, not prime modulus or irreducible polynomial function
+     */
+
+    /*
+     *   3. Compute r = x1 (mod n), where (x1, y1) = k * G. If r = 0, go to step 2
+     *      (1) Write the curve parameter A, B, and curve length M to corresponding registers
+     *      (2) Write the prime modulus or irreducible polynomial function to N registers according
+     *      (3) Write the point G(x, y) to X1, Y1 registers
+     *      (4) Write the random integer k to K register
+     *      (5) Set ECCOP(CRPT_ECC_CTL[10:9]) to 00
+     *      (6) Set FSEL(CRPT_ECC_CTL[8]) according to used curve of prime field or binary field
+     *      (7) Set START(CRPT_ECC_CTL[0]) to 1
+     *      (8) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
+     *      (9) Write the curve order and curve length to N ,M registers according
+     *      (10) Write 0x0 to Y1 registers
+     *      (11) Set ECCOP(CRPT_ECC_CTL[10:9]) to 01
+     *      (12) Set MOPOP(CRPT_ECC_CTL[12:11]) to 10
+     *      (13) Set START(CRPT_ECC_CTL[0]) to 1         *
+     *      (14) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
+     *      (15) Read X1 registers to get r
+     */
+
+    /* 3-(4) Write the random integer k to K register */
+    for (i = 0; i < 18; i++)
     {
-        /*
-         *   1. Calculate e = HASH(m), where HASH is a cryptographic hashing algorithm, (i.e. SHA-1)
-         *      (1) Use SHA to calculate e
-         */
+        crpt->ECC_K[i] = 0UL;
+    }
+    Hex2Reg(k, crpt->ECC_K);
 
-        /*   2. Select a random integer k form [1, n-1]
-         *      (1) Notice that n is order, not prime modulus or irreducible polynomial function
-         */
+    if (run_ecc_codec(crpt, ECCOP_POINT_MUL) != 0)
+        return -1;
 
-        /*
-         *   3. Compute r = x1 (mod n), where (x1, y1) = k * G. If r = 0, go to step 2
-         *      (1) Write the curve parameter A, B, and curve length M to corresponding registers
-         *      (2) Write the prime modulus or irreducible polynomial function to N registers according
-         *      (3) Write the point G(x, y) to X1, Y1 registers
-         *      (4) Write the random integer k to K register
-         *      (5) Set ECCOP(CRPT_ECC_CTL[10:9]) to 00
-         *      (6) Set FSEL(CRPT_ECC_CTL[8]) according to used curve of prime field or binary field
-         *      (7) Set START(CRPT_ECC_CTL[0]) to 1
-         *      (8) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
-         *      (9) Write the curve order and curve length to N ,M registers according
-         *      (10) Write 0x0 to Y1 registers
-         *      (11) Set ECCOP(CRPT_ECC_CTL[10:9]) to 01
-         *      (12) Set MOPOP(CRPT_ECC_CTL[12:11]) to 10
-         *      (13) Set START(CRPT_ECC_CTL[0]) to 1         *
-         *      (14) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
-         *      (15) Read X1 registers to get r
-         */
+    /*  3-(9) Write the curve order to N registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_N[i] = 0UL;
+    }
+    Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
-        /* 3-(4) Write the random integer k to K register */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_K[i] = 0UL;
-        }
-        Hex2Reg(k, crpt->ECC_K);
+    /* 3-(10) Write 0x0 to Y1 registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_Y1[i] = 0UL;
+    }
 
-        run_ecc_codec(crpt, ECCOP_POINT_MUL);
+    if (run_ecc_codec(crpt, ECCOP_MODULE | MODOP_ADD) != 0)
+        return -1;
 
-        /*  3-(9) Write the curve order to N registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_N[i] = 0UL;
-        }
-        Hex2Reg(pCurve->Eorder, crpt->ECC_N);
+    /* 3-(15) Read X1 registers to get r */
+    for (i = 0; i < 18; i++)
+    {
+        temp_result1[i] = crpt->ECC_X1[i];
+    }
 
-        /* 3-(10) Write 0x0 to Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_Y1[i] = 0UL;
-        }
+    Reg2Hex(pCurve->Echar, temp_result1, R);
 
-        run_ecc_codec(crpt, ECCOP_MODULE | MODOP_ADD);
+    /*
+     *   4. Compute s = k ? 1 ｝ (e + d ｝ r)(mod n). If s = 0, go to step 2
+     *      (1) Write the curve order to N registers according
+     *      (2) Write 0x1 to Y1 registers
+     *      (3) Write the random integer k to X1 registers according
+     *      (4) Set ECCOP(CRPT_ECC_CTL[10:9]) to 01
+     *      (5) Set MOPOP(CRPT_ECC_CTL[12:11]) to 00
+     *      (6) Set START(CRPT_ECC_CTL[0]) to 1
+     *      (7) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
+     *      (8) Read X1 registers to get k^-1
+     *      (9) Write the curve order and curve length to N ,M registers
+     *      (10) Write r, d to X1, Y1 registers
+     *      (11) Set ECCOP(CRPT_ECC_CTL[10:9]) to 01
+     *      (12) Set MOPOP(CRPT_ECC_CTL[12:11]) to 01
+     *      (13) Set START(CRPT_ECC_CTL[0]) to 1
+     *      (14) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
+     *      (15) Write the curve order to N registers
+     *      (16) Write e to Y1 registers
+     *      (17) Set ECCOP(CRPT_ECC_CTL[10:9]) to 01
+     *      (18) Set MOPOP(CRPT_ECC_CTL[12:11]) to 10
+     *      (19) Set START(CRPT_ECC_CTL[0]) to 1
+     *      (20) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
+     *      (21) Write the curve order and curve length to N ,M registers
+     *      (22) Write k^-1 to Y1 registers
+     *      (23) Set ECCOP(CRPT_ECC_CTL[10:9]) to 01
+     *      (24) Set MOPOP(CRPT_ECC_CTL[12:11]) to 01
+     *      (25) Set START(CRPT_ECC_CTL[0]) to 1
+     *      (26) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
+     *      (27) Read X1 registers to get s
+     */
 
-        /* 3-(15) Read X1 registers to get r */
-        for (i = 0; i < 18; i++)
-        {
-            temp_result1[i] = crpt->ECC_X1[i];
-        }
+    /* S/W: GFp_add_mod_order(pCurve->key_len+2, 0, x1, a, R); */
 
-        Reg2Hex(pCurve->Echar, temp_result1, R);
+    /*  4-(1) Write the curve order to N registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_N[i] = 0UL;
+    }
+    Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
-        /*
-         *   4. Compute s = k ? 1 ｝ (e + d ｝ r)(mod n). If s = 0, go to step 2
-         *      (1) Write the curve order to N registers according
-         *      (2) Write 0x1 to Y1 registers
-         *      (3) Write the random integer k to X1 registers according
-         *      (4) Set ECCOP(CRPT_ECC_CTL[10:9]) to 01
-         *      (5) Set MOPOP(CRPT_ECC_CTL[12:11]) to 00
-         *      (6) Set START(CRPT_ECC_CTL[0]) to 1
-         *      (7) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
-         *      (8) Read X1 registers to get k^-1
-         *      (9) Write the curve order and curve length to N ,M registers
-         *      (10) Write r, d to X1, Y1 registers
-         *      (11) Set ECCOP(CRPT_ECC_CTL[10:9]) to 01
-         *      (12) Set MOPOP(CRPT_ECC_CTL[12:11]) to 01
-         *      (13) Set START(CRPT_ECC_CTL[0]) to 1
-         *      (14) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
-         *      (15) Write the curve order to N registers
-         *      (16) Write e to Y1 registers
-         *      (17) Set ECCOP(CRPT_ECC_CTL[10:9]) to 01
-         *      (18) Set MOPOP(CRPT_ECC_CTL[12:11]) to 10
-         *      (19) Set START(CRPT_ECC_CTL[0]) to 1
-         *      (20) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
-         *      (21) Write the curve order and curve length to N ,M registers
-         *      (22) Write k^-1 to Y1 registers
-         *      (23) Set ECCOP(CRPT_ECC_CTL[10:9]) to 01
-         *      (24) Set MOPOP(CRPT_ECC_CTL[12:11]) to 01
-         *      (25) Set START(CRPT_ECC_CTL[0]) to 1
-         *      (26) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
-         *      (27) Read X1 registers to get s
-         */
+    /*  4-(2) Write 0x1 to Y1 registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_Y1[i] = 0UL;
+    }
+    crpt->ECC_Y1[0] = 0x1UL;
 
-        /* S/W: GFp_add_mod_order(pCurve->key_len+2, 0, x1, a, R); */
+    /*  4-(3) Write the random integer k to X1 registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_X1[i] = 0UL;
+    }
+    Hex2Reg(k, crpt->ECC_X1);
 
-        /*  4-(1) Write the curve order to N registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_N[i] = 0UL;
-        }
-        Hex2Reg(pCurve->Eorder, crpt->ECC_N);
-
-        /*  4-(2) Write 0x1 to Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_Y1[i] = 0UL;
-        }
-        crpt->ECC_Y1[0] = 0x1UL;
-
-        /*  4-(3) Write the random integer k to X1 registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_X1[i] = 0UL;
-        }
-        Hex2Reg(k, crpt->ECC_X1);
-
-        run_ecc_codec(crpt, ECCOP_MODULE | MODOP_DIV);
+    if (run_ecc_codec(crpt, ECCOP_MODULE | MODOP_DIV) != 0)
+        return -1;
 
 #if ENABLE_DEBUG
-        Reg2Hex(pCurve->Echar, crpt->ECC_X1, temp_hex_str);
-        CRPT_DBGMSG("(7) output = %s\n", temp_hex_str);
+    Reg2Hex(pCurve->Echar, crpt->ECC_X1, temp_hex_str);
+    CRPT_DBGMSG("(7) output = %s\n", temp_hex_str);
 #endif
 
-        /*  4-(8) Read X1 registers to get k^-1 */
+    /*  4-(8) Read X1 registers to get k^-1 */
 
-        for (i = 0; i < 18; i++)
-        {
-            temp_result2[i] = crpt->ECC_X1[i];
-        }
+    for (i = 0; i < 18; i++)
+    {
+        temp_result2[i] = crpt->ECC_X1[i];
+    }
 
 #if ENABLE_DEBUG
-        Reg2Hex(pCurve->Echar, temp_result2, temp_hex_str);
-        CRPT_DBGMSG("k^-1 = %s\n", temp_hex_str);
+    Reg2Hex(pCurve->Echar, temp_result2, temp_hex_str);
+    CRPT_DBGMSG("k^-1 = %s\n", temp_hex_str);
 #endif
 
-        /*  4-(9) Write the curve order and curve length to N ,M registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_N[i] = 0UL;
-        }
-        Hex2Reg(pCurve->Eorder, crpt->ECC_N);
+    /*  4-(9) Write the curve order and curve length to N ,M registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_N[i] = 0UL;
+    }
+    Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
-        /*  4-(10) Write r, d to X1, Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_X1[i] = temp_result1[i];
-        }
+    /*  4-(10) Write r, d to X1, Y1 registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_X1[i] = temp_result1[i];
+    }
 
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_Y1[i] = 0UL;
-        }
-        Hex2Reg(d, crpt->ECC_Y1);
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_Y1[i] = 0UL;
+    }
+    Hex2Reg(d, crpt->ECC_Y1);
 
-        run_ecc_codec(crpt, ECCOP_MODULE | MODOP_MUL);
+    if (run_ecc_codec(crpt, ECCOP_MODULE | MODOP_MUL) != 0)
+        return -1;
 
 #if ENABLE_DEBUG
-        Reg2Hex(pCurve->Echar, crpt->ECC_X1, temp_hex_str);
-        CRPT_DBGMSG("(14) output = %s\n", temp_hex_str);
+    Reg2Hex(pCurve->Echar, crpt->ECC_X1, temp_hex_str);
+    CRPT_DBGMSG("(14) output = %s\n", temp_hex_str);
 #endif
 
-        /*  4-(15) Write the curve order to N registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_N[i] = 0UL;
-        }
-        Hex2Reg(pCurve->Eorder, crpt->ECC_N);
+    /*  4-(15) Write the curve order to N registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_N[i] = 0UL;
+    }
+    Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
-        /*  4-(16) Write e to Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_Y1[i] = 0UL;
-        }
-        Hex2Reg(message, crpt->ECC_Y1);
+    /*  4-(16) Write e to Y1 registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_Y1[i] = 0UL;
+    }
+    Hex2Reg(message, crpt->ECC_Y1);
 
-        run_ecc_codec(crpt, ECCOP_MODULE | MODOP_ADD);
+    if (run_ecc_codec(crpt, ECCOP_MODULE | MODOP_ADD) != 0)
+        return -1;
 
 #if ENABLE_DEBUG
-        Reg2Hex(pCurve->Echar, crpt->ECC_X1, temp_hex_str);
-        CRPT_DBGMSG("(20) output = %s\n", temp_hex_str);
+    Reg2Hex(pCurve->Echar, crpt->ECC_X1, temp_hex_str);
+    CRPT_DBGMSG("(20) output = %s\n", temp_hex_str);
 #endif
 
-        /*  4-(21) Write the curve order and curve length to N ,M registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_N[i] = 0UL;
-        }
-        Hex2Reg(pCurve->Eorder, crpt->ECC_N);
+    /*  4-(21) Write the curve order and curve length to N ,M registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_N[i] = 0UL;
+    }
+    Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
-        /*  4-(22) Write k^-1 to Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_Y1[i] = temp_result2[i];
-        }
+    /*  4-(22) Write k^-1 to Y1 registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_Y1[i] = temp_result2[i];
+    }
 
-        run_ecc_codec(crpt, ECCOP_MODULE | MODOP_MUL);
+    if (run_ecc_codec(crpt, ECCOP_MODULE | MODOP_MUL) != 0)
+        return -1;
 
-        /*  4-(27) Read X1 registers to get s */
-        for (i = 0; i < 18; i++)
-        {
-            temp_result2[i] = crpt->ECC_X1[i];
-        }
+    /*  4-(27) Read X1 registers to get s */
+    for (i = 0; i < 18; i++)
+    {
+        temp_result2[i] = crpt->ECC_X1[i];
+    }
 
-        Reg2Hex(pCurve->Echar, temp_result2, S);
-
-    }  /* ret == 0 */
-
-    return ret;
+    Reg2Hex(pCurve->Echar, temp_result2, S);
+    return 0;
 }
 
 /**
@@ -1659,15 +1674,16 @@ int32_t  ECC_GenerateSignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *messag
   * @param[in]  R           R of the (R,S) pair digital signature
   * @param[in]  S           S of the (R,S) pair digital signature
   * @return  0    Success.
-  * @return  -1   "ecc_curve" value is invalid.
-  * @return  -2   Verification failed.
+  * @return  -1   H/W error or time-out
+  * @return  -2   "ecc_curve" value is invalid.
+  * @return  -4   Verification failed.
   */
 int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message,
                              char *public_k1, char *public_k2, char *R, char *S)
 {
     uint32_t  temp_result1[18], temp_result2[18];
     uint32_t  temp_x[18], temp_y[18];
-    int32_t   i, ret = 0;
+    int32_t   i;
 
     /*
      *   1. Verify that r and s are integers in the interval [1, n-1]. If not, the signature is invalid
@@ -1690,299 +1706,302 @@ int32_t  ECC_VerifySignature(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *message,
 
     if (ecc_init_curve(crpt, ecc_curve) != 0)
     {
-        ret = -1;
+        return -2;
     }
 
-    if (ret == 0)
+    /*  3-(1) Write the curve order to N registers */
+    for (i = 0; i < 18; i++)
     {
-        /*  3-(1) Write the curve order to N registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_N[i] = 0UL;
-        }
-        Hex2Reg(pCurve->Eorder, crpt->ECC_N);
+        crpt->ECC_N[i] = 0UL;
+    }
+    Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
-        /*  3-(2) Write 0x1 to Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_Y1[i] = 0UL;
-        }
-        crpt->ECC_Y1[0] = 0x1UL;
+    /*  3-(2) Write 0x1 to Y1 registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_Y1[i] = 0UL;
+    }
+    crpt->ECC_Y1[0] = 0x1UL;
 
-        /*  3-(3) Write s to X1 registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_X1[i] = 0UL;
-        }
-        Hex2Reg(S, crpt->ECC_X1);
+    /*  3-(3) Write s to X1 registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_X1[i] = 0UL;
+    }
+    Hex2Reg(S, crpt->ECC_X1);
 
-        run_ecc_codec(crpt, ECCOP_MODULE | MODOP_DIV);
+    if (run_ecc_codec(crpt, ECCOP_MODULE | MODOP_DIV) != 0)
+        return -1;
 
-        /*  3-(9) Read X1 registers to get w */
-        for (i = 0; i < 18; i++)
-        {
-            temp_result2[i] = crpt->ECC_X1[i];
-        }
+    /*  3-(9) Read X1 registers to get w */
+    for (i = 0; i < 18; i++)
+    {
+        temp_result2[i] = crpt->ECC_X1[i];
+    }
 
 #if ENABLE_DEBUG
-        CRPT_DBGMSG("e = %s\n", message);
-        Reg2Hex(pCurve->Echar, temp_result2, temp_hex_str);
-        CRPT_DBGMSG("w = %s\n", temp_hex_str);
-        CRPT_DBGMSG("o = %s (order)\n", pCurve->Eorder);
+    CRPT_DBGMSG("e = %s\n", message);
+    Reg2Hex(pCurve->Echar, temp_result2, temp_hex_str);
+    CRPT_DBGMSG("w = %s\n", temp_hex_str);
+    CRPT_DBGMSG("o = %s (order)\n", pCurve->Eorder);
 #endif
 
-        /*
-         *   4. Compute u1 = e ｝ w (mod n) and u2 = r ｝ w (mod n)
-         *      (1) Write the curve order and curve length to N ,M registers
-         *      (2) Write e, w to X1, Y1 registers
-         *      (3) Set ECCOP(CRPT_ECC_CTL[10:9]) to 01
-         *      (4) Set MOPOP(CRPT_ECC_CTL[12:11]) to 01
-         *      (5) Set START(CRPT_ECC_CTL[0]) to 1
-         *      (6) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
-         *      (7) Read X1 registers to get u1
-         *      (8) Write the curve order and curve length to N ,M registers
-         *      (9) Write r, w to X1, Y1 registers
-         *      (10) Set ECCOP(CRPT_ECC_CTL[10:9]) to 01
-         *      (11) Set MOPOP(CRPT_ECC_CTL[12:11]) to 01
-         *      (12) Set START(CRPT_ECC_CTL[0]) to 1
-         *      (13) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
-         *      (14) Read X1 registers to get u2
-         */
+    /*
+     *   4. Compute u1 = e ｝ w (mod n) and u2 = r ｝ w (mod n)
+     *      (1) Write the curve order and curve length to N ,M registers
+     *      (2) Write e, w to X1, Y1 registers
+     *      (3) Set ECCOP(CRPT_ECC_CTL[10:9]) to 01
+     *      (4) Set MOPOP(CRPT_ECC_CTL[12:11]) to 01
+     *      (5) Set START(CRPT_ECC_CTL[0]) to 1
+     *      (6) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
+     *      (7) Read X1 registers to get u1
+     *      (8) Write the curve order and curve length to N ,M registers
+     *      (9) Write r, w to X1, Y1 registers
+     *      (10) Set ECCOP(CRPT_ECC_CTL[10:9]) to 01
+     *      (11) Set MOPOP(CRPT_ECC_CTL[12:11]) to 01
+     *      (12) Set START(CRPT_ECC_CTL[0]) to 1
+     *      (13) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
+     *      (14) Read X1 registers to get u2
+     */
 
-        /*  4-(1) Write the curve order and curve length to N ,M registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_N[i] = 0UL;
-        }
-        Hex2Reg(pCurve->Eorder, crpt->ECC_N);
+    /*  4-(1) Write the curve order and curve length to N ,M registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_N[i] = 0UL;
+    }
+    Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
-        /* 4-(2) Write e, w to X1, Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_X1[i] = 0UL;
-        }
-        Hex2Reg(message, crpt->ECC_X1);
+    /* 4-(2) Write e, w to X1, Y1 registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_X1[i] = 0UL;
+    }
+    Hex2Reg(message, crpt->ECC_X1);
 
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_Y1[i] = temp_result2[i];
-        }
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_Y1[i] = temp_result2[i];
+    }
 
-        run_ecc_codec(crpt, ECCOP_MODULE | MODOP_MUL);
+    if (run_ecc_codec(crpt, ECCOP_MODULE | MODOP_MUL) != 0)
+        return -1;
 
-        /*  4-(7) Read X1 registers to get u1 */
-        for (i = 0; i < 18; i++)
-        {
-            temp_result1[i] = crpt->ECC_X1[i];
-        }
+    /*  4-(7) Read X1 registers to get u1 */
+    for (i = 0; i < 18; i++)
+    {
+        temp_result1[i] = crpt->ECC_X1[i];
+    }
 
 #if ENABLE_DEBUG
-        Reg2Hex(pCurve->Echar, temp_result1, temp_hex_str);
-        CRPT_DBGMSG("u1 = %s\n", temp_hex_str);
+    Reg2Hex(pCurve->Echar, temp_result1, temp_hex_str);
+    CRPT_DBGMSG("u1 = %s\n", temp_hex_str);
 #endif
 
-        /*  4-(8) Write the curve order and curve length to N ,M registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_N[i] = 0UL;
-        }
-        Hex2Reg(pCurve->Eorder, crpt->ECC_N);
+    /*  4-(8) Write the curve order and curve length to N ,M registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_N[i] = 0UL;
+    }
+    Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
-        /* 4-(9) Write r, w to X1, Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_X1[i] = 0UL;
-        }
-        Hex2Reg(R, crpt->ECC_X1);
+    /* 4-(9) Write r, w to X1, Y1 registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_X1[i] = 0UL;
+    }
+    Hex2Reg(R, crpt->ECC_X1);
 
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_Y1[i] = temp_result2[i];
-        }
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_Y1[i] = temp_result2[i];
+    }
 
-        run_ecc_codec(crpt, ECCOP_MODULE | MODOP_MUL);
+    if (run_ecc_codec(crpt, ECCOP_MODULE | MODOP_MUL) != 0)
+        return -1;
 
-        /*  4-(14) Read X1 registers to get u2 */
-        for (i = 0; i < 18; i++)
-        {
-            temp_result2[i] = crpt->ECC_X1[i];
-        }
+    /*  4-(14) Read X1 registers to get u2 */
+    for (i = 0; i < 18; i++)
+    {
+        temp_result2[i] = crpt->ECC_X1[i];
+    }
 
 #if ENABLE_DEBUG
-        Reg2Hex(pCurve->Echar, temp_result2, temp_hex_str);
-        CRPT_DBGMSG("u2 = %s\n", temp_hex_str);
+    Reg2Hex(pCurve->Echar, temp_result2, temp_hex_str);
+    CRPT_DBGMSG("u2 = %s\n", temp_hex_str);
 #endif
 
-        /*
-         *   5. Compute X・ (x1・, y1・) = u1 * G + u2 * Q
-         *      (1) Write the curve parameter A, B, N, and curve length M to corresponding registers
-         *      (2) Write the point G(x, y) to X1, Y1 registers
-         *      (3) Write u1 to K registers
-         *      (4) Set ECCOP(CRPT_ECC_CTL[10:9]) to 00
-         *      (5) Set START(CRPT_ECC_CTL[0]) to 1
-         *      (6) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
-         *      (7) Read X1, Y1 registers to get u1*G
-         *      (8) Write the curve parameter A, B, N, and curve length M to corresponding registers
-         *      (9) Write the public key Q(x,y) to X1, Y1 registers
-         *      (10) Write u2 to K registers
-         *      (11) Set ECCOP(CRPT_ECC_CTL[10:9]) to 00
-         *      (12) Set START(CRPT_ECC_CTL[0]) to 1
-         *      (13) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
-         *      (14) Write the curve parameter A, B, N, and curve length M to corresponding registers
-         *      (15) Write the result data u1*G to X2, Y2 registers
-         *      (16) Set ECCOP(CRPT_ECC_CTL[10:9]) to 10
-         *      (17) Set START(CRPT_ECC_CTL[0]) to 1
-         *      (18) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
-         *      (19) Read X1, Y1 registers to get X・(x1・, y1・)
-         *      (20) Write the curve order and curve length to N ,M registers
-         *      (21) Write x1・ to X1 registers
-         *      (22) Write 0x0 to Y1 registers
-         *      (23) Set ECCOP(CRPT_ECC_CTL[10:9]) to 01
-         *      (24) Set MOPOP(CRPT_ECC_CTL[12:11]) to 10
-         *      (25) Set START(CRPT_ECC_CTL[0]) to 1
-         *      (26) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
-         *      (27) Read X1 registers to get x1・ (mod n)
-         *
-         *   6. The signature is valid if x1・ = r, otherwise it is invalid
-         */
+    /*
+     *   5. Compute X・ (x1・, y1・) = u1 * G + u2 * Q
+     *      (1) Write the curve parameter A, B, N, and curve length M to corresponding registers
+     *      (2) Write the point G(x, y) to X1, Y1 registers
+     *      (3) Write u1 to K registers
+     *      (4) Set ECCOP(CRPT_ECC_CTL[10:9]) to 00
+     *      (5) Set START(CRPT_ECC_CTL[0]) to 1
+     *      (6) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
+     *      (7) Read X1, Y1 registers to get u1*G
+     *      (8) Write the curve parameter A, B, N, and curve length M to corresponding registers
+     *      (9) Write the public key Q(x,y) to X1, Y1 registers
+     *      (10) Write u2 to K registers
+     *      (11) Set ECCOP(CRPT_ECC_CTL[10:9]) to 00
+     *      (12) Set START(CRPT_ECC_CTL[0]) to 1
+     *      (13) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
+     *      (14) Write the curve parameter A, B, N, and curve length M to corresponding registers
+     *      (15) Write the result data u1*G to X2, Y2 registers
+     *      (16) Set ECCOP(CRPT_ECC_CTL[10:9]) to 10
+     *      (17) Set START(CRPT_ECC_CTL[0]) to 1
+     *      (18) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
+     *      (19) Read X1, Y1 registers to get X・(x1・, y1・)
+     *      (20) Write the curve order and curve length to N ,M registers
+     *      (21) Write x1・ to X1 registers
+     *      (22) Write 0x0 to Y1 registers
+     *      (23) Set ECCOP(CRPT_ECC_CTL[10:9]) to 01
+     *      (24) Set MOPOP(CRPT_ECC_CTL[12:11]) to 10
+     *      (25) Set START(CRPT_ECC_CTL[0]) to 1
+     *      (26) Wait for BUSY(CRPT_ECC_STS[0]) be cleared
+     *      (27) Read X1 registers to get x1・ (mod n)
+     *
+     *   6. The signature is valid if x1・ = r, otherwise it is invalid
+     */
 
-        /*
-         *  (1) Write the curve parameter A, B, N, and curve length M to corresponding registers
-         *  (2) Write the point G(x, y) to X1, Y1 registers
-         */
-        ecc_init_curve(crpt, ecc_curve);
+    /*
+     *  (1) Write the curve parameter A, B, N, and curve length M to corresponding registers
+     *  (2) Write the point G(x, y) to X1, Y1 registers
+     */
+    ecc_init_curve(crpt, ecc_curve);
 
-        /* (3) Write u1 to K registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_K[i] = temp_result1[i];
-        }
+    /* (3) Write u1 to K registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_K[i] = temp_result1[i];
+    }
 
-        run_ecc_codec(crpt, ECCOP_POINT_MUL);
+    if (run_ecc_codec(crpt, ECCOP_POINT_MUL) != 0)
+        return -1;
 
-        /* (7) Read X1, Y1 registers to get u1*G */
-        for (i = 0; i < 18; i++)
-        {
-            temp_x[i] = crpt->ECC_X1[i];
-            temp_y[i] = crpt->ECC_Y1[i];
-        }
+    /* (7) Read X1, Y1 registers to get u1*G */
+    for (i = 0; i < 18; i++)
+    {
+        temp_x[i] = crpt->ECC_X1[i];
+        temp_y[i] = crpt->ECC_Y1[i];
+    }
 
 #if ENABLE_DEBUG
-        Reg2Hex(pCurve->Echar, temp_x, temp_hex_str);
-        CRPT_DBGMSG("5-(7) u1*G, x = %s\n", temp_hex_str);
-        Reg2Hex(pCurve->Echar, temp_y, temp_hex_str);
-        CRPT_DBGMSG("5-(7) u1*G, y = %s\n", temp_hex_str);
+    Reg2Hex(pCurve->Echar, temp_x, temp_hex_str);
+    CRPT_DBGMSG("5-(7) u1*G, x = %s\n", temp_hex_str);
+    Reg2Hex(pCurve->Echar, temp_y, temp_hex_str);
+    CRPT_DBGMSG("5-(7) u1*G, y = %s\n", temp_hex_str);
 #endif
 
-        /* (8) Write the curve parameter A, B, N, and curve length M to corresponding registers */
-        ecc_init_curve(crpt, ecc_curve);
+    /* (8) Write the curve parameter A, B, N, and curve length M to corresponding registers */
+    ecc_init_curve(crpt, ecc_curve);
 
-        /* (9) Write the public key Q(x,y) to X1, Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_X1[i] = 0UL;
-            crpt->ECC_Y1[i] = 0UL;
-        }
+    /* (9) Write the public key Q(x,y) to X1, Y1 registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_X1[i] = 0UL;
+        crpt->ECC_Y1[i] = 0UL;
+    }
 
-        Hex2Reg(public_k1, crpt->ECC_X1);
-        Hex2Reg(public_k2, crpt->ECC_Y1);
+    Hex2Reg(public_k1, crpt->ECC_X1);
+    Hex2Reg(public_k2, crpt->ECC_Y1);
 
-        /* (10) Write u2 to K registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_K[i] = temp_result2[i];
-        }
+    /* (10) Write u2 to K registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_K[i] = temp_result2[i];
+    }
 
-        run_ecc_codec(crpt, ECCOP_POINT_MUL);
+    if (run_ecc_codec(crpt, ECCOP_POINT_MUL) != 0)
+        return -1;
 
-        for (i = 0; i < 18; i++)
-        {
-            temp_result1[i] = crpt->ECC_X1[i];
-            temp_result2[i] = crpt->ECC_Y1[i];
-        }
+    for (i = 0; i < 18; i++)
+    {
+        temp_result1[i] = crpt->ECC_X1[i];
+        temp_result2[i] = crpt->ECC_Y1[i];
+    }
 
 #if ENABLE_DEBUG
-        Reg2Hex(pCurve->Echar, temp_result1, temp_hex_str);
-        CRPT_DBGMSG("5-(13) u2*Q, x = %s\n", temp_hex_str);
-        Reg2Hex(pCurve->Echar, temp_result2, temp_hex_str);
-        CRPT_DBGMSG("5-(13) u2*Q, y = %s\n", temp_hex_str);
+    Reg2Hex(pCurve->Echar, temp_result1, temp_hex_str);
+    CRPT_DBGMSG("5-(13) u2*Q, x = %s\n", temp_hex_str);
+    Reg2Hex(pCurve->Echar, temp_result2, temp_hex_str);
+    CRPT_DBGMSG("5-(13) u2*Q, y = %s\n", temp_hex_str);
 #endif
 
-        /* (14) Write the curve parameter A, B, N, and curve length M to corresponding registers */
-        ecc_init_curve(crpt, ecc_curve);
+    /* (14) Write the curve parameter A, B, N, and curve length M to corresponding registers */
+    ecc_init_curve(crpt, ecc_curve);
 
-        /* Write the result data u2*Q to X1, Y1 registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_X1[i] = temp_result1[i];
-            crpt->ECC_Y1[i] = temp_result2[i];
-        }
+    /* Write the result data u2*Q to X1, Y1 registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_X1[i] = temp_result1[i];
+        crpt->ECC_Y1[i] = temp_result2[i];
+    }
 
-        /* (15) Write the result data u1*G to X2, Y2 registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_X2[i] = temp_x[i];
-            crpt->ECC_Y2[i] = temp_y[i];
-        }
+    /* (15) Write the result data u1*G to X2, Y2 registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_X2[i] = temp_x[i];
+        crpt->ECC_Y2[i] = temp_y[i];
+    }
 
-        run_ecc_codec(crpt, ECCOP_POINT_ADD);
+    if (run_ecc_codec(crpt, ECCOP_POINT_ADD) != 0)
+        return -1;
 
-        /* (19) Read X1, Y1 registers to get X・(x1・, y1・) */
-        for (i = 0; i < 18; i++)
-        {
-            temp_x[i] = crpt->ECC_X1[i];
-            temp_y[i] = crpt->ECC_Y1[i];
-        }
+    /* (19) Read X1, Y1 registers to get X・(x1・, y1・) */
+    for (i = 0; i < 18; i++)
+    {
+        temp_x[i] = crpt->ECC_X1[i];
+        temp_y[i] = crpt->ECC_Y1[i];
+    }
 
 #if ENABLE_DEBUG
-        Reg2Hex(pCurve->Echar, temp_x, temp_hex_str);
-        CRPT_DBGMSG("5-(19) x' = %s\n", temp_hex_str);
-        Reg2Hex(pCurve->Echar, temp_y, temp_hex_str);
-        CRPT_DBGMSG("5-(19) y' = %s\n", temp_hex_str);
+    Reg2Hex(pCurve->Echar, temp_x, temp_hex_str);
+    CRPT_DBGMSG("5-(19) x' = %s\n", temp_hex_str);
+    Reg2Hex(pCurve->Echar, temp_y, temp_hex_str);
+    CRPT_DBGMSG("5-(19) y' = %s\n", temp_hex_str);
 #endif
 
-        /*  (20) Write the curve order and curve length to N ,M registers */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_N[i] = 0UL;
-        }
-        Hex2Reg(pCurve->Eorder, crpt->ECC_N);
+    /*  (20) Write the curve order and curve length to N ,M registers */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_N[i] = 0UL;
+    }
+    Hex2Reg(pCurve->Eorder, crpt->ECC_N);
 
-        /*
-         *  (21) Write x1・ to X1 registers
-         *  (22) Write 0x0 to Y1 registers
-         */
-        for (i = 0; i < 18; i++)
-        {
-            crpt->ECC_X1[i] = temp_x[i];
-            crpt->ECC_Y1[i] = 0UL;
-        }
+    /*
+     *  (21) Write x1・ to X1 registers
+     *  (22) Write 0x0 to Y1 registers
+     */
+    for (i = 0; i < 18; i++)
+    {
+        crpt->ECC_X1[i] = temp_x[i];
+        crpt->ECC_Y1[i] = 0UL;
+    }
 
 #if ENABLE_DEBUG
-        Reg2Hex(pCurve->Echar, crpt->ECC_X1, temp_hex_str);
-        CRPT_DBGMSG("5-(21) x' = %s\n", temp_hex_str);
-        Reg2Hex(pCurve->Echar, crpt->ECC_Y1, temp_hex_str);
-        CRPT_DBGMSG("5-(22) y' = %s\n", temp_hex_str);
+    Reg2Hex(pCurve->Echar, crpt->ECC_X1, temp_hex_str);
+    CRPT_DBGMSG("5-(21) x' = %s\n", temp_hex_str);
+    Reg2Hex(pCurve->Echar, crpt->ECC_Y1, temp_hex_str);
+    CRPT_DBGMSG("5-(22) y' = %s\n", temp_hex_str);
 #endif
 
-        run_ecc_codec(crpt, ECCOP_MODULE | MODOP_ADD);
+    if (run_ecc_codec(crpt, ECCOP_MODULE | MODOP_ADD) != 0)
+        return -1;
 
-        /*  (27) Read X1 registers to get x1・ (mod n) */
-        Reg2Hex(pCurve->Echar, crpt->ECC_X1, temp_hex_str);
-        CRPT_DBGMSG("5-(27) x1' (mod n) = %s\n", temp_hex_str);
+    /*  (27) Read X1 registers to get x1・ (mod n) */
+    Reg2Hex(pCurve->Echar, crpt->ECC_X1, temp_hex_str);
+    CRPT_DBGMSG("5-(27) x1' (mod n) = %s\n", temp_hex_str);
 
-        /* 6. The signature is valid if x1・ = r, otherwise it is invalid */
+    /* 6. The signature is valid if x1・ = r, otherwise it is invalid */
 
-        /* Compare with test pattern to check if r is correct or not */
-        if (ecc_strcmp(temp_hex_str, R) != 0)
-        {
-            CRPT_DBGMSG("x1' (mod n) != R Test filed!!\n");
-            CRPT_DBGMSG("Signature R [%s] is not matched with expected R [%s]!\n", temp_hex_str, R);
-            ret = -2;
-        }
-    }  /* ret == 0 */
-
-    return ret;
+    /* Compare with test pattern to check if r is correct or not */
+    if (ecc_strcmp(temp_hex_str, R) != 0)
+    {
+        CRPT_DBGMSG("x1' (mod n) != R Test filed!!\n");
+        CRPT_DBGMSG("Signature R [%s] is not matched with expected R [%s]!\n", temp_hex_str, R);
+        return -4;
+    }
+    return 0;
 }
 
 /*@}*/ /* end of group CRYPTO_EXPORTED_FUNCTIONS */
