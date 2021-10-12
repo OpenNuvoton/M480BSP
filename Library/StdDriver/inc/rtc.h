@@ -286,8 +286,13 @@ __STATIC_INLINE void RTC_WaitAccessEnable(void);
   */
 __STATIC_INLINE void RTC_WaitAccessEnable(void)
 {
+    uint32_t u32TimeOutCount = SystemCoreClock; // 1 second timeout
+    uint32_t i = 0;
+
     while((RTC->RWEN & RTC_RWEN_RTCBUSY_Msk) == RTC_RWEN_RTCBUSY_Msk)
     {
+        i++;
+        if(i > u32TimeOutCount) break;
     }
 
     if(!(SYS->CSERVER & 0x1))
@@ -299,10 +304,12 @@ __STATIC_INLINE void RTC_WaitAccessEnable(void)
     /* To wait RWENF bit is set and user can access the protected-register of RTC from now on */
     while((RTC->RWEN & RTC_RWEN_RWENF_Msk) == (uint32_t)0x0)
     {
+        i++;
+        if(i > u32TimeOutCount) break;
     }
 }
 
-void RTC_Open(S_RTC_TIME_DATA_T *sPt);
+int32_t RTC_Open(S_RTC_TIME_DATA_T *sPt);
 void RTC_Close(void);
 void RTC_32KCalibration(int32_t i32FrequencyX10000);
 void RTC_GetDateAndTime(S_RTC_TIME_DATA_T *sPt);

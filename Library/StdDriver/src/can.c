@@ -260,10 +260,12 @@ void CAN_EnterInitMode(CAN_T *tCAN, uint8_t u8Mask)
   */
 void CAN_LeaveInitMode(CAN_T *tCAN)
 {
+    uint32_t u32TimeOutCount = SystemCoreClock; // 1 second timeout
     tCAN->CON &= (~(CAN_CON_INIT_Msk | CAN_CON_CCE_Msk));
-    while(tCAN->CON & CAN_CON_INIT_Msk)
+    while(tCAN->CON & CAN_CON_INIT_Msk) /* Check INIT bit is released */
     {
-        /* Check INIT bit is released */
+        if(u32TimeOutCount == 0) break;
+        u32TimeOutCount--;
     }
 }
 
@@ -389,6 +391,7 @@ uint32_t CAN_IsNewDataReceived(CAN_T *tCAN, uint8_t u8MsgObj)
   * @param[in] pCanMsg Pointer to the message structure containing data to transmit.
   * @return TRUE:  Transmission OK
   *         FALSE: Check busy flag of interface 0 is timeout
+  *         -1: Wait CAN_IF timeout
   * @details The function is used to send CAN message in BASIC mode of test mode. Before call the API,
   *          the user should be call CAN_EnterTestMode(CAN_TEST_BASIC) and let CAN controller enter
   *          basic mode of test mode. Please notice IF1 Registers used as Tx Buffer in basic mode.
@@ -397,9 +400,12 @@ int32_t CAN_BasicSendMsg(CAN_T *tCAN, STR_CANMSG_T* pCanMsg)
 {
     uint32_t i = 0ul;
     int32_t rev = 1l;
+    uint32_t u32TimeOutCount = SystemCoreClock; // 1 second timeout
 
     while(tCAN->IF[0].CREQ & CAN_IF_CREQ_BUSY_Msk)
     {
+        i++;
+        if(i > u32TimeOutCount) return -1;
     }
 
     tCAN->STATUS &= (~CAN_STATUS_TXOK_Msk);
@@ -681,12 +687,14 @@ int32_t CAN_SetRxMsgObj(CAN_T *tCAN, uint8_t u8MsgObj, uint8_t u8idType, uint32_
   * @param[in] pCanMsg Pointer to the message structure where received data is copied.
   * @retval TRUE Success
   * @retval FALSE No any message received
+  * @retval -1 Read Message Fail
   * @details Gets the message, if received.
   */
 int32_t CAN_ReadMsgObj(CAN_T *tCAN, uint8_t u8MsgObj, uint8_t u8Release, STR_CANMSG_T* pCanMsg)
 {
     int32_t rev = 1l;
     uint32_t u32MsgIfNum;
+    uint32_t u32TimeOutCount = SystemCoreClock * 2; // 2 second timeout
 
     if(!CAN_IsNewDataReceived(tCAN, u8MsgObj))
     {
@@ -714,9 +722,14 @@ int32_t CAN_ReadMsgObj(CAN_T *tCAN, uint8_t u8MsgObj, uint8_t u8Release, STR_CAN
 
             tCAN->IF[u32MsgIfNum].CREQ = 1ul + u8MsgObj;
 
-            while(tCAN->IF[u32MsgIfNum].CREQ & CAN_IF_CREQ_BUSY_Msk)
+            while(tCAN->IF[u32MsgIfNum].CREQ & CAN_IF_CREQ_BUSY_Msk) /*Wait*/
             {
-                /*Wait*/
+                if(u32TimeOutCount == 0)
+                {
+                    ReleaseIF(tCAN, u32MsgIfNum);
+                    return -1;
+                }
+                u32TimeOutCount--;
             }
 
             if((tCAN->IF[u32MsgIfNum].ARB2 & CAN_IF_ARB2_XTD_Msk) == 0ul)
@@ -998,7 +1011,9 @@ int32_t CAN_SetTxMsg(CAN_T *tCAN, uint32_t u32MsgNum, STR_CANMSG_T* pCanMsg)
   * @param[in] tCAN The pointer to CAN module base address.
   * @param[in] u32MsgNum Specifies the Message object number, from 0 to 31.
   *
-  * @return TRUE: Start transmit message.
+  * @retval TRUE: Start transmit message.
+  * @retval FALSE: No any message received
+  * @retval -1: CAN IF Busy.
   *
   * @details If a transmission is requested by programming bit TxRqst/NewDat (IFn_CMASK[2]), the TxRqst (IFn_MCON[8]) will be ignored.
   */
@@ -1006,6 +1021,7 @@ int32_t CAN_TriggerTxMsg(CAN_T  *tCAN, uint32_t u32MsgNum)
 {
     int32_t rev = 1l;
     uint32_t u32MsgIfNum;
+    uint32_t u32TimeOutCount = SystemCoreClock; // 1 second timeout
 
     if((u32MsgIfNum = LockIF_TL(tCAN)) == 2ul)
     {
@@ -1021,9 +1037,14 @@ int32_t CAN_TriggerTxMsg(CAN_T  *tCAN, uint32_t u32MsgNum)
 
         tCAN->IF[u32MsgIfNum].CREQ = 1ul + u32MsgNum;
 
-        while(tCAN->IF[u32MsgIfNum].CREQ & CAN_IF_CREQ_BUSY_Msk)
+        while(tCAN->IF[u32MsgIfNum].CREQ & CAN_IF_CREQ_BUSY_Msk) /*Wait*/
         {
-            /*Wait*/
+            if(u32TimeOutCount == 0)
+            {
+                ReleaseIF(tCAN, u32MsgIfNum);
+                return -1;
+            }
+            u32TimeOutCount--;
         }
         tCAN->IF[u32MsgIfNum].CMASK  = CAN_IF_CMASK_WRRD_Msk | CAN_IF_CMASK_TXRQSTNEWDAT_Msk;
         tCAN->IF[u32MsgIfNum].CREQ  = 1ul + u32MsgNum;
@@ -1221,6 +1242,7 @@ int32_t CAN_Transmit(CAN_T *tCAN, uint32_t u32MsgNum, STR_CANMSG_T* pCanMsg)
     if((tCAN->CON & CAN_CON_TEST_Msk) && u32Tmp)
     {
         rev = CAN_BasicSendMsg(tCAN, pCanMsg);
+        if(rev < 0) rev = 0;
     }
     else
     {

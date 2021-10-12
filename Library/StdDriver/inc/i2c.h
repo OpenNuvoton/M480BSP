@@ -27,6 +27,8 @@ extern "C"
   @{
 */
 
+#define I2C_TIMEOUT_ERR    (-1L)          /*!< I2C operation abort due to timeout error \hideinitializer */
+
 /*---------------------------------------------------------------------------------------------------------*/
 /*  I2C_CTL constant definitions.                                                                            */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -55,6 +57,8 @@ extern "C"
 #define I2C_PECTX_DISABLE           0    /*!< Disable SMBus Packet Error Check Transmit function                          \hideinitializer */
 
 /*@}*/ /* end of group I2C_EXPORTED_CONSTANTS */
+
+extern int32_t g_I2C_i32ErrCode;
 
 /** @addtogroup I2C_EXPORTED_FUNCTIONS I2C Exported Functions
   @{
@@ -439,10 +443,12 @@ __STATIC_INLINE void I2C_STOP(I2C_T *i2c);
  */
 __STATIC_INLINE void I2C_STOP(I2C_T *i2c)
 {
-
+    uint32_t u32TimeOutCount = SystemCoreClock; // 1 second timeout
     (i2c)->CTL0 |= (I2C_CTL0_SI_Msk | I2C_CTL0_STO_Msk);
     while(i2c->CTL0 & I2C_CTL0_STO_Msk)
     {
+        u32TimeOutCount--;
+        if(u32TimeOutCount == 0) break;
     }
 }
 
