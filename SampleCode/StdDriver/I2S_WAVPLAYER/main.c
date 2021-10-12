@@ -50,49 +50,6 @@ unsigned long get_fattime (void)
     return tmr;
 }
 
-volatile uint32_t  g_tick_cnt;
-
-void SysTick_Handler(void)
-{
-    g_tick_cnt++;
-}
-
-void enable_sys_tick(int ticks_per_second)
-{
-    g_tick_cnt = 0;
-    SystemCoreClock = 12000000UL;
-    if (SysTick_Config(SystemCoreClock / ticks_per_second))
-    {
-        /* Setup SysTick Timer for 1 second interrupts  */
-        printf("Set system tick error!!\n");
-        while (1);
-    }
-}
-
-uint32_t get_ticks()
-{
-    return g_tick_cnt;
-}
-
-/*
- *  This function is necessary for USB Host library.
- */
-void delay_us(int usec)
-{
-    /*
-     *  Configure Timer0, clock source from XTL_12M. Prescale 12
-     */
-    /* TIMER0 clock from HXT */
-    CLK->CLKSEL1 = (CLK->CLKSEL1 & (~CLK_CLKSEL1_TMR0SEL_Msk)) | CLK_CLKSEL1_TMR0SEL_HXT;
-    CLK->APBCLK0 |= CLK_APBCLK0_TMR0CKEN_Msk;
-    TIMER0->CTL = 0;        /* disable timer */
-    TIMER0->INTSTS = 0x3;   /* write 1 to clear for safety */
-    TIMER0->CMP = usec;
-    TIMER0->CTL = (11 << TIMER_CTL_PSC_Pos) | TIMER_ONESHOT_MODE | TIMER_CTL_CNTEN_Msk;
-
-    while (!TIMER0->INTSTS);
-}
-
 uint8_t I2cWrite_MultiByteforNAU88L25(uint8_t chipadd,uint16_t subaddr, const uint8_t *p,uint32_t len)
 {
     /* Send START */
@@ -313,10 +270,13 @@ void SDH0_IRQHandler(void)
     if (isr & SDH_INTSTS_CDIF_Msk)   // port 0 card detect
     {
         //----- SD interrupt status
-        // it is work to delay 50 times for SD_CLK = 200KHz
+        // delay 10 us to sync the GPIO and SDH
         {
-            int volatile i;         // delay 30 fail, 50 OK
-            for (i=0; i<0x500; i++);  // delay to make sure got updated value from REG_SDISR.
+            int volatile delay = SystemCoreClock / 1000000 * 10;
+            for(; delay > 0UL; delay--)
+            {
+                __NOP();
+            }
             isr = SDH0->INTSTS;
         }
 
@@ -416,6 +376,10 @@ void SYS_Init(void)
     CLK_EnableModuleClock(I2C2_MODULE);
     CLK_EnableModuleClock(I2S0_MODULE);
 
+    /* Update System Core Clock */
+    /* User can use SystemCoreClockUpdate() to calculate SystemCoreClock. */
+    SystemCoreClockUpdate();
+
     /* Set GPB multi-function pins for UART0 RXD and TXD */
     SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
     SYS->GPB_MFPH |= (SYS_GPB_MFPH_PB12MFP_UART0_RXD | SYS_GPB_MFPH_PB13MFP_UART0_TXD);
@@ -480,7 +444,12 @@ int32_t main (void)
     printf("  NOTE: This sample code needs to work with WAU88L25.\n");
 
     /* Configure FATFS */
-    SDH_Open_Disk(SDH0, CardDetect_From_GPIO);
+    printf(" Please insert SD card... \n");
+    while(1)
+    {
+        if (SDH_Open_Disk(SDH0, CardDetect_From_GPIO) == Successful)
+            break;
+    }
     f_chdrive(sd_path);          /* set default path */
 
     /* Init I2C2 to access NAU8822 */
