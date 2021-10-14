@@ -949,31 +949,19 @@ int32_t main(void)
     Buff1 = (BYTE *)((uint32_t)&Buff_Pool1[0]);
     Buff2 = (BYTE *)((uint32_t)&Buff_Pool2[0]);
 
-    HSUSBD_Open(&gsHSInfo, MSC_ClassRequest, NULL);
-    MSC_Init();
-    NVIC_EnableIRQ(USBD20_IRQn);
     usbh_core_init();
     usbh_umas_init();
     while(1)
     {
-        if(HSOTG_GET_STATUS(HSOTG_STATUS_IDSTS_Msk))   /* B-device */
+        if (HSOTG_GET_STATUS(HSOTG_STATUS_IDSTS_Msk))   /* B-device */
         {
-            if(HSOTG_GET_STATUS(HSOTG_STATUS_BVLD_Msk))   /* plug-in */
+            if (HSOTG_GET_STATUS(HSOTG_STATUS_BVLD_Msk))   /* plug-in */
             {
                 bIsBdevice = 1;
                 printf("B-device (HSOTG_STATUS: 0x%x)\n", HSOTG->STATUS);
-
-                /* Start transaction */
-                while(1)
-                {
-                    if (HSUSBD_IS_ATTACHED())
-                    {
-                        HSUSBD_Start();
-                        break;
-                    }
-                    if(HSOTG_GET_STATUS(HSOTG_STATUS_BVLD_Msk) == 0)
-                        break;
-                }
+                HSUSBD_Open(&gsHSInfo, MSC_ClassRequest, NULL);
+                MSC_Init();
+                NVIC_EnableIRQ(USBD20_IRQn);
 
                 /* Clear B-device session valid state change interrupt flag */
                 HSOTG_CLR_INT_FLAG(HSOTG_INTSTS_BVLDCHGIF_Msk);
@@ -982,7 +970,7 @@ int32_t main(void)
 
                 while(1)
                 {
-                    if(HSOTG_GET_STATUS(HSOTG_STATUS_BVLD_Msk) == 0)
+                    if (HSOTG_GET_STATUS(HSOTG_STATUS_BVLD_Msk) == 0)
                         break;
                     if (g_u8MscStart)
                         MSC_ProcessCmd();

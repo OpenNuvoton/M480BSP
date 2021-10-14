@@ -436,9 +436,9 @@ int32_t main(void)
 
     while (1)
     {
-        if(HSOTG_GET_STATUS(HSOTG_STATUS_IDSTS_Msk))   /* B-device */
+        if (HSOTG_GET_STATUS(HSOTG_STATUS_IDSTS_Msk))   /* B-device */
         {
-            if(HSOTG_GET_STATUS(HSOTG_STATUS_BVLD_Msk))   /* plug-in */
+            if (HSOTG_GET_STATUS(HSOTG_STATUS_BVLD_Msk))   /* plug-in */
             {
                 printf("B-device\n");
                 /* wait role change to host */

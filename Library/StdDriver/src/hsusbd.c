@@ -75,10 +75,7 @@ void HSUSBD_Open(S_HSUSBD_INFO_T *param, HSUSBD_CLASS_REQ pfnClassReq, HSUSBD_SE
     g_hsusbd_CtrlMaxPktSize = g_hsusbd_sInfo->gu8DevDesc[7];
 
     /* Initial USB engine */
-    //HSUSBD->PHYCTL |= (HSUSBD_PHYCTL_PHYEN_Msk | HSUSBD_PHYCTL_DPPUEN_Msk);
     HSUSBD_ENABLE_PHY();
-    while((HSUSBD->BUSINTSTS & HSUSBD_BUSINTEN_PHYCLKVLDIEN_Msk) != HSUSBD_BUSINTEN_PHYCLKVLDIEN_Msk ){}
-    HSUSBD_CLR_SE0();
 
     /* wait PHY clock ready */
     while (1)
@@ -90,8 +87,7 @@ void HSUSBD_Open(S_HSUSBD_INFO_T *param, HSUSBD_CLASS_REQ pfnClassReq, HSUSBD_SE
             break;
         }
     }
-    /* Force SE0, and then clear it to connect*/
-    HSUSBD_SET_SE0();
+    HSUSBD->OPER &= ~HSUSBD_OPER_HISPDEN_Msk;   /* full-speed */
 }
 
 /**
@@ -105,6 +101,7 @@ void HSUSBD_Open(S_HSUSBD_INFO_T *param, HSUSBD_CLASS_REQ pfnClassReq, HSUSBD_SE
  */
 void HSUSBD_Start(void)
 {
+    HSUSBD->OPER = HSUSBD_OPER_HISPDEN_Msk;   /* high-speed */
     HSUSBD_CLR_SE0();
 }
 
