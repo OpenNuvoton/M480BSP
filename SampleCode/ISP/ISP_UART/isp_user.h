@@ -42,7 +42,16 @@ extern uint32_t GetApromSize(void);
 extern int ParseCmd(unsigned char *buffer, uint8_t len);
 extern uint32_t g_apromSize, g_dataFlashAddr, g_dataFlashSize;
 
-extern __align(4) uint8_t usb_rcvbuf[];
-extern __align(4) uint8_t usb_sendbuf[];
-extern __align(4) uint8_t response_buff[64];
+#ifdef __ICCARM__
+#pragma data_alignment=4
+extern uint8_t usb_rcvbuf[];
+#pragma data_alignment=4
+extern uint8_t usb_sendbuf[];
+#pragma data_alignment=4
+extern uint8_t response_buff[64];
+#else
+extern __attribute__((aligned(4))) uint8_t usb_rcvbuf[];
+extern __attribute__((aligned(4))) uint8_t usb_sendbuf[];
+extern __attribute__((aligned(4))) uint8_t response_buff[64];
+#endif
 #endif  // #ifndef ISP_USER_H
