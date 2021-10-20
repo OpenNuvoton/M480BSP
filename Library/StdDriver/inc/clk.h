@@ -564,7 +564,7 @@ extern int32_t g_CLK_i32ErrCode;
  * @return      None
  *
  * @details     This function set Wake-up Timer Time-out Interval.
- *
+ * @note        Only M48xGC/M48xG8 support CLK_PMUCTL_WKTMRIS_131072 ~ CLK_PMUCTL_WKTMRIS_1048576
  * \hideinitializer
  */
 #define CLK_SET_WKTMR_INTERVAL(u32Interval)   (CLK->PMUCTL |= (u32Interval))
