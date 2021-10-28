@@ -834,7 +834,7 @@ int SPIM_Enable_4Bytes_Mode(int isEn, uint32_t u32NBit)
     int  isSupt = 0L, ret = -1;
     uint8_t idBuf[3];
     uint8_t cmdBuf[1];                           /* 1-byte Enter/Exit 4-Byte Mode command. */
-    uint32_t  tout;
+    int32_t  tout;
 
     SPIM_ReadJedecId(idBuf, sizeof (idBuf), u32NBit);
 
@@ -891,7 +891,7 @@ int SPIM_Enable_4Bytes_Mode(int isEn, uint32_t u32NBit)
             {
                 while ((tout-- > 0) && SPIM_Is4ByteModeEnable(u32NBit)) { }
             }
-            if (tout == 0)
+            if (tout <= 0)
                 ret = -1;
         }
     }

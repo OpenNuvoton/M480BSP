@@ -55,7 +55,7 @@ void FMC_Close(void)
   */
 int32_t FMC_ConfigXOM(uint32_t u32XomNum, uint32_t u32XomBase, uint8_t u8XomPage)
 {
-    uint32_t  tout;
+    int32_t   tout;
     int32_t   ret;
 
     g_FMC_i32ErrCode = 0;
@@ -76,7 +76,7 @@ int32_t FMC_ConfigXOM(uint32_t u32XomNum, uint32_t u32XomBase, uint8_t u8XomPage
     FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
     tout = FMC_TIMEOUT_WRITE;
     while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return -1;
@@ -95,7 +95,7 @@ int32_t FMC_ConfigXOM(uint32_t u32XomNum, uint32_t u32XomBase, uint8_t u8XomPage
     FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
     tout = FMC_TIMEOUT_WRITE;
     while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return -1;
@@ -114,7 +114,7 @@ int32_t FMC_ConfigXOM(uint32_t u32XomNum, uint32_t u32XomBase, uint8_t u8XomPage
     FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
     tout = FMC_TIMEOUT_WRITE;
     while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return -1;
@@ -142,7 +142,7 @@ int32_t FMC_ConfigXOM(uint32_t u32XomNum, uint32_t u32XomBase, uint8_t u8XomPage
   */
 int32_t FMC_Erase(uint32_t u32PageAddr)
 {
-    uint32_t  tout;
+    int32_t  tout;
 
     g_FMC_i32ErrCode = 0;
 
@@ -157,7 +157,7 @@ int32_t FMC_Erase(uint32_t u32PageAddr)
 
     tout = FMC_TIMEOUT_ERASE;
     while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return -1;
@@ -184,7 +184,7 @@ int32_t FMC_Erase(uint32_t u32PageAddr)
   */
 int32_t FMC_Erase_SPROM(void)
 {
-    uint32_t  tout;
+    int32_t  tout;
 
     g_FMC_i32ErrCode = 0;
     FMC->ISPCMD = FMC_ISPCMD_PAGE_ERASE;
@@ -194,7 +194,7 @@ int32_t FMC_Erase_SPROM(void)
 
     tout = FMC_TIMEOUT_ERASE;
     while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return -1;
@@ -222,7 +222,7 @@ int32_t FMC_Erase_SPROM(void)
   */
 int32_t FMC_Erase_Block(uint32_t u32BlockAddr)
 {
-    uint32_t  tout;
+    int32_t  tout;
 
     g_FMC_i32ErrCode = 0;
     FMC->ISPCMD = FMC_ISPCMD_BLOCK_ERASE;
@@ -231,7 +231,7 @@ int32_t FMC_Erase_Block(uint32_t u32BlockAddr)
 
     tout = FMC_TIMEOUT_ERASE;
     while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return -1;
@@ -258,7 +258,7 @@ int32_t FMC_Erase_Block(uint32_t u32BlockAddr)
   */
 int32_t FMC_Erase_Bank(uint32_t u32BankAddr)
 {
-    uint32_t  tout;
+    int32_t  tout;
 
     g_FMC_i32ErrCode = 0;
     FMC->ISPCMD = FMC_ISPCMD_BANK_ERASE;
@@ -267,7 +267,7 @@ int32_t FMC_Erase_Bank(uint32_t u32BankAddr)
 
     tout = FMC_TIMEOUT_ERASE;
     while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return -1;
@@ -302,7 +302,7 @@ int32_t FMC_EraseXOM(uint32_t u32XomNum)
 {
     uint32_t  u32Addr;
     int32_t   i32Active, err = 0;
-    uint32_t  tout;
+    int32_t   tout;
 
     if(u32XomNum >= 4UL)
     {
@@ -341,7 +341,7 @@ int32_t FMC_EraseXOM(uint32_t u32XomNum)
 #endif
             tout = FMC_TIMEOUT_ERASE;
             while ((tout-- > 0) && FMC->ISPTRG) {}
-            if (tout == 0)
+            if (tout <= 0)
                 err = -1;
 
             /* Check ISPFF flag to know whether erase OK or fail. */
@@ -430,7 +430,7 @@ void FMC_Open(void)
   */
 uint32_t FMC_Read(uint32_t u32Addr)
 {
-    uint32_t  tout;
+    int32_t  tout;
 
     g_FMC_i32ErrCode = 0;
     FMC->ISPCMD = FMC_ISPCMD_READ;
@@ -439,7 +439,7 @@ uint32_t FMC_Read(uint32_t u32Addr)
 
     tout = FMC_TIMEOUT_READ;
     while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return 0xFFFFFFFF;
@@ -462,7 +462,7 @@ uint32_t FMC_Read(uint32_t u32Addr)
   */
 int32_t FMC_Read_64(uint32_t u32addr, uint32_t * u32data0, uint32_t * u32data1)
 {
-    uint32_t  tout;
+    int32_t  tout;
 
     g_FMC_i32ErrCode = 0;
     FMC->ISPCMD = FMC_ISPCMD_READ_64;
@@ -472,7 +472,7 @@ int32_t FMC_Read_64(uint32_t u32addr, uint32_t * u32data0, uint32_t * u32data1)
 
     tout = FMC_TIMEOUT_READ;
     while ((tout-- > 0) && (FMC->ISPSTS & FMC_ISPSTS_ISPBUSY_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return -1;
@@ -537,7 +537,7 @@ void FMC_SetBootSource(int32_t i32BootSrc)
   */
 int32_t FMC_Write(uint32_t u32Addr, uint32_t u32Data)
 {
-    uint32_t  tout;
+    int32_t  tout;
 
     g_FMC_i32ErrCode = 0;
     FMC->ISPCMD = FMC_ISPCMD_PROGRAM;
@@ -547,7 +547,7 @@ int32_t FMC_Write(uint32_t u32Addr, uint32_t u32Data)
 
     tout = FMC_TIMEOUT_WRITE;
     while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return -1;
@@ -576,7 +576,7 @@ int32_t FMC_Write(uint32_t u32Addr, uint32_t u32Data)
   */
 int32_t FMC_Write8Bytes(uint32_t u32addr, uint32_t u32data0, uint32_t u32data1)
 {
-    uint32_t  tout;
+    int32_t  tout;
 
     g_FMC_i32ErrCode = 0;
     FMC->ISPCMD  = FMC_ISPCMD_PROGRAM_64;
@@ -587,7 +587,7 @@ int32_t FMC_Write8Bytes(uint32_t u32addr, uint32_t u32data0, uint32_t u32data1)
 
     tout = FMC_TIMEOUT_WRITE;
     while ((tout-- > 0) && (FMC->ISPSTS & FMC_ISPSTS_ISPBUSY_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return -1;
@@ -620,7 +620,7 @@ int32_t FMC_Write8Bytes(uint32_t u32addr, uint32_t u32data0, uint32_t u32data1)
 int32_t FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len)
 {
     int   i, idx, retval = 0;
-    uint32_t  tout;
+    int32_t  tout;
 
     g_FMC_i32ErrCode = 0;
 
@@ -648,7 +648,7 @@ int32_t FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len)
         {
             tout = FMC_TIMEOUT_WRITE;
             while ((tout-- > 0) && (FMC->MPSTS & (FMC_MPSTS_D0_Msk | FMC_MPSTS_D1_Msk))) {}
-            if (tout == 0)
+            if (tout <= 0)
             {
                 g_FMC_i32ErrCode = -1;
                 return -1;
@@ -676,7 +676,7 @@ int32_t FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len)
 
             tout = FMC_TIMEOUT_WRITE;
             while ((tout-- > 0) && (FMC->MPSTS & (FMC_MPSTS_D2_Msk | FMC_MPSTS_D3_Msk))) {}
-            if (tout == 0)
+            if (tout <= 0)
             {
                 g_FMC_i32ErrCode = -1;
                 return -1;
@@ -708,7 +708,7 @@ int32_t FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len)
 
         tout = FMC_TIMEOUT_WRITE;
         while ((tout-- > 0) && (FMC->MPSTS & FMC_MPSTS_MPBUSY_Msk)) {}
-        if (tout == 0)
+        if (tout <= 0)
         {
             g_FMC_i32ErrCode = -1;
             return -1;
@@ -735,7 +735,7 @@ int32_t FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len)
   */
 int32_t FMC_Write_OTP(uint32_t otp_num, uint32_t low_word, uint32_t high_word)
 {
-    uint32_t  tout;
+    int32_t  tout;
 
     g_FMC_i32ErrCode = 0;
 
@@ -752,7 +752,7 @@ int32_t FMC_Write_OTP(uint32_t otp_num, uint32_t low_word, uint32_t high_word)
 
     tout = FMC_TIMEOUT_WRITE;
     while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return -1;
@@ -772,7 +772,7 @@ int32_t FMC_Write_OTP(uint32_t otp_num, uint32_t low_word, uint32_t high_word)
 
     tout = FMC_TIMEOUT_WRITE;
     while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return -1;
@@ -802,7 +802,7 @@ int32_t FMC_Write_OTP(uint32_t otp_num, uint32_t low_word, uint32_t high_word)
   */
 int32_t FMC_Read_OTP(uint32_t otp_num, uint32_t *low_word, uint32_t *high_word)
 {
-    uint32_t  tout;
+    int32_t  tout;
 
     g_FMC_i32ErrCode = 0;
 
@@ -819,7 +819,7 @@ int32_t FMC_Read_OTP(uint32_t otp_num, uint32_t *low_word, uint32_t *high_word)
 
     tout = FMC_TIMEOUT_WRITE;
     while ((tout-- > 0) && (FMC->ISPSTS & FMC_ISPSTS_ISPBUSY_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return -1;
@@ -852,7 +852,7 @@ int32_t FMC_Read_OTP(uint32_t otp_num, uint32_t *low_word, uint32_t *high_word)
   */
 int32_t FMC_Lock_OTP(uint32_t otp_num)
 {
-    uint32_t  tout;
+    int32_t  tout;
 
     g_FMC_i32ErrCode = 0;
 
@@ -869,7 +869,7 @@ int32_t FMC_Lock_OTP(uint32_t otp_num)
 
     tout = FMC_TIMEOUT_WRITE;
     while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return -1;
@@ -898,7 +898,7 @@ int32_t FMC_Lock_OTP(uint32_t otp_num)
   */
 int32_t FMC_Is_OTP_Locked(uint32_t otp_num)
 {
-    uint32_t  tout;
+    int32_t  tout;
 
     g_FMC_i32ErrCode = 0;
 
@@ -914,7 +914,7 @@ int32_t FMC_Is_OTP_Locked(uint32_t otp_num)
 
     tout = FMC_TIMEOUT_READ;
     while ((tout-- > 0) && (FMC->ISPTRG & FMC_ISPTRG_ISPGO_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return -1;
@@ -1046,7 +1046,7 @@ int32_t FMC_WriteConfig(uint32_t u32Config[], uint32_t u32Count)
   */
 uint32_t  FMC_GetChkSum(uint32_t u32addr, uint32_t u32count)
 {
-    uint32_t  tout;
+    int32_t  tout;
 
     g_FMC_i32ErrCode = 0;
 
@@ -1063,7 +1063,7 @@ uint32_t  FMC_GetChkSum(uint32_t u32addr, uint32_t u32count)
 
     tout = FMC_TIMEOUT_CHKSUM;
     while ((tout-- > 0) && (FMC->ISPSTS & FMC_ISPSTS_ISPBUSY_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return 0xFFFFFFFF;
@@ -1075,7 +1075,7 @@ uint32_t  FMC_GetChkSum(uint32_t u32addr, uint32_t u32count)
 
     tout = FMC_TIMEOUT_CHKSUM;
     while ((tout-- > 0) && (FMC->ISPSTS & FMC_ISPSTS_ISPBUSY_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return 0xFFFFFFFF;
@@ -1098,7 +1098,7 @@ uint32_t  FMC_GetChkSum(uint32_t u32addr, uint32_t u32count)
   */
 uint32_t  FMC_CheckAllOne(uint32_t u32addr, uint32_t u32count)
 {
-    uint32_t  tout;
+    int32_t  tout;
 
     g_FMC_i32ErrCode = 0;
 
@@ -1111,7 +1111,7 @@ uint32_t  FMC_CheckAllOne(uint32_t u32addr, uint32_t u32count)
 
     tout = FMC_TIMEOUT_CHKALLONE;
     while ((tout-- > 0) && (FMC->ISPSTS & FMC_ISPSTS_ISPBUSY_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return READ_ALLONE_CMD_FAIL;
@@ -1124,7 +1124,7 @@ uint32_t  FMC_CheckAllOne(uint32_t u32addr, uint32_t u32count)
         FMC->ISPADDR    = u32addr;
         FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
         while ((tout-- > 0) && (FMC->ISPSTS & FMC_ISPSTS_ISPBUSY_Msk)) {}
-        if (tout == 0)
+        if (tout <= 0)
         {
             g_FMC_i32ErrCode = -1;
             return READ_ALLONE_CMD_FAIL;
@@ -1167,7 +1167,7 @@ int32_t  FMC_SetSPKey(uint32_t key[3], uint32_t kpmax, uint32_t kemax,
 {
     uint32_t  lock_ctrl = 0UL;
     uint32_t  u32KeySts;
-    uint32_t  tout;
+    int32_t   tout;
     int32_t   ret = 0;
 
     g_FMC_i32ErrCode = 0;
@@ -1208,7 +1208,7 @@ int32_t  FMC_SetSPKey(uint32_t key[3], uint32_t kpmax, uint32_t kemax,
 
         tout = FMC_TIMEOUT_WRITE;
         while ((tout-- > 0) && (FMC->KPKEYSTS & FMC_KPKEYSTS_KEYBUSY_Msk)) {}
-        if (tout == 0)
+        if (tout <= 0)
         {
             g_FMC_i32ErrCode = -3;
             return -3;
@@ -1265,7 +1265,7 @@ int32_t  FMC_SetSPKey(uint32_t key[3], uint32_t kpmax, uint32_t kemax,
 int32_t  FMC_CompareSPKey(uint32_t key[3])
 {
     uint32_t  u32KeySts;
-    uint32_t  tout;
+    int32_t   tout;
 
     g_FMC_i32ErrCode = 0;
 
@@ -1290,7 +1290,7 @@ int32_t  FMC_CompareSPKey(uint32_t key[3])
 
     tout = FMC_TIMEOUT_READ;
     while ((tout-- > 0) && (FMC->KPKEYSTS & FMC_KPKEYSTS_KEYBUSY_Msk)) {}
-    if (tout == 0)
+    if (tout <= 0)
     {
         g_FMC_i32ErrCode = -1;
         return -1;

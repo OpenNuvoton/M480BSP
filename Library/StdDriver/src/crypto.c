@@ -1211,7 +1211,7 @@ int ECC_IsPrivateKeyValid(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char private_k[])
   */
 int32_t  ECC_GeneratePublicKey(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *private_k, char public_k1[], char public_k2[])
 {
-    uint32_t  tout;
+    int32_t   tout;
     int32_t   i;
 
     if (ecc_init_curve(crpt, ecc_curve) != 0)
@@ -1244,7 +1244,7 @@ int32_t  ECC_GeneratePublicKey(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *privat
     while ((tout-- > 0) && ((g_ECC_done | g_ECCERR_done) == 0UL))
     {
     }
-    if ((tout == 0) || g_ECCERR_done)
+    if ((tout <= 0) || g_ECCERR_done)
         return -1;
 
     Reg2Hex(pCurve->Echar, crpt->ECC_X1, public_k1);
@@ -1267,7 +1267,7 @@ int32_t  ECC_GeneratePublicKey(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *privat
   */
 int32_t  ECC_Mutiply(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char x1[], char y1[], char *k, char x2[], char y2[])
 {
-    uint32_t  tout;
+    int32_t   tout;
     int32_t   i;
 
     if (ecc_init_curve(crpt, ecc_curve) != 0)
@@ -1304,7 +1304,7 @@ int32_t  ECC_Mutiply(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char x1[], char y1[], 
     while ((tout-- > 0) && ((g_ECC_done | g_ECCERR_done) == 0UL))
     {
     }
-    if ((tout == 0) || g_ECCERR_done)
+    if ((tout <= 0) || g_ECCERR_done)
         return -1;
 
     Reg2Hex(pCurve->Echar, crpt->ECC_X1, x2);
@@ -1326,7 +1326,7 @@ int32_t  ECC_Mutiply(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char x1[], char y1[], 
   */
 int32_t  ECC_GenerateSecretZ(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *private_k, char public_k1[], char public_k2[], char secret_z[])
 {
-    uint32_t  tout;
+    int32_t   tout;
     int32_t   i;
 
     if (ecc_init_curve(crpt, ecc_curve) != 0)
@@ -1377,7 +1377,7 @@ int32_t  ECC_GenerateSecretZ(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *private_
     while ((tout-- > 0) && ((g_ECC_done | g_ECCERR_done) == 0UL))
     {
     }
-    if ((tout == 0) || g_ECCERR_done)
+    if ((tout <= 0) || g_ECCERR_done)
         return -1;
 
     Reg2Hex(pCurve->Echar, crpt->ECC_X1, secret_z);
@@ -1388,7 +1388,7 @@ int32_t  ECC_GenerateSecretZ(CRPT_T *crpt, E_ECC_CURVE ecc_curve, char *private_
 
 static int32_t run_ecc_codec(CRPT_T *crpt, uint32_t mode)
 {
-    uint32_t  tout;
+    int32_t  tout;
 
     if ((mode & CRPT_ECC_CTL_ECCOP_Msk) == ECCOP_MODULE)
     {
@@ -1415,14 +1415,14 @@ static int32_t run_ecc_codec(CRPT_T *crpt, uint32_t mode)
     while ((tout-- > 0) && ((g_ECC_done | g_ECCERR_done) == 0UL))
     {
     }
-    if ((tout == 0) || g_ECCERR_done)
+    if ((tout <= 0) || g_ECCERR_done)
         return -1;
 
     tout = TIMEOUT_ECC;
     while ((tout-- > 0) && (crpt->ECC_STS & CRPT_ECC_STS_BUSY_Msk))
     {
     }
-    if (tout == 0)
+    if (tout <= 0)
         return -1;
     else
         return 0;

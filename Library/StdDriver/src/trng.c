@@ -35,7 +35,7 @@
   */
 int TRNG_Open(void)
 {
-    uint32_t   tout = TIMEOUT_TRNG;
+    int32_t   tout = TIMEOUT_TRNG;
 
     SYS->IPRST1 |= SYS_IPRST1_TRNGRST_Msk;
     SYS->IPRST1 ^= SYS_IPRST1_TRNGRST_Msk;
@@ -46,7 +46,7 @@ int TRNG_Open(void)
     while ((tout-- > 0) && !(TRNG->CTL & TRNG_CTL_READY_Msk))
     {
     }
-    if (tout == 0)
+    if (tout <= 0)
         return -1;
 
     TRNG->CTL |= TRNG_CTL_TRNGEN_Msk;
