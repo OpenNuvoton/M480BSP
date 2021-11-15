@@ -106,7 +106,7 @@ uint8_t gu8DeviceDescriptor[] __attribute__((aligned(4))) =
 #endif
     LEN_DEVICE,     /* bLength */
     DESC_DEVICE,    /* bDescriptorType */
-    0x10, 0x01,     /* bcdUSB */
+    0x00, 0x02,     /* bcdUSB */
     0x00,           /* bDeviceClass */
     0x00,           /* bDeviceSubClass */
     0x00,           /* bDeviceProtocol */
@@ -135,7 +135,7 @@ uint8_t gu8QualifierDescriptor[] __attribute__((aligned(4))) =
 #endif
     LEN_QUALIFIER,  /* bLength */
     DESC_QUALIFIER, /* bDescriptorType */
-    0x10, 0x01,     /* bcdUSB */
+    0x10, 0x02,     /* bcdUSB */
     0x00,           /* bDeviceClass */
     0x00,           /* bDeviceSubClass */
     0x00,           /* bDeviceProtocol */
@@ -243,7 +243,7 @@ uint8_t gu8OtherConfigDescriptorHS[] __attribute__((aligned(4))) =
     /* wTotalLength */
     LEN_CONFIG_AND_SUBORDINATE & 0x00FF,
     ((LEN_CONFIG_AND_SUBORDINATE & 0xFF00) >> 8),
-    0x01,           /* bNumInterfaces */
+    0x02,           /* bNumInterfaces */
     0x01,           /* bConfigurationValue */
     0x00,           /* iConfiguration */
     0x80 | (USBD_SELF_POWERED << 6) | (USBD_REMOTE_WAKEUP << 5),/* bmAttributes */
@@ -414,7 +414,7 @@ uint8_t gu8OtherConfigDescriptorFS[] __attribute__((aligned(4))) =
     /* wTotalLength */
     LEN_CONFIG_AND_SUBORDINATE & 0x00FF,
     ((LEN_CONFIG_AND_SUBORDINATE & 0xFF00) >> 8),
-    0x01,           /* bNumInterfaces */
+    0x02,           /* bNumInterfaces */
     0x01,           /* bConfigurationValue */
     0x00,           /* iConfiguration */
     0x80 | (USBD_SELF_POWERED << 6) | (USBD_REMOTE_WAKEUP << 5),/* bmAttributes */

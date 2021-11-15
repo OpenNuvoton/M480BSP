@@ -30,6 +30,10 @@
 #define HID_RPT_TYPE_OUTPUT     0x02
 #define HID_RPT_TYPE_FEATURE    0x03
 
+/*!<USB HID Protocol Type */
+#define HID_BOOT_PROTOCOL       0x00
+#define HID_REPORT_PROTOCOL     0x01
+
 /*-------------------------------------------------------------*/
 /* Define EP maximum packet size */
 #define CEP_MAX_PKT_SIZE        64

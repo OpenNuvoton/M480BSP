@@ -631,14 +631,8 @@ void HSUSBD_CtrlIn(void)
     else
     {
         /* Data size <= MXPLD */
-        cnt = g_hsusbd_CtrlInSize >> 2;
+        cnt = g_hsusbd_CtrlInSize;
         for (i=0ul; i<cnt; i++)
-        {
-            HSUSBD->CEPDAT = *(uint32_t *)g_hsusbd_CtrlInPointer;
-            g_hsusbd_CtrlInPointer += 4ul;
-        }
-
-        for (i=0ul; i<(g_hsusbd_CtrlInSize % 4ul); i++)
         {
             u8Value = *(uint8_t *)(g_hsusbd_CtrlInPointer+i);
             outpb(&HSUSBD->CEPDAT, u8Value);

@@ -63,7 +63,7 @@ uint8_t gu8DeviceDescriptor[] __attribute__((aligned(4))) =
 #endif
     LEN_DEVICE,     /* bLength */
     DESC_DEVICE,    /* bDescriptorType */
-    0x10, 0x01,     /* bcdUSB */
+    0x00, 0x02,     /* bcdUSB */
     0x00,           /* bDeviceClass */
     0x00,           /* bDeviceSubClass */
     0x00,           /* bDeviceProtocol */
@@ -92,7 +92,7 @@ uint8_t gu8QualifierDescriptor[] __attribute__((aligned(4))) =
 #endif
     LEN_QUALIFIER,  /* bLength */
     DESC_QUALIFIER, /* bDescriptorType */
-    0x10, 0x01,     /* bcdUSB */
+    0x10, 0x02,     /* bcdUSB */
     0x00,           /* bDeviceClass */
     0x00,           /* bDeviceSubClass */
     0x00,           /* bDeviceProtocol */
@@ -380,7 +380,7 @@ uint32_t gu32UsbHidReportLen[3] =
 uint32_t gu32ConfigHidDescIdx[3] =
 {
     (LEN_CONFIG+LEN_INTERFACE),
-    0,
+    (sizeof(gu8ConfigDescriptor) - LEN_HID - LEN_ENDPOINT),
     0
 };
 
