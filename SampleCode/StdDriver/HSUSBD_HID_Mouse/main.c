@@ -56,6 +56,31 @@ void SYS_Init(void)
 
 }
 
+//
+// GPF_IRQHandler
+//
+uint8_t volatile bIsPressKey = 0;
+void GPF_IRQHandler(void)
+{
+    if (GPIO_GET_INT_FLAG(PF, BIT11)) {
+        bIsPressKey = 1;
+        GPIO_CLR_INT_FLAG(PF, BIT11);
+    }
+}
+
+void gpio_init()
+{
+    SYS->GPF_MFPH &= ~(SYS_GPF_MFPH_PF11MFP_Msk);
+    SYS->GPF_MFPH |= (SYS_GPF_MFPH_PF11MFP_GPIO);
+
+    GPIO_SetMode(PF, BIT11, GPIO_MODE_INPUT);
+    GPIO_ENABLE_DEBOUNCE(PF, BIT11);
+
+    GPIO_SET_DEBOUNCE_TIME(GPIO_DBCTL_DBCLKSRC_LIRC, GPIO_DBCTL_DBCLKSEL_32);
+
+    GPIO_EnableInt(PF, 11, GPIO_INT_FALLING);
+    NVIC_EnableIRQ(GPF_IRQn);
+}
 
 int32_t main (void)
 {
@@ -68,6 +93,8 @@ int32_t main (void)
 
     /* Init UART to 115200-8n1 for print message */
     UART_Open(UART0, 115200);
+
+    gpio_init();
 
     printf("\n\nM480 HSUSBD HID\n");
 
@@ -84,7 +111,7 @@ int32_t main (void)
 
     while(1)
     {
-        HID_UpdateMouseData();
+        HID_Process();
     }
 }
 

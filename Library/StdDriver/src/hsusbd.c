@@ -39,6 +39,8 @@ static uint8_t g_hsusbd_UsbAltInterface = 0ul;
 static uint8_t g_hsusbd_EnableTestMode = 0ul;
 static uint8_t g_hsusbd_TestSelector = 0ul;
 
+uint8_t volatile g_hsusbd_RemoteWakeupEn = 0ul; /*!< Remote wake up function enable flag */
+
 #ifdef __ICCARM__
 #pragma data_alignment=4
 static uint8_t g_hsusbd_buf[12];
@@ -370,14 +372,16 @@ void HSUSBD_StandardRequest(void)
             /* Device */
             if (gUsbCmd.bmRequestType == 0x80ul)
             {
-                if ((g_hsusbd_sInfo->gu8ConfigDesc[7] & 0x40ul) == 0x40ul)
-                {
-                    g_hsusbd_buf[0] = (uint8_t)1ul; /* Self-Powered */
+                uint8_t u8Tmp;
+
+                u8Tmp = (uint8_t)0ul;
+                if ((g_hsusbd_sInfo->gu8ConfigDesc[7] & 0x40ul) == 0x40ul) {
+                    u8Tmp |= (uint8_t)1ul; /* Self-Powered/Bus-Powered.*/
                 }
-                else
-                {
-                    g_hsusbd_buf[0] = (uint8_t)0ul; /* bus-Powered */
+                if ((g_hsusbd_sInfo->gu8ConfigDesc[7] & 0x20ul) == 0x20ul) {
+                    u8Tmp |= (uint8_t)(g_hsusbd_RemoteWakeupEn << 1ul); /* Remote wake up */
                 }
+                g_hsusbd_buf[0] = u8Tmp;
             }
             /* Interface */
             else if (gUsbCmd.bmRequestType == 0x81ul)
@@ -411,9 +415,8 @@ void HSUSBD_StandardRequest(void)
         {
         case CLEAR_FEATURE:
         {
-            if((gUsbCmd.wValue & 0xfful) == FEATURE_ENDPOINT_HALT)
+            if ((gUsbCmd.wValue & 0xfful) == FEATURE_ENDPOINT_HALT)
             {
-
                 uint32_t epNum, i;
 
                 /* EP number stall is not allow to be clear in MSC class "Error Recovery Test".
@@ -426,6 +429,10 @@ void HSUSBD_StandardRequest(void)
                         HSUSBD->EP[i].EPRSPCTL = (HSUSBD->EP[i].EPRSPCTL & 0xeful) | HSUSBD_EP_RSPCTL_TOGGLE;
                     }
                 }
+            }
+            else if ((gUsbCmd.wValue & 0xfful) == FEATURE_DEVICE_REMOTE_WAKEUP)
+            {
+                g_hsusbd_RemoteWakeupEn = (uint8_t)0;
             }
             /* Status stage */
             HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_STSDONEIF_Msk);
@@ -462,6 +469,10 @@ void HSUSBD_StandardRequest(void)
             if ((gUsbCmd.wValue & 0x3ul) == 3ul)    /* HNP ebable */
             {
                 HSOTG->CTL |= (HSOTG_CTL_HNPREQEN_Msk | HSOTG_CTL_BUSREQ_Msk);
+            }
+            if ((gUsbCmd.wValue & FEATURE_DEVICE_REMOTE_WAKEUP) == FEATURE_DEVICE_REMOTE_WAKEUP)
+            {
+                g_hsusbd_RemoteWakeupEn = (uint8_t)1ul;
             }
 
             /* Status stage */
@@ -537,7 +548,7 @@ void HSUSBD_UpdateDeviceState(void)
     }
     case SET_FEATURE:
     {
-        if(gUsbCmd.wValue == FEATURE_ENDPOINT_HALT)
+        if (gUsbCmd.wValue == FEATURE_ENDPOINT_HALT)
         {
             uint32_t idx;
             idx = (uint32_t)(gUsbCmd.wIndex & 0xFul);
@@ -567,6 +578,10 @@ void HSUSBD_UpdateDeviceState(void)
                 HSUSBD->TEST = TEST_FORCE_ENABLE;
             }
         }
+        if ((gUsbCmd.wValue & FEATURE_DEVICE_REMOTE_WAKEUP) == FEATURE_DEVICE_REMOTE_WAKEUP)
+        {
+            g_hsusbd_RemoteWakeupEn = (uint8_t)1ul;
+        }
         break;
     }
     case CLEAR_FEATURE:
@@ -576,6 +591,10 @@ void HSUSBD_UpdateDeviceState(void)
             uint32_t idx;
             idx = (uint32_t)(gUsbCmd.wIndex & 0xFul);
             HSUSBD_ClearStall(idx);
+        }
+        else if(gUsbCmd.wValue == FEATURE_DEVICE_REMOTE_WAKEUP)
+        {
+            g_hsusbd_RemoteWakeupEn = (uint8_t)0;
         }
         break;
     }

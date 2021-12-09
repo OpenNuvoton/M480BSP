@@ -11,11 +11,24 @@
 #include "NuMicro.h"
 #include "hid_mouse.h"
 
+#define HSUSB_HID_REMOTE_WAKEUP_TEST  0
+
 signed char mouse_table[] = {-16, -16, -16, 0, 16, 16, 16, 0};
 uint8_t mouse_idx = 0;
 uint8_t move_len, mouse_mode=1;
 
 uint8_t volatile g_u8EPAReady = 0;
+
+//
+// Remote wakeup flag
+//
+extern uint8_t volatile g_hsusbd_RemoteWakeupEn;
+extern uint8_t volatile bIsPressKey;
+
+//
+// Suspend & Resume
+//
+static uint8_t volatile g_u8suspend = 0;
 
 //
 //  Report Protocol
@@ -40,6 +53,7 @@ void USBD20_IRQHandler(void)
 
         if (IrqSt & HSUSBD_BUSINTSTS_RSTIF_Msk)
         {
+            g_u8suspend = 0;
             HSUSBD_SwReset();
 
             HSUSBD_ResetDMA();
@@ -58,12 +72,14 @@ void USBD20_IRQHandler(void)
 
         if (IrqSt & HSUSBD_BUSINTSTS_RESUMEIF_Msk)
         {
+            g_u8suspend = 0;
             HSUSBD_ENABLE_BUS_INT(HSUSBD_BUSINTEN_RSTIEN_Msk|HSUSBD_BUSINTEN_SUSPENDIEN_Msk);
             HSUSBD_CLR_BUS_INT_FLAG(HSUSBD_BUSINTSTS_RESUMEIF_Msk);
         }
 
         if (IrqSt & HSUSBD_BUSINTSTS_SUSPENDIF_Msk)
         {
+            g_u8suspend = 1;
             HSUSBD_ENABLE_BUS_INT(HSUSBD_BUSINTEN_RSTIEN_Msk | HSUSBD_BUSINTEN_RESUMEIEN_Msk);
             HSUSBD_CLR_BUS_INT_FLAG(HSUSBD_BUSINTSTS_SUSPENDIF_Msk);
         }
@@ -468,6 +484,24 @@ void HID_VendorRequest(void)
     }
 }
 
+//
+// remoteWakeupProcess
+//
+void HID_RemoteWakeupProcess(void)
+{
+    if (g_hsusbd_RemoteWakeupEn) {
+        if (bIsPressKey) {
+            bIsPressKey = 0;
+            printf("Remote wake-up\r\n");
+            if ((HSUSBD->OPER & HSUSBD_OPER_RESUMEEN_Msk) != 1) {
+                HSUSBD->OPER |= HSUSBD_OPER_RESUMEEN_Msk;
+                while(HSUSBD->OPER & HSUSBD_OPER_RESUMEEN_Msk);
+            }
+        }
+    }
+}
+
+
 void HID_UpdateMouseData(void)
 {
     uint8_t buf[4];
@@ -500,4 +534,26 @@ void HID_UpdateMouseData(void)
     }
 }
 
+//
+// HID_powerDownHandler
+//
+void HID_powerDownHandler(void)
+{  
+    if (g_u8suspend)
+    {
+        //
+        // Perform remote wake-up
+        //
+        HID_RemoteWakeupProcess();
+    }
+}
+
+void HID_Process(void)
+{
+#if HSUSB_HID_REMOTE_WAKEUP_TEST
+    HID_powerDownHandler();
+#else
+    HID_UpdateMouseData();
+#endif
+}
 

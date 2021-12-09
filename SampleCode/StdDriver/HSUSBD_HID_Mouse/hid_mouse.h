@@ -52,7 +52,7 @@
 /* Define Descriptor information */
 #define HID_DEFAULT_INT_IN_INTERVAL     10
 #define USBD_SELF_POWERED               0
-#define USBD_REMOTE_WAKEUP              0
+#define USBD_REMOTE_WAKEUP              1
 #define USBD_MAX_POWER                  50  /* The unit is in 2mA. ex: 50 * 2mA = 100mA */
 
 #define LEN_CONFIG_AND_SUBORDINATE      (LEN_CONFIG+LEN_INTERFACE+LEN_HID+LEN_ENDPOINT)
@@ -67,7 +67,7 @@ void HID_Init(void);
 void HID_ClassRequest(void);
 
 void EPA_Handler(void);
-void HID_UpdateMouseData(void);
+void HID_Process(void);
 
 #endif  /* __HID_MOUSE_H__ */
 
