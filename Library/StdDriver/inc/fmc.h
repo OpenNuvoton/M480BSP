@@ -301,7 +301,7 @@ __STATIC_INLINE uint32_t FMC_ReadUCID(uint32_t u32Index)
  * @note        Global error code g_FMC_i32ErrCode
  *              -1  Command time-out
  */
-__STATIC_INLINE int FMC_SetVectorPageAddr(uint32_t u32PageAddr)
+__STATIC_INLINE int32_t FMC_SetVectorPageAddr(uint32_t u32PageAddr)
 {
     uint32_t  tout = FMC_TIMEOUT_WRITE;
 
