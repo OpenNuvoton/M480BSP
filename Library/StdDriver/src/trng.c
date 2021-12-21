@@ -33,7 +33,7 @@
   * @retval  0   Success
   * @retval  -1  Time-out. TRNG hardware may not be enabled.
   */
-int TRNG_Open(void)
+int32_t TRNG_Open(void)
 {
     int32_t   tout = TIMEOUT_TRNG;
 
