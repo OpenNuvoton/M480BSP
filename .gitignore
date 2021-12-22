@@ -74,6 +74,8 @@ Samplecode/*/packages/
 *.7z
 *.rar
 
+!LICENSE.txt
+!NOTICE.txt
 !SampleCode/StdDriver/FMC_IAP/IAR/Release/
 !SampleCode/StdDriver/FMC_IAP/IAR/Release/Exe/
 !SampleCode/StdDriver/FMC_IAP/IAR/Release/Exe/fmc_ld_code.bin

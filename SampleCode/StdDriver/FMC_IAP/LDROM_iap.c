@@ -18,10 +18,16 @@ void SYS_Init(void)
     /* Unlock protected registers */
     SYS_UnlockReg();
 
-#ifndef __GNUC__   /* GNU C compiler generates larger code, which can be over LDROM size. */
     /* Set XT1_OUT(PF.2) and XT1_IN(PF.3) to input mode */
     PF->MODE &= ~(GPIO_MODE_MODE2_Msk | GPIO_MODE_MODE3_Msk);
 
+#ifdef __GNUC__   /* GNU C compiler generates larger code, which can be over LDROM size. */
+    CLK->PWRCTL |= CLK_PWRCTL_HXTEN_Msk;
+    while (!(CLK->STATUS & CLK_STATUS_HXTSTB_Msk));
+    CLK->CLKSEL0 = (CLK->CLKSEL0 & ~CLK_CLKSEL0_HCLKSEL_Msk) | CLK_CLKSEL0_HCLKSEL_HXT;
+    CLK->CLKSEL1 = (CLK->CLKSEL1 & ~CLK_CLKSEL1_UART0SEL_Msk) | CLK_CLKSEL1_UART0SEL_HXT;
+    SystemCoreClock = __HXT;
+#else
     /* Enable HXT clock */
     CLK_EnableXtalRC(CLK_PWRCTL_HXTEN_Msk);
 
@@ -42,10 +48,10 @@ void SYS_Init(void)
 
     /* Select UART module clock source as HXT and UART module clock divider as 1 */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
-#endif
 
     /* Update System Core Clock */
     SystemCoreClockUpdate();
+#endif
 
     /* Set GPB multi-function pins for UART0 RXD and TXD */
     SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
