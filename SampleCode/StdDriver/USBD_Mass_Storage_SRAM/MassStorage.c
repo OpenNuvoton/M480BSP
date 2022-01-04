@@ -195,8 +195,10 @@ void USBD_IRQHandler(void)
 
         if(u32IntSts & USBD_INTSTS_EP3)
         {
-            /* Clear event flag */
-            USBD_CLR_INT_FLAG(USBD_INTSTS_EP3);
+            while(USBD_GET_INT_FLAG() & USBD_INTSTS_EP3) {
+                /* Clear event flag */
+                USBD_CLR_INT_FLAG(USBD_INTSTS_EP3);
+            }
             // Bulk OUT
             EP3_Handler();
         }

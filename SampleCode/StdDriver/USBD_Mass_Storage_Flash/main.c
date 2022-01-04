@@ -12,8 +12,7 @@
 #define CRYSTAL_LESS        1
 #define TRIM_INIT           (SYS_BASE+0x10C)
 
-#define DATA_FLASH_BASE  0x40000
-
+#define DATA_FLASH_BASE  0x20000
 
 void SYS_Init(void)
 {
