@@ -117,6 +117,12 @@ void WakeUpRTCTickFunction(uint32_t u32PDMode)
     /* Set RTC tick period as 1 second */
     RTC_SetTickPeriod(RTC_TICK_1_SEC);
 
+    /* Set GPF6~7 pull-up when enter DPD mode */ /* PF4(X32_OUT), PF5(X32_IN) unnecessary set pull-up */
+    RTC->GPIOCTL0 |= (0x1 << RTC_GPIOCTL0_PUSEL2_Pos) | (0x1 << RTC_GPIOCTL0_PUSEL3_Pos);
+    /* Set GPF8~11 pull-up when enter DPD mode */
+    RTC->GPIOCTL1 |= (0x1 << RTC_GPIOCTL1_PUSEL4_Pos) | (0x1 << RTC_GPIOCTL1_PUSEL5_Pos) |
+                     (0x1 << RTC_GPIOCTL1_PUSEL6_Pos) | (0x1 << RTC_GPIOCTL1_PUSEL7_Pos);
+
     /* Enable RTC wake-up */
     CLK_ENABLE_RTCWK();
 
@@ -194,6 +200,12 @@ void  WakeUpRTCAlarmFunction(uint32_t u32PDMode)
     /* Enable RTC alarm interrupt and wake-up function will be enabled also */
     RTC->INTEN = RTC_INTEN_ALMIEN_Msk;
 
+    /* Set GPF6~7 pull-up when enter DPD mode */ /* PF4(X32_OUT), PF5(X32_IN) unnecessary set pull-up */
+    RTC->GPIOCTL0 |= (0x1 << RTC_GPIOCTL0_PUSEL2_Pos) | (0x1 << RTC_GPIOCTL0_PUSEL3_Pos);
+    /* Set GPF8~11 pull-up when enter DPD mode */
+    RTC->GPIOCTL1 |= (0x1 << RTC_GPIOCTL1_PUSEL4_Pos) | (0x1 << RTC_GPIOCTL1_PUSEL5_Pos) |
+                     (0x1 << RTC_GPIOCTL1_PUSEL6_Pos) | (0x1 << RTC_GPIOCTL1_PUSEL7_Pos);
+
     /* Select Power-down mode */
     CLK_SetPowerDownMode(u32PDMode);
 
@@ -238,6 +250,12 @@ void  WakeUpRTCTamperFunction(uint32_t u32PDMode)
             }
         }
     }
+
+    /* Set GPF7 pull-up when enter DPD mode */ /* PF4(X32_OUT), PF5(X32_IN), PF6(Tamper0) unnecessary set pull-up */
+    RTC->GPIOCTL0 |= (0x1 << RTC_GPIOCTL0_PUSEL3_Pos);
+    /* Set GPF8~11 pull-up when enter DPD mode */
+    RTC->GPIOCTL1 |= (0x1 << RTC_GPIOCTL1_PUSEL4_Pos) | (0x1 << RTC_GPIOCTL1_PUSEL5_Pos) |
+                     (0x1 << RTC_GPIOCTL1_PUSEL6_Pos) | (0x1 << RTC_GPIOCTL1_PUSEL7_Pos);
 
     /* Set RTC Tamper 0 as low level detect */
     RTC_StaticTamperEnable(RTC_TAMPER0_SELECT, RTC_TAMPER_LOW_LEVEL_DETECT, RTC_TAMPER_DEBOUNCE_DISABLE);
