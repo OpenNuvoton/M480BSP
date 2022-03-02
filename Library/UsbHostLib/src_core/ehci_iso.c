@@ -461,37 +461,37 @@ int ehci_iso_xfer(UTR_T *utr)
     /*  Allocate iTDs                                                                     */
     /*------------------------------------------------------------------------------------*/
 
-    if (ep->bInterval < 2)                  /* transfer interval is 1 micro-frame         */
+    if (ep->bInterval <= 1)                 /* transfer interval is 1 micro-frame         */
     {
         trans_mask = 0xFF;
         itd_cnt = 1;                        /* required 1 iTD for one UTR                 */
         interval = 1;                       /* iTD frame interval of this endpoint        */
     }
-    else if (ep->bInterval < 4)             /* transfer interval is 2 micro-frames        */
+    else if (ep->bInterval == 2)            /* transfer interval is 2 micro-frames        */
     {
         trans_mask = 0x55;
         itd_cnt = 2;                        /* required 2 iTDs for one UTR                */
         interval = 1;                       /* iTD frame interval of this endpoint        */
     }
-    else if (ep->bInterval < 8)             /* transfer interval is 4 micro-frames        */
+    else if (ep->bInterval == 3)             /* transfer interval is 4 micro-frames        */
     {
         trans_mask = 0x44;
         itd_cnt = 4;                        /* required 4 iTDs for one UTR                */
         interval = 1;                       /* iTD frame interval of this endpoint        */
     }
-    else if (ep->bInterval < 16)            /* transfer interval is 8 micro-frames        */
+    else if (ep->bInterval == 4)            /* transfer interval is 8 micro-frames        */
     {
         trans_mask = 0x08;                  /* there's 1 transfer in one iTD              */
         itd_cnt = 8;                        /* required 8 iTDs for one UTR                */
         interval = 1;                       /* iTD frame interval of this endpoint        */
     }
-    else if (ep->bInterval < 32)            /* transfer interval is 16 micro-frames       */
+    else if (ep->bInterval == 5)            /* transfer interval is 16 micro-frames       */
     {
         trans_mask = 0x10;                  /* there's 1 transfer in one iTD              */
         itd_cnt = 8;                        /* required 8 iTDs for one UTR                */
         interval = 2;                       /* iTD frame interval of this endpoint        */
     }
-    else if (ep->bInterval < 64)            /* transfer interval is 32 micro-frames       */
+    else if (ep->bInterval == 6)            /* transfer interval is 32 micro-frames       */
     {
         trans_mask = 0x02;                  /* there's 1 transfer in one iTD              */
         itd_cnt = 8;                        /* required 8 iTDs for one UTR                */
