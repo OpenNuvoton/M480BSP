@@ -404,7 +404,7 @@ static uint32_t RT3[256];
 /*
  * Round constants
  */
-static uint32_t RCON[10];
+uint32_t RCON[10];
 
 /*
  * Tables generation code
@@ -670,6 +670,7 @@ int mbedtls_aes_setkey_enc( mbedtls_aes_context *ctx, const unsigned char *key,
         GET_UINT32_LE( RK[i], key, i << 2 );
     }
 
+#ifndef NUVOTON_ENABLE_AES
     switch( ctx->nr )
     {
         case 10:
@@ -732,7 +733,7 @@ int mbedtls_aes_setkey_enc( mbedtls_aes_context *ctx, const unsigned char *key,
             }
             break;
     }
-
+#endif
     return( 0 );
 }
 
@@ -746,10 +747,13 @@ int mbedtls_aes_setkey_enc( mbedtls_aes_context *ctx, const unsigned char *key,
 int mbedtls_aes_setkey_dec( mbedtls_aes_context *ctx, const unsigned char *key,
                     unsigned int keybits )
 {
-    int i, j, ret;
+#ifndef NUVOTON_ENABLE_AES
+    int i, j;
+    uint32_t *SK;
+#endif
+    int ret;
     mbedtls_aes_context cty;
     uint32_t *RK;
-    uint32_t *SK;
 
     mbedtls_aes_init( &cty );
 
@@ -778,6 +782,9 @@ int mbedtls_aes_setkey_dec( mbedtls_aes_context *ctx, const unsigned char *key,
     }
 #endif
 
+#ifdef NUVOTON_ENABLE_AES
+	memcpy(RK, cty.rk, keybits/8);
+#else
     SK = cty.rk + cty.nr * 4;
 
     *RK++ = *SK++;
@@ -800,6 +807,7 @@ int mbedtls_aes_setkey_dec( mbedtls_aes_context *ctx, const unsigned char *key,
     *RK++ = *SK++;
     *RK++ = *SK++;
     *RK++ = *SK++;
+#endif
 
 exit:
     mbedtls_aes_free( &cty );
