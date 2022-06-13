@@ -165,7 +165,7 @@ void CCAP_DisableInt(uint32_t u32IntMask)
  */
 void CCAP_EnableMono(uint32_t u32Interface)
 {
-    CCAP->CTL = (CCAP->CTL & ~CCAP_CTL_MY8_MY4) | CCAP_CTL_MONO_Msk |u32Interface;
+    CCAP->CTL = (CCAP->CTL & ~CCAP_CTL_MY8_MY8) | CCAP_CTL_MONO_Msk |u32Interface;
 }
 
 /**
