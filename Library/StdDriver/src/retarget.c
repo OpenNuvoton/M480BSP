@@ -9,6 +9,7 @@
 
 
 #include <stdio.h>
+#include <inttypes.h>
 #include "NuMicro.h"
 
 #if defined ( __CC_ARM   )
@@ -58,14 +59,14 @@ enum { r0, r1, r2, r3, r12, lr, pc, psr};
  */
 static void stackDump(uint32_t stack[])
 {
-    printf("r0  = 0x%x\n", stack[r0]);
-    printf("r1  = 0x%x\n", stack[r1]);
-    printf("r2  = 0x%x\n", stack[r2]);
-    printf("r3  = 0x%x\n", stack[r3]);
-    printf("r12 = 0x%x\n", stack[r12]);
-    printf("lr  = 0x%x\n", stack[lr]);
-    printf("pc  = 0x%x\n", stack[pc]);
-    printf("psr = 0x%x\n", stack[psr]);
+    printf("r0  = 0x%" PRIx32 "\n", stack[r0]);
+    printf("r1  = 0x%" PRIx32 "\n", stack[r1]);
+    printf("r2  = 0x%" PRIx32 "\n", stack[r2]);
+    printf("r3  = 0x%" PRIx32 "\n", stack[r3]);
+    printf("r12 = 0x%" PRIx32 "\n", stack[r12]);
+    printf("lr  = 0x%" PRIx32 "\n", stack[lr]);
+    printf("pc  = 0x%" PRIx32 "\n", stack[pc]);
+    printf("psr = 0x%" PRIx32 "\n", stack[psr]);
 }
 
 /**
@@ -328,7 +329,7 @@ SH_End
 
 /* Make sure won't goes here only because --gnu is defined , so
    add !__CC_ARM and !__ICCARM__ checking */
-# if defined ( __GNUC__ ) && !(__CC_ARM) && !(__ICCARM__) 
+# if defined ( __GNUC__ ) && !(__CC_ARM) && !(__ICCARM__)
 
 /**
  * @brief    This HardFault handler is implemented to show r0, r1, r2, r3, r12, lr, pc, psr
@@ -351,7 +352,7 @@ void HardFault_Handler(void)
         "B       Hard_Fault_Handler            \n"
         "1:                                    \n"
         "MRS     R0, MSP                       \n" /*; LR current value */
-        "B       Hard_Fault_Handler            \n"    
+        "B       Hard_Fault_Handler            \n"
         ::[Hard_Fault_Handler] "r" (Hard_Fault_Handler) // input
     );
     while(1);
