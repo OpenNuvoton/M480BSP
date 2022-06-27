@@ -643,8 +643,10 @@ int32_t FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len)
         FMC->MPDAT3  = pu32Buf[idx++];
         FMC->ISPCMD  = FMC_ISPCMD_PROGRAM_MUL;
         FMC->ISPTRG  = FMC_ISPTRG_ISPGO_Msk;
+        u32Len -= 16;
+        retval += 16;
 
-        for (i = 16; i < FMC_MULTI_WORD_PROG_LEN; )
+        for (i = 16; i < FMC_MULTI_WORD_PROG_LEN; i += 16)
         {
             tout = FMC_TIMEOUT_WRITE;
             while ((tout-- > 0) && (FMC->MPSTS & (FMC_MPSTS_D0_Msk | FMC_MPSTS_D1_Msk))) {}
@@ -653,26 +655,19 @@ int32_t FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len)
                 g_FMC_i32ErrCode = -1;
                 return -1;
             }
-
-            retval += 8;
-            u32Len -= 8;
-            if (u32Len < 8)
-            {
-                return retval;
-            }
-
             if (!(FMC->MPSTS & FMC_MPSTS_MPBUSY_Msk))
             {
                 /* printf("    [WARNING] busy cleared after D0D1 cleared!\n"); */
-                i += 8;
                 break;
             }
 
+            if (u32Len < 8)
+                break;
+
             FMC->MPDAT0 = pu32Buf[idx++];
             FMC->MPDAT1 = pu32Buf[idx++];
-
-            if (i == FMC_MULTI_WORD_PROG_LEN/4)
-                break;           // done
+            retval += 8;
+            u32Len -= 8;
 
             tout = FMC_TIMEOUT_WRITE;
             while ((tout-- > 0) && (FMC->MPSTS & (FMC_MPSTS_D2_Msk | FMC_MPSTS_D3_Msk))) {}
@@ -681,14 +676,6 @@ int32_t FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len)
                 g_FMC_i32ErrCode = -1;
                 return -1;
             }
-
-            retval += 8;
-            u32Len -= 8;
-            if (u32Len < 8)
-            {
-                return retval;
-            }
-
             if (!(FMC->MPSTS & FMC_MPSTS_MPBUSY_Msk))
             {
                 /* printf("    [WARNING] busy cleared after D2D3 cleared!\n"); */
@@ -696,8 +683,13 @@ int32_t FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len)
                 break;
             }
 
+            if (u32Len < 8)
+                break;
+
             FMC->MPDAT2 = pu32Buf[idx++];
             FMC->MPDAT3 = pu32Buf[idx++];
+            retval += 8;
+            u32Len -= 8;
         }
 
         if (i != FMC_MULTI_WORD_PROG_LEN)
