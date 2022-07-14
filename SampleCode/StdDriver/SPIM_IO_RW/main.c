@@ -124,11 +124,13 @@ int main()
 
     SPIM_WinbondUnlock(1);
 
+#if USE_4_BYTES_MODE
     if (SPIM_Enable_4Bytes_Mode(USE_4_BYTES_MODE, 1) != 0)
     {
         printf("SPIM_Enable_4Bytes_Mode failed!\n");
         goto lexit;
     }
+#endif
 
     /*
      *  Erase flash page

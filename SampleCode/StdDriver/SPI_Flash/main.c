@@ -303,13 +303,13 @@ int main(void)
     printf("|                 M480 SPI Sample with SPI Flash                         |\n");
     printf("+------------------------------------------------------------------------+\n");
 
-    if((u16ID = SpiFlash_ReadMidDid()) != 0xEF14)
+    if((u16ID = SpiFlash_ReadMidDid()) != 0xEF15)
     {
         printf("Wrong ID, 0x%x\n", u16ID);
         while(1);
     }
     else
-        printf("Flash found: W25X16 ...\n");
+        printf("Flash found: W25Q32 ...\n");
 
     printf("Erase chip ...");
 

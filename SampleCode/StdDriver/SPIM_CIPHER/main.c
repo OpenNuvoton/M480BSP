@@ -12,6 +12,7 @@
 #include "NuMicro.h"
 
 // #define HCLK_192MHZ
+// #define SUPPORT_4B_ADDR_MODE
 
 #define SPIM_KEY_1                  0x391e9055   /* SPIM cipher key word 1. User defined. */
 #define SPIM_KEY_2                  0xf15da090   /* SPIM cipher key word 2. User defined. */
@@ -131,11 +132,13 @@ int  dma_read_write(int is4ByteAddr, uint32_t u32RdCmd, int dc_num)
     uint32_t    i, offset;             /* variables */
     uint32_t    *pData;
 
+#ifdef SUPPORT_4B_ADDR_MODE
     if (SPIM_Enable_4Bytes_Mode(is4ByteAddr, 1) != 0)
     {
         printf("\nSPIM_Enable_4Bytes_Mode failed!\n");
         return -1;
     }
+#endif
 
     SPIM_SET_DCNUM(dc_num);
 

@@ -123,11 +123,13 @@ int main()
     else
         SPIM_DISABLE_CIPHER();
 
+#if USE_4_BYTES_MODE
     if (SPIM_Enable_4Bytes_Mode(USE_4_BYTES_MODE, 1) != 0)
     {
         printf("SPIM_Enable_4Bytes_Mode failed!\n");
         while (1);
     }
+#endif
 
     SPIM->CTL1 |= SPIM_CTL1_CDINVAL_Msk;        // invalid cache
 

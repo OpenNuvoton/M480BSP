@@ -11,6 +11,8 @@
 
 #include "NuMicro.h"
 
+// #define SUPPORT_4B_ADDR_MODE
+
 #define FLASH_BLOCK_SIZE            (64*1024)    /* Flash block size. Depend on the physical flash. */
 #define TEST_BLOCK_ADDR             0x20000      /* Test block address on SPI flash. */
 #define BUFFER_SIZE                 2048
@@ -93,11 +95,13 @@ int  dma_rw_dmm_read(int is4ByteAddr, uint32_t u32RdCmd, uint32_t WrCmd, int dc_
     uint32_t    i, offset;             /* variables */
     uint32_t    *pData;
 
+#ifdef SUPPORT_4B_ADDR_MODE
     if (SPIM_Enable_4Bytes_Mode(is4ByteAddr, 1) != 0)
     {
         printf("SPIM_Enable_4Bytes_Mode failed!\n");
         return -1;
     }
+#endif
 
     SPIM_SET_DCNUM(dc_num);
 
