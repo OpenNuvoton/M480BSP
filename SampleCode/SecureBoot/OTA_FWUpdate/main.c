@@ -40,15 +40,17 @@ void SYS_Init(void)
     /* Waiting for PLL clock ready */
     CLK_WaitClockReady(CLK_STATUS_PLLSTB_Msk);
 
-    /* Switch HCLK clock source to HXT */
+    /* Switch HCLK clock source to PLL */
     CLK->CLKSEL0 = (CLK->CLKSEL0 & ~CLK_CLKSEL0_HCLKSEL_Msk) | CLK_CLKSEL0_HCLKSEL_PLL;
 
     /* Set both PCLK0 and PCLK1 as HCLK/2 */
     CLK->PCLKDIV = CLK_PCLKDIV_APB0DIV_DIV2 | CLK_PCLKDIV_APB1DIV_DIV2;
 
+    /* Select UART0 clock source from HXT */
+    CLK->CLKSEL1 = (CLK->CLKSEL1 & ~CLK_CLKSEL1_UART0SEL_Msk) | CLK_CLKSEL1_UART0SEL_HXT;
+
     /* Enable IP clock */
     CLK->APBCLK0 |= CLK_APBCLK0_UART0CKEN_Msk;
-
 
     /* Set GPB multi-function pins for UART0 RXD and TXD */
     SYS->GPB_MFPH &= ~(SYS_GPB_MFPH_PB12MFP_Msk | SYS_GPB_MFPH_PB13MFP_Msk);
@@ -57,7 +59,6 @@ void SYS_Init(void)
 
 void UART0_Init(void)
 {
-
     /* Configure UART0 and set UART0 baud rate */
     UART0->LINE = 0x3;
     UART0->BAUD = 0x30000066;
