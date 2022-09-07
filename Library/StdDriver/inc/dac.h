@@ -86,20 +86,19 @@ extern "C"
 #define DAC_ENABLE_RIGHT_ALIGN(dac) ((dac)->CTL &= ~DAC_CTL_LALIGN_Msk)
 
 /**
-  * @brief Enable output voltage buffer.
+  * @brief Enable bypass voltage output buffer mode.
   * @param[in] dac Base address of DAC module.
   * @return None
-  * @details The DAC integrates a voltage output buffer that can be used to reduce output impedance and
-  *         drive external loads directly without having to add an external operational amplifier.
+  * @details  This will make DAC output bypass the voltage output buffer.
   * \hideinitializer
   */
 #define DAC_ENABLE_BYPASS_BUFFER(dac) ((dac)->CTL |= DAC_CTL_BYPASS_Msk)
 
 /**
-  * @brief Disable output voltage buffer.
+  * @brief Disable bypass voltage output buffer mode.
   * @param[in] dac Base address of DAC module.
   * @return None
-  * @details This macro is used to disable output voltage buffer.
+  * @details This will make DAC output through the voltage output buffer.
   * \hideinitializer
   */
 #define DAC_DISABLE_BYPASS_BUFFER(dac) ((dac)->CTL &= ~DAC_CTL_BYPASS_Msk)
