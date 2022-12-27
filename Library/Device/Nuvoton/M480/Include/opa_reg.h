@@ -28,123 +28,282 @@ typedef struct
 
 
     /**
-     * @var OPA_T::CTL
-     * Offset: 0x00  OP Amplifier Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |OPEN0     |OP Amplifier 0 Enable Bit
-     * |        |          |0 = OP amplifier0 Disabled.
-     * |        |          |1 = OP amplifier0 Enabled.
-     * |        |          |Note: OP Amplifier 0 output needs wait stable 20u03BCs after OPEN0 is set.
-     * |[1]     |OPEN1     |OP Amplifier 1 Enable Bit
-     * |        |          |0 = OP amplifier1 Disabled.
-     * |        |          |1 = OP amplifier1 Enabled.
-     * |        |          |Note: OP Amplifier 1 output needs wait stable 20u03BCs after OPEN1 is set.
-     * |[2]     |OPEN2     |OP Amplifier 2 Enable Bit
-     * |        |          |0 = OP amplifier2 Disabled.
-     * |        |          |1 = OP amplifier2 Enabled.
-     * |        |          |Note: OP Amplifier 2 output needs wait stable 20u03BCs after OPEN2 is set.
-     * |[4]     |OPDOEN0   |OP Amplifier 0 Schmitt Trigger Non-inverting Buffer Enable Bit
-     * |        |          |0 = OP amplifier0 Schmitt Trigger non-invert buffer Disabled.
-     * |        |          |1 = OP amplifier0 Schmitt Trigger non-invert buffer Enabled.
-     * |[5]     |OPDOEN1   |OP Amplifier 1 Schmitt Trigger Non-inverting Buffer Enable Bit
-     * |        |          |0 = OP amplifier1 Schmitt Trigger non-invert buffer Disabled.
-     * |        |          |1 = OP amplifier1 Schmitt Trigger non-invert buffer Enabled.
-     * |[6]     |OPDOEN2   |OP Amplifier 2 Schmitt Trigger Non-inverting Buffer Enable Bit
-     * |        |          |0 = OP amplifier2 Schmitt Trigger non-invert buffer Disabled.
-     * |        |          |1 = OP amplifier2 Schmitt Trigger non-invert buffer Enabled.
-     * |[8]     |OPDOIEN0  |OP Amplifier 0 Schmitt Trigger Digital Output Interrupt Enable Bit
-     * |        |          |0 = OP Amplifier 0 digital output interrupt function Disabled.
-     * |        |          |1 = OP Amplifier 0 digital output interrupt function Enabled.
-     * |        |          |The OPDOIF0 interrupt flag is set by hardware whenever the OP amplifier 0 Schmitt Trigger non-inverting buffer digital output changes state, in the meanwhile, if OPDOIEN0 is set to 1, a comparator interrupt request is generated.
-     * |[9]     |OPDOIEN1  |OP Amplifier 1 Schmitt Trigger Digital Output Interrupt Enable Bit
-     * |        |          |0 = OP Amplifier 1 digital output interrupt function Disabled.
-     * |        |          |1 = OP Amplifier 1 digital output interrupt function Enabled.
-     * |        |          |OPDOIF1 interrupt flag is set by hardware whenever the OP amplifier 1 Schmitt trigger non-inverting buffer digital output changes state, in the meanwhile, if OPDOIEN1 is set to 1, a comparator interrupt request is generated.
-     * |[10]    |OPDOIEN2  |OP Amplifier 2 Schmitt Trigger Digital Output Interrupt Enable Bit
-     * |        |          |0 = OP Amplifier 2 digital output interrupt function Disabled.
-     * |        |          |1 = OP Amplifier 2 digital output interrupt function Enabled.
-     * |        |          |OPDOIF2 interrupt flag is set by hardware whenever the OP amplifier 2 Schmitt Trigger non-inverting buffer digital output changes state, in the meanwhile, if OPDOIEN2 is set to 1, a comparator interrupt request is generated.
-     * @var OPA_T::STATUS
-     * Offset: 0x04  OP Amplifier Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |OPDO0     |OP Amplifier 0 Digital Output
-     * |        |          |Synchronized to the APB clock to allow reading by software
-     * |        |          |Cleared when the Schmitt Trigger buffer is disabled (OPDOEN0 = 0)
-     * |[1]     |OPDO1     |OP Amplifier 1 Digital Output
-     * |        |          |Synchronized to the APB clock to allow reading by software
-     * |        |          |Cleared when the Schmitt Trigger buffer is disabled (OPDOEN1 = 0)
-     * |[2]     |OPDO2     |OP Amplifier 2 Digital Output
-     * |        |          |Synchronized to the APB clock to allow reading by software
-     * |        |          |Cleared when the Schmitt Trigger buffer is disabled (OPDOEN2 = 0)
-     * |[4]     |OPDOIF0   |OP Amplifier 0 Schmitt Trigger Digital Output Interrupt Flag
-     * |        |          |OPDOIF0 interrupt flag is set by hardware whenever the OP amplifier 0 Schmitt Trigger non-inverting buffer digital output changes state
-     * |        |          |This bit is cleared by writing 1 to it.
-     * |[5]     |OPDOIF1   |OP Amplifier 1 Schmitt Trigger Digital Output Interrupt Flag
-     * |        |          |OPDOIF1 interrupt flag is set by hardware whenever the OP amplifier 1 Schmitt Trigger non-inverting buffer digital output changes state
-     * |        |          |This bit is cleared by writing 1 to it.
-     * |[6]     |OPDOIF2   |OP Amplifier 2 Schmitt Trigger Digital Output Interrupt Flag
-     * |        |          |OPDOIF2 interrupt flag is set by hardware whenever the OP amplifier 2 Schmitt Trigger non-inverting buffer digital output changes state
-     * |        |          |This bit is cleared by writing 1 to it.
-     * @var OPA_T::CALCTL
-     * Offset: 0x08  OP Amplifier Calibration Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |CALTRG0   |OP Amplifier 0 Calibration Trigger Bit
-     * |        |          |0 = Stop, hardware auto clear.
-     * |        |          |1 = Start. Note: Before enable this bit, it should set OPEN0 in advance.
-     * |[1]     |CALTRG1   |OP Amplifier 1 Calibration Trigger Bit
-     * |        |          |0 = Stop, hardware auto clear.
-     * |        |          |1 = Start. Note: Before enable this bit, it should set OPEN1 in advance.
-     * |[2]     |CALTRG2   |OP Amplifier 2 Calibration Trigger Bit
-     * |        |          |0 = Stop, hardware auto clear.
-     * |        |          |1 = Start. Note: Before enable this bit, it should set OPEN2 in advance.
-     * |[16]    |CALRVS0   |OPA0 Calibration Reference Voltage Selection
-     * |        |          |0 = VREF is AVDD.
-     * |        |          |1 = VREF from high vcm to low vcm.
-     * |[17]    |CALRVS1   |OPA1 Calibration Reference Voltage Selection
-     * |        |          |0 = VREF is AVDD.
-     * |        |          |1 = VREF from high vcm to low vcm.
-     * |[18]    |CALRVS2   |OPA2 Calibration Reference Voltage Selection
-     * |        |          |0 = VREF is AVDD.
-     * |        |          |1 = VREF from high vcm to low vcm.
-     * @var OPA_T::CALST
-     * Offset: 0x0C  OP Amplifier Calibration Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |DONE0     |OP Amplifier 0 Calibration Done Status
-     * |        |          |0 = Calibrating.
-     * |        |          |1 = Calibration Done.
-     * |[1]     |CALNS0    |OP Amplifier 0 Calibration Result Status for NMOS
-     * |        |          |0 = Pass.
-     * |        |          |1 = Fail.
-     * |[2]     |CALPS0    |OP Amplifier 0 Calibration Result Status for PMOS
-     * |        |          |0 = Pass.
-     * |        |          |1 = Fail.
-     * |[4]     |DONE1     |OP Amplifier 1 Calibration Done Status
-     * |        |          |0 = Calibrating.
-     * |        |          |1 = Calibration Done.
-     * |[5]     |CALNS1    |OP Amplifier 1 Calibration Result Status for NMOS
-     * |        |          |0 = Pass.
-     * |        |          |1 = Fail.
-     * |[6]     |CALPS1    |OP Amplifier 1 Calibration Result Status for PMOS
-     * |        |          |0 = Pass.
-     * |        |          |1 = Fail.
-     * |[8]     |DONE2     |OP Amplifier 2 Calibration Done Status
-     * |        |          |0 = Calibrating.
-     * |        |          |1 = Calibration Done.
-     * |[9]     |CALNS2    |OP Amplifier 2 Calibration Result Status for NMOS
-     * |        |          |0 = Pass.
-     * |        |          |1 = Fail.
-     * |[10]    |CALPS2    |OP Amplifier 2 Calibration Result Status for PMOS
-     * |        |          |0 = Pass.
-     * |        |          |1 = Fail.
-     */
+@var OPA_T::CTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CTL
+</font><br><p> <font size="2">
+Offset: 0x00  OP Amplifier Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>OPEN0</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 0 Enable Bit
+</b><br>
+0 = OP amplifier0 Disabled.
+<br>
+1 = OP amplifier0 Enabled.
+<br>
+Note: OP Amplifier 0 output needs wait stable 20u03BCs after OPEN0 is set.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>OPEN1</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 1 Enable Bit
+</b><br>
+0 = OP amplifier1 Disabled.
+<br>
+1 = OP amplifier1 Enabled.
+<br>
+Note: OP Amplifier 1 output needs wait stable 20u03BCs after OPEN1 is set.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>OPEN2</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 2 Enable Bit
+</b><br>
+0 = OP amplifier2 Disabled.
+<br>
+1 = OP amplifier2 Enabled.
+<br>
+Note: OP Amplifier 2 output needs wait stable 20u03BCs after OPEN2 is set.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>OPDOEN0</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 0 Schmitt Trigger Non-inverting Buffer Enable Bit
+</b><br>
+0 = OP amplifier0 Schmitt Trigger non-invert buffer Disabled.
+<br>
+1 = OP amplifier0 Schmitt Trigger non-invert buffer Enabled.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>OPDOEN1</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 1 Schmitt Trigger Non-inverting Buffer Enable Bit
+</b><br>
+0 = OP amplifier1 Schmitt Trigger non-invert buffer Disabled.
+<br>
+1 = OP amplifier1 Schmitt Trigger non-invert buffer Enabled.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>OPDOEN2</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 2 Schmitt Trigger Non-inverting Buffer Enable Bit
+</b><br>
+0 = OP amplifier2 Schmitt Trigger non-invert buffer Disabled.
+<br>
+1 = OP amplifier2 Schmitt Trigger non-invert buffer Enabled.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>OPDOIEN0</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 0 Schmitt Trigger Digital Output Interrupt Enable Bit
+</b><br>
+0 = OP Amplifier 0 digital output interrupt function Disabled.
+<br>
+1 = OP Amplifier 0 digital output interrupt function Enabled.
+<br>
+The OPDOIF0 interrupt flag is set by hardware whenever the OP amplifier 0 Schmitt Trigger non-inverting buffer digital output changes state, in the meanwhile, if OPDOIEN0 is set to 1, a comparator interrupt request is generated.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>OPDOIEN1</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 1 Schmitt Trigger Digital Output Interrupt Enable Bit
+</b><br>
+0 = OP Amplifier 1 digital output interrupt function Disabled.
+<br>
+1 = OP Amplifier 1 digital output interrupt function Enabled.
+<br>
+OPDOIF1 interrupt flag is set by hardware whenever the OP amplifier 1 Schmitt trigger non-inverting buffer digital output changes state, in the meanwhile, if OPDOIEN1 is set to 1, a comparator interrupt request is generated.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>OPDOIEN2</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 2 Schmitt Trigger Digital Output Interrupt Enable Bit
+</b><br>
+0 = OP Amplifier 2 digital output interrupt function Disabled.
+<br>
+1 = OP Amplifier 2 digital output interrupt function Enabled.
+<br>
+OPDOIF2 interrupt flag is set by hardware whenever the OP amplifier 2 Schmitt Trigger non-inverting buffer digital output changes state, in the meanwhile, if OPDOIEN2 is set to 1, a comparator interrupt request is generated.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var OPA_T::STATUS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">STATUS
+</font><br><p> <font size="2">
+Offset: 0x04  OP Amplifier Status Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>OPDO0</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 0 Digital Output
+</b><br>
+Synchronized to the APB clock to allow reading by software
+<br>
+Cleared when the Schmitt Trigger buffer is disabled (OPDOEN0 = 0)
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>OPDO1</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 1 Digital Output
+</b><br>
+Synchronized to the APB clock to allow reading by software
+<br>
+Cleared when the Schmitt Trigger buffer is disabled (OPDOEN1 = 0)
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>OPDO2</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 2 Digital Output
+</b><br>
+Synchronized to the APB clock to allow reading by software
+<br>
+Cleared when the Schmitt Trigger buffer is disabled (OPDOEN2 = 0)
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>OPDOIF0</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 0 Schmitt Trigger Digital Output Interrupt Flag
+</b><br>
+OPDOIF0 interrupt flag is set by hardware whenever the OP amplifier 0 Schmitt Trigger non-inverting buffer digital output changes state
+<br>
+This bit is cleared by writing 1 to it.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>OPDOIF1</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 1 Schmitt Trigger Digital Output Interrupt Flag
+</b><br>
+OPDOIF1 interrupt flag is set by hardware whenever the OP amplifier 1 Schmitt Trigger non-inverting buffer digital output changes state
+<br>
+This bit is cleared by writing 1 to it.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>OPDOIF2</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 2 Schmitt Trigger Digital Output Interrupt Flag
+</b><br>
+OPDOIF2 interrupt flag is set by hardware whenever the OP amplifier 2 Schmitt Trigger non-inverting buffer digital output changes state
+<br>
+This bit is cleared by writing 1 to it.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var OPA_T::CALCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CALCTL
+</font><br><p> <font size="2">
+Offset: 0x08  OP Amplifier Calibration Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>CALTRG0</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 0 Calibration Trigger Bit
+</b><br>
+0 = Stop, hardware auto clear.
+<br>
+1 = Start. Note: Before enable this bit, it should set OPEN0 in advance.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>CALTRG1</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 1 Calibration Trigger Bit
+</b><br>
+0 = Stop, hardware auto clear.
+<br>
+1 = Start. Note: Before enable this bit, it should set OPEN1 in advance.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>CALTRG2</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 2 Calibration Trigger Bit
+</b><br>
+0 = Stop, hardware auto clear.
+<br>
+1 = Start. Note: Before enable this bit, it should set OPEN2 in advance.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>CALRVS0</td><td><div style="word-wrap: break-word;"><b>OPA0 Calibration Reference Voltage Selection
+</b><br>
+0 = VREF is AVDD.
+<br>
+1 = VREF from high vcm to low vcm.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>CALRVS1</td><td><div style="word-wrap: break-word;"><b>OPA1 Calibration Reference Voltage Selection
+</b><br>
+0 = VREF is AVDD.
+<br>
+1 = VREF from high vcm to low vcm.
+<br>
+</div></td></tr><tr><td>
+[18]</td><td>CALRVS2</td><td><div style="word-wrap: break-word;"><b>OPA2 Calibration Reference Voltage Selection
+</b><br>
+0 = VREF is AVDD.
+<br>
+1 = VREF from high vcm to low vcm.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var OPA_T::CALST
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CALST
+</font><br><p> <font size="2">
+Offset: 0x0C  OP Amplifier Calibration Status Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>DONE0</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 0 Calibration Done Status
+</b><br>
+0 = Calibrating.
+<br>
+1 = Calibration Done.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>CALNS0</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 0 Calibration Result Status for NMOS
+</b><br>
+0 = Pass.
+<br>
+1 = Fail.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>CALPS0</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 0 Calibration Result Status for PMOS
+</b><br>
+0 = Pass.
+<br>
+1 = Fail.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>DONE1</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 1 Calibration Done Status
+</b><br>
+0 = Calibrating.
+<br>
+1 = Calibration Done.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>CALNS1</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 1 Calibration Result Status for NMOS
+</b><br>
+0 = Pass.
+<br>
+1 = Fail.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>CALPS1</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 1 Calibration Result Status for PMOS
+</b><br>
+0 = Pass.
+<br>
+1 = Fail.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>DONE2</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 2 Calibration Done Status
+</b><br>
+0 = Calibrating.
+<br>
+1 = Calibration Done.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>CALNS2</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 2 Calibration Result Status for NMOS
+</b><br>
+0 = Pass.
+<br>
+1 = Fail.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>CALPS2</td><td><div style="word-wrap: break-word;"><b>OP Amplifier 2 Calibration Result Status for PMOS
+</b><br>
+0 = Pass.
+<br>
+1 = Fail.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+
+ */
     __IO uint32_t CTL;                   /*!< [0x0000] OP Amplifier Control Register                                    */
     __IO uint32_t STATUS;                /*!< [0x0004] OP Amplifier Status Register                                     */
     __IO uint32_t CALCTL;                /*!< [0x0008] OP Amplifier Calibration Control Register                        */

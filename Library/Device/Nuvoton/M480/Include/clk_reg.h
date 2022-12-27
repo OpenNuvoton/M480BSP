@@ -28,964 +28,2198 @@ typedef struct
 
 
     /**
-     * @var CLK_T::PWRCTL
-     * Offset: 0x00  System Power-down Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |HXTEN     |HXT Enable Bit (Write Protect)
-     * |        |          |The bit default value is set by flash controller user configuration register CONFIG0 [26]
-     * |        |          |When the default clock source is from HXT, this bit is set to 1 automatically.
-     * |        |          |0 = 4~24 MHz external high speed crystal (HXT) Disabled.
-     * |        |          |1 = 4~24 MHz external high speed crystal (HXT) Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[1]     |LXTEN     |LXT Enable Bit (Write Protect)
-     * |        |          |0 = 32.768 kHz external low speed crystal (LXT) Disabled.
-     * |        |          |1 = 32.768 kHz external low speed crystal (LXT) Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[2]     |HIRCEN    |HIRC Enable Bit (Write Protect)
-     * |        |          |0 = 12 MHz internal high speed RC oscillator (HIRC) Disabled.
-     * |        |          |1 = 12 MHz internal high speed RC oscillator (HIRC) Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[3]     |LIRCEN    |LIRC Enable Bit (Write Protect)
-     * |        |          |0 = 10 kHz internal low speed RC oscillator (LIRC) Disabled.
-     * |        |          |1 = 10 kHz internal low speed RC oscillator (LIRC) Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[4]     |PDWKDLY   |Enable the Wake-up Delay Counter (Write Protect)
-     * |        |          |When the chip wakes up from Power-down mode, the clock control will delay certain clock cycles to wait system clock stable.
-     * |        |          |The delayed clock cycle is 4096 clock cycles when chip works at 4~24 MHz external high speed crystal oscillator (HXT), and 256 clock cycles when chip works at 12 MHz internal high speed RC oscillator (HIRC).
-     * |        |          |0 = Clock cycles delay Disabled.
-     * |        |          |1 = Clock cycles delay Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[5]     |PDWKIEN   |Power-down Mode Wake-up Interrupt Enable Bit (Write Protect)
-     * |        |          |0 = Power-down mode wake-up interrupt Disabled.
-     * |        |          |1 = Power-down mode wake-up interrupt Enabled.
-     * |        |          |Note1: The interrupt will occur when both PDWKIF and PDWKIEN are high.
-     * |        |          |Note2: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[6]     |PDWKIF    |Power-down Mode Wake-up Interrupt Status
-     * |        |          |Set by "Power-down wake-up event", it indicates that resume from Power-down mode.
-     * |        |          |The flag is set if any wake-up source is occurred. Refer Power Modes and Wake-up Sources chapter.
-     * |        |          |Note1: Write 1 to clear the bit to 0.
-     * |        |          |Note2: This bit works only if PDWKIEN (CLK_PWRCTL[5]) set to 1.
-     * |[7]     |PDEN      |System Power-down Enable (Write Protect)
-     * |        |          |When this bit is set to 1, Power-down mode is enabled and chip keeps active till the CPU sleep mode is also active and then the chip enters Power-down mode.
-     * |        |          |When chip wakes up from Power-down mode, this bit is auto cleared
-     * |        |          |Users need to set this bit again for next Power-down.
-     * |        |          |In Power-down mode, HXT and the HIRC will be disabled in this mode, but LXT and LIRC are not controlled by Power-down mode.
-     * |        |          |In Power-down mode, the PLL and system clock are disabled, and ignored the clock source selection
-     * |        |          |The clocks of peripheral are not controlled by Power-down mode, if the peripheral clock source is from LXT or LIRC.
-     * |        |          |0 = Chip will not enter Power-down mode after CPU sleep command WFI.
-     * |        |          |1 = Chip enters Power-down mode after CPU sleep command WFI.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[11:10] |HXTGAIN   |HXT Gain Control Bit (Write Protect)
-     * |        |          |This is a protected register. Please refer to open lock sequence to program it.
-     * |        |          |Gain control is used to enlarge the gain of crystal to make sure crystal work normally
-     * |        |          |If gain control is enabled, crystal will consume more power than gain control off.
-     * |        |          |00 = HXT frequency is lower than from 8 MHz.
-     * |        |          |01 = HXT frequency is from 8 MHz to 12 MHz.
-     * |        |          |10 = HXT frequency is from 12 MHz to 16 MHz.
-     * |        |          |11 = HXT frequency is higher than 16 MHz.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[12]    |HXTSELTYP |HXT Crystal Type Select Bit (Write Protect)
-     * |        |          |This is a protected register. Please refer to open lock sequence to program it.
-     * |        |          |0 = Select INV type.
-     * |        |          |1 = Select GM type.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[13]    |HXTTBEN   |HXT Crystal TURBO Mode (Write Protect)
-     * |        |          |This is a protected register. Please refer to open lock sequence to program it.
-     * |        |          |0 = HXT Crystal TURBO mode disabled.
-     * |        |          |1 = HXT Crystal TURBO mode enabled.
-     * |[17:16] |HIRCSTBS  |HIRC Stable Count Select (Write Protect)
-     * |        |          |00 = HIRC stable count is 64 clocks.
-     * |        |          |01 = HIRC stable count is 24 clocks.
-     * |        |          |others = Reserved.
-     * |[18]    |HIRCEN    |HIRC48M Enable Bit (Write Protect)
-     * |        |          |0 = 48 MHz internal high speed RC oscillator (HIRC) Disabled.
-     * |        |          |1 = 48 MHz internal high speed RC oscillator (HIRC) Enabled.
-     * @var CLK_T::AHBCLK
-     * Offset: 0x04  AHB Devices Clock Enable Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[1]     |PDMACKEN  |PDMA Controller Clock Enable Bit
-     * |        |          |0 = PDMA peripheral clock Disabled.
-     * |        |          |1 = PDMA peripheral clock Enabled.
-     * |[2]     |ISPCKEN   |Flash ISP Controller Clock Enable Bit
-     * |        |          |0 = Flash ISP peripheral clock Disabled.
-     * |        |          |1 = Flash ISP peripheral clock Enabled.
-     * |[3]     |EBICKEN   |EBI Controller Clock Enable Bit
-     * |        |          |0 = EBI peripheral clock Disabled.
-     * |        |          |1 = EBI peripheral clock Enabled.
-     * |[5]     |EMACCKEN  |Ethernet Controller Clock Enable Bit
-     * |        |          |0 = Ethernet Controller engine clock Disabled.
-     * |        |          |1 = Ethernet Controller engine clock Enabled.
-     * |[6]     |SDH0CKEN  |SD0 Controller Clock Enable Bit
-     * |        |          |0 = SD0 engine clock Disabled.
-     * |        |          |1 = SD0 engine clock Enabled.
-     * |[7]     |CRCCKEN   |CRC Generator Controller Clock Enable Bit
-     * |        |          |0 = CRC peripheral clock Disabled.
-     * |        |          |1 = CRC peripheral clock Enabled.
-     * |[10]    |HSUSBDCKEN|HSUSB Device Clock Enable Bit
-     * |        |          |0 = HSUSB device controller's clock Disabled.
-     * |        |          |1 = HSUSB device controller's clock Enabled.
-     * |[12]    |CRPTCKEN  |Cryptographic Accelerator Clock Enable Bit
-     * |        |          |0 = Cryptographic Accelerator clock Disabled.
-     * |        |          |1 = Cryptographic Accelerator clock Enabled.
-     * |[14]    |SPIMCKEN  |SPIM Controller Clock Enable Bit
-     * |        |          |0 = SPIM controller clock Disabled.
-     * |        |          |1 = SPIM controller clock Enabled.
-     * |[15]    |FMCIDLE   |Flash Memory Controller Clock Enable Bit in IDLE Mode
-     * |        |          |0 = FMC clock Disabled when chip is under IDLE mode.
-     * |        |          |1 = FMC clock Enabled when chip is under IDLE mode.
-     * |[16]    |USBHCKEN  |USB HOST Controller Clock Enable Bit
-     * |        |          |0 = USB HOST peripheral clock Disabled.
-     * |        |          |1 = USB HOST peripheral clock Enabled.
-     * |[17]    |SDH1CKEN  |SD1 Controller Clock Enable Bit
-     * |        |          |0 = SD1 engine clock Disabled.
-     * |        |          |1 = SD1 engine clock Enabled.
-     * @var CLK_T::APBCLK0
-     * Offset: 0x08  APB Devices Clock Enable Control Register 0
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |WDTCKEN   |Watchdog Timer Clock Enable Bit (Write Protect)
-     * |        |          |0 = Watchdog timer clock Disabled.
-     * |        |          |1 = Watchdog timer clock Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[1]     |RTCCKEN   |Real-time-clock APB Interface Clock Enable Bit
-     * |        |          |This bit is used to control the RTC APB clock only
-     * |        |          |The RTC peripheral clock source is selected from RTCSEL(CLK_CLKSEL3[8])
-     * |        |          |It can be selected to 32.768 kHz external low speed crystal or 10 kHz internal low speed RC oscillator (LIRC).
-     * |        |          |0 = RTC clock Disabled.
-     * |        |          |1 = RTC clock Enabled.
-     * |[2]     |TMR0CKEN  |Timer0 Clock Enable Bit
-     * |        |          |0 = Timer0 clock Disabled.
-     * |        |          |1 = Timer0 clock Enabled.
-     * |[3]     |TMR1CKEN  |Timer1 Clock Enable Bit
-     * |        |          |0 = Timer1 clock Disabled.
-     * |        |          |1 = Timer1 clock Enabled.
-     * |[4]     |TMR2CKEN  |Timer2 Clock Enable Bit
-     * |        |          |0 = Timer2 clock Disabled.
-     * |        |          |1 = Timer2 clock Enabled.
-     * |[5]     |TMR3CKEN  |Timer3 Clock Enable Bit
-     * |        |          |0 = Timer3 clock Disabled.
-     * |        |          |1 = Timer3 clock Enabled.
-     * |[6]     |CLKOCKEN  |CLKO Clock Enable Bit
-     * |        |          |0 = CLKO clock Disabled.
-     * |        |          |1 = CLKO clock Enabled.
-     * |[7]     |ACMP01CKEN|Analog Comparator 0/1 Clock Enable Bit
-     * |        |          |0 = Analog comparator 0/1 clock Disabled.
-     * |        |          |1 = Analog comparator 0/1 clock Enabled.
-     * |[8]     |I2C0CKEN  |I2C0 Clock Enable Bit
-     * |        |          |0 = I2C0 clock Disabled.
-     * |        |          |1 = I2C0 clock Enabled.
-     * |[9]     |I2C1CKEN  |I2C1 Clock Enable Bit
-     * |        |          |0 = I2C1 clock Disabled.
-     * |        |          |1 = I2C1 clock Enabled.
-     * |[10]    |I2C2CKEN  |I2C2 Clock Enable Bit
-     * |        |          |0 = I2C2 clock Disabled.
-     * |        |          |1 = I2C2 clock Enabled.
-     * |[12]    |QSPI0CKEN  |QSPI0 Clock Enable Bit
-     * |        |          |0 = QSPI0 clock Disabled.
-     * |        |          |1 = QSPI0 clock Enabled.
-     * |[13]    |SPI0CKEN  |SPI0 Clock Enable Bit
-     * |        |          |0 = SPI0 clock Disabled.
-     * |        |          |1 = SPI0 clock Enabled.
-     * |[14]    |SPI1CKEN  |SPI1 Clock Enable Bit
-     * |        |          |0 = SPI1 clock Disabled.
-     * |        |          |1 = SPI1 clock Enabled.
-     * |[15]    |SPI2CKEN  |SPI2 Clock Enable Bit
-     * |        |          |0 = SPI2 clock Disabled.
-     * |        |          |1 = SPI2 clock Enabled.
-     * |[16]    |UART0CKEN |UART0 Clock Enable Bit
-     * |        |          |0 = UART0 clock Disabled.
-     * |        |          |1 = UART0 clock Enabled.
-     * |[17]    |UART1CKEN |UART1 Clock Enable Bit
-     * |        |          |0 = UART1 clock Disabled.
-     * |        |          |1 = UART1 clock Enabled.
-     * |[18]    |UART2CKEN |UART2 Clock Enable Bit
-     * |        |          |0 = UART2 clock Disabled.
-     * |        |          |1 = UART2 clock Enabled.
-     * |[19]    |UART3CKEN |UART3 Clock Enable Bit
-     * |        |          |0 = UART3 clock Disabled.
-     * |        |          |1 = UART3 clock Enabled.
-     * |[20]    |UART4CKEN |UART4 Clock Enable Bit
-     * |        |          |0 = UART4 clock Disabled.
-     * |        |          |1 = UART4 clock Enabled.
-     * |[21]    |UART5CKEN |UART5 Clock Enable Bit
-     * |        |          |0 = UART5 clock Disabled.
-     * |        |          |1 = UART5 clock Enabled.
-     * |[24]    |CAN0CKEN  |CAN0 Clock Enable Bit
-     * |        |          |0 = CAN0 clock Disabled.
-     * |        |          |1 = CAN0 clock Enabled.
-     * |[25]    |CAN1CKEN  |CAN1 Clock Enable Bit
-     * |        |          |0 = CAN1 clock Disabled.
-     * |        |          |1 = CAN1 clock Enabled.
-     * |[26]    |OTGCKEN   |USB OTG Clock Enable Bit
-     * |        |          |0 = USB OTG clock Disabled.
-     * |        |          |1 = USB OTG clock Enabled.
-     * |[27]    |USBDCKEN  |USB Device Clock Enable Bit
-     * |        |          |0 = USB Device clock Disabled.
-     * |        |          |1 = USB Device clock Enabled.
-     * |[28]    |EADCCKEN  |Enhanced Analog-digital-converter (EADC) Clock Enable Bit
-     * |        |          |0 = EADC clock Disabled.
-     * |        |          |1 = EADC clock Enabled.
-     * |[29]    |I2S0CKEN  |I2S0 Clock Enable Bit
-     * |        |          |0 = I2S0 Clock Disabled.
-     * |        |          |1 = I2S0 Clock Enabled.
-     * |[30]    |HSOTGCKEN |HSUSB OTG Clock Enable Bit
-     * |        |          |0 = HSUSB OTG clock Disabled.
-     * |        |          |1 = HSUSB OTG clock Enabled.
-     * @var CLK_T::APBCLK1
-     * Offset: 0x0C  APB Devices Clock Enable Control Register 1
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |SC0CKEN   |SC0 Clock Enable Bit
-     * |        |          |0 = SC0 clock Disabled.
-     * |        |          |1 = SC0 clock Enabled.
-     * |[1]     |SC1CKEN   |SC1 Clock Enable Bit
-     * |        |          |0 = SC1 clock Disabled.
-     * |        |          |1 = SC1 clock Enabled.
-     * |[2]     |SC2CKEN   |SC2 Clock Enable Bit
-     * |        |          |0 = SC2 clock Disabled.
-     * |        |          |1 = SC2 clock Enabled.
-     * |[6]     |SPI3CKEN  |SPI3 Clock Enable Bit
-     * |        |          |0 = SPI3 clock Disabled.
-     * |        |          |1 = SPI3 clock Enabled.
-     * |[8]     |USCI0CKEN |USCI0 Clock Enable Bit
-     * |        |          |0 = USCI0 clock Disabled.
-     * |        |          |1 = USCI0 clock Enabled.
-     * |[9]     |USCI1CKEN |USCI1 Clock Enable Bit
-     * |        |          |0 = USCI1 clock Disabled.
-     * |        |          |1 = USCI1 clock Enabled.
-     * |[12]    |DACCKEN   |DAC Clock Enable Bit
-     * |        |          |0 = DAC clock Disabled.
-     * |        |          |1 = DAC clock Enabled.
-     * |[16]    |EPWM0CKEN |EPWM0 Clock Enable Bit
-     * |        |          |0 = EPWM0 clock Disabled.
-     * |        |          |1 = EPWM0 clock Enabled.
-     * |[17]    |EPWM1CKEN |EPWM1 Clock Enable Bit
-     * |        |          |0 = EPWM1 clock Disabled.
-     * |        |          |1 = EPWM1 clock Enabled.
-     * |[18]    |BPWM0CKEN |BPWM0 Clock Enable Bit
-     * |        |          |0 = BPWM0 clock Disabled.
-     * |        |          |1 = BPWM0 clock Enabled.
-     * |[19]    |BPWM1CKEN |BPWM1 Clock Enable Bit
-     * |        |          |0 = BPWM1 clock Disabled.
-     * |        |          |1 = BPWM1 clock Enabled.
-     * |[22]    |QEI0CKEN  |QEI0 Clock Enable Bit
-     * |        |          |0 = QEI0 clock Disabled.
-     * |        |          |1 = QEI0 clock Enabled.
-     * |[23]    |QEI1CKEN  |QEI1 Clock Enable Bit
-     * |        |          |0 = QEI1 clock Disabled.
-     * |        |          |1 = QEI1 clock Enabled.
-     * |[26]    |ECAP0CKEN |ECAP0 Clock Enable Bit
-     * |        |          |0 = ECAP0 clock Disabled.
-     * |        |          |1 = ECAP0 clock Enabled.
-     * |[27]    |ECAP1CKEN |ECAP1 Clock Enable Bit
-     * |        |          |0 = ECAP1 clock Disabled.
-     * |        |          |1 = ECAP1 clock Enabled.
-     * |[30]    |OPACKEN   |OP Amplifier (OPA) Clock Enable Bit
-     * |        |          |0 = OPA clock Disabled.
-     * |        |          |1 = OPA clock Enabled.
-     * @var CLK_T::CLKSEL0
-     * Offset: 0x10  Clock Source Select Control Register 0
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[2:0]   |HCLKSEL   |HCLK Clock Source Selection (Write Protect)
-     * |        |          |Before clock switching, the related clock sources (both pre-select and new-select) must be turned on.
-     * |        |          |The default value is reloaded from the value of CFOSC (CONFIG0[26]) in user configuration register of Flash controller by any reset
-     * |        |          |Therefore the default value is either 000b or 111b.
-     * |        |          |000 = Clock source from HXT.
-     * |        |          |001 = Clock source from LXT.
-     * |        |          |010 = Clock source from PLL.
-     * |        |          |011 = Clock source from LIRC.
-     * |        |          |111 = Clock source from HIRC.
-     * |        |          |Other = Reserved.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[5:3]   |STCLKSEL  |Cortex-M4 SysTick Clock Source Selection (Write Protect)
-     * |        |          |If SYST_CTRL[2]=0, SysTick uses listed clock source below.
-     * |        |          |000 = Clock source from HXT.
-     * |        |          |001 = Clock source from LXT.
-     * |        |          |010 = Clock source from HXT/2.
-     * |        |          |011 = Clock source from HCLK/2.
-     * |        |          |111 = Clock source from HIRC/2.
-     * |        |          |Note: if SysTick clock source is not from HCLK (i.e
-     * |        |          |SYST_CTRL[2] = 0), SysTick clock source must less than or equal to HCLK/2.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[8]     |USBSEL    |USB Clock Source Selection (Write Protect)
-     * |        |          |0 = Clock source from RC48M.
-     * |        |          |1 = Clock source from PLL.
-     * |[21:20] |SDH0SEL   |SD0 Engine Clock Source Selection (Write Protect)
-     * |        |          |00 = Clock source from HXT clock.
-     * |        |          |01 = Clock source from PLL clock.
-     * |        |          |10 = Clock source from HCLK.
-     * |        |          |11 = Clock source from HIRC clock.
-     * |[23:22] |SDH1SEL   |SD1 Engine Clock Source Selection (Write Protect)
-     * |        |          |00 = Clock source from HXT clock.
-     * |        |          |01 = Clock source from PLL clock.
-     * |        |          |10 = Clock source from HCLK.
-     * |        |          |11 = Clock source from HIRC clock.
-     * @var CLK_T::CLKSEL1
-     * Offset: 0x14  Clock Source Select Control Register 1
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[1:0]   |WDTSEL    |Watchdog Timer Clock Source Selection (Write Protect)
-     * |        |          |00 = Reserved.
-     * |        |          |01 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
-     * |        |          |10 = Clock source from HCLK/2048.
-     * |        |          |11 = Clock source from 10 kHz internal low speed RC oscillator (LIRC).
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[10:8]  |TMR0SEL   |TIMER0 Clock Source Selection
-     * |        |          |000 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |001 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
-     * |        |          |010 = Clock source from PCLK0.
-     * |        |          |011 = Clock source from external clock TM0 pin.
-     * |        |          |101 = Clock source from 10 kHz internal low speed RC oscillator (LIRC).
-     * |        |          |111 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |        |          |Others = Reserved.
-     * |[14:12] |TMR1SEL   |TIMER1 Clock Source Selection
-     * |        |          |000 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |001 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
-     * |        |          |010 = Clock source from PCLK0.
-     * |        |          |011 = Clock source from external clock TM1 pin.
-     * |        |          |101 = Clock source from 10 kHz internal low speed RC oscillator (LIRC).
-     * |        |          |111 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |        |          |Others = Reserved.
-     * |[18:16] |TMR2SEL   |TIMER2 Clock Source Selection
-     * |        |          |000 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |001 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
-     * |        |          |010 = Clock source from PCLK1.
-     * |        |          |011 = Clock source from external clock TM2 pin.
-     * |        |          |101 = Clock source from 10 kHz internal low speed RC oscillator (LIRC).
-     * |        |          |111 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |        |          |Others = Reserved.
-     * |[22:20] |TMR3SEL   |TIMER3 Clock Source Selection
-     * |        |          |000 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |001 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
-     * |        |          |010 = Clock source from PCLK1.
-     * |        |          |011 = Clock source from external clock TM3 pin.
-     * |        |          |101 = Clock source from 10 kHz internal low speed RC oscillator (LIRC).
-     * |        |          |111 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |        |          |Others = Reserved.
-     * |[25:24] |UART0SEL  |UART0 Clock Source Selection
-     * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |01 = Clock source from PLL.
-     * |        |          |10 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
-     * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |[27:26] |UART1SEL  |UART1 Clock Source Selection
-     * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |01 = Clock source from PLL.
-     * |        |          |10 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
-     * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |[29:28] |CLKOSEL   |Clock Divider Clock Source Selection
-     * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |01 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
-     * |        |          |10 = Clock source from HCLK.
-     * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |[31:30] |WWDTSEL   |Window Watchdog Timer Clock Source Selection
-     * |        |          |10 = Clock source from HCLK/2048.
-     * |        |          |11 = Clock source from 10 kHz internal low speed RC oscillator (LIRC).
-     * |        |          |Others = Reserved.
-     * @var CLK_T::CLKSEL2
-     * Offset: 0x18  Clock Source Select Control Register 2
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |EPWM0SEL  |EPWM0 Clock Source Selection
-     * |        |          |The peripheral clock source of EPWM0 is defined by EPWM0SEL.
-     * |        |          |0 = Clock source from PLL.
-     * |        |          |1 = Clock source from PCLK0.
-     * |[1]     |EPWM1SEL  |EPWM1 Clock Source Selection
-     * |        |          |The peripheral clock source of EPWM1 is defined by EPWM1SEL.
-     * |        |          |0 = Clock source from PLL.
-     * |        |          |1 = Clock source from PCLK1.
-     * |[3:2]   |QSPI0SEL   |QSPI0 Clock Source Selection
-     * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |01 = Clock source from PLL.
-     * |        |          |10 = Clock source from PCLK0.
-     * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |[5:4]   |SPI0SEL   |SPI0 Clock Source Selection
-     * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |01 = Clock source from PLL.
-     * |        |          |10 = Clock source from PCLK1.
-     * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |[7:6]   |SPI1SEL   |SPI1 Clock Source Selection
-     * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |01 = Clock source from PLL.
-     * |        |          |10 = Clock source from PCLK0.
-     * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |[8]     |BPWM0SEL  |BPWM0 Clock Source Selection
-     * |        |          |The peripheral clock source of BPWM0 is defined by BPWM0SEL.
-     * |        |          |0 = Clock source from PLL.
-     * |        |          |1 = Clock source from PCLK0.
-     * |[9]     |BPWM1SEL  |BPWM1 Clock Source Selection
-     * |        |          |The peripheral clock source of BPWM1 is defined by BPWM1SEL.
-     * |        |          |0 = Clock source from PLL.
-     * |        |          |1 = Clock source from PCLK1.
-     * |[11:10] |SPI2SEL   |SPI2 Clock Source Selection
-     * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |01 = Clock source from PLL.
-     * |        |          |10 = Clock source from PCLK1.
-     * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |[13:12] |SPI3SEL   |SPI3 Clock Source Selection
-     * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |01 = Clock source from PLL.
-     * |        |          |10 = Clock source from PCLK0.
-     * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * @var CLK_T::CLKSEL3
-     * Offset: 0x1C  Clock Source Select Control Register 3
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[1:0]   |SC0SEL    |SC0 Clock Source Selection
-     * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |01 = Clock source from PLL.
-     * |        |          |10 = Clock source from PCLK0.
-     * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |[3:2]   |SC1SEL    |SC0 Clock Source Selection
-     * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |01 = Clock source from PLL.
-     * |        |          |10 = Clock source from PCLK1.
-     * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |[5:4]   |SC2SEL    |SC2 Clock Source Selection
-     * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |01 = Clock source from PLL.
-     * |        |          |10 = Clock source from PCLK0.
-     * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |[8]     |RTCSEL    |RTC Clock Source Selection
-     * |        |          |0 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
-     * |        |          |1 = Clock source from 10 kHz internal low speed RC oscillator (LIRC).
-     * |[17:16] |I2S0SEL   |I2S0 Clock Source Selection
-     * |        |          |00 = Clock source from HXT clock.
-     * |        |          |01 = Clock source from PLL clock.
-     * |        |          |10 = Clock source from PCLK.
-     * |        |          |11 = Clock source from HIRC clock.
-     * |[25:24] |UART2SEL  |UART2 Clock Source Selection
-     * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |01 = Clock source from PLL.
-     * |        |          |10 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
-     * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |[27:26] |UART3SEL  |UART3 Clock Source Selection
-     * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |01 = Clock source from PLL.
-     * |        |          |10 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
-     * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |[29:28] |UART4SEL  |UART4 Clock Source Selection
-     * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |01 = Clock source from PLL.
-     * |        |          |10 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
-     * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * |[31:30] |UART5SEL  |UART5 Clock Source Selection
-     * |        |          |00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
-     * |        |          |01 = Clock source from PLL.
-     * |        |          |10 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
-     * |        |          |11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
-     * @var CLK_T::CLKDIV0
-     * Offset: 0x20  Clock Divider Number Register 0
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |HCLKDIV   |HCLK Clock Divide Number From HCLK Clock Source
-     * |        |          |HCLK clock frequency = (HCLK clock source frequency) / (HCLKDIV + 1).
-     * |[7:4]   |USBDIV    |USB Clock Divide Number From PLL Clock
-     * |        |          |USB clock frequency = (PLL frequency) / (USBDIV + 1).
-     * |[11:8]  |UART0DIV  |UART0 Clock Divide Number From UART0 Clock Source
-     * |        |          |UART0 clock frequency = (UART0 clock source frequency) / (UART0DIV + 1).
-     * |[15:12] |UART1DIV  |UART1 Clock Divide Number From UART1 Clock Source
-     * |        |          |UART1 clock frequency = (UART1 clock source frequency) / (UART1DIV + 1).
-     * |[23:16] |EADCDIV   |EADC Clock Divide Number From EADC Clock Source
-     * |        |          |EADC clock frequency = (EADC clock source frequency) / (EADCDIV + 1).
-     * |[31:24] |SDH0DIV   |SD0 Clock Divide Number From SD0 Clock Source
-     * |        |          |SD0 clock frequency = (SD0 clock source frequency) / (SDH0DIV + 1).
-     * @var CLK_T::CLKDIV1
-     * Offset: 0x24  Clock Divider Number Register 1
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[7:0]   |SC0DIV    |SC0 Clock Divide Number From SC0 Clock Source
-     * |        |          |SC0 clock frequency = (SC0 clock source frequency ) / (SC0DIV + 1).
-     * |[15:8]  |SC1DIV    |SC1 Clock Divide Number From SC1 Clock Source
-     * |        |          |SC1 clock frequency = (SC1 clock source frequency ) / (SC1DIV + 1).
-     * |[23:16] |SC2DIV    |SC2 Clock Divide Number From SC2 Clock Source
-     * |        |          |SC2 clock frequency = (SC2 clock source frequency ) / (SC2DIV + 1).
-     * @var CLK_T::CLKDIV3
-     * Offset: 0x2C  Clock Divider Number Register 3
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[23:16] |EMACDIV   |Ethernet Clock Divide Number Form HCLK
-     * |        |          |EMAC MDCLK clock frequency = (HCLK) / (EMACDIV + 1).
-     * |[31:24] |SDH1DIV   |SD1 Clock Divide Number From SD1 Clock Source
-     * |        |          |SD1 clock frequency = (SD1 clock source frequency) / (SDH1DIV + 1).
-     * @var CLK_T::CLKDIV4
-     * Offset: 0x30  Clock Divider Number Register 4
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |UART2DIV  |UART2 Clock Divide Number From UART2 Clock Source
-     * |        |          |UART2 clock frequency = (UART2 clock source frequency) / (UART2DIV + 1).
-     * |[7:4]   |UART3DIV  |UART3 Clock Divide Number From UART3 Clock Source
-     * |        |          |UART3 clock frequency = (UART3 clock source frequency) / (UART3DIV + 1).
-     * |[11:8]  |UART4DIV  |UART4 Clock Divide Number From UART4 Clock Source
-     * |        |          |UART4 clock frequency = (UART4 clock source frequency) / (UART4DIV + 1).
-     * |[15:12] |UART5DIV  |UART5 Clock Divide Number From UART5 Clock Source
-     * |        |          |UART5 clock frequency = (UART5 clock source frequency) / (UART5DIV + 1).
-     * @var CLK_T::PCLKDIV
-     * Offset: 0x34  APB Clock Divider Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[2:0]   |APB0DIV   |APB0 Clock Divider
-     * |        |          |APB0 clock can be divided from HCLK
-     * |        |          |000: PCLK0 = HCLK.
-     * |        |          |001: PCLK0 = 1/2 HCLK.
-     * |        |          |010: PCLK0 = 1/4 HCLK.
-     * |        |          |011: PCLK0 = 1/8 HCLK.
-     * |        |          |100: PCLK0 = 1/16 HCLK.
-     * |        |          |Others: Reserved.
-     * |[6:4]   |APB1DIV   |APB1 Clock Divider
-     * |        |          |APB1 clock can be divided from HCLK
-     * |        |          |000: PCLK1 = HCLK.
-     * |        |          |001: PCLK1 = 1/2 HCLK.
-     * |        |          |010: PCLK1 = 1/4 HCLK.
-     * |        |          |011: PCLK1 = 1/8 HCLK.
-     * |        |          |100: PCLK1 = 1/16 HCLK.
-     * |        |          |Others: Reserved.
-     * @var CLK_T::PLLCTL
-     * Offset: 0x40  PLL Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[8:0]   |FBDIV     |PLL Feedback Divider Control (Write Protect)
-     * |        |          |Refer to the formulas below the table.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[13:9]  |INDIV     |PLL Input Divider Control (Write Protect)
-     * |        |          |Refer to the formulas below the table.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[15:14] |OUTDIV    |PLL Output Divider Control (Write Protect)
-     * |        |          |Refer to the formulas below the table.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[16]    |PD        |Power-down Mode (Write Protect)
-     * |        |          |If set the PDEN bit to 1 in CLK_PWRCTL register, the PLL will enter Power-down mode, too.
-     * |        |          |0 = PLL is in normal mode.
-     * |        |          |1 = PLL is in Power-down mode (default).
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[17]    |BP        |PLL Bypass Control (Write Protect)
-     * |        |          |0 = PLL is in normal mode (default).
-     * |        |          |1 = PLL clock output is same as PLL input clock FIN.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[18]    |OE        |PLL OE (FOUT Enable) Pin Control (Write Protect)
-     * |        |          |0 = PLL FOUT Enabled.
-     * |        |          |1 = PLL FOUT is fixed low.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[19]    |PLLSRC    |PLL Source Clock Selection (Write Protect)
-     * |        |          |0 = PLL source clock from 4~24 MHz external high-speed crystal oscillator (HXT).
-     * |        |          |1 = PLL source clock from 12 MHz internal high-speed oscillator (HIRC).
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[23]    |STBSEL    |PLL Stable Counter Selection (Write Protect)
-     * |        |          |0 = PLL stable time is 6144 PLL source clock (suitable for source clock is equal to or less than 12 MHz).
-     * |        |          |1 = PLL stable time is 12288 PLL source clock (suitable for source clock is larger than 12 MHz).
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * @var CLK_T::STATUS
-     * Offset: 0x50  Clock Status Monitor Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |HXTSTB    |HXT Clock Source Stable Flag (Read Only)
-     * |        |          |0 = 4~24 MHz external high speed crystal oscillator (HXT) clock is not stable or disabled.
-     * |        |          |1 = 4~24 MHz external high speed crystal oscillator (HXT) clock is stable and enabled.
-     * |[1]     |LXTSTB    |LXT Clock Source Stable Flag (Read Only)
-     * |        |          |0 = 32.768 kHz external low speed crystal oscillator (LXT) clock is not stable or disabled.
-     * |        |          |1 = 32.768 kHz external low speed crystal oscillator (LXT) clock is stabled and enabled.
-     * |[2]     |PLLSTB    |Internal PLL Clock Source Stable Flag (Read Only)
-     * |        |          |0 = Internal PLL clock is not stable or disabled.
-     * |        |          |1 = Internal PLL clock is stable and enabled.
-     * |[3]     |LIRCSTB   |LIRC Clock Source Stable Flag (Read Only)
-     * |        |          |0 = 10 kHz internal low speed RC oscillator (LIRC) clock is not stable or disabled.
-     * |        |          |1 = 10 kHz internal low speed RC oscillator (LIRC) clock is stable and enabled.
-     * |[4]     |HIRCSTB   |HIRC Clock Source Stable Flag (Read Only)
-     * |        |          |0 = 12 MHz internal high speed RC oscillator (HIRC) clock is not stable or disabled.
-     * |        |          |1 = 12 MHz internal high speed RC oscillator (HIRC) clock is stable and enabled.
-     * |        |          |Note: This bit is read only.
-     * |[6]     |HIRC48MSTB|HIRC 48MHz Clock Source Stable Flag (Read Only)
-     * |        |          |0 = 48 MHz internal high speed RC oscillator (HIRC) clock is not stable or disabled.
-     * |        |          |1 = 48 MHz internal high speed RC oscillator (HIRC) clock is stable and enabled.
-     * |        |          |Note: This bit is read only.
-     * |[7]     |CLKSFAIL  |Clock Switching Fail Flag (Read Only)
-     * |        |          |This bit is updated when software switches system clock source
-     * |        |          |If switch target clock is stable, this bit will be set to 0
-     * |        |          |If switch target clock is not stable, this bit will be set to 1.
-     * |        |          |0 = Clock switching success.
-     * |        |          |1 = Clock switching failure.
-     * |        |          |Note: Write 1 to clear the bit to 0.
-     * @var CLK_T::CLKOCTL
-     * Offset: 0x60  Clock Output Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |FREQSEL   |Clock Output Frequency Selection
-     * |        |          |The formula of output frequency is
-     * |        |          |Fout = Fin/2(N+1).
-     * |        |          |Fin is the input clock frequency.
-     * |        |          |Fout is the frequency of divider output clock.
-     * |        |          |N is the 4-bit value of FREQSEL[3:0].
-     * |[4]     |CLKOEN    |Clock Output Enable Bit
-     * |        |          |0 = Clock Output function Disabled.
-     * |        |          |1 = Clock Output function Enabled.
-     * |[5]     |DIV1EN    |Clock Output Divide One Enable Bit
-     * |        |          |0 = Clock Output will output clock with source frequency divided by FREQSEL.
-     * |        |          |1 = Clock Output will output clock with source frequency.
-     * |[6]     |CLK1HZEN  |Clock Output 1Hz Enable Bit
-     * |        |          |0 = 1 Hz clock output for 32.768 kHz frequency compensation Disabled.
-     * |        |          |1 = 1 Hz clock output for 32.768 kHz frequency compensation Enabled.
-     * @var CLK_T::CLKDCTL
-     * Offset: 0x70  Clock Fail Detector Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[4]     |HXTFDEN   |HXT Clock Fail Detector Enable Bit
-     * |        |          |0 = 4~24 MHz external high speed crystal oscillator (HXT) clock fail detector Disabled.
-     * |        |          |1 = 4~24 MHz external high speed crystal oscillator (HXT) clock fail detector Enabled.
-     * |[5]     |HXTFIEN   |HXT Clock Fail Interrupt Enable Bit
-     * |        |          |0 = 4~24 MHz external high speed crystal oscillator (HXT) clock fail interrupt Disabled.
-     * |        |          |1 = 4~24 MHz external high speed crystal oscillator (HXT) clock fail interrupt Enabled.
-     * |[12]    |LXTFDEN   |LXT Clock Fail Detector Enable Bit
-     * |        |          |0 = 32.768 kHz external low speed crystal oscillator (LXT) clock fail detector Disabled.
-     * |        |          |1 = 32.768 kHz external low speed crystal oscillator (LXT) clock fail detector Enabled.
-     * |[13]    |LXTFIEN   |LXT Clock Fail Interrupt Enable Bit
-     * |        |          |0 = 32.768 kHz external low speed crystal oscillator (LXT) clock fail interrupt Disabled.
-     * |        |          |1 = 32.768 kHz external low speed crystal oscillator (LXT) clock fail interrupt Enabled.
-     * |[16]    |HXTFQDEN  |HXT Clock Frequency Range Detector Enable Bit
-     * |        |          |0 = 4~24 MHz external high speed crystal oscillator (HXT) clock frequency range detector Disabled.
-     * |        |          |1 = 4~24 MHz external high speed crystal oscillator (HXT) clock frequency range detector Enabled.
-     * |[17]    |HXTFQIEN  |HXT Clock Frequency Range Detector Interrupt Enable Bit
-     * |        |          |0 = 4~24 MHz external high speed crystal oscillator (HXT) clock frequency range detector fail interrupt Disabled.
-     * |        |          |1 = 4~24 MHz external high speed crystal oscillator (HXT) clock frequency range detector fail interrupt Enabled.
-     * @var CLK_T::CLKDSTS
-     * Offset: 0x74  Clock Fail Detector Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |HXTFIF    |HXT Clock Fail Interrupt Flag
-     * |        |          |0 = 4~24 MHz external high speed crystal oscillator (HXT) clock is normal.
-     * |        |          |1 = 4~24 MHz external high speed crystal oscillator (HXT) clock stops.
-     * |        |          |Note: Write 1 to clear the bit to 0.
-     * |[1]     |LXTFIF    |LXT Clock Fail Interrupt Flag
-     * |        |          |0 = 32.768 kHz external low speed crystal oscillator (LXT) clock is normal.
-     * |        |          |1 = 32.768 kHz external low speed crystal oscillator (LXT) stops.
-     * |        |          |Note: Write 1 to clear the bit to 0.
-     * |[8]     |HXTFQIF   |HXT Clock Frequency Range Detector Interrupt Flag
-     * |        |          |0 = 4~24 MHz external high speed crystal oscillator (HXT) clock frequency is normal.
-     * |        |          |1 = 4~24 MHz external high speed crystal oscillator (HXT) clock frequency is abnormal.
-     * |        |          |Note: Write 1 to clear the bit to 0.
-     * @var CLK_T::CDUPB
-     * Offset: 0x78  Clock Frequency Range Detector Upper Boundary Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[9:0]   |UPERBD    |HXT Clock Frequency Range Detector Upper Boundary Value
-     * |        |          |The bits define the maximum value of frequency range detector window.
-     * |        |          |When HXT frequency higher than this maximum frequency value, the HXT Clock Frequency Range Detector Interrupt Flag will set to 1.
-     * @var CLK_T::CDLOWB
-     * Offset: 0x7C  Clock Frequency Range Detector Lower Boundary Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[9:0]   |LOWERBD   |HXT Clock Frequency Range Detector Lower Boundary Value
-     * |        |          |The bits define the minimum value of frequency range detector window.
-     * |        |          |When HXT frequency lower than this minimum frequency value, the HXT Clock Frequency Range Detector Interrupt Flag will set to 1.
-     * @var CLK_T::PMUCTL
-     * Offset: 0x90  Power Manager Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[2:0]   |PDMSEL    |Power-down Mode Selection (Write Protect)
-     * |        |          |This is a protected register. Please refer to open lock sequence to program it.
-     * |        |          |These bits control chip power-down mode grade selection when CPU execute WFI/WFE instruction.
-     * |        |          |000 = Power-down mode is selected. (PD)
-     * |        |          |001 = Low leakage Power-down mode is selected (LLPD).
-     * |        |          |010 =Fast wake-up Power-down mode is selected (FWPD).
-     * |        |          |011 = Reserved.
-     * |        |          |100 = Standby Power-down mode 0 is selected (SPD0) (SRAM retention).
-     * |        |          |101 = Standby Power-down mode 1 is selected (SPD1).
-     * |        |          |110 = Deep Power-down mode is selected (DPD).
-     * |        |          |111 = Reserved.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[3]     |DPDHOLDEN |Deep-Power-Down Mode GPIO Hold Enable
-     * |        |          |0 = When GPIO enters deep power-down mode, all I/O status are tri-state.
-     * |        |          |1 = When GPIO enters deep power-down mode, all I/O status are hold to keep normal operating status.
-     * |        |          |    After chip was waked up from deep power-down mode, the I/O are still keep hold status until user set CLK_IOPDCTL[0]
-     * |        |          |    to release I/O hold status.
-     * |[8]     |WKTMREN   |Wake-up Timer Enable (Write Protect)
-     * |        |          |This is a protected register. Please refer to open lock sequence to program it.
-     * |        |          |0 = Wake-up timer disable at DPD/SPD mode.
-     * |        |          |1 = Wake-up timer enabled at DPD/SPD mode.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[11:9]  |WKTMRIS   |Wake-up Timer Time-out Interval Select (Write Protect)
-     * |        |          |This is a protected register. Please refer to open lock sequence to program it.
-     * |        |          |These bits control wake-up timer time-out interval when chip at DPD/SPD mode.
-     * |        |          |000 = Time-out interval is 128 OSC10K clocks (12.8 ms).
-     * |        |          |001 = Time-out interval is 256 OSC10K clocks (25.6 ms).
-     * |        |          |010 = Time-out interval is 512 OSC10K clocks (51.2 ms).
-     * |        |          |011 = Time-out interval is 1024 OSC10K clocks (102.4ms).
-     * |        |          |100 = Time-out interval is 4096 OSC10K clocks (409.6ms).
-     * |        |          |101 = Time-out interval is 8192 OSC10K clocks (819.2ms).
-     * |        |          |110 = Time-out interval is 16384 OSC10K clocks (1638.4ms).
-     * |        |          |111 = Time-out interval is 65536 OSC10K clocks (6553.6ms).
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[17:16] |WKPINEN   |Wake-up Pin Enable (Write Protect)
-     * |        |          |This is a protected register. Please refer to open lock sequence to program it.
-     * |        |          |00 = Wake-up pin disable at Deep Power-down mode.
-     * |        |          |01 = Wake-up pin rising edge enabled at Deep Power-down mode.
-     * |        |          |10 = Wake-up pin falling edge enabled at Deep Power-down mode.
-     * |        |          |11 = Wake-up pin both edge enabled at Deep Power-down mode.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[18]    |ACMPSPWK  |ACMP Standby Power-down Mode Wake-up Enable (Write Protect)
-     * |        |          |This is a protected register. Please refer to open lock sequence to program it.
-     * |        |          |0 = ACMP wake-up disable at Standby Power-down mode.
-     * |        |          |1 = ACMP wake-up enabled at Standby Power-down mode.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[23]    |RTCWKEN   |RTC Wake-up Enable (Write Protect)
-     * |        |          |This is a protected register. Please refer to open lock sequence to program it.
-     * |        |          |0 = RTC wake-up disable at Deep Power-down mode or Standby Power-down mode.
-     * |        |          |1 = RTC wake-up enabled at Deep Power-down mode or Standby Power-down mode.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * @var CLK_T::PMUSTS
-     * Offset: 0x94  Power Manager Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |PINWK     |Pin Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wake-up of chip from Deep Power-down mode was requested by a transition of the WAKEUP pin (GPC.0)
-     * |        |          |This flag is cleared when DPD mode is entered.
-     * |[1]     |TMRWK     |Timer Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wake-up of chip from Deep Power-down mode (DPD) or Standby Power-down (SPD) mode was requested by wakeup timer time-out
-     * |        |          |This flag is cleared when DPD or SPD mode is entered.
-     * |[2]     |RTCWK     |RTC Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wakeup of device from Deep Power-down mode (DPD) or Standby Power-down (SPD) mode was requested with a RTC alarm, tick time or tamper happened
-     * |        |          |This flag is cleared when DPD or SPD mode is entered.
-     * |[8]     |GPAWK     |GPA Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wake-up of chip from Standby Power-down mode was requested by a transition of selected one GPA group pins
-     * |        |          |This flag is cleared when SPD mode is entered.
-     * |[9]     |GPBWK     |GPB Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wake-up of chip from Standby Power-down mode was requested by a transition of selected one GPB group pins
-     * |        |          |This flag is cleared when SPD mode is entered.
-     * |[10]    |GPCWK     |GPC Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wake-up of chip from Standby Power-down mode was requested by a transition of selected one GPC group pins
-     * |        |          |This flag is cleared when SPD mode is entered.
-     * |[11]    |GPDWK     |GPD Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wake-up of chip from Standby Power-down mode was requested by a transition of selected one GPD group pins
-     * |        |          |This flag is cleared when SPD mode is entered.
-     * |[12]    |LVRWK     |LVR Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wakeup of device from Standby Power-down mode was requested with a LVR happened
-     * |        |          |This flag is cleared when SPD mode is entered.
-     * |[13]    |BODWK     |BOD Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wakeup of device from Standby Power-down mode (SPD) was requested with a BOD happened
-     * |        |          |This flag is cleared when SPD mode is entered.
-     * |[14]    |ACMPWK    |ACMP Wake-up Flag (Read Only)
-     * |        |          |This flag indicates that wakeup of device from Standby Power-down mode (SPD) was requested with a ACMP transition
-     * |        |          |This flag is cleared when SPD mode is entered.
-     * |[31]    |CLRWK     |Clear Wake-up Flag
-     * |        |          |0 = No clear.
-     * |        |          |1 = Clear all wake-up flag.
-     * @var CLK_T::LDOCTL
-     * Offset: 0x98  LDO Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[18]    |PDBIASEN  |Power-down Bias Enable Bit
-     * |        |          |0 = Reserved.
-     * |        |          |1 = Power-down bias enabled.
-     * |        |          |Note: This bit should set to 1 before chip enter power-down mode.
-     * @var CLK_T::SWKDBCTL
-     * Offset: 0x9C  Standby Power-down Wake-up De-bounce Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |SWKDBCLKSEL|Standby Power-down Wake-up De-bounce Sampling Cycle Selection
-     * |        |          |0000 = Sample wake-up input once per 1 clocks.
-     * |        |          |0001 = Sample wake-up input once per 2 clocks.
-     * |        |          |0010 = Sample wake-up input once per 4 clocks.
-     * |        |          |0011 = Sample wake-up input once per 8 clocks.
-     * |        |          |0100 = Sample wake-up input once per 16 clocks.
-     * |        |          |0101 = Sample wake-up input once per 32 clocks.
-     * |        |          |0110 = Sample wake-up input once per 64 clocks.
-     * |        |          |0111 = Sample wake-up input once per 128 clocks.
-     * |        |          |1000 = Sample wake-up input once per 256 clocks.
-     * |        |          |1001 = Sample wake-up input once per 2*256 clocks.
-     * |        |          |1010 = Sample wake-up input once per 4*256 clocks.
-     * |        |          |1011 = Sample wake-up input once per 8*256 clocks.
-     * |        |          |1100 = Sample wake-up input once per 16*256 clocks.
-     * |        |          |1101 = Sample wake-up input once per 32*256 clocks.
-     * |        |          |1110 = Sample wake-up input once per 64*256 clocks.
-     * |        |          |1111 = Sample wake-up input once per 128*256 clocks.
-     * |        |          |Note: De-bounce counter clock source is the 10 kHz internal low speed RC oscillator (LIRC).
-     * @var CLK_T::PASWKCTL
-     * Offset: 0xA0  GPA Standby Power-down Wake-up Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |WKEN      |Standby Power-down Pin Wake-up Enable Bit
-     * |        |          |0 = GPA group pin wake-up function disabled.
-     * |        |          |1 = GPA group pin wake-up function enabled.
-     * |[1]     |PRWKEN    |Pin Rising Edge Wake-up Enable Bit
-     * |        |          |0 = GPA group pin rising edge wake-up function disabled.
-     * |        |          |1 = GPA group pin rising edge wake-up function enabled.
-     * |[2]     |PFWKEN    |Pin Falling Edge Wake-up Enable Bit
-     * |        |          |0 = GPA group pin falling edge wake-up function disabled.
-     * |        |          |1 = GPA group pin falling edge wake-up function enabled.
-     * |[7:4]   |WKPSEL    |GPA Standby Power-down Wake-up Pin Select
-     * |        |          |0000 = GPA.0 wake-up function enabled.
-     * |        |          |0001 = GPA.1 wake-up function enabled.
-     * |        |          |0010 = GPA.2 wake-up function enabled.
-     * |        |          |0011 = GPA.3 wake-up function enabled.
-     * |        |          |0100 = GPA.4 wake-up function enabled.
-     * |        |          |0101 = GPA.5 wake-up function enabled.
-     * |        |          |0110 = GPA.6 wake-up function enabled.
-     * |        |          |0111 = GPA.7 wake-up function enabled.
-     * |        |          |1000 = GPA.8 wake-up function enabled.
-     * |        |          |1001 = GPA.9 wake-up function enabled.
-     * |        |          |1010 = GPA.10 wake-up function enabled.
-     * |        |          |1011 = GPA.11 wake-up function enabled.
-     * |        |          |1100 = GPA.12 wake-up function enabled.
-     * |        |          |1101 = GPA.13 wake-up function enabled.
-     * |        |          |1110 = GPA.14 wake-up function enabled.
-     * |        |          |1111 = GPA.15 wake-up function enabled.
-     * |[8]     |DBEN      |GPA Input Signal De-bounce Enable Bit
-     * |        |          |The DBEN bit is used to enable the de-bounce function for each corresponding IO
-     * |        |          |If the input signal pulse width cannot be sampled by continuous two de-bounce sample cycle, the input signal transition is seen as the signal bounce and will not trigger the wake-up
-     * |        |          |The de-bounce clock source is the 10 kHz internal low speed RC oscillator.
-     * |        |          |0 = Standby power-down wake-up pin De-bounce function disable.
-     * |        |          |1 = Standby power-down wake-up pin De-bounce function enable.
-     * |        |          |The de-bounce function is valid only for edge triggered.
-     * @var CLK_T::PBSWKCTL
-     * Offset: 0xA4  GPB Standby Power-down Wake-up Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |WKEN      |Standby Power-down Pin Wake-up Enable Bit
-     * |        |          |0 = GPB group pin wake-up function disabled.
-     * |        |          |1 = GPB group pin wake-up function enabled.
-     * |[1]     |PRWKEN    |Pin Rising Edge Wake-up Enable Bit
-     * |        |          |0 = GPB group pin rising edge wake-up function disabled.
-     * |        |          |1 = GPB group pin rising edge wake-up function enabled.
-     * |[2]     |PFWKEN    |Pin Falling Edge Wake-up Enable Bit
-     * |        |          |0 = GPB group pin falling edge wake-up function disabled.
-     * |        |          |1 = GPB group pin falling edge wake-up function enabled.
-     * |[7:4]   |WKPSEL    |GPB Standby Power-down Wake-up Pin Select
-     * |        |          |0000 = GPB.0 wake-up function enabled.
-     * |        |          |0001 = GPB.1 wake-up function enabled.
-     * |        |          |0010 = GPB.2 wake-up function enabled.
-     * |        |          |0011 = GPB.3 wake-up function enabled.
-     * |        |          |0100 = GPB.4 wake-up function enabled.
-     * |        |          |0101 = GPB.5 wake-up function enabled.
-     * |        |          |0110 = GPB.6 wake-up function enabled.
-     * |        |          |0111 = GPB.7 wake-up function enabled.
-     * |        |          |1000 = GPB.8 wake-up function enabled.
-     * |        |          |1001 = GPB.9 wake-up function enabled.
-     * |        |          |1010 = GPB.10 wake-up function enabled.
-     * |        |          |1011 = GPB.11 wake-up function enabled.
-     * |        |          |1100 = GPB.12 wake-up function enabled.
-     * |        |          |1101 = GPB.13 wake-up function enabled.
-     * |        |          |1110 = GPB.14 wake-up function enabled.
-     * |        |          |1111 = GPB.15 wake-up function enabled.
-     * |[8]     |DBEN      |GPB Input Signal De-bounce Enable Bit
-     * |        |          |The DBEN bit is used to enable the de-bounce function for each corresponding IO
-     * |        |          |If the input signal pulse width cannot be sampled by continuous two de-bounce sample cycle, the input signal transition is seen as the signal bounce and will not trigger the wake-up
-     * |        |          |The de-bounce clock source is the 10 kHz internal low speed RC oscillator.
-     * |        |          |0 = Standby power-down wake-up pin De-bounce function disable.
-     * |        |          |1 = Standby power-down wake-up pin De-bounce function enable.
-     * |        |          |The de-bounce function is valid only for edge triggered.
-     * @var CLK_T::PCSWKCTL
-     * Offset: 0xA8  GPC Standby Power-down Wake-up Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |WKEN      |Standby Power-down Pin Wake-up Enable Bit
-     * |        |          |0 = GPC group pin wake-up function disabled.
-     * |        |          |1 = GPC group pin wake-up function enabled.
-     * |[1]     |PRWKEN    |Pin Rising Edge Wake-up Enable Bit
-     * |        |          |0 = GPC group pin rising edge wake-up function disabled.
-     * |        |          |1 = GPC group pin rising edge wake-up function enabled.
-     * |[2]     |PFWKEN    |Pin Falling Edge Wake-up Enable Bit
-     * |        |          |0 = GPC group pin falling edge wake-up function disabled.
-     * |        |          |1 = GPC group pin falling edge wake-up function enabled.
-     * |[7:4]   |WKPSEL    |GPC Standby Power-down Wake-up Pin Select
-     * |        |          |0000 = GPC.0 wake-up function enabled.
-     * |        |          |0001 = GPC.1 wake-up function enabled.
-     * |        |          |0010 = GPC.2 wake-up function enabled.
-     * |        |          |0011 = GPC.3 wake-up function enabled.
-     * |        |          |0100 = GPC.4 wake-up function enabled.
-     * |        |          |0101 = GPC.5 wake-up function enabled.
-     * |        |          |0110 = GPC.6 wake-up function enabled.
-     * |        |          |0111 = GPC.7 wake-up function enabled.
-     * |        |          |1000 = GPC.8 wake-up function enabled.
-     * |        |          |1001 = GPC.9 wake-up function enabled.
-     * |        |          |1010 = GPC.10 wake-up function enabled.
-     * |        |          |1011 = GPC.11 wake-up function enabled.
-     * |        |          |1100 = GPC.12 wake-up function enabled.
-     * |        |          |1101 = GPC.13 wake-up function enabled.
-     * |        |          |1110 = GPC.14 wake-up function enabled.
-     * |        |          |1111 = GPC.15 wake-up function enabled.
-     * |[8]     |DBEN      |GPC Input Signal De-bounce Enable Bit
-     * |        |          |The DBEN bit is used to enable the de-bounce function for each corresponding IO
-     * |        |          |If the input signal pulse width cannot be sampled by continuous two de-bounce sample cycle, the input signal transition is seen as the signal bounce and will not trigger the wake-up
-     * |        |          |The de-bounce clock source is the 10 kHz internal low speed RC oscillator.
-     * |        |          |0 = Standby power-down wake-up pin De-bounce function disable.
-     * |        |          |1 = Standby power-down wake-up pin De-bounce function enable.
-     * |        |          |The de-bounce function is valid only for edge triggered.
-     * @var CLK_T::PDSWKCTL
-     * Offset: 0xAC  GPD Standby Power-down Wake-up Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |WKEN      |Standby Power-down Pin Wake-up Enable Bit
-     * |        |          |0 = GPD group pin wake-up function disabled.
-     * |        |          |1 = GPD group pin wake-up function enabled.
-     * |[1]     |PRWKEN    |Pin Rising Edge Wake-up Enable Bit
-     * |        |          |0 = GPD group pin rising edge wake-up function disabled.
-     * |        |          |1 = GPD group pin rising edge wake-up function enabled.
-     * |[2]     |PFWKEN    |Pin Falling Edge Wake-up Enable Bit
-     * |        |          |0 = GPD group pin falling edge wake-up function disabled.
-     * |        |          |1 = GPD group pin falling edge wake-up function enabled.
-     * |[7:4]   |WKPSEL    |GPD Standby Power-down Wake-up Pin Select
-     * |        |          |0000 = GPD.0 wake-up function enabled.
-     * |        |          |0001 = GPD.1 wake-up function enabled.
-     * |        |          |0010 = GPD.2 wake-up function enabled.
-     * |        |          |0011 = GPD.3 wake-up function enabled.
-     * |        |          |0100 = GPD.4 wake-up function enabled.
-     * |        |          |0101 = GPD.5 wake-up function enabled.
-     * |        |          |0110 = GPD.6 wake-up function enabled.
-     * |        |          |0111 = GPD.7 wake-up function enabled.
-     * |        |          |1000 = GPD.8 wake-up function enabled.
-     * |        |          |1001 = GPD.9 wake-up function enabled.
-     * |        |          |1010 = GPD.10 wake-up function enabled.
-     * |        |          |1011 = GPD.11 wake-up function enabled.
-     * |        |          |1100 = GPD.12 wake-up function enabled.
-     * |        |          |1101 = GPD.13 wake-up function enabled.
-     * |        |          |1110 = GPD.14 wake-up function enabled.
-     * |        |          |1111 = GPD.15 wake-up function enabled.
-     * |[8]     |DBEN      |GPD Input Signal De-bounce Enable Bit
-     * |        |          |The DBEN bit is used to enable the de-bounce function for each corresponding IO
-     * |        |          |If the input signal pulse width cannot be sampled by continuous two de-bounce sample cycle, the input signal transition is seen as the signal bounce and will not trigger the wake-up
-     * |        |          |The de-bounce clock source is the 10 kHz internal low speed RC oscillator.
-     * |        |          |0 = Standby power-down wake-up pin De-bounce function disable.
-     * |        |          |1 = Standby power-down wake-up pin De-bounce function enable.
-     * |        |          |The de-bounce function is valid only for edge triggered.
-     * @var CLK_T::IOPDCTL
-     * Offset: 0xB0  GPIO Standby Power-down Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |IOHR      |GPIO Hold Release
-     * |        |          |When GPIO enter standby power-down mode, all I/O status are hold to keep normal operating status
-     * |        |          |After chip was waked up from standby power-down mode, the I/O are still keep hold status until user set this bit to release I/O hold status.
-     * |        |          |This bit is auto cleared by hardware.
-     */
+@var CLK_T::PWRCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PWRCTL
+</font><br><p> <font size="2">
+Offset: 0x00  System Power-down Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>HXTEN</td><td><div style="word-wrap: break-word;"><b>HXT Enable Bit (Write Protect)
+</b><br>
+The bit default value is set by flash controller user configuration register CONFIG0 [26]
+<br>
+When the default clock source is from HXT, this bit is set to 1 automatically.
+<br>
+0 = 4~24 MHz external high speed crystal (HXT) Disabled.
+<br>
+1 = 4~24 MHz external high speed crystal (HXT) Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>LXTEN</td><td><div style="word-wrap: break-word;"><b>LXT Enable Bit (Write Protect)
+</b><br>
+0 = 32.768 kHz external low speed crystal (LXT) Disabled.
+<br>
+1 = 32.768 kHz external low speed crystal (LXT) Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>HIRCEN</td><td><div style="word-wrap: break-word;"><b>HIRC Enable Bit (Write Protect)
+</b><br>
+0 = 12 MHz internal high speed RC oscillator (HIRC) Disabled.
+<br>
+1 = 12 MHz internal high speed RC oscillator (HIRC) Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>LIRCEN</td><td><div style="word-wrap: break-word;"><b>LIRC Enable Bit (Write Protect)
+</b><br>
+0 = 10 kHz internal low speed RC oscillator (LIRC) Disabled.
+<br>
+1 = 10 kHz internal low speed RC oscillator (LIRC) Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>PDWKDLY</td><td><div style="word-wrap: break-word;"><b>Enable the Wake-up Delay Counter (Write Protect)
+</b><br>
+When the chip wakes up from Power-down mode, the clock control will delay certain clock cycles to wait system clock stable.
+<br>
+The delayed clock cycle is 4096 clock cycles when chip works at 4~24 MHz external high speed crystal oscillator (HXT), and 256 clock cycles when chip works at 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+0 = Clock cycles delay Disabled.
+<br>
+1 = Clock cycles delay Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>PDWKIEN</td><td><div style="word-wrap: break-word;"><b>Power-down Mode Wake-up Interrupt Enable Bit (Write Protect)
+</b><br>
+0 = Power-down mode wake-up interrupt Disabled.
+<br>
+1 = Power-down mode wake-up interrupt Enabled.
+<br>
+Note1: The interrupt will occur when both PDWKIF and PDWKIEN are high.
+<br>
+Note2: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>PDWKIF</td><td><div style="word-wrap: break-word;"><b>Power-down Mode Wake-up Interrupt Status
+</b><br>
+Set by "Power-down wake-up event", it indicates that resume from Power-down mode.
+<br>
+The flag is set if any wake-up source is occurred. Refer Power Modes and Wake-up Sources chapter.
+<br>
+Note1: Write 1 to clear the bit to 0.
+<br>
+Note2: This bit works only if PDWKIEN (CLK_PWRCTL[5]) set to 1.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>PDEN</td><td><div style="word-wrap: break-word;"><b>System Power-down Enable (Write Protect)
+</b><br>
+When this bit is set to 1, Power-down mode is enabled and chip keeps active till the CPU sleep mode is also active and then the chip enters Power-down mode.
+<br>
+When chip wakes up from Power-down mode, this bit is auto cleared
+<br>
+Users need to set this bit again for next Power-down.
+<br>
+In Power-down mode, HXT and the HIRC will be disabled in this mode, but LXT and LIRC are not controlled by Power-down mode.
+<br>
+In Power-down mode, the PLL and system clock are disabled, and ignored the clock source selection
+<br>
+The clocks of peripheral are not controlled by Power-down mode, if the peripheral clock source is from LXT or LIRC.
+<br>
+0 = Chip will not enter Power-down mode after CPU sleep command WFI.
+<br>
+1 = Chip enters Power-down mode after CPU sleep command WFI.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[11:10]</td><td>HXTGAIN</td><td><div style="word-wrap: break-word;"><b>HXT Gain Control Bit (Write Protect)
+</b><br>
+This is a protected register. Please refer to open lock sequence to program it.
+<br>
+Gain control is used to enlarge the gain of crystal to make sure crystal work normally
+<br>
+If gain control is enabled, crystal will consume more power than gain control off.
+<br>
+00 = HXT frequency is lower than from 8 MHz.
+<br>
+01 = HXT frequency is from 8 MHz to 12 MHz.
+<br>
+10 = HXT frequency is from 12 MHz to 16 MHz.
+<br>
+11 = HXT frequency is higher than 16 MHz.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>HXTSELTYP</td><td><div style="word-wrap: break-word;"><b>HXT Crystal Type Select Bit (Write Protect)
+</b><br>
+This is a protected register. Please refer to open lock sequence to program it.
+<br>
+0 = Select INV type.
+<br>
+1 = Select GM type.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>HXTTBEN</td><td><div style="word-wrap: break-word;"><b>HXT Crystal TURBO Mode (Write Protect)
+</b><br>
+This is a protected register. Please refer to open lock sequence to program it.
+<br>
+0 = HXT Crystal TURBO mode disabled.
+<br>
+1 = HXT Crystal TURBO mode enabled.
+<br>
+</div></td></tr><tr><td>
+[17:16]</td><td>HIRCSTBS</td><td><div style="word-wrap: break-word;"><b>HIRC Stable Count Select (Write Protect)
+</b><br>
+00 = HIRC stable count is 64 clocks.
+<br>
+01 = HIRC stable count is 24 clocks.
+<br>
+others = Reserved.
+<br>
+</div></td></tr><tr><td>
+[18]</td><td>HIRCEN</td><td><div style="word-wrap: break-word;"><b>HIRC48M Enable Bit (Write Protect)
+</b><br>
+0 = 48 MHz internal high speed RC oscillator (HIRC) Disabled.
+<br>
+1 = 48 MHz internal high speed RC oscillator (HIRC) Enabled.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::AHBCLK
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">AHBCLK
+</font><br><p> <font size="2">
+Offset: 0x04  AHB Devices Clock Enable Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[1]</td><td>PDMACKEN</td><td><div style="word-wrap: break-word;"><b>PDMA Controller Clock Enable Bit
+</b><br>
+0 = PDMA peripheral clock Disabled.
+<br>
+1 = PDMA peripheral clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>ISPCKEN</td><td><div style="word-wrap: break-word;"><b>Flash ISP Controller Clock Enable Bit
+</b><br>
+0 = Flash ISP peripheral clock Disabled.
+<br>
+1 = Flash ISP peripheral clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>EBICKEN</td><td><div style="word-wrap: break-word;"><b>EBI Controller Clock Enable Bit
+</b><br>
+0 = EBI peripheral clock Disabled.
+<br>
+1 = EBI peripheral clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>EMACCKEN</td><td><div style="word-wrap: break-word;"><b>Ethernet Controller Clock Enable Bit
+</b><br>
+0 = Ethernet Controller engine clock Disabled.
+<br>
+1 = Ethernet Controller engine clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>SDH0CKEN</td><td><div style="word-wrap: break-word;"><b>SD0 Controller Clock Enable Bit
+</b><br>
+0 = SD0 engine clock Disabled.
+<br>
+1 = SD0 engine clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>CRCCKEN</td><td><div style="word-wrap: break-word;"><b>CRC Generator Controller Clock Enable Bit
+</b><br>
+0 = CRC peripheral clock Disabled.
+<br>
+1 = CRC peripheral clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>HSUSBDCKEN</td><td><div style="word-wrap: break-word;"><b>HSUSB Device Clock Enable Bit
+</b><br>
+0 = HSUSB device controller's clock Disabled.
+<br>
+1 = HSUSB device controller's clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>CRPTCKEN</td><td><div style="word-wrap: break-word;"><b>Cryptographic Accelerator Clock Enable Bit
+</b><br>
+0 = Cryptographic Accelerator clock Disabled.
+<br>
+1 = Cryptographic Accelerator clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>SPIMCKEN</td><td><div style="word-wrap: break-word;"><b>SPIM Controller Clock Enable Bit
+</b><br>
+0 = SPIM controller clock Disabled.
+<br>
+1 = SPIM controller clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>FMCIDLE</td><td><div style="word-wrap: break-word;"><b>Flash Memory Controller Clock Enable Bit in IDLE Mode
+</b><br>
+0 = FMC clock Disabled when chip is under IDLE mode.
+<br>
+1 = FMC clock Enabled when chip is under IDLE mode.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>USBHCKEN</td><td><div style="word-wrap: break-word;"><b>USB HOST Controller Clock Enable Bit
+</b><br>
+0 = USB HOST peripheral clock Disabled.
+<br>
+1 = USB HOST peripheral clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>SDH1CKEN</td><td><div style="word-wrap: break-word;"><b>SD1 Controller Clock Enable Bit
+</b><br>
+0 = SD1 engine clock Disabled.
+<br>
+1 = SD1 engine clock Enabled.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::APBCLK0
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">APBCLK0
+</font><br><p> <font size="2">
+Offset: 0x08  APB Devices Clock Enable Control Register 0
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>WDTCKEN</td><td><div style="word-wrap: break-word;"><b>Watchdog Timer Clock Enable Bit (Write Protect)
+</b><br>
+0 = Watchdog timer clock Disabled.
+<br>
+1 = Watchdog timer clock Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>RTCCKEN</td><td><div style="word-wrap: break-word;"><b>Real-time-clock APB Interface Clock Enable Bit
+</b><br>
+This bit is used to control the RTC APB clock only
+<br>
+The RTC peripheral clock source is selected from RTCSEL(CLK_CLKSEL3[8])
+<br>
+It can be selected to 32.768 kHz external low speed crystal or 10 kHz internal low speed RC oscillator (LIRC).
+<br>
+0 = RTC clock Disabled.
+<br>
+1 = RTC clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>TMR0CKEN</td><td><div style="word-wrap: break-word;"><b>Timer0 Clock Enable Bit
+</b><br>
+0 = Timer0 clock Disabled.
+<br>
+1 = Timer0 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>TMR1CKEN</td><td><div style="word-wrap: break-word;"><b>Timer1 Clock Enable Bit
+</b><br>
+0 = Timer1 clock Disabled.
+<br>
+1 = Timer1 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>TMR2CKEN</td><td><div style="word-wrap: break-word;"><b>Timer2 Clock Enable Bit
+</b><br>
+0 = Timer2 clock Disabled.
+<br>
+1 = Timer2 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>TMR3CKEN</td><td><div style="word-wrap: break-word;"><b>Timer3 Clock Enable Bit
+</b><br>
+0 = Timer3 clock Disabled.
+<br>
+1 = Timer3 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>CLKOCKEN</td><td><div style="word-wrap: break-word;"><b>CLKO Clock Enable Bit
+</b><br>
+0 = CLKO clock Disabled.
+<br>
+1 = CLKO clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>ACMP01CKEN</td><td><div style="word-wrap: break-word;"><b>Analog Comparator 0/1 Clock Enable Bit
+</b><br>
+0 = Analog comparator 0/1 clock Disabled.
+<br>
+1 = Analog comparator 0/1 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>I2C0CKEN</td><td><div style="word-wrap: break-word;"><b>I2C0 Clock Enable Bit
+</b><br>
+0 = I2C0 clock Disabled.
+<br>
+1 = I2C0 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>I2C1CKEN</td><td><div style="word-wrap: break-word;"><b>I2C1 Clock Enable Bit
+</b><br>
+0 = I2C1 clock Disabled.
+<br>
+1 = I2C1 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>I2C2CKEN</td><td><div style="word-wrap: break-word;"><b>I2C2 Clock Enable Bit
+</b><br>
+0 = I2C2 clock Disabled.
+<br>
+1 = I2C2 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>QSPI0CKEN</td><td><div style="word-wrap: break-word;"><b>QSPI0 Clock Enable Bit
+</b><br>
+0 = QSPI0 clock Disabled.
+<br>
+1 = QSPI0 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>SPI0CKEN</td><td><div style="word-wrap: break-word;"><b>SPI0 Clock Enable Bit
+</b><br>
+0 = SPI0 clock Disabled.
+<br>
+1 = SPI0 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>SPI1CKEN</td><td><div style="word-wrap: break-word;"><b>SPI1 Clock Enable Bit
+</b><br>
+0 = SPI1 clock Disabled.
+<br>
+1 = SPI1 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>SPI2CKEN</td><td><div style="word-wrap: break-word;"><b>SPI2 Clock Enable Bit
+</b><br>
+0 = SPI2 clock Disabled.
+<br>
+1 = SPI2 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>UART0CKEN</td><td><div style="word-wrap: break-word;"><b>UART0 Clock Enable Bit
+</b><br>
+0 = UART0 clock Disabled.
+<br>
+1 = UART0 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>UART1CKEN</td><td><div style="word-wrap: break-word;"><b>UART1 Clock Enable Bit
+</b><br>
+0 = UART1 clock Disabled.
+<br>
+1 = UART1 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[18]</td><td>UART2CKEN</td><td><div style="word-wrap: break-word;"><b>UART2 Clock Enable Bit
+</b><br>
+0 = UART2 clock Disabled.
+<br>
+1 = UART2 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[19]</td><td>UART3CKEN</td><td><div style="word-wrap: break-word;"><b>UART3 Clock Enable Bit
+</b><br>
+0 = UART3 clock Disabled.
+<br>
+1 = UART3 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[20]</td><td>UART4CKEN</td><td><div style="word-wrap: break-word;"><b>UART4 Clock Enable Bit
+</b><br>
+0 = UART4 clock Disabled.
+<br>
+1 = UART4 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[21]</td><td>UART5CKEN</td><td><div style="word-wrap: break-word;"><b>UART5 Clock Enable Bit
+</b><br>
+0 = UART5 clock Disabled.
+<br>
+1 = UART5 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[24]</td><td>CAN0CKEN</td><td><div style="word-wrap: break-word;"><b>CAN0 Clock Enable Bit
+</b><br>
+0 = CAN0 clock Disabled.
+<br>
+1 = CAN0 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[25]</td><td>CAN1CKEN</td><td><div style="word-wrap: break-word;"><b>CAN1 Clock Enable Bit
+</b><br>
+0 = CAN1 clock Disabled.
+<br>
+1 = CAN1 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[26]</td><td>OTGCKEN</td><td><div style="word-wrap: break-word;"><b>USB OTG Clock Enable Bit
+</b><br>
+0 = USB OTG clock Disabled.
+<br>
+1 = USB OTG clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[27]</td><td>USBDCKEN</td><td><div style="word-wrap: break-word;"><b>USB Device Clock Enable Bit
+</b><br>
+0 = USB Device clock Disabled.
+<br>
+1 = USB Device clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[28]</td><td>EADCCKEN</td><td><div style="word-wrap: break-word;"><b>Enhanced Analog-digital-converter (EADC) Clock Enable Bit
+</b><br>
+0 = EADC clock Disabled.
+<br>
+1 = EADC clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[29]</td><td>I2S0CKEN</td><td><div style="word-wrap: break-word;"><b>I2S0 Clock Enable Bit
+</b><br>
+0 = I2S0 Clock Disabled.
+<br>
+1 = I2S0 Clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[30]</td><td>HSOTGCKEN</td><td><div style="word-wrap: break-word;"><b>HSUSB OTG Clock Enable Bit
+</b><br>
+0 = HSUSB OTG clock Disabled.
+<br>
+1 = HSUSB OTG clock Enabled.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::APBCLK1
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">APBCLK1
+</font><br><p> <font size="2">
+Offset: 0x0C  APB Devices Clock Enable Control Register 1
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>SC0CKEN</td><td><div style="word-wrap: break-word;"><b>SC0 Clock Enable Bit
+</b><br>
+0 = SC0 clock Disabled.
+<br>
+1 = SC0 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>SC1CKEN</td><td><div style="word-wrap: break-word;"><b>SC1 Clock Enable Bit
+</b><br>
+0 = SC1 clock Disabled.
+<br>
+1 = SC1 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>SC2CKEN</td><td><div style="word-wrap: break-word;"><b>SC2 Clock Enable Bit
+</b><br>
+0 = SC2 clock Disabled.
+<br>
+1 = SC2 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>SPI3CKEN</td><td><div style="word-wrap: break-word;"><b>SPI3 Clock Enable Bit
+</b><br>
+0 = SPI3 clock Disabled.
+<br>
+1 = SPI3 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>USCI0CKEN</td><td><div style="word-wrap: break-word;"><b>USCI0 Clock Enable Bit
+</b><br>
+0 = USCI0 clock Disabled.
+<br>
+1 = USCI0 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>USCI1CKEN</td><td><div style="word-wrap: break-word;"><b>USCI1 Clock Enable Bit
+</b><br>
+0 = USCI1 clock Disabled.
+<br>
+1 = USCI1 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>DACCKEN</td><td><div style="word-wrap: break-word;"><b>DAC Clock Enable Bit
+</b><br>
+0 = DAC clock Disabled.
+<br>
+1 = DAC clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>EPWM0CKEN</td><td><div style="word-wrap: break-word;"><b>EPWM0 Clock Enable Bit
+</b><br>
+0 = EPWM0 clock Disabled.
+<br>
+1 = EPWM0 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>EPWM1CKEN</td><td><div style="word-wrap: break-word;"><b>EPWM1 Clock Enable Bit
+</b><br>
+0 = EPWM1 clock Disabled.
+<br>
+1 = EPWM1 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[18]</td><td>BPWM0CKEN</td><td><div style="word-wrap: break-word;"><b>BPWM0 Clock Enable Bit
+</b><br>
+0 = BPWM0 clock Disabled.
+<br>
+1 = BPWM0 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[19]</td><td>BPWM1CKEN</td><td><div style="word-wrap: break-word;"><b>BPWM1 Clock Enable Bit
+</b><br>
+0 = BPWM1 clock Disabled.
+<br>
+1 = BPWM1 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[22]</td><td>QEI0CKEN</td><td><div style="word-wrap: break-word;"><b>QEI0 Clock Enable Bit
+</b><br>
+0 = QEI0 clock Disabled.
+<br>
+1 = QEI0 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[23]</td><td>QEI1CKEN</td><td><div style="word-wrap: break-word;"><b>QEI1 Clock Enable Bit
+</b><br>
+0 = QEI1 clock Disabled.
+<br>
+1 = QEI1 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[26]</td><td>ECAP0CKEN</td><td><div style="word-wrap: break-word;"><b>ECAP0 Clock Enable Bit
+</b><br>
+0 = ECAP0 clock Disabled.
+<br>
+1 = ECAP0 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[27]</td><td>ECAP1CKEN</td><td><div style="word-wrap: break-word;"><b>ECAP1 Clock Enable Bit
+</b><br>
+0 = ECAP1 clock Disabled.
+<br>
+1 = ECAP1 clock Enabled.
+<br>
+</div></td></tr><tr><td>
+[30]</td><td>OPACKEN</td><td><div style="word-wrap: break-word;"><b>OP Amplifier (OPA) Clock Enable Bit
+</b><br>
+0 = OPA clock Disabled.
+<br>
+1 = OPA clock Enabled.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::CLKSEL0
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CLKSEL0
+</font><br><p> <font size="2">
+Offset: 0x10  Clock Source Select Control Register 0
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[2:0]</td><td>HCLKSEL</td><td><div style="word-wrap: break-word;"><b>HCLK Clock Source Selection (Write Protect)
+</b><br>
+Before clock switching, the related clock sources (both pre-select and new-select) must be turned on.
+<br>
+The default value is reloaded from the value of CFOSC (CONFIG0[26]) in user configuration register of Flash controller by any reset
+<br>
+Therefore the default value is either 000b or 111b.
+<br>
+000 = Clock source from HXT.
+<br>
+001 = Clock source from LXT.
+<br>
+010 = Clock source from PLL.
+<br>
+011 = Clock source from LIRC.
+<br>
+111 = Clock source from HIRC.
+<br>
+Other = Reserved.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[5:3]</td><td>STCLKSEL</td><td><div style="word-wrap: break-word;"><b>Cortex-M4 SysTick Clock Source Selection (Write Protect)
+</b><br>
+If SYST_CTRL[2]=0, SysTick uses listed clock source below.
+<br>
+000 = Clock source from HXT.
+<br>
+001 = Clock source from LXT.
+<br>
+010 = Clock source from HXT/2.
+<br>
+011 = Clock source from HCLK/2.
+<br>
+111 = Clock source from HIRC/2.
+<br>
+Note: if SysTick clock source is not from HCLK (i.e
+<br>
+SYST_CTRL[2] = 0), SysTick clock source must less than or equal to HCLK/2.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>USBSEL</td><td><div style="word-wrap: break-word;"><b>USB Clock Source Selection (Write Protect)
+</b><br>
+0 = Clock source from RC48M.
+<br>
+1 = Clock source from PLL.
+<br>
+</div></td></tr><tr><td>
+[21:20]</td><td>SDH0SEL</td><td><div style="word-wrap: break-word;"><b>SD0 Engine Clock Source Selection (Write Protect)
+</b><br>
+00 = Clock source from HXT clock.
+<br>
+01 = Clock source from PLL clock.
+<br>
+10 = Clock source from HCLK.
+<br>
+11 = Clock source from HIRC clock.
+<br>
+</div></td></tr><tr><td>
+[23:22]</td><td>SDH1SEL</td><td><div style="word-wrap: break-word;"><b>SD1 Engine Clock Source Selection (Write Protect)
+</b><br>
+00 = Clock source from HXT clock.
+<br>
+01 = Clock source from PLL clock.
+<br>
+10 = Clock source from HCLK.
+<br>
+11 = Clock source from HIRC clock.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::CLKSEL1
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CLKSEL1
+</font><br><p> <font size="2">
+Offset: 0x14  Clock Source Select Control Register 1
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[1:0]</td><td>WDTSEL</td><td><div style="word-wrap: break-word;"><b>Watchdog Timer Clock Source Selection (Write Protect)
+</b><br>
+00 = Reserved.
+<br>
+01 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
+<br>
+10 = Clock source from HCLK/2048.
+<br>
+11 = Clock source from 10 kHz internal low speed RC oscillator (LIRC).
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[10:8]</td><td>TMR0SEL</td><td><div style="word-wrap: break-word;"><b>TIMER0 Clock Source Selection
+</b><br>
+000 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+001 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
+<br>
+010 = Clock source from PCLK0.
+<br>
+011 = Clock source from external clock TM0 pin.
+<br>
+101 = Clock source from 10 kHz internal low speed RC oscillator (LIRC).
+<br>
+111 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+Others = Reserved.
+<br>
+</div></td></tr><tr><td>
+[14:12]</td><td>TMR1SEL</td><td><div style="word-wrap: break-word;"><b>TIMER1 Clock Source Selection
+</b><br>
+000 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+001 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
+<br>
+010 = Clock source from PCLK0.
+<br>
+011 = Clock source from external clock TM1 pin.
+<br>
+101 = Clock source from 10 kHz internal low speed RC oscillator (LIRC).
+<br>
+111 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+Others = Reserved.
+<br>
+</div></td></tr><tr><td>
+[18:16]</td><td>TMR2SEL</td><td><div style="word-wrap: break-word;"><b>TIMER2 Clock Source Selection
+</b><br>
+000 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+001 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
+<br>
+010 = Clock source from PCLK1.
+<br>
+011 = Clock source from external clock TM2 pin.
+<br>
+101 = Clock source from 10 kHz internal low speed RC oscillator (LIRC).
+<br>
+111 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+Others = Reserved.
+<br>
+</div></td></tr><tr><td>
+[22:20]</td><td>TMR3SEL</td><td><div style="word-wrap: break-word;"><b>TIMER3 Clock Source Selection
+</b><br>
+000 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+001 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
+<br>
+010 = Clock source from PCLK1.
+<br>
+011 = Clock source from external clock TM3 pin.
+<br>
+101 = Clock source from 10 kHz internal low speed RC oscillator (LIRC).
+<br>
+111 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+Others = Reserved.
+<br>
+</div></td></tr><tr><td>
+[25:24]</td><td>UART0SEL</td><td><div style="word-wrap: break-word;"><b>UART0 Clock Source Selection
+</b><br>
+00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+01 = Clock source from PLL.
+<br>
+10 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
+<br>
+11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+</div></td></tr><tr><td>
+[27:26]</td><td>UART1SEL</td><td><div style="word-wrap: break-word;"><b>UART1 Clock Source Selection
+</b><br>
+00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+01 = Clock source from PLL.
+<br>
+10 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
+<br>
+11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+</div></td></tr><tr><td>
+[29:28]</td><td>CLKOSEL</td><td><div style="word-wrap: break-word;"><b>Clock Divider Clock Source Selection
+</b><br>
+00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+01 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
+<br>
+10 = Clock source from HCLK.
+<br>
+11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+</div></td></tr><tr><td>
+[31:30]</td><td>WWDTSEL</td><td><div style="word-wrap: break-word;"><b>Window Watchdog Timer Clock Source Selection
+</b><br>
+10 = Clock source from HCLK/2048.
+<br>
+11 = Clock source from 10 kHz internal low speed RC oscillator (LIRC).
+<br>
+Others = Reserved.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::CLKSEL2
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CLKSEL2
+</font><br><p> <font size="2">
+Offset: 0x18  Clock Source Select Control Register 2
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>EPWM0SEL</td><td><div style="word-wrap: break-word;"><b>EPWM0 Clock Source Selection
+</b><br>
+The peripheral clock source of EPWM0 is defined by EPWM0SEL.
+<br>
+0 = Clock source from PLL.
+<br>
+1 = Clock source from PCLK0.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>EPWM1SEL</td><td><div style="word-wrap: break-word;"><b>EPWM1 Clock Source Selection
+</b><br>
+The peripheral clock source of EPWM1 is defined by EPWM1SEL.
+<br>
+0 = Clock source from PLL.
+<br>
+1 = Clock source from PCLK1.
+<br>
+</div></td></tr><tr><td>
+[3:2]</td><td>QSPI0SEL</td><td><div style="word-wrap: break-word;"><b>QSPI0 Clock Source Selection
+</b><br>
+00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+01 = Clock source from PLL.
+<br>
+10 = Clock source from PCLK0.
+<br>
+11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+</div></td></tr><tr><td>
+[5:4]</td><td>SPI0SEL</td><td><div style="word-wrap: break-word;"><b>SPI0 Clock Source Selection
+</b><br>
+00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+01 = Clock source from PLL.
+<br>
+10 = Clock source from PCLK1.
+<br>
+11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+</div></td></tr><tr><td>
+[7:6]</td><td>SPI1SEL</td><td><div style="word-wrap: break-word;"><b>SPI1 Clock Source Selection
+</b><br>
+00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+01 = Clock source from PLL.
+<br>
+10 = Clock source from PCLK0.
+<br>
+11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>BPWM0SEL</td><td><div style="word-wrap: break-word;"><b>BPWM0 Clock Source Selection
+</b><br>
+The peripheral clock source of BPWM0 is defined by BPWM0SEL.
+<br>
+0 = Clock source from PLL.
+<br>
+1 = Clock source from PCLK0.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>BPWM1SEL</td><td><div style="word-wrap: break-word;"><b>BPWM1 Clock Source Selection
+</b><br>
+The peripheral clock source of BPWM1 is defined by BPWM1SEL.
+<br>
+0 = Clock source from PLL.
+<br>
+1 = Clock source from PCLK1.
+<br>
+</div></td></tr><tr><td>
+[11:10]</td><td>SPI2SEL</td><td><div style="word-wrap: break-word;"><b>SPI2 Clock Source Selection
+</b><br>
+00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+01 = Clock source from PLL.
+<br>
+10 = Clock source from PCLK1.
+<br>
+11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+</div></td></tr><tr><td>
+[13:12]</td><td>SPI3SEL</td><td><div style="word-wrap: break-word;"><b>SPI3 Clock Source Selection
+</b><br>
+00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+01 = Clock source from PLL.
+<br>
+10 = Clock source from PCLK0.
+<br>
+11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::CLKSEL3
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CLKSEL3
+</font><br><p> <font size="2">
+Offset: 0x1C  Clock Source Select Control Register 3
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[1:0]</td><td>SC0SEL</td><td><div style="word-wrap: break-word;"><b>SC0 Clock Source Selection
+</b><br>
+00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+01 = Clock source from PLL.
+<br>
+10 = Clock source from PCLK0.
+<br>
+11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+</div></td></tr><tr><td>
+[3:2]</td><td>SC1SEL</td><td><div style="word-wrap: break-word;"><b>SC0 Clock Source Selection
+</b><br>
+00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+01 = Clock source from PLL.
+<br>
+10 = Clock source from PCLK1.
+<br>
+11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+</div></td></tr><tr><td>
+[5:4]</td><td>SC2SEL</td><td><div style="word-wrap: break-word;"><b>SC2 Clock Source Selection
+</b><br>
+00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+01 = Clock source from PLL.
+<br>
+10 = Clock source from PCLK0.
+<br>
+11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>RTCSEL</td><td><div style="word-wrap: break-word;"><b>RTC Clock Source Selection
+</b><br>
+0 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
+<br>
+1 = Clock source from 10 kHz internal low speed RC oscillator (LIRC).
+<br>
+</div></td></tr><tr><td>
+[17:16]</td><td>I2S0SEL</td><td><div style="word-wrap: break-word;"><b>I2S0 Clock Source Selection
+</b><br>
+00 = Clock source from HXT clock.
+<br>
+01 = Clock source from PLL clock.
+<br>
+10 = Clock source from PCLK.
+<br>
+11 = Clock source from HIRC clock.
+<br>
+</div></td></tr><tr><td>
+[25:24]</td><td>UART2SEL</td><td><div style="word-wrap: break-word;"><b>UART2 Clock Source Selection
+</b><br>
+00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+01 = Clock source from PLL.
+<br>
+10 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
+<br>
+11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+</div></td></tr><tr><td>
+[27:26]</td><td>UART3SEL</td><td><div style="word-wrap: break-word;"><b>UART3 Clock Source Selection
+</b><br>
+00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+01 = Clock source from PLL.
+<br>
+10 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
+<br>
+11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+</div></td></tr><tr><td>
+[29:28]</td><td>UART4SEL</td><td><div style="word-wrap: break-word;"><b>UART4 Clock Source Selection
+</b><br>
+00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+01 = Clock source from PLL.
+<br>
+10 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
+<br>
+11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+</div></td></tr><tr><td>
+[31:30]</td><td>UART5SEL</td><td><div style="word-wrap: break-word;"><b>UART5 Clock Source Selection
+</b><br>
+00 = Clock source from 4~24 MHz external high speed crystal oscillator (HXT).
+<br>
+01 = Clock source from PLL.
+<br>
+10 = Clock source from 32.768 kHz external low speed crystal oscillator (LXT).
+<br>
+11 = Clock source from 12 MHz internal high speed RC oscillator (HIRC).
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::CLKDIV0
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CLKDIV0
+</font><br><p> <font size="2">
+Offset: 0x20  Clock Divider Number Register 0
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>HCLKDIV</td><td><div style="word-wrap: break-word;"><b>HCLK Clock Divide Number From HCLK Clock Source
+</b><br>
+HCLK clock frequency = (HCLK clock source frequency) / (HCLKDIV + 1).
+<br>
+</div></td></tr><tr><td>
+[7:4]</td><td>USBDIV</td><td><div style="word-wrap: break-word;"><b>USB Clock Divide Number From PLL Clock
+</b><br>
+USB clock frequency = (PLL frequency) / (USBDIV + 1).
+<br>
+</div></td></tr><tr><td>
+[11:8]</td><td>UART0DIV</td><td><div style="word-wrap: break-word;"><b>UART0 Clock Divide Number From UART0 Clock Source
+</b><br>
+UART0 clock frequency = (UART0 clock source frequency) / (UART0DIV + 1).
+<br>
+</div></td></tr><tr><td>
+[15:12]</td><td>UART1DIV</td><td><div style="word-wrap: break-word;"><b>UART1 Clock Divide Number From UART1 Clock Source
+</b><br>
+UART1 clock frequency = (UART1 clock source frequency) / (UART1DIV + 1).
+<br>
+</div></td></tr><tr><td>
+[23:16]</td><td>EADCDIV</td><td><div style="word-wrap: break-word;"><b>EADC Clock Divide Number From EADC Clock Source
+</b><br>
+EADC clock frequency = (EADC clock source frequency) / (EADCDIV + 1).
+<br>
+</div></td></tr><tr><td>
+[31:24]</td><td>SDH0DIV</td><td><div style="word-wrap: break-word;"><b>SD0 Clock Divide Number From SD0 Clock Source
+</b><br>
+SD0 clock frequency = (SD0 clock source frequency) / (SDH0DIV + 1).
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::CLKDIV1
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CLKDIV1
+</font><br><p> <font size="2">
+Offset: 0x24  Clock Divider Number Register 1
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[7:0]</td><td>SC0DIV</td><td><div style="word-wrap: break-word;"><b>SC0 Clock Divide Number From SC0 Clock Source
+</b><br>
+SC0 clock frequency = (SC0 clock source frequency ) / (SC0DIV + 1).
+<br>
+</div></td></tr><tr><td>
+[15:8]</td><td>SC1DIV</td><td><div style="word-wrap: break-word;"><b>SC1 Clock Divide Number From SC1 Clock Source
+</b><br>
+SC1 clock frequency = (SC1 clock source frequency ) / (SC1DIV + 1).
+<br>
+</div></td></tr><tr><td>
+[23:16]</td><td>SC2DIV</td><td><div style="word-wrap: break-word;"><b>SC2 Clock Divide Number From SC2 Clock Source
+</b><br>
+SC2 clock frequency = (SC2 clock source frequency ) / (SC2DIV + 1).
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::CLKDIV3
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CLKDIV3
+</font><br><p> <font size="2">
+Offset: 0x2C  Clock Divider Number Register 3
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[23:16]</td><td>EMACDIV</td><td><div style="word-wrap: break-word;"><b>Ethernet Clock Divide Number Form HCLK
+</b><br>
+EMAC MDCLK clock frequency = (HCLK) / (EMACDIV + 1).
+<br>
+</div></td></tr><tr><td>
+[31:24]</td><td>SDH1DIV</td><td><div style="word-wrap: break-word;"><b>SD1 Clock Divide Number From SD1 Clock Source
+</b><br>
+SD1 clock frequency = (SD1 clock source frequency) / (SDH1DIV + 1).
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::CLKDIV4
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CLKDIV4
+</font><br><p> <font size="2">
+Offset: 0x30  Clock Divider Number Register 4
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>UART2DIV</td><td><div style="word-wrap: break-word;"><b>UART2 Clock Divide Number From UART2 Clock Source
+</b><br>
+UART2 clock frequency = (UART2 clock source frequency) / (UART2DIV + 1).
+<br>
+</div></td></tr><tr><td>
+[7:4]</td><td>UART3DIV</td><td><div style="word-wrap: break-word;"><b>UART3 Clock Divide Number From UART3 Clock Source
+</b><br>
+UART3 clock frequency = (UART3 clock source frequency) / (UART3DIV + 1).
+<br>
+</div></td></tr><tr><td>
+[11:8]</td><td>UART4DIV</td><td><div style="word-wrap: break-word;"><b>UART4 Clock Divide Number From UART4 Clock Source
+</b><br>
+UART4 clock frequency = (UART4 clock source frequency) / (UART4DIV + 1).
+<br>
+</div></td></tr><tr><td>
+[15:12]</td><td>UART5DIV</td><td><div style="word-wrap: break-word;"><b>UART5 Clock Divide Number From UART5 Clock Source
+</b><br>
+UART5 clock frequency = (UART5 clock source frequency) / (UART5DIV + 1).
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::PCLKDIV
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PCLKDIV
+</font><br><p> <font size="2">
+Offset: 0x34  APB Clock Divider Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[2:0]</td><td>APB0DIV</td><td><div style="word-wrap: break-word;"><b>APB0 Clock Divider
+</b><br>
+APB0 clock can be divided from HCLK
+<br>
+000: PCLK0 = HCLK.
+<br>
+001: PCLK0 = 1/2 HCLK.
+<br>
+010: PCLK0 = 1/4 HCLK.
+<br>
+011: PCLK0 = 1/8 HCLK.
+<br>
+100: PCLK0 = 1/16 HCLK.
+<br>
+Others: Reserved.
+<br>
+</div></td></tr><tr><td>
+[6:4]</td><td>APB1DIV</td><td><div style="word-wrap: break-word;"><b>APB1 Clock Divider
+</b><br>
+APB1 clock can be divided from HCLK
+<br>
+000: PCLK1 = HCLK.
+<br>
+001: PCLK1 = 1/2 HCLK.
+<br>
+010: PCLK1 = 1/4 HCLK.
+<br>
+011: PCLK1 = 1/8 HCLK.
+<br>
+100: PCLK1 = 1/16 HCLK.
+<br>
+Others: Reserved.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::PLLCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PLLCTL
+</font><br><p> <font size="2">
+Offset: 0x40  PLL Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[8:0]</td><td>FBDIV</td><td><div style="word-wrap: break-word;"><b>PLL Feedback Divider Control (Write Protect)
+</b><br>
+Refer to the formulas below the table.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[13:9]</td><td>INDIV</td><td><div style="word-wrap: break-word;"><b>PLL Input Divider Control (Write Protect)
+</b><br>
+Refer to the formulas below the table.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[15:14]</td><td>OUTDIV</td><td><div style="word-wrap: break-word;"><b>PLL Output Divider Control (Write Protect)
+</b><br>
+Refer to the formulas below the table.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>PD</td><td><div style="word-wrap: break-word;"><b>Power-down Mode (Write Protect)
+</b><br>
+If set the PDEN bit to 1 in CLK_PWRCTL register, the PLL will enter Power-down mode, too.
+<br>
+0 = PLL is in normal mode.
+<br>
+1 = PLL is in Power-down mode (default).
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>BP</td><td><div style="word-wrap: break-word;"><b>PLL Bypass Control (Write Protect)
+</b><br>
+0 = PLL is in normal mode (default).
+<br>
+1 = PLL clock output is same as PLL input clock FIN.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[18]</td><td>OE</td><td><div style="word-wrap: break-word;"><b>PLL OE (FOUT Enable) Pin Control (Write Protect)
+</b><br>
+0 = PLL FOUT Enabled.
+<br>
+1 = PLL FOUT is fixed low.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[19]</td><td>PLLSRC</td><td><div style="word-wrap: break-word;"><b>PLL Source Clock Selection (Write Protect)
+</b><br>
+0 = PLL source clock from 4~24 MHz external high-speed crystal oscillator (HXT).
+<br>
+1 = PLL source clock from 12 MHz internal high-speed oscillator (HIRC).
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[23]</td><td>STBSEL</td><td><div style="word-wrap: break-word;"><b>PLL Stable Counter Selection (Write Protect)
+</b><br>
+0 = PLL stable time is 6144 PLL source clock (suitable for source clock is equal to or less than 12 MHz).
+<br>
+1 = PLL stable time is 12288 PLL source clock (suitable for source clock is larger than 12 MHz).
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::STATUS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">STATUS
+</font><br><p> <font size="2">
+Offset: 0x50  Clock Status Monitor Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>HXTSTB</td><td><div style="word-wrap: break-word;"><b>HXT Clock Source Stable Flag (Read Only)
+</b><br>
+0 = 4~24 MHz external high speed crystal oscillator (HXT) clock is not stable or disabled.
+<br>
+1 = 4~24 MHz external high speed crystal oscillator (HXT) clock is stable and enabled.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>LXTSTB</td><td><div style="word-wrap: break-word;"><b>LXT Clock Source Stable Flag (Read Only)
+</b><br>
+0 = 32.768 kHz external low speed crystal oscillator (LXT) clock is not stable or disabled.
+<br>
+1 = 32.768 kHz external low speed crystal oscillator (LXT) clock is stabled and enabled.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>PLLSTB</td><td><div style="word-wrap: break-word;"><b>Internal PLL Clock Source Stable Flag (Read Only)
+</b><br>
+0 = Internal PLL clock is not stable or disabled.
+<br>
+1 = Internal PLL clock is stable and enabled.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>LIRCSTB</td><td><div style="word-wrap: break-word;"><b>LIRC Clock Source Stable Flag (Read Only)
+</b><br>
+0 = 10 kHz internal low speed RC oscillator (LIRC) clock is not stable or disabled.
+<br>
+1 = 10 kHz internal low speed RC oscillator (LIRC) clock is stable and enabled.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>HIRCSTB</td><td><div style="word-wrap: break-word;"><b>HIRC Clock Source Stable Flag (Read Only)
+</b><br>
+0 = 12 MHz internal high speed RC oscillator (HIRC) clock is not stable or disabled.
+<br>
+1 = 12 MHz internal high speed RC oscillator (HIRC) clock is stable and enabled.
+<br>
+Note: This bit is read only.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>HIRC48MSTB</td><td><div style="word-wrap: break-word;"><b>HIRC 48MHz Clock Source Stable Flag (Read Only)
+</b><br>
+0 = 48 MHz internal high speed RC oscillator (HIRC) clock is not stable or disabled.
+<br>
+1 = 48 MHz internal high speed RC oscillator (HIRC) clock is stable and enabled.
+<br>
+Note: This bit is read only.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>CLKSFAIL</td><td><div style="word-wrap: break-word;"><b>Clock Switching Fail Flag (Read Only)
+</b><br>
+This bit is updated when software switches system clock source
+<br>
+If switch target clock is stable, this bit will be set to 0
+<br>
+If switch target clock is not stable, this bit will be set to 1.
+<br>
+0 = Clock switching success.
+<br>
+1 = Clock switching failure.
+<br>
+Note: Write 1 to clear the bit to 0.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::CLKOCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CLKOCTL
+</font><br><p> <font size="2">
+Offset: 0x60  Clock Output Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>FREQSEL</td><td><div style="word-wrap: break-word;"><b>Clock Output Frequency Selection
+</b><br>
+The formula of output frequency is
+<br>
+Fout = Fin/2(N+1).
+<br>
+Fin is the input clock frequency.
+<br>
+Fout is the frequency of divider output clock.
+<br>
+N is the 4-bit value of FREQSEL[3:0].
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>CLKOEN</td><td><div style="word-wrap: break-word;"><b>Clock Output Enable Bit
+</b><br>
+0 = Clock Output function Disabled.
+<br>
+1 = Clock Output function Enabled.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>DIV1EN</td><td><div style="word-wrap: break-word;"><b>Clock Output Divide One Enable Bit
+</b><br>
+0 = Clock Output will output clock with source frequency divided by FREQSEL.
+<br>
+1 = Clock Output will output clock with source frequency.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>CLK1HZEN</td><td><div style="word-wrap: break-word;"><b>Clock Output 1Hz Enable Bit
+</b><br>
+0 = 1 Hz clock output for 32.768 kHz frequency compensation Disabled.
+<br>
+1 = 1 Hz clock output for 32.768 kHz frequency compensation Enabled.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::CLKDCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CLKDCTL
+</font><br><p> <font size="2">
+Offset: 0x70  Clock Fail Detector Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[4]</td><td>HXTFDEN</td><td><div style="word-wrap: break-word;"><b>HXT Clock Fail Detector Enable Bit
+</b><br>
+0 = 4~24 MHz external high speed crystal oscillator (HXT) clock fail detector Disabled.
+<br>
+1 = 4~24 MHz external high speed crystal oscillator (HXT) clock fail detector Enabled.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>HXTFIEN</td><td><div style="word-wrap: break-word;"><b>HXT Clock Fail Interrupt Enable Bit
+</b><br>
+0 = 4~24 MHz external high speed crystal oscillator (HXT) clock fail interrupt Disabled.
+<br>
+1 = 4~24 MHz external high speed crystal oscillator (HXT) clock fail interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>LXTFDEN</td><td><div style="word-wrap: break-word;"><b>LXT Clock Fail Detector Enable Bit
+</b><br>
+0 = 32.768 kHz external low speed crystal oscillator (LXT) clock fail detector Disabled.
+<br>
+1 = 32.768 kHz external low speed crystal oscillator (LXT) clock fail detector Enabled.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>LXTFIEN</td><td><div style="word-wrap: break-word;"><b>LXT Clock Fail Interrupt Enable Bit
+</b><br>
+0 = 32.768 kHz external low speed crystal oscillator (LXT) clock fail interrupt Disabled.
+<br>
+1 = 32.768 kHz external low speed crystal oscillator (LXT) clock fail interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>HXTFQDEN</td><td><div style="word-wrap: break-word;"><b>HXT Clock Frequency Range Detector Enable Bit
+</b><br>
+0 = 4~24 MHz external high speed crystal oscillator (HXT) clock frequency range detector Disabled.
+<br>
+1 = 4~24 MHz external high speed crystal oscillator (HXT) clock frequency range detector Enabled.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>HXTFQIEN</td><td><div style="word-wrap: break-word;"><b>HXT Clock Frequency Range Detector Interrupt Enable Bit
+</b><br>
+0 = 4~24 MHz external high speed crystal oscillator (HXT) clock frequency range detector fail interrupt Disabled.
+<br>
+1 = 4~24 MHz external high speed crystal oscillator (HXT) clock frequency range detector fail interrupt Enabled.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::CLKDSTS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CLKDSTS
+</font><br><p> <font size="2">
+Offset: 0x74  Clock Fail Detector Status Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>HXTFIF</td><td><div style="word-wrap: break-word;"><b>HXT Clock Fail Interrupt Flag
+</b><br>
+0 = 4~24 MHz external high speed crystal oscillator (HXT) clock is normal.
+<br>
+1 = 4~24 MHz external high speed crystal oscillator (HXT) clock stops.
+<br>
+Note: Write 1 to clear the bit to 0.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>LXTFIF</td><td><div style="word-wrap: break-word;"><b>LXT Clock Fail Interrupt Flag
+</b><br>
+0 = 32.768 kHz external low speed crystal oscillator (LXT) clock is normal.
+<br>
+1 = 32.768 kHz external low speed crystal oscillator (LXT) stops.
+<br>
+Note: Write 1 to clear the bit to 0.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>HXTFQIF</td><td><div style="word-wrap: break-word;"><b>HXT Clock Frequency Range Detector Interrupt Flag
+</b><br>
+0 = 4~24 MHz external high speed crystal oscillator (HXT) clock frequency is normal.
+<br>
+1 = 4~24 MHz external high speed crystal oscillator (HXT) clock frequency is abnormal.
+<br>
+Note: Write 1 to clear the bit to 0.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::CDUPB
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CDUPB
+</font><br><p> <font size="2">
+Offset: 0x78  Clock Frequency Range Detector Upper Boundary Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[9:0]</td><td>UPERBD</td><td><div style="word-wrap: break-word;"><b>HXT Clock Frequency Range Detector Upper Boundary Value
+</b><br>
+The bits define the maximum value of frequency range detector window.
+<br>
+When HXT frequency higher than this maximum frequency value, the HXT Clock Frequency Range Detector Interrupt Flag will set to 1.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::CDLOWB
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CDLOWB
+</font><br><p> <font size="2">
+Offset: 0x7C  Clock Frequency Range Detector Lower Boundary Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[9:0]</td><td>LOWERBD</td><td><div style="word-wrap: break-word;"><b>HXT Clock Frequency Range Detector Lower Boundary Value
+</b><br>
+The bits define the minimum value of frequency range detector window.
+<br>
+When HXT frequency lower than this minimum frequency value, the HXT Clock Frequency Range Detector Interrupt Flag will set to 1.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::PMUCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PMUCTL
+</font><br><p> <font size="2">
+Offset: 0x90  Power Manager Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[2:0]</td><td>PDMSEL</td><td><div style="word-wrap: break-word;"><b>Power-down Mode Selection (Write Protect)
+</b><br>
+This is a protected register. Please refer to open lock sequence to program it.
+<br>
+These bits control chip power-down mode grade selection when CPU execute WFI/WFE instruction.
+<br>
+000 = Power-down mode is selected. (PD)
+<br>
+001 = Low leakage Power-down mode is selected (LLPD).
+<br>
+010 =Fast wake-up Power-down mode is selected (FWPD).
+<br>
+011 = Reserved.
+<br>
+100 = Standby Power-down mode 0 is selected (SPD0) (SRAM retention).
+<br>
+101 = Standby Power-down mode 1 is selected (SPD1).
+<br>
+110 = Deep Power-down mode is selected (DPD).
+<br>
+111 = Reserved.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>DPDHOLDEN</td><td><div style="word-wrap: break-word;"><b>Deep-Power-Down Mode GPIO Hold Enable
+</b><br>
+0 = When GPIO enters deep power-down mode, all I/O status are tri-state.
+<br>
+1 = When GPIO enters deep power-down mode, all I/O status are hold to keep normal operating status.
+<br>
+    After chip was waked up from deep power-down mode, the I/O are still keep hold status until user set CLK_IOPDCTL[0]
+<br>
+    to release I/O hold status.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>WKTMREN</td><td><div style="word-wrap: break-word;"><b>Wake-up Timer Enable (Write Protect)
+</b><br>
+This is a protected register. Please refer to open lock sequence to program it.
+<br>
+0 = Wake-up timer disable at DPD/SPD mode.
+<br>
+1 = Wake-up timer enabled at DPD/SPD mode.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[11:9]</td><td>WKTMRIS</td><td><div style="word-wrap: break-word;"><b>Wake-up Timer Time-out Interval Select (Write Protect)
+</b><br>
+This is a protected register. Please refer to open lock sequence to program it.
+<br>
+These bits control wake-up timer time-out interval when chip at DPD/SPD mode.
+<br>
+000 = Time-out interval is 128 OSC10K clocks (12.8 ms).
+<br>
+001 = Time-out interval is 256 OSC10K clocks (25.6 ms).
+<br>
+010 = Time-out interval is 512 OSC10K clocks (51.2 ms).
+<br>
+011 = Time-out interval is 1024 OSC10K clocks (102.4ms).
+<br>
+100 = Time-out interval is 4096 OSC10K clocks (409.6ms).
+<br>
+101 = Time-out interval is 8192 OSC10K clocks (819.2ms).
+<br>
+110 = Time-out interval is 16384 OSC10K clocks (1638.4ms).
+<br>
+111 = Time-out interval is 65536 OSC10K clocks (6553.6ms).
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[17:16]</td><td>WKPINEN</td><td><div style="word-wrap: break-word;"><b>Wake-up Pin Enable (Write Protect)
+</b><br>
+This is a protected register. Please refer to open lock sequence to program it.
+<br>
+00 = Wake-up pin disable at Deep Power-down mode.
+<br>
+01 = Wake-up pin rising edge enabled at Deep Power-down mode.
+<br>
+10 = Wake-up pin falling edge enabled at Deep Power-down mode.
+<br>
+11 = Wake-up pin both edge enabled at Deep Power-down mode.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[18]</td><td>ACMPSPWK</td><td><div style="word-wrap: break-word;"><b>ACMP Standby Power-down Mode Wake-up Enable (Write Protect)
+</b><br>
+This is a protected register. Please refer to open lock sequence to program it.
+<br>
+0 = ACMP wake-up disable at Standby Power-down mode.
+<br>
+1 = ACMP wake-up enabled at Standby Power-down mode.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[23]</td><td>RTCWKEN</td><td><div style="word-wrap: break-word;"><b>RTC Wake-up Enable (Write Protect)
+</b><br>
+This is a protected register. Please refer to open lock sequence to program it.
+<br>
+0 = RTC wake-up disable at Deep Power-down mode or Standby Power-down mode.
+<br>
+1 = RTC wake-up enabled at Deep Power-down mode or Standby Power-down mode.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::PMUSTS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PMUSTS
+</font><br><p> <font size="2">
+Offset: 0x94  Power Manager Status Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>PINWK</td><td><div style="word-wrap: break-word;"><b>Pin Wake-up Flag (Read Only)
+</b><br>
+This flag indicates that wake-up of chip from Deep Power-down mode was requested by a transition of the WAKEUP pin (GPC.0)
+<br>
+This flag is cleared when DPD mode is entered.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>TMRWK</td><td><div style="word-wrap: break-word;"><b>Timer Wake-up Flag (Read Only)
+</b><br>
+This flag indicates that wake-up of chip from Deep Power-down mode (DPD) or Standby Power-down (SPD) mode was requested by wakeup timer time-out
+<br>
+This flag is cleared when DPD or SPD mode is entered.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>RTCWK</td><td><div style="word-wrap: break-word;"><b>RTC Wake-up Flag (Read Only)
+</b><br>
+This flag indicates that wakeup of device from Deep Power-down mode (DPD) or Standby Power-down (SPD) mode was requested with a RTC alarm, tick time or tamper happened
+<br>
+This flag is cleared when DPD or SPD mode is entered.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>GPAWK</td><td><div style="word-wrap: break-word;"><b>GPA Wake-up Flag (Read Only)
+</b><br>
+This flag indicates that wake-up of chip from Standby Power-down mode was requested by a transition of selected one GPA group pins
+<br>
+This flag is cleared when SPD mode is entered.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>GPBWK</td><td><div style="word-wrap: break-word;"><b>GPB Wake-up Flag (Read Only)
+</b><br>
+This flag indicates that wake-up of chip from Standby Power-down mode was requested by a transition of selected one GPB group pins
+<br>
+This flag is cleared when SPD mode is entered.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>GPCWK</td><td><div style="word-wrap: break-word;"><b>GPC Wake-up Flag (Read Only)
+</b><br>
+This flag indicates that wake-up of chip from Standby Power-down mode was requested by a transition of selected one GPC group pins
+<br>
+This flag is cleared when SPD mode is entered.
+<br>
+</div></td></tr><tr><td>
+[11]</td><td>GPDWK</td><td><div style="word-wrap: break-word;"><b>GPD Wake-up Flag (Read Only)
+</b><br>
+This flag indicates that wake-up of chip from Standby Power-down mode was requested by a transition of selected one GPD group pins
+<br>
+This flag is cleared when SPD mode is entered.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>LVRWK</td><td><div style="word-wrap: break-word;"><b>LVR Wake-up Flag (Read Only)
+</b><br>
+This flag indicates that wakeup of device from Standby Power-down mode was requested with a LVR happened
+<br>
+This flag is cleared when SPD mode is entered.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>BODWK</td><td><div style="word-wrap: break-word;"><b>BOD Wake-up Flag (Read Only)
+</b><br>
+This flag indicates that wakeup of device from Standby Power-down mode (SPD) was requested with a BOD happened
+<br>
+This flag is cleared when SPD mode is entered.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>ACMPWK</td><td><div style="word-wrap: break-word;"><b>ACMP Wake-up Flag (Read Only)
+</b><br>
+This flag indicates that wakeup of device from Standby Power-down mode (SPD) was requested with a ACMP transition
+<br>
+This flag is cleared when SPD mode is entered.
+<br>
+</div></td></tr><tr><td>
+[31]</td><td>CLRWK</td><td><div style="word-wrap: break-word;"><b>Clear Wake-up Flag
+</b><br>
+0 = No clear.
+<br>
+1 = Clear all wake-up flag.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::LDOCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">LDOCTL
+</font><br><p> <font size="2">
+Offset: 0x98  LDO Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[18]</td><td>PDBIASEN</td><td><div style="word-wrap: break-word;"><b>Power-down Bias Enable Bit
+</b><br>
+0 = Reserved.
+<br>
+1 = Power-down bias enabled.
+<br>
+Note: This bit should set to 1 before chip enter power-down mode.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::SWKDBCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SWKDBCTL
+</font><br><p> <font size="2">
+Offset: 0x9C  Standby Power-down Wake-up De-bounce Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>SWKDBCLKSEL</td><td><div style="word-wrap: break-word;"><b>Standby Power-down Wake-up De-bounce Sampling Cycle Selection
+</b><br>
+0000 = Sample wake-up input once per 1 clocks.
+<br>
+0001 = Sample wake-up input once per 2 clocks.
+<br>
+0010 = Sample wake-up input once per 4 clocks.
+<br>
+0011 = Sample wake-up input once per 8 clocks.
+<br>
+0100 = Sample wake-up input once per 16 clocks.
+<br>
+0101 = Sample wake-up input once per 32 clocks.
+<br>
+0110 = Sample wake-up input once per 64 clocks.
+<br>
+0111 = Sample wake-up input once per 128 clocks.
+<br>
+1000 = Sample wake-up input once per 256 clocks.
+<br>
+1001 = Sample wake-up input once per 2*256 clocks.
+<br>
+1010 = Sample wake-up input once per 4*256 clocks.
+<br>
+1011 = Sample wake-up input once per 8*256 clocks.
+<br>
+1100 = Sample wake-up input once per 16*256 clocks.
+<br>
+1101 = Sample wake-up input once per 32*256 clocks.
+<br>
+1110 = Sample wake-up input once per 64*256 clocks.
+<br>
+1111 = Sample wake-up input once per 128*256 clocks.
+<br>
+Note: De-bounce counter clock source is the 10 kHz internal low speed RC oscillator (LIRC).
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::PASWKCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PASWKCTL
+</font><br><p> <font size="2">
+Offset: 0xA0  GPA Standby Power-down Wake-up Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>WKEN</td><td><div style="word-wrap: break-word;"><b>Standby Power-down Pin Wake-up Enable Bit
+</b><br>
+0 = GPA group pin wake-up function disabled.
+<br>
+1 = GPA group pin wake-up function enabled.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>PRWKEN</td><td><div style="word-wrap: break-word;"><b>Pin Rising Edge Wake-up Enable Bit
+</b><br>
+0 = GPA group pin rising edge wake-up function disabled.
+<br>
+1 = GPA group pin rising edge wake-up function enabled.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>PFWKEN</td><td><div style="word-wrap: break-word;"><b>Pin Falling Edge Wake-up Enable Bit
+</b><br>
+0 = GPA group pin falling edge wake-up function disabled.
+<br>
+1 = GPA group pin falling edge wake-up function enabled.
+<br>
+</div></td></tr><tr><td>
+[7:4]</td><td>WKPSEL</td><td><div style="word-wrap: break-word;"><b>GPA Standby Power-down Wake-up Pin Select
+</b><br>
+0000 = GPA.0 wake-up function enabled.
+<br>
+0001 = GPA.1 wake-up function enabled.
+<br>
+0010 = GPA.2 wake-up function enabled.
+<br>
+0011 = GPA.3 wake-up function enabled.
+<br>
+0100 = GPA.4 wake-up function enabled.
+<br>
+0101 = GPA.5 wake-up function enabled.
+<br>
+0110 = GPA.6 wake-up function enabled.
+<br>
+0111 = GPA.7 wake-up function enabled.
+<br>
+1000 = GPA.8 wake-up function enabled.
+<br>
+1001 = GPA.9 wake-up function enabled.
+<br>
+1010 = GPA.10 wake-up function enabled.
+<br>
+1011 = GPA.11 wake-up function enabled.
+<br>
+1100 = GPA.12 wake-up function enabled.
+<br>
+1101 = GPA.13 wake-up function enabled.
+<br>
+1110 = GPA.14 wake-up function enabled.
+<br>
+1111 = GPA.15 wake-up function enabled.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>DBEN</td><td><div style="word-wrap: break-word;"><b>GPA Input Signal De-bounce Enable Bit
+</b><br>
+The DBEN bit is used to enable the de-bounce function for each corresponding IO
+<br>
+If the input signal pulse width cannot be sampled by continuous two de-bounce sample cycle, the input signal transition is seen as the signal bounce and will not trigger the wake-up
+<br>
+The de-bounce clock source is the 10 kHz internal low speed RC oscillator.
+<br>
+0 = Standby power-down wake-up pin De-bounce function disable.
+<br>
+1 = Standby power-down wake-up pin De-bounce function enable.
+<br>
+The de-bounce function is valid only for edge triggered.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::PBSWKCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PBSWKCTL
+</font><br><p> <font size="2">
+Offset: 0xA4  GPB Standby Power-down Wake-up Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>WKEN</td><td><div style="word-wrap: break-word;"><b>Standby Power-down Pin Wake-up Enable Bit
+</b><br>
+0 = GPB group pin wake-up function disabled.
+<br>
+1 = GPB group pin wake-up function enabled.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>PRWKEN</td><td><div style="word-wrap: break-word;"><b>Pin Rising Edge Wake-up Enable Bit
+</b><br>
+0 = GPB group pin rising edge wake-up function disabled.
+<br>
+1 = GPB group pin rising edge wake-up function enabled.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>PFWKEN</td><td><div style="word-wrap: break-word;"><b>Pin Falling Edge Wake-up Enable Bit
+</b><br>
+0 = GPB group pin falling edge wake-up function disabled.
+<br>
+1 = GPB group pin falling edge wake-up function enabled.
+<br>
+</div></td></tr><tr><td>
+[7:4]</td><td>WKPSEL</td><td><div style="word-wrap: break-word;"><b>GPB Standby Power-down Wake-up Pin Select
+</b><br>
+0000 = GPB.0 wake-up function enabled.
+<br>
+0001 = GPB.1 wake-up function enabled.
+<br>
+0010 = GPB.2 wake-up function enabled.
+<br>
+0011 = GPB.3 wake-up function enabled.
+<br>
+0100 = GPB.4 wake-up function enabled.
+<br>
+0101 = GPB.5 wake-up function enabled.
+<br>
+0110 = GPB.6 wake-up function enabled.
+<br>
+0111 = GPB.7 wake-up function enabled.
+<br>
+1000 = GPB.8 wake-up function enabled.
+<br>
+1001 = GPB.9 wake-up function enabled.
+<br>
+1010 = GPB.10 wake-up function enabled.
+<br>
+1011 = GPB.11 wake-up function enabled.
+<br>
+1100 = GPB.12 wake-up function enabled.
+<br>
+1101 = GPB.13 wake-up function enabled.
+<br>
+1110 = GPB.14 wake-up function enabled.
+<br>
+1111 = GPB.15 wake-up function enabled.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>DBEN</td><td><div style="word-wrap: break-word;"><b>GPB Input Signal De-bounce Enable Bit
+</b><br>
+The DBEN bit is used to enable the de-bounce function for each corresponding IO
+<br>
+If the input signal pulse width cannot be sampled by continuous two de-bounce sample cycle, the input signal transition is seen as the signal bounce and will not trigger the wake-up
+<br>
+The de-bounce clock source is the 10 kHz internal low speed RC oscillator.
+<br>
+0 = Standby power-down wake-up pin De-bounce function disable.
+<br>
+1 = Standby power-down wake-up pin De-bounce function enable.
+<br>
+The de-bounce function is valid only for edge triggered.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::PCSWKCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PCSWKCTL
+</font><br><p> <font size="2">
+Offset: 0xA8  GPC Standby Power-down Wake-up Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>WKEN</td><td><div style="word-wrap: break-word;"><b>Standby Power-down Pin Wake-up Enable Bit
+</b><br>
+0 = GPC group pin wake-up function disabled.
+<br>
+1 = GPC group pin wake-up function enabled.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>PRWKEN</td><td><div style="word-wrap: break-word;"><b>Pin Rising Edge Wake-up Enable Bit
+</b><br>
+0 = GPC group pin rising edge wake-up function disabled.
+<br>
+1 = GPC group pin rising edge wake-up function enabled.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>PFWKEN</td><td><div style="word-wrap: break-word;"><b>Pin Falling Edge Wake-up Enable Bit
+</b><br>
+0 = GPC group pin falling edge wake-up function disabled.
+<br>
+1 = GPC group pin falling edge wake-up function enabled.
+<br>
+</div></td></tr><tr><td>
+[7:4]</td><td>WKPSEL</td><td><div style="word-wrap: break-word;"><b>GPC Standby Power-down Wake-up Pin Select
+</b><br>
+0000 = GPC.0 wake-up function enabled.
+<br>
+0001 = GPC.1 wake-up function enabled.
+<br>
+0010 = GPC.2 wake-up function enabled.
+<br>
+0011 = GPC.3 wake-up function enabled.
+<br>
+0100 = GPC.4 wake-up function enabled.
+<br>
+0101 = GPC.5 wake-up function enabled.
+<br>
+0110 = GPC.6 wake-up function enabled.
+<br>
+0111 = GPC.7 wake-up function enabled.
+<br>
+1000 = GPC.8 wake-up function enabled.
+<br>
+1001 = GPC.9 wake-up function enabled.
+<br>
+1010 = GPC.10 wake-up function enabled.
+<br>
+1011 = GPC.11 wake-up function enabled.
+<br>
+1100 = GPC.12 wake-up function enabled.
+<br>
+1101 = GPC.13 wake-up function enabled.
+<br>
+1110 = GPC.14 wake-up function enabled.
+<br>
+1111 = GPC.15 wake-up function enabled.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>DBEN</td><td><div style="word-wrap: break-word;"><b>GPC Input Signal De-bounce Enable Bit
+</b><br>
+The DBEN bit is used to enable the de-bounce function for each corresponding IO
+<br>
+If the input signal pulse width cannot be sampled by continuous two de-bounce sample cycle, the input signal transition is seen as the signal bounce and will not trigger the wake-up
+<br>
+The de-bounce clock source is the 10 kHz internal low speed RC oscillator.
+<br>
+0 = Standby power-down wake-up pin De-bounce function disable.
+<br>
+1 = Standby power-down wake-up pin De-bounce function enable.
+<br>
+The de-bounce function is valid only for edge triggered.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::PDSWKCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PDSWKCTL
+</font><br><p> <font size="2">
+Offset: 0xAC  GPD Standby Power-down Wake-up Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>WKEN</td><td><div style="word-wrap: break-word;"><b>Standby Power-down Pin Wake-up Enable Bit
+</b><br>
+0 = GPD group pin wake-up function disabled.
+<br>
+1 = GPD group pin wake-up function enabled.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>PRWKEN</td><td><div style="word-wrap: break-word;"><b>Pin Rising Edge Wake-up Enable Bit
+</b><br>
+0 = GPD group pin rising edge wake-up function disabled.
+<br>
+1 = GPD group pin rising edge wake-up function enabled.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>PFWKEN</td><td><div style="word-wrap: break-word;"><b>Pin Falling Edge Wake-up Enable Bit
+</b><br>
+0 = GPD group pin falling edge wake-up function disabled.
+<br>
+1 = GPD group pin falling edge wake-up function enabled.
+<br>
+</div></td></tr><tr><td>
+[7:4]</td><td>WKPSEL</td><td><div style="word-wrap: break-word;"><b>GPD Standby Power-down Wake-up Pin Select
+</b><br>
+0000 = GPD.0 wake-up function enabled.
+<br>
+0001 = GPD.1 wake-up function enabled.
+<br>
+0010 = GPD.2 wake-up function enabled.
+<br>
+0011 = GPD.3 wake-up function enabled.
+<br>
+0100 = GPD.4 wake-up function enabled.
+<br>
+0101 = GPD.5 wake-up function enabled.
+<br>
+0110 = GPD.6 wake-up function enabled.
+<br>
+0111 = GPD.7 wake-up function enabled.
+<br>
+1000 = GPD.8 wake-up function enabled.
+<br>
+1001 = GPD.9 wake-up function enabled.
+<br>
+1010 = GPD.10 wake-up function enabled.
+<br>
+1011 = GPD.11 wake-up function enabled.
+<br>
+1100 = GPD.12 wake-up function enabled.
+<br>
+1101 = GPD.13 wake-up function enabled.
+<br>
+1110 = GPD.14 wake-up function enabled.
+<br>
+1111 = GPD.15 wake-up function enabled.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>DBEN</td><td><div style="word-wrap: break-word;"><b>GPD Input Signal De-bounce Enable Bit
+</b><br>
+The DBEN bit is used to enable the de-bounce function for each corresponding IO
+<br>
+If the input signal pulse width cannot be sampled by continuous two de-bounce sample cycle, the input signal transition is seen as the signal bounce and will not trigger the wake-up
+<br>
+The de-bounce clock source is the 10 kHz internal low speed RC oscillator.
+<br>
+0 = Standby power-down wake-up pin De-bounce function disable.
+<br>
+1 = Standby power-down wake-up pin De-bounce function enable.
+<br>
+The de-bounce function is valid only for edge triggered.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CLK_T::IOPDCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">IOPDCTL
+</font><br><p> <font size="2">
+Offset: 0xB0  GPIO Standby Power-down Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>IOHR</td><td><div style="word-wrap: break-word;"><b>GPIO Hold Release
+</b><br>
+When GPIO enter standby power-down mode, all I/O status are hold to keep normal operating status
+<br>
+After chip was waked up from standby power-down mode, the I/O are still keep hold status until user set this bit to release I/O hold status.
+<br>
+This bit is auto cleared by hardware.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+
+ */
     __IO uint32_t PWRCTL;                /*!< [0x0000] System Power-down Control Register                               */
     __IO uint32_t AHBCLK;                /*!< [0x0004] AHB Devices Clock Enable Control Register                        */
     __IO uint32_t APBCLK0;               /*!< [0x0008] APB Devices Clock Enable Control Register 0                      */

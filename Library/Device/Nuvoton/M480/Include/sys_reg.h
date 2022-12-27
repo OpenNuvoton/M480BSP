@@ -28,2084 +28,4713 @@ typedef struct
 
 
     /**
-     * @var SYS_T::PDID
-     * Offset: 0x00  Part Device Identification Number Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[31:0]  |PDID      |Part Device Identification Number (Read Only)
-     * |        |          |This register reflects device part number code
-     * |        |          |Software can read this register to identify which device is used.
-     * @var SYS_T::RSTSTS
-     * Offset: 0x04  System Reset Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |PORF      |POR Reset Flag
-     * |        |          |The POR reset flag is set by the "Reset Signal" from the Power-on Reset (POR) Controller or bit CHIPRST (SYS_IPRST0[0]) to indicate the previous reset source.
-     * |        |          |0 = No reset from POR or CHIPRST.
-     * |        |          |1 = Power-on Reset (POR) or CHIPRST had issued the reset signal to reset the system.
-     * |        |          |Note: Write 1 to clear this bit to 0.
-     * |[1]     |PINRF     |NRESET Pin Reset Flag
-     * |        |          |The nRESET pin reset flag is set by the "Reset Signal" from the nRESET Pin to indicate the previous reset source.
-     * |        |          |0 = No reset from nRESET pin.
-     * |        |          |1 = Pin nRESET had issued the reset signal to reset the system.
-     * |        |          |Note: Write 1 to clear this bit to 0.
-     * |[2]     |WDTRF     |WDT Reset Flag
-     * |        |          |The WDT reset flag is set by the "Reset Signal" from the Watchdog Timer or Window Watchdog Timer to indicate the previous reset source.
-     * |        |          |0 = No reset from watchdog timer or window watchdog timer.
-     * |        |          |1 = The watchdog timer or window watchdog timer had issued the reset signal to reset the system.
-     * |        |          |Note1: Write 1 to clear this bit to 0.
-     * |        |          |Note2: Watchdog Timer register RSTF(WDT_CTL[2]) bit is set if the system has been reset by WDT time-out reset
-     * |        |          |Window Watchdog Timer register WWDTRF(WWDT_STATUS[1]) bit is set if the system has been reset by WWDT time-out reset.
-     * |[3]     |LVRF      |LVR Reset Flag
-     * |        |          |The LVR reset flag is set by the "Reset Signal" from the Low Voltage Reset Controller to indicate the previous reset source.
-     * |        |          |0 = No reset from LVR.
-     * |        |          |1 = LVR controller had issued the reset signal to reset the system.
-     * |        |          |Note: Write 1 to clear this bit to 0.
-     * |[4]     |BODRF     |BOD Reset Flag
-     * |        |          |The BOD reset flag is set by the "Reset Signal" from the Brown-Out Detector to indicate the previous reset source.
-     * |        |          |0 = No reset from BOD.
-     * |        |          |1 = The BOD had issued the reset signal to reset the system.
-     * |        |          |Note: Write 1 to clear this bit to 0.
-     * |[5]     |SYSRF     |System Reset Flag
-     * |        |          |The system reset flag is set by the "Reset Signal" from the Cortex-M4 Core to indicate the previous reset source.
-     * |        |          |0 = No reset from Cortex-M4.
-     * |        |          |1 = The Cortex-M4 had issued the reset signal to reset the system by writing 1 to the bit SYSRESETREQ(AIRCR[2], Application Interrupt and Reset Control Register, address = 0xE000ED0C) in system control registers of Cortex-M4 core.
-     * |        |          |Note: Write 1 to clear this bit to 0.
-     * |[7]     |CPURF     |CPU Reset Flag
-     * |        |          |The CPU reset flag is set by hardware if software writes CPURST (SYS_IPRST0[1]) 1 to reset Cortex-M4 Core and Flash Memory Controller (FMC).
-     * |        |          |0 = No reset from CPU.
-     * |        |          |1 = The Cortex-M4 Core and FMC are reset by software setting CPURST to 1.
-     * |        |          |Note: Write to clear this bit to 0.
-     * |[8]     |CPULKRF   |CPU Lock-up Reset Flag
-     * |        |          |0 = No reset from CPU lock-up happened.
-     * |        |          |1 = The Cortex-M4 lock-up happened and chip is reset.
-     * |        |          |Note: Write 1 to clear this bit to 0.
-     * |        |          |Note2: When CPU lock-up happened under ICE is connected, This flag will set to 1 but chip will not reset.
-     * @var SYS_T::IPRST0
-     * Offset: 0x08  Peripheral  Reset Control Register 0
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |CHIPRST   |Chip One-shot Reset (Write Protect)
-     * |        |          |Setting this bit will reset the whole chip, including Processor core and all peripherals, and this bit will automatically return to 0 after the 2 clock cycles.
-     * |        |          |The CHIPRST is same as the POR reset, all the chip controllers is reset and the chip setting from flash are also reload.
-     * |        |          |About the difference between CHIPRST and SYSRESETREQ(AIRCR[2]), please refer to section 6.2.2
-     * |        |          |0 = Chip normal operation.
-     * |        |          |1 = Chip one-shot reset.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[1]     |CPURST    |Processor Core One-shot Reset (Write Protect)
-     * |        |          |Setting this bit will only reset the processor core and Flash Memory Controller(FMC), and this bit will automatically return to 0 after the 2 clock cycles.
-     * |        |          |0 = Processor core normal operation.
-     * |        |          |1 = Processor core one-shot reset.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[2]     |PDMARST   |PDMA Controller Reset (Write Protect)
-     * |        |          |Setting this bit to 1 will generate a reset signal to the PDMA
-     * |        |          |User needs to set this bit to 0 to release from reset state.
-     * |        |          |0 = PDMA controller normal operation.
-     * |        |          |1 = PDMA controller reset.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[3]     |EBIRST    |EBI Controller Reset (Write Protect)
-     * |        |          |Set this bit to 1 will generate a reset signal to the EBI
-     * |        |          |User needs to set this bit to 0 to release from the reset state.
-     * |        |          |0 = EBI controller normal operation.
-     * |        |          |1 = EBI controller reset.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[5]     |EMACRST   |EMAC Controller Reset (Write Protect)
-     * |        |          |Setting this bit to 1 will generate a reset signal to the EMAC controller
-     * |        |          |User needs to set this bit to 0 to release from the reset state.
-     * |        |          |0 = EMAC controller normal operation.
-     * |        |          |1 = EMAC controller reset.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[6]     |SDH0RST   |SDHOST0 Controller Reset (Write Protect)
-     * |        |          |Setting this bit to 1 will generate a reset signal to the SDHOST0 controller
-     * |        |          |User needs to set this bit to 0 to release from the reset state.
-     * |        |          |0 = SDHOST0 controller normal operation.
-     * |        |          |1 = SDHOST0 controller reset.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[7]     |CRCRST    |CRC Calculation Controller Reset (Write Protect)
-     * |        |          |Set this bit to 1 will generate a reset signal to the CRC calculation controller
-     * |        |          |User needs to set this bit to 0 to release from the reset state.
-     * |        |          |0 = CRC calculation controller normal operation.
-     * |        |          |1 = CRC calculation controller reset.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[8]     |CCAPRST   |CCAP Controller Reset (Write Protect)
-     * |        |          |Set this bit to 1 will generate a reset signal to the CCAP controller.
-     * |        |          |User needs to set this bit to 0 to release from the reset state.
-     * |        |          |0 = CCAP controller normal operation.
-     * |        |          |1 = CCAP controller reset.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[10]    |HSUSBDRST |HSUSBD Controller Reset (Write Protect)
-     * |        |          |Setting this bit to 1 will generate a reset signal to the HSUSBD controller
-     * |        |          |User needs to set this bit to 0 to release from the reset state.
-     * |        |          |0 = HSUSBD controller normal operation.
-     * |        |          |1 = HSUSBD controller reset.
-     * |[12]    |CRPTRST   |CRYPTO Controller Reset (Write Protect)
-     * |        |          |Setting this bit to 1 will generate a reset signal to the CRYPTO controller
-     * |        |          |User needs to set this bit to 0 to release from the reset state.
-     * |        |          |0 = CRYPTO controller normal operation.
-     * |        |          |1 = CRYPTO controller reset.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[14]    |SPIMRST   |SPIM Controller Reset
-     * |        |          |Setting this bit to 1 will generate a reset signal to the SPIM controller
-     * |        |          |User needs to set this bit to 0 to release from the reset state.
-     * |        |          |0 = SPIM controller normal operation.
-     * |        |          |1 = SPIM controller reset.
-     * |[16]    |USBHRST   |USBH Controller Reset (Write Protect)
-     * |        |          |Set this bit to 1 will generate a reset signal to the USBH controller
-     * |        |          |User needs to set this bit to 0 to release from the reset state.
-     * |        |          |0 = USBH controller normal operation.
-     * |        |          |1 = USBH controller reset.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[17]    |SDH1RST   |SDHOST1 Controller Reset (Write Protect)
-     * |        |          |Setting this bit to 1 will generate a reset signal to the SDHOST1 controller
-     * |        |          |User needs to set this bit to 0 to release from the reset state.
-     * |        |          |0 = SDHOST1 controller normal operation.
-     * |        |          |1 = SDHOST1 controller reset.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * @var SYS_T::IPRST1
-     * Offset: 0x0C  Peripheral Reset Control Register 1
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[1]     |GPIORST   |GPIO Controller Reset
-     * |        |          |0 = GPIO controller normal operation.
-     * |        |          |1 = GPIO controller reset.
-     * |[2]     |TMR0RST   |Timer0 Controller Reset
-     * |        |          |0 = Timer0 controller normal operation.
-     * |        |          |1 = Timer0 controller reset.
-     * |[3]     |TMR1RST   |Timer1 Controller Reset
-     * |        |          |0 = Timer1 controller normal operation.
-     * |        |          |1 = Timer1 controller reset.
-     * |[4]     |TMR2RST   |Timer2 Controller Reset
-     * |        |          |0 = Timer2 controller normal operation.
-     * |        |          |1 = Timer2 controller reset.
-     * |[5]     |TMR3RST   |Timer3 Controller Reset
-     * |        |          |0 = Timer3 controller normal operation.
-     * |        |          |1 = Timer3 controller reset.
-     * |[7]     |ACMP01RST |Analog Comparator 0/1 Controller Reset
-     * |        |          |0 = Analog Comparator 0/1 controller normal operation.
-     * |        |          |1 = Analog Comparator 0/1 controller reset.
-     * |[8]     |I2C0RST   |I2C0 Controller Reset
-     * |        |          |0 = I2C0 controller normal operation.
-     * |        |          |1 = I2C0 controller reset.
-     * |[9]     |I2C1RST   |I2C1 Controller Reset
-     * |        |          |0 = I2C1 controller normal operation.
-     * |        |          |1 = I2C1 controller reset.
-     * |[10]    |I2C2RST   |I2C2 Controller Reset
-     * |        |          |0 = I2C2 controller normal operation.
-     * |        |          |1 = I2C2 controller reset.
-     * |[12]    |QSPI0RST   |QSPI0 Controller Reset
-     * |        |          |0 = QSPI0 controller normal operation.
-     * |        |          |1 = QSPI0 controller reset.
-     * |[13]    |SPI0RST   |SPI0 Controller Reset
-     * |        |          |0 = SPI0 controller normal operation.
-     * |        |          |1 = SPI0 controller reset.
-     * |[14]    |SPI1RST   |SPI1 Controller Reset
-     * |        |          |0 = SPI1 controller normal operation.
-     * |        |          |1 = SPI1 controller reset.
-     * |[15]    |SPI2RST   |SPI2 Controller Reset
-     * |        |          |0 = SPI2 controller normal operation.
-     * |        |          |1 = SPI2 controller reset.
-     * |[16]    |UART0RST  |UART0 Controller Reset
-     * |        |          |0 = UART0 controller normal operation.
-     * |        |          |1 = UART0 controller reset.
-     * |[17]    |UART1RST  |UART1 Controller Reset
-     * |        |          |0 = UART1 controller normal operation.
-     * |        |          |1 = UART1 controller reset.
-     * |[18]    |UART2RST  |UART2 Controller Reset
-     * |        |          |0 = UART2 controller normal operation.
-     * |        |          |1 = UART2 controller reset.
-     * |[19]    |UART3RST  |UART3 Controller Reset
-     * |        |          |0 = UART3 controller normal operation.
-     * |        |          |1 = UART3 controller reset.
-     * |[20]    |UART4RST  |UART4 Controller Reset
-     * |        |          |0 = UART4 controller normal operation.
-     * |        |          |1 = UART4 controller reset.
-     * |[21]    |UART5RST  |UART5 Controller Reset
-     * |        |          |0 = UART5 controller normal operation.
-     * |        |          |1 = UART5 controller reset.
-     * |[24]    |CAN0RST   |CAN0 Controller Reset
-     * |        |          |0 = CAN0 controller normal operation.
-     * |        |          |1 = CAN0 controller reset.
-     * |[25]    |CAN1RST   |CAN1 Controller Reset
-     * |        |          |0 = CAN1 controller normal operation.
-     * |        |          |1 = CAN1 controller reset.
-     * |[27]    |USBDRST   |USBD Controller Reset
-     * |        |          |0 = USBD controller normal operation.
-     * |        |          |1 = USBD controller reset.
-     * |[28]    |EADCRST   |EADC Controller Reset
-     * |        |          |0 = EADC controller normal operation.
-     * |        |          |1 = EADC controller reset.
-     * |[29]    |I2S0RST   |I2S0 Controller Reset
-     * |        |          |0 = I2S0 controller normal operation.
-     * |        |          |1 = I2S0 controller reset.
-     * @var SYS_T::IPRST2
-     * Offset: 0x10  Peripheral Reset Control Register 2
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |SC0RST    |SC0 Controller Reset
-     * |        |          |0 = SC0 controller normal operation.
-     * |        |          |1 = SC0 controller reset.
-     * |[1]     |SC1RST    |SC1 Controller Reset
-     * |        |          |0 = SC1 controller normal operation.
-     * |        |          |1 = SC1 controller reset.
-     * |[2]     |SC2RST    |SC2 Controller Reset
-     * |        |          |0 = SC2 controller normal operation.
-     * |        |          |1 = SC2 controller reset.
-     * |[6]     |SPI3RST   |SPI3 Controller Reset
-     * |        |          |0 = SPI3 controller normal operation.
-     * |        |          |1 = SPI3 controller reset.
-     * |[8]     |USCI0RST  |USCI0 Controller Reset
-     * |        |          |0 = USCI0 controller normal operation.
-     * |        |          |1 = USCI0 controller reset.
-     * |[9]     |USCI1RST  |USCI1 Controller Reset
-     * |        |          |0 = USCI1 controller normal operation.
-     * |        |          |1 = USCI1 controller reset.
-     * |[12]    |DACRST    |DAC Controller Reset
-     * |        |          |0 = DAC controller normal operation.
-     * |        |          |1 = DAC controller reset.
-     * |[16]    |EPWM0RST   |EPWM0 Controller Reset
-     * |        |          |0 = EPWM0 controller normal operation.
-     * |        |          |1 = EPWM0 controller reset.
-     * |[17]    |EPWM1RST   |EPWM1 Controller Reset
-     * |        |          |0 = EPWM1 controller normal operation.
-     * |        |          |1 = EPWM1 controller reset.
-     * |[18]    |BPWM0RST  |BPWM0 Controller Reset
-     * |        |          |0 = BPWM0 controller normal operation.
-     * |        |          |1 = BPWM0 controller reset.
-     * |[19]    |BPWM1RST  |BPWM1 Controller Reset
-     * |        |          |0 = BPWM1 controller normal operation.
-     * |        |          |1 = BPWM1 controller reset.
-     * |[22]    |QEI0RST   |QEI0 Controller Reset
-     * |        |          |0 = QEI0 controller normal operation.
-     * |        |          |1 = QEI0 controller reset.
-     * |[23]    |QEI1RST   |QEI1 Controller Reset
-     * |        |          |0 = QEI1 controller normal operation.
-     * |        |          |1 = QEI1 controller reset.
-     * |[26]    |ECAP0RST  |ECAP0 Controller Reset
-     * |        |          |0 = ECAP0 controller normal operation.
-     * |        |          |1 = ECAP0 controller reset.
-     * |[27]    |ECAP1RST  |ECAP1 Controller Reset
-     * |        |          |0 = ECAP1 controller normal operation.
-     * |        |          |1 = ECAP1 controller reset.
-     * |[28]    |CAN2RST   |CAN2 Controller Reset
-     * |        |          |0 = CAN2 controller normal operation.
-     * |        |          |1 = CAN2 controller reset.
-     * |[30]    |OPARST    |OP Amplifier (OPA) Controller Reset
-     * |        |          |0 = OPA controller normal operation.
-     * |        |          |1 = OPA controller reset.
-     * @var SYS_T::BODCTL
-     * Offset: 0x18  Brown-Out Detector Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |BODEN     |Brown-out Detector Enable Bit (Write Protect)
-     * |        |          |The default value is set by flash controller user configuration register CBODEN(CONFIG0 [19]).
-     * |        |          |0 = Brown-out Detector function Disabled.
-     * |        |          |1 = Brown-out Detector function Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[3]     |BODRSTEN  |Brown-out Reset Enable Bit (Write Protect)
-     * |        |          |The default value is set by flash controller user configuration register CBORST(CONFIG0[20]) bit .
-     * |        |          |0 = Brown-out INTERRUPT function Enabled.
-     * |        |          |1 = Brown-out RESET function Enabled.
-     * |        |          |Note1:
-     * |        |          |While the Brown-out Detector function is enabled (BODEN high) and BOD reset function is enabled (BODRSTEN high), BOD will assert a signal to reset chip when the detected voltage is lower than the threshold (BODOUT high).
-     * |        |          |While the BOD function is enabled (BODEN high) and BOD interrupt function is enabled (BODRSTEN low), BOD will assert an interrupt if BODOUT is high
-     * |        |          |BOD interrupt will keep till to the BODEN set to 0
-     * |        |          |BOD interrupt can be blocked by disabling the NVIC BOD interrupt or disabling BOD function (set BODEN low).
-     * |        |          |Note2: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[4]     |BODIF     |Brown-out Detector Interrupt Flag
-     * |        |          |0 = Brown-out Detector does not detect any voltage draft at VDD down through or up through the voltage of BODVL setting.
-     * |        |          |1 = When Brown-out Detector detects the VDD is dropped down through the voltage of BODVL setting or the VDD is raised up through the voltage of BODVL setting, this bit is set to 1 and the brown-out interrupt is requested if brown-out interrupt is enabled.
-     * |        |          |Note: Write 1 to clear this bit to 0.
-     * |[5]     |BODLPM    |Brown-out Detector Low Power Mode (Write Protect)
-     * |        |          |0 = BOD operate in normal mode (default).
-     * |        |          |1 = BOD Low Power mode Enabled.
-     * |        |          |Note1: The BOD consumes about 100uA in normal mode, the low power mode can reduce the current to about 1/10 but slow the BOD response.
-     * |        |          |Note2: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[6]     |BODOUT    |Brown-out Detector Output Status
-     * |        |          |0 = Brown-out Detector output status is 0.
-     * |        |          |It means the detected voltage is higher than BODVL setting or BODEN is 0.
-     * |        |          |1 = Brown-out Detector output status is 1.
-     * |        |          |It means the detected voltage is lower than BODVL setting
-     * |        |          |If the BODEN is 0, BOD function disabled , this bit always responds 0000.
-     * |[7]     |LVREN     |Low Voltage Reset Enable Bit (Write Protect)
-     * |        |          |The LVR function resets the chip when the input power voltage is lower than LVR circuit setting
-     * |        |          |LVR function is enabled by default.
-     * |        |          |0 = Low Voltage Reset function Disabled.
-     * |        |          |1 = Low Voltage Reset function Enabled.
-     * |        |          |Note1: After enabling the bit, the LVR function will be active with 100us delay for LVR output stable (default).
-     * |        |          |Note2: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[10:8]  |BODDGSEL  |Brown-out Detector Output De-glitch Time Select (Write Protect)
-     * |        |          |000 = BOD output is sampled by RC10K clock.
-     * |        |          |001 = 4 system clock (HCLK).
-     * |        |          |010 = 8 system clock (HCLK).
-     * |        |          |011 = 16 system clock (HCLK).
-     * |        |          |100 = 32 system clock (HCLK).
-     * |        |          |101 = 64 system clock (HCLK).
-     * |        |          |110 = 128 system clock (HCLK).
-     * |        |          |111 = 256 system clock (HCLK).
-     * |        |          |Note: These bits are write protected. Refer to the SYS_REGLCTL register.
-     * |[14:12] |LVRDGSEL  |LVR Output De-glitch Time Select (Write Protect)
-     * |        |          |000 = Without de-glitch function.
-     * |        |          |001 = 4 system clock (HCLK).
-     * |        |          |010 = 8 system clock (HCLK).
-     * |        |          |011 = 16 system clock (HCLK).
-     * |        |          |100 = 32 system clock (HCLK).
-     * |        |          |101 = 64 system clock (HCLK).
-     * |        |          |110 = 128 system clock (HCLK).
-     * |        |          |111 = 256 system clock (HCLK).
-     * |        |          |Note: These bits are write protected. Refer to the SYS_REGLCTL register.
-     * |[18:16] |BODVL     |Brown-out Detector Threshold Voltage Selection (Write Protect)
-     * |        |          |The default value is set by flash controller user configuration register CBOV (CONFIG0 [23:21]).
-     * |        |          |000 = Brown-Out Detector threshold voltage is 1.6V.
-     * |        |          |001 = Brown-Out Detector threshold voltage is 1.8V.
-     * |        |          |010 = Brown-Out Detector threshold voltage is 2.0V.
-     * |        |          |011 = Brown-Out Detector threshold voltage is 2.2V.
-     * |        |          |100 = Brown-Out Detector threshold voltage is 2.4V.
-     * |        |          |101 = Brown-Out Detector threshold voltage is 2.6V.
-     * |        |          |110 = Brown-Out Detector threshold voltage is 2.8V.
-     * |        |          |111 = Brown-Out Detector threshold voltage is 3.0V.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * @var SYS_T::IVSCTL
-     * Offset: 0x1C  Internal Voltage Source Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |VTEMPEN   |Temperature Sensor Enable Bit
-     * |        |          |This bit is used to enable/disable temperature sensor function.
-     * |        |          |0 = Temperature sensor function Disabled (default).
-     * |        |          |1 = Temperature sensor function Enabled.
-     * |        |          |Note: After this bit is set to 1, the value of temperature sensor output can be obtained through GPC.9.
-     * |[1]     |VBATUGEN  |VBAT Unity Gain Buffer Enable Bit
-     * |        |          |This bit is used to enable/disable VBAT unity gain buffer function.
-     * |        |          |0 = VBAT unity gain buffer function Disabled (default).
-     * |        |          |1 = VBAT unity gain buffer function Enabled.
-     * |        |          |Note: After this bit is set to 1, the value of VBAT unity gain buffer output voltage can be obtained from ADC conversion result
-     * @var SYS_T::PORCTL
-     * Offset: 0x24  Power-On-Reset Controller Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |POROFF    |Power-on Reset Enable Bit (Write Protect)
-     * |        |          |When powered on, the POR circuit generates a reset signal to reset the whole chip function, but noise on the power may cause the POR active again
-     * |        |          |User can disable internal POR circuit to avoid unpredictable noise to cause chip reset by writing 0x5AA5 to this field.
-     * |        |          |The POR function will be active again when this field is set to another value or chip is reset by other reset source, including:
-     * |        |          |nRESET, Watchdog, LVR reset, BOD reset, ICE reset command and the software-chip reset function.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * @var SYS_T::VREFCTL
-     * Offset: 0x28  VREF Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[4:0]   |VREFCTL   |VREF Control Bits (Write Protect)
-     * |        |          |00000 = VREF is from external pin.
-     * |        |          |00011 = VREF is internal 1.6V.
-     * |        |          |00111 = VREF is internal 2.0V.
-     * |        |          |01011 = VREF is internal 2.5V.
-     * |        |          |01111 = VREF is internal 3.0V.
-     * |        |          |Others = Reserved.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[7:6]   |PRELOAD_SEL|Pre-load Timing Selection.
-     * |        |          |00 = pre-load time is 60us for 0.1uF Capacitor.
-     * |        |          |01 = pre-load time is 310us for 1uF Capacitor.
-     * |        |          |10 = pre-load time is 1270us for 4.7uF Capacitor.
-     * |        |          |11 = pre-load time is 2650us for 10uF Capacitor.
-     * @var SYS_T::USBPHY
-     * Offset: 0x2C  USB PHY Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[1:0]   |USBROLE   |USB Role Option (Write Protect)
-     * |        |          |These two bits are used to select the role of USB.
-     * |        |          |00 = Standard USB Device mode.
-     * |        |          |01 = Standard USB Host mode.
-     * |        |          |10 = ID dependent mode.
-     * |        |          |11 = Reserved.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[2]     |SBO       |Note: This bit must always be kept 1. If set to 0, the result is unpredictable
-     * |[8]     |USBEN     |USB PHY Enable (Write Protect)
-     * |        |          |This bit is used to enable/disable USB PHY.
-     * |        |          |0 = USB PHY Disabled.
-     * |        |          |1 = USB PHY Enabled.
-     * |[17:16] |HSUSBROLE |HSUSB Role Option (Write Protect)
-     * |        |          |These two bits are used to select the role of HSUSB
-     * |        |          |00 = Standard HSUSB Device mode.
-     * |        |          |01 = Standard HSUSB Host mode.
-     * |        |          |10 = ID dependent mode.
-     * |        |          |11 = Reserved.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[24]    |HSUSBEN   |HSUSB PHY Enable (Write Protect)
-     * |        |          |This bit is used to enable/disable HSUSB PHY.
-     * |        |          |0 = HSUSB PHY Disabled.
-     * |        |          |1 = HSUSB PHY Enabled.
-     * |[25]    |HSUSBACT  |HSUSB PHY Active Control
-     * |        |          |This bit is used to control HSUSB PHY at reset state or active state.
-     * |        |          |0 = HSUSB PHY at reset state.
-     * |        |          |1 = HSUSB PHY at active state.
-     * |        |          |Note: After set HSUSBEN (SYS_USBPHY[24]) to enable HSUSB PHY, user should keep HSUSB PHY at reset mode at lease 10uS before changing to active mode.
-     * @var SYS_T::GPA_MFPL
-     * Offset: 0x30  GPIOA Low Byte Multiple Function Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |PA0MFP    |PA.0 Multi-function Pin Selection
-     * |[7:4]   |PA1MFP    |PA.1 Multi-function Pin Selection
-     * |[11:8]  |PA2MFP    |PA.2 Multi-function Pin Selection
-     * |[15:12] |PA3MFP    |PA.3 Multi-function Pin Selection
-     * |[19:16] |PA4MFP    |PA.4 Multi-function Pin Selection
-     * |[23:20] |PA5MFP    |PA.5 Multi-function Pin Selection
-     * |[27:24] |PA6MFP    |PA.6 Multi-function Pin Selection
-     * |[31:28] |PA7MFP    |PA.7 Multi-function Pin Selection
-     * @var SYS_T::GPA_MFPH
-     * Offset: 0x34  GPIOA High Byte Multiple Function Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |PA8MFP    |PA.8 Multi-function Pin Selection
-     * |[7:4]   |PA9MFP    |PA.9 Multi-function Pin Selection
-     * |[11:8]  |PA10MFP   |PA.10 Multi-function Pin Selection
-     * |[15:12] |PA11MFP   |PA.11 Multi-function Pin Selection
-     * |[19:16] |PA12MFP   |PA.12 Multi-function Pin Selection
-     * |[23:20] |PA13MFP   |PA.13 Multi-function Pin Selection
-     * |[27:24] |PA14MFP   |PA.14 Multi-function Pin Selection
-     * |[31:28] |PA15MFP   |PA.15 Multi-function Pin Selection
-     * @var SYS_T::GPB_MFPL
-     * Offset: 0x38  GPIOB Low Byte Multiple Function Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |PB0MFP    |PB.0 Multi-function Pin Selection
-     * |[7:4]   |PB1MFP    |PB.1 Multi-function Pin Selection
-     * |[11:8]  |PB2MFP    |PB.2 Multi-function Pin Selection
-     * |[15:12] |PB3MFP    |PB.3 Multi-function Pin Selection
-     * |[19:16] |PB4MFP    |PB.4 Multi-function Pin Selection
-     * |[23:20] |PB5MFP    |PB.5 Multi-function Pin Selection
-     * |[27:24] |PB6MFP    |PB.6 Multi-function Pin Selection
-     * |[31:28] |PB7MFP    |PB.7 Multi-function Pin Selection
-     * @var SYS_T::GPB_MFPH
-     * Offset: 0x3C  GPIOB High Byte Multiple Function Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |PB8MFP    |PB.8 Multi-function Pin Selection
-     * |[7:4]   |PB9MFP    |PB.9 Multi-function Pin Selection
-     * |[11:8]  |PB10MFP   |PB.10 Multi-function Pin Selection
-     * |[15:12] |PB11MFP   |PB.11 Multi-function Pin Selection
-     * |[19:16] |PB12MFP   |PB.12 Multi-function Pin Selection
-     * |[23:20] |PB13MFP   |PB.13 Multi-function Pin Selection
-     * |[27:24] |PB14MFP   |PB.14 Multi-function Pin Selection
-     * |[31:28] |PB15MFP   |PB.15 Multi-function Pin Selection
-     * @var SYS_T::GPC_MFPL
-     * Offset: 0x40  GPIOC Low Byte Multiple Function Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |PC0MFP    |PC.0 Multi-function Pin Selection
-     * |[7:4]   |PC1MFP    |PC.1 Multi-function Pin Selection
-     * |[11:8]  |PC2MFP    |PC.2 Multi-function Pin Selection
-     * |[15:12] |PC3MFP    |PC.3 Multi-function Pin Selection
-     * |[19:16] |PC4MFP    |PC.4 Multi-function Pin Selection
-     * |[23:20] |PC5MFP    |PC.5 Multi-function Pin Selection
-     * |[27:24] |PC6MFP    |PC.6 Multi-function Pin Selection
-     * |[31:28] |PC7MFP    |PC.7 Multi-function Pin Selection
-     * @var SYS_T::GPC_MFPH
-     * Offset: 0x44  GPIOC High Byte Multiple Function Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |PC8MFP    |PC.8 Multi-function Pin Selection
-     * |[7:4]   |PC9MFP    |PC.9 Multi-function Pin Selection
-     * |[11:8]  |PC10MFP   |PC.10 Multi-function Pin Selection
-     * |[15:12] |PC11MFP   |PC.11 Multi-function Pin Selection
-     * |[19:16] |PC12MFP   |PC.12 Multi-function Pin Selection
-     * |[23:20] |PC13MFP   |PC.13 Multi-function Pin Selection
-     * |[27:24] |PC14MFP   |PC.14 Multi-function Pin Selection
-     * |[31:28] |PC15MFP   |PC.15 Multi-function Pin Selection
-     * @var SYS_T::GPD_MFPL
-     * Offset: 0x48  GPIOD Low Byte Multiple Function Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |PD0MFP    |PD.0 Multi-function Pin Selection
-     * |[7:4]   |PD1MFP    |PD.1 Multi-function Pin Selection
-     * |[11:8]  |PD2MFP    |PD.2 Multi-function Pin Selection
-     * |[15:12] |PD3MFP    |PD.3 Multi-function Pin Selection
-     * |[19:16] |PD4MFP    |PD.4 Multi-function Pin Selection
-     * |[23:20] |PD5MFP    |PD.5 Multi-function Pin Selection
-     * |[27:24] |PD6MFP    |PD.6 Multi-function Pin Selection
-     * |[31:28] |PD7MFP    |PD.7 Multi-function Pin Selection
-     * @var SYS_T::GPD_MFPH
-     * Offset: 0x4C  GPIOD High Byte Multiple Function Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |PD8MFP    |PD.8 Multi-function Pin Selection
-     * |[7:4]   |PD9MFP    |PD.9 Multi-function Pin Selection
-     * |[11:8]  |PD10MFP   |PD.10 Multi-function Pin Selection
-     * |[15:12] |PD11MFP   |PD.11 Multi-function Pin Selection
-     * |[19:16] |PD12MFP   |PD.12 Multi-function Pin Selection
-     * |[23:20] |PD13MFP   |PD.13 Multi-function Pin Selection
-     * |[27:24] |PD14MFP   |PD.14 Multi-function Pin Selection
-     * |[31:28] |PD15MFP   |PD.15 Multi-function Pin Selection
-     * @var SYS_T::GPE_MFPL
-     * Offset: 0x50  GPIOE Low Byte Multiple Function Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |PE0MFP    |PE.0 Multi-function Pin Selection
-     * |[7:4]   |PE1MFP    |PE.1 Multi-function Pin Selection
-     * |[11:8]  |PE2MFP    |PE.2 Multi-function Pin Selection
-     * |[15:12] |PE3MFP    |PE.3 Multi-function Pin Selection
-     * |[19:16] |PE4MFP    |PE.4 Multi-function Pin Selection
-     * |[23:20] |PE5MFP    |PE.5 Multi-function Pin Selection
-     * |[27:24] |PE6MFP    |PE.6 Multi-function Pin Selection
-     * |[31:28] |PE7MFP    |PE.7 Multi-function Pin Selection
-     * @var SYS_T::GPE_MFPH
-     * Offset: 0x54  GPIOE High Byte Multiple Function Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |PE8MFP    |PE.8 Multi-function Pin Selection
-     * |[7:4]   |PE9MFP    |PE.9 Multi-function Pin Selection
-     * |[11:8]  |PE10MFP   |PE.10 Multi-function Pin Selection
-     * |[15:12] |PE11MFP   |PE.11 Multi-function Pin Selection
-     * |[19:16] |PE12MFP   |PE.12 Multi-function Pin Selection
-     * |[23:20] |PE13MFP   |PE.13 Multi-function Pin Selection
-     * |[27:24] |PE14MFP   |PE.14 Multi-function Pin Selection
-     * |[31:28] |PE15MFP   |PE.15 Multi-function Pin Selection
-     * @var SYS_T::GPF_MFPL
-     * Offset: 0x58  GPIOF Low Byte Multiple Function Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |PF0MFP    |PF.0 Multi-function Pin Selection
-     * |[7:4]   |PF1MFP    |PF.1 Multi-function Pin Selection
-     * |[11:8]  |PF2MFP    |PF.2 Multi-function Pin Selection
-     * |[15:12] |PF3MFP    |PF.3 Multi-function Pin Selection
-     * |[19:16] |PF4MFP    |PF.4 Multi-function Pin Selection
-     * |[23:20] |PF5MFP    |PF.5 Multi-function Pin Selection
-     * |[27:24] |PF6MFP    |PF.6 Multi-function Pin Selection
-     * |[31:28] |PF7MFP    |PF.7 Multi-function Pin Selection
-     * @var SYS_T::GPF_MFPH
-     * Offset: 0x5C  GPIOF High Byte Multiple Function Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |PF8MFP    |PF.8 Multi-function Pin Selection
-     * |[7:4]   |PF9MFP    |PF.9 Multi-function Pin Selection
-     * |[11:8]  |PF10MFP   |PF.10 Multi-function Pin Selection
-     * |[15:12] |PF11MFP   |PF.11 Multi-function Pin Selection
-     * |[19:16] |PF12MFP   |PF.12 Multi-function Pin Selection
-     * |[23:20] |PF13MFP   |PF.13 Multi-function Pin Selection
-     * |[27:24] |PF14MFP   |PF.14 Multi-function Pin Selection
-     * |[31:28] |PF15MFP   |PF.15 Multi-function Pin Selection
-     * @var SYS_T::GPG_MFPL
-     * Offset: 0x60  GPIOG Low Byte Multiple Function Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |PG0MFP    |PG.0 Multi-function Pin Selection
-     * |[7:4]   |PG1MFP    |PG.1 Multi-function Pin Selection
-     * |[11:8]  |PG2MFP    |PG.2 Multi-function Pin Selection
-     * |[15:12] |PG3MFP    |PG.3 Multi-function Pin Selection
-     * |[19:16] |PG4MFP    |PG.4 Multi-function Pin Selection
-     * |[23:20] |PG5MFP    |PG.5 Multi-function Pin Selection
-     * |[27:24] |PG6MFP    |PG.6 Multi-function Pin Selection
-     * |[31:28] |PG7MFP    |PG.7 Multi-function Pin Selection
-     * @var SYS_T::GPG_MFPH
-     * Offset: 0x64  GPIOG High Byte Multiple Function Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |PG8MFP    |PG.8 Multi-function Pin Selection
-     * |[7:4]   |PG9MFP    |PG.9 Multi-function Pin Selection
-     * |[11:8]  |PG10MFP   |PG.10 Multi-function Pin Selection
-     * |[15:12] |PG11MFP   |PG.11 Multi-function Pin Selection
-     * |[19:16] |PG12MFP   |PG.12 Multi-function Pin Selection
-     * |[23:20] |PG13MFP   |PG.13 Multi-function Pin Selection
-     * |[27:24] |PG14MFP   |PG.14 Multi-function Pin Selection
-     * |[31:28] |PG15MFP   |PG.15 Multi-function Pin Selection
-     * @var SYS_T::GPH_MFPL
-     * Offset: 0x68  GPIOH Low Byte Multiple Function Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |PH0MFP    |PH.0 Multi-function Pin Selection
-     * |[7:4]   |PH1MFP    |PH.1 Multi-function Pin Selection
-     * |[11:8]  |PH2MFP    |PH.2 Multi-function Pin Selection
-     * |[15:12] |PH3MFP    |PH.3 Multi-function Pin Selection
-     * |[19:16] |PH4MFP    |PH.4 Multi-function Pin Selection
-     * |[23:20] |PH5MFP    |PH.5 Multi-function Pin Selection
-     * |[27:24] |PH6MFP    |PH.6 Multi-function Pin Selection
-     * |[31:28] |PH7MFP    |PH.7 Multi-function Pin Selection
-     * @var SYS_T::GPH_MFPH
-     * Offset: 0x6C  GPIOH High Byte Multiple Function Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |PH8MFP    |PH.8 Multi-function Pin Selection
-     * |[7:4]   |PH9MFP    |PH.9 Multi-function Pin Selection
-     * |[11:8]  |PH10MFP   |PH.10 Multi-function Pin Selection
-     * |[15:12] |PH11MFP   |PH.11 Multi-function Pin Selection
-     * |[19:16] |PH12MFP   |PH.12 Multi-function Pin Selection
-     * |[23:20] |PH13MFP   |PH.13 Multi-function Pin Selection
-     * |[27:24] |PH14MFP   |PH.14 Multi-function Pin Selection
-     * |[31:28] |PH15MFP   |PH.15 Multi-function Pin Selection
-     * @var SYS_T::GPA_MFOS
-     * Offset: 0x80  GPIOA Multiple Function Output Select Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |MFOS0     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[1]     |MFOS1     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[2]     |MFOS2     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[3]     |MFOS3     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[4]     |MFOS4     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[5]     |MFOS5     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[6]     |MFOS6     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[7]     |MFOS7     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[8]     |MFOS8     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[9]     |MFOS9     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[10]    |MFOS10    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[11]    |MFOS11    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[12]    |MFOS12    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[13]    |MFOS13    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[14]    |MFOS14    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[15]    |MFOS15    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * @var SYS_T::GPB_MFOS
-     * Offset: 0x84  GPIOB Multiple Function Output Select Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |MFOS0     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[1]     |MFOS1     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[2]     |MFOS2     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[3]     |MFOS3     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[4]     |MFOS4     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[5]     |MFOS5     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[6]     |MFOS6     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[7]     |MFOS7     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[8]     |MFOS8     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[9]     |MFOS9     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[10]    |MFOS10    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[11]    |MFOS11    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[12]    |MFOS12    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[13]    |MFOS13    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[14]    |MFOS14    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[15]    |MFOS15    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * @var SYS_T::GPC_MFOS
-     * Offset: 0x88  GPIOC Multiple Function Output Select Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |MFOS0     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[1]     |MFOS1     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[2]     |MFOS2     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[3]     |MFOS3     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[4]     |MFOS4     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[5]     |MFOS5     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[6]     |MFOS6     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[7]     |MFOS7     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[8]     |MFOS8     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[9]     |MFOS9     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[10]    |MFOS10    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[11]    |MFOS11    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[12]    |MFOS12    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[13]    |MFOS13    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[14]    |MFOS14    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[15]    |MFOS15    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * @var SYS_T::GPD_MFOS
-     * Offset: 0x8C  GPIOD Multiple Function Output Select Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |MFOS0     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[1]     |MFOS1     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[2]     |MFOS2     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[3]     |MFOS3     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[4]     |MFOS4     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[5]     |MFOS5     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[6]     |MFOS6     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[7]     |MFOS7     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[8]     |MFOS8     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[9]     |MFOS9     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[10]    |MFOS10    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[11]    |MFOS11    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[12]    |MFOS12    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[13]    |MFOS13    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[14]    |MFOS14    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[15]    |MFOS15    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * @var SYS_T::GPE_MFOS
-     * Offset: 0x90  GPIOE Multiple Function Output Select Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |MFOS0     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[1]     |MFOS1     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[2]     |MFOS2     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[3]     |MFOS3     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[4]     |MFOS4     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[5]     |MFOS5     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[6]     |MFOS6     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[7]     |MFOS7     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[8]     |MFOS8     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[9]     |MFOS9     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[10]    |MFOS10    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[11]    |MFOS11    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[12]    |MFOS12    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[13]    |MFOS13    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[14]    |MFOS14    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[15]    |MFOS15    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * @var SYS_T::GPF_MFOS
-     * Offset: 0x94  GPIOF Multiple Function Output Select Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |MFOS0     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[1]     |MFOS1     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[2]     |MFOS2     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[3]     |MFOS3     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[4]     |MFOS4     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[5]     |MFOS5     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[6]     |MFOS6     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[7]     |MFOS7     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[8]     |MFOS8     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[9]     |MFOS9     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[10]    |MFOS10    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[11]    |MFOS11    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[12]    |MFOS12    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[13]    |MFOS13    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[14]    |MFOS14    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[15]    |MFOS15    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * @var SYS_T::GPG_MFOS
-     * Offset: 0x98  GPIOG Multiple Function Output Select Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |MFOS0     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[1]     |MFOS1     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[2]     |MFOS2     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[3]     |MFOS3     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[4]     |MFOS4     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[5]     |MFOS5     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[6]     |MFOS6     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[7]     |MFOS7     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[8]     |MFOS8     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[9]     |MFOS9     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[10]    |MFOS10    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[11]    |MFOS11    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[12]    |MFOS12    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[13]    |MFOS13    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[14]    |MFOS14    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[15]    |MFOS15    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * @var SYS_T::GPH_MFOS
-     * Offset: 0x9C  GPIOH Multiple Function Output Select Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |MFOS0     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[1]     |MFOS1     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[2]     |MFOS2     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[3]     |MFOS3     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[4]     |MFOS4     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[5]     |MFOS5     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[6]     |MFOS6     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[7]     |MFOS7     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[8]     |MFOS8     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[9]     |MFOS9     |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[10]    |MFOS10    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[11]    |MFOS11    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[12]    |MFOS12    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[13]    |MFOS13    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[14]    |MFOS14    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * |[15]    |MFOS15    |GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
-     * |        |          |This bit used to select multiple function pin output mode type for Px.n pin
-     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
-     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
-     * |        |          |Note:
-     * |        |          |Max. n=15 for port A/B/E/G.
-     * |        |          |Max. n=14 for port C/D.
-     * |        |          |Max. n=11 for port F/H.
-     * @var SYS_T::SRAM_INTCTL
-     * Offset: 0xC0  System SRAM Interrupt Enable Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |PERRIEN   |SRAM Parity Check Error Interrupt Enable Bit
-     * |        |          |0 = SRAM parity check error interrupt Disabled.
-     * |        |          |1 = SRAM parity check error interrupt Enabled.
-     * @var SYS_T::SRAM_STATUS
-     * Offset: 0xC4  System SRAM Parity Error Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |PERRIF    |SRAM Parity Check Error Flag
-     * |        |          |This bit indicates the System SRAM parity error occurred. Write 1 to clear this to 0.
-     * |        |          |0 = No System SRAM parity error.
-     * |        |          |1 = System SRAM parity error occur.
-     * @var SYS_T::SRAM_ERRADDR
-     * Offset: 0xC8  System SRAM Parity Check Error Address Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[31:0]  |ERRADDR   |System SRAM Parity Error Address
-     * |        |          |This register shows system SRAM parity error byte address.
-     * @var SYS_T::SRAM_BISTCTL
-     * Offset: 0xD0  System SRAM BIST Test Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |SRBIST0   |SRAM Bank0 BIST Enable Bit (Write Protect)
-     * |        |          |This bit enables BIST test for SRAM bank0.
-     * |        |          |0 = system SRAM bank0 BIST Disabled.
-     * |        |          |1 = system SRAM bank0 BIST Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[1]     |SRBIST1   |SRAM Bank1 BIST Enable Bit (Write Protect)
-     * |        |          |This bit enables BIST test for SRAM bank1.
-     * |        |          |0 = system SRAM bank1 BIST Disabled.
-     * |        |          |1 = system SRAM bank1 BIST Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[2]     |CRBIST    |CACHE BIST Enable Bit (Write Protect)
-     * |        |          |This bit enables BIST test for CACHE RAM
-     * |        |          |0 = system CACHE BIST Disabled.
-     * |        |          |1 = system CACHE BIST Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[3]     |CANBIST   |CAN BIST Enable Bit (Write Protect)
-     * |        |          |This bit enables BIST test for CAN RAM
-     * |        |          |0 = system CAN BIST Disabled.
-     * |        |          |1 = system CAN BIST Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[4]     |USBBIST   |USB BIST Enable Bit (Write Protect)
-     * |        |          |This bit enables BIST test for USB RAM
-     * |        |          |0 = system USB BIST Disabled.
-     * |        |          |1 = system USB BIST Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[5]     |SPIMBIST  |SPIM BIST Enable Bit (Write Protect)
-     * |        |          |This bit enables BIST test for SPIM RAM
-     * |        |          |0 = system SPIM BIST Disabled.
-     * |        |          |1 = system SPIM BIST Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[6]     |EMCBIST   |EMC BIST Enable Bit (Write Protect)
-     * |        |          |This bit enables BIST test for EMC RAM
-     * |        |          |0 = system EMC BIST Disabled.
-     * |        |          |1 = system EMC BIST Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[7]     |PDMABIST  |PDMA BIST Enable Bit (Write Protect)
-     * |        |          |This bit enables BIST test for PDMA RAM
-     * |        |          |0 = system PDMA BIST Disabled.
-     * |        |          |1 = system PDMA BIST Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[8]     |HSUSBDBIST|HSUSBD BIST Enable Bit (Write Protect)
-     * |        |          |This bit enables BIST test for HSUSBD RAM
-     * |        |          |0 = system HSUSBD BIST Disabled.
-     * |        |          |1 = system HSUSBD BIST Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[9]     |HSUSBHBIST|HSUSBH BIST Enable Bit (Write Protect)
-     * |        |          |This bit enables BIST test for HSUSBH RAM
-     * |        |          |0 = system HSUSBH BIST Disabled.
-     * |        |          |1 = system HSUSBH BIST Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[16]    |SRB0S0    |SRAM Bank0 Section 0 BIST Select (Write Protect)
-     * |        |          |This bit define if the first 16KB section of SRAM bank0 is selected or not when doing bist test.
-     * |        |          |0 = SRAM bank0 section 0 is deselected when doing bist test.
-     * |        |          |1 = SRAM bank0 section 0 is selected when doing bist test.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |        |          |Note: At least one section of SRAM bank0 should be selected when doing SRAM bank0 bist test.
-     * |[17]    |SRB0S1    |SRAM Bank0 Section 1 BIST Select (Write Protect)
-     * |        |          |This bit define if the second 16KB section of SRAM bank0 is selected or not when doing bist test.
-     * |        |          |0 = SRAM bank0 section 1 is deselected when doing bist test.
-     * |        |          |1 = SRAM bank0 section 1 is selected when doing bist test.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |        |          |Note: At least one section of SRAM bank0 should be selected when doing SRAM bank0 bist test.
-     * |[18]    |SRB1S0    |SRAM Bank1 Section 0 BIST Select (Write Protect)
-     * |        |          |This bit define if the first 16KB section of SRAM bank1 is selected or not when doing bist test.
-     * |        |          |0 = SRAM bank1 first 16KB section is deselected when doing bist test.
-     * |        |          |1 = SRAM bank1 first 16KB section is selected when doing bist test.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |        |          |Note: At least one section of SRAM bank1 should be selected when doing SRAM bank1 bist test.
-     * |[19]    |SRB1S1    |SRAM Bank1 Section 1 BIST Select (Write Protect)
-     * |        |          |This bit define if the second 16KB section of SRAM bank1 is selected or not when doing bist test.
-     * |        |          |0 = SRAM bank1 second 16KB section is deselected when doing bist test.
-     * |        |          |1 = SRAM bank1 second 16KB section is selected when doing bist test.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |        |          |Note: At least one section of SRAM bank1 should be selected when doing SRAM bank1 bist test.
-     * |[20]    |SRB1S2    |SRAM Bank1 Section 0 BIST Select (Write Protect)
-     * |        |          |This bit define if the third 16KB section of SRAM bank1 is selected or not when doing bist test.
-     * |        |          |0 = SRAM bank1 third 16KB section is deselected when doing bist test.
-     * |        |          |1 = SRAM bank1 third 16KB section is selected when doing bist test.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |        |          |Note: At least one section of SRAM bank1 should be selected when doing SRAM bank1 bist test.
-     * |[21]    |SRB1S3    |SRAM Bank1 Section 1 BIST Select (Write Protect)
-     * |        |          |This bit define if the fourth 16KB section of SRAM bank1 is selected or not when doing bist test.
-     * |        |          |0 = SRAM bank1 fourth 16KB section is deselected when doing bist test.
-     * |        |          |1 = SRAM bank1 fourth 16KB section is selected when doing bist test.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |        |          |Note: At least one section of SRAM bank1 should be selected when doing SRAM bank1 bist test.
-     * |[22]    |SRB1S4    |SRAM Bank1 Section 0 BIST Select (Write Protect)
-     * |        |          |This bit define if the fifth 16KB section of SRAM bank1 is selected or not when doing bist test.
-     * |        |          |0 = SRAM bank1 fifth 16KB section is deselected when doing bist test.
-     * |        |          |1 = SRAM bank1 fifth 16KB section is selected when doing bist test.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |        |          |Note: At least one section of SRAM bank1 should be selected when doing SRAM bank1 bist test.
-     * |[23]    |SRB1S5    |SRAM Bank1 Section 1 BIST Select (Write Protect)
-     * |        |          |This bit define if the sixth 16KB section of SRAM bank1 is selected or not when doing bist test.
-     * |        |          |0 = SRAM bank1 sixth 16KB section is deselected when doing bist test.
-     * |        |          |1 = SRAM bank1 sixth 16KB section is selected when doing bist test.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |        |          |Note: At least one section of SRAM bank1 should be selected when doing SRAM bank1 bist test.
-     * @var SYS_T::SRAM_BISTSTS
-     * Offset: 0xD4  System SRAM BIST Test Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |SRBISTEF0 |1st System SRAM BIST Fail Flag
-     * |        |          |0 = 1st system SRAM BIST test pass.
-     * |        |          |1 = 1st system SRAM BIST test fail.
-     * |[1]     |SRBISTEF1 |2nd System SRAM BIST Fail Flag
-     * |        |          |0 = 2nd system SRAM BIST test pass.
-     * |        |          |1 = 2nd system SRAM BIST test fail.
-     * |[2]     |CRBISTEF  |CACHE SRAM BIST Fail Flag
-     * |        |          |0 = System CACHE RAM BIST test pass.
-     * |        |          |1 = System CACHE RAM BIST test fail.
-     * |[3]     |CANBEF    |CAN SRAM BIST Fail Flag
-     * |        |          |0 = CAN SRAM BIST test pass.
-     * |        |          |1 = CAN SRAM BIST test fail.
-     * |[4]     |USBBEF    |USB SRAM BIST Fail Flag
-     * |        |          |0 = USB SRAM BIST test pass.
-     * |        |          |1 = USB SRAM BIST test fail.
-     * |[16]    |SRBEND0   |1st SRAM BIST Test Finish
-     * |        |          |0 = 1st system SRAM BIST active.
-     * |        |          |1 =1st system SRAM BIST finish.
-     * |[17]    |SRBEND1   |2nd SRAM BIST Test Finish
-     * |        |          |0 = 2nd system SRAM BIST is active.
-     * |        |          |1 = 2nd system SRAM BIST finish.
-     * |[18]    |CRBEND    |CACHE SRAM BIST Test Finish
-     * |        |          |0 = System CACHE RAM BIST is active.
-     * |        |          |1 = System CACHE RAM BIST test finish.
-     * |[19]    |CANBEND   |CAN SRAM BIST Test Finish
-     * |        |          |0 = CAN SRAM BIST is active.
-     * |        |          |1 = CAN SRAM BIST test finish.
-     * |[20]    |USBBEND   |USB SRAM BIST Test Finish
-     * |        |          |0 = USB SRAM BIST is active.
-     * |        |          |1 = USB SRAM BIST test finish.
-     * @var SYS_T::HIRCTCTL
-     * Offset: 0xE4  HIRC48M Trim Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[1:0]   |FREQSEL   |Trim Frequency Selection
-     * |        |          |This field indicates the target frequency of 48 MHz internal high speed RC oscillator (HIRC) auto trim.
-     * |        |          |During auto trim operation, if clock error detected with CESTOPEN is set to 1 or trim retry limitation count reached, this field will be cleared to 00 automatically.
-     * |        |          |00 = Disable HIRC auto trim function.
-     * |        |          |01 = Enable HIRC auto trim function and trim HIRC to 48 MHz.
-     * |        |          |10 = Reserved..
-     * |        |          |11 = Reserved.
-     * |[5:4]   |LOOPSEL   |Trim Calculation Loop Selection
-     * |        |          |This field defines that trim value calculation is based on how many reference clocks.
-     * |        |          |00 = Trim value calculation is based on average difference in 4 clocks of reference clock.
-     * |        |          |01 = Trim value calculation is based on average difference in 8 clocks of reference clock.
-     * |        |          |10 = Trim value calculation is based on average difference in 16 clocks of reference clock.
-     * |        |          |11 = Trim value calculation is based on average difference in 32 clocks of reference clock.
-     * |        |          |Note: For example, if LOOPSEL is set as 00, auto trim circuit will calculate trim value based on the average frequency difference in 4 clocks of reference clock.
-     * |[7:6]   |RETRYCNT  |Trim Value Update Limitation Count
-     * |        |          |This field defines that how many times the auto trim circuit will try to update the HIRC trim value before the frequency of HIRC locked.
-     * |        |          |Once the HIRC locked, the internal trim value update counter will be reset.
-     * |        |          |If the trim value update counter reached this limitation value and frequency of HIRC still doesn't lock, the auto trim operation will be disabled and FREQSEL will be cleared to 00.
-     * |        |          |00 = Trim retry count limitation is 64 loops.
-     * |        |          |01 = Trim retry count limitation is 128 loops.
-     * |        |          |10 = Trim retry count limitation is 256 loops.
-     * |        |          |11 = Trim retry count limitation is 512 loops.
-     * |[8]     |CESTOPEN  |Clock Error Stop Enable Bit
-     * |        |          |0 = The trim operation is keep going if clock is inaccuracy.
-     * |        |          |1 = The trim operation is stopped if clock is inaccuracy.
-     * |[9]     |BOUNDEN   |Boundary Enable Bit
-     * |        |          |0 = Boundary function is disable.
-     * |        |          |1 = Boundary function is enable.
-     * |[10]    |REFCKSEL  |Reference Clock Selection
-     * |        |          |0 = HIRC trim reference from external 32.768 kHz crystal oscillator.
-     * |        |          |1 = HIRC trim reference from internal USB synchronous mode.
-     * |        |          |Note: HIRC trim reference clock is 20Khz in test mode.
-     * |[20:16  |BOUNDARY  |Boundary Selection
-     * |        |          |Fill the boundary range from 0x1 to 0x31, 0x0 is reserved.
-     * |        |          |Note1: This field is effective only when the BOUNDEN(SYS_HIRCTRIMCTL[9]) is enable.
-     * @var SYS_T::HIRCTIEN
-     * Offset: 0xE8  HIRC48M Trim Interrupt Enable Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[1]     |TFAILIEN  |Trim Failure Interrupt Enable Bit
-     * |        |          |This bit controls if an interrupt will be triggered while HIRC trim value update limitation count reached and HIRC frequency still not locked on target frequency set by FREQSEL(SYS_HIRCTCTL[1:0]).
-     * |        |          |If this bit is high and TFAILIF(SYS_HIRCTISTS[1]) is set during auto trim operation, an interrupt will be triggered to notify that HIRC trim value update limitation count was reached.
-     * |        |          |0 = Disable TFAILIF(SYS_HIRCTISTS[1]) status to trigger an interrupt to CPU.
-     * |        |          |1 = Enable TFAILIF(SYS_HIRCTISTS[1]) status to trigger an interrupt to CPU.
-     * |[2]     |CLKEIEN   |Clock Error Interrupt Enable Bit
-     * |        |          |This bit controls if CPU would get an interrupt while clock is inaccuracy during auto trim operation.
-     * |        |          |If this bit is set to1, and CLKERRIF(SYS_HIRCTISTS[2]) is set during auto trim operation, an interrupt will be triggered to notify the clock frequency is inaccuracy.
-     * |        |          |0 = Disable CLKERRIF(SYS_HIRCTISTS[2]) status to trigger an interrupt to CPU.
-     * |        |          |1 = Enable CLKERRIF(SYS_HIRCTISTS[2]) status to trigger an interrupt to CPU.
-     * @var SYS_T::HIRCTISTS
-     * Offset: 0xEC  HIRC48M Trim Interrupt Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |FREQLOCK  |HIRC Frequency Lock Status
-     * |        |          |This bit indicates the HIRC frequency is locked.
-     * |        |          |This is a status bit and doesn't trigger any interrupt
-     * |        |          |Write 1 to clear this to 0
-     * |        |          |This bit will be set automatically, if the frequency is lock and the RC_TRIM is enabled.
-     * |        |          |0 = The internal high-speed oscillator frequency doesn't lock at 48 MHz yet.
-     * |        |          |1 = The internal high-speed oscillator frequency locked at 48 MHz.
-     * |[1]     |TFAILIF   |Trim Failure Interrupt Status
-     * |        |          |This bit indicates that HIRC trim value update limitation count reached and the HIRC clock frequency still doesn't be locked
-     * |        |          |Once this bit is set, the auto trim operation stopped and FREQSEL(SYS_HIRCTCTL[1:0]) will be cleared to 00 by hardware automatically.
-     * |        |          |If this bit is set and TFAILIEN(SYS_HIRCTIEN[1]) is high, an interrupt will be triggered to notify that HIRC trim value update limitation count was reached
-     * |        |          |Write 1 to clear this to 0.
-     * |        |          |0 = Trim value update limitation count does not reach.
-     * |        |          |1 = Trim value update limitation count reached and HIRC frequency still not locked.
-     * |[2]     |CLKERRIF  |Clock Error Interrupt Status
-     * |        |          |When the frequency of 32.768 kHz external low speed crystal oscillator (LXT) or 48MHz internal high speed RC oscillator (HIRC) is shift larger to unreasonable value, this bit will be set and to be an indicate that clock frequency is inaccuracy.
-     * |        |          |Once this bit is set to 1, the auto trim operation stopped and FREQSEL(SYS_HIRCTCL[1:0]) will be cleared to 00 by hardware automatically if CESTOPEN(SYS_HIRCTCTL[8]) is set to 1.
-     * |        |          |If this bit is set and CLKEIEN(SYS_HIRCTIEN[2]) is high, an interrupt will be triggered to notify the clock frequency is inaccuracy.
-     * |        |          |Write 1 to clear this to 0.
-     * |        |          |0 = Clock frequency is accurate.
-     * |        |          |1 = Clock frequency is inaccurate.
-     * |[3]     |OVBDIF    |Over Boundary Status
-     * |        |          |When the over boundary function is set, if there occurs the over boundary condition, this flag will be set.
-     * |        |          |Note1: Write 1 to clear this flag.
-     * |        |          |Note2: This function is only supported in M48xGC/M48xG8.
-     * |        |          |0 = Over boundary condition did not occur.
-     * |        |          |1 = Over boundary condition occurred.
-     * @var SYS_T::IRCTCTL
-     * Offset: 0xF0  HIRC Trim Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[1:0]   |FREQSEL   |Trim Frequency Selection
-     * |        |          |This field indicates the target frequency of 12 MHz internal high speed RC oscillator (HIRC) auto trim.
-     * |        |          |During auto trim operation, if clock error detected with CESTOPEN is set to 1 or trim retry limitation count reached, this field will be cleared to 00 automatically.
-     * |        |          |00 = Disable HIRC auto trim function.
-     * |        |          |01 = Enable HIRC auto trim function and trim HIRC to 12 MHz.
-     * |        |          |10 = Reserved..
-     * |        |          |11 = Reserved.
-     * |[5:4]   |LOOPSEL   |Trim Calculation Loop Selection
-     * |        |          |This field defines that trim value calculation is based on how many reference clocks.
-     * |        |          |00 = Trim value calculation is based on average difference in 4 clocks of reference clock.
-     * |        |          |01 = Trim value calculation is based on average difference in 8 clocks of reference clock.
-     * |        |          |10 = Trim value calculation is based on average difference in 16 clocks of reference clock.
-     * |        |          |11 = Trim value calculation is based on average difference in 32 clocks of reference clock.
-     * |        |          |Note: For example, if LOOPSEL is set as 00, auto trim circuit will calculate trim value based on the average frequency difference in 4 clocks of reference clock.
-     * |[7:6]   |RETRYCNT  |Trim Value Update Limitation Count
-     * |        |          |This field defines that how many times the auto trim circuit will try to update the HIRC trim value before the frequency of HIRC locked.
-     * |        |          |Once the HIRC locked, the internal trim value update counter will be reset.
-     * |        |          |If the trim value update counter reached this limitation value and frequency of HIRC still doesn't lock, the auto trim operation will be disabled and FREQSEL will be cleared to 00.
-     * |        |          |00 = Trim retry count limitation is 64 loops.
-     * |        |          |01 = Trim retry count limitation is 128 loops.
-     * |        |          |10 = Trim retry count limitation is 256 loops.
-     * |        |          |11 = Trim retry count limitation is 512 loops.
-     * |[8]     |CESTOPEN  |Clock Error Stop Enable Bit
-     * |        |          |0 = The trim operation is keep going if clock is inaccuracy.
-     * |        |          |1 = The trim operation is stopped if clock is inaccuracy.
-     * |[10]    |REFCKSEL  |Reference Clock Selection
-     * |        |          |0 = HIRC trim reference from external 32.768 kHz crystal oscillator.
-     * |        |          |1 = HIRC trim reference from internal USB synchronous mode.
-     * |        |          |Note: HIRC trim reference clock is 20Khz in test mode.
-     * @var SYS_T::IRCTIEN
-     * Offset: 0xF4  HIRC Trim Interrupt Enable Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[1]     |TFAILIEN  |Trim Failure Interrupt Enable Bit
-     * |        |          |This bit controls if an interrupt will be triggered while HIRC trim value update limitation count reached and HIRC frequency still not locked on target frequency set by FREQSEL(SYS_IRCTCTL[1:0]).
-     * |        |          |If this bit is high and TFAILIF(SYS_IRCTISTS[1]) is set during auto trim operation, an interrupt will be triggered to notify that HIRC trim value update limitation count was reached.
-     * |        |          |0 = Disable TFAILIF(SYS_IRCTISTS[1]) status to trigger an interrupt to CPU.
-     * |        |          |1 = Enable TFAILIF(SYS_IRCTISTS[1]) status to trigger an interrupt to CPU.
-     * |[2]     |CLKEIEN   |Clock Error Interrupt Enable Bit
-     * |        |          |This bit controls if CPU would get an interrupt while clock is inaccuracy during auto trim operation.
-     * |        |          |If this bit is set to1, and CLKERRIF(SYS_IRCTISTS[2]) is set during auto trim operation, an interrupt will be triggered to notify the clock frequency is inaccuracy.
-     * |        |          |0 = Disable CLKERRIF(SYS_IRCTISTS[2]) status to trigger an interrupt to CPU.
-     * |        |          |1 = Enable CLKERRIF(SYS_IRCTISTS[2]) status to trigger an interrupt to CPU.
-     * @var SYS_T::IRCTISTS
-     * Offset: 0xF8  HIRC Trim Interrupt Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |FREQLOCK  |HIRC Frequency Lock Status
-     * |        |          |This bit indicates the HIRC frequency is locked.
-     * |        |          |This is a status bit and doesn't trigger any interrupt
-     * |        |          |Write 1 to clear this to 0
-     * |        |          |This bit will be set automatically, if the frequency is lock and the RC_TRIM is enabled.
-     * |        |          |0 = The internal high-speed oscillator frequency doesn't lock at 12 MHz yet.
-     * |        |          |1 = The internal high-speed oscillator frequency locked at 12 MHz.
-     * |[1]     |TFAILIF   |Trim Failure Interrupt Status
-     * |        |          |This bit indicates that HIRC trim value update limitation count reached and the HIRC clock frequency still doesn't be locked
-     * |        |          |Once this bit is set, the auto trim operation stopped and FREQSEL(SYS_IRCTCTL[1:0]) will be cleared to 00 by hardware automatically.
-     * |        |          |If this bit is set and TFAILIEN(SYS_IRCTIEN[1]) is high, an interrupt will be triggered to notify that HIRC trim value update limitation count was reached
-     * |        |          |Write 1 to clear this to 0.
-     * |        |          |0 = Trim value update limitation count does not reach.
-     * |        |          |1 = Trim value update limitation count reached and HIRC frequency still not locked.
-     * |[2]     |CLKERRIF  |Clock Error Interrupt Status
-     * |        |          |When the frequency of 32.768 kHz external low speed crystal oscillator (LXT) or 12MHz internal high speed RC oscillator (HIRC) is shift larger to unreasonable value, this bit will be set and to be an indicate that clock frequency is inaccuracy.
-     * |        |          |Once this bit is set to 1, the auto trim operation stopped and FREQSEL(SYS_IRCTCL[1:0]) will be cleared to 00 by hardware automatically if CESTOPEN(SYS_IRCTCTL[8]) is set to 1.
-     * |        |          |If this bit is set and CLKEIEN(SYS_IRCTIEN[2]) is high, an interrupt will be triggered to notify the clock frequency is inaccuracy.
-     * |        |          |Write 1 to clear this to 0.
-     * |        |          |0 = Clock frequency is accurate.
-     * |        |          |1 = Clock frequency is inaccurate.
-     * @var SYS_T::REGLCTL
-     * Offset: 0x100  Register Lock Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[7:0]   |REGLCTL   |Register Lock Control Code
-     * |        |          |Some registers have write-protection function
-     * |        |          |Writing these registers have to disable the protected function by writing the sequence value "59h", "16h", "88h" to this field.
-     * |        |          |After this sequence is completed, the REGLCTL bit will be set to 1 and write-protection registers can be normal write.
-     * |        |          |Register Lock Control Code
-     * |        |          |0 = Write-protection Enabled for writing protected registers
-     * |        |          |Any write to the protected register is ignored.
-     * |        |          |1 = Write-protection Disabled for writing protected registers.
-     * @var SYS_T::PORDISAN
-     * Offset: 0x1EC  Analog POR Disable Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |POROFFAN  |Power-on Reset Enable Bit (Write Protect)
-     * |        |          |After powered on, User can turn off internal analog POR circuit to save power by writing 0x5AA5 to this field.
-     * |        |          |The analog POR circuit will be active again when  this field is set to another value or chip is reset by other reset source, including:
-     * |        |          |nRESET, Watchdog, LVR reset, BOD reset, ICE reset command and the software-chip reset function.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * @var SYS_T::PLCTL
-     * Offset: 0x1F8  Power Level Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[1:0]   |PLSEL     |Power Level Select(Write Protect)
-     * |        |          |00 = Power level is PL0.
-     * |        |          |01 = Power level is PL1.
-     * |        |          |Others = Reserved.
-     * |[21:16] |LVSSTEP   |LDO Voltage Scaling Step(Write Protect)
-     * |        |          |The LVSSTEP value is LDO voltage rising step.
-     * |        |          |Core voltage scaling voltage step = (LVSSTEP + 1) * 10mV.
-     * |[31:24] |LVSPRD    |LDO Voltage Scaling Period(Write Protect)
-     * |        |          |The LVSPRD value is the period of each LDO voltage rising step.
-     * |        |          |LDO voltage scaling period = (LVSPRD + 1) * 1us.
-     * @var SYS_T::PLSTS
-     * Offset: 0x1FC  Power Level Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |PLCBUSY   |Power Level Change Busy Bit (Read Only)
-     * |        |          |This bit is set by hardware when core voltage is changing
-     * |        |          |After core voltage change is completed, this bit will be cleared automatically by hardware.
-     * |        |          |0 = Core voltage change is completed.
-     * |        |          |1 = Core voltage change is ongoing.
-     * |[9:8]   |PLSTATUS  |Power Level Status (Read Only)
-     * |        |          |00 = Power level is PL0.
-     * |        |          |01 = Power level is PL1.
-     * |        |          |Others = Reserved.
-     * @var SYS_T::AHBMCTL
-     * Offset: 0x400  AHB Bus Matrix Priority Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |INTACTEN  |Highest AHB Bus Priority of Cortex M4 Core Enable Bit (Write Protect)
-     * |        |          |Enable Cortex-M4 Core With Highest AHB Bus Priority In AHB Bus Matrix
-     * |        |          |0 = Run robin mode.
-     * |        |          |1 = Cortex-M4 CPU with highest bus priority when interrupt occurred.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     */
+@var SYS_T::PDID
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PDID
+</font><br><p> <font size="2">
+Offset: 0x00  Part Device Identification Number Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[31:0]</td><td>PDID</td><td><div style="word-wrap: break-word;"><b>Part Device Identification Number (Read Only)
+</b><br>
+This register reflects device part number code
+<br>
+Software can read this register to identify which device is used.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::RSTSTS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">RSTSTS
+</font><br><p> <font size="2">
+Offset: 0x04  System Reset Status Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>PORF</td><td><div style="word-wrap: break-word;"><b>POR Reset Flag
+</b><br>
+The POR reset flag is set by the "Reset Signal" from the Power-on Reset (POR) Controller or bit CHIPRST (SYS_IPRST0[0]) to indicate the previous reset source.
+<br>
+0 = No reset from POR or CHIPRST.
+<br>
+1 = Power-on Reset (POR) or CHIPRST had issued the reset signal to reset the system.
+<br>
+Note: Write 1 to clear this bit to 0.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>PINRF</td><td><div style="word-wrap: break-word;"><b>NRESET Pin Reset Flag
+</b><br>
+The nRESET pin reset flag is set by the "Reset Signal" from the nRESET Pin to indicate the previous reset source.
+<br>
+0 = No reset from nRESET pin.
+<br>
+1 = Pin nRESET had issued the reset signal to reset the system.
+<br>
+Note: Write 1 to clear this bit to 0.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>WDTRF</td><td><div style="word-wrap: break-word;"><b>WDT Reset Flag
+</b><br>
+The WDT reset flag is set by the "Reset Signal" from the Watchdog Timer or Window Watchdog Timer to indicate the previous reset source.
+<br>
+0 = No reset from watchdog timer or window watchdog timer.
+<br>
+1 = The watchdog timer or window watchdog timer had issued the reset signal to reset the system.
+<br>
+Note1: Write 1 to clear this bit to 0.
+<br>
+Note2: Watchdog Timer register RSTF(WDT_CTL[2]) bit is set if the system has been reset by WDT time-out reset
+<br>
+Window Watchdog Timer register WWDTRF(WWDT_STATUS[1]) bit is set if the system has been reset by WWDT time-out reset.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>LVRF</td><td><div style="word-wrap: break-word;"><b>LVR Reset Flag
+</b><br>
+The LVR reset flag is set by the "Reset Signal" from the Low Voltage Reset Controller to indicate the previous reset source.
+<br>
+0 = No reset from LVR.
+<br>
+1 = LVR controller had issued the reset signal to reset the system.
+<br>
+Note: Write 1 to clear this bit to 0.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>BODRF</td><td><div style="word-wrap: break-word;"><b>BOD Reset Flag
+</b><br>
+The BOD reset flag is set by the "Reset Signal" from the Brown-Out Detector to indicate the previous reset source.
+<br>
+0 = No reset from BOD.
+<br>
+1 = The BOD had issued the reset signal to reset the system.
+<br>
+Note: Write 1 to clear this bit to 0.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>SYSRF</td><td><div style="word-wrap: break-word;"><b>System Reset Flag
+</b><br>
+The system reset flag is set by the "Reset Signal" from the Cortex-M4 Core to indicate the previous reset source.
+<br>
+0 = No reset from Cortex-M4.
+<br>
+1 = The Cortex-M4 had issued the reset signal to reset the system by writing 1 to the bit SYSRESETREQ(AIRCR[2], Application Interrupt and Reset Control Register, address = 0xE000ED0C) in system control registers of Cortex-M4 core.
+<br>
+Note: Write 1 to clear this bit to 0.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>CPURF</td><td><div style="word-wrap: break-word;"><b>CPU Reset Flag
+</b><br>
+The CPU reset flag is set by hardware if software writes CPURST (SYS_IPRST0[1]) 1 to reset Cortex-M4 Core and Flash Memory Controller (FMC).
+<br>
+0 = No reset from CPU.
+<br>
+1 = The Cortex-M4 Core and FMC are reset by software setting CPURST to 1.
+<br>
+Note: Write to clear this bit to 0.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>CPULKRF</td><td><div style="word-wrap: break-word;"><b>CPU Lock-up Reset Flag
+</b><br>
+0 = No reset from CPU lock-up happened.
+<br>
+1 = The Cortex-M4 lock-up happened and chip is reset.
+<br>
+Note: Write 1 to clear this bit to 0.
+<br>
+Note2: When CPU lock-up happened under ICE is connected, This flag will set to 1 but chip will not reset.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::IPRST0
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">IPRST0
+</font><br><p> <font size="2">
+Offset: 0x08  Peripheral  Reset Control Register 0
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>CHIPRST</td><td><div style="word-wrap: break-word;"><b>Chip One-shot Reset (Write Protect)
+</b><br>
+Setting this bit will reset the whole chip, including Processor core and all peripherals, and this bit will automatically return to 0 after the 2 clock cycles.
+<br>
+The CHIPRST is same as the POR reset, all the chip controllers is reset and the chip setting from flash are also reload.
+<br>
+About the difference between CHIPRST and SYSRESETREQ(AIRCR[2]), please refer to section 6.2.2
+<br>
+0 = Chip normal operation.
+<br>
+1 = Chip one-shot reset.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>CPURST</td><td><div style="word-wrap: break-word;"><b>Processor Core One-shot Reset (Write Protect)
+</b><br>
+Setting this bit will only reset the processor core and Flash Memory Controller(FMC), and this bit will automatically return to 0 after the 2 clock cycles.
+<br>
+0 = Processor core normal operation.
+<br>
+1 = Processor core one-shot reset.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>PDMARST</td><td><div style="word-wrap: break-word;"><b>PDMA Controller Reset (Write Protect)
+</b><br>
+Setting this bit to 1 will generate a reset signal to the PDMA
+<br>
+User needs to set this bit to 0 to release from reset state.
+<br>
+0 = PDMA controller normal operation.
+<br>
+1 = PDMA controller reset.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>EBIRST</td><td><div style="word-wrap: break-word;"><b>EBI Controller Reset (Write Protect)
+</b><br>
+Set this bit to 1 will generate a reset signal to the EBI
+<br>
+User needs to set this bit to 0 to release from the reset state.
+<br>
+0 = EBI controller normal operation.
+<br>
+1 = EBI controller reset.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>EMACRST</td><td><div style="word-wrap: break-word;"><b>EMAC Controller Reset (Write Protect)
+</b><br>
+Setting this bit to 1 will generate a reset signal to the EMAC controller
+<br>
+User needs to set this bit to 0 to release from the reset state.
+<br>
+0 = EMAC controller normal operation.
+<br>
+1 = EMAC controller reset.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>SDH0RST</td><td><div style="word-wrap: break-word;"><b>SDHOST0 Controller Reset (Write Protect)
+</b><br>
+Setting this bit to 1 will generate a reset signal to the SDHOST0 controller
+<br>
+User needs to set this bit to 0 to release from the reset state.
+<br>
+0 = SDHOST0 controller normal operation.
+<br>
+1 = SDHOST0 controller reset.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>CRCRST</td><td><div style="word-wrap: break-word;"><b>CRC Calculation Controller Reset (Write Protect)
+</b><br>
+Set this bit to 1 will generate a reset signal to the CRC calculation controller
+<br>
+User needs to set this bit to 0 to release from the reset state.
+<br>
+0 = CRC calculation controller normal operation.
+<br>
+1 = CRC calculation controller reset.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>CCAPRST</td><td><div style="word-wrap: break-word;"><b>CCAP Controller Reset (Write Protect)
+</b><br>
+Set this bit to 1 will generate a reset signal to the CCAP controller.
+<br>
+User needs to set this bit to 0 to release from the reset state.
+<br>
+0 = CCAP controller normal operation.
+<br>
+1 = CCAP controller reset.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>HSUSBDRST</td><td><div style="word-wrap: break-word;"><b>HSUSBD Controller Reset (Write Protect)
+</b><br>
+Setting this bit to 1 will generate a reset signal to the HSUSBD controller
+<br>
+User needs to set this bit to 0 to release from the reset state.
+<br>
+0 = HSUSBD controller normal operation.
+<br>
+1 = HSUSBD controller reset.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>CRPTRST</td><td><div style="word-wrap: break-word;"><b>CRYPTO Controller Reset (Write Protect)
+</b><br>
+Setting this bit to 1 will generate a reset signal to the CRYPTO controller
+<br>
+User needs to set this bit to 0 to release from the reset state.
+<br>
+0 = CRYPTO controller normal operation.
+<br>
+1 = CRYPTO controller reset.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>SPIMRST</td><td><div style="word-wrap: break-word;"><b>SPIM Controller Reset
+</b><br>
+Setting this bit to 1 will generate a reset signal to the SPIM controller
+<br>
+User needs to set this bit to 0 to release from the reset state.
+<br>
+0 = SPIM controller normal operation.
+<br>
+1 = SPIM controller reset.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>USBHRST</td><td><div style="word-wrap: break-word;"><b>USBH Controller Reset (Write Protect)
+</b><br>
+Set this bit to 1 will generate a reset signal to the USBH controller
+<br>
+User needs to set this bit to 0 to release from the reset state.
+<br>
+0 = USBH controller normal operation.
+<br>
+1 = USBH controller reset.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>SDH1RST</td><td><div style="word-wrap: break-word;"><b>SDHOST1 Controller Reset (Write Protect)
+</b><br>
+Setting this bit to 1 will generate a reset signal to the SDHOST1 controller
+<br>
+User needs to set this bit to 0 to release from the reset state.
+<br>
+0 = SDHOST1 controller normal operation.
+<br>
+1 = SDHOST1 controller reset.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::IPRST1
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">IPRST1
+</font><br><p> <font size="2">
+Offset: 0x0C  Peripheral Reset Control Register 1
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[1]</td><td>GPIORST</td><td><div style="word-wrap: break-word;"><b>GPIO Controller Reset
+</b><br>
+0 = GPIO controller normal operation.
+<br>
+1 = GPIO controller reset.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>TMR0RST</td><td><div style="word-wrap: break-word;"><b>Timer0 Controller Reset
+</b><br>
+0 = Timer0 controller normal operation.
+<br>
+1 = Timer0 controller reset.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>TMR1RST</td><td><div style="word-wrap: break-word;"><b>Timer1 Controller Reset
+</b><br>
+0 = Timer1 controller normal operation.
+<br>
+1 = Timer1 controller reset.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>TMR2RST</td><td><div style="word-wrap: break-word;"><b>Timer2 Controller Reset
+</b><br>
+0 = Timer2 controller normal operation.
+<br>
+1 = Timer2 controller reset.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>TMR3RST</td><td><div style="word-wrap: break-word;"><b>Timer3 Controller Reset
+</b><br>
+0 = Timer3 controller normal operation.
+<br>
+1 = Timer3 controller reset.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>ACMP01RST</td><td><div style="word-wrap: break-word;"><b>Analog Comparator 0/1 Controller Reset
+</b><br>
+0 = Analog Comparator 0/1 controller normal operation.
+<br>
+1 = Analog Comparator 0/1 controller reset.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>I2C0RST</td><td><div style="word-wrap: break-word;"><b>I2C0 Controller Reset
+</b><br>
+0 = I2C0 controller normal operation.
+<br>
+1 = I2C0 controller reset.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>I2C1RST</td><td><div style="word-wrap: break-word;"><b>I2C1 Controller Reset
+</b><br>
+0 = I2C1 controller normal operation.
+<br>
+1 = I2C1 controller reset.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>I2C2RST</td><td><div style="word-wrap: break-word;"><b>I2C2 Controller Reset
+</b><br>
+0 = I2C2 controller normal operation.
+<br>
+1 = I2C2 controller reset.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>QSPI0RST</td><td><div style="word-wrap: break-word;"><b>QSPI0 Controller Reset
+</b><br>
+0 = QSPI0 controller normal operation.
+<br>
+1 = QSPI0 controller reset.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>SPI0RST</td><td><div style="word-wrap: break-word;"><b>SPI0 Controller Reset
+</b><br>
+0 = SPI0 controller normal operation.
+<br>
+1 = SPI0 controller reset.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>SPI1RST</td><td><div style="word-wrap: break-word;"><b>SPI1 Controller Reset
+</b><br>
+0 = SPI1 controller normal operation.
+<br>
+1 = SPI1 controller reset.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>SPI2RST</td><td><div style="word-wrap: break-word;"><b>SPI2 Controller Reset
+</b><br>
+0 = SPI2 controller normal operation.
+<br>
+1 = SPI2 controller reset.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>UART0RST</td><td><div style="word-wrap: break-word;"><b>UART0 Controller Reset
+</b><br>
+0 = UART0 controller normal operation.
+<br>
+1 = UART0 controller reset.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>UART1RST</td><td><div style="word-wrap: break-word;"><b>UART1 Controller Reset
+</b><br>
+0 = UART1 controller normal operation.
+<br>
+1 = UART1 controller reset.
+<br>
+</div></td></tr><tr><td>
+[18]</td><td>UART2RST</td><td><div style="word-wrap: break-word;"><b>UART2 Controller Reset
+</b><br>
+0 = UART2 controller normal operation.
+<br>
+1 = UART2 controller reset.
+<br>
+</div></td></tr><tr><td>
+[19]</td><td>UART3RST</td><td><div style="word-wrap: break-word;"><b>UART3 Controller Reset
+</b><br>
+0 = UART3 controller normal operation.
+<br>
+1 = UART3 controller reset.
+<br>
+</div></td></tr><tr><td>
+[20]</td><td>UART4RST</td><td><div style="word-wrap: break-word;"><b>UART4 Controller Reset
+</b><br>
+0 = UART4 controller normal operation.
+<br>
+1 = UART4 controller reset.
+<br>
+</div></td></tr><tr><td>
+[21]</td><td>UART5RST</td><td><div style="word-wrap: break-word;"><b>UART5 Controller Reset
+</b><br>
+0 = UART5 controller normal operation.
+<br>
+1 = UART5 controller reset.
+<br>
+</div></td></tr><tr><td>
+[24]</td><td>CAN0RST</td><td><div style="word-wrap: break-word;"><b>CAN0 Controller Reset
+</b><br>
+0 = CAN0 controller normal operation.
+<br>
+1 = CAN0 controller reset.
+<br>
+</div></td></tr><tr><td>
+[25]</td><td>CAN1RST</td><td><div style="word-wrap: break-word;"><b>CAN1 Controller Reset
+</b><br>
+0 = CAN1 controller normal operation.
+<br>
+1 = CAN1 controller reset.
+<br>
+</div></td></tr><tr><td>
+[27]</td><td>USBDRST</td><td><div style="word-wrap: break-word;"><b>USBD Controller Reset
+</b><br>
+0 = USBD controller normal operation.
+<br>
+1 = USBD controller reset.
+<br>
+</div></td></tr><tr><td>
+[28]</td><td>EADCRST</td><td><div style="word-wrap: break-word;"><b>EADC Controller Reset
+</b><br>
+0 = EADC controller normal operation.
+<br>
+1 = EADC controller reset.
+<br>
+</div></td></tr><tr><td>
+[29]</td><td>I2S0RST</td><td><div style="word-wrap: break-word;"><b>I2S0 Controller Reset
+</b><br>
+0 = I2S0 controller normal operation.
+<br>
+1 = I2S0 controller reset.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::IPRST2
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">IPRST2
+</font><br><p> <font size="2">
+Offset: 0x10  Peripheral Reset Control Register 2
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>SC0RST</td><td><div style="word-wrap: break-word;"><b>SC0 Controller Reset
+</b><br>
+0 = SC0 controller normal operation.
+<br>
+1 = SC0 controller reset.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>SC1RST</td><td><div style="word-wrap: break-word;"><b>SC1 Controller Reset
+</b><br>
+0 = SC1 controller normal operation.
+<br>
+1 = SC1 controller reset.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>SC2RST</td><td><div style="word-wrap: break-word;"><b>SC2 Controller Reset
+</b><br>
+0 = SC2 controller normal operation.
+<br>
+1 = SC2 controller reset.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>SPI3RST</td><td><div style="word-wrap: break-word;"><b>SPI3 Controller Reset
+</b><br>
+0 = SPI3 controller normal operation.
+<br>
+1 = SPI3 controller reset.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>USCI0RST</td><td><div style="word-wrap: break-word;"><b>USCI0 Controller Reset
+</b><br>
+0 = USCI0 controller normal operation.
+<br>
+1 = USCI0 controller reset.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>USCI1RST</td><td><div style="word-wrap: break-word;"><b>USCI1 Controller Reset
+</b><br>
+0 = USCI1 controller normal operation.
+<br>
+1 = USCI1 controller reset.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>DACRST</td><td><div style="word-wrap: break-word;"><b>DAC Controller Reset
+</b><br>
+0 = DAC controller normal operation.
+<br>
+1 = DAC controller reset.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>EPWM0RST</td><td><div style="word-wrap: break-word;"><b>EPWM0 Controller Reset
+</b><br>
+0 = EPWM0 controller normal operation.
+<br>
+1 = EPWM0 controller reset.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>EPWM1RST</td><td><div style="word-wrap: break-word;"><b>EPWM1 Controller Reset
+</b><br>
+0 = EPWM1 controller normal operation.
+<br>
+1 = EPWM1 controller reset.
+<br>
+</div></td></tr><tr><td>
+[18]</td><td>BPWM0RST</td><td><div style="word-wrap: break-word;"><b>BPWM0 Controller Reset
+</b><br>
+0 = BPWM0 controller normal operation.
+<br>
+1 = BPWM0 controller reset.
+<br>
+</div></td></tr><tr><td>
+[19]</td><td>BPWM1RST</td><td><div style="word-wrap: break-word;"><b>BPWM1 Controller Reset
+</b><br>
+0 = BPWM1 controller normal operation.
+<br>
+1 = BPWM1 controller reset.
+<br>
+</div></td></tr><tr><td>
+[22]</td><td>QEI0RST</td><td><div style="word-wrap: break-word;"><b>QEI0 Controller Reset
+</b><br>
+0 = QEI0 controller normal operation.
+<br>
+1 = QEI0 controller reset.
+<br>
+</div></td></tr><tr><td>
+[23]</td><td>QEI1RST</td><td><div style="word-wrap: break-word;"><b>QEI1 Controller Reset
+</b><br>
+0 = QEI1 controller normal operation.
+<br>
+1 = QEI1 controller reset.
+<br>
+</div></td></tr><tr><td>
+[26]</td><td>ECAP0RST</td><td><div style="word-wrap: break-word;"><b>ECAP0 Controller Reset
+</b><br>
+0 = ECAP0 controller normal operation.
+<br>
+1 = ECAP0 controller reset.
+<br>
+</div></td></tr><tr><td>
+[27]</td><td>ECAP1RST</td><td><div style="word-wrap: break-word;"><b>ECAP1 Controller Reset
+</b><br>
+0 = ECAP1 controller normal operation.
+<br>
+1 = ECAP1 controller reset.
+<br>
+</div></td></tr><tr><td>
+[28]</td><td>CAN2RST</td><td><div style="word-wrap: break-word;"><b>CAN2 Controller Reset
+</b><br>
+0 = CAN2 controller normal operation.
+<br>
+1 = CAN2 controller reset.
+<br>
+</div></td></tr><tr><td>
+[30]</td><td>OPARST</td><td><div style="word-wrap: break-word;"><b>OP Amplifier (OPA) Controller Reset
+</b><br>
+0 = OPA controller normal operation.
+<br>
+1 = OPA controller reset.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::BODCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">BODCTL
+</font><br><p> <font size="2">
+Offset: 0x18  Brown-Out Detector Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>BODEN</td><td><div style="word-wrap: break-word;"><b>Brown-out Detector Enable Bit (Write Protect)
+</b><br>
+The default value is set by flash controller user configuration register CBODEN(CONFIG0 [19]).
+<br>
+0 = Brown-out Detector function Disabled.
+<br>
+1 = Brown-out Detector function Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>BODRSTEN</td><td><div style="word-wrap: break-word;"><b>Brown-out Reset Enable Bit (Write Protect)
+</b><br>
+The default value is set by flash controller user configuration register CBORST(CONFIG0[20]) bit .
+<br>
+0 = Brown-out INTERRUPT function Enabled.
+<br>
+1 = Brown-out RESET function Enabled.
+<br>
+Note1:
+<br>
+While the Brown-out Detector function is enabled (BODEN high) and BOD reset function is enabled (BODRSTEN high), BOD will assert a signal to reset chip when the detected voltage is lower than the threshold (BODOUT high).
+<br>
+While the BOD function is enabled (BODEN high) and BOD interrupt function is enabled (BODRSTEN low), BOD will assert an interrupt if BODOUT is high
+<br>
+BOD interrupt will keep till to the BODEN set to 0
+<br>
+BOD interrupt can be blocked by disabling the NVIC BOD interrupt or disabling BOD function (set BODEN low).
+<br>
+Note2: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>BODIF</td><td><div style="word-wrap: break-word;"><b>Brown-out Detector Interrupt Flag
+</b><br>
+0 = Brown-out Detector does not detect any voltage draft at VDD down through or up through the voltage of BODVL setting.
+<br>
+1 = When Brown-out Detector detects the VDD is dropped down through the voltage of BODVL setting or the VDD is raised up through the voltage of BODVL setting, this bit is set to 1 and the brown-out interrupt is requested if brown-out interrupt is enabled.
+<br>
+Note: Write 1 to clear this bit to 0.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>BODLPM</td><td><div style="word-wrap: break-word;"><b>Brown-out Detector Low Power Mode (Write Protect)
+</b><br>
+0 = BOD operate in normal mode (default).
+<br>
+1 = BOD Low Power mode Enabled.
+<br>
+Note1: The BOD consumes about 100uA in normal mode, the low power mode can reduce the current to about 1/10 but slow the BOD response.
+<br>
+Note2: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>BODOUT</td><td><div style="word-wrap: break-word;"><b>Brown-out Detector Output Status
+</b><br>
+0 = Brown-out Detector output status is 0.
+<br>
+It means the detected voltage is higher than BODVL setting or BODEN is 0.
+<br>
+1 = Brown-out Detector output status is 1.
+<br>
+It means the detected voltage is lower than BODVL setting
+<br>
+If the BODEN is 0, BOD function disabled , this bit always responds 0000.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>LVREN</td><td><div style="word-wrap: break-word;"><b>Low Voltage Reset Enable Bit (Write Protect)
+</b><br>
+The LVR function resets the chip when the input power voltage is lower than LVR circuit setting
+<br>
+LVR function is enabled by default.
+<br>
+0 = Low Voltage Reset function Disabled.
+<br>
+1 = Low Voltage Reset function Enabled.
+<br>
+Note1: After enabling the bit, the LVR function will be active with 100us delay for LVR output stable (default).
+<br>
+Note2: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[10:8]</td><td>BODDGSEL</td><td><div style="word-wrap: break-word;"><b>Brown-out Detector Output De-glitch Time Select (Write Protect)
+</b><br>
+000 = BOD output is sampled by RC10K clock.
+<br>
+001 = 4 system clock (HCLK).
+<br>
+010 = 8 system clock (HCLK).
+<br>
+011 = 16 system clock (HCLK).
+<br>
+100 = 32 system clock (HCLK).
+<br>
+101 = 64 system clock (HCLK).
+<br>
+110 = 128 system clock (HCLK).
+<br>
+111 = 256 system clock (HCLK).
+<br>
+Note: These bits are write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[14:12]</td><td>LVRDGSEL</td><td><div style="word-wrap: break-word;"><b>LVR Output De-glitch Time Select (Write Protect)
+</b><br>
+000 = Without de-glitch function.
+<br>
+001 = 4 system clock (HCLK).
+<br>
+010 = 8 system clock (HCLK).
+<br>
+011 = 16 system clock (HCLK).
+<br>
+100 = 32 system clock (HCLK).
+<br>
+101 = 64 system clock (HCLK).
+<br>
+110 = 128 system clock (HCLK).
+<br>
+111 = 256 system clock (HCLK).
+<br>
+Note: These bits are write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[18:16]</td><td>BODVL</td><td><div style="word-wrap: break-word;"><b>Brown-out Detector Threshold Voltage Selection (Write Protect)
+</b><br>
+The default value is set by flash controller user configuration register CBOV (CONFIG0 [23:21]).
+<br>
+000 = Brown-Out Detector threshold voltage is 1.6V.
+<br>
+001 = Brown-Out Detector threshold voltage is 1.8V.
+<br>
+010 = Brown-Out Detector threshold voltage is 2.0V.
+<br>
+011 = Brown-Out Detector threshold voltage is 2.2V.
+<br>
+100 = Brown-Out Detector threshold voltage is 2.4V.
+<br>
+101 = Brown-Out Detector threshold voltage is 2.6V.
+<br>
+110 = Brown-Out Detector threshold voltage is 2.8V.
+<br>
+111 = Brown-Out Detector threshold voltage is 3.0V.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::IVSCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">IVSCTL
+</font><br><p> <font size="2">
+Offset: 0x1C  Internal Voltage Source Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>VTEMPEN</td><td><div style="word-wrap: break-word;"><b>Temperature Sensor Enable Bit
+</b><br>
+This bit is used to enable/disable temperature sensor function.
+<br>
+0 = Temperature sensor function Disabled (default).
+<br>
+1 = Temperature sensor function Enabled.
+<br>
+Note: After this bit is set to 1, the value of temperature sensor output can be obtained through GPC.9.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>VBATUGEN</td><td><div style="word-wrap: break-word;"><b>VBAT Unity Gain Buffer Enable Bit
+</b><br>
+This bit is used to enable/disable VBAT unity gain buffer function.
+<br>
+0 = VBAT unity gain buffer function Disabled (default).
+<br>
+1 = VBAT unity gain buffer function Enabled.
+<br>
+Note: After this bit is set to 1, the value of VBAT unity gain buffer output voltage can be obtained from ADC conversion result
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::PORCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PORCTL
+</font><br><p> <font size="2">
+Offset: 0x24  Power-On-Reset Controller Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[15:0]</td><td>POROFF</td><td><div style="word-wrap: break-word;"><b>Power-on Reset Enable Bit (Write Protect)
+</b><br>
+When powered on, the POR circuit generates a reset signal to reset the whole chip function, but noise on the power may cause the POR active again
+<br>
+User can disable internal POR circuit to avoid unpredictable noise to cause chip reset by writing 0x5AA5 to this field.
+<br>
+The POR function will be active again when this field is set to another value or chip is reset by other reset source, including:
+<br>
+nRESET, Watchdog, LVR reset, BOD reset, ICE reset command and the software-chip reset function.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::VREFCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">VREFCTL
+</font><br><p> <font size="2">
+Offset: 0x28  VREF Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[4:0]</td><td>VREFCTL</td><td><div style="word-wrap: break-word;"><b>VREF Control Bits (Write Protect)
+</b><br>
+00000 = VREF is from external pin.
+<br>
+00011 = VREF is internal 1.6V.
+<br>
+00111 = VREF is internal 2.0V.
+<br>
+01011 = VREF is internal 2.5V.
+<br>
+01111 = VREF is internal 3.0V.
+<br>
+Others = Reserved.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[7:6]</td><td>PRELOAD_SEL</td><td><div style="word-wrap: break-word;"><b>Pre-load Timing Selection.
+</b><br>
+00 = pre-load time is 60us for 0.1uF Capacitor.
+<br>
+01 = pre-load time is 310us for 1uF Capacitor.
+<br>
+10 = pre-load time is 1270us for 4.7uF Capacitor.
+<br>
+11 = pre-load time is 2650us for 10uF Capacitor.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::USBPHY
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">USBPHY
+</font><br><p> <font size="2">
+Offset: 0x2C  USB PHY Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[1:0]</td><td>USBROLE</td><td><div style="word-wrap: break-word;"><b>USB Role Option (Write Protect)
+</b><br>
+These two bits are used to select the role of USB.
+<br>
+00 = Standard USB Device mode.
+<br>
+01 = Standard USB Host mode.
+<br>
+10 = ID dependent mode.
+<br>
+11 = Reserved.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>SBO</td><td><div style="word-wrap: break-word;"><b>Note: This bit must always be kept 1. If set to 0, the result is unpredictable
+</b><br>
+</div></td></tr><tr><td>
+[8]</td><td>USBEN</td><td><div style="word-wrap: break-word;"><b>USB PHY Enable (Write Protect)
+</b><br>
+This bit is used to enable/disable USB PHY.
+<br>
+0 = USB PHY Disabled.
+<br>
+1 = USB PHY Enabled.
+<br>
+</div></td></tr><tr><td>
+[17:16]</td><td>HSUSBROLE</td><td><div style="word-wrap: break-word;"><b>HSUSB Role Option (Write Protect)
+</b><br>
+These two bits are used to select the role of HSUSB
+<br>
+00 = Standard HSUSB Device mode.
+<br>
+01 = Standard HSUSB Host mode.
+<br>
+10 = ID dependent mode.
+<br>
+11 = Reserved.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[24]</td><td>HSUSBEN</td><td><div style="word-wrap: break-word;"><b>HSUSB PHY Enable (Write Protect)
+</b><br>
+This bit is used to enable/disable HSUSB PHY.
+<br>
+0 = HSUSB PHY Disabled.
+<br>
+1 = HSUSB PHY Enabled.
+<br>
+</div></td></tr><tr><td>
+[25]</td><td>HSUSBACT</td><td><div style="word-wrap: break-word;"><b>HSUSB PHY Active Control
+</b><br>
+This bit is used to control HSUSB PHY at reset state or active state.
+<br>
+0 = HSUSB PHY at reset state.
+<br>
+1 = HSUSB PHY at active state.
+<br>
+Note: After set HSUSBEN (SYS_USBPHY[24]) to enable HSUSB PHY, user should keep HSUSB PHY at reset mode at lease 10uS before changing to active mode.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPA_MFPL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPA_MFPL
+</font><br><p> <font size="2">
+Offset: 0x30  GPIOA Low Byte Multiple Function Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>PA0MFP</td><td><div style="word-wrap: break-word;"><b>PA.0 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[7:4]</td><td>PA1MFP</td><td><div style="word-wrap: break-word;"><b>PA.1 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[11:8]</td><td>PA2MFP</td><td><div style="word-wrap: break-word;"><b>PA.2 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[15:12]</td><td>PA3MFP</td><td><div style="word-wrap: break-word;"><b>PA.3 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[19:16]</td><td>PA4MFP</td><td><div style="word-wrap: break-word;"><b>PA.4 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[23:20]</td><td>PA5MFP</td><td><div style="word-wrap: break-word;"><b>PA.5 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[27:24]</td><td>PA6MFP</td><td><div style="word-wrap: break-word;"><b>PA.6 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[31:28]</td><td>PA7MFP</td><td><div style="word-wrap: break-word;"><b>PA.7 Multi-function Pin Selection
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPA_MFPH
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPA_MFPH
+</font><br><p> <font size="2">
+Offset: 0x34  GPIOA High Byte Multiple Function Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>PA8MFP</td><td><div style="word-wrap: break-word;"><b>PA.8 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[7:4]</td><td>PA9MFP</td><td><div style="word-wrap: break-word;"><b>PA.9 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[11:8]</td><td>PA10MFP</td><td><div style="word-wrap: break-word;"><b>PA.10 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[15:12]</td><td>PA11MFP</td><td><div style="word-wrap: break-word;"><b>PA.11 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[19:16]</td><td>PA12MFP</td><td><div style="word-wrap: break-word;"><b>PA.12 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[23:20]</td><td>PA13MFP</td><td><div style="word-wrap: break-word;"><b>PA.13 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[27:24]</td><td>PA14MFP</td><td><div style="word-wrap: break-word;"><b>PA.14 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[31:28]</td><td>PA15MFP</td><td><div style="word-wrap: break-word;"><b>PA.15 Multi-function Pin Selection
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPB_MFPL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPB_MFPL
+</font><br><p> <font size="2">
+Offset: 0x38  GPIOB Low Byte Multiple Function Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>PB0MFP</td><td><div style="word-wrap: break-word;"><b>PB.0 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[7:4]</td><td>PB1MFP</td><td><div style="word-wrap: break-word;"><b>PB.1 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[11:8]</td><td>PB2MFP</td><td><div style="word-wrap: break-word;"><b>PB.2 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[15:12]</td><td>PB3MFP</td><td><div style="word-wrap: break-word;"><b>PB.3 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[19:16]</td><td>PB4MFP</td><td><div style="word-wrap: break-word;"><b>PB.4 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[23:20]</td><td>PB5MFP</td><td><div style="word-wrap: break-word;"><b>PB.5 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[27:24]</td><td>PB6MFP</td><td><div style="word-wrap: break-word;"><b>PB.6 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[31:28]</td><td>PB7MFP</td><td><div style="word-wrap: break-word;"><b>PB.7 Multi-function Pin Selection
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPB_MFPH
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPB_MFPH
+</font><br><p> <font size="2">
+Offset: 0x3C  GPIOB High Byte Multiple Function Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>PB8MFP</td><td><div style="word-wrap: break-word;"><b>PB.8 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[7:4]</td><td>PB9MFP</td><td><div style="word-wrap: break-word;"><b>PB.9 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[11:8]</td><td>PB10MFP</td><td><div style="word-wrap: break-word;"><b>PB.10 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[15:12]</td><td>PB11MFP</td><td><div style="word-wrap: break-word;"><b>PB.11 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[19:16]</td><td>PB12MFP</td><td><div style="word-wrap: break-word;"><b>PB.12 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[23:20]</td><td>PB13MFP</td><td><div style="word-wrap: break-word;"><b>PB.13 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[27:24]</td><td>PB14MFP</td><td><div style="word-wrap: break-word;"><b>PB.14 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[31:28]</td><td>PB15MFP</td><td><div style="word-wrap: break-word;"><b>PB.15 Multi-function Pin Selection
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPC_MFPL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPC_MFPL
+</font><br><p> <font size="2">
+Offset: 0x40  GPIOC Low Byte Multiple Function Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>PC0MFP</td><td><div style="word-wrap: break-word;"><b>PC.0 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[7:4]</td><td>PC1MFP</td><td><div style="word-wrap: break-word;"><b>PC.1 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[11:8]</td><td>PC2MFP</td><td><div style="word-wrap: break-word;"><b>PC.2 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[15:12]</td><td>PC3MFP</td><td><div style="word-wrap: break-word;"><b>PC.3 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[19:16]</td><td>PC4MFP</td><td><div style="word-wrap: break-word;"><b>PC.4 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[23:20]</td><td>PC5MFP</td><td><div style="word-wrap: break-word;"><b>PC.5 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[27:24]</td><td>PC6MFP</td><td><div style="word-wrap: break-word;"><b>PC.6 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[31:28]</td><td>PC7MFP</td><td><div style="word-wrap: break-word;"><b>PC.7 Multi-function Pin Selection
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPC_MFPH
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPC_MFPH
+</font><br><p> <font size="2">
+Offset: 0x44  GPIOC High Byte Multiple Function Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>PC8MFP</td><td><div style="word-wrap: break-word;"><b>PC.8 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[7:4]</td><td>PC9MFP</td><td><div style="word-wrap: break-word;"><b>PC.9 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[11:8]</td><td>PC10MFP</td><td><div style="word-wrap: break-word;"><b>PC.10 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[15:12]</td><td>PC11MFP</td><td><div style="word-wrap: break-word;"><b>PC.11 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[19:16]</td><td>PC12MFP</td><td><div style="word-wrap: break-word;"><b>PC.12 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[23:20]</td><td>PC13MFP</td><td><div style="word-wrap: break-word;"><b>PC.13 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[27:24]</td><td>PC14MFP</td><td><div style="word-wrap: break-word;"><b>PC.14 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[31:28]</td><td>PC15MFP</td><td><div style="word-wrap: break-word;"><b>PC.15 Multi-function Pin Selection
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPD_MFPL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPD_MFPL
+</font><br><p> <font size="2">
+Offset: 0x48  GPIOD Low Byte Multiple Function Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>PD0MFP</td><td><div style="word-wrap: break-word;"><b>PD.0 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[7:4]</td><td>PD1MFP</td><td><div style="word-wrap: break-word;"><b>PD.1 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[11:8]</td><td>PD2MFP</td><td><div style="word-wrap: break-word;"><b>PD.2 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[15:12]</td><td>PD3MFP</td><td><div style="word-wrap: break-word;"><b>PD.3 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[19:16]</td><td>PD4MFP</td><td><div style="word-wrap: break-word;"><b>PD.4 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[23:20]</td><td>PD5MFP</td><td><div style="word-wrap: break-word;"><b>PD.5 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[27:24]</td><td>PD6MFP</td><td><div style="word-wrap: break-word;"><b>PD.6 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[31:28]</td><td>PD7MFP</td><td><div style="word-wrap: break-word;"><b>PD.7 Multi-function Pin Selection
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPD_MFPH
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPD_MFPH
+</font><br><p> <font size="2">
+Offset: 0x4C  GPIOD High Byte Multiple Function Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>PD8MFP</td><td><div style="word-wrap: break-word;"><b>PD.8 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[7:4]</td><td>PD9MFP</td><td><div style="word-wrap: break-word;"><b>PD.9 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[11:8]</td><td>PD10MFP</td><td><div style="word-wrap: break-word;"><b>PD.10 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[15:12]</td><td>PD11MFP</td><td><div style="word-wrap: break-word;"><b>PD.11 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[19:16]</td><td>PD12MFP</td><td><div style="word-wrap: break-word;"><b>PD.12 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[23:20]</td><td>PD13MFP</td><td><div style="word-wrap: break-word;"><b>PD.13 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[27:24]</td><td>PD14MFP</td><td><div style="word-wrap: break-word;"><b>PD.14 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[31:28]</td><td>PD15MFP</td><td><div style="word-wrap: break-word;"><b>PD.15 Multi-function Pin Selection
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPE_MFPL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPE_MFPL
+</font><br><p> <font size="2">
+Offset: 0x50  GPIOE Low Byte Multiple Function Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>PE0MFP</td><td><div style="word-wrap: break-word;"><b>PE.0 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[7:4]</td><td>PE1MFP</td><td><div style="word-wrap: break-word;"><b>PE.1 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[11:8]</td><td>PE2MFP</td><td><div style="word-wrap: break-word;"><b>PE.2 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[15:12]</td><td>PE3MFP</td><td><div style="word-wrap: break-word;"><b>PE.3 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[19:16]</td><td>PE4MFP</td><td><div style="word-wrap: break-word;"><b>PE.4 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[23:20]</td><td>PE5MFP</td><td><div style="word-wrap: break-word;"><b>PE.5 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[27:24]</td><td>PE6MFP</td><td><div style="word-wrap: break-word;"><b>PE.6 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[31:28]</td><td>PE7MFP</td><td><div style="word-wrap: break-word;"><b>PE.7 Multi-function Pin Selection
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPE_MFPH
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPE_MFPH
+</font><br><p> <font size="2">
+Offset: 0x54  GPIOE High Byte Multiple Function Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>PE8MFP</td><td><div style="word-wrap: break-word;"><b>PE.8 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[7:4]</td><td>PE9MFP</td><td><div style="word-wrap: break-word;"><b>PE.9 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[11:8]</td><td>PE10MFP</td><td><div style="word-wrap: break-word;"><b>PE.10 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[15:12]</td><td>PE11MFP</td><td><div style="word-wrap: break-word;"><b>PE.11 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[19:16]</td><td>PE12MFP</td><td><div style="word-wrap: break-word;"><b>PE.12 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[23:20]</td><td>PE13MFP</td><td><div style="word-wrap: break-word;"><b>PE.13 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[27:24]</td><td>PE14MFP</td><td><div style="word-wrap: break-word;"><b>PE.14 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[31:28]</td><td>PE15MFP</td><td><div style="word-wrap: break-word;"><b>PE.15 Multi-function Pin Selection
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPF_MFPL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPF_MFPL
+</font><br><p> <font size="2">
+Offset: 0x58  GPIOF Low Byte Multiple Function Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>PF0MFP</td><td><div style="word-wrap: break-word;"><b>PF.0 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[7:4]</td><td>PF1MFP</td><td><div style="word-wrap: break-word;"><b>PF.1 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[11:8]</td><td>PF2MFP</td><td><div style="word-wrap: break-word;"><b>PF.2 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[15:12]</td><td>PF3MFP</td><td><div style="word-wrap: break-word;"><b>PF.3 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[19:16]</td><td>PF4MFP</td><td><div style="word-wrap: break-word;"><b>PF.4 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[23:20]</td><td>PF5MFP</td><td><div style="word-wrap: break-word;"><b>PF.5 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[27:24]</td><td>PF6MFP</td><td><div style="word-wrap: break-word;"><b>PF.6 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[31:28]</td><td>PF7MFP</td><td><div style="word-wrap: break-word;"><b>PF.7 Multi-function Pin Selection
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPF_MFPH
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPF_MFPH
+</font><br><p> <font size="2">
+Offset: 0x5C  GPIOF High Byte Multiple Function Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>PF8MFP</td><td><div style="word-wrap: break-word;"><b>PF.8 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[7:4]</td><td>PF9MFP</td><td><div style="word-wrap: break-word;"><b>PF.9 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[11:8]</td><td>PF10MFP</td><td><div style="word-wrap: break-word;"><b>PF.10 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[15:12]</td><td>PF11MFP</td><td><div style="word-wrap: break-word;"><b>PF.11 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[19:16]</td><td>PF12MFP</td><td><div style="word-wrap: break-word;"><b>PF.12 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[23:20]</td><td>PF13MFP</td><td><div style="word-wrap: break-word;"><b>PF.13 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[27:24]</td><td>PF14MFP</td><td><div style="word-wrap: break-word;"><b>PF.14 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[31:28]</td><td>PF15MFP</td><td><div style="word-wrap: break-word;"><b>PF.15 Multi-function Pin Selection
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPG_MFPL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPG_MFPL
+</font><br><p> <font size="2">
+Offset: 0x60  GPIOG Low Byte Multiple Function Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>PG0MFP</td><td><div style="word-wrap: break-word;"><b>PG.0 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[7:4]</td><td>PG1MFP</td><td><div style="word-wrap: break-word;"><b>PG.1 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[11:8]</td><td>PG2MFP</td><td><div style="word-wrap: break-word;"><b>PG.2 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[15:12]</td><td>PG3MFP</td><td><div style="word-wrap: break-word;"><b>PG.3 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[19:16]</td><td>PG4MFP</td><td><div style="word-wrap: break-word;"><b>PG.4 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[23:20]</td><td>PG5MFP</td><td><div style="word-wrap: break-word;"><b>PG.5 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[27:24]</td><td>PG6MFP</td><td><div style="word-wrap: break-word;"><b>PG.6 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[31:28]</td><td>PG7MFP</td><td><div style="word-wrap: break-word;"><b>PG.7 Multi-function Pin Selection
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPG_MFPH
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPG_MFPH
+</font><br><p> <font size="2">
+Offset: 0x64  GPIOG High Byte Multiple Function Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>PG8MFP</td><td><div style="word-wrap: break-word;"><b>PG.8 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[7:4]</td><td>PG9MFP</td><td><div style="word-wrap: break-word;"><b>PG.9 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[11:8]</td><td>PG10MFP</td><td><div style="word-wrap: break-word;"><b>PG.10 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[15:12]</td><td>PG11MFP</td><td><div style="word-wrap: break-word;"><b>PG.11 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[19:16]</td><td>PG12MFP</td><td><div style="word-wrap: break-word;"><b>PG.12 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[23:20]</td><td>PG13MFP</td><td><div style="word-wrap: break-word;"><b>PG.13 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[27:24]</td><td>PG14MFP</td><td><div style="word-wrap: break-word;"><b>PG.14 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[31:28]</td><td>PG15MFP</td><td><div style="word-wrap: break-word;"><b>PG.15 Multi-function Pin Selection
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPH_MFPL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPH_MFPL
+</font><br><p> <font size="2">
+Offset: 0x68  GPIOH Low Byte Multiple Function Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>PH0MFP</td><td><div style="word-wrap: break-word;"><b>PH.0 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[7:4]</td><td>PH1MFP</td><td><div style="word-wrap: break-word;"><b>PH.1 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[11:8]</td><td>PH2MFP</td><td><div style="word-wrap: break-word;"><b>PH.2 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[15:12]</td><td>PH3MFP</td><td><div style="word-wrap: break-word;"><b>PH.3 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[19:16]</td><td>PH4MFP</td><td><div style="word-wrap: break-word;"><b>PH.4 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[23:20]</td><td>PH5MFP</td><td><div style="word-wrap: break-word;"><b>PH.5 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[27:24]</td><td>PH6MFP</td><td><div style="word-wrap: break-word;"><b>PH.6 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[31:28]</td><td>PH7MFP</td><td><div style="word-wrap: break-word;"><b>PH.7 Multi-function Pin Selection
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPH_MFPH
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPH_MFPH
+</font><br><p> <font size="2">
+Offset: 0x6C  GPIOH High Byte Multiple Function Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>PH8MFP</td><td><div style="word-wrap: break-word;"><b>PH.8 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[7:4]</td><td>PH9MFP</td><td><div style="word-wrap: break-word;"><b>PH.9 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[11:8]</td><td>PH10MFP</td><td><div style="word-wrap: break-word;"><b>PH.10 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[15:12]</td><td>PH11MFP</td><td><div style="word-wrap: break-word;"><b>PH.11 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[19:16]</td><td>PH12MFP</td><td><div style="word-wrap: break-word;"><b>PH.12 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[23:20]</td><td>PH13MFP</td><td><div style="word-wrap: break-word;"><b>PH.13 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[27:24]</td><td>PH14MFP</td><td><div style="word-wrap: break-word;"><b>PH.14 Multi-function Pin Selection
+</b><br>
+</div></td></tr><tr><td>
+[31:28]</td><td>PH15MFP</td><td><div style="word-wrap: break-word;"><b>PH.15 Multi-function Pin Selection
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPA_MFOS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPA_MFOS
+</font><br><p> <font size="2">
+Offset: 0x80  GPIOA Multiple Function Output Select Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>MFOS0</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>MFOS1</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>MFOS2</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>MFOS3</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>MFOS4</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>MFOS5</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>MFOS6</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>MFOS7</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>MFOS8</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>MFOS9</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>MFOS10</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[11]</td><td>MFOS11</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>MFOS12</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>MFOS13</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>MFOS14</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>MFOS15</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPB_MFOS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPB_MFOS
+</font><br><p> <font size="2">
+Offset: 0x84  GPIOB Multiple Function Output Select Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>MFOS0</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>MFOS1</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>MFOS2</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>MFOS3</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>MFOS4</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>MFOS5</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>MFOS6</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>MFOS7</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>MFOS8</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>MFOS9</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>MFOS10</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[11]</td><td>MFOS11</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>MFOS12</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>MFOS13</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>MFOS14</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>MFOS15</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPC_MFOS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPC_MFOS
+</font><br><p> <font size="2">
+Offset: 0x88  GPIOC Multiple Function Output Select Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>MFOS0</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>MFOS1</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>MFOS2</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>MFOS3</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>MFOS4</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>MFOS5</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>MFOS6</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>MFOS7</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>MFOS8</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>MFOS9</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>MFOS10</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[11]</td><td>MFOS11</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>MFOS12</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>MFOS13</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>MFOS14</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>MFOS15</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPD_MFOS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPD_MFOS
+</font><br><p> <font size="2">
+Offset: 0x8C  GPIOD Multiple Function Output Select Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>MFOS0</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>MFOS1</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>MFOS2</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>MFOS3</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>MFOS4</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>MFOS5</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>MFOS6</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>MFOS7</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>MFOS8</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>MFOS9</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>MFOS10</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[11]</td><td>MFOS11</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>MFOS12</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>MFOS13</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>MFOS14</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>MFOS15</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPE_MFOS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPE_MFOS
+</font><br><p> <font size="2">
+Offset: 0x90  GPIOE Multiple Function Output Select Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>MFOS0</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>MFOS1</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>MFOS2</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>MFOS3</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>MFOS4</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>MFOS5</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>MFOS6</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>MFOS7</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>MFOS8</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>MFOS9</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>MFOS10</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[11]</td><td>MFOS11</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>MFOS12</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>MFOS13</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>MFOS14</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>MFOS15</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPF_MFOS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPF_MFOS
+</font><br><p> <font size="2">
+Offset: 0x94  GPIOF Multiple Function Output Select Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>MFOS0</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>MFOS1</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>MFOS2</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>MFOS3</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>MFOS4</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>MFOS5</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>MFOS6</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>MFOS7</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>MFOS8</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>MFOS9</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>MFOS10</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[11]</td><td>MFOS11</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>MFOS12</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>MFOS13</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>MFOS14</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>MFOS15</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPG_MFOS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPG_MFOS
+</font><br><p> <font size="2">
+Offset: 0x98  GPIOG Multiple Function Output Select Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>MFOS0</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>MFOS1</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>MFOS2</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>MFOS3</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>MFOS4</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>MFOS5</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>MFOS6</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>MFOS7</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>MFOS8</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>MFOS9</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>MFOS10</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[11]</td><td>MFOS11</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>MFOS12</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>MFOS13</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>MFOS14</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>MFOS15</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::GPH_MFOS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GPH_MFOS
+</font><br><p> <font size="2">
+Offset: 0x9C  GPIOH Multiple Function Output Select Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>MFOS0</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>MFOS1</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>MFOS2</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>MFOS3</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>MFOS4</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>MFOS5</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>MFOS6</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>MFOS7</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>MFOS8</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>MFOS9</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>MFOS10</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[11]</td><td>MFOS11</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>MFOS12</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>MFOS13</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>MFOS14</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>MFOS15</td><td><div style="word-wrap: break-word;"><b>GPIOA-H Pin[n] Multiple Function Pin Output Mode Select
+</b><br>
+This bit used to select multiple function pin output mode type for Px.n pin
+<br>
+0 = Multiple function pin output mode type is Push-pull mode.
+<br>
+1 = Multiple function pin output mode type is Open-drain mode.
+<br>
+Note:
+<br>
+Max. n=15 for port A/B/E/G.
+<br>
+Max. n=14 for port C/D.
+<br>
+Max. n=11 for port F/H.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::SRAM_INTCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SRAM_INTCTL
+</font><br><p> <font size="2">
+Offset: 0xC0  System SRAM Interrupt Enable Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>PERRIEN</td><td><div style="word-wrap: break-word;"><b>SRAM Parity Check Error Interrupt Enable Bit
+</b><br>
+0 = SRAM parity check error interrupt Disabled.
+<br>
+1 = SRAM parity check error interrupt Enabled.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::SRAM_STATUS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SRAM_STATUS
+</font><br><p> <font size="2">
+Offset: 0xC4  System SRAM Parity Error Status Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>PERRIF</td><td><div style="word-wrap: break-word;"><b>SRAM Parity Check Error Flag
+</b><br>
+This bit indicates the System SRAM parity error occurred. Write 1 to clear this to 0.
+<br>
+0 = No System SRAM parity error.
+<br>
+1 = System SRAM parity error occur.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::SRAM_ERRADDR
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SRAM_ERRADDR
+</font><br><p> <font size="2">
+Offset: 0xC8  System SRAM Parity Check Error Address Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[31:0]</td><td>ERRADDR</td><td><div style="word-wrap: break-word;"><b>System SRAM Parity Error Address
+</b><br>
+This register shows system SRAM parity error byte address.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::SRAM_BISTCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SRAM_BISTCTL
+</font><br><p> <font size="2">
+Offset: 0xD0  System SRAM BIST Test Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>SRBIST0</td><td><div style="word-wrap: break-word;"><b>SRAM Bank0 BIST Enable Bit (Write Protect)
+</b><br>
+This bit enables BIST test for SRAM bank0.
+<br>
+0 = system SRAM bank0 BIST Disabled.
+<br>
+1 = system SRAM bank0 BIST Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>SRBIST1</td><td><div style="word-wrap: break-word;"><b>SRAM Bank1 BIST Enable Bit (Write Protect)
+</b><br>
+This bit enables BIST test for SRAM bank1.
+<br>
+0 = system SRAM bank1 BIST Disabled.
+<br>
+1 = system SRAM bank1 BIST Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>CRBIST</td><td><div style="word-wrap: break-word;"><b>CACHE BIST Enable Bit (Write Protect)
+</b><br>
+This bit enables BIST test for CACHE RAM
+<br>
+0 = system CACHE BIST Disabled.
+<br>
+1 = system CACHE BIST Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>CANBIST</td><td><div style="word-wrap: break-word;"><b>CAN BIST Enable Bit (Write Protect)
+</b><br>
+This bit enables BIST test for CAN RAM
+<br>
+0 = system CAN BIST Disabled.
+<br>
+1 = system CAN BIST Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>USBBIST</td><td><div style="word-wrap: break-word;"><b>USB BIST Enable Bit (Write Protect)
+</b><br>
+This bit enables BIST test for USB RAM
+<br>
+0 = system USB BIST Disabled.
+<br>
+1 = system USB BIST Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>SPIMBIST</td><td><div style="word-wrap: break-word;"><b>SPIM BIST Enable Bit (Write Protect)
+</b><br>
+This bit enables BIST test for SPIM RAM
+<br>
+0 = system SPIM BIST Disabled.
+<br>
+1 = system SPIM BIST Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>EMCBIST</td><td><div style="word-wrap: break-word;"><b>EMC BIST Enable Bit (Write Protect)
+</b><br>
+This bit enables BIST test for EMC RAM
+<br>
+0 = system EMC BIST Disabled.
+<br>
+1 = system EMC BIST Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>PDMABIST</td><td><div style="word-wrap: break-word;"><b>PDMA BIST Enable Bit (Write Protect)
+</b><br>
+This bit enables BIST test for PDMA RAM
+<br>
+0 = system PDMA BIST Disabled.
+<br>
+1 = system PDMA BIST Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>HSUSBDBIST</td><td><div style="word-wrap: break-word;"><b>HSUSBD BIST Enable Bit (Write Protect)
+</b><br>
+This bit enables BIST test for HSUSBD RAM
+<br>
+0 = system HSUSBD BIST Disabled.
+<br>
+1 = system HSUSBD BIST Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>HSUSBHBIST</td><td><div style="word-wrap: break-word;"><b>HSUSBH BIST Enable Bit (Write Protect)
+</b><br>
+This bit enables BIST test for HSUSBH RAM
+<br>
+0 = system HSUSBH BIST Disabled.
+<br>
+1 = system HSUSBH BIST Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>SRB0S0</td><td><div style="word-wrap: break-word;"><b>SRAM Bank0 Section 0 BIST Select (Write Protect)
+</b><br>
+This bit define if the first 16KB section of SRAM bank0 is selected or not when doing bist test.
+<br>
+0 = SRAM bank0 section 0 is deselected when doing bist test.
+<br>
+1 = SRAM bank0 section 0 is selected when doing bist test.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+Note: At least one section of SRAM bank0 should be selected when doing SRAM bank0 bist test.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>SRB0S1</td><td><div style="word-wrap: break-word;"><b>SRAM Bank0 Section 1 BIST Select (Write Protect)
+</b><br>
+This bit define if the second 16KB section of SRAM bank0 is selected or not when doing bist test.
+<br>
+0 = SRAM bank0 section 1 is deselected when doing bist test.
+<br>
+1 = SRAM bank0 section 1 is selected when doing bist test.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+Note: At least one section of SRAM bank0 should be selected when doing SRAM bank0 bist test.
+<br>
+</div></td></tr><tr><td>
+[18]</td><td>SRB1S0</td><td><div style="word-wrap: break-word;"><b>SRAM Bank1 Section 0 BIST Select (Write Protect)
+</b><br>
+This bit define if the first 16KB section of SRAM bank1 is selected or not when doing bist test.
+<br>
+0 = SRAM bank1 first 16KB section is deselected when doing bist test.
+<br>
+1 = SRAM bank1 first 16KB section is selected when doing bist test.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+Note: At least one section of SRAM bank1 should be selected when doing SRAM bank1 bist test.
+<br>
+</div></td></tr><tr><td>
+[19]</td><td>SRB1S1</td><td><div style="word-wrap: break-word;"><b>SRAM Bank1 Section 1 BIST Select (Write Protect)
+</b><br>
+This bit define if the second 16KB section of SRAM bank1 is selected or not when doing bist test.
+<br>
+0 = SRAM bank1 second 16KB section is deselected when doing bist test.
+<br>
+1 = SRAM bank1 second 16KB section is selected when doing bist test.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+Note: At least one section of SRAM bank1 should be selected when doing SRAM bank1 bist test.
+<br>
+</div></td></tr><tr><td>
+[20]</td><td>SRB1S2</td><td><div style="word-wrap: break-word;"><b>SRAM Bank1 Section 0 BIST Select (Write Protect)
+</b><br>
+This bit define if the third 16KB section of SRAM bank1 is selected or not when doing bist test.
+<br>
+0 = SRAM bank1 third 16KB section is deselected when doing bist test.
+<br>
+1 = SRAM bank1 third 16KB section is selected when doing bist test.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+Note: At least one section of SRAM bank1 should be selected when doing SRAM bank1 bist test.
+<br>
+</div></td></tr><tr><td>
+[21]</td><td>SRB1S3</td><td><div style="word-wrap: break-word;"><b>SRAM Bank1 Section 1 BIST Select (Write Protect)
+</b><br>
+This bit define if the fourth 16KB section of SRAM bank1 is selected or not when doing bist test.
+<br>
+0 = SRAM bank1 fourth 16KB section is deselected when doing bist test.
+<br>
+1 = SRAM bank1 fourth 16KB section is selected when doing bist test.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+Note: At least one section of SRAM bank1 should be selected when doing SRAM bank1 bist test.
+<br>
+</div></td></tr><tr><td>
+[22]</td><td>SRB1S4</td><td><div style="word-wrap: break-word;"><b>SRAM Bank1 Section 0 BIST Select (Write Protect)
+</b><br>
+This bit define if the fifth 16KB section of SRAM bank1 is selected or not when doing bist test.
+<br>
+0 = SRAM bank1 fifth 16KB section is deselected when doing bist test.
+<br>
+1 = SRAM bank1 fifth 16KB section is selected when doing bist test.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+Note: At least one section of SRAM bank1 should be selected when doing SRAM bank1 bist test.
+<br>
+</div></td></tr><tr><td>
+[23]</td><td>SRB1S5</td><td><div style="word-wrap: break-word;"><b>SRAM Bank1 Section 1 BIST Select (Write Protect)
+</b><br>
+This bit define if the sixth 16KB section of SRAM bank1 is selected or not when doing bist test.
+<br>
+0 = SRAM bank1 sixth 16KB section is deselected when doing bist test.
+<br>
+1 = SRAM bank1 sixth 16KB section is selected when doing bist test.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+Note: At least one section of SRAM bank1 should be selected when doing SRAM bank1 bist test.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::SRAM_BISTSTS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SRAM_BISTSTS
+</font><br><p> <font size="2">
+Offset: 0xD4  System SRAM BIST Test Status Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>SRBISTEF0</td><td><div style="word-wrap: break-word;"><b>1st System SRAM BIST Fail Flag
+</b><br>
+0 = 1st system SRAM BIST test pass.
+<br>
+1 = 1st system SRAM BIST test fail.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>SRBISTEF1</td><td><div style="word-wrap: break-word;"><b>2nd System SRAM BIST Fail Flag
+</b><br>
+0 = 2nd system SRAM BIST test pass.
+<br>
+1 = 2nd system SRAM BIST test fail.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>CRBISTEF</td><td><div style="word-wrap: break-word;"><b>CACHE SRAM BIST Fail Flag
+</b><br>
+0 = System CACHE RAM BIST test pass.
+<br>
+1 = System CACHE RAM BIST test fail.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>CANBEF</td><td><div style="word-wrap: break-word;"><b>CAN SRAM BIST Fail Flag
+</b><br>
+0 = CAN SRAM BIST test pass.
+<br>
+1 = CAN SRAM BIST test fail.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>USBBEF</td><td><div style="word-wrap: break-word;"><b>USB SRAM BIST Fail Flag
+</b><br>
+0 = USB SRAM BIST test pass.
+<br>
+1 = USB SRAM BIST test fail.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>SRBEND0</td><td><div style="word-wrap: break-word;"><b>1st SRAM BIST Test Finish
+</b><br>
+0 = 1st system SRAM BIST active.
+<br>
+1 =1st system SRAM BIST finish.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>SRBEND1</td><td><div style="word-wrap: break-word;"><b>2nd SRAM BIST Test Finish
+</b><br>
+0 = 2nd system SRAM BIST is active.
+<br>
+1 = 2nd system SRAM BIST finish.
+<br>
+</div></td></tr><tr><td>
+[18]</td><td>CRBEND</td><td><div style="word-wrap: break-word;"><b>CACHE SRAM BIST Test Finish
+</b><br>
+0 = System CACHE RAM BIST is active.
+<br>
+1 = System CACHE RAM BIST test finish.
+<br>
+</div></td></tr><tr><td>
+[19]</td><td>CANBEND</td><td><div style="word-wrap: break-word;"><b>CAN SRAM BIST Test Finish
+</b><br>
+0 = CAN SRAM BIST is active.
+<br>
+1 = CAN SRAM BIST test finish.
+<br>
+</div></td></tr><tr><td>
+[20]</td><td>USBBEND</td><td><div style="word-wrap: break-word;"><b>USB SRAM BIST Test Finish
+</b><br>
+0 = USB SRAM BIST is active.
+<br>
+1 = USB SRAM BIST test finish.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::HIRCTCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HIRCTCTL
+</font><br><p> <font size="2">
+Offset: 0xE4  HIRC48M Trim Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[1:0]</td><td>FREQSEL</td><td><div style="word-wrap: break-word;"><b>Trim Frequency Selection
+</b><br>
+This field indicates the target frequency of 48 MHz internal high speed RC oscillator (HIRC) auto trim.
+<br>
+During auto trim operation, if clock error detected with CESTOPEN is set to 1 or trim retry limitation count reached, this field will be cleared to 00 automatically.
+<br>
+00 = Disable HIRC auto trim function.
+<br>
+01 = Enable HIRC auto trim function and trim HIRC to 48 MHz.
+<br>
+10 = Reserved..
+<br>
+11 = Reserved.
+<br>
+</div></td></tr><tr><td>
+[5:4]</td><td>LOOPSEL</td><td><div style="word-wrap: break-word;"><b>Trim Calculation Loop Selection
+</b><br>
+This field defines that trim value calculation is based on how many reference clocks.
+<br>
+00 = Trim value calculation is based on average difference in 4 clocks of reference clock.
+<br>
+01 = Trim value calculation is based on average difference in 8 clocks of reference clock.
+<br>
+10 = Trim value calculation is based on average difference in 16 clocks of reference clock.
+<br>
+11 = Trim value calculation is based on average difference in 32 clocks of reference clock.
+<br>
+Note: For example, if LOOPSEL is set as 00, auto trim circuit will calculate trim value based on the average frequency difference in 4 clocks of reference clock.
+<br>
+</div></td></tr><tr><td>
+[7:6]</td><td>RETRYCNT</td><td><div style="word-wrap: break-word;"><b>Trim Value Update Limitation Count
+</b><br>
+This field defines that how many times the auto trim circuit will try to update the HIRC trim value before the frequency of HIRC locked.
+<br>
+Once the HIRC locked, the internal trim value update counter will be reset.
+<br>
+If the trim value update counter reached this limitation value and frequency of HIRC still doesn't lock, the auto trim operation will be disabled and FREQSEL will be cleared to 00.
+<br>
+00 = Trim retry count limitation is 64 loops.
+<br>
+01 = Trim retry count limitation is 128 loops.
+<br>
+10 = Trim retry count limitation is 256 loops.
+<br>
+11 = Trim retry count limitation is 512 loops.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>CESTOPEN</td><td><div style="word-wrap: break-word;"><b>Clock Error Stop Enable Bit
+</b><br>
+0 = The trim operation is keep going if clock is inaccuracy.
+<br>
+1 = The trim operation is stopped if clock is inaccuracy.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>BOUNDEN</td><td><div style="word-wrap: break-word;"><b>Boundary Enable Bit
+</b><br>
+0 = Boundary function is disable.
+<br>
+1 = Boundary function is enable.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>REFCKSEL</td><td><div style="word-wrap: break-word;"><b>Reference Clock Selection
+</b><br>
+0 = HIRC trim reference from external 32.768 kHz crystal oscillator.
+<br>
+1 = HIRC trim reference from internal USB synchronous mode.
+<br>
+Note: HIRC trim reference clock is 20Khz in test mode.
+<br>
+</div></td></tr><tr><td>
+</td><td> </td><td><div style="word-wrap: break-word;"><b>[20:16  |BOUNDARY  |Boundary Selection
+</b><br>
+Fill the boundary range from 0x1 to 0x31, 0x0 is reserved.
+<br>
+Note1: This field is effective only when the BOUNDEN(SYS_HIRCTRIMCTL[9]) is enable.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::HIRCTIEN
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HIRCTIEN
+</font><br><p> <font size="2">
+Offset: 0xE8  HIRC48M Trim Interrupt Enable Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[1]</td><td>TFAILIEN</td><td><div style="word-wrap: break-word;"><b>Trim Failure Interrupt Enable Bit
+</b><br>
+This bit controls if an interrupt will be triggered while HIRC trim value update limitation count reached and HIRC frequency still not locked on target frequency set by FREQSEL(SYS_HIRCTCTL[1:0]).
+<br>
+If this bit is high and TFAILIF(SYS_HIRCTISTS[1]) is set during auto trim operation, an interrupt will be triggered to notify that HIRC trim value update limitation count was reached.
+<br>
+0 = Disable TFAILIF(SYS_HIRCTISTS[1]) status to trigger an interrupt to CPU.
+<br>
+1 = Enable TFAILIF(SYS_HIRCTISTS[1]) status to trigger an interrupt to CPU.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>CLKEIEN</td><td><div style="word-wrap: break-word;"><b>Clock Error Interrupt Enable Bit
+</b><br>
+This bit controls if CPU would get an interrupt while clock is inaccuracy during auto trim operation.
+<br>
+If this bit is set to1, and CLKERRIF(SYS_HIRCTISTS[2]) is set during auto trim operation, an interrupt will be triggered to notify the clock frequency is inaccuracy.
+<br>
+0 = Disable CLKERRIF(SYS_HIRCTISTS[2]) status to trigger an interrupt to CPU.
+<br>
+1 = Enable CLKERRIF(SYS_HIRCTISTS[2]) status to trigger an interrupt to CPU.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::HIRCTISTS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HIRCTISTS
+</font><br><p> <font size="2">
+Offset: 0xEC  HIRC48M Trim Interrupt Status Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>FREQLOCK</td><td><div style="word-wrap: break-word;"><b>HIRC Frequency Lock Status
+</b><br>
+This bit indicates the HIRC frequency is locked.
+<br>
+This is a status bit and doesn't trigger any interrupt
+<br>
+Write 1 to clear this to 0
+<br>
+This bit will be set automatically, if the frequency is lock and the RC_TRIM is enabled.
+<br>
+0 = The internal high-speed oscillator frequency doesn't lock at 48 MHz yet.
+<br>
+1 = The internal high-speed oscillator frequency locked at 48 MHz.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>TFAILIF</td><td><div style="word-wrap: break-word;"><b>Trim Failure Interrupt Status
+</b><br>
+This bit indicates that HIRC trim value update limitation count reached and the HIRC clock frequency still doesn't be locked
+<br>
+Once this bit is set, the auto trim operation stopped and FREQSEL(SYS_HIRCTCTL[1:0]) will be cleared to 00 by hardware automatically.
+<br>
+If this bit is set and TFAILIEN(SYS_HIRCTIEN[1]) is high, an interrupt will be triggered to notify that HIRC trim value update limitation count was reached
+<br>
+Write 1 to clear this to 0.
+<br>
+0 = Trim value update limitation count does not reach.
+<br>
+1 = Trim value update limitation count reached and HIRC frequency still not locked.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>CLKERRIF</td><td><div style="word-wrap: break-word;"><b>Clock Error Interrupt Status
+</b><br>
+When the frequency of 32.768 kHz external low speed crystal oscillator (LXT) or 48MHz internal high speed RC oscillator (HIRC) is shift larger to unreasonable value, this bit will be set and to be an indicate that clock frequency is inaccuracy.
+<br>
+Once this bit is set to 1, the auto trim operation stopped and FREQSEL(SYS_HIRCTCL[1:0]) will be cleared to 00 by hardware automatically if CESTOPEN(SYS_HIRCTCTL[8]) is set to 1.
+<br>
+If this bit is set and CLKEIEN(SYS_HIRCTIEN[2]) is high, an interrupt will be triggered to notify the clock frequency is inaccuracy.
+<br>
+Write 1 to clear this to 0.
+<br>
+0 = Clock frequency is accurate.
+<br>
+1 = Clock frequency is inaccurate.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>OVBDIF</td><td><div style="word-wrap: break-word;"><b>Over Boundary Status
+</b><br>
+When the over boundary function is set, if there occurs the over boundary condition, this flag will be set.
+<br>
+Note1: Write 1 to clear this flag.
+<br>
+Note2: This function is only supported in M48xGC/M48xG8.
+<br>
+0 = Over boundary condition did not occur.
+<br>
+1 = Over boundary condition occurred.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::IRCTCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">IRCTCTL
+</font><br><p> <font size="2">
+Offset: 0xF0  HIRC Trim Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[1:0]</td><td>FREQSEL</td><td><div style="word-wrap: break-word;"><b>Trim Frequency Selection
+</b><br>
+This field indicates the target frequency of 12 MHz internal high speed RC oscillator (HIRC) auto trim.
+<br>
+During auto trim operation, if clock error detected with CESTOPEN is set to 1 or trim retry limitation count reached, this field will be cleared to 00 automatically.
+<br>
+00 = Disable HIRC auto trim function.
+<br>
+01 = Enable HIRC auto trim function and trim HIRC to 12 MHz.
+<br>
+10 = Reserved..
+<br>
+11 = Reserved.
+<br>
+</div></td></tr><tr><td>
+[5:4]</td><td>LOOPSEL</td><td><div style="word-wrap: break-word;"><b>Trim Calculation Loop Selection
+</b><br>
+This field defines that trim value calculation is based on how many reference clocks.
+<br>
+00 = Trim value calculation is based on average difference in 4 clocks of reference clock.
+<br>
+01 = Trim value calculation is based on average difference in 8 clocks of reference clock.
+<br>
+10 = Trim value calculation is based on average difference in 16 clocks of reference clock.
+<br>
+11 = Trim value calculation is based on average difference in 32 clocks of reference clock.
+<br>
+Note: For example, if LOOPSEL is set as 00, auto trim circuit will calculate trim value based on the average frequency difference in 4 clocks of reference clock.
+<br>
+</div></td></tr><tr><td>
+[7:6]</td><td>RETRYCNT</td><td><div style="word-wrap: break-word;"><b>Trim Value Update Limitation Count
+</b><br>
+This field defines that how many times the auto trim circuit will try to update the HIRC trim value before the frequency of HIRC locked.
+<br>
+Once the HIRC locked, the internal trim value update counter will be reset.
+<br>
+If the trim value update counter reached this limitation value and frequency of HIRC still doesn't lock, the auto trim operation will be disabled and FREQSEL will be cleared to 00.
+<br>
+00 = Trim retry count limitation is 64 loops.
+<br>
+01 = Trim retry count limitation is 128 loops.
+<br>
+10 = Trim retry count limitation is 256 loops.
+<br>
+11 = Trim retry count limitation is 512 loops.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>CESTOPEN</td><td><div style="word-wrap: break-word;"><b>Clock Error Stop Enable Bit
+</b><br>
+0 = The trim operation is keep going if clock is inaccuracy.
+<br>
+1 = The trim operation is stopped if clock is inaccuracy.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>REFCKSEL</td><td><div style="word-wrap: break-word;"><b>Reference Clock Selection
+</b><br>
+0 = HIRC trim reference from external 32.768 kHz crystal oscillator.
+<br>
+1 = HIRC trim reference from internal USB synchronous mode.
+<br>
+Note: HIRC trim reference clock is 20Khz in test mode.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::IRCTIEN
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">IRCTIEN
+</font><br><p> <font size="2">
+Offset: 0xF4  HIRC Trim Interrupt Enable Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[1]</td><td>TFAILIEN</td><td><div style="word-wrap: break-word;"><b>Trim Failure Interrupt Enable Bit
+</b><br>
+This bit controls if an interrupt will be triggered while HIRC trim value update limitation count reached and HIRC frequency still not locked on target frequency set by FREQSEL(SYS_IRCTCTL[1:0]).
+<br>
+If this bit is high and TFAILIF(SYS_IRCTISTS[1]) is set during auto trim operation, an interrupt will be triggered to notify that HIRC trim value update limitation count was reached.
+<br>
+0 = Disable TFAILIF(SYS_IRCTISTS[1]) status to trigger an interrupt to CPU.
+<br>
+1 = Enable TFAILIF(SYS_IRCTISTS[1]) status to trigger an interrupt to CPU.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>CLKEIEN</td><td><div style="word-wrap: break-word;"><b>Clock Error Interrupt Enable Bit
+</b><br>
+This bit controls if CPU would get an interrupt while clock is inaccuracy during auto trim operation.
+<br>
+If this bit is set to1, and CLKERRIF(SYS_IRCTISTS[2]) is set during auto trim operation, an interrupt will be triggered to notify the clock frequency is inaccuracy.
+<br>
+0 = Disable CLKERRIF(SYS_IRCTISTS[2]) status to trigger an interrupt to CPU.
+<br>
+1 = Enable CLKERRIF(SYS_IRCTISTS[2]) status to trigger an interrupt to CPU.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::IRCTISTS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">IRCTISTS
+</font><br><p> <font size="2">
+Offset: 0xF8  HIRC Trim Interrupt Status Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>FREQLOCK</td><td><div style="word-wrap: break-word;"><b>HIRC Frequency Lock Status
+</b><br>
+This bit indicates the HIRC frequency is locked.
+<br>
+This is a status bit and doesn't trigger any interrupt
+<br>
+Write 1 to clear this to 0
+<br>
+This bit will be set automatically, if the frequency is lock and the RC_TRIM is enabled.
+<br>
+0 = The internal high-speed oscillator frequency doesn't lock at 12 MHz yet.
+<br>
+1 = The internal high-speed oscillator frequency locked at 12 MHz.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>TFAILIF</td><td><div style="word-wrap: break-word;"><b>Trim Failure Interrupt Status
+</b><br>
+This bit indicates that HIRC trim value update limitation count reached and the HIRC clock frequency still doesn't be locked
+<br>
+Once this bit is set, the auto trim operation stopped and FREQSEL(SYS_IRCTCTL[1:0]) will be cleared to 00 by hardware automatically.
+<br>
+If this bit is set and TFAILIEN(SYS_IRCTIEN[1]) is high, an interrupt will be triggered to notify that HIRC trim value update limitation count was reached
+<br>
+Write 1 to clear this to 0.
+<br>
+0 = Trim value update limitation count does not reach.
+<br>
+1 = Trim value update limitation count reached and HIRC frequency still not locked.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>CLKERRIF</td><td><div style="word-wrap: break-word;"><b>Clock Error Interrupt Status
+</b><br>
+When the frequency of 32.768 kHz external low speed crystal oscillator (LXT) or 12MHz internal high speed RC oscillator (HIRC) is shift larger to unreasonable value, this bit will be set and to be an indicate that clock frequency is inaccuracy.
+<br>
+Once this bit is set to 1, the auto trim operation stopped and FREQSEL(SYS_IRCTCL[1:0]) will be cleared to 00 by hardware automatically if CESTOPEN(SYS_IRCTCTL[8]) is set to 1.
+<br>
+If this bit is set and CLKEIEN(SYS_IRCTIEN[2]) is high, an interrupt will be triggered to notify the clock frequency is inaccuracy.
+<br>
+Write 1 to clear this to 0.
+<br>
+0 = Clock frequency is accurate.
+<br>
+1 = Clock frequency is inaccurate.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::REGLCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">REGLCTL
+</font><br><p> <font size="2">
+Offset: 0x100  Register Lock Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[7:0]</td><td>REGLCTL</td><td><div style="word-wrap: break-word;"><b>Register Lock Control Code
+</b><br>
+Some registers have write-protection function
+<br>
+Writing these registers have to disable the protected function by writing the sequence value "59h", "16h", "88h" to this field.
+<br>
+After this sequence is completed, the REGLCTL bit will be set to 1 and write-protection registers can be normal write.
+<br>
+Register Lock Control Code
+<br>
+0 = Write-protection Enabled for writing protected registers
+<br>
+Any write to the protected register is ignored.
+<br>
+1 = Write-protection Disabled for writing protected registers.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::PORDISAN
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PORDISAN
+</font><br><p> <font size="2">
+Offset: 0x1EC  Analog POR Disable Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[15:0]</td><td>POROFFAN</td><td><div style="word-wrap: break-word;"><b>Power-on Reset Enable Bit (Write Protect)
+</b><br>
+After powered on, User can turn off internal analog POR circuit to save power by writing 0x5AA5 to this field.
+<br>
+The analog POR circuit will be active again when  this field is set to another value or chip is reset by other reset source, including:
+<br>
+nRESET, Watchdog, LVR reset, BOD reset, ICE reset command and the software-chip reset function.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::PLCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PLCTL
+</font><br><p> <font size="2">
+Offset: 0x1F8  Power Level Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[1:0]</td><td>PLSEL</td><td><div style="word-wrap: break-word;"><b>Power Level Select(Write Protect)
+</b><br>
+00 = Power level is PL0.
+<br>
+01 = Power level is PL1.
+<br>
+Others = Reserved.
+<br>
+</div></td></tr><tr><td>
+[21:16]</td><td>LVSSTEP</td><td><div style="word-wrap: break-word;"><b>LDO Voltage Scaling Step(Write Protect)
+</b><br>
+The LVSSTEP value is LDO voltage rising step.
+<br>
+Core voltage scaling voltage step = (LVSSTEP + 1) * 10mV.
+<br>
+</div></td></tr><tr><td>
+[31:24]</td><td>LVSPRD</td><td><div style="word-wrap: break-word;"><b>LDO Voltage Scaling Period(Write Protect)
+</b><br>
+The LVSPRD value is the period of each LDO voltage rising step.
+<br>
+LDO voltage scaling period = (LVSPRD + 1) * 1us.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::PLSTS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PLSTS
+</font><br><p> <font size="2">
+Offset: 0x1FC  Power Level Status Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>PLCBUSY</td><td><div style="word-wrap: break-word;"><b>Power Level Change Busy Bit (Read Only)
+</b><br>
+This bit is set by hardware when core voltage is changing
+<br>
+After core voltage change is completed, this bit will be cleared automatically by hardware.
+<br>
+0 = Core voltage change is completed.
+<br>
+1 = Core voltage change is ongoing.
+<br>
+</div></td></tr><tr><td>
+[9:8]</td><td>PLSTATUS</td><td><div style="word-wrap: break-word;"><b>Power Level Status (Read Only)
+</b><br>
+00 = Power level is PL0.
+<br>
+01 = Power level is PL1.
+<br>
+Others = Reserved.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var SYS_T::AHBMCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">AHBMCTL
+</font><br><p> <font size="2">
+Offset: 0x400  AHB Bus Matrix Priority Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>INTACTEN</td><td><div style="word-wrap: break-word;"><b>Highest AHB Bus Priority of Cortex M4 Core Enable Bit (Write Protect)
+</b><br>
+Enable Cortex-M4 Core With Highest AHB Bus Priority In AHB Bus Matrix
+<br>
+0 = Run robin mode.
+<br>
+1 = Cortex-M4 CPU with highest bus priority when interrupt occurred.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+
+ */
     __I  uint32_t PDID;                  /*!< [0x0000] Part Device Identification Number Register                       */
     __IO uint32_t RSTSTS;                /*!< [0x0004] System Reset Status Register                                     */
     __IO uint32_t IPRST0;                /*!< [0x0008] Peripheral  Reset Control Register 0                             */
@@ -3435,122 +6064,274 @@ typedef struct
 
 
     /**
-     * @var NMI_T::NMIEN
-     * Offset: 0x00  NMI Source Interrupt Enable Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |BODOUT    |BOD NMI Source Enable (Write Protect)
-     * |        |          |0 = BOD NMI source Disabled.
-     * |        |          |1 = BOD NMI source Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[1]     |IRC_INT   |IRC TRIM NMI Source Enable (Write Protect)
-     * |        |          |0 = IRC TRIM NMI source Disabled.
-     * |        |          |1 = IRC TRIM NMI source Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[2]     |PWRWU_INT |Power-down Mode Wake-up NMI Source Enable (Write Protect)
-     * |        |          |0 = Power-down mode wake-up NMI source Disabled.
-     * |        |          |1 = Power-down mode wake-up NMI source Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[3]     |SRAM_PERR |SRAM Parity Check NMI Source Enable (Write Protect)
-     * |        |          |0 = SRAM parity check error NMI source Disabled.
-     * |        |          |1 = SRAM parity check error NMI source Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[4]     |CLKFAIL   |Clock Fail Detected and IRC Auto Trim Interrupt NMI Source Enable (Write Protect)
-     * |        |          |0 = Clock fail detected and IRC Auto Trim interrupt NMI source Disabled.
-     * |        |          |1 = Clock fail detected and IRC Auto Trim interrupt NMI source Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[6]     |RTC_INT   |RTC NMI Source Enable (Write Protect)
-     * |        |          |0 = RTC NMI source Disabled.
-     * |        |          |1 = RTC NMI source Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[7]     |TAMPER_INT|TAMPER_INT NMI Source Enable (Write Protect)
-     * |        |          |0 = Backup register tamper detected NMI source Disabled.
-     * |        |          |1 = Backup register tamper detected NMI source Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[8]     |EINT0     |External Interrupt From PA.6 or PB.5 Pin NMI Source Enable (Write Protect)
-     * |        |          |0 = External interrupt from PA.6 or PB.5 pin NMI source Disabled.
-     * |        |          |1 = External interrupt from PA.6 or PB.5 pin NMI source Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[9]     |EINT1     |External Interrupt From PA.7, PB.4 or PD.15 Pin NMI Source Enable (Write Protect)
-     * |        |          |0 = External interrupt from PA.7, PB.4 or PD.15 pin NMI source Disabled.
-     * |        |          |1 = External interrupt from PA.7, PB.4 or PD.15 pin NMI source Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[10]    |EINT2     |External Interrupt From PB.3 or PC.6 Pin NMI Source Enable (Write Protect)
-     * |        |          |0 = External interrupt from PB.3 or PC.6 pin NMI source Disabled.
-     * |        |          |1 = External interrupt from PB.3 or PC.6 pin NMI source Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[11]    |EINT3     |External Interrupt From PB.2 or PC.7 Pin NMI Source Enable (Write Protect)
-     * |        |          |0 = External interrupt from PB.2 or PC.7 pin NMI source Disabled.
-     * |        |          |1 = External interrupt from PB.2 or PC.7 pin NMI source Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[12]    |EINT4     |External Interrupt From PA.8, PB.6 or PF.15 Pin NMI Source Enable (Write Protect)
-     * |        |          |0 = External interrupt from PA.8, PB.6 or PF.15 pin NMI source Disabled.
-     * |        |          |1 = External interrupt from PA.8, PB.6 or PF.15 pin NMI source Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[13]    |EINT5     |External Interrupt From PB.7 or PF.14 Pin NMI Source Enable (Write Protect)
-     * |        |          |0 = External interrupt from PB.7 or PF.14 pin NMI source Disabled.
-     * |        |          |1 = External interrupt from PB.7 or PF.14 pin NMI source Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[14]    |UART0_INT |UART0 NMI Source Enable (Write Protect)
-     * |        |          |0 = UART0 NMI source Disabled.
-     * |        |          |1 = UART0 NMI source Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * |[15]    |UART1_INT |UART1 NMI Source Enable (Write Protect)
-     * |        |          |0 = UART1 NMI source Disabled.
-     * |        |          |1 = UART1 NMI source Enabled.
-     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
-     * @var NMI_T::NMISTS
-     * Offset: 0x04  NMI Source Interrupt Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |BODOUT    |BOD Interrupt Flag (Read Only)
-     * |        |          |0 = BOD interrupt is deasserted.
-     * |        |          |1 = BOD interrupt is asserted.
-     * |[1]     |IRC_INT   |IRC TRIM Interrupt Flag (Read Only)
-     * |        |          |0 = HIRC TRIM interrupt is deasserted.
-     * |        |          |1 = HIRC TRIM interrupt is asserted.
-     * |[2]     |PWRWU_INT |Power-down Mode Wake-up Interrupt Flag (Read Only)
-     * |        |          |0 = Power-down mode wake-up interrupt is deasserted.
-     * |        |          |1 = Power-down mode wake-up interrupt is asserted.
-     * |[3]     |SRAM_PERR |SRAM ParityCheck Error Interrupt Flag (Read Only)
-     * |        |          |0 = SRAM parity check error interrupt is deasserted.
-     * |        |          |1 = SRAM parity check error interrupt is asserted.
-     * |[4]     |CLKFAIL   |Clock Fail Detected or IRC Auto Trim Interrupt Flag (Read Only)
-     * |        |          |0 = Clock fail detected or IRC Auto Trim interrupt is deasserted.
-     * |        |          |1 = Clock fail detected or IRC Auto Trim interrupt is asserted.
-     * |[6]     |RTC_INT   |RTC Interrupt Flag (Read Only)
-     * |        |          |0 = RTC interrupt is deasserted.
-     * |        |          |1 = RTC interrupt is asserted.
-     * |[7]     |TAMPER_INT|TAMPER_INT Interrupt Flag (Read Only)
-     * |        |          |0 = Backup register tamper detected interrupt is deasserted.
-     * |        |          |1 = Backup register tamper detected interrupt is asserted.
-     * |[8]     |EINT0     |External Interrupt From PA.6 or PB.5 Pin Interrupt Flag (Read Only)
-     * |        |          |0 = External Interrupt from PA.6 or PB.5 interrupt is deasserted.
-     * |        |          |1 = External Interrupt from PA.6 or PB.5 interrupt is asserted.
-     * |[9]     |EINT1     |External Interrupt From PA.7, PB.4 or PD.15 Pin Interrupt Flag (Read Only)
-     * |        |          |0 = External Interrupt from PA.7, PB.4 or PD.15 interrupt is deasserted.
-     * |        |          |1 = External Interrupt from PA.7, PB.4 or PD.15 interrupt is asserted.
-     * |[10]    |EINT2     |External Interrupt From PB.3 or PC.6 Pin Interrupt Flag (Read Only)
-     * |        |          |0 = External Interrupt from PB.3 or PC.6 interrupt is deasserted.
-     * |        |          |1 = External Interrupt from PB.3 or PC.6 interrupt is asserted.
-     * |[11]    |EINT3     |External Interrupt From PB.2 or PC.7 Pin Interrupt Flag (Read Only)
-     * |        |          |0 = External Interrupt from PB.2 or PC.7 interrupt is deasserted.
-     * |        |          |1 = External Interrupt from PB.2 or PC.7 interrupt is asserted.
-     * |[12]    |EINT4     |External Interrupt From PA.8, PB.6 or PF.15 Pin Interrupt Flag (Read Only)
-     * |        |          |0 = External Interrupt from PA.8, PB.6 or PF.15 interrupt is deasserted.
-     * |        |          |1 = External Interrupt from PA.8, PB.6 or PF.15 interrupt is asserted.
-     * |[13]    |EINT5     |External Interrupt From PB.7 or PF.14 Pin Interrupt Flag (Read Only)
-     * |        |          |0 = External Interrupt from PB.7 or PF.14 interrupt is deasserted.
-     * |        |          |1 = External Interrupt from PB.7 or PF.14 interrupt is asserted.
-     * |[14]    |UART0_INT |UART0 Interrupt Flag (Read Only)
-     * |        |          |0 = UART1 interrupt is deasserted.
-     * |        |          |1 = UART1 interrupt is asserted.
-     * |[15]    |UART1_INT |UART1 Interrupt Flag (Read Only)
-     * |        |          |0 = UART1 interrupt is deasserted.
-     * |        |          |1 = UART1 interrupt is asserted.
-     */
+@var NMI_T::NMIEN
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">NMIEN
+</font><br><p> <font size="2">
+Offset: 0x00  NMI Source Interrupt Enable Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>BODOUT</td><td><div style="word-wrap: break-word;"><b>BOD NMI Source Enable (Write Protect)
+</b><br>
+0 = BOD NMI source Disabled.
+<br>
+1 = BOD NMI source Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>IRC_INT</td><td><div style="word-wrap: break-word;"><b>IRC TRIM NMI Source Enable (Write Protect)
+</b><br>
+0 = IRC TRIM NMI source Disabled.
+<br>
+1 = IRC TRIM NMI source Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>PWRWU_INT</td><td><div style="word-wrap: break-word;"><b>Power-down Mode Wake-up NMI Source Enable (Write Protect)
+</b><br>
+0 = Power-down mode wake-up NMI source Disabled.
+<br>
+1 = Power-down mode wake-up NMI source Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>SRAM_PERR</td><td><div style="word-wrap: break-word;"><b>SRAM Parity Check NMI Source Enable (Write Protect)
+</b><br>
+0 = SRAM parity check error NMI source Disabled.
+<br>
+1 = SRAM parity check error NMI source Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>CLKFAIL</td><td><div style="word-wrap: break-word;"><b>Clock Fail Detected and IRC Auto Trim Interrupt NMI Source Enable (Write Protect)
+</b><br>
+0 = Clock fail detected and IRC Auto Trim interrupt NMI source Disabled.
+<br>
+1 = Clock fail detected and IRC Auto Trim interrupt NMI source Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>RTC_INT</td><td><div style="word-wrap: break-word;"><b>RTC NMI Source Enable (Write Protect)
+</b><br>
+0 = RTC NMI source Disabled.
+<br>
+1 = RTC NMI source Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>TAMPER_INT</td><td><div style="word-wrap: break-word;"><b>TAMPER_INT NMI Source Enable (Write Protect)
+</b><br>
+0 = Backup register tamper detected NMI source Disabled.
+<br>
+1 = Backup register tamper detected NMI source Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>EINT0</td><td><div style="word-wrap: break-word;"><b>External Interrupt From PA.6 or PB.5 Pin NMI Source Enable (Write Protect)
+</b><br>
+0 = External interrupt from PA.6 or PB.5 pin NMI source Disabled.
+<br>
+1 = External interrupt from PA.6 or PB.5 pin NMI source Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>EINT1</td><td><div style="word-wrap: break-word;"><b>External Interrupt From PA.7, PB.4 or PD.15 Pin NMI Source Enable (Write Protect)
+</b><br>
+0 = External interrupt from PA.7, PB.4 or PD.15 pin NMI source Disabled.
+<br>
+1 = External interrupt from PA.7, PB.4 or PD.15 pin NMI source Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>EINT2</td><td><div style="word-wrap: break-word;"><b>External Interrupt From PB.3 or PC.6 Pin NMI Source Enable (Write Protect)
+</b><br>
+0 = External interrupt from PB.3 or PC.6 pin NMI source Disabled.
+<br>
+1 = External interrupt from PB.3 or PC.6 pin NMI source Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[11]</td><td>EINT3</td><td><div style="word-wrap: break-word;"><b>External Interrupt From PB.2 or PC.7 Pin NMI Source Enable (Write Protect)
+</b><br>
+0 = External interrupt from PB.2 or PC.7 pin NMI source Disabled.
+<br>
+1 = External interrupt from PB.2 or PC.7 pin NMI source Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>EINT4</td><td><div style="word-wrap: break-word;"><b>External Interrupt From PA.8, PB.6 or PF.15 Pin NMI Source Enable (Write Protect)
+</b><br>
+0 = External interrupt from PA.8, PB.6 or PF.15 pin NMI source Disabled.
+<br>
+1 = External interrupt from PA.8, PB.6 or PF.15 pin NMI source Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>EINT5</td><td><div style="word-wrap: break-word;"><b>External Interrupt From PB.7 or PF.14 Pin NMI Source Enable (Write Protect)
+</b><br>
+0 = External interrupt from PB.7 or PF.14 pin NMI source Disabled.
+<br>
+1 = External interrupt from PB.7 or PF.14 pin NMI source Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>UART0_INT</td><td><div style="word-wrap: break-word;"><b>UART0 NMI Source Enable (Write Protect)
+</b><br>
+0 = UART0 NMI source Disabled.
+<br>
+1 = UART0 NMI source Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>UART1_INT</td><td><div style="word-wrap: break-word;"><b>UART1 NMI Source Enable (Write Protect)
+</b><br>
+0 = UART1 NMI source Disabled.
+<br>
+1 = UART1 NMI source Enabled.
+<br>
+Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var NMI_T::NMISTS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">NMISTS
+</font><br><p> <font size="2">
+Offset: 0x04  NMI Source Interrupt Status Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>BODOUT</td><td><div style="word-wrap: break-word;"><b>BOD Interrupt Flag (Read Only)
+</b><br>
+0 = BOD interrupt is deasserted.
+<br>
+1 = BOD interrupt is asserted.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>IRC_INT</td><td><div style="word-wrap: break-word;"><b>IRC TRIM Interrupt Flag (Read Only)
+</b><br>
+0 = HIRC TRIM interrupt is deasserted.
+<br>
+1 = HIRC TRIM interrupt is asserted.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>PWRWU_INT</td><td><div style="word-wrap: break-word;"><b>Power-down Mode Wake-up Interrupt Flag (Read Only)
+</b><br>
+0 = Power-down mode wake-up interrupt is deasserted.
+<br>
+1 = Power-down mode wake-up interrupt is asserted.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>SRAM_PERR</td><td><div style="word-wrap: break-word;"><b>SRAM ParityCheck Error Interrupt Flag (Read Only)
+</b><br>
+0 = SRAM parity check error interrupt is deasserted.
+<br>
+1 = SRAM parity check error interrupt is asserted.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>CLKFAIL</td><td><div style="word-wrap: break-word;"><b>Clock Fail Detected or IRC Auto Trim Interrupt Flag (Read Only)
+</b><br>
+0 = Clock fail detected or IRC Auto Trim interrupt is deasserted.
+<br>
+1 = Clock fail detected or IRC Auto Trim interrupt is asserted.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>RTC_INT</td><td><div style="word-wrap: break-word;"><b>RTC Interrupt Flag (Read Only)
+</b><br>
+0 = RTC interrupt is deasserted.
+<br>
+1 = RTC interrupt is asserted.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>TAMPER_INT</td><td><div style="word-wrap: break-word;"><b>TAMPER_INT Interrupt Flag (Read Only)
+</b><br>
+0 = Backup register tamper detected interrupt is deasserted.
+<br>
+1 = Backup register tamper detected interrupt is asserted.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>EINT0</td><td><div style="word-wrap: break-word;"><b>External Interrupt From PA.6 or PB.5 Pin Interrupt Flag (Read Only)
+</b><br>
+0 = External Interrupt from PA.6 or PB.5 interrupt is deasserted.
+<br>
+1 = External Interrupt from PA.6 or PB.5 interrupt is asserted.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>EINT1</td><td><div style="word-wrap: break-word;"><b>External Interrupt From PA.7, PB.4 or PD.15 Pin Interrupt Flag (Read Only)
+</b><br>
+0 = External Interrupt from PA.7, PB.4 or PD.15 interrupt is deasserted.
+<br>
+1 = External Interrupt from PA.7, PB.4 or PD.15 interrupt is asserted.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>EINT2</td><td><div style="word-wrap: break-word;"><b>External Interrupt From PB.3 or PC.6 Pin Interrupt Flag (Read Only)
+</b><br>
+0 = External Interrupt from PB.3 or PC.6 interrupt is deasserted.
+<br>
+1 = External Interrupt from PB.3 or PC.6 interrupt is asserted.
+<br>
+</div></td></tr><tr><td>
+[11]</td><td>EINT3</td><td><div style="word-wrap: break-word;"><b>External Interrupt From PB.2 or PC.7 Pin Interrupt Flag (Read Only)
+</b><br>
+0 = External Interrupt from PB.2 or PC.7 interrupt is deasserted.
+<br>
+1 = External Interrupt from PB.2 or PC.7 interrupt is asserted.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>EINT4</td><td><div style="word-wrap: break-word;"><b>External Interrupt From PA.8, PB.6 or PF.15 Pin Interrupt Flag (Read Only)
+</b><br>
+0 = External Interrupt from PA.8, PB.6 or PF.15 interrupt is deasserted.
+<br>
+1 = External Interrupt from PA.8, PB.6 or PF.15 interrupt is asserted.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>EINT5</td><td><div style="word-wrap: break-word;"><b>External Interrupt From PB.7 or PF.14 Pin Interrupt Flag (Read Only)
+</b><br>
+0 = External Interrupt from PB.7 or PF.14 interrupt is deasserted.
+<br>
+1 = External Interrupt from PB.7 or PF.14 interrupt is asserted.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>UART0_INT</td><td><div style="word-wrap: break-word;"><b>UART0 Interrupt Flag (Read Only)
+</b><br>
+0 = UART1 interrupt is deasserted.
+<br>
+1 = UART1 interrupt is asserted.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>UART1_INT</td><td><div style="word-wrap: break-word;"><b>UART1 Interrupt Flag (Read Only)
+</b><br>
+0 = UART1 interrupt is deasserted.
+<br>
+1 = UART1 interrupt is asserted.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+
+ */
     __IO uint32_t NMIEN;                 /*!< [0x0000] NMI Source Interrupt Enable Register                             */
     __I  uint32_t NMISTS;                /*!< [0x0004] NMI Source Interrupt Status Register                             */
 

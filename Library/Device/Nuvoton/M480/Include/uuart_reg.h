@@ -28,399 +28,913 @@ typedef struct
 
 
     /**
-     * @var UUART_T::CTL
-     * Offset: 0x00  USCI Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[2:0]   |FUNMODE   |Function Mode
-     * |        |          |This bit field selects the protocol for this USCI controller
-     * |        |          |Selecting a protocol that is not available or a reserved combination disables the USCI
-     * |        |          |When switching between two protocols, the USCI has to be disabled before selecting a new protocol
-     * |        |          |Simultaneously, the USCI will be reset when user write 000 to FUNMODE.
-     * |        |          |000 = The USCI is disabled. All protocol related state machines are set to idle state.
-     * |        |          |001 = The SPI protocol is selected.
-     * |        |          |010 = The UART protocol is selected.
-     * |        |          |100 = The I2C protocol is selected.
-     * |        |          |Note: Other bit combinations are reserved.
-     * @var UUART_T::INTEN
-     * Offset: 0x04  USCI Interrupt Enable Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[1]     |TXSTIEN   |Transmit Start Interrupt Enable Bit
-     * |        |          |This bit enables the interrupt generation in case of a transmit start event.
-     * |        |          |0 = The transmit start interrupt is disabled.
-     * |        |          |1 = The transmit start interrupt is enabled.
-     * |[2]     |TXENDIEN  |Transmit End Interrupt Enable Bit
-     * |        |          |This bit enables the interrupt generation in case of a transmit finish event.
-     * |        |          |0 = The transmit finish interrupt is disabled.
-     * |        |          |1 = The transmit finish interrupt is enabled.
-     * |[3]     |RXSTIEN   |Receive Start Interrupt Enable BIt
-     * |        |          |This bit enables the interrupt generation in case of a receive start event.
-     * |        |          |0 = The receive start interrupt is disabled.
-     * |        |          |1 = The receive start interrupt is enabled.
-     * |[4]     |RXENDIEN  |Receive End Interrupt Enable Bit
-     * |        |          |This bit enables the interrupt generation in case of a receive finish event.
-     * |        |          |0 = The receive end interrupt is disabled.
-     * |        |          |1 = The receive end interrupt is enabled.
-     * @var UUART_T::BRGEN
-     * Offset: 0x08  USCI Baud Rate Generator Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |RCLKSEL   |Reference Clock Source Selection
-     * |        |          |This bit selects the source signal of reference clock (fREF_CLK).
-     * |        |          |0 = Peripheral device clock fPCLK.
-     * |        |          |1 = Reserved.
-     * |[1]     |PTCLKSEL  |Protocol Clock Source Selection
-     * |        |          |This bit selects the source signal of protocol clock (fPROT_CLK).
-     * |        |          |0 = Reference clock fREF_CLK.
-     * |        |          |1 = fREF_CLK2 (its frequency is half of fREF_CLK).
-     * |[3:2]   |SPCLKSEL  |Sample Clock Source Selection
-     * |        |          |This bit field used for the clock source selection of a sample clock (fSAMP_CLK) for the protocol processor.
-     * |        |          |00 = fSAMP_CLK = fDIV_CLK.
-     * |        |          |01 = fSAMP_CLK = fPROT_CLK.
-     * |        |          |10 = fSAMP_CLK = fSCLK.
-     * |        |          |11 = fSAMP_CLK = fREF_CLK.
-     * |[4]     |TMCNTEN   |Timing Measurement Counter Enable Bit
-     * |        |          |This bit enables the 10-bit timing measurement counter.
-     * |        |          |0 = Timing measurement counter is Disabled.
-     * |        |          |1 = Timing measurement counter is Enabled.
-     * |[5]     |TMCNTSRC  |Timing Measurement Counter Clock Source Selection
-     * |        |          |0 = Timing measurement counter with fPROT_CLK.
-     * |        |          |1 = Timing measurement counter with fDIV_CLK.
-     * |[9:8]   |PDSCNT    |Pre-divider for Sample Counter
-     * |        |          |This bit field defines the divide ratio of the clock division from sample clock fSAMP_CLK
-     * |        |          |The divided frequency fPDS_CNT = fSAMP_CLK / (PDSCNT+1).
-     * |[14:10] |DSCNT     |Denominator for Sample Counter
-     * |        |          |This bit field defines the divide ratio of the sample clock fSAMP_CLK.
-     * |        |          |The divided frequency fDS_CNT = fPDS_CNT / (DSCNT+1).
-     * |        |          |Note: The maximum value of DSCNT is 0xF on UART mode and suggest to set over 4 to confirm the receiver data is sampled in right value
-     * |[25:16] |CLKDIV    |Clock Divider
-     * |        |          |This bit field defines the ratio between the protocol clock frequency fPROT_CLK and
-     * |        |          |the clock divider frequency fDIV_CLK (fDIV_CLK = fPROT_CLK / (CLKDIV+1) ).
-     * |        |          |Note: In UART function, it can be updated by hardware in the 4th falling edge of the input data 0x55
-     * |        |          |when the auto baud rate function (ABREN(USCI_PROTCTL[6])) is enabled
-     * |        |          |The revised value is the average bit time between bit 5 and bit 6
-     * |        |          |The user can use revised CLKDIV and new BRDETITV (USCI_PROTCTL[24:16]) to calculate the precise baud rate.
-     * @var UUART_T::DATIN0
-     * Offset: 0x10  USCI Input Data Signal Configuration Register 0
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |SYNCSEL   |Input Signal Synchronization Selection
-     * |        |          |This bit selects if the un-synchronized input signal (with optionally inverted) or
-     * |        |          |the synchronized (and optionally filtered) signal can be used as input for the   data shift unit.
-     * |        |          |0 = The un-synchronized signal can be taken as input for the data shift unit.
-     * |        |          |1 = The synchronized signal can be taken as input for the data shift unit.
-     * |[2]     |ININV     |Input Signal Inverse Selection
-     * |        |          |This bit defines the inverter enable of the input asynchronous signal.
-     * |        |          |0 = The un-synchronized input signal will not be inverted.
-     * |        |          |1 = The un-synchronized input signal will be inverted.
-     * |[4:3]   |EDGEDET   |Input Signal   Edge Detection Mode
-     * |        |          |This bit field selects which edge actives the trigger event of input data signal.
-     * |        |          |00 = The trigger event activation is disabled.
-     * |        |          |01 = A rising   edge activates the trigger event of input data signal.
-     * |        |          |10 = A falling edge activates the trigger event of input data signal.
-     * |        |          |11 = Both edges activate the trigger event of input data signal.
-     * |        |          |Note: In UART function mode, it is suggested to   set this bit field as 10.
-     * @var UUART_T::CTLIN0
-     * Offset: 0x20  USCI Input Control Signal Configuration Register 0
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |SYNCSEL   |Input Synchronization Signal Selection
-     * |        |          |This bit selects if the un-synchronized input signal (with optionally inverted) or
-     * |        |          |the synchronized (and optionally filtered) signal can be used as input for the   data shift unit.
-     * |        |          |0 = The un-synchronized signal can be taken as input for the data shift unit.
-     * |        |          |1 = The   synchronized signal can be taken as input for the data shift unit.
-     * |[2]     |ININV     |Input Signal Inverse Selection
-     * |        |          |This bit defines the inverter enable of the input asynchronous signal.
-     * |        |          |0 = The un-synchronized input signal will not be inverted.
-     * |        |          |1 = The un-synchronized input signal will be inverted.
-     * @var UUART_T::CLKIN
-     * Offset: 0x28  USCI Input Clock Signal Configuration Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |SYNCSEL   |Input Synchronization Signal Selection
-     * |        |          |This bit selects if the un-synchronized input signal or
-     * |        |          |the synchronized (and optionally filtered) signal can be used as input for the data shift unit.
-     * |        |          |0 = The un-synchronized signal can be taken as input for the data shift unit.
-     * |        |          |1 = The synchronized signal can be taken as input for the data shift unit.
-     * @var UUART_T::LINECTL
-     * Offset: 0x2C  USCI Line Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |LSB       |LSB First Transmission Selection
-     * |        |          |0 = The MSB, which bit of transmit/receive data buffer depends on the setting of DWIDTH, is transmitted/received first.
-     * |        |          |1 = The LSB, the bit 0 of data buffer, will be transmitted/received first.
-     * |[5]     |DATOINV   |Data Output Inverse Selection
-     * |        |          |This bit defines the relation between the internal shift data value and the output data signal of USCIx_DAT1 pin.
-     * |        |          |0 = The value of USCIx_DAT1 is equal to the data shift register.
-     * |        |          |1 = The value of USCIx_DAT1 is the inversion of data shift register.
-     * |[7]     |CTLOINV   |Control Signal Output Inverse Selection
-     * |        |          |This bit defines the relation between the internal control signal and the output control signal.
-     * |        |          |0 = No effect.
-     * |        |          |1 = The control signal will be inverted before its output.
-     * |        |          |Note: In UART protocol, the control signal means nRTS signal.
-     * |[11:8]  |DWIDTH    |Word Length of Transmission
-     * |        |          |This bit field defines the data word length (amount of bits) for reception and transmission
-     * |        |          |The data word is always right-aligned in the data buffer
-     * |        |          |USCI support word length from 4 to 16 bits.
-     * |        |          |0x0: The data word contains 16 bits located at bit positions [15:0].
-     * |        |          |0x1: Reserved.
-     * |        |          |0x2: Reserved.
-     * |        |          |0x3: Reserved.
-     * |        |          |0x4: The data word contains 4 bits located at bit positions [3:0].
-     * |        |          |0x5: The data word contains 5 bits located at bit positions [4:0].
-     * |        |          |..
-     * |        |          |0xF: The data word contains 15 bits located at bit positions [14:0].
-     * |        |          |Note: In UART protocol, the length can be configured as 6~13 bits.
-     * @var UUART_T::TXDAT
-     * Offset: 0x30  USCI Transmit Data Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |TXDAT     |Transmit Data
-     * |        |          |Software can use this bit field to write 16-bit transmit data for transmission.
-     * @var UUART_T::RXDAT
-     * Offset: 0x34  USCI Receive Data Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |RXDAT     |Received Data
-     * |        |          |This bit field monitors the received data which stored in receive data buffer.
-     * |        |          |Note: RXDAT[15:13] indicate the same frame status of BREAK, FRMERR and PARITYERR (USCI_PROTSTS[7:5]).
-     * @var UUART_T::BUFCTL
-     * Offset: 0x38  USCI Transmit/Receive Buffer Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[7]     |TXCLR     |Clear Transmit Buffer
-     * |        |          |0 = No effect.
-     * |        |          |1 = The transmit buffer is cleared (filling level is cleared and output pointer is set to input pointer value)
-     * |        |          |Should only be used while the buffer is not taking part in data traffic.
-     * |        |          |Note: It is cleared automatically after one PCLK cycle.
-     * |[14]    |RXOVIEN   |Receive Buffer Overrun Error Interrupt Enable Control
-     * |        |          |0 = Receive overrun interrupt Disabled.
-     * |        |          |1 = Receive overrun interrupt Enabled.
-     * |[15]    |RXCLR     |Clear Receive Buffer
-     * |        |          |0 = No effect.
-     * |        |          |1 = The receive buffer is cleared (filling level is cleared and output pointer is set to input pointer value)
-     * |        |          |Should only be used while the buffer is not taking part in data traffic.
-     * |        |          |Note: It is cleared automatically after one PCLK cycle.
-     * |[16]    |TXRST     |Transmit Reset
-     * |        |          |0 = No effect.
-     * |        |          |1 = Reset the transmit-related counters, state machine, and the content of transmit shift register and data buffer.
-     * |        |          |Note: It is cleared automatically after one PCLK cycle.
-     * |[17]    |RXRST     |Receive Reset
-     * |        |          |0 = No effect.
-     * |        |          |1 = Reset the receive-related counters, state machine, and the content of receive shift register and data buffer.
-     * |        |          |Note 1: It is cleared automatically after one PCLK cycle.
-     * |        |          |Note 2: It is suggest to check the RXBUSY (USCI_PROTSTS[10]) before this bit will be set to 1.
-     * @var UUART_T::BUFSTS
-     * Offset: 0x3C  USCI Transmit/Receive Buffer Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |RXEMPTY   |Receive Buffer Empty Indicator
-     * |        |          |0 = Receive buffer is not empty.
-     * |        |          |1 = Receive buffer is empty.
-     * |[1]     |RXFULL    |Receive Buffer Full Indicator
-     * |        |          |0 = Receive buffer is not full.
-     * |        |          |1 = Receive buffer is full.
-     * |[3]     |RXOVIF    |Receive Buffer Over-run Error Interrupt Status
-     * |        |          |This bit indicates that a receive buffer overrun error event has been detected
-     * |        |          |If RXOVIEN (USCI_BUFCTL[14]) is enabled, the corresponding interrupt request is activated
-     * |        |          |It is cleared by software writes 1 to this bit.
-     * |        |          |0 = A receive buffer overrun error event has not been detected.
-     * |        |          |1 = A receive buffer overrun error event has been detected.
-     * |[8]     |TXEMPTY   |Transmit Buffer Empty Indicator
-     * |        |          |0 = Transmit buffer is not empty.
-     * |        |          |1 = Transmit buffer is empty.
-     * |[9]     |TXFULL    |Transmit Buffer Full Indicator
-     * |        |          |0 = Transmit buffer is not full.
-     * |        |          |1 = Transmit buffer is full.
-     * @var UUART_T::PDMACTL
-     * Offset: 0x40  USCI PDMA Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |PDMARST   |PDMA Reset
-     * |        |          |0 = No effect.
-     * |        |          |1 = Reset the USCI's PDMA control logic. This bit will be cleared to 0 automatically.
-     * |[1]     |TXPDMAEN  |PDMA Transmit Channel Available
-     * |        |          |0 = Transmit PDMA function Disabled.
-     * |        |          |1 = Transmit PDMA function Enabled.
-     * |[2]     |RXPDMAEN  |PDMA Receive Channel Available
-     * |        |          |0 = Receive PDMA function Disabled.
-     * |        |          |1 = Receive PDMA function Enabled.
-     * |[3]     |PDMAEN    |PDMA Mode Enable Bit
-     * |        |          |0 = PDMA function Disabled.
-     * |        |          |1 = PDMA function Enabled.
-     * @var UUART_T::WKCTL
-     * Offset: 0x54  USCI Wake-up Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |WKEN      |Wake-up Enable Bit
-     * |        |          |0 = Wake-up function Disabled.
-     * |        |          |1 = Wake-up function Enabled.
-     * |[2]     |PDBOPT    |Power Down Blocking Option
-     * |        |          |0 = If user attempts to enter Power-down mode by executing WFI while the protocol is in transferring, MCU will stop the transfer and enter Power-down mode immediately.
-     * |        |          |1 = If user attempts to enter Power-down mode by executing WFI while the protocol is in transferring, the on-going transfer will not be stopped and MCU will enter idle mode immediately.
-     * @var UUART_T::WKSTS
-     * Offset: 0x58  USCI Wake-up Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |WKF       |Wake-up Flag
-     * |        |          |When chip is woken up from Power-down mode, this bit is set to 1
-     * |        |          |Software can write 1 to clear this bit.
-     * @var UUART_T::PROTCTL
-     * Offset: 0x5C  USCI Protocol Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |STOPB     |Stop Bits
-     * |        |          |This bit defines the number of stop bits in an UART frame.
-     * |        |          |0 = The number of stop bits is 1.
-     * |        |          |1 = The number of stop bits is 2.
-     * |[1]     |PARITYEN  |Parity Enable Bit
-     * |        |          |This bit defines the parity bit is enabled in an UART frame.
-     * |        |          |0 = The parity bit Disabled.
-     * |        |          |1 = The parity bit Enabled.
-     * |[2]     |EVENPARITY|Even Parity Enable Bit
-     * |        |          |0 = Odd number of logic 1's is transmitted and checked in each word.
-     * |        |          |1 = Even number of logic 1's is transmitted and checked in each word.
-     * |        |          |Note: This bit has effect only when PARITYEN is set.
-     * |[3]     |RTSAUTOEN |nRTS Auto-flow Control Enable Bit
-     * |        |          |When nRTS auto-flow is enabled, if the receiver buffer is full (RXFULL (USCI_BUFSTS[1] = 1'b1)), the UART will de-assert nRTS signal.
-     * |        |          |0 = nRTS auto-flow control Disabled.
-     * |        |          |1 = nRTS auto-flow control Enabled.
-     * |        |          |Note: This bit has effect only when the RTSAUDIREN is not set.
-     * |[4]     |CTSAUTOEN |nCTS Auto-flow Control Enable Bit
-     * |        |          |When nCTS auto-flow is enabled, the UART will send data to external device when nCTS input assert (UART will not send data to device if nCTS input is dis-asserted).
-     * |        |          |0 = nCTS auto-flow control Disabled.
-     * |        |          |1 = nCTS auto-flow control Enabled.
-     * |[5]     |RTSAUDIREN|nRTS Auto Direction Enable Bit
-     * |        |          |When nRTS auto direction is enabled, if the transmitted bytes in the TX buffer is empty, the UART asserted nRTS signal automatically.
-     * |        |          |0 = nRTS auto direction control Disabled.
-     * |        |          |1 = nRTS auto direction control Enabled.
-     * |        |          |Note 1: This bit is used for nRTS auto direction control for RS485.
-     * |        |          |Note 2: This bit has effect only when the RTSAUTOEN is not set.
-     * |[6]     |ABREN     |Auto-baud Rate Detect Enable Bit
-     * |        |          |0 = Auto-baud rate detect function Disabled.
-     * |        |          |1 = Auto-baud rate detect function Enabled.
-     * |        |          |Note: When the auto - baud rate detect operation finishes, hardware will clear this bit
-     * |        |          |The associated interrupt ABRDETIF (USCI_PROTST[9]) will be generated (If ARBIEN (USCI_PROTIEN [1]) is enabled).
-     * |[9]     |DATWKEN   |Data Wake-up Mode Enable Bit
-     * |        |          |0 = Data wake-up mode Disabled.
-     * |        |          |1 = Data wake-up mode Enabled.
-     * |[10]    |CTSWKEN   |nCTS Wake-up Mode Enable Bit
-     * |        |          |0 = nCTS wake-up mode Disabled.
-     * |        |          |1 = nCTS wake-up mode Enabled.
-     * |[14:11] |WAKECNT   |Wake-up Counter
-     * |        |          |These bits field indicate how many clock cycle selected by fPDS_CNT do the slave can get the 1st bit (start bit) when the device is wake-up from Power-down mode.
-     * |[24:16] |BRDETITV  |Baud Rate Detection Interval
-     * |        |          |This bit fields indicate how many clock cycle selected by TMCNTSRC (USCI_BRGEN [5]) does the slave calculates the baud rate in one bits
-     * |        |          |The order of the bus shall be 1 and 0 step by step (e.g. the input data pattern shall be 0x55)
-     * |        |          |The user can read the value to know the current input baud rate of the bus whenever the ABRDETIF (USCI_PROTCTL[9]) is set.
-     * |        |          |Note: This bit can be cleared to 0 by software writing '0' to the BRDETITV.
-     * |[26]    |STICKEN   |Stick Parity Enable Bit
-     * |        |          |0 = Stick parity Disabled.
-     * |        |          |1 = Stick parity Enabled.
-     * |        |          |Note: Refer to RS-485 Support section for detail information.
-     * |[29]    |BCEN      |Transmit Break Control Enable Bit
-     * |        |          |0 = Transmit Break Control Disabled.
-     * |        |          |1 = Transmit Break Control Enabled.
-     * |        |          |Note: When this bit is set to logic 1, the serial data output (TX) is forced to the Spacing State (logic 0)
-     * |        |          |This bit acts only on TX line and has no effect on the transmitter logic.
-     * |[31]    |PROTEN    |UART Protocol Enable Bit
-     * |        |          |0 = UART Protocol Disabled.
-     * |        |          |1 = UART Protocol Enabled.
-     * @var UUART_T::PROTIEN
-     * Offset: 0x60  USCI Protocol Interrupt Enable Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[1]     |ABRIEN    |Auto-baud Rate Interrupt Enable Bit
-     * |        |          |0 = Auto-baud rate interrupt Disabled.
-     * |        |          |1 = Auto-baud rate interrupt Enabled.
-     * |[2]     |RLSIEN    |Receive Line Status Interrupt Enable Bit
-     * |        |          |0 = Receive line status interrupt Disabled.
-     * |        |          |1 = Receive line status interrupt Enabled.
-     * |        |          |Note: USCI_PROTSTS[7:5] indicates the current interrupt event for receive line status interrupt.
-     * @var UUART_T::PROTSTS
-     * Offset: 0x64  USCI Protocol Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[1]     |TXSTIF    |Transmit Start Interrupt Flag
-     * |        |          |0 = A transmit start interrupt status has not occurred.
-     * |        |          |1 = A transmit start interrupt status has occurred.
-     * |        |          |Note 1: It is cleared by software writing one into this bit.
-     * |        |          |Note 2: Used for user to load next transmit data when there is no data in transmit buffer.
-     * |[2]     |TXENDIF   |Transmit End Interrupt Flag
-     * |        |          |0 = A transmit end interrupt status has not occurred.
-     * |        |          |1 = A transmit end interrupt status has occurred.
-     * |        |          |Note: It is cleared by software writing one into this bit.
-     * |[3]     |RXSTIF    |Receive Start Interrupt Flag
-     * |        |          |0 = A receive start interrupt status has not occurred.
-     * |        |          |1 = A receive start interrupt status has occurred.
-     * |        |          |Note: It is cleared by software writing one into this bit.
-     * |[4]     |RXENDIF   |Receive End Interrupt Flag
-     * |        |          |0 = A receive finish interrupt status has not occurred.
-     * |        |          |1 = A receive finish interrupt status has occurred.
-     * |        |          |Note: It is cleared by software writing one into this bit.
-     * |[5]     |PARITYERR |Parity Error Flag
-     * |        |          |This bit is set to logic 1 whenever the received character does not have a valid 'parity bit'.
-     * |        |          |0 = No parity error is generated.
-     * |        |          |1 = Parity error is generated.
-     * |        |          |Note: This bit can be cleared by write '1' among the BREAK, FRMERR and PARITYERR bits.
-     * |[6]     |FRMERR    |Framing Error Flag
-     * |        |          |This bit is set to logic 1 whenever the received character does not have a valid 'stop bit'
-     * |        |          |(that is, the stop bit following the last data bit or parity bit is detected as logic 0).
-     * |        |          |0 = No framing error is generated.
-     * |        |          |1 = Framing error is generated.
-     * |        |          |Note: This bit can be cleared by write '1' among the BREAK, FRMERR and PARITYERR bits.
-     * |[7]     |BREAK     |Break Flag
-     * |        |          |This bit is set to logic 1 whenever the received data input (RX) is held in the 'spacing state'
-     * |        |          |(logic 0) for longer than a full word transmission time (that is, the total time of  start bit + data bits + parity + stop bits).
-     * |        |          |0 = No Break is generated.
-     * |        |          |1 = Break is generated in the receiver bus.
-     * |        |          |Note: This bit can be cleared by write '1' among the BREAK, FRMERR and PARITYERR bits.
-     * |[9]     |ABRDETIF  |Auto-baud Rate Interrupt Flag
-     * |        |          |This bit is set when auto-baud rate detection is done among the falling edge of the input data
-     * |        |          |If the ABRIEN (USCI_PROTCTL[6]) is set, the auto-baud rate interrupt will be generated
-     * |        |          |This bit can be set 4 times when the input data pattern is 0x55 and it is cleared before the next falling edge of the input bus.
-     * |        |          |0 = Auto-baud rate detect function is not done.
-     * |        |          |1 = One Bit auto-baud rate detect function is done.
-     * |        |          |Note: This bit can be cleared by writing '1' to it.
-     * |[10]    |RXBUSY    |RX Bus Status Flag (Read Only)
-     * |        |          |This bit indicates the busy status of the receiver.
-     * |        |          |0 = The receiver is Idle.
-     * |        |          |1 = The receiver is BUSY.
-     * |[11]    |ABERRSTS  |Auto-baud Rate Error Status
-     * |        |          |This bit is set when auto-baud rate detection counter overrun
-     * |        |          |When the auto-baud rate counter overrun, the user shall revise the CLKDIV (USCI_BRGEN[25:16]) value and
-     * |        |          |enable ABREN (USCI_PROTCTL[6]) to detect the correct baud rate again.
-     * |        |          |0 = Auto-baud rate detect counter is not overrun.
-     * |        |          |1 = Auto-baud rate detect counter is overrun.
-     * |        |          |Note 1: This bit is set at the same time of ABRDETIF.
-     * |        |          |Note 2: This bit can be cleared by writing '1' to ABRDETIF or ABERRSTS.
-     * |[16]    |CTSSYNCLV |nCTS Synchronized Level Status (Read Only)
-     * |        |          |This bit used to indicate the current status of the internal synchronized nCTS signal.
-     * |        |          |0 = The internal synchronized nCTS is low.
-     * |        |          |1 = The internal synchronized nCTS is high.
-     * |[17]    |CTSLV     |nCTS Pin Status (Read Only)
-     * |        |          |This bit used to monitor the current status of nCTS pin input.
-     * |        |          |0 = nCTS pin input is low level voltage logic state.
-     * |        |          |1 = nCTS pin input is high level voltage logic state.
-     */
+@var UUART_T::CTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CTL
+</font><br><p> <font size="2">
+Offset: 0x00  USCI Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[2:0]</td><td>FUNMODE</td><td><div style="word-wrap: break-word;"><b>Function Mode
+</b><br>
+This bit field selects the protocol for this USCI controller
+<br>
+Selecting a protocol that is not available or a reserved combination disables the USCI
+<br>
+When switching between two protocols, the USCI has to be disabled before selecting a new protocol
+<br>
+Simultaneously, the USCI will be reset when user write 000 to FUNMODE.
+<br>
+000 = The USCI is disabled. All protocol related state machines are set to idle state.
+<br>
+001 = The SPI protocol is selected.
+<br>
+010 = The UART protocol is selected.
+<br>
+100 = The I2C protocol is selected.
+<br>
+Note: Other bit combinations are reserved.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var UUART_T::INTEN
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">INTEN
+</font><br><p> <font size="2">
+Offset: 0x04  USCI Interrupt Enable Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[1]</td><td>TXSTIEN</td><td><div style="word-wrap: break-word;"><b>Transmit Start Interrupt Enable Bit
+</b><br>
+This bit enables the interrupt generation in case of a transmit start event.
+<br>
+0 = The transmit start interrupt is disabled.
+<br>
+1 = The transmit start interrupt is enabled.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>TXENDIEN</td><td><div style="word-wrap: break-word;"><b>Transmit End Interrupt Enable Bit
+</b><br>
+This bit enables the interrupt generation in case of a transmit finish event.
+<br>
+0 = The transmit finish interrupt is disabled.
+<br>
+1 = The transmit finish interrupt is enabled.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>RXSTIEN</td><td><div style="word-wrap: break-word;"><b>Receive Start Interrupt Enable BIt
+</b><br>
+This bit enables the interrupt generation in case of a receive start event.
+<br>
+0 = The receive start interrupt is disabled.
+<br>
+1 = The receive start interrupt is enabled.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>RXENDIEN</td><td><div style="word-wrap: break-word;"><b>Receive End Interrupt Enable Bit
+</b><br>
+This bit enables the interrupt generation in case of a receive finish event.
+<br>
+0 = The receive end interrupt is disabled.
+<br>
+1 = The receive end interrupt is enabled.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var UUART_T::BRGEN
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">BRGEN
+</font><br><p> <font size="2">
+Offset: 0x08  USCI Baud Rate Generator Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>RCLKSEL</td><td><div style="word-wrap: break-word;"><b>Reference Clock Source Selection
+</b><br>
+This bit selects the source signal of reference clock (fREF_CLK).
+<br>
+0 = Peripheral device clock fPCLK.
+<br>
+1 = Reserved.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>PTCLKSEL</td><td><div style="word-wrap: break-word;"><b>Protocol Clock Source Selection
+</b><br>
+This bit selects the source signal of protocol clock (fPROT_CLK).
+<br>
+0 = Reference clock fREF_CLK.
+<br>
+1 = fREF_CLK2 (its frequency is half of fREF_CLK).
+<br>
+</div></td></tr><tr><td>
+[3:2]</td><td>SPCLKSEL</td><td><div style="word-wrap: break-word;"><b>Sample Clock Source Selection
+</b><br>
+This bit field used for the clock source selection of a sample clock (fSAMP_CLK) for the protocol processor.
+<br>
+00 = fSAMP_CLK = fDIV_CLK.
+<br>
+01 = fSAMP_CLK = fPROT_CLK.
+<br>
+10 = fSAMP_CLK = fSCLK.
+<br>
+11 = fSAMP_CLK = fREF_CLK.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>TMCNTEN</td><td><div style="word-wrap: break-word;"><b>Timing Measurement Counter Enable Bit
+</b><br>
+This bit enables the 10-bit timing measurement counter.
+<br>
+0 = Timing measurement counter is Disabled.
+<br>
+1 = Timing measurement counter is Enabled.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>TMCNTSRC</td><td><div style="word-wrap: break-word;"><b>Timing Measurement Counter Clock Source Selection
+</b><br>
+0 = Timing measurement counter with fPROT_CLK.
+<br>
+1 = Timing measurement counter with fDIV_CLK.
+<br>
+</div></td></tr><tr><td>
+[9:8]</td><td>PDSCNT</td><td><div style="word-wrap: break-word;"><b>Pre-divider for Sample Counter
+</b><br>
+This bit field defines the divide ratio of the clock division from sample clock fSAMP_CLK
+<br>
+The divided frequency fPDS_CNT = fSAMP_CLK / (PDSCNT+1).
+<br>
+</div></td></tr><tr><td>
+[14:10]</td><td>DSCNT</td><td><div style="word-wrap: break-word;"><b>Denominator for Sample Counter
+</b><br>
+This bit field defines the divide ratio of the sample clock fSAMP_CLK.
+<br>
+The divided frequency fDS_CNT = fPDS_CNT / (DSCNT+1).
+<br>
+Note: The maximum value of DSCNT is 0xF on UART mode and suggest to set over 4 to confirm the receiver data is sampled in right value
+<br>
+</div></td></tr><tr><td>
+[25:16]</td><td>CLKDIV</td><td><div style="word-wrap: break-word;"><b>Clock Divider
+</b><br>
+This bit field defines the ratio between the protocol clock frequency fPROT_CLK and
+<br>
+the clock divider frequency fDIV_CLK (fDIV_CLK = fPROT_CLK / (CLKDIV+1) ).
+<br>
+Note: In UART function, it can be updated by hardware in the 4th falling edge of the input data 0x55
+<br>
+when the auto baud rate function (ABREN(USCI_PROTCTL[6])) is enabled
+<br>
+The revised value is the average bit time between bit 5 and bit 6
+<br>
+The user can use revised CLKDIV and new BRDETITV (USCI_PROTCTL[24:16]) to calculate the precise baud rate.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var UUART_T::DATIN0
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DATIN0
+</font><br><p> <font size="2">
+Offset: 0x10  USCI Input Data Signal Configuration Register 0
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>SYNCSEL</td><td><div style="word-wrap: break-word;"><b>Input Signal Synchronization Selection
+</b><br>
+This bit selects if the un-synchronized input signal (with optionally inverted) or
+<br>
+the synchronized (and optionally filtered) signal can be used as input for the   data shift unit.
+<br>
+0 = The un-synchronized signal can be taken as input for the data shift unit.
+<br>
+1 = The synchronized signal can be taken as input for the data shift unit.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>ININV</td><td><div style="word-wrap: break-word;"><b>Input Signal Inverse Selection
+</b><br>
+This bit defines the inverter enable of the input asynchronous signal.
+<br>
+0 = The un-synchronized input signal will not be inverted.
+<br>
+1 = The un-synchronized input signal will be inverted.
+<br>
+</div></td></tr><tr><td>
+[4:3]</td><td>EDGEDET</td><td><div style="word-wrap: break-word;"><b>Input Signal   Edge Detection Mode
+</b><br>
+This bit field selects which edge actives the trigger event of input data signal.
+<br>
+00 = The trigger event activation is disabled.
+<br>
+01 = A rising   edge activates the trigger event of input data signal.
+<br>
+10 = A falling edge activates the trigger event of input data signal.
+<br>
+11 = Both edges activate the trigger event of input data signal.
+<br>
+Note: In UART function mode, it is suggested to   set this bit field as 10.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var UUART_T::CTLIN0
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CTLIN0
+</font><br><p> <font size="2">
+Offset: 0x20  USCI Input Control Signal Configuration Register 0
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>SYNCSEL</td><td><div style="word-wrap: break-word;"><b>Input Synchronization Signal Selection
+</b><br>
+This bit selects if the un-synchronized input signal (with optionally inverted) or
+<br>
+the synchronized (and optionally filtered) signal can be used as input for the   data shift unit.
+<br>
+0 = The un-synchronized signal can be taken as input for the data shift unit.
+<br>
+1 = The   synchronized signal can be taken as input for the data shift unit.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>ININV</td><td><div style="word-wrap: break-word;"><b>Input Signal Inverse Selection
+</b><br>
+This bit defines the inverter enable of the input asynchronous signal.
+<br>
+0 = The un-synchronized input signal will not be inverted.
+<br>
+1 = The un-synchronized input signal will be inverted.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var UUART_T::CLKIN
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CLKIN
+</font><br><p> <font size="2">
+Offset: 0x28  USCI Input Clock Signal Configuration Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>SYNCSEL</td><td><div style="word-wrap: break-word;"><b>Input Synchronization Signal Selection
+</b><br>
+This bit selects if the un-synchronized input signal or
+<br>
+the synchronized (and optionally filtered) signal can be used as input for the data shift unit.
+<br>
+0 = The un-synchronized signal can be taken as input for the data shift unit.
+<br>
+1 = The synchronized signal can be taken as input for the data shift unit.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var UUART_T::LINECTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">LINECTL
+</font><br><p> <font size="2">
+Offset: 0x2C  USCI Line Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>LSB</td><td><div style="word-wrap: break-word;"><b>LSB First Transmission Selection
+</b><br>
+0 = The MSB, which bit of transmit/receive data buffer depends on the setting of DWIDTH, is transmitted/received first.
+<br>
+1 = The LSB, the bit 0 of data buffer, will be transmitted/received first.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>DATOINV</td><td><div style="word-wrap: break-word;"><b>Data Output Inverse Selection
+</b><br>
+This bit defines the relation between the internal shift data value and the output data signal of USCIx_DAT1 pin.
+<br>
+0 = The value of USCIx_DAT1 is equal to the data shift register.
+<br>
+1 = The value of USCIx_DAT1 is the inversion of data shift register.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>CTLOINV</td><td><div style="word-wrap: break-word;"><b>Control Signal Output Inverse Selection
+</b><br>
+This bit defines the relation between the internal control signal and the output control signal.
+<br>
+0 = No effect.
+<br>
+1 = The control signal will be inverted before its output.
+<br>
+Note: In UART protocol, the control signal means nRTS signal.
+<br>
+</div></td></tr><tr><td>
+[11:8]</td><td>DWIDTH</td><td><div style="word-wrap: break-word;"><b>Word Length of Transmission
+</b><br>
+This bit field defines the data word length (amount of bits) for reception and transmission
+<br>
+The data word is always right-aligned in the data buffer
+<br>
+USCI support word length from 4 to 16 bits.
+<br>
+0x0: The data word contains 16 bits located at bit positions [15:0].
+<br>
+0x1: Reserved.
+<br>
+0x2: Reserved.
+<br>
+0x3: Reserved.
+<br>
+0x4: The data word contains 4 bits located at bit positions [3:0].
+<br>
+0x5: The data word contains 5 bits located at bit positions [4:0].
+<br>
+..
+<br>
+0xF: The data word contains 15 bits located at bit positions [14:0].
+<br>
+Note: In UART protocol, the length can be configured as 6~13 bits.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var UUART_T::TXDAT
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">TXDAT
+</font><br><p> <font size="2">
+Offset: 0x30  USCI Transmit Data Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[15:0]</td><td>TXDAT</td><td><div style="word-wrap: break-word;"><b>Transmit Data
+</b><br>
+Software can use this bit field to write 16-bit transmit data for transmission.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var UUART_T::RXDAT
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">RXDAT
+</font><br><p> <font size="2">
+Offset: 0x34  USCI Receive Data Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[15:0]</td><td>RXDAT</td><td><div style="word-wrap: break-word;"><b>Received Data
+</b><br>
+This bit field monitors the received data which stored in receive data buffer.
+<br>
+Note: RXDAT[15:13] indicate the same frame status of BREAK, FRMERR and PARITYERR (USCI_PROTSTS[7:5]).
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var UUART_T::BUFCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">BUFCTL
+</font><br><p> <font size="2">
+Offset: 0x38  USCI Transmit/Receive Buffer Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[7]</td><td>TXCLR</td><td><div style="word-wrap: break-word;"><b>Clear Transmit Buffer
+</b><br>
+0 = No effect.
+<br>
+1 = The transmit buffer is cleared (filling level is cleared and output pointer is set to input pointer value)
+<br>
+Should only be used while the buffer is not taking part in data traffic.
+<br>
+Note: It is cleared automatically after one PCLK cycle.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>RXOVIEN</td><td><div style="word-wrap: break-word;"><b>Receive Buffer Overrun Error Interrupt Enable Control
+</b><br>
+0 = Receive overrun interrupt Disabled.
+<br>
+1 = Receive overrun interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>RXCLR</td><td><div style="word-wrap: break-word;"><b>Clear Receive Buffer
+</b><br>
+0 = No effect.
+<br>
+1 = The receive buffer is cleared (filling level is cleared and output pointer is set to input pointer value)
+<br>
+Should only be used while the buffer is not taking part in data traffic.
+<br>
+Note: It is cleared automatically after one PCLK cycle.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>TXRST</td><td><div style="word-wrap: break-word;"><b>Transmit Reset
+</b><br>
+0 = No effect.
+<br>
+1 = Reset the transmit-related counters, state machine, and the content of transmit shift register and data buffer.
+<br>
+Note: It is cleared automatically after one PCLK cycle.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>RXRST</td><td><div style="word-wrap: break-word;"><b>Receive Reset
+</b><br>
+0 = No effect.
+<br>
+1 = Reset the receive-related counters, state machine, and the content of receive shift register and data buffer.
+<br>
+Note 1: It is cleared automatically after one PCLK cycle.
+<br>
+Note 2: It is suggest to check the RXBUSY (USCI_PROTSTS[10]) before this bit will be set to 1.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var UUART_T::BUFSTS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">BUFSTS
+</font><br><p> <font size="2">
+Offset: 0x3C  USCI Transmit/Receive Buffer Status Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>RXEMPTY</td><td><div style="word-wrap: break-word;"><b>Receive Buffer Empty Indicator
+</b><br>
+0 = Receive buffer is not empty.
+<br>
+1 = Receive buffer is empty.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>RXFULL</td><td><div style="word-wrap: break-word;"><b>Receive Buffer Full Indicator
+</b><br>
+0 = Receive buffer is not full.
+<br>
+1 = Receive buffer is full.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>RXOVIF</td><td><div style="word-wrap: break-word;"><b>Receive Buffer Over-run Error Interrupt Status
+</b><br>
+This bit indicates that a receive buffer overrun error event has been detected
+<br>
+If RXOVIEN (USCI_BUFCTL[14]) is enabled, the corresponding interrupt request is activated
+<br>
+It is cleared by software writes 1 to this bit.
+<br>
+0 = A receive buffer overrun error event has not been detected.
+<br>
+1 = A receive buffer overrun error event has been detected.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>TXEMPTY</td><td><div style="word-wrap: break-word;"><b>Transmit Buffer Empty Indicator
+</b><br>
+0 = Transmit buffer is not empty.
+<br>
+1 = Transmit buffer is empty.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>TXFULL</td><td><div style="word-wrap: break-word;"><b>Transmit Buffer Full Indicator
+</b><br>
+0 = Transmit buffer is not full.
+<br>
+1 = Transmit buffer is full.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var UUART_T::PDMACTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PDMACTL
+</font><br><p> <font size="2">
+Offset: 0x40  USCI PDMA Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>PDMARST</td><td><div style="word-wrap: break-word;"><b>PDMA Reset
+</b><br>
+0 = No effect.
+<br>
+1 = Reset the USCI's PDMA control logic. This bit will be cleared to 0 automatically.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>TXPDMAEN</td><td><div style="word-wrap: break-word;"><b>PDMA Transmit Channel Available
+</b><br>
+0 = Transmit PDMA function Disabled.
+<br>
+1 = Transmit PDMA function Enabled.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>RXPDMAEN</td><td><div style="word-wrap: break-word;"><b>PDMA Receive Channel Available
+</b><br>
+0 = Receive PDMA function Disabled.
+<br>
+1 = Receive PDMA function Enabled.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>PDMAEN</td><td><div style="word-wrap: break-word;"><b>PDMA Mode Enable Bit
+</b><br>
+0 = PDMA function Disabled.
+<br>
+1 = PDMA function Enabled.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var UUART_T::WKCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">WKCTL
+</font><br><p> <font size="2">
+Offset: 0x54  USCI Wake-up Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>WKEN</td><td><div style="word-wrap: break-word;"><b>Wake-up Enable Bit
+</b><br>
+0 = Wake-up function Disabled.
+<br>
+1 = Wake-up function Enabled.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>PDBOPT</td><td><div style="word-wrap: break-word;"><b>Power Down Blocking Option
+</b><br>
+0 = If user attempts to enter Power-down mode by executing WFI while the protocol is in transferring, MCU will stop the transfer and enter Power-down mode immediately.
+<br>
+1 = If user attempts to enter Power-down mode by executing WFI while the protocol is in transferring, the on-going transfer will not be stopped and MCU will enter idle mode immediately.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var UUART_T::WKSTS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">WKSTS
+</font><br><p> <font size="2">
+Offset: 0x58  USCI Wake-up Status Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>WKF</td><td><div style="word-wrap: break-word;"><b>Wake-up Flag
+</b><br>
+When chip is woken up from Power-down mode, this bit is set to 1
+<br>
+Software can write 1 to clear this bit.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var UUART_T::PROTCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PROTCTL
+</font><br><p> <font size="2">
+Offset: 0x5C  USCI Protocol Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>STOPB</td><td><div style="word-wrap: break-word;"><b>Stop Bits
+</b><br>
+This bit defines the number of stop bits in an UART frame.
+<br>
+0 = The number of stop bits is 1.
+<br>
+1 = The number of stop bits is 2.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>PARITYEN</td><td><div style="word-wrap: break-word;"><b>Parity Enable Bit
+</b><br>
+This bit defines the parity bit is enabled in an UART frame.
+<br>
+0 = The parity bit Disabled.
+<br>
+1 = The parity bit Enabled.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>EVENPARITY</td><td><div style="word-wrap: break-word;"><b>Even Parity Enable Bit
+</b><br>
+0 = Odd number of logic 1's is transmitted and checked in each word.
+<br>
+1 = Even number of logic 1's is transmitted and checked in each word.
+<br>
+Note: This bit has effect only when PARITYEN is set.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>RTSAUTOEN</td><td><div style="word-wrap: break-word;"><b>nRTS Auto-flow Control Enable Bit
+</b><br>
+When nRTS auto-flow is enabled, if the receiver buffer is full (RXFULL (USCI_BUFSTS[1] = 1'b1)), the UART will de-assert nRTS signal.
+<br>
+0 = nRTS auto-flow control Disabled.
+<br>
+1 = nRTS auto-flow control Enabled.
+<br>
+Note: This bit has effect only when the RTSAUDIREN is not set.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>CTSAUTOEN</td><td><div style="word-wrap: break-word;"><b>nCTS Auto-flow Control Enable Bit
+</b><br>
+When nCTS auto-flow is enabled, the UART will send data to external device when nCTS input assert (UART will not send data to device if nCTS input is dis-asserted).
+<br>
+0 = nCTS auto-flow control Disabled.
+<br>
+1 = nCTS auto-flow control Enabled.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>RTSAUDIREN</td><td><div style="word-wrap: break-word;"><b>nRTS Auto Direction Enable Bit
+</b><br>
+When nRTS auto direction is enabled, if the transmitted bytes in the TX buffer is empty, the UART asserted nRTS signal automatically.
+<br>
+0 = nRTS auto direction control Disabled.
+<br>
+1 = nRTS auto direction control Enabled.
+<br>
+Note 1: This bit is used for nRTS auto direction control for RS485.
+<br>
+Note 2: This bit has effect only when the RTSAUTOEN is not set.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>ABREN</td><td><div style="word-wrap: break-word;"><b>Auto-baud Rate Detect Enable Bit
+</b><br>
+0 = Auto-baud rate detect function Disabled.
+<br>
+1 = Auto-baud rate detect function Enabled.
+<br>
+Note: When the auto - baud rate detect operation finishes, hardware will clear this bit
+<br>
+The associated interrupt ABRDETIF (USCI_PROTST[9]) will be generated (If ARBIEN (USCI_PROTIEN [1]) is enabled).
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>DATWKEN</td><td><div style="word-wrap: break-word;"><b>Data Wake-up Mode Enable Bit
+</b><br>
+0 = Data wake-up mode Disabled.
+<br>
+1 = Data wake-up mode Enabled.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>CTSWKEN</td><td><div style="word-wrap: break-word;"><b>nCTS Wake-up Mode Enable Bit
+</b><br>
+0 = nCTS wake-up mode Disabled.
+<br>
+1 = nCTS wake-up mode Enabled.
+<br>
+</div></td></tr><tr><td>
+[14:11]</td><td>WAKECNT</td><td><div style="word-wrap: break-word;"><b>Wake-up Counter
+</b><br>
+These bits field indicate how many clock cycle selected by fPDS_CNT do the slave can get the 1st bit (start bit) when the device is wake-up from Power-down mode.
+<br>
+</div></td></tr><tr><td>
+[24:16]</td><td>BRDETITV</td><td><div style="word-wrap: break-word;"><b>Baud Rate Detection Interval
+</b><br>
+This bit fields indicate how many clock cycle selected by TMCNTSRC (USCI_BRGEN [5]) does the slave calculates the baud rate in one bits
+<br>
+The order of the bus shall be 1 and 0 step by step (e.g. the input data pattern shall be 0x55)
+<br>
+The user can read the value to know the current input baud rate of the bus whenever the ABRDETIF (USCI_PROTCTL[9]) is set.
+<br>
+Note: This bit can be cleared to 0 by software writing '0' to the BRDETITV.
+<br>
+</div></td></tr><tr><td>
+[26]</td><td>STICKEN</td><td><div style="word-wrap: break-word;"><b>Stick Parity Enable Bit
+</b><br>
+0 = Stick parity Disabled.
+<br>
+1 = Stick parity Enabled.
+<br>
+Note: Refer to RS-485 Support section for detail information.
+<br>
+</div></td></tr><tr><td>
+[29]</td><td>BCEN</td><td><div style="word-wrap: break-word;"><b>Transmit Break Control Enable Bit
+</b><br>
+0 = Transmit Break Control Disabled.
+<br>
+1 = Transmit Break Control Enabled.
+<br>
+Note: When this bit is set to logic 1, the serial data output (TX) is forced to the Spacing State (logic 0)
+<br>
+This bit acts only on TX line and has no effect on the transmitter logic.
+<br>
+</div></td></tr><tr><td>
+[31]</td><td>PROTEN</td><td><div style="word-wrap: break-word;"><b>UART Protocol Enable Bit
+</b><br>
+0 = UART Protocol Disabled.
+<br>
+1 = UART Protocol Enabled.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var UUART_T::PROTIEN
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PROTIEN
+</font><br><p> <font size="2">
+Offset: 0x60  USCI Protocol Interrupt Enable Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[1]</td><td>ABRIEN</td><td><div style="word-wrap: break-word;"><b>Auto-baud Rate Interrupt Enable Bit
+</b><br>
+0 = Auto-baud rate interrupt Disabled.
+<br>
+1 = Auto-baud rate interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>RLSIEN</td><td><div style="word-wrap: break-word;"><b>Receive Line Status Interrupt Enable Bit
+</b><br>
+0 = Receive line status interrupt Disabled.
+<br>
+1 = Receive line status interrupt Enabled.
+<br>
+Note: USCI_PROTSTS[7:5] indicates the current interrupt event for receive line status interrupt.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var UUART_T::PROTSTS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PROTSTS
+</font><br><p> <font size="2">
+Offset: 0x64  USCI Protocol Status Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[1]</td><td>TXSTIF</td><td><div style="word-wrap: break-word;"><b>Transmit Start Interrupt Flag
+</b><br>
+0 = A transmit start interrupt status has not occurred.
+<br>
+1 = A transmit start interrupt status has occurred.
+<br>
+Note 1: It is cleared by software writing one into this bit.
+<br>
+Note 2: Used for user to load next transmit data when there is no data in transmit buffer.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>TXENDIF</td><td><div style="word-wrap: break-word;"><b>Transmit End Interrupt Flag
+</b><br>
+0 = A transmit end interrupt status has not occurred.
+<br>
+1 = A transmit end interrupt status has occurred.
+<br>
+Note: It is cleared by software writing one into this bit.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>RXSTIF</td><td><div style="word-wrap: break-word;"><b>Receive Start Interrupt Flag
+</b><br>
+0 = A receive start interrupt status has not occurred.
+<br>
+1 = A receive start interrupt status has occurred.
+<br>
+Note: It is cleared by software writing one into this bit.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>RXENDIF</td><td><div style="word-wrap: break-word;"><b>Receive End Interrupt Flag
+</b><br>
+0 = A receive finish interrupt status has not occurred.
+<br>
+1 = A receive finish interrupt status has occurred.
+<br>
+Note: It is cleared by software writing one into this bit.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>PARITYERR</td><td><div style="word-wrap: break-word;"><b>Parity Error Flag
+</b><br>
+This bit is set to logic 1 whenever the received character does not have a valid 'parity bit'.
+<br>
+0 = No parity error is generated.
+<br>
+1 = Parity error is generated.
+<br>
+Note: This bit can be cleared by write '1' among the BREAK, FRMERR and PARITYERR bits.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>FRMERR</td><td><div style="word-wrap: break-word;"><b>Framing Error Flag
+</b><br>
+This bit is set to logic 1 whenever the received character does not have a valid 'stop bit'
+<br>
+(that is, the stop bit following the last data bit or parity bit is detected as logic 0).
+<br>
+0 = No framing error is generated.
+<br>
+1 = Framing error is generated.
+<br>
+Note: This bit can be cleared by write '1' among the BREAK, FRMERR and PARITYERR bits.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>BREAK</td><td><div style="word-wrap: break-word;"><b>Break Flag
+</b><br>
+This bit is set to logic 1 whenever the received data input (RX) is held in the 'spacing state'
+<br>
+(logic 0) for longer than a full word transmission time (that is, the total time of  start bit + data bits + parity + stop bits).
+<br>
+0 = No Break is generated.
+<br>
+1 = Break is generated in the receiver bus.
+<br>
+Note: This bit can be cleared by write '1' among the BREAK, FRMERR and PARITYERR bits.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>ABRDETIF</td><td><div style="word-wrap: break-word;"><b>Auto-baud Rate Interrupt Flag
+</b><br>
+This bit is set when auto-baud rate detection is done among the falling edge of the input data
+<br>
+If the ABRIEN (USCI_PROTCTL[6]) is set, the auto-baud rate interrupt will be generated
+<br>
+This bit can be set 4 times when the input data pattern is 0x55 and it is cleared before the next falling edge of the input bus.
+<br>
+0 = Auto-baud rate detect function is not done.
+<br>
+1 = One Bit auto-baud rate detect function is done.
+<br>
+Note: This bit can be cleared by writing '1' to it.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>RXBUSY</td><td><div style="word-wrap: break-word;"><b>RX Bus Status Flag (Read Only)
+</b><br>
+This bit indicates the busy status of the receiver.
+<br>
+0 = The receiver is Idle.
+<br>
+1 = The receiver is BUSY.
+<br>
+</div></td></tr><tr><td>
+[11]</td><td>ABERRSTS</td><td><div style="word-wrap: break-word;"><b>Auto-baud Rate Error Status
+</b><br>
+This bit is set when auto-baud rate detection counter overrun
+<br>
+When the auto-baud rate counter overrun, the user shall revise the CLKDIV (USCI_BRGEN[25:16]) value and
+<br>
+enable ABREN (USCI_PROTCTL[6]) to detect the correct baud rate again.
+<br>
+0 = Auto-baud rate detect counter is not overrun.
+<br>
+1 = Auto-baud rate detect counter is overrun.
+<br>
+Note 1: This bit is set at the same time of ABRDETIF.
+<br>
+Note 2: This bit can be cleared by writing '1' to ABRDETIF or ABERRSTS.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>CTSSYNCLV</td><td><div style="word-wrap: break-word;"><b>nCTS Synchronized Level Status (Read Only)
+</b><br>
+This bit used to indicate the current status of the internal synchronized nCTS signal.
+<br>
+0 = The internal synchronized nCTS is low.
+<br>
+1 = The internal synchronized nCTS is high.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>CTSLV</td><td><div style="word-wrap: break-word;"><b>nCTS Pin Status (Read Only)
+</b><br>
+This bit used to monitor the current status of nCTS pin input.
+<br>
+0 = nCTS pin input is low level voltage logic state.
+<br>
+1 = nCTS pin input is high level voltage logic state.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+
+ */
     __IO uint32_t CTL;                   /*!< [0x0000] USCI Control Register                                            */
     __IO uint32_t INTEN;                 /*!< [0x0004] USCI Interrupt Enable Register                                   */
     __IO uint32_t BRGEN;                 /*!< [0x0008] USCI Baud Rate Generator Register                                */

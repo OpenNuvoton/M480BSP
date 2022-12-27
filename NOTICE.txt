@@ -1,2 +1,2 @@
-Copyright 2021, Nuvoton Technology Corp.
+Copyright 2022, Nuvoton Technology Corp.
 

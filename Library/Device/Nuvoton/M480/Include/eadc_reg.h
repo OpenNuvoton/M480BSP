@@ -28,519 +28,1173 @@ typedef struct
 
 
     /**
-     * @var EADC_T::DAT[19]
-     * Offset: 0x00  ADC Data Register 0~18 for Sample Module 0~18
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |RESULT    |ADC Conversion Result
-     * |        |          |This field contains 12 bits conversion result.
-     * |        |          |When DMOF (EADC_CTL[9]) is set to 0, 12-bit ADC conversion result with unsigned format will be filled in RESULT[11:0] and zero will be filled in RESULT[15:12].
-     * |        |          |When DMOF (EADC_CTL[9]) set to 1, 12-bit ADC conversion result with 2'complement format will be filled in RESULT[11:0] and signed bits to will be filled in RESULT[15:12].
-     * |[16]    |OV        |Overrun Flag
-     * |        |          |If converted data in RESULT[11:0] has not been read before new conversion result is loaded to this register, OV is set to 1.
-     * |        |          |0 = Data in RESULT[11:0] is recent conversion result.
-     * |        |          |1 = Data in RESULT[11:0] is overwrite.
-     * |        |          |Note: It is cleared by hardware after EADC_DAT register is read.
-     * |[17]    |VALID     |Valid Flag
-     * |        |          |This bit is set to 1 when corresponding sample module channel analog input conversion is completed and cleared by hardware after EADC_DAT register is read.
-     * |        |          |0 = Data in RESULT[11:0] bits is not valid.
-     * |        |          |1 = Data in RESULT[11:0] bits is valid.
-     * @var EADC_T::CURDAT
-     * Offset: 0x4C  ADC PDMA Current Transfer Data Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[17:0]  |CURDAT    |ADC PDMA Current Transfer Data Register
-     * |        |          |This register is a shadow register of EADC_DATn (n=0~18) for PDMA support.
-     * |        |          |This is a read only register.
-     * @var EADC_T::CTL
-     * Offset: 0x50  ADC Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |ADCEN     |ADC Converter Enable Bit
-     * |        |          |0 = Disabled EADC.
-     * |        |          |1 = Enabled EADC.
-     * |        |          |Note: Before starting ADC conversion function, this bit should be set to 1
-     * |        |          |Clear it to 0 to disable ADC converter analog circuit power consumption.
-     * |[1]     |ADCRST    |ADC Converter Control Circuits Reset
-     * |        |          |0 = No effect.
-     * |        |          |1 = Cause ADC control circuits reset to initial state, but not change the ADC registers value.
-     * |        |          |Note: ADCRST bit remains 1 during ADC reset, when ADC reset end, the ADCRST bit is automatically cleared to 0.
-     * |[2]     |ADCIEN0   |Specific Sample Module ADC ADINT0 Interrupt Enable Bit
-     * |        |          |The ADC converter generates a conversion end ADIF0 (EADC_STATUS2[0]) upon the end of specific sample module ADC conversion
-     * |        |          |If ADCIEN0 bit is set then conversion end interrupt request ADINT0 is generated.
-     * |        |          |0 = Specific sample module ADC ADINT0 interrupt function Disabled.
-     * |        |          |1 = Specific sample module ADC ADINT0 interrupt function Enabled.
-     * |[3]     |ADCIEN1   |Specific Sample Module ADC ADINT1 Interrupt Enable Bit
-     * |        |          |The ADC converter generates a conversion end ADIF1 (EADC_STATUS2[1]) upon the end of specific sample module ADC conversion
-     * |        |          |If ADCIEN1 bit is set then conversion end interrupt request ADINT1 is generated.
-     * |        |          |0 = Specific sample module ADC ADINT1 interrupt function Disabled.
-     * |        |          |1 = Specific sample module ADC ADINT1 interrupt function Enabled.
-     * |[4]     |ADCIEN2   |Specific Sample Module ADC ADINT2 Interrupt Enable Bit
-     * |        |          |The ADC converter generates a conversion end ADIF2 (EADC_STATUS2[2]) upon the end of specific sample module ADC conversion
-     * |        |          |If ADCIEN2 bit is set then conversion end interrupt request ADINT2 is generated.
-     * |        |          |0 = Specific sample module ADC ADINT2 interrupt function Disabled.
-     * |        |          |1 = Specific sample module ADC ADINT2 interrupt function Enabled.
-     * |[5]     |ADCIEN3   |Specific Sample Module ADC ADINT3 Interrupt Enable Bit
-     * |        |          |The ADC converter generates a conversion end ADIF3 (EADC_STATUS2[3]) upon the end of specific sample module ADC conversion
-     * |        |          |If ADCIEN3 bit is set then conversion end interrupt request ADINT3 is generated.
-     * |        |          |0 = Specific sample module ADC ADINT3 interrupt function Disabled.
-     * |        |          |1 = Specific sample module ADC ADINT3 interrupt function Enabled.
-     * |[7:6]   |RESSEL    |Resolution Selection
-     * |        |          |00 = 6-bit ADC result will be put at RESULT (EADC_DATn[5:0]).
-     * |        |          |01 = 8-bit ADC result will be put at RESULT (EADC_DATn[7:0]).
-     * |        |          |10 = 10-bit ADC result will be put at RESULT (EADC_DATn[9:0]).
-     * |        |          |11 = 12-bit ADC result will be put at RESULT (EADC_DATn[11:0]).
-     * |[8]     |DIFFEN    |Differential Analog Input Mode Enable Bit
-     * |        |          |0 = Single-end analog input mode.
-     * |        |          |1 = Differential analog input mode.
-     * |[9]     |DMOF      |ADC Differential Input Mode Output Format
-     * |        |          |0 = ADC conversion result will be filled in RESULT (EADC_DATn[15:0] , n= 0 ~18) with unsigned format.
-     * |        |          |1 = ADC conversion result will be filled in RESULT (EADC_DATn[15:0] , n= 0 ~18) with 2'complement format.
-     * |[11]    |PDMAEN    |PDMA Transfer Enable Bit
-     * |        |          |When ADC conversion is completed, the converted data is loaded into EADC_DATn (n: 0 ~ 18) register, user can enable this bit to generate a PDMA data transfer request.
-     * |        |          |0 = PDMA data transfer Disabled.
-     * |        |          |1 = PDMA data transfer Enabled.
-     * |        |          |Note: When set this bit field to 1, user must set ADCIENn (EADC_CTL[5:2], n=0~3) = 0 to disable interrupt.
-     * @var EADC_T::SWTRG
-     * Offset: 0x54  ADC Sample Module Software Start Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[18:0]  |SWTRG     |ADC Sample Module 0~18 Software Force to Start ADC Conversion
-     * |        |          |0 = No effect.
-     * |        |          |1 = Cause an ADC conversion when the priority is given to sample module.
-     * |        |          |Note: After write this register to start ADC conversion, the EADC_PENDSTS register will show which sample module will conversion
-     * |        |          |If user want to disable the conversion of the sample module, user can write EADC_PENDSTS register to clear it.
-     * @var EADC_T::PENDSTS
-     * Offset: 0x58  ADC Start of Conversion Pending Flag Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[18:0]  |STPF      |ADC Sample Module 0~18 Start of Conversion Pending Flag
-     * |        |          |Read:
-     * |        |          |0 = There is no pending conversion for sample module.
-     * |        |          |1 = Sample module ADC start of conversion is pending.
-     * |        |          |Write:
-     * |        |          |1 = clear pending flag & cancel the conversion for sample module.
-     * |        |          |Note: This bit remains 1 during pending state, when the respective ADC conversion is end, the STPFn (n=0~18) bit is automatically cleared to 0
-     * @var EADC_T::OVSTS
-     * Offset: 0x5C  ADC Sample Module Start of Conversion Overrun Flag Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[18:0]  |SPOVF     |ADC SAMPLE0~18 Overrun Flag
-     * |        |          |0 = No sample module event overrun.
-     * |        |          |1 = Indicates a new sample module event is generated while an old one event is pending.
-     * |        |          |Note: This bit is cleared by writing 1 to it.
-     * @var EADC_T::SCTL[19]
-     * Offset: 0x80  ADC Sample Module 0~18 Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[3:0]   |CHSEL     |ADC Sample Module Channel Selection
-     * |        |          |00H = EADC_CH0 (slow channel).
-     * |        |          |01H = EADC_CH1 (slow channel).
-     * |        |          |02H = EADC_CH2 (slow channel).
-     * |        |          |03H = EADC_CH3 (slow channel).
-     * |        |          |04H = EADC_CH4 (slow channel).
-     * |        |          |05H = EADC_CH5 (slow channel).
-     * |        |          |06H = EADC_CH6 (slow channel).
-     * |        |          |07H = EADC_CH7 (slow channel).
-     * |        |          |08H = EADC_CH8 (slow channel).
-     * |        |          |09H = EADC_CH9 (slow channel).
-     * |        |          |0AH = EADC_CH10 (fast channel).
-     * |        |          |0BH = EADC_CH11 (fast channel).
-     * |        |          |0CH = EADC_CH12 (fast channel).
-     * |        |          |0DH = EADC_CH13 (fast channel).
-     * |        |          |0EH = EADC_CH14 (fast channel).
-     * |        |          |0FH = EADC_CH15 (fast channel).
-     * |[4]     |EXTREN    |ADC External Trigger Rising Edge Enable Bit
-     * |        |          |0 = Rising edge Disabled when ADC selects EADC0_ST as trigger source.
-     * |        |          |1 = Rising edge Enabled when ADC selects EADC0_ST as trigger source.
-     * |[5]     |EXTFEN    |ADC External Trigger Falling Edge Enable Bit
-     * |        |          |0 = Falling edge Disabled when ADC selects EADC0_ST as trigger source.
-     * |        |          |1 = Falling edge Enabled when ADC selects EADC0_ST as trigger source.
-     * |[7:6]   |TRGDLYDIV |ADC Sample Module Start of Conversion Trigger Delay Clock Divider Selection
-     * |        |          |Trigger delay clock frequency:
-     * |        |          |00 = ADC_CLK/1.
-     * |        |          |01 = ADC_CLK/2.
-     * |        |          |10 = ADC_CLK/4.
-     * |        |          |11 = ADC_CLK/16.
-     * |[15:8]  |TRGDLYCNT |ADC Sample Module Start of Conversion Trigger Delay Time
-     * |        |          |Trigger delay time = TRGDLYCNT x ADC_CLK x n (n=1,2,4,16 from TRGDLYDIV setting).
-     * |[20:16] |TRGSEL    |ADC Sample Module Start of Conversion Trigger Source Selection
-     * |        |          |0H = Disable trigger.
-     * |        |          |1H = External trigger from EADC0_ST pin input.
-     * |        |          |2H = ADC ADINT0 interrupt EOC (End of conversion) pulse trigger.
-     * |        |          |3H = ADC ADINT1 interrupt EOC (End of conversion) pulse trigger.
-     * |        |          |4H = Timer0 overflow pulse trigger.
-     * |        |          |5H = Timer1 overflow pulse trigger.
-     * |        |          |6H = Timer2 overflow pulse trigger.
-     * |        |          |7H = Timer3 overflow pulse trigger.
-     * |        |          |8H = EPWM0TG0.
-     * |        |          |9H = EPWM0TG1.
-     * |        |          |AH = EPWM0TG2.
-     * |        |          |BH = EPWM0TG3.
-     * |        |          |CH = EPWM0TG4.
-     * |        |          |DH = EPWM0TG5.
-     * |        |          |EH = EPWM1TG0.
-     * |        |          |FH = EPWM1TG1.
-     * |        |          |10H = EPWM1TG2.
-     * |        |          |11H = EPWM1TG3.
-     * |        |          |12H = EPWM1TG4.
-     * |        |          |13H = EPWM1TG5.
-     * |        |          |14H = BPWM0TG.
-     * |        |          |15H = BPWM1TG.
-     * |        |          |other = Reserved.
-     * |[22]    |INTPOS    |Interrupt Flag Position Select
-     * |        |          |0 = Set ADIFn (EADC_STATUS2[n], n=0~3) at ADC end of conversion.
-     * |        |          |1 = Set ADIFn (EADC_STATUS2[n], n=0~3) at ADC start of conversion.
-     * |[23]    |DBMEN     |Double Buffer Mode Enable Bit
-     * |        |          |0 = Sample has one sample result register. (default).
-     * |        |          |1 = Sample has two sample result registers.
-     * |[31:24] |EXTSMPT   |ADC Sampling Time Extend
-     * |        |          |When ADC converting at high conversion rate, the sampling time of analog input voltage may not enough if input channel loading is heavy, user can extend ADC sampling time after trigger source is coming to get enough sampling time.
-     * |        |          |The range of start delay time is from 0~255 ADC clock.
-     * @var EADC_T::INTSRC[4]
-     * Offset: 0xD0  ADC interrupt 0~3 Source Enable Control Register.
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |SPLIE0    |Sample Module 0 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 0 interrupt Disabled.
-     * |        |          |1 = Sample Module 0 interrupt Enabled.
-     * |[1]     |SPLIE1    |Sample Module 1 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 1 interrupt Disabled.
-     * |        |          |1 = Sample Module 1 interrupt Enabled.
-     * |[2]     |SPLIE2    |Sample Module 2 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 2 interrupt Disabled.
-     * |        |          |1 = Sample Module 2 interrupt Enabled.
-     * |[3]     |SPLIE3    |Sample Module 3 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 3 interrupt Disabled.
-     * |        |          |1 = Sample Module 3 interrupt Enabled.
-     * |[4]     |SPLIE4    |Sample Module 4 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 4 interrupt Disabled.
-     * |        |          |1 = Sample Module 4 interrupt Enabled.
-     * |[5]     |SPLIE5    |Sample Module 5 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 5 interrupt Disabled.
-     * |        |          |1 = Sample Module 5 interrupt Enabled.
-     * |[6]     |SPLIE6    |Sample Module 6 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 6 interrupt Disabled.
-     * |        |          |1 = Sample Module 6 interrupt Enabled.
-     * |[7]     |SPLIE7    |Sample Module 7 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 7 interrupt Disabled.
-     * |        |          |1 = Sample Module 7 interrupt Enabled.
-     * |[8]     |SPLIE8    |Sample Module 8 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 8 interrupt Disabled.
-     * |        |          |1 = Sample Module 8 interrupt Enabled.
-     * |[9]     |SPLIE9    |Sample Module 9 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 9 interrupt Disabled.
-     * |        |          |1 = Sample Module 9 interrupt Enabled.
-     * |[10]    |SPLIE10   |Sample Module 10 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 10 interrupt Disabled.
-     * |        |          |1 = Sample Module 10 interrupt Enabled.
-     * |[11]    |SPLIE11   |Sample Module 11 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 11 interrupt Disabled.
-     * |        |          |1 = Sample Module 11 interrupt Enabled.
-     * |[12]    |SPLIE12   |Sample Module 12 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 12 interrupt Disabled.
-     * |        |          |1 = Sample Module 12 interrupt Enabled.
-     * |[13]    |SPLIE13   |Sample Module 13 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 13 interrupt Disabled.
-     * |        |          |1 = Sample Module 13 interrupt Enabled.
-     * |[14]    |SPLIE14   |Sample Module 14 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 14 interrupt Disabled.
-     * |        |          |1 = Sample Module 14 interrupt Enabled.
-     * |[15]    |SPLIE15   |Sample Module 15 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 15 interrupt Disabled.
-     * |        |          |1 = Sample Module 15 interrupt Enabled.
-     * |[16]    |SPLIE16   |Sample Module 16 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 16 interrupt Disabled.
-     * |        |          |1 = Sample Module 16 interrupt Enabled.
-     * |[17]    |SPLIE17   |Sample Module 17 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 17 interrupt Disabled.
-     * |        |          |1 = Sample Module 17 interrupt Enabled.
-     * |[18]    |SPLIE18   |Sample Module 18 Interrupt Enable Bit
-     * |        |          |0 = Sample Module 18 interrupt Disabled.
-     * |        |          |1 = Sample Module 18 interrupt Enabled.
-     * @var EADC_T::CMP[4]
-     * Offset: 0xE0  ADC Result Compare Register 0~3
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |ADCMPEN   |ADC Result Compare Enable Bit
-     * |        |          |0 = Compare Disabled.
-     * |        |          |1 = Compare Enabled.
-     * |        |          |Set this bit to 1 to enable compare CMPDAT (EADC_CMPn[27:16], n=0~3) with specified sample module conversion result when converted data is loaded into EADC_DAT register.
-     * |[1]     |ADCMPIE   |ADC Result Compare Interrupt Enable Bit
-     * |        |          |0 = Compare function interrupt Disabled.
-     * |        |          |1 = Compare function interrupt Enabled.
-     * |        |          |If the compare function is enabled and the compare condition matches the setting of CMPCOND (EADC_CMPn[2], n=0~3) and CMPMCNT (EADC_CMPn[11:8], n=0~3), ADCMPFn (EADC_STATUS2[7:4], n=0~3) will be asserted, in the meanwhile, if ADCMPIE is set to 1, a compare interrupt request is generated.
-     * |[2]     |CMPCOND   |Compare Condition
-     * |        |          |0= Set the compare condition as that when a 12-bit ADC conversion result is less than the 12-bit CMPDAT (EADC_CMPn [27:16]), the internal match counter will increase one.
-     * |        |          |1= Set the compare condition as that when a 12-bit ADC conversion result is greater or equal to the 12-bit CMPDAT (EADC_CMPn [27:16]), the internal match counter will increase one.
-     * |        |          |Note: When the internal counter reaches the value to (CMPMCNT (EADC_CMPn[11:8], n=0~3) +1), the CMPF bit will be set.
-     * |[7:3]   |CMPSPL    |Compare Sample Module Selection
-     * |        |          |00000 = Sample Module 0 conversion result EADC_DAT0 is selected to be compared.
-     * |        |          |00001 = Sample Module 1 conversion result EADC_DAT1 is selected to be compared.
-     * |        |          |00010 = Sample Module 2 conversion result EADC_DAT2 is selected to be compared.
-     * |        |          |00011 = Sample Module 3 conversion result EADC_DAT3 is selected to be compared.
-     * |        |          |00100 = Sample Module 4 conversion result EADC_DAT4 is selected to be compared.
-     * |        |          |00101 = Sample Module 5 conversion result EADC_DAT5 is selected to be compared.
-     * |        |          |00110 = Sample Module 6 conversion result EADC_DAT6 is selected to be compared.
-     * |        |          |00111 = Sample Module 7 conversion result EADC_DAT7 is selected to be compared.
-     * |        |          |01000 = Sample Module 8 conversion result EADC_DAT8 is selected to be compared.
-     * |        |          |01001 = Sample Module 9 conversion result EADC_DAT9 is selected to be compared.
-     * |        |          |01010 = Sample Module 10 conversion result EADC_DAT10 is selected to be compared.
-     * |        |          |01011 = Sample Module 11 conversion result EADC_DAT11 is selected to be compared.
-     * |        |          |01100 = Sample Module 12 conversion result EADC_DAT12 is selected to be compared.
-     * |        |          |01101 = Sample Module 13 conversion result EADC_DAT13 is selected to be compared.
-     * |        |          |01110 = Sample Module 14 conversion result EADC_DAT14 is selected to be compared.
-     * |        |          |01111 = Sample Module 15 conversion result EADC_DAT15 is selected to be compared.
-     * |        |          |10000 = Sample Module 16 conversion result EADC_DAT16 is selected to be compared.
-     * |        |          |10001 = Sample Module 17 conversion result EADC_DAT17 is selected to be compared.
-     * |        |          |10010 = Sample Module 18 conversion result EADC_DAT18 is selected to be compared.
-     * |[11:8]  |CMPMCNT   |Compare Match Count
-     * |        |          |When the specified ADC sample module analog conversion result matches the compare condition defined by CMPCOND (EADC_CMPn[2], n=0~3), the internal match counter will increase 1
-     * |        |          |If the compare result does not meet the compare condition, the internal compare match counter will reset to 0
-     * |        |          |When the internal counter reaches the value to (CMPMCNT +1), the ADCMPFn (EADC_STATUS2[7:4], n=0~3) will be set.
-     * |[15]    |CMPWEN    |Compare Window Mode Enable Bit
-     * |        |          |0 = ADCMPF0 (EADC_STATUS2[4]) will be set when EADC_CMP0 compared condition matched
-     * |        |          |ADCMPF2 (EADC_STATUS2[6]) will be set when EADC_CMP2 compared condition matched
-     * |        |          |1 = ADCMPF0 (EADC_STATUS2[4]) will be set when both EADC_CMP0 and EADC_CMP1 compared condition matched
-     * |        |          |ADCMPF2 (EADC_STATUS2[6]) will be set when both EADC_CMP2 and EADC_CMP3 compared condition matched.
-     * |        |          |Note: This bit is only present in EADC_CMP0 and EADC_CMP2 register.
-     * |[27:16] |CMPDAT    |Comparison Data
-     * |        |          |The 12 bits data is used to compare with conversion result of specified sample module
-     * |        |          |User can use it to monitor the external analog input pin voltage transition without imposing a load on software.
-     * @var EADC_T::STATUS0
-     * Offset: 0xF0  ADC Status Register 0
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |VALID     |EADC_DAT0~15 Data Valid Flag
-     * |        |          |It is a mirror of VALID bit in sample module ADC result data register EADC_DATn. (n=0~18).
-     * |[31:16] |OV        |EADC_DAT0~15 Overrun Flag
-     * |        |          |It is a mirror to OV bit in sample module ADC result data register EADC_DATn. (n=0~18).
-     * @var EADC_T::STATUS1
-     * Offset: 0xF4  ADC Status Register 1
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[2:0]   |VALID     |EADC_DAT16~18 Data Valid Flag
-     * |        |          |It is a mirror of VALID bit in sample module ADC result data register EADC_DATn. (n=0~18).
-     * |[18:16] |OV        |EADC_DAT16~18 Overrun Flag
-     * |        |          |It is a mirror to OV bit in sample module ADC result data register EADC_DATn. (n=0~18).
-     * @var EADC_T::STATUS2
-     * Offset: 0xF8  ADC Status Register 2
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |ADIF0     |ADC ADINT0 Interrupt Flag
-     * |        |          |0 = No ADINT0 interrupt pulse received.
-     * |        |          |1 = ADINT0 interrupt pulse has been received.
-     * |        |          |Note1: This bit is cleared by writing 1 to it.
-     * |        |          |Note2:This bit indicates whether an ADC conversion of specific sample module has been completed
-     * |[1]     |ADIF1     |ADC ADINT1 Interrupt Flag
-     * |        |          |0 = No ADINT1 interrupt pulse received.
-     * |        |          |1 = ADINT1 interrupt pulse has been received.
-     * |        |          |Note1: This bit is cleared by writing 1 to it.
-     * |        |          |Note2:This bit indicates whether an ADC conversion of specific sample module has been completed
-     * |[2]     |ADIF2     |ADC ADINT2 Interrupt Flag
-     * |        |          |0 = No ADINT2 interrupt pulse received.
-     * |        |          |1 = ADINT2 interrupt pulse has been received.
-     * |        |          |Note1: This bit is cleared by writing 1 to it.
-     * |        |          |Note2:This bit indicates whether an ADC conversion of specific sample module has been completed
-     * |[3]     |ADIF3     |ADC ADINT3 Interrupt Flag
-     * |        |          |0 = No ADINT3 interrupt pulse received.
-     * |        |          |1 = ADINT3 interrupt pulse has been received.
-     * |        |          |Note1: This bit is cleared by writing 1 to it.
-     * |        |          |Note2:This bit indicates whether an ADC conversion of specific sample module has been completed
-     * |[4]     |ADCMPF0   |ADC Compare 0 Flag
-     * |        |          |When the specific sample module ADC conversion result meets setting condition in EADC_CMP0 then this bit is set to 1.
-     * |        |          |0 = Conversion result in EADC_DAT does not meet EADC_CMP0 register setting.
-     * |        |          |1 = Conversion result in EADC_DAT meets EADC_CMP0 register setting.
-     * |        |          |Note: This bit is cleared by writing 1 to it.
-     * |[5]     |ADCMPF1   |ADC Compare 1 Flag
-     * |        |          |When the specific sample module ADC conversion result meets setting condition in EADC_CMP1 then this bit is set to 1.
-     * |        |          |0 = Conversion result in EADC_DAT does not meet EADC_CMP1 register setting.
-     * |        |          |1 = Conversion result in EADC_DAT meets EADC_CMP1 register setting.
-     * |        |          |Note: This bit is cleared by writing 1 to it.
-     * |[6]     |ADCMPF2   |ADC Compare 2 Flag
-     * |        |          |When the specific sample module ADC conversion result meets setting condition in EADC_CMP2 then this bit is set to 1.
-     * |        |          |0 = Conversion result in EADC_DAT does not meet EADC_CMP2 register setting.
-     * |        |          |1 = Conversion result in EADC_DAT meets EADC_CMP2 register setting.
-     * |        |          |Note: This bit is cleared by writing 1 to it.
-     * |[7]     |ADCMPF3   |ADC Compare 3 Flag
-     * |        |          |When the specific sample module ADC conversion result meets setting condition in EADC_CMP3 then this bit is set to 1.
-     * |        |          |0 = Conversion result in EADC_DAT does not meet EADC_CMP3 register setting.
-     * |        |          |1 = Conversion result in EADC_DAT meets EADC_CMP3 register setting.
-     * |        |          |Note: This bit is cleared by writing 1 to it.
-     * |[8]     |ADOVIF0   |ADC ADINT0 Interrupt Flag Overrun
-     * |        |          |0 = ADINT0 interrupt flag is not overwritten to 1.
-     * |        |          |1 = ADINT0 interrupt flag is overwritten to 1.
-     * |        |          |Note: This bit is cleared by writing 1 to it.
-     * |[9]     |ADOVIF1   |ADC ADINT1 Interrupt Flag Overrun
-     * |        |          |0 = ADINT1 interrupt flag is not overwritten to 1.
-     * |        |          |1 = ADINT1 interrupt flag is overwritten to 1.
-     * |        |          |Note: This bit is cleared by writing 1 to it.
-     * |[10]    |ADOVIF2   |ADC ADINT2 Interrupt Flag Overrun
-     * |        |          |0 = ADINT2 interrupt flag is not overwritten to 1.
-     * |        |          |1 = ADINT2 interrupt flag is s overwritten to 1.
-     * |        |          |Note: This bit is cleared by writing 1 to it.
-     * |[11]    |ADOVIF3   |ADC ADINT3 Interrupt Flag Overrun
-     * |        |          |0 = ADINT3 interrupt flag is not overwritten to 1.
-     * |        |          |1 = ADINT3 interrupt flag is overwritten to 1.
-     * |        |          |Note: This bit is cleared by writing 1 to it.
-     * |[12]    |ADCMPO0   |ADC Compare 0 Output Status (Read Only)
-     * |        |          |The 12 bits compare0 data CMPDAT0 (EADC_CMP0[27:16]) is used to compare with conversion result of specified sample module
-     * |        |          |User can use it to monitor the external analog input pin voltage status.
-     * |        |          |0 = Conversion result in EADC_DAT less than CMPDAT0 setting.
-     * |        |          |1 = Conversion result in EADC_DAT great than or equal CMPDAT0 setting.
-     * |[13]    |ADCMPO1   |ADC Compare 1 Output Status (Read Only)
-     * |        |          |The 12 bits compare1 data CMPDAT1 (EADC_CMP1[27:16]) is used to compare with conversion result of specified sample module
-     * |        |          |User can use it to monitor the external analog input pin voltage status.
-     * |        |          |0 = Conversion result in EADC_DAT less than CMPDAT1 setting.
-     * |        |          |1 = Conversion result in EADC_DAT great than or equal CMPDAT1 setting.
-     * |[14]    |ADCMPO2   |ADC Compare 2 Output Status (Read Only)
-     * |        |          |The 12 bits compare2 data CMPDAT2 (EADC_CMP2[27:16]) is used to compare with conversion result of specified sample module
-     * |        |          |User can use it to monitor the external analog input pin voltage status.
-     * |        |          |0 = Conversion result in EADC_DAT less than CMPDAT2 setting.
-     * |        |          |1 = Conversion result in EADC_DAT great than or equal CMPDAT2 setting.
-     * |[15]    |ADCMPO3   |ADC Compare 3 Output Status (Read Only)
-     * |        |          |The 12 bits compare3 data CMPDAT3 (EADC_CMP3[27:16]) is used to compare with conversion result of specified sample module
-     * |        |          |User can use it to monitor the external analog input pin voltage status.
-     * |        |          |0 = Conversion result in EADC_DAT less than CMPDAT3 setting.
-     * |        |          |1 = Conversion result in EADC_DAT great than or equal CMPDAT3 setting.
-     * |[20:16] |CHANNEL   |Current Conversion Channel (Read Only)
-     * |        |          |This filed reflects ADC current conversion channel when BUSY=1.
-     * |        |          |It is read only.
-     * |        |          |00H = EADC_CH0.
-     * |        |          |01H = EADC_CH1.
-     * |        |          |02H = EADC_CH2.
-     * |        |          |03H = EADC_CH3.
-     * |        |          |04H = EADC_CH4.
-     * |        |          |05H = EADC_CH5.
-     * |        |          |06H = EADC_CH6.
-     * |        |          |07H = EADC_CH7.
-     * |        |          |08H = EADC_CH8.
-     * |        |          |09H = EADC_CH9.
-     * |        |          |0AH = EADC_CH10.
-     * |        |          |0BH = EADC_CH11.
-     * |        |          |0CH = EADC_CH12.
-     * |        |          |0DH = EADC_CH13.
-     * |        |          |0EH = EADC_CH14.
-     * |        |          |0FH = EADC_CH15.
-     * |        |          |10H = VBG.
-     * |        |          |11H = VTEMP.
-     * |        |          |12H = VBAT/4.
-     * |[23]    |BUSY      |Busy/Idle (Read Only)
-     * |        |          |0 = EADC is in idle state.
-     * |        |          |1 = EADC is busy at conversion.
-     * |[24]    |ADOVIF    |All ADC Interrupt Flag Overrun Bits Check (Read Only)
-     * |        |          |n=0~3.
-     * |        |          |0 = None of ADINT interrupt flag ADOVIFn (EADC_STATUS2[11:8]) is overwritten to 1.
-     * |        |          |1 = Any one of ADINT interrupt flag ADOVIFn (EADC_STATUS2[11:8]) is overwritten to 1.
-     * |        |          |Note: This bit will keep 1 when any ADOVIFn Flag is equal to 1.
-     * |[25]    |STOVF     |for All ADC Sample Module Start of Conversion Overrun Flags Check (Read Only)
-     * |        |          |n=0~18.
-     * |        |          |0 = None of sample module event overrun flag SPOVFn (EADC_OVSTS[n]) is set to 1.
-     * |        |          |1 = Any one of sample module event overrun flag SPOVFn (EADC_OVSTS[n]) is set to 1.
-     * |        |          |Note: This bit will keep 1 when any SPOVFn Flag is equal to 1.
-     * |[26]    |AVALID    |for All Sample Module ADC Result Data Register EADC_DAT Data Valid Flag Check (Read Only)
-     * |        |          |n=0~18.
-     * |        |          |0 = None of sample module data register valid flag VALIDn (EADC_DATn[17]) is set to 1.
-     * |        |          |1 = Any one of sample module data register valid flag VALIDn (EADC_DATn[17]) is set to 1.
-     * |        |          |Note: This bit will keep 1 when any VALIDn Flag is equal to 1.
-     * |[27]    |AOV       |for All Sample Module ADC Result Data Register Overrun Flags Check (Read Only)
-     * |        |          |n=0~18.
-     * |        |          |0 = None of sample module data register overrun flag OVn (EADC_DATn[16]) is set to 1.
-     * |        |          |1 = Any one of sample module data register overrun flag OVn (EADC_DATn[16]) is set to 1.
-     * |        |          |Note: This bit will keep 1 when any OVn Flag is equal to 1.
-     * @var EADC_T::STATUS3
-     * Offset: 0xFC  ADC Status Register 3
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[4:0]   |CURSPL    |ADC Current Sample Module
-     * |        |          |This register show the current ADC is controlled by which sample module control logic modules.
-     * |        |          |If the ADC is Idle, this bit filed will set to 0x1F.
-     * |        |          |This is a read only register.
-     * @var EADC_T::DDAT[4]
-     * Offset: 0x100  ADC Double Data Register 0 for Sample Module 0
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |RESULT    |ADC Conversion Results
-     * |        |          |This field contains 12 bits conversion results.
-     * |        |          |When the DMOF (EADC_CTL[9]) is set to 0, 12-bit ADC conversion result with unsigned format will be filled in RESULT [11:0] and zero will be filled in RESULT [15:12].
-     * |        |          |When DMOF (EADC_CTL[9]) set to 1, 12-bit ADC conversion result with 2'complement format will be filled in RESULT [11:0] and signed bits to will be filled in RESULT [15:12].
-     * |[16]    |OV        |Overrun Flag
-     * |        |          |0 = Data in RESULT (EADC_DATn[15:0], n=0~3) is recent conversion result.
-     * |        |          |1 = Data in RESULT (EADC_DATn[15:0], n=0~3) is overwrite.
-     * |        |          |If converted data in RESULT[15:0] has not been read before new conversion result is loaded to this register, OV is set to 1
-     * |        |          |It is cleared by hardware after EADC_DDAT register is read.
-     * |[17]    |VALID     |Valid Flag
-     * |        |          |0 = Double data in RESULT (EADC_DDATn[15:0]) is not valid.
-     * |        |          |1 = Double data in RESULT (EADC_DDATn[15:0]) is valid.
-     * |        |          |This bit is set to 1 when corresponding sample module channel analog input conversion is completed and cleared by hardware after EADC_DDATn register is read
-     * |        |          |(n=0~3).
-     * @var EADC_T::PWRM
-     * Offset: 0x110  ADC Power Management Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |PWUPRDY   |ADC Power-up Sequence Completed and Ready for Conversion (Read Only)
-     * |        |          |0 = ADC is not ready for conversion may be in power down state or in the progress of start up.
-     * |        |          |1 = ADC is ready for conversion.
-     * |[1]     |PWUCALEN  |Power Up Calibration Function Enable Control
-     * |        |          |0 = Disable the function of calibration at power up.
-     * |        |          |1 = Enable the function of calibration at power up.
-     * |        |          |Note: This bit work together with CALSEL (EADC_CALCTL [3]), see the following
-     * |        |          |{PWUCALEN, CALSEL } Description:
-     * |        |          |PWUCALEN is 0 and CALSEL is 0: No need to calibrate.
-     * |        |          |PWUCALEN is 0 and CALSEL is 1: No need to calibrate.
-     * |        |          |PWUCALEN is 1 and CALSEL is 0: Load calibration word when power up.
-     * |        |          |PWUCALEN is 1 and CALSEL is 1: Calibrate when power up.
-     * |[3:2]   |PWDMOD    |ADC Power-down Mode
-     * |        |          |Set this bit fields to select ADC power down mode when system power-down.
-     * |        |          |00 = ADC Deep power down mode.
-     * |        |          |01 = ADC Power down.
-     * |        |          |10 = ADC Standby mode.
-     * |        |          |11 = ADC Deep power down mode.
-     * |        |          |Note: Different PWDMOD has different power down/up sequence, in order to avoid ADC powering up with wrong sequence; user must keep PWMOD consistent each time in power down and start up
-     * |[19:8]  |LDOSUT    |ADC Internal LDO Start-up Time
-     * |        |          |Set this bit fields to control LDO start-up time
-     * |        |          |The minimum required LDO start-up time is 20us
-     * |        |          |LDO start-up time = (1/ADC_CLK) x LDOSUT.
-     * @var EADC_T::CALCTL
-     * Offset: 0x114  ADC Calibration Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[1]     |CALSTART  |Calibration Functional Block Start
-     * |        |          |0 = Stops calibration functional block.
-     * |        |          |1 = Starts calibration functional block.
-     * |        |          |Note: This bit is set by SW and clear by HW after re-calibration finish
-     * |[2]     |CALDONE   |Calibration Functional Block Complete (Read Only)
-     * |        |          |0 = During a calibration.
-     * |        |          |1 = Calibration is completed.
-     * |[3]     |CALSEL    |Select Calibration Functional Block
-     * |        |          |0 = Load calibration word when calibration functional block is active.
-     * |        |          |1 = Execute calibration when calibration functional block is active.
-     * @var EADC_T::CALDWRD
-     * Offset: 0x118  ADC Calibration Load Word Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[6:0]   |CALWORD   |Calibration Word Bits
-     * |        |          |Write to this register with the previous calibration word before load calibration action.
-     * |        |          |Read this register after calibration done.
-     * |        |          |Note: The calibration block contains two parts CALIBRATION and LOAD CALIBRATION; if the calibration block configure as CALIBRATION; then this register represent the result of calibration when calibration is completed; if configure as LOAD CALIBRATION ; configure this register before loading calibration action, after loading calibration complete, the laoded calibration word will apply to the ADC; while in loading calibration function the loaded value will not be equal to the original CALWORD until calibration is done.
-     */
+@var EADC_T::DAT[19]
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DAT[19]
+</font><br><p> <font size="2">
+Offset: 0x00  ADC Data Register 0~18 for Sample Module 0~18
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[15:0]</td><td>RESULT</td><td><div style="word-wrap: break-word;"><b>ADC Conversion Result
+</b><br>
+This field contains 12 bits conversion result.
+<br>
+When DMOF (EADC_CTL[9]) is set to 0, 12-bit ADC conversion result with unsigned format will be filled in RESULT[11:0] and zero will be filled in RESULT[15:12].
+<br>
+When DMOF (EADC_CTL[9]) set to 1, 12-bit ADC conversion result with 2'complement format will be filled in RESULT[11:0] and signed bits to will be filled in RESULT[15:12].
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>OV</td><td><div style="word-wrap: break-word;"><b>Overrun Flag
+</b><br>
+If converted data in RESULT[11:0] has not been read before new conversion result is loaded to this register, OV is set to 1.
+<br>
+0 = Data in RESULT[11:0] is recent conversion result.
+<br>
+1 = Data in RESULT[11:0] is overwrite.
+<br>
+Note: It is cleared by hardware after EADC_DAT register is read.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>VALID</td><td><div style="word-wrap: break-word;"><b>Valid Flag
+</b><br>
+This bit is set to 1 when corresponding sample module channel analog input conversion is completed and cleared by hardware after EADC_DAT register is read.
+<br>
+0 = Data in RESULT[11:0] bits is not valid.
+<br>
+1 = Data in RESULT[11:0] bits is valid.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var EADC_T::CURDAT
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CURDAT
+</font><br><p> <font size="2">
+Offset: 0x4C  ADC PDMA Current Transfer Data Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[17:0]</td><td>CURDAT</td><td><div style="word-wrap: break-word;"><b>ADC PDMA Current Transfer Data Register
+</b><br>
+This register is a shadow register of EADC_DATn (n=0~18) for PDMA support.
+<br>
+This is a read only register.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var EADC_T::CTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CTL
+</font><br><p> <font size="2">
+Offset: 0x50  ADC Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>ADCEN</td><td><div style="word-wrap: break-word;"><b>ADC Converter Enable Bit
+</b><br>
+0 = Disabled EADC.
+<br>
+1 = Enabled EADC.
+<br>
+Note: Before starting ADC conversion function, this bit should be set to 1
+<br>
+Clear it to 0 to disable ADC converter analog circuit power consumption.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>ADCRST</td><td><div style="word-wrap: break-word;"><b>ADC Converter Control Circuits Reset
+</b><br>
+0 = No effect.
+<br>
+1 = Cause ADC control circuits reset to initial state, but not change the ADC registers value.
+<br>
+Note: ADCRST bit remains 1 during ADC reset, when ADC reset end, the ADCRST bit is automatically cleared to 0.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>ADCIEN0</td><td><div style="word-wrap: break-word;"><b>Specific Sample Module ADC ADINT0 Interrupt Enable Bit
+</b><br>
+The ADC converter generates a conversion end ADIF0 (EADC_STATUS2[0]) upon the end of specific sample module ADC conversion
+<br>
+If ADCIEN0 bit is set then conversion end interrupt request ADINT0 is generated.
+<br>
+0 = Specific sample module ADC ADINT0 interrupt function Disabled.
+<br>
+1 = Specific sample module ADC ADINT0 interrupt function Enabled.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>ADCIEN1</td><td><div style="word-wrap: break-word;"><b>Specific Sample Module ADC ADINT1 Interrupt Enable Bit
+</b><br>
+The ADC converter generates a conversion end ADIF1 (EADC_STATUS2[1]) upon the end of specific sample module ADC conversion
+<br>
+If ADCIEN1 bit is set then conversion end interrupt request ADINT1 is generated.
+<br>
+0 = Specific sample module ADC ADINT1 interrupt function Disabled.
+<br>
+1 = Specific sample module ADC ADINT1 interrupt function Enabled.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>ADCIEN2</td><td><div style="word-wrap: break-word;"><b>Specific Sample Module ADC ADINT2 Interrupt Enable Bit
+</b><br>
+The ADC converter generates a conversion end ADIF2 (EADC_STATUS2[2]) upon the end of specific sample module ADC conversion
+<br>
+If ADCIEN2 bit is set then conversion end interrupt request ADINT2 is generated.
+<br>
+0 = Specific sample module ADC ADINT2 interrupt function Disabled.
+<br>
+1 = Specific sample module ADC ADINT2 interrupt function Enabled.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>ADCIEN3</td><td><div style="word-wrap: break-word;"><b>Specific Sample Module ADC ADINT3 Interrupt Enable Bit
+</b><br>
+The ADC converter generates a conversion end ADIF3 (EADC_STATUS2[3]) upon the end of specific sample module ADC conversion
+<br>
+If ADCIEN3 bit is set then conversion end interrupt request ADINT3 is generated.
+<br>
+0 = Specific sample module ADC ADINT3 interrupt function Disabled.
+<br>
+1 = Specific sample module ADC ADINT3 interrupt function Enabled.
+<br>
+</div></td></tr><tr><td>
+[7:6]</td><td>RESSEL</td><td><div style="word-wrap: break-word;"><b>Resolution Selection
+</b><br>
+00 = 6-bit ADC result will be put at RESULT (EADC_DATn[5:0]).
+<br>
+01 = 8-bit ADC result will be put at RESULT (EADC_DATn[7:0]).
+<br>
+10 = 10-bit ADC result will be put at RESULT (EADC_DATn[9:0]).
+<br>
+11 = 12-bit ADC result will be put at RESULT (EADC_DATn[11:0]).
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>DIFFEN</td><td><div style="word-wrap: break-word;"><b>Differential Analog Input Mode Enable Bit
+</b><br>
+0 = Single-end analog input mode.
+<br>
+1 = Differential analog input mode.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>DMOF</td><td><div style="word-wrap: break-word;"><b>ADC Differential Input Mode Output Format
+</b><br>
+0 = ADC conversion result will be filled in RESULT (EADC_DATn[15:0] , n= 0 ~18) with unsigned format.
+<br>
+1 = ADC conversion result will be filled in RESULT (EADC_DATn[15:0] , n= 0 ~18) with 2'complement format.
+<br>
+</div></td></tr><tr><td>
+[11]</td><td>PDMAEN</td><td><div style="word-wrap: break-word;"><b>PDMA Transfer Enable Bit
+</b><br>
+When ADC conversion is completed, the converted data is loaded into EADC_DATn (n: 0 ~ 18) register, user can enable this bit to generate a PDMA data transfer request.
+<br>
+0 = PDMA data transfer Disabled.
+<br>
+1 = PDMA data transfer Enabled.
+<br>
+Note: When set this bit field to 1, user must set ADCIENn (EADC_CTL[5:2], n=0~3) = 0 to disable interrupt.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var EADC_T::SWTRG
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SWTRG
+</font><br><p> <font size="2">
+Offset: 0x54  ADC Sample Module Software Start Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[18:0]</td><td>SWTRG</td><td><div style="word-wrap: break-word;"><b>ADC Sample Module 0~18 Software Force to Start ADC Conversion
+</b><br>
+0 = No effect.
+<br>
+1 = Cause an ADC conversion when the priority is given to sample module.
+<br>
+Note: After write this register to start ADC conversion, the EADC_PENDSTS register will show which sample module will conversion
+<br>
+If user want to disable the conversion of the sample module, user can write EADC_PENDSTS register to clear it.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var EADC_T::PENDSTS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PENDSTS
+</font><br><p> <font size="2">
+Offset: 0x58  ADC Start of Conversion Pending Flag Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[18:0]</td><td>STPF</td><td><div style="word-wrap: break-word;"><b>ADC Sample Module 0~18 Start of Conversion Pending Flag
+</b><br>
+Read:
+<br>
+0 = There is no pending conversion for sample module.
+<br>
+1 = Sample module ADC start of conversion is pending.
+<br>
+Write:
+<br>
+1 = clear pending flag & cancel the conversion for sample module.
+<br>
+Note: This bit remains 1 during pending state, when the respective ADC conversion is end, the STPFn (n=0~18) bit is automatically cleared to 0
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var EADC_T::OVSTS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">OVSTS
+</font><br><p> <font size="2">
+Offset: 0x5C  ADC Sample Module Start of Conversion Overrun Flag Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[18:0]</td><td>SPOVF</td><td><div style="word-wrap: break-word;"><b>ADC SAMPLE0~18 Overrun Flag
+</b><br>
+0 = No sample module event overrun.
+<br>
+1 = Indicates a new sample module event is generated while an old one event is pending.
+<br>
+Note: This bit is cleared by writing 1 to it.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var EADC_T::SCTL[19]
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SCTL[19]
+</font><br><p> <font size="2">
+Offset: 0x80  ADC Sample Module 0~18 Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[3:0]</td><td>CHSEL</td><td><div style="word-wrap: break-word;"><b>ADC Sample Module Channel Selection
+</b><br>
+00H = EADC_CH0 (slow channel).
+<br>
+01H = EADC_CH1 (slow channel).
+<br>
+02H = EADC_CH2 (slow channel).
+<br>
+03H = EADC_CH3 (slow channel).
+<br>
+04H = EADC_CH4 (slow channel).
+<br>
+05H = EADC_CH5 (slow channel).
+<br>
+06H = EADC_CH6 (slow channel).
+<br>
+07H = EADC_CH7 (slow channel).
+<br>
+08H = EADC_CH8 (slow channel).
+<br>
+09H = EADC_CH9 (slow channel).
+<br>
+0AH = EADC_CH10 (fast channel).
+<br>
+0BH = EADC_CH11 (fast channel).
+<br>
+0CH = EADC_CH12 (fast channel).
+<br>
+0DH = EADC_CH13 (fast channel).
+<br>
+0EH = EADC_CH14 (fast channel).
+<br>
+0FH = EADC_CH15 (fast channel).
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>EXTREN</td><td><div style="word-wrap: break-word;"><b>ADC External Trigger Rising Edge Enable Bit
+</b><br>
+0 = Rising edge Disabled when ADC selects EADC0_ST as trigger source.
+<br>
+1 = Rising edge Enabled when ADC selects EADC0_ST as trigger source.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>EXTFEN</td><td><div style="word-wrap: break-word;"><b>ADC External Trigger Falling Edge Enable Bit
+</b><br>
+0 = Falling edge Disabled when ADC selects EADC0_ST as trigger source.
+<br>
+1 = Falling edge Enabled when ADC selects EADC0_ST as trigger source.
+<br>
+</div></td></tr><tr><td>
+[7:6]</td><td>TRGDLYDIV</td><td><div style="word-wrap: break-word;"><b>ADC Sample Module Start of Conversion Trigger Delay Clock Divider Selection
+</b><br>
+Trigger delay clock frequency:
+<br>
+00 = ADC_CLK/1.
+<br>
+01 = ADC_CLK/2.
+<br>
+10 = ADC_CLK/4.
+<br>
+11 = ADC_CLK/16.
+<br>
+</div></td></tr><tr><td>
+[15:8]</td><td>TRGDLYCNT</td><td><div style="word-wrap: break-word;"><b>ADC Sample Module Start of Conversion Trigger Delay Time
+</b><br>
+Trigger delay time = TRGDLYCNT x ADC_CLK x n (n=1,2,4,16 from TRGDLYDIV setting).
+<br>
+</div></td></tr><tr><td>
+[20:16]</td><td>TRGSEL</td><td><div style="word-wrap: break-word;"><b>ADC Sample Module Start of Conversion Trigger Source Selection
+</b><br>
+0H = Disable trigger.
+<br>
+1H = External trigger from EADC0_ST pin input.
+<br>
+2H = ADC ADINT0 interrupt EOC (End of conversion) pulse trigger.
+<br>
+3H = ADC ADINT1 interrupt EOC (End of conversion) pulse trigger.
+<br>
+4H = Timer0 overflow pulse trigger.
+<br>
+5H = Timer1 overflow pulse trigger.
+<br>
+6H = Timer2 overflow pulse trigger.
+<br>
+7H = Timer3 overflow pulse trigger.
+<br>
+8H = EPWM0TG0.
+<br>
+9H = EPWM0TG1.
+<br>
+AH = EPWM0TG2.
+<br>
+BH = EPWM0TG3.
+<br>
+CH = EPWM0TG4.
+<br>
+DH = EPWM0TG5.
+<br>
+EH = EPWM1TG0.
+<br>
+FH = EPWM1TG1.
+<br>
+10H = EPWM1TG2.
+<br>
+11H = EPWM1TG3.
+<br>
+12H = EPWM1TG4.
+<br>
+13H = EPWM1TG5.
+<br>
+14H = BPWM0TG.
+<br>
+15H = BPWM1TG.
+<br>
+other = Reserved.
+<br>
+</div></td></tr><tr><td>
+[22]</td><td>INTPOS</td><td><div style="word-wrap: break-word;"><b>Interrupt Flag Position Select
+</b><br>
+0 = Set ADIFn (EADC_STATUS2[n], n=0~3) at ADC end of conversion.
+<br>
+1 = Set ADIFn (EADC_STATUS2[n], n=0~3) at ADC start of conversion.
+<br>
+</div></td></tr><tr><td>
+[23]</td><td>DBMEN</td><td><div style="word-wrap: break-word;"><b>Double Buffer Mode Enable Bit
+</b><br>
+0 = Sample has one sample result register. (default).
+<br>
+1 = Sample has two sample result registers.
+<br>
+</div></td></tr><tr><td>
+[31:24]</td><td>EXTSMPT</td><td><div style="word-wrap: break-word;"><b>ADC Sampling Time Extend
+</b><br>
+When ADC converting at high conversion rate, the sampling time of analog input voltage may not enough if input channel loading is heavy, user can extend ADC sampling time after trigger source is coming to get enough sampling time.
+<br>
+The range of start delay time is from 0~255 ADC clock.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var EADC_T::INTSRC[4]
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">INTSRC[4]
+</font><br><p> <font size="2">
+Offset: 0xD0  ADC interrupt 0~3 Source Enable Control Register.
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>SPLIE0</td><td><div style="word-wrap: break-word;"><b>Sample Module 0 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 0 interrupt Disabled.
+<br>
+1 = Sample Module 0 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>SPLIE1</td><td><div style="word-wrap: break-word;"><b>Sample Module 1 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 1 interrupt Disabled.
+<br>
+1 = Sample Module 1 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>SPLIE2</td><td><div style="word-wrap: break-word;"><b>Sample Module 2 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 2 interrupt Disabled.
+<br>
+1 = Sample Module 2 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>SPLIE3</td><td><div style="word-wrap: break-word;"><b>Sample Module 3 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 3 interrupt Disabled.
+<br>
+1 = Sample Module 3 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>SPLIE4</td><td><div style="word-wrap: break-word;"><b>Sample Module 4 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 4 interrupt Disabled.
+<br>
+1 = Sample Module 4 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>SPLIE5</td><td><div style="word-wrap: break-word;"><b>Sample Module 5 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 5 interrupt Disabled.
+<br>
+1 = Sample Module 5 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>SPLIE6</td><td><div style="word-wrap: break-word;"><b>Sample Module 6 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 6 interrupt Disabled.
+<br>
+1 = Sample Module 6 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>SPLIE7</td><td><div style="word-wrap: break-word;"><b>Sample Module 7 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 7 interrupt Disabled.
+<br>
+1 = Sample Module 7 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>SPLIE8</td><td><div style="word-wrap: break-word;"><b>Sample Module 8 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 8 interrupt Disabled.
+<br>
+1 = Sample Module 8 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>SPLIE9</td><td><div style="word-wrap: break-word;"><b>Sample Module 9 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 9 interrupt Disabled.
+<br>
+1 = Sample Module 9 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>SPLIE10</td><td><div style="word-wrap: break-word;"><b>Sample Module 10 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 10 interrupt Disabled.
+<br>
+1 = Sample Module 10 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[11]</td><td>SPLIE11</td><td><div style="word-wrap: break-word;"><b>Sample Module 11 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 11 interrupt Disabled.
+<br>
+1 = Sample Module 11 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>SPLIE12</td><td><div style="word-wrap: break-word;"><b>Sample Module 12 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 12 interrupt Disabled.
+<br>
+1 = Sample Module 12 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>SPLIE13</td><td><div style="word-wrap: break-word;"><b>Sample Module 13 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 13 interrupt Disabled.
+<br>
+1 = Sample Module 13 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>SPLIE14</td><td><div style="word-wrap: break-word;"><b>Sample Module 14 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 14 interrupt Disabled.
+<br>
+1 = Sample Module 14 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>SPLIE15</td><td><div style="word-wrap: break-word;"><b>Sample Module 15 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 15 interrupt Disabled.
+<br>
+1 = Sample Module 15 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>SPLIE16</td><td><div style="word-wrap: break-word;"><b>Sample Module 16 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 16 interrupt Disabled.
+<br>
+1 = Sample Module 16 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>SPLIE17</td><td><div style="word-wrap: break-word;"><b>Sample Module 17 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 17 interrupt Disabled.
+<br>
+1 = Sample Module 17 interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[18]</td><td>SPLIE18</td><td><div style="word-wrap: break-word;"><b>Sample Module 18 Interrupt Enable Bit
+</b><br>
+0 = Sample Module 18 interrupt Disabled.
+<br>
+1 = Sample Module 18 interrupt Enabled.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var EADC_T::CMP[4]
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CMP[4]
+</font><br><p> <font size="2">
+Offset: 0xE0  ADC Result Compare Register 0~3
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>ADCMPEN</td><td><div style="word-wrap: break-word;"><b>ADC Result Compare Enable Bit
+</b><br>
+0 = Compare Disabled.
+<br>
+1 = Compare Enabled.
+<br>
+Set this bit to 1 to enable compare CMPDAT (EADC_CMPn[27:16], n=0~3) with specified sample module conversion result when converted data is loaded into EADC_DAT register.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>ADCMPIE</td><td><div style="word-wrap: break-word;"><b>ADC Result Compare Interrupt Enable Bit
+</b><br>
+0 = Compare function interrupt Disabled.
+<br>
+1 = Compare function interrupt Enabled.
+<br>
+If the compare function is enabled and the compare condition matches the setting of CMPCOND (EADC_CMPn[2], n=0~3) and CMPMCNT (EADC_CMPn[11:8], n=0~3), ADCMPFn (EADC_STATUS2[7:4], n=0~3) will be asserted, in the meanwhile, if ADCMPIE is set to 1, a compare interrupt request is generated.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>CMPCOND</td><td><div style="word-wrap: break-word;"><b>Compare Condition
+</b><br>
+0= Set the compare condition as that when a 12-bit ADC conversion result is less than the 12-bit CMPDAT (EADC_CMPn [27:16]), the internal match counter will increase one.
+<br>
+1= Set the compare condition as that when a 12-bit ADC conversion result is greater or equal to the 12-bit CMPDAT (EADC_CMPn [27:16]), the internal match counter will increase one.
+<br>
+Note: When the internal counter reaches the value to (CMPMCNT (EADC_CMPn[11:8], n=0~3) +1), the CMPF bit will be set.
+<br>
+</div></td></tr><tr><td>
+[7:3]</td><td>CMPSPL</td><td><div style="word-wrap: break-word;"><b>Compare Sample Module Selection
+</b><br>
+00000 = Sample Module 0 conversion result EADC_DAT0 is selected to be compared.
+<br>
+00001 = Sample Module 1 conversion result EADC_DAT1 is selected to be compared.
+<br>
+00010 = Sample Module 2 conversion result EADC_DAT2 is selected to be compared.
+<br>
+00011 = Sample Module 3 conversion result EADC_DAT3 is selected to be compared.
+<br>
+00100 = Sample Module 4 conversion result EADC_DAT4 is selected to be compared.
+<br>
+00101 = Sample Module 5 conversion result EADC_DAT5 is selected to be compared.
+<br>
+00110 = Sample Module 6 conversion result EADC_DAT6 is selected to be compared.
+<br>
+00111 = Sample Module 7 conversion result EADC_DAT7 is selected to be compared.
+<br>
+01000 = Sample Module 8 conversion result EADC_DAT8 is selected to be compared.
+<br>
+01001 = Sample Module 9 conversion result EADC_DAT9 is selected to be compared.
+<br>
+01010 = Sample Module 10 conversion result EADC_DAT10 is selected to be compared.
+<br>
+01011 = Sample Module 11 conversion result EADC_DAT11 is selected to be compared.
+<br>
+01100 = Sample Module 12 conversion result EADC_DAT12 is selected to be compared.
+<br>
+01101 = Sample Module 13 conversion result EADC_DAT13 is selected to be compared.
+<br>
+01110 = Sample Module 14 conversion result EADC_DAT14 is selected to be compared.
+<br>
+01111 = Sample Module 15 conversion result EADC_DAT15 is selected to be compared.
+<br>
+10000 = Sample Module 16 conversion result EADC_DAT16 is selected to be compared.
+<br>
+10001 = Sample Module 17 conversion result EADC_DAT17 is selected to be compared.
+<br>
+10010 = Sample Module 18 conversion result EADC_DAT18 is selected to be compared.
+<br>
+</div></td></tr><tr><td>
+[11:8]</td><td>CMPMCNT</td><td><div style="word-wrap: break-word;"><b>Compare Match Count
+</b><br>
+When the specified ADC sample module analog conversion result matches the compare condition defined by CMPCOND (EADC_CMPn[2], n=0~3), the internal match counter will increase 1
+<br>
+If the compare result does not meet the compare condition, the internal compare match counter will reset to 0
+<br>
+When the internal counter reaches the value to (CMPMCNT +1), the ADCMPFn (EADC_STATUS2[7:4], n=0~3) will be set.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>CMPWEN</td><td><div style="word-wrap: break-word;"><b>Compare Window Mode Enable Bit
+</b><br>
+0 = ADCMPF0 (EADC_STATUS2[4]) will be set when EADC_CMP0 compared condition matched
+<br>
+ADCMPF2 (EADC_STATUS2[6]) will be set when EADC_CMP2 compared condition matched
+<br>
+1 = ADCMPF0 (EADC_STATUS2[4]) will be set when both EADC_CMP0 and EADC_CMP1 compared condition matched
+<br>
+ADCMPF2 (EADC_STATUS2[6]) will be set when both EADC_CMP2 and EADC_CMP3 compared condition matched.
+<br>
+Note: This bit is only present in EADC_CMP0 and EADC_CMP2 register.
+<br>
+</div></td></tr><tr><td>
+[27:16]</td><td>CMPDAT</td><td><div style="word-wrap: break-word;"><b>Comparison Data
+</b><br>
+The 12 bits data is used to compare with conversion result of specified sample module
+<br>
+User can use it to monitor the external analog input pin voltage transition without imposing a load on software.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var EADC_T::STATUS0
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">STATUS0
+</font><br><p> <font size="2">
+Offset: 0xF0  ADC Status Register 0
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[15:0]</td><td>VALID</td><td><div style="word-wrap: break-word;"><b>EADC_DAT0~15 Data Valid Flag
+</b><br>
+It is a mirror of VALID bit in sample module ADC result data register EADC_DATn. (n=0~18).
+<br>
+</div></td></tr><tr><td>
+[31:16]</td><td>OV</td><td><div style="word-wrap: break-word;"><b>EADC_DAT0~15 Overrun Flag
+</b><br>
+It is a mirror to OV bit in sample module ADC result data register EADC_DATn. (n=0~18).
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var EADC_T::STATUS1
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">STATUS1
+</font><br><p> <font size="2">
+Offset: 0xF4  ADC Status Register 1
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[2:0]</td><td>VALID</td><td><div style="word-wrap: break-word;"><b>EADC_DAT16~18 Data Valid Flag
+</b><br>
+It is a mirror of VALID bit in sample module ADC result data register EADC_DATn. (n=0~18).
+<br>
+</div></td></tr><tr><td>
+[18:16]</td><td>OV</td><td><div style="word-wrap: break-word;"><b>EADC_DAT16~18 Overrun Flag
+</b><br>
+It is a mirror to OV bit in sample module ADC result data register EADC_DATn. (n=0~18).
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var EADC_T::STATUS2
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">STATUS2
+</font><br><p> <font size="2">
+Offset: 0xF8  ADC Status Register 2
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>ADIF0</td><td><div style="word-wrap: break-word;"><b>ADC ADINT0 Interrupt Flag
+</b><br>
+0 = No ADINT0 interrupt pulse received.
+<br>
+1 = ADINT0 interrupt pulse has been received.
+<br>
+Note1: This bit is cleared by writing 1 to it.
+<br>
+Note2:This bit indicates whether an ADC conversion of specific sample module has been completed
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>ADIF1</td><td><div style="word-wrap: break-word;"><b>ADC ADINT1 Interrupt Flag
+</b><br>
+0 = No ADINT1 interrupt pulse received.
+<br>
+1 = ADINT1 interrupt pulse has been received.
+<br>
+Note1: This bit is cleared by writing 1 to it.
+<br>
+Note2:This bit indicates whether an ADC conversion of specific sample module has been completed
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>ADIF2</td><td><div style="word-wrap: break-word;"><b>ADC ADINT2 Interrupt Flag
+</b><br>
+0 = No ADINT2 interrupt pulse received.
+<br>
+1 = ADINT2 interrupt pulse has been received.
+<br>
+Note1: This bit is cleared by writing 1 to it.
+<br>
+Note2:This bit indicates whether an ADC conversion of specific sample module has been completed
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>ADIF3</td><td><div style="word-wrap: break-word;"><b>ADC ADINT3 Interrupt Flag
+</b><br>
+0 = No ADINT3 interrupt pulse received.
+<br>
+1 = ADINT3 interrupt pulse has been received.
+<br>
+Note1: This bit is cleared by writing 1 to it.
+<br>
+Note2:This bit indicates whether an ADC conversion of specific sample module has been completed
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>ADCMPF0</td><td><div style="word-wrap: break-word;"><b>ADC Compare 0 Flag
+</b><br>
+When the specific sample module ADC conversion result meets setting condition in EADC_CMP0 then this bit is set to 1.
+<br>
+0 = Conversion result in EADC_DAT does not meet EADC_CMP0 register setting.
+<br>
+1 = Conversion result in EADC_DAT meets EADC_CMP0 register setting.
+<br>
+Note: This bit is cleared by writing 1 to it.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>ADCMPF1</td><td><div style="word-wrap: break-word;"><b>ADC Compare 1 Flag
+</b><br>
+When the specific sample module ADC conversion result meets setting condition in EADC_CMP1 then this bit is set to 1.
+<br>
+0 = Conversion result in EADC_DAT does not meet EADC_CMP1 register setting.
+<br>
+1 = Conversion result in EADC_DAT meets EADC_CMP1 register setting.
+<br>
+Note: This bit is cleared by writing 1 to it.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>ADCMPF2</td><td><div style="word-wrap: break-word;"><b>ADC Compare 2 Flag
+</b><br>
+When the specific sample module ADC conversion result meets setting condition in EADC_CMP2 then this bit is set to 1.
+<br>
+0 = Conversion result in EADC_DAT does not meet EADC_CMP2 register setting.
+<br>
+1 = Conversion result in EADC_DAT meets EADC_CMP2 register setting.
+<br>
+Note: This bit is cleared by writing 1 to it.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>ADCMPF3</td><td><div style="word-wrap: break-word;"><b>ADC Compare 3 Flag
+</b><br>
+When the specific sample module ADC conversion result meets setting condition in EADC_CMP3 then this bit is set to 1.
+<br>
+0 = Conversion result in EADC_DAT does not meet EADC_CMP3 register setting.
+<br>
+1 = Conversion result in EADC_DAT meets EADC_CMP3 register setting.
+<br>
+Note: This bit is cleared by writing 1 to it.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>ADOVIF0</td><td><div style="word-wrap: break-word;"><b>ADC ADINT0 Interrupt Flag Overrun
+</b><br>
+0 = ADINT0 interrupt flag is not overwritten to 1.
+<br>
+1 = ADINT0 interrupt flag is overwritten to 1.
+<br>
+Note: This bit is cleared by writing 1 to it.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>ADOVIF1</td><td><div style="word-wrap: break-word;"><b>ADC ADINT1 Interrupt Flag Overrun
+</b><br>
+0 = ADINT1 interrupt flag is not overwritten to 1.
+<br>
+1 = ADINT1 interrupt flag is overwritten to 1.
+<br>
+Note: This bit is cleared by writing 1 to it.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>ADOVIF2</td><td><div style="word-wrap: break-word;"><b>ADC ADINT2 Interrupt Flag Overrun
+</b><br>
+0 = ADINT2 interrupt flag is not overwritten to 1.
+<br>
+1 = ADINT2 interrupt flag is s overwritten to 1.
+<br>
+Note: This bit is cleared by writing 1 to it.
+<br>
+</div></td></tr><tr><td>
+[11]</td><td>ADOVIF3</td><td><div style="word-wrap: break-word;"><b>ADC ADINT3 Interrupt Flag Overrun
+</b><br>
+0 = ADINT3 interrupt flag is not overwritten to 1.
+<br>
+1 = ADINT3 interrupt flag is overwritten to 1.
+<br>
+Note: This bit is cleared by writing 1 to it.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>ADCMPO0</td><td><div style="word-wrap: break-word;"><b>ADC Compare 0 Output Status (Read Only)
+</b><br>
+The 12 bits compare0 data CMPDAT0 (EADC_CMP0[27:16]) is used to compare with conversion result of specified sample module
+<br>
+User can use it to monitor the external analog input pin voltage status.
+<br>
+0 = Conversion result in EADC_DAT less than CMPDAT0 setting.
+<br>
+1 = Conversion result in EADC_DAT great than or equal CMPDAT0 setting.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>ADCMPO1</td><td><div style="word-wrap: break-word;"><b>ADC Compare 1 Output Status (Read Only)
+</b><br>
+The 12 bits compare1 data CMPDAT1 (EADC_CMP1[27:16]) is used to compare with conversion result of specified sample module
+<br>
+User can use it to monitor the external analog input pin voltage status.
+<br>
+0 = Conversion result in EADC_DAT less than CMPDAT1 setting.
+<br>
+1 = Conversion result in EADC_DAT great than or equal CMPDAT1 setting.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>ADCMPO2</td><td><div style="word-wrap: break-word;"><b>ADC Compare 2 Output Status (Read Only)
+</b><br>
+The 12 bits compare2 data CMPDAT2 (EADC_CMP2[27:16]) is used to compare with conversion result of specified sample module
+<br>
+User can use it to monitor the external analog input pin voltage status.
+<br>
+0 = Conversion result in EADC_DAT less than CMPDAT2 setting.
+<br>
+1 = Conversion result in EADC_DAT great than or equal CMPDAT2 setting.
+<br>
+</div></td></tr><tr><td>
+[15]</td><td>ADCMPO3</td><td><div style="word-wrap: break-word;"><b>ADC Compare 3 Output Status (Read Only)
+</b><br>
+The 12 bits compare3 data CMPDAT3 (EADC_CMP3[27:16]) is used to compare with conversion result of specified sample module
+<br>
+User can use it to monitor the external analog input pin voltage status.
+<br>
+0 = Conversion result in EADC_DAT less than CMPDAT3 setting.
+<br>
+1 = Conversion result in EADC_DAT great than or equal CMPDAT3 setting.
+<br>
+</div></td></tr><tr><td>
+[20:16]</td><td>CHANNEL</td><td><div style="word-wrap: break-word;"><b>Current Conversion Channel (Read Only)
+</b><br>
+This filed reflects ADC current conversion channel when BUSY=1.
+<br>
+It is read only.
+<br>
+00H = EADC_CH0.
+<br>
+01H = EADC_CH1.
+<br>
+02H = EADC_CH2.
+<br>
+03H = EADC_CH3.
+<br>
+04H = EADC_CH4.
+<br>
+05H = EADC_CH5.
+<br>
+06H = EADC_CH6.
+<br>
+07H = EADC_CH7.
+<br>
+08H = EADC_CH8.
+<br>
+09H = EADC_CH9.
+<br>
+0AH = EADC_CH10.
+<br>
+0BH = EADC_CH11.
+<br>
+0CH = EADC_CH12.
+<br>
+0DH = EADC_CH13.
+<br>
+0EH = EADC_CH14.
+<br>
+0FH = EADC_CH15.
+<br>
+10H = VBG.
+<br>
+11H = VTEMP.
+<br>
+12H = VBAT/4.
+<br>
+</div></td></tr><tr><td>
+[23]</td><td>BUSY</td><td><div style="word-wrap: break-word;"><b>Busy/Idle (Read Only)
+</b><br>
+0 = EADC is in idle state.
+<br>
+1 = EADC is busy at conversion.
+<br>
+</div></td></tr><tr><td>
+[24]</td><td>ADOVIF</td><td><div style="word-wrap: break-word;"><b>All ADC Interrupt Flag Overrun Bits Check (Read Only)
+</b><br>
+n=0~3.
+<br>
+0 = None of ADINT interrupt flag ADOVIFn (EADC_STATUS2[11:8]) is overwritten to 1.
+<br>
+1 = Any one of ADINT interrupt flag ADOVIFn (EADC_STATUS2[11:8]) is overwritten to 1.
+<br>
+Note: This bit will keep 1 when any ADOVIFn Flag is equal to 1.
+<br>
+</div></td></tr><tr><td>
+[25]</td><td>STOVF</td><td><div style="word-wrap: break-word;"><b>for All ADC Sample Module Start of Conversion Overrun Flags Check (Read Only)
+</b><br>
+n=0~18.
+<br>
+0 = None of sample module event overrun flag SPOVFn (EADC_OVSTS[n]) is set to 1.
+<br>
+1 = Any one of sample module event overrun flag SPOVFn (EADC_OVSTS[n]) is set to 1.
+<br>
+Note: This bit will keep 1 when any SPOVFn Flag is equal to 1.
+<br>
+</div></td></tr><tr><td>
+[26]</td><td>AVALID</td><td><div style="word-wrap: break-word;"><b>for All Sample Module ADC Result Data Register EADC_DAT Data Valid Flag Check (Read Only)
+</b><br>
+n=0~18.
+<br>
+0 = None of sample module data register valid flag VALIDn (EADC_DATn[17]) is set to 1.
+<br>
+1 = Any one of sample module data register valid flag VALIDn (EADC_DATn[17]) is set to 1.
+<br>
+Note: This bit will keep 1 when any VALIDn Flag is equal to 1.
+<br>
+</div></td></tr><tr><td>
+[27]</td><td>AOV</td><td><div style="word-wrap: break-word;"><b>for All Sample Module ADC Result Data Register Overrun Flags Check (Read Only)
+</b><br>
+n=0~18.
+<br>
+0 = None of sample module data register overrun flag OVn (EADC_DATn[16]) is set to 1.
+<br>
+1 = Any one of sample module data register overrun flag OVn (EADC_DATn[16]) is set to 1.
+<br>
+Note: This bit will keep 1 when any OVn Flag is equal to 1.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var EADC_T::STATUS3
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">STATUS3
+</font><br><p> <font size="2">
+Offset: 0xFC  ADC Status Register 3
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[4:0]</td><td>CURSPL</td><td><div style="word-wrap: break-word;"><b>ADC Current Sample Module
+</b><br>
+This register show the current ADC is controlled by which sample module control logic modules.
+<br>
+If the ADC is Idle, this bit filed will set to 0x1F.
+<br>
+This is a read only register.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var EADC_T::DDAT[4]
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DDAT[4]
+</font><br><p> <font size="2">
+Offset: 0x100  ADC Double Data Register 0 for Sample Module 0
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[15:0]</td><td>RESULT</td><td><div style="word-wrap: break-word;"><b>ADC Conversion Results
+</b><br>
+This field contains 12 bits conversion results.
+<br>
+When the DMOF (EADC_CTL[9]) is set to 0, 12-bit ADC conversion result with unsigned format will be filled in RESULT [11:0] and zero will be filled in RESULT [15:12].
+<br>
+When DMOF (EADC_CTL[9]) set to 1, 12-bit ADC conversion result with 2'complement format will be filled in RESULT [11:0] and signed bits to will be filled in RESULT [15:12].
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>OV</td><td><div style="word-wrap: break-word;"><b>Overrun Flag
+</b><br>
+0 = Data in RESULT (EADC_DATn[15:0], n=0~3) is recent conversion result.
+<br>
+1 = Data in RESULT (EADC_DATn[15:0], n=0~3) is overwrite.
+<br>
+If converted data in RESULT[15:0] has not been read before new conversion result is loaded to this register, OV is set to 1
+<br>
+It is cleared by hardware after EADC_DDAT register is read.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>VALID</td><td><div style="word-wrap: break-word;"><b>Valid Flag
+</b><br>
+0 = Double data in RESULT (EADC_DDATn[15:0]) is not valid.
+<br>
+1 = Double data in RESULT (EADC_DDATn[15:0]) is valid.
+<br>
+This bit is set to 1 when corresponding sample module channel analog input conversion is completed and cleared by hardware after EADC_DDATn register is read
+<br>
+(n=0~3).
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var EADC_T::PWRM
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PWRM
+</font><br><p> <font size="2">
+Offset: 0x110  ADC Power Management Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>PWUPRDY</td><td><div style="word-wrap: break-word;"><b>ADC Power-up Sequence Completed and Ready for Conversion (Read Only)
+</b><br>
+0 = ADC is not ready for conversion may be in power down state or in the progress of start up.
+<br>
+1 = ADC is ready for conversion.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>PWUCALEN</td><td><div style="word-wrap: break-word;"><b>Power Up Calibration Function Enable Control
+</b><br>
+0 = Disable the function of calibration at power up.
+<br>
+1 = Enable the function of calibration at power up.
+<br>
+Note: This bit work together with CALSEL (EADC_CALCTL [3]), see the following
+<br>
+{PWUCALEN, CALSEL } Description:
+<br>
+PWUCALEN is 0 and CALSEL is 0: No need to calibrate.
+<br>
+PWUCALEN is 0 and CALSEL is 1: No need to calibrate.
+<br>
+PWUCALEN is 1 and CALSEL is 0: Load calibration word when power up.
+<br>
+PWUCALEN is 1 and CALSEL is 1: Calibrate when power up.
+<br>
+</div></td></tr><tr><td>
+[3:2]</td><td>PWDMOD</td><td><div style="word-wrap: break-word;"><b>ADC Power-down Mode
+</b><br>
+Set this bit fields to select ADC power down mode when system power-down.
+<br>
+00 = ADC Deep power down mode.
+<br>
+01 = ADC Power down.
+<br>
+10 = ADC Standby mode.
+<br>
+11 = ADC Deep power down mode.
+<br>
+Note: Different PWDMOD has different power down/up sequence, in order to avoid ADC powering up with wrong sequence; user must keep PWMOD consistent each time in power down and start up
+<br>
+</div></td></tr><tr><td>
+[19:8]</td><td>LDOSUT</td><td><div style="word-wrap: break-word;"><b>ADC Internal LDO Start-up Time
+</b><br>
+Set this bit fields to control LDO start-up time
+<br>
+The minimum required LDO start-up time is 20us
+<br>
+LDO start-up time = (1/ADC_CLK) x LDOSUT.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var EADC_T::CALCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CALCTL
+</font><br><p> <font size="2">
+Offset: 0x114  ADC Calibration Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[1]</td><td>CALSTART</td><td><div style="word-wrap: break-word;"><b>Calibration Functional Block Start
+</b><br>
+0 = Stops calibration functional block.
+<br>
+1 = Starts calibration functional block.
+<br>
+Note: This bit is set by SW and clear by HW after re-calibration finish
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>CALDONE</td><td><div style="word-wrap: break-word;"><b>Calibration Functional Block Complete (Read Only)
+</b><br>
+0 = During a calibration.
+<br>
+1 = Calibration is completed.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>CALSEL</td><td><div style="word-wrap: break-word;"><b>Select Calibration Functional Block
+</b><br>
+0 = Load calibration word when calibration functional block is active.
+<br>
+1 = Execute calibration when calibration functional block is active.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var EADC_T::CALDWRD
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CALDWRD
+</font><br><p> <font size="2">
+Offset: 0x118  ADC Calibration Load Word Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[6:0]</td><td>CALWORD</td><td><div style="word-wrap: break-word;"><b>Calibration Word Bits
+</b><br>
+Write to this register with the previous calibration word before load calibration action.
+<br>
+Read this register after calibration done.
+<br>
+Note: The calibration block contains two parts CALIBRATION and LOAD CALIBRATION; if the calibration block configure as CALIBRATION; then this register represent the result of calibration when calibration is completed; if configure as LOAD CALIBRATION ; configure this register before loading calibration action, after loading calibration complete, the laoded calibration word will apply to the ADC; while in loading calibration function the loaded value will not be equal to the original CALWORD until calibration is done.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+
+ */
     __I  uint32_t DAT[19];               /*!< [0x0000] ADC Data Register 0~18 for Sample Module 0~18                    */
     __I  uint32_t CURDAT;                /*!< [0x004c] ADC PDMA Current Transfer Data Register                          */
     __IO uint32_t CTL;                   /*!< [0x0050] ADC Control Register                                             */

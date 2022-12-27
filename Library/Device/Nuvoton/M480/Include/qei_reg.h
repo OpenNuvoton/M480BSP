@@ -28,165 +28,377 @@ typedef struct
 
 
     /**
-     * @var QEI_T::CNT
-     * Offset: 0x00  QEI Counter Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[31:0]  |CNT       |Quadrature Encoder Interface Counter
-     * |        |          |A 32-bit up/down counter
-     * |        |          |When an effective phase pulse is detected, this counter is increased by one if the bit DIRF (QEI_STATUS[8]) is one or decreased by one if the bit DIRF(QEI_STATUS[8]) is zero
-     * |        |          |This register performs an integrator which count value is proportional to the encoder position
-     * |        |          |The pulse counter may be initialized to a predetermined value by one of three events occurs:
-     * |        |          |1. Software is written if QEIEN (QEI_CTL[29]) = 0.
-     * |        |          |2. Compare-match event if QEIEN(QEI_CTL[29])=1 and QEI is in compare-counting mode.
-     * |        |          |3. Index signal change if QEIEN(QEI_CTL[29])=1 and IDXRLDEN (QEI_CTL[27])=1.
-     * @var QEI_T::CNTHOLD
-     * Offset: 0x04  QEI Counter Hold Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[31:0]  |CNTHOLD   |Quadrature Encoder Interface Counter Hold
-     * |        |          |When bit HOLDCNT (QEI_CTL[24]) goes from low to high, the CNT(QEI_CNT[31:0]) is copied into CNTHOLD (QEI_CNTHOLD[31:0]) register.
-     * @var QEI_T::CNTLATCH
-     * Offset: 0x08  QEI Counter Index Latch Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[31:0]  |CNTLATCH  |Quadrature Encoder Interface Counter Index Latch
-     * |        |          |When the IDXF (QEI_STATUS[0]) bit is set, the CNT(QEI_CNT[31:0]) is copied into CNTLATCH (QEI_CNTLATCH[31:0]) register.
-     * @var QEI_T::CNTCMP
-     * Offset: 0x0C  QEI Counter Compare Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[31:0]  |CNTCMP    |Quadrature Encoder Interface Counter Compare
-     * |        |          |If the QEI controller is in the compare-counting mode CMPEN (QEI_CTL[28]) =1, when the value of CNT(QEI_CNT[31:0]) matches CNTCMP(QEI_CNTCMP[31:0]), CMPF will be set
-     * |        |          |This register is software writable.
-     * @var QEI_T::CNTMAX
-     * Offset: 0x14  QEI Pre-set Maximum Count Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[31:0]  |CNTMAX    |Quadrature Encoder Interface Preset Maximum Count
-     * |        |          |This register value determined by user stores the maximum value which may be the number of the QEI counter for the QEI controller compare-counting mode
-     * @var QEI_T::CTL
-     * Offset: 0x18  QEI Controller Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[2:0]   |NFCLKSEL  |Noise Filter Clock Pre-divide Selection
-     * |        |          |To determine the sampling frequency of the Noise Filter clock .
-     * |        |          |000 = QEI_CLK.
-     * |        |          |001 = QEI_CLK/2.
-     * |        |          |010 = QEI_CLK/4.
-     * |        |          |011 = QEI_CLK/16.
-     * |        |          |100 = QEI_CLK/32.
-     * |        |          |101 = QEI_CLK/64.
-     * |[3]     |NFDIS     |QEI Controller Input Noise Filter Disable Bit
-     * |        |          |0 = The noise filter of QEI controller Enabled.
-     * |        |          |1 = The noise filter of QEI controller Disabled.
-     * |[4]     |CHAEN     |QEA Input to QEI Controller Enable Bit
-     * |        |          |0 = QEA input to QEI Controller Disabled.
-     * |        |          |1 = QEA input to QEI Controller Enabled.
-     * |[5]     |CHBEN     |QEB Input to QEI Controller Enable Bit
-     * |        |          |0 = QEB input to QEI Controller Disabled.
-     * |        |          |1 = QEB input to QEI Controller Enabled.
-     * |[6]     |IDXEN     |IDX Input to QEI Controller Enable Bit
-     * |        |          |0 = IDX input to QEI Controller Disabled.
-     * |        |          |1 = IDX input to QEI Controller Enabled.
-     * |[9:8]   |MODE      |QEI Counting Mode Selection
-     * |        |          |There are four quadrature encoder pulse counter operation modes.
-     * |        |          |00 = X4 Free-counting Mode.
-     * |        |          |01 = X2 Free-counting Mode.
-     * |        |          |10 = X4 Compare-counting Mode.
-     * |        |          |11 = X2 Compare-counting Mode.
-     * |[12]    |CHAINV    |Inverse QEA Input Polarity
-     * |        |          |0 = Not inverse QEA input polarity.
-     * |        |          |1 = QEA input polarity is inversed to QEI controller.
-     * |[13]    |CHBINV    |Inverse QEB Input Polarity
-     * |        |          |0 = Not inverse QEB input polarity.
-     * |        |          |1 = QEB input polarity is inversed to QEI controller.
-     * |[14]    |IDXINV    |Inverse IDX Input Polarity
-     * |        |          |0 = Not inverse IDX input polarity.
-     * |        |          |1 = IDX input polarity is inversed to QEI controller.
-     * |[16]    |OVUNIEN   |OVUNF Trigger QEI Interrupt Enable Bit
-     * |        |          |0 = OVUNF can trigger QEI controller interrupt Disabled.
-     * |        |          |1 = OVUNF can trigger QEI controller interrupt Enabled.
-     * |[17]    |DIRIEN    |DIRCHGF Trigger QEI Interrupt Enable Bit
-     * |        |          |0 = DIRCHGF can trigger QEI controller interrupt Disabled.
-     * |        |          |1 = DIRCHGF can trigger QEI controller interrupt Enabled.
-     * |[18]    |CMPIEN    |CMPF Trigger QEI Interrupt Enable Bit
-     * |        |          |0 = CMPF can trigger QEI controller interrupt Disabled.
-     * |        |          |1 = CMPF can trigger QEI controller interrupt Enabled.
-     * |[19]    |IDXIEN    |IDXF Trigger QEI Interrupt Enable Bit
-     * |        |          |0 = The IDXF can trigger QEI interrupt Disabled.
-     * |        |          |1 = The IDXF can trigger QEI interrupt Enabled.
-     * |[20]    |HOLDTMR0  |Hold QEI_CNT by Timer 0
-     * |        |          |0 = TIF (TIMER0_INTSTS[0]) has no effect on HOLDCNT.
-     * |        |          |1 = A rising edge of bit TIF(TIMER0_INTSTS[0]) in timer 0 sets HOLDCNT to 1.
-     * |[21]    |HOLDTMR1  |Hold QEI_CNT by Timer 1
-     * |        |          |0 = TIF(TIMER1_INTSTS[0]) has no effect on HOLDCNT.
-     * |        |          |1 = A rising edge of bit TIF (TIMER1_INTSTS[0]) in timer 1 sets HOLDCNT to 1.
-     * |[22]    |HOLDTMR2  |Hold QEI_CNT by Timer 2
-     * |        |          |0 = TIF(TIMER2_INTSTS[0]) has no effect on HOLDCNT.
-     * |        |          |1 = A rising edge of bit TIF(TIMER2_INTSTS[0]) in timer 2 sets HOLDCNT to 1.
-     * |[23]    |HOLDTMR3  |Hold QEI_CNT by Timer 3
-     * |        |          |0 = TIF (TIMER3_INTSTS[0]) has no effect on HOLDCNT.
-     * |        |          |1 = A rising edge of bit TIF(TIMER3_INTSTS[0]) in timer 3 sets HOLDCNT to 1.
-     * |[24]    |HOLDCNT   |Hold QEI_CNT Control
-     * |        |          |When this bit is set from low to high, the CNT(QEI_CNT[31:0]) is copied into CNTHOLD(QEI_CNTHOLD[31:0])
-     * |        |          |This bit may be set by writing 1 to it or Timer0~Timer3 interrupt flag TIF (TIMERx_INTSTS[0]).
-     * |        |          |0 = No operation.
-     * |        |          |1 = QEI_CNT content is captured and stored in CNTHOLD(QEI_CNTHOLD[31:0]).
-     * |        |          |Note: This bit is automatically cleared after QEI_CNTHOLD holds QEI_CNT value.
-     * |[25]    |IDXLATEN  |Index Latch QEI_CNT Enable Bit
-     * |        |          |If this bit is set to high, the CNT(QEI_CNT[31:0]) content will be latched into CNTLATCH (QEI_CNTLATCH[31:0]) at every rising on signal CHX.
-     * |        |          |0 = The index signal latch QEI counter function Disabled.
-     * |        |          |1 = The index signal latch QEI counter function Enabled.
-     * |[27]    |IDXRLDEN  |Index Trigger QEI_CNT Reload Enable Bit
-     * |        |          |When this bit is high and a rising edge comes on signal CHX, the CNT(QEI_CNT[31:0]) will be reset to zero if the counter is in up-counting type (DIRF(QEI_STATUS[8]) = 1); while the CNT(QEI_CNT[31:0]) will be reloaded with CNTMAX (QEI_CNTMAX[31:0]) content if the counter is in down-counting type (DIRF(QEI_STATUS[8]) = 0).
-     * |        |          |0 = Reload function Disabled.
-     * |        |          |1 = QEI_CNT re-initialized by Index signal Enabled.
-     * |[28]    |CMPEN     |The Compare Function Enable Bit
-     * |        |          |The compare function in QEI controller is to compare the dynamic counting QEI_CNT with the compare register CNTCMP( QEI_CNTCMP[31:0]), if CNT(QEI_CNT[31:0]) reaches CNTCMP( QEI_CNTCMP[31:0]), the flag CMPF will be set.
-     * |        |          |0 = Compare function Disabled.
-     * |        |          |1 = Compare function Enabled.
-     * |[29]    |QEIEN     |Quadrature Encoder Interface Controller Enable Bit
-     * |        |          |0 = QEI controller function Disabled.
-     * |        |          |1 = QEI controller function Enabled.
-     * @var QEI_T::STATUS
-     * Offset: 0x2C  QEI Controller Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |IDXF      |IDX Detected Flag
-     * |        |          |When the QEI controller detects a rising edge on signal CHX it will set flag IDXF to high.
-     * |        |          |0 = No rising edge detected on signal CHX.
-     * |        |          |1 = A rising edge occurs on signal CHX.
-     * |        |          |Note: This bit is only cleared by writing 1 to it.
-     * |[1]     |CMPF      |Compare-match Flag
-     * |        |          |If the QEI compare function is enabled, the flag is set by hardware while QEI counter up or down counts and reach to the CNTCMP(QEI_CNTCMP[31:0]).
-     * |        |          |0 = QEI counter does not match with CNTCMP(QEI_CNTCMP[31:0]).
-     * |        |          |1 = QEI counter counts to the same as CNTCMP(QEI_CNTCMP[31:0]).
-     * |        |          |Note: This bit is only cleared by writing 1 to it.
-     * |[2]     |OVUNF     |QEI Counter Overflow or Underflow Flag
-     * |        |          |Flag is set by hardware while CNT(QEI_CNT[31:0]) overflows from 0xFFFF_FFFF to zero in free-counting mode or from the CNTMAX (QEI_CNTMAX[31:0]) to zero in compare-counting mode
-    * |        |          |Similarly, the flag is set while QEI counter underflows from zero to 0xFFFF_FFFF or CNTMAX (QEI_CNTMAX[31:0]).
-     * |        |          |0 = No overflow or underflow occurs in QEI counter.
-     * |        |          |1 = QEI counter occurs counting overflow or underflow.
-     * |        |          |Note: This bit is only cleared by writing 1 to it.
-     * |[3]     |DIRCHGF   |Direction Change Flag
-     * |        |          |Flag is set by hardware while QEI counter counting direction is changed.
-     * |        |          |Software can clear this bit by writing 1 to it.
-     * |        |          |0 = No change in QEI counter counting direction.
-     * |        |          |1 = QEI counter counting direction is changed.
-     * |        |          |Note: This bit is only cleared by writing 1 to it.
-     * |[8]     |DIRF      |QEI Counter Counting Direction Indication
-     * |        |          |0 = QEI Counter is in down-counting.
-     * |        |          |1 = QEI Counter is in up-counting.
-     * |        |          |Note: This bit is set/reset by hardware according to the phase detection between CHA and CHB.
-     */
+@var QEI_T::CNT
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CNT
+</font><br><p> <font size="2">
+Offset: 0x00  QEI Counter Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[31:0]</td><td>CNT</td><td><div style="word-wrap: break-word;"><b>Quadrature Encoder Interface Counter
+</b><br>
+A 32-bit up/down counter
+<br>
+When an effective phase pulse is detected, this counter is increased by one if the bit DIRF (QEI_STATUS[8]) is one or decreased by one if the bit DIRF(QEI_STATUS[8]) is zero
+<br>
+This register performs an integrator which count value is proportional to the encoder position
+<br>
+The pulse counter may be initialized to a predetermined value by one of three events occurs:
+<br>
+1. Software is written if QEIEN (QEI_CTL[29]) = 0.
+<br>
+2. Compare-match event if QEIEN(QEI_CTL[29])=1 and QEI is in compare-counting mode.
+<br>
+3. Index signal change if QEIEN(QEI_CTL[29])=1 and IDXRLDEN (QEI_CTL[27])=1.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var QEI_T::CNTHOLD
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CNTHOLD
+</font><br><p> <font size="2">
+Offset: 0x04  QEI Counter Hold Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[31:0]</td><td>CNTHOLD</td><td><div style="word-wrap: break-word;"><b>Quadrature Encoder Interface Counter Hold
+</b><br>
+When bit HOLDCNT (QEI_CTL[24]) goes from low to high, the CNT(QEI_CNT[31:0]) is copied into CNTHOLD (QEI_CNTHOLD[31:0]) register.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var QEI_T::CNTLATCH
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CNTLATCH
+</font><br><p> <font size="2">
+Offset: 0x08  QEI Counter Index Latch Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[31:0]</td><td>CNTLATCH</td><td><div style="word-wrap: break-word;"><b>Quadrature Encoder Interface Counter Index Latch
+</b><br>
+When the IDXF (QEI_STATUS[0]) bit is set, the CNT(QEI_CNT[31:0]) is copied into CNTLATCH (QEI_CNTLATCH[31:0]) register.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var QEI_T::CNTCMP
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CNTCMP
+</font><br><p> <font size="2">
+Offset: 0x0C  QEI Counter Compare Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[31:0]</td><td>CNTCMP</td><td><div style="word-wrap: break-word;"><b>Quadrature Encoder Interface Counter Compare
+</b><br>
+If the QEI controller is in the compare-counting mode CMPEN (QEI_CTL[28]) =1, when the value of CNT(QEI_CNT[31:0]) matches CNTCMP(QEI_CNTCMP[31:0]), CMPF will be set
+<br>
+This register is software writable.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var QEI_T::CNTMAX
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CNTMAX
+</font><br><p> <font size="2">
+Offset: 0x14  QEI Pre-set Maximum Count Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[31:0]</td><td>CNTMAX</td><td><div style="word-wrap: break-word;"><b>Quadrature Encoder Interface Preset Maximum Count
+</b><br>
+This register value determined by user stores the maximum value which may be the number of the QEI counter for the QEI controller compare-counting mode
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var QEI_T::CTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CTL
+</font><br><p> <font size="2">
+Offset: 0x18  QEI Controller Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[2:0]</td><td>NFCLKSEL</td><td><div style="word-wrap: break-word;"><b>Noise Filter Clock Pre-divide Selection
+</b><br>
+To determine the sampling frequency of the Noise Filter clock .
+<br>
+000 = QEI_CLK.
+<br>
+001 = QEI_CLK/2.
+<br>
+010 = QEI_CLK/4.
+<br>
+011 = QEI_CLK/16.
+<br>
+100 = QEI_CLK/32.
+<br>
+101 = QEI_CLK/64.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>NFDIS</td><td><div style="word-wrap: break-word;"><b>QEI Controller Input Noise Filter Disable Bit
+</b><br>
+0 = The noise filter of QEI controller Enabled.
+<br>
+1 = The noise filter of QEI controller Disabled.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>CHAEN</td><td><div style="word-wrap: break-word;"><b>QEA Input to QEI Controller Enable Bit
+</b><br>
+0 = QEA input to QEI Controller Disabled.
+<br>
+1 = QEA input to QEI Controller Enabled.
+<br>
+</div></td></tr><tr><td>
+[5]</td><td>CHBEN</td><td><div style="word-wrap: break-word;"><b>QEB Input to QEI Controller Enable Bit
+</b><br>
+0 = QEB input to QEI Controller Disabled.
+<br>
+1 = QEB input to QEI Controller Enabled.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>IDXEN</td><td><div style="word-wrap: break-word;"><b>IDX Input to QEI Controller Enable Bit
+</b><br>
+0 = IDX input to QEI Controller Disabled.
+<br>
+1 = IDX input to QEI Controller Enabled.
+<br>
+</div></td></tr><tr><td>
+[9:8]</td><td>MODE</td><td><div style="word-wrap: break-word;"><b>QEI Counting Mode Selection
+</b><br>
+There are four quadrature encoder pulse counter operation modes.
+<br>
+00 = X4 Free-counting Mode.
+<br>
+01 = X2 Free-counting Mode.
+<br>
+10 = X4 Compare-counting Mode.
+<br>
+11 = X2 Compare-counting Mode.
+<br>
+</div></td></tr><tr><td>
+[12]</td><td>CHAINV</td><td><div style="word-wrap: break-word;"><b>Inverse QEA Input Polarity
+</b><br>
+0 = Not inverse QEA input polarity.
+<br>
+1 = QEA input polarity is inversed to QEI controller.
+<br>
+</div></td></tr><tr><td>
+[13]</td><td>CHBINV</td><td><div style="word-wrap: break-word;"><b>Inverse QEB Input Polarity
+</b><br>
+0 = Not inverse QEB input polarity.
+<br>
+1 = QEB input polarity is inversed to QEI controller.
+<br>
+</div></td></tr><tr><td>
+[14]</td><td>IDXINV</td><td><div style="word-wrap: break-word;"><b>Inverse IDX Input Polarity
+</b><br>
+0 = Not inverse IDX input polarity.
+<br>
+1 = IDX input polarity is inversed to QEI controller.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>OVUNIEN</td><td><div style="word-wrap: break-word;"><b>OVUNF Trigger QEI Interrupt Enable Bit
+</b><br>
+0 = OVUNF can trigger QEI controller interrupt Disabled.
+<br>
+1 = OVUNF can trigger QEI controller interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>DIRIEN</td><td><div style="word-wrap: break-word;"><b>DIRCHGF Trigger QEI Interrupt Enable Bit
+</b><br>
+0 = DIRCHGF can trigger QEI controller interrupt Disabled.
+<br>
+1 = DIRCHGF can trigger QEI controller interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[18]</td><td>CMPIEN</td><td><div style="word-wrap: break-word;"><b>CMPF Trigger QEI Interrupt Enable Bit
+</b><br>
+0 = CMPF can trigger QEI controller interrupt Disabled.
+<br>
+1 = CMPF can trigger QEI controller interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[19]</td><td>IDXIEN</td><td><div style="word-wrap: break-word;"><b>IDXF Trigger QEI Interrupt Enable Bit
+</b><br>
+0 = The IDXF can trigger QEI interrupt Disabled.
+<br>
+1 = The IDXF can trigger QEI interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[20]</td><td>HOLDTMR0</td><td><div style="word-wrap: break-word;"><b>Hold QEI_CNT by Timer 0
+</b><br>
+0 = TIF (TIMER0_INTSTS[0]) has no effect on HOLDCNT.
+<br>
+1 = A rising edge of bit TIF(TIMER0_INTSTS[0]) in timer 0 sets HOLDCNT to 1.
+<br>
+</div></td></tr><tr><td>
+[21]</td><td>HOLDTMR1</td><td><div style="word-wrap: break-word;"><b>Hold QEI_CNT by Timer 1
+</b><br>
+0 = TIF(TIMER1_INTSTS[0]) has no effect on HOLDCNT.
+<br>
+1 = A rising edge of bit TIF (TIMER1_INTSTS[0]) in timer 1 sets HOLDCNT to 1.
+<br>
+</div></td></tr><tr><td>
+[22]</td><td>HOLDTMR2</td><td><div style="word-wrap: break-word;"><b>Hold QEI_CNT by Timer 2
+</b><br>
+0 = TIF(TIMER2_INTSTS[0]) has no effect on HOLDCNT.
+<br>
+1 = A rising edge of bit TIF(TIMER2_INTSTS[0]) in timer 2 sets HOLDCNT to 1.
+<br>
+</div></td></tr><tr><td>
+[23]</td><td>HOLDTMR3</td><td><div style="word-wrap: break-word;"><b>Hold QEI_CNT by Timer 3
+</b><br>
+0 = TIF (TIMER3_INTSTS[0]) has no effect on HOLDCNT.
+<br>
+1 = A rising edge of bit TIF(TIMER3_INTSTS[0]) in timer 3 sets HOLDCNT to 1.
+<br>
+</div></td></tr><tr><td>
+[24]</td><td>HOLDCNT</td><td><div style="word-wrap: break-word;"><b>Hold QEI_CNT Control
+</b><br>
+When this bit is set from low to high, the CNT(QEI_CNT[31:0]) is copied into CNTHOLD(QEI_CNTHOLD[31:0])
+<br>
+This bit may be set by writing 1 to it or Timer0~Timer3 interrupt flag TIF (TIMERx_INTSTS[0]).
+<br>
+0 = No operation.
+<br>
+1 = QEI_CNT content is captured and stored in CNTHOLD(QEI_CNTHOLD[31:0]).
+<br>
+Note: This bit is automatically cleared after QEI_CNTHOLD holds QEI_CNT value.
+<br>
+</div></td></tr><tr><td>
+[25]</td><td>IDXLATEN</td><td><div style="word-wrap: break-word;"><b>Index Latch QEI_CNT Enable Bit
+</b><br>
+If this bit is set to high, the CNT(QEI_CNT[31:0]) content will be latched into CNTLATCH (QEI_CNTLATCH[31:0]) at every rising on signal CHX.
+<br>
+0 = The index signal latch QEI counter function Disabled.
+<br>
+1 = The index signal latch QEI counter function Enabled.
+<br>
+</div></td></tr><tr><td>
+[27]</td><td>IDXRLDEN</td><td><div style="word-wrap: break-word;"><b>Index Trigger QEI_CNT Reload Enable Bit
+</b><br>
+When this bit is high and a rising edge comes on signal CHX, the CNT(QEI_CNT[31:0]) will be reset to zero if the counter is in up-counting type (DIRF(QEI_STATUS[8]) = 1); while the CNT(QEI_CNT[31:0]) will be reloaded with CNTMAX (QEI_CNTMAX[31:0]) content if the counter is in down-counting type (DIRF(QEI_STATUS[8]) = 0).
+<br>
+0 = Reload function Disabled.
+<br>
+1 = QEI_CNT re-initialized by Index signal Enabled.
+<br>
+</div></td></tr><tr><td>
+[28]</td><td>CMPEN</td><td><div style="word-wrap: break-word;"><b>The Compare Function Enable Bit
+</b><br>
+The compare function in QEI controller is to compare the dynamic counting QEI_CNT with the compare register CNTCMP( QEI_CNTCMP[31:0]), if CNT(QEI_CNT[31:0]) reaches CNTCMP( QEI_CNTCMP[31:0]), the flag CMPF will be set.
+<br>
+0 = Compare function Disabled.
+<br>
+1 = Compare function Enabled.
+<br>
+</div></td></tr><tr><td>
+[29]</td><td>QEIEN</td><td><div style="word-wrap: break-word;"><b>Quadrature Encoder Interface Controller Enable Bit
+</b><br>
+0 = QEI controller function Disabled.
+<br>
+1 = QEI controller function Enabled.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var QEI_T::STATUS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">STATUS
+</font><br><p> <font size="2">
+Offset: 0x2C  QEI Controller Status Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>IDXF</td><td><div style="word-wrap: break-word;"><b>IDX Detected Flag
+</b><br>
+When the QEI controller detects a rising edge on signal CHX it will set flag IDXF to high.
+<br>
+0 = No rising edge detected on signal CHX.
+<br>
+1 = A rising edge occurs on signal CHX.
+<br>
+Note: This bit is only cleared by writing 1 to it.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>CMPF</td><td><div style="word-wrap: break-word;"><b>Compare-match Flag
+</b><br>
+If the QEI compare function is enabled, the flag is set by hardware while QEI counter up or down counts and reach to the CNTCMP(QEI_CNTCMP[31:0]).
+<br>
+0 = QEI counter does not match with CNTCMP(QEI_CNTCMP[31:0]).
+<br>
+1 = QEI counter counts to the same as CNTCMP(QEI_CNTCMP[31:0]).
+<br>
+Note: This bit is only cleared by writing 1 to it.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>OVUNF</td><td><div style="word-wrap: break-word;"><b>QEI Counter Overflow or Underflow Flag
+</b><br>
+Flag is set by hardware while CNT(QEI_CNT[31:0]) overflows from 0xFFFF_FFFF to zero in free-counting mode or from the CNTMAX (QEI_CNTMAX[31:0]) to zero in compare-counting mode
+<br>
+imilarly, the flag is set while QEI counter underflows from zero to 0xFFFF_FFFF or CNTMAX (QEI_CNTMAX[31:0]).
+<br>
+0 = No overflow or underflow occurs in QEI counter.
+<br>
+1 = QEI counter occurs counting overflow or underflow.
+<br>
+Note: This bit is only cleared by writing 1 to it.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>DIRCHGF</td><td><div style="word-wrap: break-word;"><b>Direction Change Flag
+</b><br>
+Flag is set by hardware while QEI counter counting direction is changed.
+<br>
+Software can clear this bit by writing 1 to it.
+<br>
+0 = No change in QEI counter counting direction.
+<br>
+1 = QEI counter counting direction is changed.
+<br>
+Note: This bit is only cleared by writing 1 to it.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>DIRF</td><td><div style="word-wrap: break-word;"><b>QEI Counter Counting Direction Indication
+</b><br>
+0 = QEI Counter is in down-counting.
+<br>
+1 = QEI Counter is in up-counting.
+<br>
+Note: This bit is set/reset by hardware according to the phase detection between CHA and CHB.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+
+ */
     __IO uint32_t CNT;                   /*!< [0x0000] QEI Counter Register                                             */
     __IO uint32_t CNTHOLD;               /*!< [0x0004] QEI Counter Hold Register                                        */
     __IO uint32_t CNTLATCH;              /*!< [0x0008] QEI Counter Index Latch Register                                 */

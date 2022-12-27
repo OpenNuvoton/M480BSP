@@ -19,7 +19,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign">
-   <div id="projectname">M480 BSP<span id="projectnumber">&#160;V3.05.003</span>
+   <div id="projectname">M480 BSP<span id="projectnumber">&#160;V3.05.004</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -89,6 +89,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga36ecb4214440705a023114a3a1b9a6fc"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_l_i_b___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga36ecb4214440705a023114a3a1b9a6fc">SCLIB_CheckErrorEvent</a> (uint32_t num)</td></tr>
 <tr class="memdesc:ga36ecb4214440705a023114a3a1b9a6fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process error event in IRQ handler.  <a href="group___s_c_l_i_b___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga36ecb4214440705a023114a3a1b9a6fc">More...</a><br /></td></tr>
 <tr class="separator:ga36ecb4214440705a023114a3a1b9a6fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga88f5d3c23a63490770886e1e7dd34774"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_l_i_b___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga88f5d3c23a63490770886e1e7dd34774">SCLIB_ResetAnyway</a> (uint32_t num)</td></tr>
+<tr class="memdesc:ga88f5d3c23a63490770886e1e7dd34774"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activate a smartcard without historical bytes check, this function can be called if <a class="el" href="group___s_c_l_i_b___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gabb70ec55d6f58ee4286fc3272b9f7a4b">SCLIB_Activate</a> or <a class="el" href="group___s_c_l_i_b___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga7c6f434ac0e08d9a2a4c25e42e9d91cc">SCLIB_ActivateDelay</a> return an error.  <a href="group___s_c_l_i_b___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga88f5d3c23a63490770886e1e7dd34774">More...</a><br /></td></tr>
+<tr class="separator:ga88f5d3c23a63490770886e1e7dd34774"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1547dcc5ad0504b593819c8ac3c468af"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___s_c_l_i_b___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga1547dcc5ad0504b593819c8ac3c468af">SCLIB_SetSpecificAtrBR</a> (uint32_t num, uint32_t br)</td></tr>
+<tr class="memdesc:ga1547dcc5ad0504b593819c8ac3c468af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a specific baud rate to catch ATR for a card which is not compatible with ISO-7816, this function should be called before <a class="el" href="group___s_c_l_i_b___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gabb70ec55d6f58ee4286fc3272b9f7a4b">SCLIB_Activate</a> or <a class="el" href="group___s_c_l_i_b___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga7c6f434ac0e08d9a2a4c25e42e9d91cc">SCLIB_ActivateDelay</a>.  <a href="group___s_c_l_i_b___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga1547dcc5ad0504b593819c8ac3c468af">More...</a><br /></td></tr>
+<tr class="separator:ga1547dcc5ad0504b593819c8ac3c468af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -485,6 +491,40 @@ Only use this function instead of <a class="el" href="group___s_c_l_i_b___e_x_p_
 
 </div>
 </div>
+<a id="ga88f5d3c23a63490770886e1e7dd34774" name="ga88f5d3c23a63490770886e1e7dd34774"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga88f5d3c23a63490770886e1e7dd34774">&#9670;&nbsp;</a></span>SCLIB_ResetAnyway()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t SCLIB_ResetAnyway </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>num</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Activate a smartcard without historical bytes check, this function can be called if <a class="el" href="group___s_c_l_i_b___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gabb70ec55d6f58ee4286fc3272b9f7a4b">SCLIB_Activate</a> or <a class="el" href="group___s_c_l_i_b___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga7c6f434ac0e08d9a2a4c25e42e9d91cc">SCLIB_ActivateDelay</a> return an error. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">num</td><td>Smartcard interface number. From 0 ~ ( <a class="el" href="group___s_c___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#gab1a473b529ef7082465c9a36b4be3472">SC_INTERFACE_NUM</a> - 1) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Smartcard reset success or not </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">SCLIB_SUCCESS</td><td>Smartcard reset success </td></tr>
+    <tr><td class="paramname">Others</td><td>Smartcard reset failed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga1586bc952411d6a6b162acabc1db94a6" name="ga1586bc952411d6a6b162acabc1db94a6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga1586bc952411d6a6b162acabc1db94a6">&#9670;&nbsp;</a></span>SCLIB_SetIFSD()</h2>
 
@@ -524,6 +564,51 @@ Only use this function instead of <a class="el" href="group___s_c_l_i_b___e_x_p_
   <table class="retval">
     <tr><td class="paramname">SCLIB_SUCCESS</td><td>Smartcard warm reset success </td></tr>
     <tr><td class="paramname">Others</td><td>Smartcard warm reset failed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga1547dcc5ad0504b593819c8ac3c468af" name="ga1547dcc5ad0504b593819c8ac3c468af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1547dcc5ad0504b593819c8ac3c468af">&#9670;&nbsp;</a></span>SCLIB_SetSpecificAtrBR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t SCLIB_SetSpecificAtrBR </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>br</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set a specific baud rate to catch ATR for a card which is not compatible with ISO-7816, this function should be called before <a class="el" href="group___s_c_l_i_b___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gabb70ec55d6f58ee4286fc3272b9f7a4b">SCLIB_Activate</a> or <a class="el" href="group___s_c_l_i_b___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga7c6f434ac0e08d9a2a4c25e42e9d91cc">SCLIB_ActivateDelay</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">num</td><td>Smartcard interface number. From 0 ~ ( <a class="el" href="group___s_c___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#gab1a473b529ef7082465c9a36b4be3472">SC_INTERFACE_NUM</a> - 1) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">br</td><td>ATR default baud rate should be 9600 according to ISO-7816 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Baud rate set success or not </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">SCLIB_SUCCESS</td><td>set ATR baud rate success </td></tr>
+    <tr><td class="paramname">Others</td><td>set ATR baud rate failed </td></tr>
   </table>
   </dd>
 </dl>
@@ -689,7 +774,7 @@ Only use this function instead of <a class="el" href="group___s_c_l_i_b___e_x_p_
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 3 2022 17:39:08 for M480 BSP by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Tue Dec 20 2022 11:01:09 for M480 BSP by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

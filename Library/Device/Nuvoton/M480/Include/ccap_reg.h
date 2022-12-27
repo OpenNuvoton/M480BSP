@@ -28,276 +28,666 @@ typedef struct {
 
 
     /**
-     * @var CCAP_T::CTL
-     * Offset: 0x00  Camera Capture Interface Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |CCAPEN    |Camera Capture Interface Enable
-     * |        |          |0 = Camera Capture Interface Disabled.
-     * |        |          |1 = Camera Capture Interface Enabled.
-     * |[3]     |ADDRSW    |Packet Buffer Address Switch
-     * |        |          |0 = Packet buffer address switch Disabled.
-     * |        |          |1 = Packet buffer address switch Enabled.
-     * |[6]     |PKTEN     |Packet Output Enable
-     * |        |          |0 = Packet output Disabled.
-     * |        |          |1 = Packet output Enabled.
-     * |[7]     |MONO      |Monochrome CMOS Sensor Select
-     * |        |          |0 = Color CMOS Sensor.
-     * |        |          |1 = Monochrome CMOS Sensor. The U/V components are ignored when the MONO is enabled.
-     * |[16]    |SHUTTER   |Image Capture Interface Automatically Disable The Capture Interface After A Frame Had Been Captured
-     * |        |          |0 = Shutter Disabled.
-     * |        |          |1 = Shutter Enabled.
-     * |[20]    |UPDATE    |Update Register At New Frame
-     * |        |          |0 = Update register at new frame Disabled.
-     * |        |          |1 = Update register at new frame Enabled (Auto clear to 0 when register updated).
-     * |[24]    |VPRST     |Capture Interface Reset
-     * |        |          |0 = Capture interface reset Disabled.
-     * |        |          |1 = Capture interface reset Enabled.
-     * @var CCAP_T::PAR
-     * Offset: 0x04  Camera Capture Interface Parameter Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |INFMT     |Sensor Input Data Format
-     * |        |          |0 = YCbCr422.
-     * |        |          |1 = RGB565.
-     * |[1]     |SENTYPE   |Sensor Input Type
-     * |        |          |0 = CCIR601.
-     * |        |          |1 = CCIR656, VSync & Hsync embedded in the data signal.
-     * |[2:3]   |INDATORD  |Sensor Input Data Order
-     * |        |          |If INFMT = 0 (YCbCr),.
-     * |        |          | Byte 0 1 2 3
-     * |        |          |00 = Y0 U0 Y1 V0.
-     * |        |          |01 = Y0 V0 Y1 U0.
-     * |        |          |10 = U0 Y0 V0 Y1.
-     * |        |          |11 = V0 Y0 U0 Y1.
-     * |        |          |If INFMT = 1 (RGB565),.
-     * |        |          |00 = Byte0[R[4:0] G[5:3]] Byte1[G[2:0] B[4:0]]
-     * |        |          |01 = Byte0[B[4:0] G[5:3]] Byte1[G[2:0] R[4:0]]
-     * |        |          |10 = Byte0[G[2:0] B[4:0]] Byte1[R[4:0] G[5:3]]
-     * |        |          |11 = Byte0[G[2:0] R[4:0]] Byte1[B[4:0] G[5:3]]
-     * |[4:5]   |OUTFMT    |Image Data Format Output To System Memory
-     * |        |          |00 = YCbCr422.
-     * |        |          |01 = Only output Y.
-     * |        |          |10 = RGB555.
-     * |        |          |11 = RGB565.
-     * |[6]     |RANGE     |Scale Input YUV CCIR601 Color Range To Full Range
-     * |        |          |0 = default.
-     * |        |          |1 = Scale to full range.
-     * |[8]     |PCLKP     |Sensor Pixel Clock Polarity
-     * |        |          |0 = Input video data and signals are latched by falling edge of Pixel Clock.
-     * |        |          |1 = Input video data and signals are latched by rising edge of Pixel Clock.
-     * |[9]     |HSP       |Sensor Hsync Polarity
-     * |        |          |0 = Sync Low.
-     * |        |          |1 = Sync High.
-     * |[10]    |VSP       |Sensor Vsync Polarity
-     * |        |          |0 = Sync Low.
-     * |        |          |1 = Sync High.
-     * |[18]    |FBB       |Field By Blank
-     * |        |          |Hardware will tag field0 or field1 by vertical blanking instead of FIELD flag in CCIR-656 mode.
-     * |        |          |0 = Field by blank Disabled.
-     * |        |          |1 = Field by blank Enabled.
-     * @var CCAP_T::INT
-     * Offset: 0x08  Camera Capture Interface Interrupt Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |VINTF     |Video Frame End Interrupt
-     * |        |          |If this bit shows 1, receiving a frame completed.
-     * |        |          |Write 1 to clear it.
-     * |[1]     |MEINTF    |Bus Master Transfer Error Interrupt
-     * |        |          |If this bit shows 1, Transfer Error occurred. Write 1 to clear it.
-     * |[3]     |ADDRMINTF |Memory Address Match Interrupt
-     * |        |          |If this bit shows 1, Memory Address Match Interrupt occurred.
-     * |        |          |Write 1 to clear it.
-     * |[4]     |MDINTF    |Motion Detection Output Finish Interrupt
-     * |        |          |If this bit shows 1, Motion Detection Output Finish Interrupt occurred.
-     * |        |          |Write 1 to clear it.
-     * |[16]    |VIEN      |Video Frame End Interrupt Enable
-     * |        |          |0 = Video frame end interrupt Disabled.
-     * |        |          |1 = Video frame end interrupt Enabled.
-     * |[17]    |MEIEN     |System Memory Error Interrupt Enable
-     * |        |          |0 = System memory error interrupt Disabled.
-     * |        |          |1 = System memory error interrupt Enabled.
-     * |[19]    |ADDRMIEN  |Address Match Interrupt Enable
-     * |        |          |0 = Address match interrupt Disabled.
-     * |        |          |1 = Address match interrupt Enabled.
-     * @var CCAP_T::POSTERIZE
-     * Offset: 0x0C  YUV Component Posterizing Factor Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0:7]   |VCOMP     |V Component Posterizing Factor
-     * |        |          |Final_V_Out = Original_V[7:0] & V_Posterizing_Factor.
-     * |[8:15]  |UCOMP     |U Component Posterizing Factor
-     * |        |          |Final_U_Out = Original_U[7:0] & U_Posterizing_Factor.
-     * |[16:23] |YCOMP     |Y Component Posterizing Factor
-     * |        |          |Final_Y_Out = Original_Y[7:0] & Y_Posterizing_Factor.
-     * @var CCAP_T::MD
-     * Offset: 0x10  Motion Detection Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |MDEN      |Motion Detection Enable
-     * |        |          |0 = CCAP_MD Disabled.
-     * |        |          |1 = CCAP_MD Enabled.
-     * |[8]     |MDBS      |Motion Detection Block Size
-     * |        |          |0 = 16x16.
-     * |        |          |1 = 8x8.
-     * |[9]     |MDSM      |Motion Detection Save Mode
-     * |        |          |0 = 1 bit DIFF + 7 bit Y Differential.
-     * |        |          |1 = 1 bit DIFF only.
-     * |[10:11] |MDDF      |Motion Detection Detect Frequency
-     * |        |          |00 = Each frame.
-     * |        |          |01 = Every 2 frame.
-     * |        |          |10 = Every 3 frame.
-     * |        |          |11 = Every 4 frame.
-     * |[16:20] |MDTHR     |Motion Detection Differential Threshold
-     * @var CCAP_T::MDADDR
-     * Offset: 0x14  Motion Detection Output Address Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0:31]  |MDADDR    |Motion Detection Output Address Register (Word Alignment)
-     * @var CCAP_T::MDYADDR
-     * Offset: 0x18  Motion Detection Temp Y Output Address Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0:31]  |MDYADDR   |Motion Detection Temp Y Output Address Register (Word Alignment)
-     * @var CCAP_T::SEPIA
-     * Offset: 0x1C  Sepia Effect Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0:7]   |VCOMP     |Define the constant V component while Sepia color effect is turned on.
-     * |[8:15]  |UCOMP     |Define the constant U component while Sepia color effect is turned on.
-     * @var CCAP_T::CWSP
-     * Offset: 0x20  Cropping Window Starting Address Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0:11]  |CWSADDRH  |Cropping Window Horizontal Starting Address
-     * |[16:26] |CWSADDRV  |Cropping Window Vertical Starting Address
-     * @var CCAP_T::CWS
-     * Offset: 0x24  Cropping Window Size Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0:11]  |CIWW      |Cropping Image Window Width
-     * |[16:26] |CIWH      |Cropping Image Window Height
-     * @var CCAP_T::PKTSL
-     * Offset: 0x28  Packet Scaling Vertical/Horizontal Factor Register (LSB)
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0:7]   |PKTSHML   |Packet Scaling Horizontal Factor M (Lower 8-Bit)
-     * |        |          |Specifies the lower 8-bit of denominator part (M) of the horizontal scaling factor.
-     * |        |          |The lower 8-bit will be cascaded with higher 8-bit (PKDSHMH) to form a 16-bit denominator (M) of vertical factor.
-     * |        |          |The output image width will be equal to the image width * N/M.
-     * |        |          |Note: The value of N must be equal to or less than M.
-     * |[8:15]  |PKTSHNL   |Packet Scaling Horizontal Factor N (Lower 8-Bit)
-     * |        |          |Specify the lower 8-bit of numerator part (N) of the horizontal scaling factor.
-     * |        |          |The lower 8-bit will be cascaded with higher 8-bit (PKDSHNH) to form a 16-bit numerator of horizontal factor.
-     * |[16:23] |PKTSVML   |Packet Scaling Vertical Factor M (Lower 8-Bit)
-     * |        |          |Specify the lower 8-bit of denominator part (M) of the vertical scaling factor.
-     * |        |          |The lower 8-bit will be cascaded with higher 8-bit (PKDSVMH) to form a 16-bit denominator (M) of vertical factor.
-     * |        |          |The output image width will be equal to the image height * N/M.
-     * |        |          |Note: The value of N must be equal to or less than M.
-     * |[24:31] |PKTSVNL   |Packet Scaling Vertical Factor N (Lower 8-Bit)
-     * |        |          |Specify the lower 8-bit of numerator part (N) of the vertical scaling factor.
-     * |        |          |The lower 8-bit will be cascaded with higher 8-bit (PKDSVNH) to form a 16-bit numerator of vertical factor
-     * @var CCAP_T::PLNSL
-     * Offset: 0x2C  Planar Scaling Vertical/Horizontal Factor Register (LSB)
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0:7]   |PLNSHML   |Planar Scaling Horizontal Factor M (Lower 8-Bit)
-     * |        |          |Specify the lower 8-bit of denominator part (M) of the horizontal scaling factor.
-     * |        |          |The lower 8-bit will be cascaded with higher 8-bit (PNDSHMH) to form a 16-bit denominator (M) of vertical factor.
-     * |        |          |The output image width will be equal to the image width * N/M.
-     * |        |          |Note: The value of N must be equal to or less than M.
-     * |[8:15]  |PLNSHNL   |Planar Scaling Horizontal Factor N (Lower 8-Bit)
-     * |        |          |Specify the lower 8-bit of numerator part (N) of the horizontal scaling factor.
-     * |        |          |The lower 8-bit will be cascaded with higher 8-bit (PNDSHNH) to form a 16-bit numerator of horizontal factor.
-     * |[16:23] |PLNSVML   |Planar Scaling Vertical Factor M (Lower 8-Bit)
-     * |        |          |Specify the lower 8-bit of denominator part (M) of the vertical scaling factor.
-     * |        |          |The lower 8-bit will be cascaded with higher 8-bit (PNDSVMH) to form a 16-bit denominator (M) of vertical factor.
-     * |        |          |The output image width will be equal to the image height * N/M.
-     * |        |          |Note: The value of N must be equal to or less than M.
-     * |[24:31] |PLNSVNL   |Planar Scaling Vertical Factor N (Lower 8-Bit)
-     * |        |          |Specify the lower 8-bit of numerator part (N) of the vertical scaling factor.
-     * |        |          |The lower 8-bit will be cascaded with higher 8-bit (PNDSVNH) to form a 16-bit numerator of vertical factor.
-     * @var CCAP_T::FRCTL
-     * Offset: 0x30  Scaling Frame Rate Factor Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0:5]   |FRM       |Scaling Frame Rate Factor M
-     * |        |          |Specify the denominator part (M) of the frame rate scaling factor.
-     * |        |          |The output image frame rate will be equal to input image frame rate * (N/M).
-     * |        |          |Note: The value of N must be equal to or less than M.
-     * |[8:13]  |FRN       |Scaling Frame Rate Factor N
-     * |        |          |Specify the denominator part (N) of the frame rate scaling factor.
-     * @var CCAP_T::STRIDE
-     * Offset: 0x34  Frame Output Pixel Stride Width Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0:13]  |PKTSTRIDE |Packet Frame Output Pixel Stride Width
-     * |        |          |The output pixel stride size of packet pipe.
-     * |[16:29] |PLNSTRIDE |Planar Frame Output Pixel Stride Width
-     * |        |          |The output pixel stride size of planar pipe.
-     * @var CCAP_T::FIFOTH
-     * Offset: 0x3C  FIFO Threshold Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0:3]   |PLNVFTH   |Planar V FIFO Threshold
-     * |[8:11]  |PLNUFTH   |Planar U FIFO Threshold
-     * |[16:20] |PLNYFTH   |Planar Y FIFO Threshold
-     * |[24:28] |PKTFTH    |Packet FIFO Threshold
-     * |[31]    |OVF       |FIFO Overflow Flag
-     * @var CCAP_T::CMPADDR
-     * Offset: 0x40  Compare Memory Base Address Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0:31]  |CMPADDR   |Compare Memory Base Address
-     * |        |          |Word aligns address; ignore the bits [1:0].
-     * @var CCAP_T::LUMA_Y1_THD
-     * Offset: 0x44  Luminance Y8 to Y1 Threshold Value Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field          |Descriptions
-     * | :----: | :-----------: | :---- |
-     * |[0:8]   |LUMA_Y1_THRESH |Luminance Y8 to Y1 Threshold Value
-     * |        |               |Specify the 8-bit threshold value for the luminance Y bit-8 to the luminance Y 1-bit conversion.
-     * @var CCAP_T::PKTSM
-     * Offset: 0x48  Packet Scaling Vertical/Horizontal Factor Register (MSB)
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0:7]   |PKTSHMH   |Packet Scaling Horizontal Factor M (Higher 8-Bit)
-     * |        |          |Specify the lower 8-bit of denominator part (M) of the horizontal scaling factor.
-     * |        |          |Please refer to the register CCAP_PKTSL?for the detailed operation.
-     * |[8:15]  |PKTSHNH   |Packet Scaling Horizontal Factor N (Higher 8-Bit)
-     * |        |          |Specify the lower 8-bit of numerator part (N) of the horizontal scaling factor.
-     * |        |          |Please refer to the register CCAP_PKTSL for the detailed operation.
-     * |[16:23] |PKTSVMH   |Packet Scaling Vertical Factor M (Higher 8-Bit)
-     * |        |          |Specify the lower 8-bit of denominator part (M) of the vertical scaling factor.
-     * |        |          |Please refer to the register CCAP_PKTSL to check the cooperation between these two registers.
-     * |[24:31] |PKTSVNH   |Packet Scaling Vertical Factor N (Higher 8-Bit)
-     * |        |          |Specify the higher 8-bit of numerator part (N) of the vertical scaling factor.
-     * |        |          |Please refer to the register CCAP_PKTSL?to check the cooperation between these two registers.
-     * @var CCAP_T::PKTBA0
-     * Offset: 0x60  System Memory Packet Base Address 0 Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0:31]  |BASEADDR  |System Memory Packet Base Address 0
-     * |        |          |Word aligns address; ignore the bits [1:0].
-     */
+@var CCAP_T::CTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CTL
+</font><br><p> <font size="2">
+Offset: 0x00  Camera Capture Interface Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>CCAPEN</td><td><div style="word-wrap: break-word;"><b>Camera Capture Interface Enable
+</b><br>
+0 = Camera Capture Interface Disabled.
+<br>
+1 = Camera Capture Interface Enabled.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>ADDRSW</td><td><div style="word-wrap: break-word;"><b>Packet Buffer Address Switch
+</b><br>
+0 = Packet buffer address switch Disabled.
+<br>
+1 = Packet buffer address switch Enabled.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>PKTEN</td><td><div style="word-wrap: break-word;"><b>Packet Output Enable
+</b><br>
+0 = Packet output Disabled.
+<br>
+1 = Packet output Enabled.
+<br>
+</div></td></tr><tr><td>
+[7]</td><td>MONO</td><td><div style="word-wrap: break-word;"><b>Monochrome CMOS Sensor Select
+</b><br>
+0 = Color CMOS Sensor.
+<br>
+1 = Monochrome CMOS Sensor. The U/V components are ignored when the MONO is enabled.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>SHUTTER</td><td><div style="word-wrap: break-word;"><b>Image Capture Interface Automatically Disable The Capture Interface After A Frame Had Been Captured
+</b><br>
+0 = Shutter Disabled.
+<br>
+1 = Shutter Enabled.
+<br>
+</div></td></tr><tr><td>
+[20]</td><td>UPDATE</td><td><div style="word-wrap: break-word;"><b>Update Register At New Frame
+</b><br>
+0 = Update register at new frame Disabled.
+<br>
+1 = Update register at new frame Enabled (Auto clear to 0 when register updated).
+<br>
+</div></td></tr><tr><td>
+[24]</td><td>VPRST</td><td><div style="word-wrap: break-word;"><b>Capture Interface Reset
+</b><br>
+0 = Capture interface reset Disabled.
+<br>
+1 = Capture interface reset Enabled.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::PAR
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PAR
+</font><br><p> <font size="2">
+Offset: 0x04  Camera Capture Interface Parameter Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>INFMT</td><td><div style="word-wrap: break-word;"><b>Sensor Input Data Format
+</b><br>
+0 = YCbCr422.
+<br>
+1 = RGB565.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>SENTYPE</td><td><div style="word-wrap: break-word;"><b>Sensor Input Type
+</b><br>
+0 = CCIR601.
+<br>
+1 = CCIR656, VSync & Hsync embedded in the data signal.
+<br>
+</div></td></tr><tr><td>
+[2:3]</td><td>INDATORD</td><td><div style="word-wrap: break-word;"><b>Sensor Input Data Order
+</b><br>
+If INFMT = 0 (YCbCr),.
+<br>
+ Byte 0 1 2 3
+<br>
+00 = Y0 U0 Y1 V0.
+<br>
+01 = Y0 V0 Y1 U0.
+<br>
+10 = U0 Y0 V0 Y1.
+<br>
+11 = V0 Y0 U0 Y1.
+<br>
+If INFMT = 1 (RGB565),.
+<br>
+00 = Byte0[R[4:0] G[5:3]] Byte1[G[2:0] B[4:0]]
+<br>
+01 = Byte0[B[4:0] G[5:3]] Byte1[G[2:0] R[4:0]]
+<br>
+10 = Byte0[G[2:0] B[4:0]] Byte1[R[4:0] G[5:3]]
+<br>
+11 = Byte0[G[2:0] R[4:0]] Byte1[B[4:0] G[5:3]]
+<br>
+</div></td></tr><tr><td>
+[4:5]</td><td>OUTFMT</td><td><div style="word-wrap: break-word;"><b>Image Data Format Output To System Memory
+</b><br>
+00 = YCbCr422.
+<br>
+01 = Only output Y.
+<br>
+10 = RGB555.
+<br>
+11 = RGB565.
+<br>
+</div></td></tr><tr><td>
+[6]</td><td>RANGE</td><td><div style="word-wrap: break-word;"><b>Scale Input YUV CCIR601 Color Range To Full Range
+</b><br>
+0 = default.
+<br>
+1 = Scale to full range.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>PCLKP</td><td><div style="word-wrap: break-word;"><b>Sensor Pixel Clock Polarity
+</b><br>
+0 = Input video data and signals are latched by falling edge of Pixel Clock.
+<br>
+1 = Input video data and signals are latched by rising edge of Pixel Clock.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>HSP</td><td><div style="word-wrap: break-word;"><b>Sensor Hsync Polarity
+</b><br>
+0 = Sync Low.
+<br>
+1 = Sync High.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>VSP</td><td><div style="word-wrap: break-word;"><b>Sensor Vsync Polarity
+</b><br>
+0 = Sync Low.
+<br>
+1 = Sync High.
+<br>
+</div></td></tr><tr><td>
+[18]</td><td>FBB</td><td><div style="word-wrap: break-word;"><b>Field By Blank
+</b><br>
+Hardware will tag field0 or field1 by vertical blanking instead of FIELD flag in CCIR-656 mode.
+<br>
+0 = Field by blank Disabled.
+<br>
+1 = Field by blank Enabled.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::INT
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">INT
+</font><br><p> <font size="2">
+Offset: 0x08  Camera Capture Interface Interrupt Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>VINTF</td><td><div style="word-wrap: break-word;"><b>Video Frame End Interrupt
+</b><br>
+If this bit shows 1, receiving a frame completed.
+<br>
+Write 1 to clear it.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>MEINTF</td><td><div style="word-wrap: break-word;"><b>Bus Master Transfer Error Interrupt
+</b><br>
+If this bit shows 1, Transfer Error occurred. Write 1 to clear it.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>ADDRMINTF</td><td><div style="word-wrap: break-word;"><b>Memory Address Match Interrupt
+</b><br>
+If this bit shows 1, Memory Address Match Interrupt occurred.
+<br>
+Write 1 to clear it.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>MDINTF</td><td><div style="word-wrap: break-word;"><b>Motion Detection Output Finish Interrupt
+</b><br>
+If this bit shows 1, Motion Detection Output Finish Interrupt occurred.
+<br>
+Write 1 to clear it.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>VIEN</td><td><div style="word-wrap: break-word;"><b>Video Frame End Interrupt Enable
+</b><br>
+0 = Video frame end interrupt Disabled.
+<br>
+1 = Video frame end interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[17]</td><td>MEIEN</td><td><div style="word-wrap: break-word;"><b>System Memory Error Interrupt Enable
+</b><br>
+0 = System memory error interrupt Disabled.
+<br>
+1 = System memory error interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[19]</td><td>ADDRMIEN</td><td><div style="word-wrap: break-word;"><b>Address Match Interrupt Enable
+</b><br>
+0 = Address match interrupt Disabled.
+<br>
+1 = Address match interrupt Enabled.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::POSTERIZE
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">POSTERIZE
+</font><br><p> <font size="2">
+Offset: 0x0C  YUV Component Posterizing Factor Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0:7]</td><td>VCOMP</td><td><div style="word-wrap: break-word;"><b>V Component Posterizing Factor
+</b><br>
+Final_V_Out = Original_V[7:0] & V_Posterizing_Factor.
+<br>
+</div></td></tr><tr><td>
+[8:15]</td><td>UCOMP</td><td><div style="word-wrap: break-word;"><b>U Component Posterizing Factor
+</b><br>
+Final_U_Out = Original_U[7:0] & U_Posterizing_Factor.
+<br>
+</div></td></tr><tr><td>
+[16:23]</td><td>YCOMP</td><td><div style="word-wrap: break-word;"><b>Y Component Posterizing Factor
+</b><br>
+Final_Y_Out = Original_Y[7:0] & Y_Posterizing_Factor.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::MD
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">MD
+</font><br><p> <font size="2">
+Offset: 0x10  Motion Detection Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>MDEN</td><td><div style="word-wrap: break-word;"><b>Motion Detection Enable
+</b><br>
+0 = CCAP_MD Disabled.
+<br>
+1 = CCAP_MD Enabled.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>MDBS</td><td><div style="word-wrap: break-word;"><b>Motion Detection Block Size
+</b><br>
+0 = 16x16.
+<br>
+1 = 8x8.
+<br>
+</div></td></tr><tr><td>
+[9]</td><td>MDSM</td><td><div style="word-wrap: break-word;"><b>Motion Detection Save Mode
+</b><br>
+0 = 1 bit DIFF + 7 bit Y Differential.
+<br>
+1 = 1 bit DIFF only.
+<br>
+</div></td></tr><tr><td>
+[10:11]</td><td>MDDF</td><td><div style="word-wrap: break-word;"><b>Motion Detection Detect Frequency
+</b><br>
+00 = Each frame.
+<br>
+01 = Every 2 frame.
+<br>
+10 = Every 3 frame.
+<br>
+11 = Every 4 frame.
+<br>
+</div></td></tr><tr><td>
+[16:20]</td><td>MDTHR</td><td><div style="word-wrap: break-word;"><b>Motion Detection Differential Threshold
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::MDADDR
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">MDADDR
+</font><br><p> <font size="2">
+Offset: 0x14  Motion Detection Output Address Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0:31]</td><td>MDADDR</td><td><div style="word-wrap: break-word;"><b>Motion Detection Output Address Register (Word Alignment)
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::MDYADDR
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">MDYADDR
+</font><br><p> <font size="2">
+Offset: 0x18  Motion Detection Temp Y Output Address Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0:31]</td><td>MDYADDR</td><td><div style="word-wrap: break-word;"><b>Motion Detection Temp Y Output Address Register (Word Alignment)
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::SEPIA
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SEPIA
+</font><br><p> <font size="2">
+Offset: 0x1C  Sepia Effect Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0:7]</td><td>VCOMP</td><td><div style="word-wrap: break-word;"><b>Define the constant V component while Sepia color effect is turned on.
+</b><br>
+</div></td></tr><tr><td>
+[8:15]</td><td>UCOMP</td><td><div style="word-wrap: break-word;"><b>Define the constant U component while Sepia color effect is turned on.
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::CWSP
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CWSP
+</font><br><p> <font size="2">
+Offset: 0x20  Cropping Window Starting Address Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0:11]</td><td>CWSADDRH</td><td><div style="word-wrap: break-word;"><b>Cropping Window Horizontal Starting Address
+</b><br>
+</div></td></tr><tr><td>
+[16:26]</td><td>CWSADDRV</td><td><div style="word-wrap: break-word;"><b>Cropping Window Vertical Starting Address
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::CWS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CWS
+</font><br><p> <font size="2">
+Offset: 0x24  Cropping Window Size Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0:11]</td><td>CIWW</td><td><div style="word-wrap: break-word;"><b>Cropping Image Window Width
+</b><br>
+</div></td></tr><tr><td>
+[16:26]</td><td>CIWH</td><td><div style="word-wrap: break-word;"><b>Cropping Image Window Height
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::PKTSL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PKTSL
+</font><br><p> <font size="2">
+Offset: 0x28  Packet Scaling Vertical/Horizontal Factor Register (LSB)
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0:7]</td><td>PKTSHML</td><td><div style="word-wrap: break-word;"><b>Packet Scaling Horizontal Factor M (Lower 8-Bit)
+</b><br>
+Specifies the lower 8-bit of denominator part (M) of the horizontal scaling factor.
+<br>
+The lower 8-bit will be cascaded with higher 8-bit (PKDSHMH) to form a 16-bit denominator (M) of vertical factor.
+<br>
+The output image width will be equal to the image width * N/M.
+<br>
+Note: The value of N must be equal to or less than M.
+<br>
+</div></td></tr><tr><td>
+[8:15]</td><td>PKTSHNL</td><td><div style="word-wrap: break-word;"><b>Packet Scaling Horizontal Factor N (Lower 8-Bit)
+</b><br>
+Specify the lower 8-bit of numerator part (N) of the horizontal scaling factor.
+<br>
+The lower 8-bit will be cascaded with higher 8-bit (PKDSHNH) to form a 16-bit numerator of horizontal factor.
+<br>
+</div></td></tr><tr><td>
+[16:23]</td><td>PKTSVML</td><td><div style="word-wrap: break-word;"><b>Packet Scaling Vertical Factor M (Lower 8-Bit)
+</b><br>
+Specify the lower 8-bit of denominator part (M) of the vertical scaling factor.
+<br>
+The lower 8-bit will be cascaded with higher 8-bit (PKDSVMH) to form a 16-bit denominator (M) of vertical factor.
+<br>
+The output image width will be equal to the image height * N/M.
+<br>
+Note: The value of N must be equal to or less than M.
+<br>
+</div></td></tr><tr><td>
+[24:31]</td><td>PKTSVNL</td><td><div style="word-wrap: break-word;"><b>Packet Scaling Vertical Factor N (Lower 8-Bit)
+</b><br>
+Specify the lower 8-bit of numerator part (N) of the vertical scaling factor.
+<br>
+The lower 8-bit will be cascaded with higher 8-bit (PKDSVNH) to form a 16-bit numerator of vertical factor
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::PLNSL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PLNSL
+</font><br><p> <font size="2">
+Offset: 0x2C  Planar Scaling Vertical/Horizontal Factor Register (LSB)
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0:7]</td><td>PLNSHML</td><td><div style="word-wrap: break-word;"><b>Planar Scaling Horizontal Factor M (Lower 8-Bit)
+</b><br>
+Specify the lower 8-bit of denominator part (M) of the horizontal scaling factor.
+<br>
+The lower 8-bit will be cascaded with higher 8-bit (PNDSHMH) to form a 16-bit denominator (M) of vertical factor.
+<br>
+The output image width will be equal to the image width * N/M.
+<br>
+Note: The value of N must be equal to or less than M.
+<br>
+</div></td></tr><tr><td>
+[8:15]</td><td>PLNSHNL</td><td><div style="word-wrap: break-word;"><b>Planar Scaling Horizontal Factor N (Lower 8-Bit)
+</b><br>
+Specify the lower 8-bit of numerator part (N) of the horizontal scaling factor.
+<br>
+The lower 8-bit will be cascaded with higher 8-bit (PNDSHNH) to form a 16-bit numerator of horizontal factor.
+<br>
+</div></td></tr><tr><td>
+[16:23]</td><td>PLNSVML</td><td><div style="word-wrap: break-word;"><b>Planar Scaling Vertical Factor M (Lower 8-Bit)
+</b><br>
+Specify the lower 8-bit of denominator part (M) of the vertical scaling factor.
+<br>
+The lower 8-bit will be cascaded with higher 8-bit (PNDSVMH) to form a 16-bit denominator (M) of vertical factor.
+<br>
+The output image width will be equal to the image height * N/M.
+<br>
+Note: The value of N must be equal to or less than M.
+<br>
+</div></td></tr><tr><td>
+[24:31]</td><td>PLNSVNL</td><td><div style="word-wrap: break-word;"><b>Planar Scaling Vertical Factor N (Lower 8-Bit)
+</b><br>
+Specify the lower 8-bit of numerator part (N) of the vertical scaling factor.
+<br>
+The lower 8-bit will be cascaded with higher 8-bit (PNDSVNH) to form a 16-bit numerator of vertical factor.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::FRCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">FRCTL
+</font><br><p> <font size="2">
+Offset: 0x30  Scaling Frame Rate Factor Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0:5]</td><td>FRM</td><td><div style="word-wrap: break-word;"><b>Scaling Frame Rate Factor M
+</b><br>
+Specify the denominator part (M) of the frame rate scaling factor.
+<br>
+The output image frame rate will be equal to input image frame rate * (N/M).
+<br>
+Note: The value of N must be equal to or less than M.
+<br>
+</div></td></tr><tr><td>
+[8:13]</td><td>FRN</td><td><div style="word-wrap: break-word;"><b>Scaling Frame Rate Factor N
+</b><br>
+Specify the denominator part (N) of the frame rate scaling factor.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::STRIDE
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">STRIDE
+</font><br><p> <font size="2">
+Offset: 0x34  Frame Output Pixel Stride Width Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0:13]</td><td>PKTSTRIDE</td><td><div style="word-wrap: break-word;"><b>Packet Frame Output Pixel Stride Width
+</b><br>
+The output pixel stride size of packet pipe.
+<br>
+</div></td></tr><tr><td>
+[16:29]</td><td>PLNSTRIDE</td><td><div style="word-wrap: break-word;"><b>Planar Frame Output Pixel Stride Width
+</b><br>
+The output pixel stride size of planar pipe.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::FIFOTH
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">FIFOTH
+</font><br><p> <font size="2">
+Offset: 0x3C  FIFO Threshold Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0:3]</td><td>PLNVFTH</td><td><div style="word-wrap: break-word;"><b>Planar V FIFO Threshold
+</b><br>
+</div></td></tr><tr><td>
+[8:11]</td><td>PLNUFTH</td><td><div style="word-wrap: break-word;"><b>Planar U FIFO Threshold
+</b><br>
+</div></td></tr><tr><td>
+[16:20]</td><td>PLNYFTH</td><td><div style="word-wrap: break-word;"><b>Planar Y FIFO Threshold
+</b><br>
+</div></td></tr><tr><td>
+[24:28]</td><td>PKTFTH</td><td><div style="word-wrap: break-word;"><b>Packet FIFO Threshold
+</b><br>
+</div></td></tr><tr><td>
+[31]</td><td>OVF</td><td><div style="word-wrap: break-word;"><b>FIFO Overflow Flag
+</b><br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::CMPADDR
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CMPADDR
+</font><br><p> <font size="2">
+Offset: 0x40  Compare Memory Base Address Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0:31]</td><td>CMPADDR</td><td><div style="word-wrap: break-word;"><b>Compare Memory Base Address
+</b><br>
+Word aligns address; ignore the bits [1:0].
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::LUMA_Y1_THD
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">LUMA_Y1_THD
+</font><br><p> <font size="2">
+Offset: 0x44  Luminance Y8 to Y1 Threshold Value Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0:8]</td><td>LUMA_Y1_THRESH</td><td><div style="word-wrap: break-word;"><b>Luminance Y8 to Y1 Threshold Value
+</b><br>
+    |Specify the 8-bit threshold value for the luminance Y bit-8 to the luminance Y 1-bit conversion.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::PKTSM
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PKTSM
+</font><br><p> <font size="2">
+Offset: 0x48  Packet Scaling Vertical/Horizontal Factor Register (MSB)
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0:7]</td><td>PKTSHMH</td><td><div style="word-wrap: break-word;"><b>Packet Scaling Horizontal Factor M (Higher 8-Bit)
+</b><br>
+Specify the lower 8-bit of denominator part (M) of the horizontal scaling factor.
+<br>
+Please refer to the register CCAP_PKTSL?for the detailed operation.
+<br>
+</div></td></tr><tr><td>
+[8:15]</td><td>PKTSHNH</td><td><div style="word-wrap: break-word;"><b>Packet Scaling Horizontal Factor N (Higher 8-Bit)
+</b><br>
+Specify the lower 8-bit of numerator part (N) of the horizontal scaling factor.
+<br>
+Please refer to the register CCAP_PKTSL for the detailed operation.
+<br>
+</div></td></tr><tr><td>
+[16:23]</td><td>PKTSVMH</td><td><div style="word-wrap: break-word;"><b>Packet Scaling Vertical Factor M (Higher 8-Bit)
+</b><br>
+Specify the lower 8-bit of denominator part (M) of the vertical scaling factor.
+<br>
+Please refer to the register CCAP_PKTSL to check the cooperation between these two registers.
+<br>
+</div></td></tr><tr><td>
+[24:31]</td><td>PKTSVNH</td><td><div style="word-wrap: break-word;"><b>Packet Scaling Vertical Factor N (Higher 8-Bit)
+</b><br>
+Specify the higher 8-bit of numerator part (N) of the vertical scaling factor.
+<br>
+Please refer to the register CCAP_PKTSL?to check the cooperation between these two registers.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var CCAP_T::PKTBA0
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PKTBA0
+</font><br><p> <font size="2">
+Offset: 0x60  System Memory Packet Base Address 0 Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0:31]</td><td>BASEADDR</td><td><div style="word-wrap: break-word;"><b>System Memory Packet Base Address 0
+</b><br>
+Word aligns address; ignore the bits [1:0].
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+
+ */
     __IO uint32_t CTL;
     __IO uint32_t PAR;
     __IO uint32_t INT;

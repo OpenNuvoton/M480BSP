@@ -28,109 +28,248 @@ typedef struct
 
 
     /**
-     * @var DAC_T::CTL
-     * Offset: 0x00  DAC Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |DACEN     |DAC Enable Bit
-     * |        |          |0 = DAC is Disabled.
-     * |        |          |1 = DAC is Enabled.
-     * |[1]     |DACIEN    |DAC Interrupt Enable Bit
-     * |        |          |0 = Interrupt is Disabled.
-     * |        |          |1 = Interrupt is Enabled.
-     * |[2]     |DMAEN     |DMA Mode Enable Bit
-     * |        |          |0 = DMA mode Disabled.
-     * |        |          |1 = DMA mode Enabled.
-     * |[3]     |DMAURIEN  |DMA Under-run Interrupt Enable Bit
-     * |        |          |0 = DMA under-run interrupt Disabled.
-     * |        |          |1 = DMA under-run interrupt Enabled.
-     * |[4]     |TRGEN     |Trigger Mode Enable Bit
-     * |        |          |0 = DAC event trigger mode Disabled.
-     * |        |          |1 = DAC event trigger mode Enabled.
-     * |[7:5]   |TRGSEL    |Trigger Source Selection
-     * |        |          |000 = Software trigger.
-     * |        |          |001 = External pin DAC0_ST trigger.
-     * |        |          |010 = Timer 0 trigger.
-     * |        |          |011 = Timer 1 trigger.
-     * |        |          |100 = Timer 2 trigger.
-     * |        |          |101 = Timer 3 trigger.
-     * |        |          |110 = EPWM0 trigger.
-     * |        |          |111 = EPWM1 trigger.
-     * |[8]     |BYPASS    |Bypass Buffer Mode
-     * |        |          |0 = Output voltage buffer Enabled.
-     * |        |          |1 = Output voltage buffer Disabled.
-     * |[10]    |LALIGN    |DAC Data Left-aligned Enabled Control
-     * |        |          |0 = Right alignment.
-     * |        |          |1 = Left alignment.
-     * |[13:12] |ETRGSEL   |External Pin Trigger Selection
-     * |        |          |00 = Low level trigger.
-     * |        |          |01 = High level trigger.
-     * |        |          |10 = Falling edge trigger.
-     * |        |          |11 = Rising edge trigger.
-     * |[15:14] |BWSEL     |DAC Data Bit-width Selection
-     * |        |          |00 = data is 12 bits.
-     * |        |          |01 = data is 8 bits.
-     * |        |          |Others = reserved.
-     * |[16]    |GRPEN     |DAC Group Mode Enable Bit
-     * |        |          |0 = DAC0 and DAC1 are not grouped.
-     * |        |          |1 = DAC0 and DAC1 are grouped.
-     * @var DAC_T::SWTRG
-     * Offset: 0x04  DAC Software Trigger Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |SWTRG     |Software Trigger
-     * |        |          |0 = Software trigger Disabled.
-     * |        |          |1 = Software trigger Enabled.
-     * |        |          |User writes this bit to generate one shot pulse and it is cleared to 0 by hardware automatically; Reading this bit will always get 0.
-     * @var DAC_T::DAT
-     * Offset: 0x08  DAC Data Holding Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[15:0]  |DACDAT    |DAC 12-bit Holding Data
-     * |        |          |These bits are written by user software which specifies 12-bit conversion data for DAC output
-     * |        |          |The unused bits (DAC_DAT[3:0] in left-alignment mode and DAC_DAT[15:12] in right alignment mode) are ignored by DAC controller hardware.
-     * |        |          |12 bit left alignment: user has to load data into DAC_DAT[15:4] bits.
-     * |        |          |12 bit right alignment: user has to load data into DAC_DAT[11:0] bits.
-     * @var DAC_T::DATOUT
-     * Offset: 0x0C  DAC Data Output Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[11:0]  |DATOUT    |DAC 12-bit Output Data
-     * |        |          |These bits are current digital data for DAC output conversion.
-     * |        |          |It is loaded from DAC_DAT register and user cannot write it directly.
-     * @var DAC_T::STATUS
-     * Offset: 0x10  DAC Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |FINISH    |DAC Conversion Complete Finish Flag
-     * |        |          |0 = DAC is in conversion state.
-     * |        |          |1 = DAC conversion finish.
-     * |        |          |This bit set to 1 when conversion time counter counts to SETTLET
-     * |        |          |It is cleared to 0 when DAC starts a new conversion
-     * |        |          |User writes 1 to clear this bit to 0.
-     * |[1]     |DMAUDR    |DMA Under-run Interrupt Flag
-     * |        |          |0 = No DMA under-run error condition occurred.
-     * |        |          |1 = DMA under-run error condition occurred.
-     * |        |          |User writes 1 to clear this bit.
-     * |[8]     |BUSY      |DAC Busy Flag (Read Only)
-     * |        |          |0 = DAC is ready for next conversion.
-     * |        |          |1 = DAC is busy in conversion.
-     * |        |          |This is read only bit.
-     * @var DAC_T::TCTL
-     * Offset: 0x14  DAC Timing Control Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[9:0]   |SETTLET   |DAC Output Settling Time
-     * |        |          |User software needs to write appropriate value to these bits to meet DAC conversion settling time base on PCLK (APB clock) speed.
-     * |        |          |For example, DAC controller clock speed is 80MHz and DAC conversion settling time is 1 us, SETTLETvalue must be greater than 0x50.
-     * |        |          |SELTTLET = DAC controller clock speed x settling time.
-     */
+@var DAC_T::CTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CTL
+</font><br><p> <font size="2">
+Offset: 0x00  DAC Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>DACEN</td><td><div style="word-wrap: break-word;"><b>DAC Enable Bit
+</b><br>
+0 = DAC is Disabled.
+<br>
+1 = DAC is Enabled.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>DACIEN</td><td><div style="word-wrap: break-word;"><b>DAC Interrupt Enable Bit
+</b><br>
+0 = Interrupt is Disabled.
+<br>
+1 = Interrupt is Enabled.
+<br>
+</div></td></tr><tr><td>
+[2]</td><td>DMAEN</td><td><div style="word-wrap: break-word;"><b>DMA Mode Enable Bit
+</b><br>
+0 = DMA mode Disabled.
+<br>
+1 = DMA mode Enabled.
+<br>
+</div></td></tr><tr><td>
+[3]</td><td>DMAURIEN</td><td><div style="word-wrap: break-word;"><b>DMA Under-run Interrupt Enable Bit
+</b><br>
+0 = DMA under-run interrupt Disabled.
+<br>
+1 = DMA under-run interrupt Enabled.
+<br>
+</div></td></tr><tr><td>
+[4]</td><td>TRGEN</td><td><div style="word-wrap: break-word;"><b>Trigger Mode Enable Bit
+</b><br>
+0 = DAC event trigger mode Disabled.
+<br>
+1 = DAC event trigger mode Enabled.
+<br>
+</div></td></tr><tr><td>
+[7:5]</td><td>TRGSEL</td><td><div style="word-wrap: break-word;"><b>Trigger Source Selection
+</b><br>
+000 = Software trigger.
+<br>
+001 = External pin DAC0_ST trigger.
+<br>
+010 = Timer 0 trigger.
+<br>
+011 = Timer 1 trigger.
+<br>
+100 = Timer 2 trigger.
+<br>
+101 = Timer 3 trigger.
+<br>
+110 = EPWM0 trigger.
+<br>
+111 = EPWM1 trigger.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>BYPASS</td><td><div style="word-wrap: break-word;"><b>Bypass Buffer Mode
+</b><br>
+0 = Output voltage buffer Enabled.
+<br>
+1 = Output voltage buffer Disabled.
+<br>
+</div></td></tr><tr><td>
+[10]</td><td>LALIGN</td><td><div style="word-wrap: break-word;"><b>DAC Data Left-aligned Enabled Control
+</b><br>
+0 = Right alignment.
+<br>
+1 = Left alignment.
+<br>
+</div></td></tr><tr><td>
+[13:12]</td><td>ETRGSEL</td><td><div style="word-wrap: break-word;"><b>External Pin Trigger Selection
+</b><br>
+00 = Low level trigger.
+<br>
+01 = High level trigger.
+<br>
+10 = Falling edge trigger.
+<br>
+11 = Rising edge trigger.
+<br>
+</div></td></tr><tr><td>
+[15:14]</td><td>BWSEL</td><td><div style="word-wrap: break-word;"><b>DAC Data Bit-width Selection
+</b><br>
+00 = data is 12 bits.
+<br>
+01 = data is 8 bits.
+<br>
+Others = reserved.
+<br>
+</div></td></tr><tr><td>
+[16]</td><td>GRPEN</td><td><div style="word-wrap: break-word;"><b>DAC Group Mode Enable Bit
+</b><br>
+0 = DAC0 and DAC1 are not grouped.
+<br>
+1 = DAC0 and DAC1 are grouped.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var DAC_T::SWTRG
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SWTRG
+</font><br><p> <font size="2">
+Offset: 0x04  DAC Software Trigger Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>SWTRG</td><td><div style="word-wrap: break-word;"><b>Software Trigger
+</b><br>
+0 = Software trigger Disabled.
+<br>
+1 = Software trigger Enabled.
+<br>
+User writes this bit to generate one shot pulse and it is cleared to 0 by hardware automatically; Reading this bit will always get 0.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var DAC_T::DAT
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DAT
+</font><br><p> <font size="2">
+Offset: 0x08  DAC Data Holding Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[15:0]</td><td>DACDAT</td><td><div style="word-wrap: break-word;"><b>DAC 12-bit Holding Data
+</b><br>
+These bits are written by user software which specifies 12-bit conversion data for DAC output
+<br>
+The unused bits (DAC_DAT[3:0] in left-alignment mode and DAC_DAT[15:12] in right alignment mode) are ignored by DAC controller hardware.
+<br>
+12 bit left alignment: user has to load data into DAC_DAT[15:4] bits.
+<br>
+12 bit right alignment: user has to load data into DAC_DAT[11:0] bits.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var DAC_T::DATOUT
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DATOUT
+</font><br><p> <font size="2">
+Offset: 0x0C  DAC Data Output Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[11:0]</td><td>DATOUT</td><td><div style="word-wrap: break-word;"><b>DAC 12-bit Output Data
+</b><br>
+These bits are current digital data for DAC output conversion.
+<br>
+It is loaded from DAC_DAT register and user cannot write it directly.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var DAC_T::STATUS
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">STATUS
+</font><br><p> <font size="2">
+Offset: 0x10  DAC Status Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[0]</td><td>FINISH</td><td><div style="word-wrap: break-word;"><b>DAC Conversion Complete Finish Flag
+</b><br>
+0 = DAC is in conversion state.
+<br>
+1 = DAC conversion finish.
+<br>
+This bit set to 1 when conversion time counter counts to SETTLET
+<br>
+It is cleared to 0 when DAC starts a new conversion
+<br>
+User writes 1 to clear this bit to 0.
+<br>
+</div></td></tr><tr><td>
+[1]</td><td>DMAUDR</td><td><div style="word-wrap: break-word;"><b>DMA Under-run Interrupt Flag
+</b><br>
+0 = No DMA under-run error condition occurred.
+<br>
+1 = DMA under-run error condition occurred.
+<br>
+User writes 1 to clear this bit.
+<br>
+</div></td></tr><tr><td>
+[8]</td><td>BUSY</td><td><div style="word-wrap: break-word;"><b>DAC Busy Flag (Read Only)
+</b><br>
+0 = DAC is ready for next conversion.
+<br>
+1 = DAC is busy in conversion.
+<br>
+This is read only bit.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+@var DAC_T::TCTL
+
+\htmlonly
+
+<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">TCTL
+</font><br><p> <font size="2">
+Offset: 0x14  DAC Timing Control Register
+</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
+<tr><td>
+[9:0]</td><td>SETTLET</td><td><div style="word-wrap: break-word;"><b>DAC Output Settling Time
+</b><br>
+User software needs to write appropriate value to these bits to meet DAC conversion settling time base on PCLK (APB clock) speed.
+<br>
+For example, DAC controller clock speed is 80MHz and DAC conversion settling time is 1 us, SETTLETvalue must be greater than 0x50.
+<br>
+SELTTLET = DAC controller clock speed x settling time.
+<br>
+</div></td></tr></tbody></table></html>
+
+\endhtmlonly
+
+
+
+ */
     __IO uint32_t CTL;                   /*!< [0x0000] DAC Control Register                                             */
     __IO uint32_t SWTRG;                 /*!< [0x0004] DAC Software Trigger Control Register                            */
     __IO uint32_t DAT;                   /*!< [0x0008] DAC Data Holding Register                                        */

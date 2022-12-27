@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>M480 BSP: StdDriver/src/sys.c Source File</title>
+<title>M480 BSP: C:/BACKUP/M4/M480/temp/bsp/Library/StdDriver/src/sys.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -19,7 +19,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign">
-   <div id="projectname">M480 BSP<span id="projectnumber">&#160;V3.05.003</span>
+   <div id="projectname">M480 BSP<span id="projectnumber">&#160;V3.05.004</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -41,7 +41,7 @@ $(function() {
 <div id="main-nav"></div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_0d398eaf8b2db165a9197a6619ec9f0e.html">StdDriver</a></li><li class="navelem"><a class="el" href="dir_3abedc03644d33bc69016fb8a5546004.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_28e1bb8382970ac72e8ae3b23df4a891.html">temp</a></li><li class="navelem"><a class="el" href="dir_ac1a90b6ef5aa03e556f89dab089c58a.html">bsp</a></li><li class="navelem"><a class="el" href="dir_1e673998d2b6c3157fdac073e6ceab22.html">Library</a></li><li class="navelem"><a class="el" href="dir_4c1fa96f12ce7db653e32ac1d5f8c3d9.html">StdDriver</a></li><li class="navelem"><a class="el" href="dir_08f8c0a7d63658875787abd4a2f421b8.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -98,11 +98,11 @@ $(function() {
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    <span class="comment">/* Generate reset signal to the corresponding module */</span></div>
 <div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    u32tmpVal = (1UL &lt;&lt; (u32ModuleIndex &amp; 0x00ffffffUL));</div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    u32tmpAddr = (uint32_t)&amp;<a class="code hl_define" href="group___p_e_r_i_p_h_e_r_a_l___d_e_c_l_a_r_a_t_i_o_n.html#gae3d9f52a1a315303ad04f0576bd42a25">SYS</a>-&gt;IPRST0 + ((u32ModuleIndex &gt;&gt; 24UL));</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    *(uint32_t *)u32tmpAddr |= u32tmpVal;</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    *(<span class="keyword">volatile</span> uint32_t *)u32tmpAddr |= u32tmpVal;</div>
 <div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
 <div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    <span class="comment">/* Release corresponding module from reset state */</span></div>
 <div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    u32tmpVal = ~(1UL &lt;&lt; (u32ModuleIndex &amp; 0x00ffffffUL));</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    *(uint32_t *)u32tmpAddr &amp;= u32tmpVal;</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    *(<span class="keyword">volatile</span> uint32_t *)u32tmpAddr &amp;= u32tmpVal;</div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>}</div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno"><a class="line" href="group___s_y_s___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga790f536ad44ceaec7e95f939d83137b9">  216</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group___s_y_s___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga790f536ad44ceaec7e95f939d83137b9">SYS_EnableBOD</a>(int32_t i32Mode, uint32_t u32BODLevel)</div>
@@ -164,7 +164,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 3 2022 17:38:59 for M480 BSP by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Tue Dec 20 2022 11:01:04 for M480 BSP by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

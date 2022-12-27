@@ -19,7 +19,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign">
-   <div id="projectname">M480 BSP<span id="projectnumber">&#160;V3.05.003</span>
+   <div id="projectname">M480 BSP<span id="projectnumber">&#160;V3.05.004</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -60,10 +60,10 @@ Macros</h2></td></tr>
 <tr class="memdesc:gaee35dcfd2ff2993e93477effcf1da0d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable DAC data right-aligned.  <a href="group___d_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaee35dcfd2ff2993e93477effcf1da0d9">More...</a><br /></td></tr>
 <tr class="separator:gaee35dcfd2ff2993e93477effcf1da0d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaca0255f15be70b25d700a59dc7d6d6a7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaca0255f15be70b25d700a59dc7d6d6a7">DAC_ENABLE_BYPASS_BUFFER</a>(dac)</td></tr>
-<tr class="memdesc:gaca0255f15be70b25d700a59dc7d6d6a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable output voltage buffer.  <a href="group___d_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaca0255f15be70b25d700a59dc7d6d6a7">More...</a><br /></td></tr>
+<tr class="memdesc:gaca0255f15be70b25d700a59dc7d6d6a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable bypass voltage output buffer mode.  <a href="group___d_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gaca0255f15be70b25d700a59dc7d6d6a7">More...</a><br /></td></tr>
 <tr class="separator:gaca0255f15be70b25d700a59dc7d6d6a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac00a38d8c3d46512c03824760f8bde75"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gac00a38d8c3d46512c03824760f8bde75">DAC_DISABLE_BYPASS_BUFFER</a>(dac)</td></tr>
-<tr class="memdesc:gac00a38d8c3d46512c03824760f8bde75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable output voltage buffer.  <a href="group___d_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gac00a38d8c3d46512c03824760f8bde75">More...</a><br /></td></tr>
+<tr class="memdesc:gac00a38d8c3d46512c03824760f8bde75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable bypass voltage output buffer mode.  <a href="group___d_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gac00a38d8c3d46512c03824760f8bde75">More...</a><br /></td></tr>
 <tr class="separator:gac00a38d8c3d46512c03824760f8bde75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga184b95138368f2ce7571d43a3e7caebc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga184b95138368f2ce7571d43a3e7caebc">DAC_ENABLE_INT</a>(dac,  u32Ch)</td></tr>
 <tr class="memdesc:ga184b95138368f2ce7571d43a3e7caebc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the interrupt.  <a href="group___d_a_c___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga184b95138368f2ce7571d43a3e7caebc">More...</a><br /></td></tr>
@@ -151,7 +151,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>User writes DMAUDR bit (DAC_STATUS[1]) to clear DMA under-run flag. </p>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00234">234</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00233">233</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -192,7 +192,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>User writes FINISH bit (DAC_STATUS[0]) to clear DAC conversion complete finish flag. </p>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00225">225</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00224">224</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -212,7 +212,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Disable output voltage buffer. </p>
+<p>Disable bypass voltage output buffer mode. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">dac</td><td>Base address of DAC module. </td></tr>
@@ -220,9 +220,9 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
-<p>This macro is used to disable output voltage buffer. </p>
+<p>This will make DAC output through the voltage output buffer. </p>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00105">105</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00104">104</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -252,7 +252,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to disable DMA under-run interrupt. </p>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00143">143</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00142">142</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -281,7 +281,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00251">251</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00250">250</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -322,7 +322,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to disable DAC interrupt. </p>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00125">125</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00124">124</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -352,7 +352,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to disable DMA mode. </p>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00161">161</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00160">160</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -372,7 +372,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Enable output voltage buffer. </p>
+<p>Enable bypass voltage output buffer mode. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">dac</td><td>Base address of DAC module. </td></tr>
@@ -380,9 +380,9 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
-<p>The DAC integrates a voltage output buffer that can be used to reduce output impedance and drive external loads directly without having to add an external operational amplifier. </p>
+<p>This will make DAC output bypass the voltage output buffer. </p>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00096">96</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00095">95</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -412,7 +412,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to enable DMA under-run interrupt. </p>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00134">134</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00133">133</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -441,7 +441,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00243">243</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00242">242</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -482,7 +482,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This macro is used to enable DAC interrupt. </p>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00115">115</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00114">114</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -542,7 +542,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>DAC DMA request is generated when a hardware trigger event occurs while DMAEN (DAC_CTL[2]) is set. </p>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00152">152</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00151">151</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -608,7 +608,7 @@ Functions</h2></td></tr>
 </dl>
 <p>This macro is used to read DMAUDR bit (DAC_STATUS[1]) to get DMA under-run state. </p>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00215">215</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00214">214</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -655,7 +655,7 @@ Functions</h2></td></tr>
 </dl>
 <p>This macro is used to read FINISH bit (DAC_STATUS[0]) to get DAC conversion complete finish flag. </p>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00205">205</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00204">204</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -702,7 +702,7 @@ Functions</h2></td></tr>
 </dl>
 <p>This macro is used to read BUSY bit (DAC_STATUS[8]) to get busy state. </p>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00194">194</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00193">193</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -743,7 +743,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Return DAC 12-bit holding data.</dd></dl>
 <p>This macro is used to read DAC_DAT register. </p>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00183">183</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00182">182</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -821,7 +821,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>12 bit left alignment: user has to load data into DAC_DAT[15:4] bits. 12 bit right alignment: user has to load data into DAC_DAT[11:0] bits. </p>
 
-<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00173">173</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="dac_8h_source.html#l00172">172</a> of file <a class="el" href="dac_8h_source.html">dac.h</a>.</p>
 
 </div>
 </div>
@@ -973,7 +973,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 3 2022 17:39:09 for M480 BSP by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Tue Dec 20 2022 11:01:10 for M480 BSP by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>
