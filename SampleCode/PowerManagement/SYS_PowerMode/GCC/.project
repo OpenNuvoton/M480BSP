@@ -54,11 +54,6 @@
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/main.c</locationURI>
 		</link>
-		<link>
-			<name>Library/Library/wdt.c</name>
-			<type>1</type>
-			<location>C:/bsp_tmp_m480/Library/StdDriver/src/wdt.c</location>
-		</link>
 	</linkedResources>
 	<filteredResources>
 		<filter>
@@ -113,6 +108,15 @@
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-false-false-timer.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1504675175354</id>
+			<name>Library/Library</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-wdt.c</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>
