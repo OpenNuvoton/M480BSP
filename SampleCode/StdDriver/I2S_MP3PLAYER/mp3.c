@@ -50,6 +50,8 @@ FILINFO         Finfo;
 size_t          ReadSize;
 size_t          Remaining;
 size_t          ReturnSize;
+FSIZE_t         id3v2Size = 0;
+FSIZE_t         id3v1Size = 128;
 
 extern void NAU88L25_Reset(void);
 // I2S PCM buffer x2
@@ -61,6 +63,56 @@ volatile uint8_t aPCMBuffer_Full[2]= {0,0};
 // audio information structure
 struct AudioInfoObject audioInfo;
 extern volatile uint8_t u8PCMBuffer_Playing;
+
+/**
+ * MP3 frame can be attached with either ID3v1 or v2, or both
+ * [ID3v2][Frame][Frame]...[Frame][ID3v1]
+ * ID3v2 : ['ID3' + ...], total 10 bytes header + tag frame(M bytes)
+ * ID3v1 : ['TAG' + ...], total 128 bytes
+ * Frame : [4 bytes header + body(N bytes)]
+ */
+FRESULT MP3_id3v2_offload(void)
+{
+    FRESULT res;
+
+    f_lseek(&mp3FileObject, 0);
+    res = f_read(&mp3FileObject, (char *)(&MadInputBuffer[0]), 10, &ReturnSize);
+
+    if(res == FR_OK)
+    {
+        // Check header exist
+        if(ReturnSize >= 10 && !memcmp(MadInputBuffer, "ID3", 3) && !(MadInputBuffer[5] & 15) ||
+            (MadInputBuffer[6] & 0x80) || (MadInputBuffer[7] & 0x80) || (MadInputBuffer[8] & 0x80) || (MadInputBuffer[9] & 0x80))
+        {
+            id3v2Size = (((MadInputBuffer[6] & 0x7f) << 21) | ((MadInputBuffer[7] & 0x7f) << 14) |
+                            ((MadInputBuffer[8] & 0x7f) << 7) | (MadInputBuffer[9] & 0x7f)) + 10;
+            f_lseek(&mp3FileObject, id3v2Size);
+        }
+    }
+
+    return res;
+}
+
+FSIZE_t MP3_id3v1_offload(FSIZE_t filesize)
+{
+    FRESULT res;
+
+    f_lseek(&mp3FileObject, audioInfo.playFileSize - id3v1Size);
+    res = f_read(&mp3FileObject, (char *)(&MadInputBuffer[0]), id3v1Size, &ReturnSize);
+
+    if(res == FR_OK)
+    {
+        // Check header exist
+        if(ReturnSize >= id3v1Size && !memcmp(MadInputBuffer, "TAG", 3))
+            filesize -= id3v1Size;
+        else
+            id3v1Size = 0;
+    }
+    else
+        filesize = 0;
+
+    return filesize;
+}
 
 // Parse MP3 header and get some informations
 void MP3_ParseHeaderInfo(uint8_t *pFileName)
@@ -75,6 +127,8 @@ void MP3_ParseHeaderInfo(uint8_t *pFileName)
         f_stat((void *)pFileName, &Finfo);
         audioInfo.playFileSize = Finfo.fsize;
 
+        MP3_id3v2_offload();
+
         while(1)
         {
             res = f_read(&mp3FileObject, (char *)(&MadInputBuffer[0]), FILE_IO_BUFFER_SIZE, &ReturnSize);
@@ -84,7 +138,7 @@ void MP3_ParseHeaderInfo(uint8_t *pFileName)
             if (audioInfo.mp3SampleRate != 0)
                 // Got the header and sampling rate
                 break;
-        
+
             // ID3 may too long, try to parse following data
             // but only forward file point to half of buffer to prevent the header is
             // just right at the boundry of buffer
@@ -92,7 +146,7 @@ void MP3_ParseHeaderInfo(uint8_t *pFileName)
             if (fptr >= audioInfo.playFileSize)
                 // Fail to find header
                 break;
-                
+
             f_lseek(&mp3FileObject, fptr);
         }
     }
@@ -101,6 +155,8 @@ void MP3_ParseHeaderInfo(uint8_t *pFileName)
         //printf("Open File Error\r\n");
         return;
     }
+    MP3_id3v1_offload(audioInfo.playFileSize);
+
     f_close(&mp3FileObject);
 
     printf("====[MP3 Info]======\r\n");
@@ -172,6 +228,9 @@ void MP3Player(void)
         //printf("Open file error \r\n");
         return;
     }
+
+    mp3FileObject.obj.objsize -= id3v1Size;
+    f_lseek(&mp3FileObject, id3v2Size);
 
     /* Reset NAU88L25 codec */
     NAU88L25_Reset();
