@@ -111,7 +111,7 @@ static void get_max_lun(MSC_T *msc)
 {
     UDEV_T    *udev = msc->iface->udev;
     uint32_t  read_len;
-    uint8_t   buff[2];
+    uint8_t   buff[2] = { 0, 0 };
     int       ret;
 
     msc->max_lun = 0;
