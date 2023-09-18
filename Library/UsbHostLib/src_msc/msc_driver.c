@@ -120,7 +120,7 @@ static void get_max_lun(MSC_T *msc)
     /* Issue GET MAXLUN MSC class command to get the maximum lun number                   */
     /*------------------------------------------------------------------------------------*/
     ret = usbh_ctrl_xfer(udev, REQ_TYPE_IN | REQ_TYPE_CLASS_DEV | REQ_TYPE_TO_IFACE,
-                         0xFE, 0, 0, msc->iface->if_num, buff, &read_len, 200);
+                         0xFE, 0, msc->iface->if_num, 1, buff, &read_len, 200);
     if (ret < 0)
     {
         msc_debug_msg("Get Max Lun command failed! Assign 0...\n");
