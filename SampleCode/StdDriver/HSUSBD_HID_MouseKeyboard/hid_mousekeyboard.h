@@ -1,8 +1,9 @@
 /***************************************************************************//**
- * @file     hid_mouse.h
- * @brief    M480 USB driver header file
+ * @file     hid_mousekeyboard.h
  * @version  2.0.0
+ * @brief    HSUSBD HID mouse and keyboard header file.
  *
+ * @copyright SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __USBD_HID_H__
@@ -33,6 +34,15 @@
 /*!<USB HID Protocol Type */
 #define HID_BOOT_PROTOCOL       0x00
 #define HID_REPORT_PROTOCOL     0x01
+
+/*!<USB HID Keyboard Output Report */
+#define HID_LED_NumLock         0x01
+#define HID_LED_CapsLock        0x02
+#define HID_LED_ScrollLock      0x04
+#define HID_LED_Compose         0x08
+#define HID_LED_Kana            0x10
+#define HID_LED_Constatnt       0xE0
+#define HID_LED_ALL             0xFF
 
 /*-------------------------------------------------------------*/
 /* Define EP maximum packet size */

@@ -3,6 +3,7 @@
  * @version  V1.00
  * @brief    Simulate an USB mouse and draws circle on the screen
  *
+ * @copyright SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
@@ -59,17 +60,13 @@ void SYS_Init(void)
 
 int32_t main (void)
 {
-    /* Init System, IP clock and multi-function I/O
-       In the end of SYS_Init() will issue SYS_LockReg()
-       to lock protected register. If user want to write
-       protected register, please issue SYS_UnlockReg()
-       to unlock protected register if necessary */
+    /* Init System, peripheral clock and multi-function I/O */
     SYS_Init();
 
     /* Init UART to 115200-8n1 for print message */
     UART_Open(UART0, 115200);
 
-    printf("\nM480 HSUSBD HID\n");
+    printf("NuMicro HSUSBD HID\n");
 
     HSUSBD_Open(&gsHSInfo, HID_ClassRequest, NULL);
     HSUSBD_SetVendorRequest(HID_VendorRequest);
@@ -77,7 +74,7 @@ int32_t main (void)
     /* Endpoint configuration */
     HID_Init();
 
-    /* Enable USBD interrupt */
+    /* Enable HSUSBD interrupt */
     NVIC_EnableIRQ(USBD20_IRQn);
 
     /* Start transaction */

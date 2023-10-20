@@ -3,6 +3,7 @@
  * @brief    M480 series USBD driver source file
  * @version  2.0.0
  *
+ * SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 /*!<Includes */
@@ -43,7 +44,7 @@ uint8_t HID_KeyboardReportDescriptor[] =
     0x19, 0x00,         /* Usage Minimum(0x0) */
     0x29, 0x65,         /* Usage Maximum(0x65) */
     0x81, 0x00,         /* Input (Data) */
-    0xC0,               /* End Collection */
+    0xC0                /* End Collection */
 };
 
 
@@ -157,8 +158,16 @@ uint8_t gu8BOSDescriptor[] =
     /* Device Capability */
     LEN_BOSCAP,     /* bLength */
     DESC_CAPABILITY,/* bDescriptorType */
-    CAP_USB20_EXT,  /* bDevCapabilityType */
+    CAP_USB20_EXT,  /* bDevCapabilityType, 0x02 is USB 2.0 Extension */
     0x02, 0x00, 0x00, 0x00  /* bmAttributes */
+    /* bit 0 : Reserved. Must 0. */
+    /* bit 1 : 1 to support LPM. */
+    /* bit 2 : 1 to support BSL & Alternat HIRD. */
+    /* bit 3 : 1 to recommend Baseline BESL. */
+    /* bit 4 : 1 to recommand Deep BESL. */
+    /* bit 11:8 : Recommend Baseline BESL value. Ignore by bit3 is zero. */
+    /* bit 15:12 : Recommend Deep BESL value. Ignore by bit4 is zero. */
+    /* bit 31:16 : Reserved. Must 0. */
 };
 
 uint8_t *gpu8UsbString[4] =
@@ -166,28 +175,28 @@ uint8_t *gpu8UsbString[4] =
     gu8StringLang,
     gu8VendorStringDesc,
     gu8ProductStringDesc,
-    NULL,
+    NULL
 };
 
 uint8_t *gu8UsbHidReport[3] =
 {
     HID_KeyboardReportDescriptor,
     NULL,
-    NULL,
+    NULL
 };
 
 uint32_t gu32UsbHidReportLen[3] =
 {
     sizeof(HID_KeyboardReportDescriptor),
     0,
-    0,
+    0
 };
 
 uint32_t gu32ConfigHidDescIdx[3] =
 {
     (LEN_CONFIG+LEN_INTERFACE),
     0,
-    0,
+    0
 };
 
 const S_USBD_INFO_T gsInfo =

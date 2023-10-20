@@ -15,6 +15,9 @@
 uint32_t volatile g_u32OutToggle = 0;
 uint8_t volatile g_u8EP5Ready;
 
+uint8_t Led_Status[8];
+uint32_t LED_SATUS = 0;
+
 void USBD_IRQHandler(void)
 {
     uint32_t u32IntSts = USBD_GET_INT_FLAG();
@@ -305,7 +308,8 @@ void HID_ClassRequest(void)
             {
                 /* Request Type = Output */
                 USBD_SET_DATA1(EP1);
-                USBD_SET_PAYLOAD_LEN(EP1, buf[6]);
+                /* Data stage */
+                USBD_PrepareCtrlOut(Led_Status, buf[6]);
 
                 /* Trigger for HID Int in */
                 USBD_SET_PAYLOAD_LEN(EP5, 0);
@@ -340,7 +344,7 @@ void VCOM_LineCoding(uint8_t port)
 
     if (port == 0)
     {
-        NVIC_DisableIRQ(UART0_IRQn);
+        NVIC_DisableIRQ(UART1_IRQn);
         // Reset software FIFO
         comRbytes = 0;
         comRhead = 0;
@@ -351,15 +355,15 @@ void VCOM_LineCoding(uint8_t port)
         comTtail = 0;
 
         // Reset hardware FIFO
-        UART0->FIFO = 0x3;
+        UART1->FIFO = 0x3;
 
         // Set baudrate
         u32Baud_Div = UART_BAUD_MODE0_DIVIDER(__HXT, gLineCoding.u32DTERate);
 
         if(u32Baud_Div > 0xFFFF)
-            UART0->BAUD = (UART_BAUD_MODE0 | UART_BAUD_MODE0_DIVIDER(__HXT, gLineCoding.u32DTERate));
+            UART1->BAUD = (UART_BAUD_MODE0 | UART_BAUD_MODE0_DIVIDER(__HXT, gLineCoding.u32DTERate));
         else
-            UART0->BAUD = (UART_BAUD_MODE2 | u32Baud_Div);
+            UART1->BAUD = (UART_BAUD_MODE2 | u32Baud_Div);
 
         // Set parity
         if(gLineCoding.u8ParityType == 0)
@@ -394,10 +398,10 @@ void VCOM_LineCoding(uint8_t port)
         if(gLineCoding.u8CharFormat > 0)
             u32Reg |= 0x4; // 2 or 1.5 bits
 
-        UART0->LINE = u32Reg;
+        UART1->LINE = u32Reg;
 
         // Re-enable UART interrupt
-        NVIC_EnableIRQ(UART0_IRQn);
+        NVIC_EnableIRQ(UART1_IRQn);
     }
 }
 
@@ -412,10 +416,10 @@ void HID_UpdateKbData(void)
     {
         buf = (uint8_t *)(USBD_BUF_BASE + USBD_GET_EP_BUF_ADDR(EP5));
 
-        /* If GPB15 = 0, just report it is key 'a' */
-        key = (PB->PIN & (1 << 15)) ? 0 : 1;
+        /* If GPB15 = 1, just report it is key 'a' */
+        key = (PB->PIN & (1 << 15)) ? 1 : 0;
 
-        if(key == 0)
+        if (key == 0)
         {
             for(i = 0; i < 8; i++)
             {
@@ -434,6 +438,37 @@ void HID_UpdateKbData(void)
             buf[2] = 0x04; /* Key A */
             USBD_SET_PAYLOAD_LEN(EP5, 8);
         }
+    }
+    if(Led_Status[0] != LED_SATUS)
+    {
+        if((Led_Status[0] & HID_LED_ALL) != (LED_SATUS & HID_LED_ALL))
+        {
+            if(Led_Status[0] & HID_LED_NumLock)
+                printf("NmLK  ON, ");
+            else
+                printf("NmLK OFF, ");
+
+            if(Led_Status[0] & HID_LED_CapsLock)
+                printf("CapsLock  ON, ");
+            else
+                printf("CapsLock OFF, ");
+
+            if(Led_Status[0] & HID_LED_ScrollLock)
+                printf("ScrollLock  ON, ");
+            else
+                printf("ScrollLock OFF, ");
+            
+            if(Led_Status[0] & HID_LED_Compose)
+                printf("Compose  ON, ");
+            else
+                printf("Compose OFF, ");
+
+            if(Led_Status[0] & HID_LED_Kana)
+                printf("Kana  ON\n");
+            else
+                printf("Kana OFF\n");
+        }
+        LED_SATUS = Led_Status[0];
     }
 }
 

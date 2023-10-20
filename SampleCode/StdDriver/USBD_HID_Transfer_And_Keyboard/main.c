@@ -95,6 +95,7 @@ int32_t main (void)
     UART0_Init();
 
     printf("NuMicro USB composite device Sample.(HID Transfer and Keyboard)\n");
+    printf("If PB.15 = 1, just report it is key 'a'.\n");
 
     USBD_Open(&gsInfo, HID_ClassRequest, NULL);
 

@@ -146,7 +146,7 @@ int32_t main (void)
     /* Endpoint configuration */
     UAC_Init();
     NVIC_EnableIRQ(USBD20_IRQn);
-    HSUSBD_Start();
+    HSUSBD_CLR_SE0();
     while(1)
     {
         if (g_usbd_rxflag)

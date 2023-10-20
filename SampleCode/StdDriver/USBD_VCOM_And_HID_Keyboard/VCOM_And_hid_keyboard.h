@@ -30,6 +30,15 @@
 #define HID_RPT_TYPE_OUTPUT     0x02
 #define HID_RPT_TYPE_FEATURE    0x03
 
+/*!<USB HID HID LED */
+#define HID_LED_NumLock         0x01
+#define HID_LED_CapsLock        0x02
+#define HID_LED_ScrollLock      0x04
+#define HID_LED_Compose         0x08
+#define HID_LED_Kana            0x10
+#define HID_LED_Constatnt       0xE0
+#define HID_LED_ALL             0xFF
+
 /*!<Define CDC Class Specific Request */
 #define SET_LINE_CODE           0x20
 #define GET_LINE_CODE           0x21

@@ -1,13 +1,11 @@
 /**************************************************************************//**
  * @file     descriptors.c
  * @version  V1.00
- * @brief    M480 HSUSBD driver source file
+ * @brief    HSUSBD descriptor.
  *
+ * @copyright SPDX-License-Identifier: Apache-2.0
  * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
-#ifndef __DESCRIPTORS_C__
-#define __DESCRIPTORS_C__
-
 /*!<Includes */
 #include "NuMicro.h"
 #include "hid_mousekeyboard.h"
@@ -47,7 +45,7 @@ uint8_t HID_MouseReportDescriptor[] __attribute__((aligned(4))) =
     0x95, 0x03,             /* Report Count(0x3) */
     0x81, 0x06,             /* Input(1 byte wheel) */
     0xC0,               /* End Collection */
-    0xC0,           /* End Collection */
+    0xC0            /* End Collection */
 };
 
 
@@ -90,7 +88,7 @@ uint8_t HID_KeyboardReportDescriptor[] __attribute__((aligned(4))) =
     0x19, 0x00,         /* Usage Minimum(0x0) */
     0x29, 0x65,         /* Usage Maximum(0x65) */
     0x81, 0x00,         /* Input (Data) */
-    0xC0,           /* End Collection */
+    0xC0            /* End Collection */
 };
 
 
@@ -533,14 +531,14 @@ uint8_t *gpu8UsbString[4] =
     gu8StringLang,
     gu8VendorStringDesc,
     gu8ProductStringDesc,
-    NULL,
+    NULL
 };
 
 uint8_t *gu8UsbHidReport[3] =
 {
     HID_MouseReportDescriptor,
     HID_KeyboardReportDescriptor,
-    NULL,
+    NULL
 };
 
 uint32_t gu32UsbHidReportLen[3] =
@@ -554,7 +552,7 @@ uint32_t gu32ConfigHidDescIdx[3] =
 {
     (LEN_CONFIG+LEN_INTERFACE),
     (sizeof(gu8ConfigDescriptor) - LEN_HID - LEN_ENDPOINT),
-    0,
+    0
 };
 
 S_HSUSBD_INFO_T gsHSInfo =
@@ -571,5 +569,3 @@ S_HSUSBD_INFO_T gsHSInfo =
     gu32ConfigHidDescIdx,
 };
 
-
-#endif  /* __DESCRIPTORS_C__ */
