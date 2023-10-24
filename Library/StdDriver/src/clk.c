@@ -810,8 +810,12 @@ uint32_t CLK_EnablePLL(uint32_t u32PllClkSrc, uint32_t u32PllFreq)
         u32CLK_SRC = CLK_PLLCTL_PLLSRC_HXT;
         u32PllSrcClk = __HXT;
 
-        /* u32NR start from 2 */
-        u32NR = 2UL;
+        /* Check HXT range. Set u32NR start value */
+        /* Constraint 1: 4MHz <= FREF <= 8MHz */
+        if((u32PllSrcClk >= 4000000UL) && (u32PllSrcClk <= 8000000UL))
+            u32NR = 1UL;
+        else
+            u32NR = 2UL;
     }
 
     /* PLL source clock is from HIRC */
@@ -864,7 +868,7 @@ uint32_t CLK_EnablePLL(uint32_t u32PllClkSrc, uint32_t u32PllFreq)
                 {
                 }
 
-                for(u32NR = 2UL; u32NR <= 32UL; u32NR++)
+                for(u32NR = 1UL; u32NR <= 32UL; u32NR++)
                 {
                     /* Break when get good results */
                     if (u32Min == 0UL)
