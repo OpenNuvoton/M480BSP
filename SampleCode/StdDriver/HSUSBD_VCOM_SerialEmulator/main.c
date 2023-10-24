@@ -18,7 +18,7 @@ uint16_t gCtrlSignal = 0;     /* BIT0: DTR(Data Terminal Ready) , BIT1: RTS(Requ
 
 /*--------------------------------------------------------------------------*/
 #define RXBUFSIZE           512 /* RX buffer size */
-#define TXBUFSIZE           512 /* RX buffer size */
+#define TXBUFSIZE           512 /* TX buffer size */
 
 #define TX_FIFO_SIZE        16  /* TX Hardware FIFO size */
 
@@ -31,13 +31,13 @@ uint16_t gCtrlSignal = 0;     /* BIT0: DTR(Data Terminal Ready) , BIT1: RTS(Requ
 #pragma data_alignment=4
 volatile uint8_t comRbuf[RXBUFSIZE];
 volatile uint8_t comTbuf[TXBUFSIZE];
-uint8_t gRxBuf[64] = {0};
-uint8_t gUsbRxBuf[64] = {0};
+uint8_t gRxBuf[RXBUFSIZE] = {0};
+uint8_t gUsbRxBuf[RXBUFSIZE] = {0};
 #else
 volatile uint8_t comRbuf[RXBUFSIZE] __attribute__((aligned(4)));
 volatile uint8_t comTbuf[TXBUFSIZE]__attribute__((aligned(4)));
-uint8_t gRxBuf[64] __attribute__((aligned(4))) = {0};
-uint8_t gUsbRxBuf[64] __attribute__((aligned(4))) = {0};
+uint8_t gRxBuf[RXBUFSIZE] __attribute__((aligned(4))) = {0};
+uint8_t gUsbRxBuf[RXBUFSIZE] __attribute__((aligned(4))) = {0};
 #endif
 
 
