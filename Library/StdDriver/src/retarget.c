@@ -601,7 +601,7 @@ int kbhit(void)
 #ifndef DISABLE_UART
     return !((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0);
 #else
-    return 0;
+    return 1;
 #endif
 }
 /**
