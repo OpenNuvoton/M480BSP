@@ -18,6 +18,7 @@ uint8_t g_au8TxData[3];
 volatile uint8_t g_u8RxData;
 volatile uint8_t g_u8DataLen;
 volatile uint8_t g_u8EndFlag = 0;
+volatile uint8_t g_u8TimeoutFlag = 0;
 
 typedef void (*I2C_FUNC)(uint32_t u32Status);
 
@@ -36,6 +37,7 @@ void I2C0_IRQHandler(void)
     {
         /* Clear I2C0 Timeout Flag */
         I2C_ClearTimeoutFlag(I2C0);
+        g_u8TimeoutFlag = 1;
     }
     else
     {
@@ -207,6 +209,8 @@ int32_t Read_Write_SLAVE(uint8_t slvaddr)
         /* I2C function to write data to slave */
         s_I2C0HandlerFn = (I2C_FUNC)I2C_MasterTx;
 
+        g_u8TimeoutFlag = 0;
+
         /* I2C as master sends START signal */
         I2C_SET_CONTROL_REG(I2C0, I2C_CTL_STA);
 
@@ -223,7 +227,17 @@ int32_t Read_Write_SLAVE(uint8_t slvaddr)
         I2C_SET_CONTROL_REG(I2C0, I2C_CTL_STA);
 
         /* Wait I2C Rx Finish */
-        while (g_u8EndFlag == 0);
+        do
+        {
+            if(g_u8TimeoutFlag)
+            {
+                printf(" MasterTx time out !!\n");
+                SYS->IPRST1 |= SYS_IPRST1_I2C0RST_Msk;
+                SYS->IPRST1 = 0;
+                printf(" Reset I2C and exit this demo !!");
+                return -1;
+            }
+        }while (g_u8EndFlag == 0);
 
         /* Compare data */
         if (g_u8RxData != g_au8TxData[2])
@@ -258,6 +272,10 @@ int32_t main (void)
 
     /* Init I2C0 */
     I2C0_Init();
+
+#ifdef I2C_TIMEOUT_EN
+    I2C_EnableTimeout(I2C0, 1);
+#endif
 
     /* Access Slave with no address mask */
     printf("\n");
