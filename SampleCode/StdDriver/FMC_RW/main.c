@@ -84,6 +84,8 @@ static int  set_data_flash_base(uint32_t u32DFBA)
     au32Config[0] &= ~0x1;             /* Clear CONFIG0 bit 0 to enable Data Flash */
     au32Config[1] = u32DFBA;           /* Give Data Flash base address  */
 
+	FMC_Erase(FMC_CONFIG_BASE);
+
     /* Update User Configuration settings. */
     if (FMC_WriteConfig(au32Config, 2) < 0)
         return -1;                     /* failed to write user configuration */
