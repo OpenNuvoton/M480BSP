@@ -91,7 +91,8 @@ static uint8_t g_au8ModePage_1C[8] =
     0x1C, 0x06, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00
 };
 
-
+uint32_t volatile intcnt = 0;
+uint32_t volatile preintcnt = 0;
 void USBD_IRQHandler(void)
 {
     uint32_t u32IntSts = USBD_GET_INT_FLAG();
@@ -195,12 +196,14 @@ void USBD_IRQHandler(void)
 
         if(u32IntSts & USBD_INTSTS_EP3)
         {
-            while(USBD_GET_INT_FLAG() & USBD_INTSTS_EP3) {
+            intcnt++;
+            while (USBD_GET_INT_FLAG() & USBD_INTSTS_EP3) {
                 /* Clear event flag */
                 USBD_CLR_INT_FLAG(USBD_INTSTS_EP3);
             }
             // Bulk OUT
             EP3_Handler();
+            preintcnt = intcnt;
         }
 
         if(u32IntSts & USBD_INTSTS_EP4)
@@ -247,6 +250,10 @@ void EP3_Handler(void)
     }
     else
     {
+        /* M483KG: make sure new interrupt, not previous interrupt */
+        if (preintcnt == intcnt)
+            return;
+
         g_u8EP3Ready = 1;
         g_u32OutToggle = USBD->EPSTS0 & USBD_EPSTS0_EPSTS3_Msk;
         g_u32OutSkip = 0;
