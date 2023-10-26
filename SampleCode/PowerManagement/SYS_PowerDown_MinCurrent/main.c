@@ -26,13 +26,6 @@
 #define SET_PDMSEL       6
 
 /*
-// <o0> LVR
-//      <0=> Disable
-//      <1=> Enable
-*/
-#define SET_LVR       0
-
-/*
 // <o0> POR
 //      <0=> Disable
 //      <1=> Enable
@@ -102,18 +95,6 @@ void PowerDownFunction(void)
 
     /* Enter to Power-down mode */
     CLK_PowerDown();
-}
-
-void LvrSetting(void)
-{
-    if(SET_LVR == 0)
-    {
-        SYS_DISABLE_LVR();
-    }
-    else
-    {
-        SYS_ENABLE_LVR();
-    }
 }
 
 void PorSetting(void)
@@ -428,16 +409,15 @@ int32_t main(void)
     printf("| Operating sequence                                                |\n");
     printf("|  1. Remove all continuous load, e.g. LED.                         |\n");
     printf("|  2. Configure all GPIO as Quasi-bidirectional Mode                |\n");
-    printf("|  3. Disable LVR                                                   |\n");
-    printf("|  4. Disable analog function, e.g. POR module                      |\n");
-    printf("|  5. Disable unused clock, e.g. LIRC                               |\n");
-    printf("|  6. Disable SRAM retention for SPD mode                           |\n");
-    printf("|  7. Enter to Power-Down                                           |\n");
-    printf("|  8. Wait for PC.0 rising-edge interrupt event to wake-up the MCU  |\n");
+    printf("|  3. Disable analog function, e.g. POR module                      |\n");
+    printf("|  4. Disable unused clock, e.g. LIRC                               |\n");
+    printf("|  5. Disable SRAM retention for SPD mode                           |\n");
+    printf("|  6. Enter to Power-Down                                           |\n");
+    printf("|  7. Wait for PC.0 rising-edge interrupt event to wake-up the MCU  |\n");
     printf("+-------------------------------------------------------------------+\n\n");
 
     /*
-        To measure Power-down current, remove component, e.g. NuMaker-M467HJ board,
+        To measure Power-down current, remove component, e.g. NuMaker-M487 board,
         Nu-Link2-Me, UP1 LDO, UP2 LDO, U2 HyperRAM, U7 Ethernet PHY and U9 Audio codec.
     */
 
@@ -453,10 +433,6 @@ int32_t main(void)
     GPIO_SetMode(PF, GPIO_P0_TO_P15, GPIO_MODE_QUASI);
     GPIO_SetMode(PG, GPIO_P0_TO_P15, GPIO_MODE_QUASI);
     GPIO_SetMode(PH, GPIO_P0_TO_P15, GPIO_MODE_QUASI);
-
-    /* LVR setting */
-    if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
-        LvrSetting();
 
     /* POR setting */
     PorSetting();
