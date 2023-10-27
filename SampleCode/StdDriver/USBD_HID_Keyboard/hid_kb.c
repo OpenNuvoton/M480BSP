@@ -238,9 +238,9 @@ void HID_ClassRequest(void)
             {
                 /* Request Type = Output */
                 USBD_SET_DATA1(EP1);
-                
+
                 USBD_PrepareCtrlOut(Led_Status, buf[6]);
-                
+
                 /* Status stage */
                 USBD_PrepareCtrlIn(0, 0);
             }
