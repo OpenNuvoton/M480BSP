@@ -366,16 +366,16 @@ void HID_UpdateKbData(void)
                 printf("ScrollLock  ON, ");
             else
                 printf("ScrollLock OFF, ");
-            
+
             if(Led_Status[0] & HID_LED_Compose)
                 printf("Compose  ON, ");
             else
-                printf("Compose OFF, ");   
-            
+                printf("Compose OFF, ");
+
             if(Led_Status[0] & HID_LED_Kana)
                 printf("Kana  ON\n");
             else
-                printf("Kana OFF\n");  
+                printf("Kana OFF\n");
         }
         LED_SATUS = Led_Status[0];
     }
