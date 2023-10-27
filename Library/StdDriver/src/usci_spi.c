@@ -59,7 +59,6 @@ uint32_t USPI_Open(USPI_T *uspi, uint32_t u32MasterSlave, uint32_t u32SPIMode,  
     {
         u32ClkDiv = (uint32_t) ((((((u32Pclk/2ul)*10ul)/(u32BusClock))+5ul)/10ul)-1ul); /* Compute proper divider for USCI_SPI clock */
     }
-    else {}
 
     /* Enable USCI_SPI protocol */
     uspi->CTL &= ~USPI_CTL_FUNMODE_Msk;
@@ -70,7 +69,6 @@ uint32_t USPI_Open(USPI_T *uspi, uint32_t u32MasterSlave, uint32_t u32SPIMode,  
     {
         u32DataWidth = 0ul;
     }
-    else {}
     uspi->LINECTL &= ~USPI_LINECTL_DWIDTH_Msk;
     uspi->LINECTL |= (u32DataWidth << USPI_LINECTL_DWIDTH_Pos);
 
@@ -100,7 +98,6 @@ uint32_t USPI_Open(USPI_T *uspi, uint32_t u32MasterSlave, uint32_t u32SPIMode,  
     {
         u32UspiClk = (uint32_t)( u32Pclk / ((u32ClkDiv+1ul)<<1) );
     }
-    else {}
 
     return u32UspiClk;
 }
@@ -238,62 +235,52 @@ void USPI_EnableInt(USPI_T *uspi, uint32_t u32Mask)
     {
         uspi->PROTIEN |= USPI_PROTIEN_SSINAIEN_Msk;
     }
-    else {}
     /* Enable slave selection signal active interrupt flag */
     if((u32Mask & USPI_SSACT_INT_MASK) == USPI_SSACT_INT_MASK)
     {
         uspi->PROTIEN |= USPI_PROTIEN_SSACTIEN_Msk;
     }
-    else {}
     /* Enable slave time-out interrupt flag */
     if((u32Mask & USPI_SLVTO_INT_MASK) == USPI_SLVTO_INT_MASK)
     {
         uspi->PROTIEN |= USPI_PROTIEN_SLVTOIEN_Msk;
     }
-    else {}
 
     /* Enable slave bit count error interrupt flag */
     if((u32Mask & USPI_SLVBE_INT_MASK) == USPI_SLVBE_INT_MASK)
     {
         uspi->PROTIEN |= USPI_PROTIEN_SLVBEIEN_Msk;
     }
-    else {}
     /* Enable TX under run interrupt flag */
     if((u32Mask & USPI_TXUDR_INT_MASK) == USPI_TXUDR_INT_MASK)
     {
         uspi->BUFCTL |= USPI_BUFCTL_TXUDRIEN_Msk;
     }
-    else {}
     /* Enable RX overrun interrupt flag */
     if((u32Mask & USPI_RXOV_INT_MASK) == USPI_RXOV_INT_MASK)
     {
         uspi->BUFCTL |= USPI_BUFCTL_RXOVIEN_Msk;
     }
-    else {}
     /* Enable TX start interrupt flag */
     if((u32Mask & USPI_TXST_INT_MASK) == USPI_TXST_INT_MASK)
     {
         uspi->INTEN |= USPI_INTEN_TXSTIEN_Msk;
     }
-    else {}
     /* Enable TX end interrupt flag */
     if((u32Mask & USPI_TXEND_INT_MASK) == USPI_TXEND_INT_MASK)
     {
         uspi->INTEN |= USPI_INTEN_TXENDIEN_Msk;
     }
-    else {}
     /* Enable RX start interrupt flag */
     if((u32Mask & USPI_RXST_INT_MASK) == USPI_RXST_INT_MASK)
     {
         uspi->INTEN |= USPI_INTEN_RXSTIEN_Msk;
     }
-    else {}
     /* Enable RX end interrupt flag */
     if((u32Mask & USPI_RXEND_INT_MASK) == USPI_RXEND_INT_MASK)
     {
         uspi->INTEN |= USPI_INTEN_RXENDIEN_Msk;
     }
-    else {}
 }
 
 /**
@@ -321,61 +308,51 @@ void USPI_DisableInt(USPI_T *uspi, uint32_t u32Mask)
     {
         uspi->PROTIEN &= ~USPI_PROTIEN_SSINAIEN_Msk;
     }
-    else {}
     /* Disable slave selection signal active interrupt flag */
     if((u32Mask & USPI_SSACT_INT_MASK) == USPI_SSACT_INT_MASK)
     {
         uspi->PROTIEN &= ~USPI_PROTIEN_SSACTIEN_Msk;
     }
-    else {}
     /* Disable slave time-out interrupt flag */
     if((u32Mask & USPI_SLVTO_INT_MASK) == USPI_SLVTO_INT_MASK)
     {
         uspi->PROTIEN &= ~USPI_PROTIEN_SLVTOIEN_Msk;
     }
-    else {}
     /* Disable slave bit count error interrupt flag */
     if((u32Mask & USPI_SLVBE_INT_MASK) == USPI_SLVBE_INT_MASK)
     {
         uspi->PROTIEN &= ~USPI_PROTIEN_SLVBEIEN_Msk;
     }
-    else {}
     /* Disable TX under run interrupt flag */
     if((u32Mask & USPI_TXUDR_INT_MASK) == USPI_TXUDR_INT_MASK)
     {
         uspi->BUFCTL &= ~USPI_BUFCTL_TXUDRIEN_Msk;
     }
-    else {}
     /* Disable RX overrun interrupt flag */
     if((u32Mask & USPI_RXOV_INT_MASK) == USPI_RXOV_INT_MASK)
     {
         uspi->BUFCTL &= ~USPI_BUFCTL_RXOVIEN_Msk;
     }
-    else {}
     /* Disable TX start interrupt flag */
     if((u32Mask & USPI_TXST_INT_MASK) == USPI_TXST_INT_MASK)
     {
         uspi->INTEN &= ~USPI_INTEN_TXSTIEN_Msk;
     }
-    else {}
     /* Disable TX end interrupt flag */
     if((u32Mask & USPI_TXEND_INT_MASK) == USPI_TXEND_INT_MASK)
     {
         uspi->INTEN &= ~USPI_INTEN_TXENDIEN_Msk;
     }
-    else {}
     /* Disable RX start interrupt flag */
     if((u32Mask & USPI_RXST_INT_MASK) == USPI_RXST_INT_MASK)
     {
         uspi->INTEN &= ~USPI_INTEN_RXSTIEN_Msk;
     }
-    else {}
     /* Disable RX end interrupt flag */
     if((u32Mask & USPI_RXEND_INT_MASK) == USPI_RXEND_INT_MASK)
     {
         uspi->INTEN &= ~USPI_INTEN_RXENDIEN_Msk;
     }
-    else {}
 }
 
 /**
@@ -407,7 +384,6 @@ uint32_t USPI_GetIntFlag(USPI_T *uspi, uint32_t u32Mask)
     {
         u32IntFlag |= USPI_SSINACT_INT_MASK;
     }
-    else {}
     /* Check slave selection signal active interrupt flag */
 
     u32TmpFlag = uspi->PROTSTS & USPI_PROTSTS_SSACTIF_Msk;
@@ -415,7 +391,6 @@ uint32_t USPI_GetIntFlag(USPI_T *uspi, uint32_t u32Mask)
     {
         u32IntFlag |= USPI_SSACT_INT_MASK;
     }
-    else {}
 
     /* Check slave time-out interrupt flag */
     u32TmpFlag = uspi->PROTSTS & USPI_PROTSTS_SLVTOIF_Msk;
@@ -423,7 +398,6 @@ uint32_t USPI_GetIntFlag(USPI_T *uspi, uint32_t u32Mask)
     {
         u32IntFlag |= USPI_SLVTO_INT_MASK;
     }
-    else {}
 
     /* Check slave bit count error interrupt flag */
     u32TmpFlag = uspi->PROTSTS & USPI_PROTSTS_SLVBEIF_Msk;
@@ -431,7 +405,6 @@ uint32_t USPI_GetIntFlag(USPI_T *uspi, uint32_t u32Mask)
     {
         u32IntFlag |= USPI_SLVBE_INT_MASK;
     }
-    else {}
 
     /* Check TX under run interrupt flag */
     u32TmpFlag = uspi->BUFSTS & USPI_BUFSTS_TXUDRIF_Msk;
@@ -439,7 +412,6 @@ uint32_t USPI_GetIntFlag(USPI_T *uspi, uint32_t u32Mask)
     {
         u32IntFlag |= USPI_TXUDR_INT_MASK;
     }
-    else {}
 
     /* Check RX overrun interrupt flag */
     u32TmpFlag = uspi->BUFSTS & USPI_BUFSTS_RXOVIF_Msk;
@@ -447,7 +419,6 @@ uint32_t USPI_GetIntFlag(USPI_T *uspi, uint32_t u32Mask)
     {
         u32IntFlag |= USPI_RXOV_INT_MASK;
     }
-    else {}
 
     /* Check TX start interrupt flag */
     u32TmpFlag = uspi->PROTSTS & USPI_PROTSTS_TXSTIF_Msk;
@@ -455,7 +426,6 @@ uint32_t USPI_GetIntFlag(USPI_T *uspi, uint32_t u32Mask)
     {
         u32IntFlag |= USPI_TXST_INT_MASK;
     }
-    else {}
 
     /* Check TX end interrupt flag */
     u32TmpFlag = uspi->PROTSTS & USPI_PROTSTS_TXENDIF_Msk;
@@ -463,7 +433,6 @@ uint32_t USPI_GetIntFlag(USPI_T *uspi, uint32_t u32Mask)
     {
         u32IntFlag |= USPI_TXEND_INT_MASK;
     }
-    else {}
 
     /* Check RX start interrupt flag */
     u32TmpFlag = uspi->PROTSTS & USPI_PROTSTS_RXSTIF_Msk;
@@ -471,7 +440,6 @@ uint32_t USPI_GetIntFlag(USPI_T *uspi, uint32_t u32Mask)
     {
         u32IntFlag |= USPI_RXST_INT_MASK;
     }
-    else {}
 
     /* Check RX end interrupt flag */
     u32TmpFlag = uspi->PROTSTS & USPI_PROTSTS_RXENDIF_Msk;
@@ -479,7 +447,6 @@ uint32_t USPI_GetIntFlag(USPI_T *uspi, uint32_t u32Mask)
     {
         u32IntFlag |= USPI_RXEND_INT_MASK;
     }
-    else {}
     return u32IntFlag;
 }
 
@@ -508,62 +475,52 @@ void USPI_ClearIntFlag(USPI_T *uspi, uint32_t u32Mask)
     {
         uspi->PROTSTS = USPI_PROTSTS_SSINAIF_Msk;
     }
-    else {}
     /* Clear slave selection signal active interrupt flag */
     if((u32Mask & USPI_SSACT_INT_MASK)==USPI_SSACT_INT_MASK)
     {
         uspi->PROTSTS = USPI_PROTSTS_SSACTIF_Msk;
     }
-    else {}
     /* Clear slave time-out interrupt flag */
     if((u32Mask & USPI_SLVTO_INT_MASK)==USPI_SLVTO_INT_MASK)
     {
         uspi->PROTSTS = USPI_PROTSTS_SLVTOIF_Msk;
     }
-    else {}
     /* Clear slave bit count error interrupt flag */
     if((u32Mask & USPI_SLVBE_INT_MASK)==USPI_SLVBE_INT_MASK)
     {
         uspi->PROTSTS = USPI_PROTSTS_SLVBEIF_Msk;
     }
-    else {}
     /* Clear TX under run interrupt flag */
     if((u32Mask & USPI_TXUDR_INT_MASK)==USPI_TXUDR_INT_MASK)
     {
         uspi->BUFSTS = USPI_BUFSTS_TXUDRIF_Msk;
     }
-    else {}
     /* Clear RX overrun interrupt flag */
     if((u32Mask & USPI_RXOV_INT_MASK)==USPI_RXOV_INT_MASK)
     {
         uspi->BUFSTS = USPI_BUFSTS_RXOVIF_Msk;
     }
-    else {}
     /* Clear TX start interrupt flag */
     if((u32Mask & USPI_TXST_INT_MASK)==USPI_TXST_INT_MASK)
     {
         uspi->PROTSTS = USPI_PROTSTS_TXSTIF_Msk;
     }
-    else {}
     /* Clear TX end interrupt flag */
     if((u32Mask & USPI_TXEND_INT_MASK)==USPI_TXEND_INT_MASK)
     {
         uspi->PROTSTS = USPI_PROTSTS_TXENDIF_Msk;
     }
-    else {}
     /* Clear RX start interrupt flag */
     if((u32Mask & USPI_RXST_INT_MASK)==USPI_RXST_INT_MASK)
     {
         uspi->PROTSTS = USPI_PROTSTS_RXSTIF_Msk;
     }
-    else {}
 
     /* Clear RX end interrupt flag */
     if((u32Mask & USPI_RXEND_INT_MASK)==USPI_RXEND_INT_MASK)
     {
         uspi->PROTSTS = USPI_PROTSTS_RXENDIF_Msk;
     }
-    else {}
 }
 
 /**
@@ -591,7 +548,6 @@ uint32_t USPI_GetStatus(USPI_T *uspi, uint32_t u32Mask)
     {
         u32Flag |= USPI_BUSY_MASK;
     }
-    else {}
 
     /* Check RX empty flag */
     u32TmpFlag = uspi->BUFSTS & USPI_BUFSTS_RXEMPTY_Msk;
@@ -599,7 +555,6 @@ uint32_t USPI_GetStatus(USPI_T *uspi, uint32_t u32Mask)
     {
         u32Flag |= USPI_RX_EMPTY_MASK;
     }
-    else {}
 
     /* Check RX full flag */
     u32TmpFlag = uspi->BUFSTS & USPI_BUFSTS_RXFULL_Msk;
@@ -607,7 +562,6 @@ uint32_t USPI_GetStatus(USPI_T *uspi, uint32_t u32Mask)
     {
         u32Flag |= USPI_RX_FULL_MASK;
     }
-    else {}
 
     /* Check TX empty flag */
     u32TmpFlag = uspi->BUFSTS & USPI_BUFSTS_TXEMPTY_Msk;
@@ -615,7 +569,6 @@ uint32_t USPI_GetStatus(USPI_T *uspi, uint32_t u32Mask)
     {
         u32Flag |= USPI_TX_EMPTY_MASK;
     }
-    else {}
 
     /* Check TX full flag */
     u32TmpFlag = uspi->BUFSTS & USPI_BUFSTS_TXFULL_Msk;
@@ -623,7 +576,6 @@ uint32_t USPI_GetStatus(USPI_T *uspi, uint32_t u32Mask)
     {
         u32Flag |= USPI_TX_FULL_MASK;
     }
-    else {}
 
     /* Check USCI_SPI_SS line status */
     u32TmpFlag = uspi->PROTSTS & USPI_PROTSTS_SSLINE_Msk;
@@ -631,7 +583,6 @@ uint32_t USPI_GetStatus(USPI_T *uspi, uint32_t u32Mask)
     {
         u32Flag |= USPI_SSLINE_STS_MASK;
     }
-    else {}
     return u32Flag;
 }
 
