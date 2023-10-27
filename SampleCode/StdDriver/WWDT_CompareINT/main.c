@@ -3,7 +3,7 @@
  * @version  V3.00
  * @brief    Show how to reload the WWDT counter value.
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
@@ -29,9 +29,9 @@ volatile uint8_t g_u32WWDTINTCounts;
  *
  * @return      None
  *
- * @details     The WDT_IRQHandler is default IRQ of WWDT, declared in startup_M480.s.
+ * @details     The WWDT_IRQHandler is default IRQ of WWDT, declared in startup_M480.s.
  */
-void WDT_IRQHandler(void)
+void WWDT_IRQHandler(void)
 {
     if(WWDT_GET_INT_FLAG() == 1)
     {
@@ -143,7 +143,7 @@ int main(void)
     PA0 = 1;
 
     /* Enable WWDT NVIC */
-    NVIC_EnableIRQ(WDT_IRQn);
+    NVIC_EnableIRQ(WWDT_IRQn);
 
     g_u32WWDTINTCounts = 0;
 
@@ -160,4 +160,4 @@ int main(void)
     while(1);
 }
 
-/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2023 Nuvoton Technology Corp. ***/
