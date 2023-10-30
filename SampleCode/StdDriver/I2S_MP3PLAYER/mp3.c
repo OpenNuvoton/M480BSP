@@ -31,6 +31,11 @@
 
 #define MP3_FILE    "0:\\test.mp3"
 
+#if defined FF_FS_RPATH
+    #undef FF_FS_RPATH
+    #define FF_FS_RPATH 0
+#endif
+
 /*
  * This is perhaps the simplest example use of the MAD high-level API.
  * Standard input is mapped into memory via mmap(), then the high-level API
