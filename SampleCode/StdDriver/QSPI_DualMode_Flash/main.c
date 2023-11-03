@@ -306,13 +306,24 @@ int main(void)
     /* Wait ready */
     SpiFlash_WaitReady();
 
-    if((u16ID = SpiFlash_ReadMidDid()) != 0x1C14)
+    u16ID = SpiFlash_ReadMidDid();
+
+    if (u16ID == 0xEF13)
+        printf("Flash found: W25Q80 ...\n");
+    else if (u16ID == 0xEF14)
+        printf("Flash found: W25Q16 ...\n");
+    else if (u16ID == 0xEF15)
+        printf("Flash found: W25Q32 ...\n");
+    else if (u16ID == 0xEF16)
+        printf("Flash found: W25Q64 ...\n");
+    else if (u16ID == 0xEF17)
+        printf("Flash found: W25Q128 ...\n");
+    else
     {
         printf("Wrong ID, 0x%x\n", u16ID);
-        return -1;
+
+        while (1);
     }
-    else
-        printf("Flash found: EN25QH16 ...\n");
 
     printf("Erase chip ...");
 

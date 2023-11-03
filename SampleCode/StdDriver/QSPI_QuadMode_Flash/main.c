@@ -394,13 +394,24 @@ int main(void)
     printf("|                M480 QSPI Quad Mode with Flash Sample Code               |\n");
     printf("+------------------------------------------------------------------------+\n");
 
-    if((u16ID = SpiFlash_ReadMidDid()) != 0xEF14)
+    u16ID = SpiFlash_ReadMidDid();
+
+    if (u16ID == 0xEF13)
+        printf("Flash found: W25Q80 ...\n");
+    else if (u16ID == 0xEF14)
+        printf("Flash found: W25Q16 ...\n");
+    else if (u16ID == 0xEF15)
+        printf("Flash found: W25Q32 ...\n");
+    else if (u16ID == 0xEF16)
+        printf("Flash found: W25Q64 ...\n");
+    else if (u16ID == 0xEF17)
+        printf("Flash found: W25Q128 ...\n");
+    else
     {
         printf("Wrong ID, 0x%x\n", u16ID);
-        while(1);
+
+        while (1);
     }
-    else
-        printf("Flash found: W25X16 ...\n");
 
     printf("Erase chip ...");
 
