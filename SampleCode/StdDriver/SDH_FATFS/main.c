@@ -13,6 +13,10 @@
 #include "diskio.h"
 #include "ff.h"
 
+#define DEF_CARD_DETECT_SOURCE       CardDetect_From_GPIO
+//#define DEF_CARD_DETECT_SOURCE       CardDetect_From_DAT3
+
+
 #define BUFF_SIZE       (8*1024)
 
 static UINT blen = BUFF_SIZE;
@@ -299,6 +303,8 @@ void SDH0_IRQHandler(void)
 
     //----- SD interrupt status
     isr = SDH0->INTSTS;
+    ier = SDH0->INTEN;
+
     if (isr & SDH_INTSTS_BLKDIF_Msk)
     {
         // block down
@@ -306,7 +312,8 @@ void SDH0_IRQHandler(void)
         SDH0->INTSTS = SDH_INTSTS_BLKDIF_Msk;
     }
 
-    if (isr & SDH_INTSTS_CDIF_Msk)   // card detect
+    if ((ier & SDH_INTEN_CDIEN_Msk) &&
+            (isr & SDH_INTSTS_CDIF_Msk))    // card detect
     {
         //----- SD interrupt status
         // delay 10 us to sync the GPIO and SDH
@@ -319,7 +326,11 @@ void SDH0_IRQHandler(void)
             isr = SDH0->INTSTS;
         }
 
+#if (DEF_CARD_DETECT_SOURCE==CardDetect_From_DAT3)
+        if (!(isr & SDH_INTSTS_CDSTS_Msk))
+#else
         if (isr & SDH_INTSTS_CDSTS_Msk)
+#endif
         {
             printf("\n***** card remove !\n");
             SD0.IsCardInsert = FALSE;   // SDISR_CD_Card = 1 means card remove for GPIO mode
@@ -328,7 +339,7 @@ void SDH0_IRQHandler(void)
         else
         {
             printf("***** card insert !\n");
-            gSdInit = 1;
+            gSdInit = 0;
 //            SDH_Open(SDH0, CardDetect_From_GPIO);
 //            SDH_Probe(SDH0);
         }
@@ -402,7 +413,6 @@ void SYS_Init(void)
     SYS->GPD_MFPH &= ~(SYS_GPD_MFPH_PD13MFP_Msk);
     SYS->GPD_MFPH |=  (SYS_GPD_MFPH_PD13MFP_SD0_nCD);
 
-
     /* Select IP clock source */
     CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART0SEL_HXT, CLK_CLKDIV0_UART0(1));
     CLK_SetModuleClock(SDH0_MODULE, CLK_CLKSEL0_SDH0SEL_PLL, CLK_CLKDIV0_SDH0(10));
@@ -464,28 +474,41 @@ int32_t main(void)
     UART_Open(UART0, 115200);
     timer_init();
 
+    /*
+        SD initial state needs 300KHz clock output, driver will use HIRC for SD initial clock source.
+        And then switch back to the user's setting.
+    */
+    gSdInit = (SDH_Open_Disk(SDH0, DEF_CARD_DETECT_SOURCE)==0)?1:0;
+
+    SYS_LockReg();
+
     printf("\n");
     printf("====================================\n");
     printf("          SDH Testing               \n");
     printf("====================================\n");
 
-    printf("\n\nM480 SDH FATFS TEST!\n");
-    /*
-        SD initial state needs 400KHz clock output, driver will use HIRC for SD initial clock source.
-        And then switch back to the user's setting.
-    */
-    SDH_Open_Disk(SDH0, CardDetect_From_GPIO);
+#if (DEF_CARD_DETECT_SOURCE == CardDetect_From_DAT3)
+    printf("You enabled card detection source from DAT3 mode.\n");
+    printf("Please remove pull-up resistor of DAT3 pin and add a pull-down 100Kohm resistor on DAT3 pin.\n");
+    printf("Please also check your SD card is with an internal pull-up circuit on DAT3 pin.\n");
+#endif
+
+    printf("\n\n SDH FATFS TEST!\n");
+
     f_chdrive(sd_path);          /* set default path */
 
     for (;;)
     {
         if(!(SDH_CardDetection(SDH0)))
-            continue;
-
-        if (gSdInit)
         {
-            SDH_Open_Disk(SDH0, CardDetect_From_GPIO);
             gSdInit = 0;
+            printf("No card!!\n");
+            continue;
+        }
+
+        if (!gSdInit)
+        {
+            gSdInit = (SDH_Open_Disk(SDH0, DEF_CARD_DETECT_SOURCE)==0)?1:0;
         }
         printf(_T(">"));
         ptr = Line;
@@ -794,8 +817,8 @@ int32_t main(void)
                 if (!xatoi(&ptr, &p1) || !xatoi(&ptr, &p2) || !xatoi(&ptr, &p3)) break;
                 Finfo.fdate = (WORD)(((p1 - 1980) << 9) | ((p2 & 15) << 5) | (p3 & 31));
                 if (!xatoi(&ptr, &p1) || !xatoi(&ptr, &p2) || !xatoi(&ptr, &p3)) break;
-                Finfo.ftime = (WORD)(((p1 & 31) << 11) | ((p1 & 63) << 5) | ((p1 >> 1) & 31));
-                put_rc(f_utime(ptr, &Finfo));
+                Finfo.ftime = (WORD)(((p1 & 31) << 11) | ((p2 & 63) << 5) | ((p3 >> 1) & 31));
+                put_rc(f_utime(ptr+1, &Finfo));
                 break;
 
             case 'x' :   /* fx <src_name> <dst_name> - Copy file */
