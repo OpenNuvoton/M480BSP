@@ -1205,15 +1205,15 @@ int32_t CAN_SetMultiRxMsg(CAN_T *tCAN, uint32_t u32MsgNum, uint32_t u32MsgCount,
             if(++u32TimeOutCount >= RETRY_COUNTS)
             {
                 rev = (int32_t)FALSE;
-                break;
+                return rev;
             }
             else
             {
             }
         }
-    }
 
-    u32MsgNum++;
+        u32MsgNum++;
+    }
 
     return rev;
 }
