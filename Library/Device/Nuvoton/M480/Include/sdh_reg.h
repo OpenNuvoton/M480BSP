@@ -27,729 +27,316 @@ typedef struct
 {
 
     /**
-@var SDH_T::FB
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">FB
-</font><br><p> <font size="2">
-Offset: 0x00~0x7C  Shared Buffer (FIFO)
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:0]</td><td>BUFFER</td><td><div style="word-wrap: break-word;"><b>Shared Buffer
-</b><br>
-Buffer for DMA transfer
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var SDH_T::DMACTL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DMACTL
-</font><br><p> <font size="2">
-Offset: 0x400  DMA Control and Status Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>DMAEN</td><td><div style="word-wrap: break-word;"><b>DMA Engine Enable Bit
-</b><br>
-0 = DMA Disabled.
-<br>
-1 = DMA Enabled.
-<br>
-If this bit is cleared, DMA will ignore all requests from SD host and force bus master into IDLE state.
-<br>
-Note: If target abort is occurred, DMAEN will be cleared.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>DMARST</td><td><div style="word-wrap: break-word;"><b>Software Engine Reset
-</b><br>
-0 = No effect.
-<br>
-1 = Reset internal state machine and pointers
-<br>
-The contents of control register will not be cleared
-<br>
-This bit will auto be cleared after few clock cycles.
-<br>
-Note: The software reset DMA related registers.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>SGEN</td><td><div style="word-wrap: break-word;"><b>Scatter-gather Function Enable Bit
-</b><br>
-0 = Scatter-gather function Disabled (DMA will treat the starting address in DMASAR as starting pointer of a single block memory).
-<br>
-1 = Scatter-gather function Enabled (DMA will treat the starting address in DMASAR as a starting address of Physical Address Descriptor (PAD) table
-<br>
-The format of these Pads' will be described later).
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>DMABUSY</td><td><div style="word-wrap: break-word;"><b>DMA Transfer Is in Progress
-</b><br>
-This bit indicates if SD Host is granted and doing DMA transfer or not.
-<br>
-0 = DMA transfer is not in progress.
-<br>
-1 = DMA transfer is in progress.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var SDH_T::DMASA
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DMASA
-</font><br><p> <font size="2">
-Offset: 0x408  DMA Transfer Starting Address Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>ORDER</td><td><div style="word-wrap: break-word;"><b>Determined to the PAD Table Fetching Is in Order or Out of Order
-</b><br>
-0 = PAD table is fetched in order.
-<br>
-1 = PAD table is fetched out of order.
-<br>
-Note: the bit0 is valid in scatter-gather mode when SGEN = 1.
-<br>
-</div></td></tr><tr><td>
-[31:1]</td><td>DMASA</td><td><div style="word-wrap: break-word;"><b>DMA Transfer Starting Address
-</b><br>
-This field pads 0 as least significant bit indicates a 32-bit starting address of system memory (SRAM) for DMA to retrieve or fill in data.
-<br>
-If DMA is not in normal mode, this field will be interpreted as a starting address of Physical Address Descriptor (PAD) table.
-<br>
-Note: Starting address of the SRAM must be word aligned, for example, 0x0000_0000, 0x0000_0004.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var SDH_T::DMABCNT
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DMABCNT
-</font><br><p> <font size="2">
-Offset: 0x40C  DMA Transfer Byte Count Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[25:0]</td><td>BCNT</td><td><div style="word-wrap: break-word;"><b>DMA Transfer Byte Count (Read Only)
-</b><br>
-This field indicates the remained byte count of DMA transfer
-<br>
-The value of this field is valid only when DMA is busy; otherwise, it is 0.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var SDH_T::DMAINTEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DMAINTEN
-</font><br><p> <font size="2">
-Offset: 0x410  DMA Interrupt Enable Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>ABORTIEN</td><td><div style="word-wrap: break-word;"><b>DMA Read/Write Target Abort Interrupt Enable Bit
-</b><br>
-0 = Target abort interrupt generation Disabled during DMA transfer.
-<br>
-1 = Target abort interrupt generation Enabled during DMA transfer.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>WEOTIEN</td><td><div style="word-wrap: break-word;"><b>Wrong EOT Encountered Interrupt Enable Bit
-</b><br>
-0 = Interrupt generation Disabled when wrong EOT is encountered.
-<br>
-1 = Interrupt generation Enabled when wrong EOT is encountered.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var SDH_T::DMAINTSTS
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DMAINTSTS
-</font><br><p> <font size="2">
-Offset: 0x414  DMA Interrupt Status Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>ABORTIF</td><td><div style="word-wrap: break-word;"><b>DMA Read/Write Target Abort Interrupt Flag
-</b><br>
-0 = No bus ERROR response received.
-<br>
-1 = Bus ERROR response received.
-<br>
-Note1: This bit is read only, but can be cleared by writing '1' to it.
-<br>
-Note2: When DMA's bus master received ERROR response, it means that target abort is happened
-<br>
-DMA will stop transfer and respond this event and then go to IDLE state
-<br>
-When target abort occurred or WEOTIF is set, software must reset DMA and SD host, and then transfer those data again.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>WEOTIF</td><td><div style="word-wrap: break-word;"><b>Wrong EOT Encountered Interrupt Flag
-</b><br>
-When DMA Scatter-Gather function is enabled, and EOT of the descriptor is encountered before DMA transfer finished (that means the total sector count of all PAD is less than the sector count of SD host), this bit will be set.
-<br>
-0 = No EOT encountered before DMA transfer finished.
-<br>
-1 = EOT encountered before DMA transfer finished.
-<br>
-Note: This bit is read only, but can be cleared by writing '1' to it.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var SDH_T::GCTL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GCTL
-</font><br><p> <font size="2">
-Offset: 0x800  Global Control and Status Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>GCTLRST</td><td><div style="word-wrap: break-word;"><b>Software Engine Reset
-</b><br>
-0 = No effect.
-<br>
-1 = Reset SD host
-<br>
-The contents of control register will not be cleared
-<br>
-This bit will auto cleared after reset complete.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>SDEN</td><td><div style="word-wrap: break-word;"><b>Secure Digital Functionality Enable Bit
-</b><br>
-0 = SD functionality disabled.
-<br>
-1 = SD functionality enabled.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var SDH_T::GINTEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GINTEN
-</font><br><p> <font size="2">
-Offset: 0x804  Global Interrupt Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>DTAIEN</td><td><div style="word-wrap: break-word;"><b>DMA READ/WRITE Target Abort Interrupt Enable Bit
-</b><br>
-0 = DMA READ/WRITE target abort interrupt generation disabled.
-<br>
-1 = DMA READ/WRITE target abort interrupt generation enabled.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var SDH_T::GINTSTS
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GINTSTS
-</font><br><p> <font size="2">
-Offset: 0x808  Global Interrupt Status Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>DTAIF</td><td><div style="word-wrap: break-word;"><b>DMA READ/WRITE Target Abort Interrupt Flag (Read Only)
-</b><br>
-This bit indicates DMA received an ERROR response from internal AHB bus during DMA read/write operation
-<br>
-When Target Abort is occurred, please reset all engine.
-<br>
-0 = No bus ERROR response received.
-<br>
-1 = Bus ERROR response received.
-<br>
-Note: This bit is read only, but can be cleared by writing '1' to it.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var SDH_T::CTL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CTL
-</font><br><p> <font size="2">
-Offset: 0x820  SD Control and Status Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>COEN</td><td><div style="word-wrap: break-word;"><b>Command Output Enable Bit
-</b><br>
-0 = No effect. (Please use DMARST (SDH_CTL [0]) to clear this bit.)
-<br>
-1 = Enabled, SD host will output a command to SD card.
-<br>
-Note: When operation is finished, this bit will be cleared automatically, so don't write 0 to this bit (the controller will be abnormal).
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>RIEN</td><td><div style="word-wrap: break-word;"><b>Response Input Enable Bit
-</b><br>
-0 = No effect. (Please use DMARST (SDH_CTL [0]) to clear this bit.)
-<br>
-1 = Enabled, SD host will wait to receive a response from SD card.
-<br>
-Note: When operation is finished, this bit will be cleared automatically, so don't write 0 to this bit (the controller will be abnormal).
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>DIEN</td><td><div style="word-wrap: break-word;"><b>Data Input Enable Bit
-</b><br>
-0 = No effect. (Please use DMARST (SDH_CTL [0]) to clear this bit.)
-<br>
-1 = Enabled, SD host will wait to receive block data and the CRC16 value from SD card.
-<br>
-Note: When operation is finished, this bit will be cleared automatically, so don't write 0 to this bit (the controller will be abnormal).
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>DOEN</td><td><div style="word-wrap: break-word;"><b>Data Output Enable Bit
-</b><br>
-0 = No effect. (Please use DMARST (SDH_CTL [0]) to clear this bit.)
-<br>
-1 = Enabled, SD host will transfer block data and the CRC16 value to SD card.
-<br>
-Note: When operation is finished, this bit will be cleared automatically, so don't write 0 to this bit (the controller will be abnormal).
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>R2EN</td><td><div style="word-wrap: break-word;"><b>Response R2 Input Enable Bit
-</b><br>
-0 = No effect. (Please use DMARST (SDH_CTL [0]) to clear this bit.)
-<br>
-1 = Enabled, SD host will wait to receive a response R2 from SD card and store the response data into DMC's flash buffer (exclude CRC7).
-<br>
-Note: When operation is finished, this bit will be cleared automatically, so don't write 0 to this bit (the controller will be abnormal).
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>CLK74OEN</td><td><div style="word-wrap: break-word;"><b>Initial 74 Clock Cycles Output Enable Bit
-</b><br>
-0 = No effect. (Please use DMARST (SDH_CTL [0]) to clear this bit.)
-<br>
-1 = Enabled, SD host will output 74 clock cycles to SD card.
-<br>
-Note: When operation is finished, this bit will be cleared automatically, so don't write 0 to this bit (the controller will be abnormal).
-<br>
-</div></td></tr><tr><td>
-[6]</td><td>CLK8OEN</td><td><div style="word-wrap: break-word;"><b>Generating 8 Clock Cycles Output Enable Bit
-</b><br>
-0 = No effect. (Please use DMARST (SDH_CTL [0]) to clear this bit.)
-<br>
-1 = Enabled, SD host will output 8 clock cycles.
-<br>
-Note: When operation is finished, this bit will be cleared automatically, so don't write 0 to this bit (the controller will be abnormal).
-<br>
-</div></td></tr><tr><td>
-[7]</td><td>CLKKEEP</td><td><div style="word-wrap: break-word;"><b>SD Clock Enable Control
-</b><br>
-0 = SD host decided when to output clock and when to disable clock output automatically.
-<br>
-1 = SD clock always keeps free running.
-<br>
-</div></td></tr><tr><td>
-[13:8]</td><td>CMDCODE</td><td><div style="word-wrap: break-word;"><b>SD Command Code
-</b><br>
-This register contains the SD command code (0x00 - 0x3F).
-<br>
-</div></td></tr><tr><td>
-[14]</td><td>CTLRST</td><td><div style="word-wrap: break-word;"><b>Software Engine Reset
-</b><br>
-0 = No effect.
-<br>
-1 = Reset the internal state machine and counters
-<br>
-The contents of control register will not be cleared (but RIEN, DIEN, DOEN and R2_EN will be cleared)
-<br>
-This bit will be auto cleared after few clock cycles.
-<br>
-</div></td></tr><tr><td>
-[15]</td><td>DBW</td><td><div style="word-wrap: break-word;"><b>SD Data Bus Width (for 1-bit / 4-bit Selection)
-</b><br>
-0 = Data bus width is 1-bit.
-<br>
-1 = Data bus width is 4-bit.
-<br>
-</div></td></tr><tr><td>
-[23:16]</td><td>BLKCNT</td><td><div style="word-wrap: break-word;"><b>Block Counts to Be Transferred or Received
-</b><br>
-This field contains the block counts for data-in and data-out transfer
-<br>
-For READ_MULTIPLE_BLOCK and WRITE_MULTIPLE_BLOCK command, software can use this function to accelerate data transfer and improve performance
-<br>
-Don't fill 0x0 to this field.
-<br>
-Note: For READ_MULTIPLE_BLOCK and WRITE_MULTIPLE_BLOCK command, the actual total length is BLKCNT * (BLKLEN +1).
-<br>
-</div></td></tr><tr><td>
-[27:24]</td><td>SDNWR</td><td><div style="word-wrap: break-word;"><b>NWR Parameter for Block Write Operation
-</b><br>
-This value indicates the NWR parameter for data block write operation in SD clock counts
-<br>
-The actual clock cycle will be SDNWR+1.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var SDH_T::CMDARG
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CMDARG
-</font><br><p> <font size="2">
-Offset: 0x824  SD Command Argument Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:0]</td><td>ARGUMENT</td><td><div style="word-wrap: break-word;"><b>SD Command Argument
-</b><br>
-This register contains a 32-bit value specifies the argument of SD command from host controller to SD card
-<br>
-Before trigger COEN (SDH_CTL [0]), software should fill argument in this field.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var SDH_T::INTEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">INTEN
-</font><br><p> <font size="2">
-Offset: 0x828  SD Interrupt Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>BLKDIEN</td><td><div style="word-wrap: break-word;"><b>Block Transfer Done Interrupt Enable Bit
-</b><br>
-0 = BLKDIF (SDH_INTEN[0]) trigger interrupt Disable.
-<br>
-1 = BLKDIF (SDH_INTEN[0]) trigger interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>CRCIEN</td><td><div style="word-wrap: break-word;"><b>CRC7, CRC16 and CRC Status Error Interrupt Enable Bit
-</b><br>
-0 = CRCIF (SDH_INTEN[1]) trigger interrupt Disable.
-<br>
-1 = CRCIF (SDH_INTEN[1]) trigger interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>CDIEN</td><td><div style="word-wrap: break-word;"><b>SD Card Detection Interrupt Enable Bit
-</b><br>
-Enable/Disable interrupts generation of SD controller when card is inserted or removed.
-<br>
-0 = CDIF (SDH_INTEN[8]) trigger interrupt Disable.
-<br>
-1 = CDIF (SDH_INTEN[8]) trigger interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>RTOIEN</td><td><div style="word-wrap: break-word;"><b>Response Time-out Interrupt Enable Bit
-</b><br>
-Enable/Disable interrupts generation of SD controller when receiving response or R2 time-out
-<br>
-Time-out value is specified at TOUT register.
-<br>
-0 = RTOIF (SDH_INTEN[12]) trigger interrupt Disabled.
-<br>
-1 = RTOIF (SDH_INTEN[12]) trigger interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[13]</td><td>DITOIEN</td><td><div style="word-wrap: break-word;"><b>Data Input Time-out Interrupt Enable Bit
-</b><br>
-Enable/Disable interrupts generation of SD controller when data input time-out
-<br>
-Time-out value is specified at TOUT register.
-<br>
-0 = DITOIF (SDH_INTEN[13]) trigger interrupt Disabled.
-<br>
-1 = DITOIF (SDH_INTEN[13]) trigger interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[14]</td><td>WKIEN</td><td><div style="word-wrap: break-word;"><b>Wake-up Signal Generating Enable Bit
-</b><br>
-Enable/Disable wake-up signal generating of SD host when current using SD card issues an interrupt (wake-up) via DAT [1] to host.
-<br>
-0 = SD Card interrupt to wake-up chip Disabled.
-<br>
-1 = SD Card interrupt to wake-up chip Enabled.
-<br>
-</div></td></tr><tr><td>
-[30]</td><td>CDSRC</td><td><div style="word-wrap: break-word;"><b>SD Card Detect Source Selection
-</b><br>
-0 = From SD card's DAT3 pin.
-<br>
-Host need clock to got data on pin DAT3
-<br>
-Please make sure CLKKEEP (SDH_CTL[7]) is 1 in order to generate free running clock for DAT3 pin.
-<br>
-1 = From GPIO pin.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var SDH_T::INTSTS
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">INTSTS
-</font><br><p> <font size="2">
-Offset: 0x82C  SD Interrupt Status Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>BLKDIF</td><td><div style="word-wrap: break-word;"><b>Block Transfer Done Interrupt Flag (Read Only)
-</b><br>
-This bit indicates that SD host has finished all data-in or data-out block transfer
-<br>
-If there is a CRC16 error or incorrect CRC status during multiple block data transfer, the transfer will be broken and this bit will also be set.
-<br>
-0 = Not finished yet.
-<br>
-1 = Done.
-<br>
-Note: This bit is read only, but can be cleared by writing '1' to it.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>CRCIF</td><td><div style="word-wrap: break-word;"><b>CRC7, CRC16 and CRC Status Error Interrupt Flag (Read Only)
-</b><br>
-This bit indicates that SD host has occurred CRC error during response in, data-in or data-out (CRC status error) transfer
-<br>
-When CRC error is occurred, software should reset SD engine
-<br>
-Some response (ex
-<br>
-R3) doesn't have CRC7 information with it; SD host will still calculate CRC7, get CRC error and set this flag
-<br>
-In this condition, software should ignore CRC error and clears this bit manually.
-<br>
-0 = No CRC error is occurred.
-<br>
-1 = CRC error is occurred.
-<br>
-Note: This bit is read only, but can be cleared by writing '1' to it.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>CRC7</td><td><div style="word-wrap: break-word;"><b>CRC7 Check Status (Read Only)
-</b><br>
-SD host will check CRC7 correctness during each response in
-<br>
-If that response does not contain CRC7 information (ex
-<br>
-R3), then software should turn off CRCIEN (SDH_INTEN[1]) and ignore this bit.
-<br>
-0 = Fault.
-<br>
-1 = OK.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>CRC16</td><td><div style="word-wrap: break-word;"><b>CRC16 Check Status of Data-in Transfer (Read Only)
-</b><br>
-SD host will check CRC16 correctness after data-in transfer.
-<br>
-0 = Fault.
-<br>
-1 = OK.
-<br>
-</div></td></tr><tr><td>
-[6:4]</td><td>CRCSTS</td><td><div style="word-wrap: break-word;"><b>CRC Status Value of Data-out Transfer (Read Only)
-</b><br>
-SD host will record CRC status of data-out transfer
-<br>
-Software could use this value to identify what type of error is during data-out transfer.
-<br>
-010 = Positive CRC status.
-<br>
-101 = Negative CRC status.
-<br>
-111 = SD card programming error occurs.
-<br>
-</div></td></tr><tr><td>
-[7]</td><td>DAT0STS</td><td><div style="word-wrap: break-word;"><b>DAT0 Pin Status of Current Selected SD Port (Read Only)
-</b><br>
-This bit is the DAT0 pin status of current selected SD port.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>CDIF</td><td><div style="word-wrap: break-word;"><b>SD Card Detection Interrupt Flag (Read Only)
-</b><br>
-This bit indicates that SD card is inserted or removed
-<br>
-Only when CDIEN (SDH_INTEN[8]) is set to 1, this bit is active.
-<br>
-0 = No card is inserted or removed.
-<br>
-1 = There is a card inserted in or removed from SD.
-<br>
-Note: This bit is read only, but can be cleared by writing '1' to it.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>RTOIF</td><td><div style="word-wrap: break-word;"><b>Response Time-out Interrupt Flag (Read Only)
-</b><br>
-This bit indicates that SD host counts to time-out value when receiving response or R2 (waiting start bit).
-<br>
-0 = Not time-out.
-<br>
-1 = Response time-out.
-<br>
-Note: This bit is read only, but can be cleared by writing '1' to it.
-<br>
-</div></td></tr><tr><td>
-[13]</td><td>DITOIF</td><td><div style="word-wrap: break-word;"><b>Data Input Time-out Interrupt Flag (Read Only)
-</b><br>
-This bit indicates that SD host counts to time-out value when receiving data (waiting start bit).
-<br>
-0 = Not time-out.
-<br>
-1 = Data input time-out.
-<br>
-Note: This bit is read only, but can be cleared by writing '1' to it.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>CDSTS</td><td><div style="word-wrap: break-word;"><b>Card Detect Status of SD (Read Only)
-</b><br>
-This bit indicates the card detect pin status of SD, and is used for card detection
-<br>
-When there is a card inserted in or removed from SD, software should check this bit to confirm if there is really a card insertion or removal.
-<br>
-If CDSRC (SDH_INTEN[30]) = 0, to select DAT3 for card detection:.
-<br>
-0 = Card removed.
-<br>
-1 = Card inserted.
-<br>
-If CDSRC (SDH_INTEN[30]) = 1, to select GPIO for card detection:.
-<br>
-0 = Card inserted.
-<br>
-1 = Card removed.
-<br>
-</div></td></tr><tr><td>
-[18]</td><td>DAT1STS</td><td><div style="word-wrap: break-word;"><b>DAT1 Pin Status of SD Port (Read Only)
-</b><br>
-This bit indicates the DAT1 pin status of SD port.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var SDH_T::RESP0
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">RESP0
-</font><br><p> <font size="2">
-Offset: 0x830  SD Receiving Response Token Register 0
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:0]</td><td>RESPTK0</td><td><div style="word-wrap: break-word;"><b>SD Receiving Response Token 0
-</b><br>
-SD host controller will receive a response token for getting a reply from SD card when RIEN (SDH_CTL[1]) is set
-<br>
-This field contains response bit 47-16 of the response token.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var SDH_T::RESP1
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">RESP1
-</font><br><p> <font size="2">
-Offset: 0x834  SD Receiving Response Token Register 1
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[7:0]</td><td>RESPTK1</td><td><div style="word-wrap: break-word;"><b>SD Receiving Response Token 1
-</b><br>
-SD host controller will receive a response token for getting a reply from SD card when RIEN (SDH_CTL[1]) is set
-<br>
-This register contains the bit 15-8 of the response token.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var SDH_T::BLEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">BLEN
-</font><br><p> <font size="2">
-Offset: 0x838  SD Block Length Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[10:0]</td><td>BLKLEN</td><td><div style="word-wrap: break-word;"><b>SD BLOCK LENGTH in Byte Unit
-</b><br>
-An 11-bit value specifies the SD transfer byte count of a block
-<br>
-The actual byte count is equal to BLKLEN+1.
-<br>
-Note: The default SD block length is 512 bytes
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var SDH_T::TOUT
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">TOUT
-</font><br><p> <font size="2">
-Offset: 0x83C  SD Response/Data-in Time-out Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[23:0]</td><td>TOUT</td><td><div style="word-wrap: break-word;"><b>SD Response/Data-in Time-out Value
-</b><br>
-A 24-bit value specifies the time-out counts of response and data input
-<br>
-SD host controller will wait start bit of response or data-in until this value reached
-<br>
-The time period depends on SD engine clock frequency
-<br>
-Do not write a small number into this field, or you may never get response or data due to time-out.
-<br>
-Note: Filling 0x0 into this field will disable hardware time-out function.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-
- */
+     * @var SDH_T::FB
+     * Offset: 0x00~0x7C  Shared Buffer (FIFO)
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:0]  |BUFFER    |Shared Buffer
+     * |        |          |Buffer for DMA transfer
+     * @var SDH_T::DMACTL
+     * Offset: 0x400  DMA Control and Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |DMAEN     |DMA Engine Enable Bit
+     * |        |          |0 = DMA Disabled.
+     * |        |          |1 = DMA Enabled.
+     * |        |          |If this bit is cleared, DMA will ignore all requests from SD host and force bus master into IDLE state.
+     * |        |          |Note: If target abort is occurred, DMAEN will be cleared.
+     * |[1]     |DMARST    |Software Engine Reset
+     * |        |          |0 = No effect.
+     * |        |          |1 = Reset internal state machine and pointers
+     * |        |          |The contents of control register will not be cleared
+     * |        |          |This bit will auto be cleared after few clock cycles.
+     * |        |          |Note: The software reset DMA related registers.
+     * |[3]     |SGEN      |Scatter-gather Function Enable Bit
+     * |        |          |0 = Scatter-gather function Disabled (DMA will treat the starting address in DMASAR as starting pointer of a single block memory).
+     * |        |          |1 = Scatter-gather function Enabled (DMA will treat the starting address in DMASAR as a starting address of Physical Address Descriptor (PAD) table
+     * |        |          |The format of these Pads' will be described later).
+     * |[9]     |DMABUSY   |DMA Transfer Is in Progress
+     * |        |          |This bit indicates if SD Host is granted and doing DMA transfer or not.
+     * |        |          |0 = DMA transfer is not in progress.
+     * |        |          |1 = DMA transfer is in progress.
+     * @var SDH_T::DMASA
+     * Offset: 0x408  DMA Transfer Starting Address Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |ORDER     |Determined to the PAD Table Fetching Is in Order or Out of Order
+     * |        |          |0 = PAD table is fetched in order.
+     * |        |          |1 = PAD table is fetched out of order.
+     * |        |          |Note: the bit0 is valid in scatter-gather mode when SGEN = 1.
+     * |[31:1]  |DMASA     |DMA Transfer Starting Address
+     * |        |          |This field pads 0 as least significant bit indicates a 32-bit starting address of system memory (SRAM) for DMA to retrieve or fill in data.
+     * |        |          |If DMA is not in normal mode, this field will be interpreted as a starting address of Physical Address Descriptor (PAD) table.
+     * |        |          |Note: Starting address of the SRAM must be word aligned, for example, 0x0000_0000, 0x0000_0004.
+     * @var SDH_T::DMABCNT
+     * Offset: 0x40C  DMA Transfer Byte Count Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[25:0]  |BCNT      |DMA Transfer Byte Count (Read Only)
+     * |        |          |This field indicates the remained byte count of DMA transfer
+     * |        |          |The value of this field is valid only when DMA is busy; otherwise, it is 0.
+     * @var SDH_T::DMAINTEN
+     * Offset: 0x410  DMA Interrupt Enable Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |ABORTIEN  |DMA Read/Write Target Abort Interrupt Enable Bit
+     * |        |          |0 = Target abort interrupt generation Disabled during DMA transfer.
+     * |        |          |1 = Target abort interrupt generation Enabled during DMA transfer.
+     * |[1]     |WEOTIEN   |Wrong EOT Encountered Interrupt Enable Bit
+     * |        |          |0 = Interrupt generation Disabled when wrong EOT is encountered.
+     * |        |          |1 = Interrupt generation Enabled when wrong EOT is encountered.
+     * @var SDH_T::DMAINTSTS
+     * Offset: 0x414  DMA Interrupt Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |ABORTIF   |DMA Read/Write Target Abort Interrupt Flag
+     * |        |          |0 = No bus ERROR response received.
+     * |        |          |1 = Bus ERROR response received.
+     * |        |          |Note1: This bit is read only, but can be cleared by writing '1' to it.
+     * |        |          |Note2: When DMA's bus master received ERROR response, it means that target abort is happened
+     * |        |          |DMA will stop transfer and respond this event and then go to IDLE state
+     * |        |          |When target abort occurred or WEOTIF is set, software must reset DMA and SD host, and then transfer those data again.
+     * |[1]     |WEOTIF    |Wrong EOT Encountered Interrupt Flag
+     * |        |          |When DMA Scatter-Gather function is enabled, and EOT of the descriptor is encountered before DMA transfer finished (that means the total sector count of all PAD is less than the sector count of SD host), this bit will be set.
+     * |        |          |0 = No EOT encountered before DMA transfer finished.
+     * |        |          |1 = EOT encountered before DMA transfer finished.
+     * |        |          |Note: This bit is read only, but can be cleared by writing '1' to it.
+     * @var SDH_T::GCTL
+     * Offset: 0x800  Global Control and Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |GCTLRST   |Software Engine Reset
+     * |        |          |0 = No effect.
+     * |        |          |1 = Reset SD host
+     * |        |          |The contents of control register will not be cleared
+     * |        |          |This bit will auto cleared after reset complete.
+     * |[1]     |SDEN      |Secure Digital Functionality Enable Bit
+     * |        |          |0 = SD functionality disabled.
+     * |        |          |1 = SD functionality enabled.
+     * @var SDH_T::GINTEN
+     * Offset: 0x804  Global Interrupt Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |DTAIEN    |DMA READ/WRITE Target Abort Interrupt Enable Bit
+     * |        |          |0 = DMA READ/WRITE target abort interrupt generation disabled.
+     * |        |          |1 = DMA READ/WRITE target abort interrupt generation enabled.
+     * @var SDH_T::GINTSTS
+     * Offset: 0x808  Global Interrupt Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |DTAIF     |DMA READ/WRITE Target Abort Interrupt Flag (Read Only)
+     * |        |          |This bit indicates DMA received an ERROR response from internal AHB bus during DMA read/write operation
+     * |        |          |When Target Abort is occurred, please reset all engine.
+     * |        |          |0 = No bus ERROR response received.
+     * |        |          |1 = Bus ERROR response received.
+     * |        |          |Note: This bit is read only, but can be cleared by writing '1' to it.
+     * @var SDH_T::CTL
+     * Offset: 0x820  SD Control and Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |COEN      |Command Output Enable Bit
+     * |        |          |0 = No effect. (Please use DMARST (SDH_CTL [0]) to clear this bit.)
+     * |        |          |1 = Enabled, SD host will output a command to SD card.
+     * |        |          |Note: When operation is finished, this bit will be cleared automatically, so don't write 0 to this bit (the controller will be abnormal).
+     * |[1]     |RIEN      |Response Input Enable Bit
+     * |        |          |0 = No effect. (Please use DMARST (SDH_CTL [0]) to clear this bit.)
+     * |        |          |1 = Enabled, SD host will wait to receive a response from SD card.
+     * |        |          |Note: When operation is finished, this bit will be cleared automatically, so don't write 0 to this bit (the controller will be abnormal).
+     * |[2]     |DIEN      |Data Input Enable Bit
+     * |        |          |0 = No effect. (Please use DMARST (SDH_CTL [0]) to clear this bit.)
+     * |        |          |1 = Enabled, SD host will wait to receive block data and the CRC16 value from SD card.
+     * |        |          |Note: When operation is finished, this bit will be cleared automatically, so don't write 0 to this bit (the controller will be abnormal).
+     * |[3]     |DOEN      |Data Output Enable Bit
+     * |        |          |0 = No effect. (Please use DMARST (SDH_CTL [0]) to clear this bit.)
+     * |        |          |1 = Enabled, SD host will transfer block data and the CRC16 value to SD card.
+     * |        |          |Note: When operation is finished, this bit will be cleared automatically, so don't write 0 to this bit (the controller will be abnormal).
+     * |[4]     |R2EN      |Response R2 Input Enable Bit
+     * |        |          |0 = No effect. (Please use DMARST (SDH_CTL [0]) to clear this bit.)
+     * |        |          |1 = Enabled, SD host will wait to receive a response R2 from SD card and store the response data into DMC's flash buffer (exclude CRC7).
+     * |        |          |Note: When operation is finished, this bit will be cleared automatically, so don't write 0 to this bit (the controller will be abnormal).
+     * |[5]     |CLK74OEN  |Initial 74 Clock Cycles Output Enable Bit
+     * |        |          |0 = No effect. (Please use DMARST (SDH_CTL [0]) to clear this bit.)
+     * |        |          |1 = Enabled, SD host will output 74 clock cycles to SD card.
+     * |        |          |Note: When operation is finished, this bit will be cleared automatically, so don't write 0 to this bit (the controller will be abnormal).
+     * |[6]     |CLK8OEN   |Generating 8 Clock Cycles Output Enable Bit
+     * |        |          |0 = No effect. (Please use DMARST (SDH_CTL [0]) to clear this bit.)
+     * |        |          |1 = Enabled, SD host will output 8 clock cycles.
+     * |        |          |Note: When operation is finished, this bit will be cleared automatically, so don't write 0 to this bit (the controller will be abnormal).
+     * |[7]     |CLKKEEP   |SD Clock Enable Control
+     * |        |          |0 = SD host decided when to output clock and when to disable clock output automatically.
+     * |        |          |1 = SD clock always keeps free running.
+     * |[13:8]  |CMDCODE   |SD Command Code
+     * |        |          |This register contains the SD command code (0x00 - 0x3F).
+     * |[14]    |CTLRST    |Software Engine Reset
+     * |        |          |0 = No effect.
+     * |        |          |1 = Reset the internal state machine and counters
+     * |        |          |The contents of control register will not be cleared (but RIEN, DIEN, DOEN and R2_EN will be cleared)
+     * |        |          |This bit will be auto cleared after few clock cycles.
+     * |[15]    |DBW       |SD Data Bus Width (for 1-bit / 4-bit Selection)
+     * |        |          |0 = Data bus width is 1-bit.
+     * |        |          |1 = Data bus width is 4-bit.
+     * |[23:16] |BLKCNT    |Block Counts to Be Transferred or Received
+     * |        |          |This field contains the block counts for data-in and data-out transfer
+     * |        |          |For READ_MULTIPLE_BLOCK and WRITE_MULTIPLE_BLOCK command, software can use this function to accelerate data transfer and improve performance
+     * |        |          |Don't fill 0x0 to this field.
+     * |        |          |Note: For READ_MULTIPLE_BLOCK and WRITE_MULTIPLE_BLOCK command, the actual total length is BLKCNT * (BLKLEN +1).
+     * |[27:24] |SDNWR     |NWR Parameter for Block Write Operation
+     * |        |          |This value indicates the NWR parameter for data block write operation in SD clock counts
+     * |        |          |The actual clock cycle will be SDNWR+1.
+     * @var SDH_T::CMDARG
+     * Offset: 0x824  SD Command Argument Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:0]  |ARGUMENT  |SD Command Argument
+     * |        |          |This register contains a 32-bit value specifies the argument of SD command from host controller to SD card
+     * |        |          |Before trigger COEN (SDH_CTL [0]), software should fill argument in this field.
+     * @var SDH_T::INTEN
+     * Offset: 0x828  SD Interrupt Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |BLKDIEN   |Block Transfer Done Interrupt Enable Bit
+     * |        |          |0 = BLKDIF (SDH_INTEN[0]) trigger interrupt Disable.
+     * |        |          |1 = BLKDIF (SDH_INTEN[0]) trigger interrupt Enabled.
+     * |[1]     |CRCIEN    |CRC7, CRC16 and CRC Status Error Interrupt Enable Bit
+     * |        |          |0 = CRCIF (SDH_INTEN[1]) trigger interrupt Disable.
+     * |        |          |1 = CRCIF (SDH_INTEN[1]) trigger interrupt Enabled.
+     * |[8]     |CDIEN     |SD Card Detection Interrupt Enable Bit
+     * |        |          |Enable/Disable interrupts generation of SD controller when card is inserted or removed.
+     * |        |          |0 = CDIF (SDH_INTEN[8]) trigger interrupt Disable.
+     * |        |          |1 = CDIF (SDH_INTEN[8]) trigger interrupt Enabled.
+     * |[12]    |RTOIEN    |Response Time-out Interrupt Enable Bit
+     * |        |          |Enable/Disable interrupts generation of SD controller when receiving response or R2 time-out
+     * |        |          |Time-out value is specified at TOUT register.
+     * |        |          |0 = RTOIF (SDH_INTEN[12]) trigger interrupt Disabled.
+     * |        |          |1 = RTOIF (SDH_INTEN[12]) trigger interrupt Enabled.
+     * |[13]    |DITOIEN   |Data Input Time-out Interrupt Enable Bit
+     * |        |          |Enable/Disable interrupts generation of SD controller when data input time-out
+     * |        |          |Time-out value is specified at TOUT register.
+     * |        |          |0 = DITOIF (SDH_INTEN[13]) trigger interrupt Disabled.
+     * |        |          |1 = DITOIF (SDH_INTEN[13]) trigger interrupt Enabled.
+     * |[14]    |WKIEN     |Wake-up Signal Generating Enable Bit
+     * |        |          |Enable/Disable wake-up signal generating of SD host when current using SD card issues an interrupt (wake-up) via DAT [1] to host.
+     * |        |          |0 = SD Card interrupt to wake-up chip Disabled.
+     * |        |          |1 = SD Card interrupt to wake-up chip Enabled.
+     * |[30]    |CDSRC     |SD Card Detect Source Selection
+     * |        |          |0 = From SD card's DAT3 pin.
+     * |        |          |Host need clock to got data on pin DAT3
+     * |        |          |Please make sure CLKKEEP (SDH_CTL[7]) is 1 in order to generate free running clock for DAT3 pin.
+     * |        |          |1 = From GPIO pin.
+     * @var SDH_T::INTSTS
+     * Offset: 0x82C  SD Interrupt Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |BLKDIF    |Block Transfer Done Interrupt Flag (Read Only)
+     * |        |          |This bit indicates that SD host has finished all data-in or data-out block transfer
+     * |        |          |If there is a CRC16 error or incorrect CRC status during multiple block data transfer, the transfer will be broken and this bit will also be set.
+     * |        |          |0 = Not finished yet.
+     * |        |          |1 = Done.
+     * |        |          |Note: This bit is read only, but can be cleared by writing '1' to it.
+     * |[1]     |CRCIF     |CRC7, CRC16 and CRC Status Error Interrupt Flag (Read Only)
+     * |        |          |This bit indicates that SD host has occurred CRC error during response in, data-in or data-out (CRC status error) transfer
+     * |        |          |When CRC error is occurred, software should reset SD engine
+     * |        |          |Some response (ex
+     * |        |          |R3) doesn't have CRC7 information with it; SD host will still calculate CRC7, get CRC error and set this flag
+     * |        |          |In this condition, software should ignore CRC error and clears this bit manually.
+     * |        |          |0 = No CRC error is occurred.
+     * |        |          |1 = CRC error is occurred.
+     * |        |          |Note: This bit is read only, but can be cleared by writing '1' to it.
+     * |[2]     |CRC7      |CRC7 Check Status (Read Only)
+     * |        |          |SD host will check CRC7 correctness during each response in
+     * |        |          |If that response does not contain CRC7 information (ex
+     * |        |          |R3), then software should turn off CRCIEN (SDH_INTEN[1]) and ignore this bit.
+     * |        |          |0 = Fault.
+     * |        |          |1 = OK.
+     * |[3]     |CRC16     |CRC16 Check Status of Data-in Transfer (Read Only)
+     * |        |          |SD host will check CRC16 correctness after data-in transfer.
+     * |        |          |0 = Fault.
+     * |        |          |1 = OK.
+     * |[6:4]   |CRCSTS    |CRC Status Value of Data-out Transfer (Read Only)
+     * |        |          |SD host will record CRC status of data-out transfer
+     * |        |          |Software could use this value to identify what type of error is during data-out transfer.
+     * |        |          |010 = Positive CRC status.
+     * |        |          |101 = Negative CRC status.
+     * |        |          |111 = SD card programming error occurs.
+     * |[7]     |DAT0STS   |DAT0 Pin Status of Current Selected SD Port (Read Only)
+     * |        |          |This bit is the DAT0 pin status of current selected SD port.
+     * |[8]     |CDIF      |SD Card Detection Interrupt Flag (Read Only)
+     * |        |          |This bit indicates that SD card is inserted or removed
+     * |        |          |Only when CDIEN (SDH_INTEN[8]) is set to 1, this bit is active.
+     * |        |          |0 = No card is inserted or removed.
+     * |        |          |1 = There is a card inserted in or removed from SD.
+     * |        |          |Note: This bit is read only, but can be cleared by writing '1' to it.
+     * |[12]    |RTOIF     |Response Time-out Interrupt Flag (Read Only)
+     * |        |          |This bit indicates that SD host counts to time-out value when receiving response or R2 (waiting start bit).
+     * |        |          |0 = Not time-out.
+     * |        |          |1 = Response time-out.
+     * |        |          |Note: This bit is read only, but can be cleared by writing '1' to it.
+     * |[13]    |DITOIF    |Data Input Time-out Interrupt Flag (Read Only)
+     * |        |          |This bit indicates that SD host counts to time-out value when receiving data (waiting start bit).
+     * |        |          |0 = Not time-out.
+     * |        |          |1 = Data input time-out.
+     * |        |          |Note: This bit is read only, but can be cleared by writing '1' to it.
+     * |[16]    |CDSTS     |Card Detect Status of SD (Read Only)
+     * |        |          |This bit indicates the card detect pin status of SD, and is used for card detection
+     * |        |          |When there is a card inserted in or removed from SD, software should check this bit to confirm if there is really a card insertion or removal.
+     * |        |          |If CDSRC (SDH_INTEN[30]) = 0, to select DAT3 for card detection:.
+     * |        |          |0 = Card removed.
+     * |        |          |1 = Card inserted.
+     * |        |          |If CDSRC (SDH_INTEN[30]) = 1, to select GPIO for card detection:.
+     * |        |          |0 = Card inserted.
+     * |        |          |1 = Card removed.
+     * |[18]    |DAT1STS   |DAT1 Pin Status of SD Port (Read Only)
+     * |        |          |This bit indicates the DAT1 pin status of SD port.
+     * @var SDH_T::RESP0
+     * Offset: 0x830  SD Receiving Response Token Register 0
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:0]  |RESPTK0   |SD Receiving Response Token 0
+     * |        |          |SD host controller will receive a response token for getting a reply from SD card when RIEN (SDH_CTL[1]) is set
+     * |        |          |This field contains response bit 47-16 of the response token.
+     * @var SDH_T::RESP1
+     * Offset: 0x834  SD Receiving Response Token Register 1
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[7:0]   |RESPTK1   |SD Receiving Response Token 1
+     * |        |          |SD host controller will receive a response token for getting a reply from SD card when RIEN (SDH_CTL[1]) is set
+     * |        |          |This register contains the bit 15-8 of the response token.
+     * @var SDH_T::BLEN
+     * Offset: 0x838  SD Block Length Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[10:0]  |BLKLEN    |SD BLOCK LENGTH in Byte Unit
+     * |        |          |An 11-bit value specifies the SD transfer byte count of a block
+     * |        |          |The actual byte count is equal to BLKLEN+1.
+     * |        |          |Note: The default SD block length is 512 bytes
+     * @var SDH_T::TOUT
+     * Offset: 0x83C  SD Response/Data-in Time-out Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[23:0]  |TOUT      |SD Response/Data-in Time-out Value
+     * |        |          |A 24-bit value specifies the time-out counts of response and data input
+     * |        |          |SD host controller will wait start bit of response or data-in until this value reached
+     * |        |          |The time period depends on SD engine clock frequency
+     * |        |          |Do not write a small number into this field, or you may never get response or data due to time-out.
+     * |        |          |Note: Filling 0x0 into this field will disable hardware time-out function.
+     */
 
     __IO uint32_t FB[32];                /*!< Shared Buffer (FIFO)                                                      */
     /// @cond HIDDEN_SYMBOLS

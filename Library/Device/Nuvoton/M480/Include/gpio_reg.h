@@ -28,457 +28,207 @@ typedef struct
 {
 
     /**
-@var GPIO_T::MODE
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">MODE
-</font><br><p> <font size="2">
-Offset: 0x00/0x40/0x80/0xC0/0x100/0x140/0x180/0x1C0  Port A-H I/O Mode Control
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[2n+1:2n]</td><td>MODEn</td><td><div style="word-wrap: break-word;"><b>Port A-H I/O Pin[n] Mode Control
-</b><br>
-Determine each I/O mode of Px.n pins.
-<br>
-00 = Px.n is in Input mode.
-<br>
-01 = Px.n is in Push-pull Output mode.
-<br>
-10 = Px.n is in Open-drain Output mode.
-<br>
-11 = Px.n is in Quasi-bidirectional mode.
-<br>
-Note1: The initial value of this field is defined by CIOINI (CONFIG0 [10]).
-<br>
-If CIOINI is set to 0, the default value is 0xFFFF_FFFF and all pins will be quasi-bidirectional mode after chip powered on.
-<br>
-If CIOINI is set to 1, the default value is 0x0000_0000 and all pins will be input mode after chip powered on.
-<br>
-Note2:
-<br>
-Max. n=15 for port A/B/E/G.
-<br>
-Max. n=14 for port C/D.
-<br>
-Max. n=11 for port F/H.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var GPIO_T::DINOFF
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DINOFF
-</font><br><p> <font size="2">
-Offset: 0x04/0x44/0x84/0xC4/0x104/0x144/0x184/0x1C4  Port A-H Digital Input Path Disable Control
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[n+16]</td><td>DINOFFn</td><td><div style="word-wrap: break-word;"><b>Port A-H Pin[n] Digital Input Path Disable Control
-</b><br>
-Each of these bits is used to control if the digital input path of corresponding Px.n pin is disabled.
-<br>
-If input is analog signal, users can disable Px.n digital input path to avoid input current leakage.
-<br>
-0 = Px.n digital input path Enabled.
-<br>
-1 = Px.n digital input path Disabled (digital input tied to low).
-<br>
-Note:
-<br>
-Max. n=15 for port A/B/E/G.
-<br>
-Max. n=14 for port C/D.
-<br>
-Max. n=11 for port F/H.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var GPIO_T::DOUT
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DOUT
-</font><br><p> <font size="2">
-Offset: 0x08/0x48/0x88/0xC8/0x108/0x148/0x188/0x1C8  Port A-H Data Output Value
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[n]</td><td>DOUTn</td><td><div style="word-wrap: break-word;"><b>Port A-H Pin[n] Output Value
-</b><br>
-Each of these bits controls the status of a Px.n pin when the Px.n is configured as Push-pull output, Open-drain output or Quasi-bidirectional mode.
-<br>
-0 = Px.n will drive Low if the Px.n pin is configured as Push-pull output, Open-drain output or Quasi-bidirectional mode.
-<br>
-1 = Px.n will drive High if the Px.n pin is configured as Push-pull output or Quasi-bidirectional mode.
-<br>
-Note:
-<br>
-Max. n=15 for port A/B/E/G.
-<br>
-Max. n=14 for port C/D.
-<br>
-Max. n=11 for port F/H.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var GPIO_T::DATMSK
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DATMSK
-</font><br><p> <font size="2">
-Offset: 0x0C/0x4C/0x8C/0xCC/0x10C/0x14C/0x18C/0x1CC  Port A-H Data Output Write Mask
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[n]</td><td>DATMSKn</td><td><div style="word-wrap: break-word;"><b>Port A-H Pin[n] Data Output Write Mask
-</b><br>
-These bits are used to protect the corresponding DOUT (Px_DOUT[n]) bit.
-<br>
-When the DATMSK (Px_DATMSK[n]) bit is set to 1, the corresponding DOUT (Px_DOUT[n]) bit is protected.
-<br>
-If the write signal is masked, writing data to the protect bit is ignored.
-<br>
-0 = Corresponding DOUT (Px_DOUT[n]) bit can be updated.
-<br>
-1 = Corresponding DOUT (Px_DOUT[n]) bit protected.
-<br>
-Note1: This function only protects the corresponding DOUT (Px_DOUT[n]) bit, and will not protect the corresponding PDIO (Pxn_PDIO[n]) bit.
-<br>
-Note2:
-<br>
-Max. n=15 for port A/B/E/G.
-<br>
-Max. n=14 for port C/D.
-<br>
-Max. n=11 for port F/H.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var GPIO_T::PIN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PIN
-</font><br><p> <font size="2">
-Offset: 0x10/0x50/0x90/0xD0/0x110/0x150/0x190/0x1D0  Port A-H Pin Value
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[n]</td><td>PINn</td><td><div style="word-wrap: break-word;"><b>Port A-H Pin[n] Pin Value
-</b><br>
-Each bit of the register reflects the actual status of the respective Px.n pin.
-<br>
-If the bit is 1, it indicates the corresponding pin status is high; else the pin status is low.
-<br>
-Note:
-<br>
-Max. n=15 for port A/B/E/G.
-<br>
-Max. n=14 for port C/D.
-<br>
-Max. n=11 for port F/H.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var GPIO_T::DBEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DBEN
-</font><br><p> <font size="2">
-Offset: 0x14/0x54/0x94/0xD4/0x114/0x154/0x194/0x1D4  Port A-H De-Bounce Enable Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[n]</td><td>DBENn</td><td><div style="word-wrap: break-word;"><b>Port A-H Pin[n] Input Signal De-Bounce Enable Bit
-</b><br>
-The DBEN[n] bit is used to enable the de-bounce function for each corresponding bit.
-<br>
-If the input signal pulse width cannot be sampled by continuous two de-bounce sample cycle, the input signal transition is seen as the signal bounce and will not trigger the interrupt.
-<br>
-The de-bounce clock source is controlled by DBCLKSRC (GPIO_DBCTL [4]), one de-bounce sample cycle period is controlled by DBCLKSEL (GPIO_DBCTL [3:0]).
-<br>
-0 = Px.n de-bounce function Disabled.
-<br>
-1 = Px.n de-bounce function Enabled.
-<br>
-The de-bounce function is valid only for edge triggered interrupt.
-<br>
-If the interrupt mode is level triggered, the de-bounce enable bit is ignored.
-<br>
-Note:
-<br>
-Max. n=15 for port A/B/E/G.
-<br>
-Max. n=14 for port C/D.
-<br>
-Max. n=11 for port F/H.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var GPIO_T::INTTYPE
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">INTTYPE
-</font><br><p> <font size="2">
-Offset: 0x18/0x58/0x98/0xD8/0x118/0x158/0x198/0x1D8  Port A-H Interrupt Trigger Type Control
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[n]</td><td>TYPEn</td><td><div style="word-wrap: break-word;"><b>Port A-H Pin[n] Edge or Level Detection Interrupt Trigger Type Control
-</b><br>
-TYPE (Px_INTTYPE[n]) bit is used to control the triggered interrupt is by level trigger or by edge trigger.
-<br>
-If the interrupt is by edge trigger, the trigger source can be controlled by de-bounce.
-<br>
-If the interrupt is by level trigger, the input source is sampled by one HCLK clock and generates the interrupt.
-<br>
-0 = Edge trigger interrupt.
-<br>
-1 = Level trigger interrupt.
-<br>
-If the pin is set as the level trigger interrupt, only one level can be set on the registers RHIEN (Px_INTEN[n+16])/FLIEN (Px_INTEN[n]).
-<br>
-If both levels to trigger interrupt are set, the setting is ignored and no interrupt will occur.
-<br>
-The de-bounce function is valid only for edge triggered interrupt.
-<br>
-If the interrupt mode is level triggered, the de-bounce enable bit is ignored.
-<br>
-Note:
-<br>
-Max. n=15 for port A/B/E/G.
-<br>
-Max. n=14 for port C/D.
-<br>
-Max. n=11 for port F/H.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var GPIO_T::INTEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">INTEN
-</font><br><p> <font size="2">
-Offset: 0x1C/0x5C/0x9C/0xDC/0x11C/0x15C/0x19C/0x1DC  Port A-H Interrupt Enable Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[n]</td><td>FLIENn</td><td><div style="word-wrap: break-word;"><b>Port A-H Pin[n] Falling Edge or Low Level Interrupt Trigger Type Enable Bit
-</b><br>
-The FLIEN (Px_INTEN[n]) bit is used to enable the interrupt for each of the corresponding input Px.n pin.
-<br>
-Set bit to 1 also enable the pin wake-up function.
-<br>
-When setting the FLIEN (Px_INTEN[n]) bit to 1 :
-<br>
-If the interrupt is level trigger (TYPE (Px_INTTYPE[n]) bit is set to 1), the input Px.n pin will generate the interrupt while this pin state is at low level.
-<br>
-If the interrupt is edge trigger(TYPE (Px_INTTYPE[n]) bit is set to 0), the input Px.n pin will generate the interrupt while this pin state changed from high to low.
-<br>
-0 = Px.n level low or high to low interrupt Disabled.
-<br>
-1 = Px.n level low or high to low interrupt Enabled.
-<br>
-Note:
-<br>
-Max. n=15 for port A/B/E/G.
-<br>
-Max. n=14 for port C/D.
-<br>
-Max. n=11 for port F/H.
-<br>
-</div></td></tr><tr><td>
-[n+16]</td><td>RHIENn</td><td><div style="word-wrap: break-word;"><b>Port A-H Pin[n] Rising Edge or High Level Interrupt Trigger Type Enable Bit
-</b><br>
-The RHIEN (Px_INTEN[n+16]) bit is used to enable the interrupt for each of the corresponding input Px.n pin
-<br>
-Set bit to 1 also enable the pin wake-up function.
-<br>
-When setting the RHIEN (Px_INTEN[n+16]) bit to 1 :
-<br>
-If the interrupt is level trigger (TYPE (Px_INTTYPE[n]) bit is set to 1), the input Px.n pin will generate the interrupt while this pin state is at high level.
-<br>
-If the interrupt is edge trigger (TYPE (Px_INTTYPE[n]) bit is set to 0), the input Px.n pin will generate the interrupt while this pin state changed from low to high.
-<br>
-0 = Px.n level high or low to high interrupt Disabled.
-<br>
-1 = Px.n level high or low to high interrupt Enabled.
-<br>
-Note:
-<br>
-Max. n=15 for port A/B/E/G.
-<br>
-Max. n=14 for port C/D.
-<br>
-Max. n=11 for port F/H.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var GPIO_T::INTSRC
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">INTSRC
-</font><br><p> <font size="2">
-Offset: 0x20/0x60/0xA0/0xE0/0x120/0x160/0x1A0/0x1E0  Port A-H Interrupt Source Flag
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[n]</td><td>INTSRCn</td><td><div style="word-wrap: break-word;"><b>Port A-H Pin[n] Interrupt Source Flag
-</b><br>
-Write Operation :
-<br>
-0 = No action.
-<br>
-1 = Clear the corresponding pending interrupt.
-<br>
-Read Operation :
-<br>
-0 = No interrupt at Px.n.
-<br>
-1 = Px.n generates an interrupt.
-<br>
-Note:
-<br>
-Max. n=15 for port A/B/E/G.
-<br>
-Max. n=14 for port C/D.
-<br>
-Max. n=11 for port F/H.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var GPIO_T::SMTEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SMTEN
-</font><br><p> <font size="2">
-Offset: 0x24/0x64/0xA4/0xE4/0x124/0x164/0x1A4/0x1E4  Port A-H Input Schmitt Trigger Enable Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[n]</td><td>SMTENn</td><td><div style="word-wrap: break-word;"><b>Port A-H Pin[n] Input Schmitt Trigger Enable Bit
-</b><br>
-0 = Px.n input Schmitt trigger function Disabled.
-<br>
-1 = Px.n input Schmitt trigger function Enabled.
-<br>
-Note:
-<br>
-Max. n=15 for port A/B/E/G.
-<br>
-Max. n=14 for port C/D.
-<br>
-Max. n=11 for port F/H.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var GPIO_T::SLEWCTL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SLEWCTL
-</font><br><p> <font size="2">
-Offset: 0x28/0x68/0xA8/0xE8/0x128/0x168/0x1A8/0x1E8  Port A-H High Slew Rate Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[2n+1:2n]</td><td>HSRENn</td><td><div style="word-wrap: break-word;"><b>Port A-H Pin[n] High Slew Rate Control
-</b><br>
-00 = Px.n output with normal slew rate mode (maximum 40 MHz at 2.7V).
-<br>
-01 = Px.n output with high slew rate mode (maximum 80 MHz at 2.7V).
-<br>
-10 = Px.n output with fast slew rate mode (maximum 100 MHz at 2.7V.
-<br>
-11 = Reserved.
-<br>
-Note:
-<br>
-Max. n=15 for port A/B/E/G.
-<br>
-Max. n=14 for port C/D.
-<br>
-Max. n=11 for port F/H.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var GPIO_T::PUSEL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PUSEL
-</font><br><p> <font size="2">
-Offset: 0x30/0x70/0xB0/0xF0/0x130/0x170/0x1B0/0x1F0  Port A-H Pull-up and Pull-down Selection Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[2n+1:2n]</td><td>PUSELn</td><td><div style="word-wrap: break-word;"><b>Port A-H Pin[n] Pull-up and Pull-down Enable Register
-</b><br>
-Determine each I/O Pull-up/pull-down of Px.n pins.
-<br>
-00 = Px.n pull-up and pull-up disable.
-<br>
-01 = Px.n pull-up enable.
-<br>
-10 = Px.n pull-down enable.
-<br>
-11 = Reserved.
-<br>
-Note1:
-<br>
-Basically, the pull-up control and pull-down control has following behavior limitation
-<br>
-The independent pull-up control register only valid when MODEn set as tri-state and open-drain mode
-<br>
-The independent pull-down control register only valid when MODEn set as tri-state mode
-<br>
-When both pull-up pull-down is set as 1 at tri-state mode, keep I/O in tri-state mode
-<br>
-Note2:
-<br>
-Max. n=15 for port A/B/E/G.
-<br>
-Max. n=14 for port C/D.
-<br>
-Max. n=11 for port F/H.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-
- */
+     * @var GPIO_T::MODE
+     * Offset: 0x00/0x40/0x80/0xC0/0x100/0x140/0x180/0x1C0  Port A-H I/O Mode Control
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[2n+1:2n]|MODEn    |Port A-H I/O Pin[n] Mode Control
+     * |        |          |Determine each I/O mode of Px.n pins.
+     * |        |          |00 = Px.n is in Input mode.
+     * |        |          |01 = Px.n is in Push-pull Output mode.
+     * |        |          |10 = Px.n is in Open-drain Output mode.
+     * |        |          |11 = Px.n is in Quasi-bidirectional mode.
+     * |        |          |Note1: The initial value of this field is defined by CIOINI (CONFIG0 [10]).
+     * |        |          |If CIOINI is set to 0, the default value is 0xFFFF_FFFF and all pins will be quasi-bidirectional mode after chip powered on.
+     * |        |          |If CIOINI is set to 1, the default value is 0x0000_0000 and all pins will be input mode after chip powered on.
+     * |        |          |Note2:
+     * |        |          |Max. n=15 for port A/B/E/G.
+     * |        |          |Max. n=14 for port C/D.
+     * |        |          |Max. n=11 for port F/H.
+     * @var GPIO_T::DINOFF
+     * Offset: 0x04/0x44/0x84/0xC4/0x104/0x144/0x184/0x1C4  Port A-H Digital Input Path Disable Control
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[n+16]  |DINOFFn   |Port A-H Pin[n] Digital Input Path Disable Control
+     * |        |          |Each of these bits is used to control if the digital input path of corresponding Px.n pin is disabled.
+     * |        |          |If input is analog signal, users can disable Px.n digital input path to avoid input current leakage.
+     * |        |          |0 = Px.n digital input path Enabled.
+     * |        |          |1 = Px.n digital input path Disabled (digital input tied to low).
+     * |        |          |Note:
+     * |        |          |Max. n=15 for port A/B/E/G.
+     * |        |          |Max. n=14 for port C/D.
+     * |        |          |Max. n=11 for port F/H.
+     * @var GPIO_T::DOUT
+     * Offset: 0x08/0x48/0x88/0xC8/0x108/0x148/0x188/0x1C8  Port A-H Data Output Value
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[n]     |DOUTn     |Port A-H Pin[n] Output Value
+     * |        |          |Each of these bits controls the status of a Px.n pin when the Px.n is configured as Push-pull output, Open-drain output or Quasi-bidirectional mode.
+     * |        |          |0 = Px.n will drive Low if the Px.n pin is configured as Push-pull output, Open-drain output or Quasi-bidirectional mode.
+     * |        |          |1 = Px.n will drive High if the Px.n pin is configured as Push-pull output or Quasi-bidirectional mode.
+     * |        |          |Note:
+     * |        |          |Max. n=15 for port A/B/E/G.
+     * |        |          |Max. n=14 for port C/D.
+     * |        |          |Max. n=11 for port F/H.
+     * @var GPIO_T::DATMSK
+     * Offset: 0x0C/0x4C/0x8C/0xCC/0x10C/0x14C/0x18C/0x1CC  Port A-H Data Output Write Mask
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[n]     |DATMSKn    |Port A-H Pin[n] Data Output Write Mask
+     * |        |          |These bits are used to protect the corresponding DOUT (Px_DOUT[n]) bit.
+     * |        |          |When the DATMSK (Px_DATMSK[n]) bit is set to 1, the corresponding DOUT (Px_DOUT[n]) bit is protected.
+     * |        |          |If the write signal is masked, writing data to the protect bit is ignored.
+     * |        |          |0 = Corresponding DOUT (Px_DOUT[n]) bit can be updated.
+     * |        |          |1 = Corresponding DOUT (Px_DOUT[n]) bit protected.
+     * |        |          |Note1: This function only protects the corresponding DOUT (Px_DOUT[n]) bit, and will not protect the corresponding PDIO (Pxn_PDIO[n]) bit.
+     * |        |          |Note2:
+     * |        |          |Max. n=15 for port A/B/E/G.
+     * |        |          |Max. n=14 for port C/D.
+     * |        |          |Max. n=11 for port F/H.
+     * @var GPIO_T::PIN
+     * Offset: 0x10/0x50/0x90/0xD0/0x110/0x150/0x190/0x1D0  Port A-H Pin Value
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[n]     |PINn      |Port A-H Pin[n] Pin Value
+     * |        |          |Each bit of the register reflects the actual status of the respective Px.n pin.
+     * |        |          |If the bit is 1, it indicates the corresponding pin status is high; else the pin status is low.
+     * |        |          |Note:
+     * |        |          |Max. n=15 for port A/B/E/G.
+     * |        |          |Max. n=14 for port C/D.
+     * |        |          |Max. n=11 for port F/H.
+     * @var GPIO_T::DBEN
+     * Offset: 0x14/0x54/0x94/0xD4/0x114/0x154/0x194/0x1D4  Port A-H De-Bounce Enable Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[n]     |DBENn     |Port A-H Pin[n] Input Signal De-Bounce Enable Bit
+     * |        |          |The DBEN[n] bit is used to enable the de-bounce function for each corresponding bit.
+     * |        |          |If the input signal pulse width cannot be sampled by continuous two de-bounce sample cycle, the input signal transition is seen as the signal bounce and will not trigger the interrupt.
+     * |        |          |The de-bounce clock source is controlled by DBCLKSRC (GPIO_DBCTL [4]), one de-bounce sample cycle period is controlled by DBCLKSEL (GPIO_DBCTL [3:0]).
+     * |        |          |0 = Px.n de-bounce function Disabled.
+     * |        |          |1 = Px.n de-bounce function Enabled.
+     * |        |          |The de-bounce function is valid only for edge triggered interrupt.
+     * |        |          |If the interrupt mode is level triggered, the de-bounce enable bit is ignored.
+     * |        |          |Note:
+     * |        |          |Max. n=15 for port A/B/E/G.
+     * |        |          |Max. n=14 for port C/D.
+     * |        |          |Max. n=11 for port F/H.
+     * @var GPIO_T::INTTYPE
+     * Offset: 0x18/0x58/0x98/0xD8/0x118/0x158/0x198/0x1D8  Port A-H Interrupt Trigger Type Control
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[n]     |TYPEn     |Port A-H Pin[n] Edge or Level Detection Interrupt Trigger Type Control
+     * |        |          |TYPE (Px_INTTYPE[n]) bit is used to control the triggered interrupt is by level trigger or by edge trigger.
+     * |        |          |If the interrupt is by edge trigger, the trigger source can be controlled by de-bounce.
+     * |        |          |If the interrupt is by level trigger, the input source is sampled by one HCLK clock and generates the interrupt.
+     * |        |          |0 = Edge trigger interrupt.
+     * |        |          |1 = Level trigger interrupt.
+     * |        |          |If the pin is set as the level trigger interrupt, only one level can be set on the registers RHIEN (Px_INTEN[n+16])/FLIEN (Px_INTEN[n]).
+     * |        |          |If both levels to trigger interrupt are set, the setting is ignored and no interrupt will occur.
+     * |        |          |The de-bounce function is valid only for edge triggered interrupt.
+     * |        |          |If the interrupt mode is level triggered, the de-bounce enable bit is ignored.
+     * |        |          |Note:
+     * |        |          |Max. n=15 for port A/B/E/G.
+     * |        |          |Max. n=14 for port C/D.
+     * |        |          |Max. n=11 for port F/H.
+     * @var GPIO_T::INTEN
+     * Offset: 0x1C/0x5C/0x9C/0xDC/0x11C/0x15C/0x19C/0x1DC  Port A-H Interrupt Enable Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[n]     |FLIENn    |Port A-H Pin[n] Falling Edge or Low Level Interrupt Trigger Type Enable Bit
+     * |        |          |The FLIEN (Px_INTEN[n]) bit is used to enable the interrupt for each of the corresponding input Px.n pin.
+     * |        |          |Set bit to 1 also enable the pin wake-up function.
+     * |        |          |When setting the FLIEN (Px_INTEN[n]) bit to 1 :
+     * |        |          |If the interrupt is level trigger (TYPE (Px_INTTYPE[n]) bit is set to 1), the input Px.n pin will generate the interrupt while this pin state is at low level.
+     * |        |          |If the interrupt is edge trigger(TYPE (Px_INTTYPE[n]) bit is set to 0), the input Px.n pin will generate the interrupt while this pin state changed from high to low.
+     * |        |          |0 = Px.n level low or high to low interrupt Disabled.
+     * |        |          |1 = Px.n level low or high to low interrupt Enabled.
+     * |        |          |Note:
+     * |        |          |Max. n=15 for port A/B/E/G.
+     * |        |          |Max. n=14 for port C/D.
+     * |        |          |Max. n=11 for port F/H.
+     * |[n+16]  |RHIENn    |Port A-H Pin[n] Rising Edge or High Level Interrupt Trigger Type Enable Bit
+     * |        |          |The RHIEN (Px_INTEN[n+16]) bit is used to enable the interrupt for each of the corresponding input Px.n pin
+     * |        |          |Set bit to 1 also enable the pin wake-up function.
+     * |        |          |When setting the RHIEN (Px_INTEN[n+16]) bit to 1 :
+     * |        |          |If the interrupt is level trigger (TYPE (Px_INTTYPE[n]) bit is set to 1), the input Px.n pin will generate the interrupt while this pin state is at high level.
+     * |        |          |If the interrupt is edge trigger (TYPE (Px_INTTYPE[n]) bit is set to 0), the input Px.n pin will generate the interrupt while this pin state changed from low to high.
+     * |        |          |0 = Px.n level high or low to high interrupt Disabled.
+     * |        |          |1 = Px.n level high or low to high interrupt Enabled.
+     * |        |          |Note:
+     * |        |          |Max. n=15 for port A/B/E/G.
+     * |        |          |Max. n=14 for port C/D.
+     * |        |          |Max. n=11 for port F/H.
+     * @var GPIO_T::INTSRC
+     * Offset: 0x20/0x60/0xA0/0xE0/0x120/0x160/0x1A0/0x1E0  Port A-H Interrupt Source Flag
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[n]     |INTSRCn   |Port A-H Pin[n] Interrupt Source Flag
+     * |        |          |Write Operation :
+     * |        |          |0 = No action.
+     * |        |          |1 = Clear the corresponding pending interrupt.
+     * |        |          |Read Operation :
+     * |        |          |0 = No interrupt at Px.n.
+     * |        |          |1 = Px.n generates an interrupt.
+     * |        |          |Note:
+     * |        |          |Max. n=15 for port A/B/E/G.
+     * |        |          |Max. n=14 for port C/D.
+     * |        |          |Max. n=11 for port F/H.
+     * @var GPIO_T::SMTEN
+     * Offset: 0x24/0x64/0xA4/0xE4/0x124/0x164/0x1A4/0x1E4  Port A-H Input Schmitt Trigger Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[n]     |SMTENn    |Port A-H Pin[n] Input Schmitt Trigger Enable Bit
+     * |        |          |0 = Px.n input Schmitt trigger function Disabled.
+     * |        |          |1 = Px.n input Schmitt trigger function Enabled.
+     * |        |          |Note:
+     * |        |          |Max. n=15 for port A/B/E/G.
+     * |        |          |Max. n=14 for port C/D.
+     * |        |          |Max. n=11 for port F/H.
+     * @var GPIO_T::SLEWCTL
+     * Offset: 0x28/0x68/0xA8/0xE8/0x128/0x168/0x1A8/0x1E8  Port A-H High Slew Rate Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[2n+1:2n]|HSRENn    |Port A-H Pin[n] High Slew Rate Control
+     * |        |          |00 = Px.n output with normal slew rate mode (maximum 40 MHz at 2.7V).
+     * |        |          |01 = Px.n output with high slew rate mode (maximum 80 MHz at 2.7V).
+     * |        |          |10 = Px.n output with fast slew rate mode (maximum 100 MHz at 2.7V.
+     * |        |          |11 = Reserved.
+     * |        |          |Note:
+     * |        |          |Max. n=15 for port A/B/E/G.
+     * |        |          |Max. n=14 for port C/D.
+     * |        |          |Max. n=11 for port F/H.
+     * @var GPIO_T::PUSEL
+     * Offset: 0x30/0x70/0xB0/0xF0/0x130/0x170/0x1B0/0x1F0  Port A-H Pull-up and Pull-down Selection Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[2n+1:2n]|PUSELn    |Port A-H Pin[n] Pull-up and Pull-down Enable Register
+     * |        |          |Determine each I/O Pull-up/pull-down of Px.n pins.
+     * |        |          |00 = Px.n pull-up and pull-up disable.
+     * |        |          |01 = Px.n pull-up enable.
+     * |        |          |10 = Px.n pull-down enable.
+     * |        |          |11 = Reserved.
+     * |        |          |Note1:
+     * |        |          |Basically, the pull-up control and pull-down control has following behavior limitation
+     * |        |          |The independent pull-up control register only valid when MODEn set as tri-state and open-drain mode
+     * |        |          |The independent pull-down control register only valid when MODEn set as tri-state mode
+     * |        |          |When both pull-up pull-down is set as 1 at tri-state mode, keep I/O in tri-state mode
+     * |        |          |Note2:
+     * |        |          |Max. n=15 for port A/B/E/G.
+     * |        |          |Max. n=14 for port C/D.
+     * |        |          |Max. n=11 for port F/H.
+     */
 
     __IO uint32_t MODE;          /* Offset: 0x00/0x40/0x80/0xC0/0x100/0x140/0x180/0x1C0  Port A-H I/O Mode Control                       */
     __IO uint32_t DINOFF;        /* Offset: 0x04/0x44/0x84/0xC4/0x104/0x144/0x184/0x1C4  Port A-H Digital Input Path Disable Control     */
@@ -502,72 +252,36 @@ typedef struct
 {
 
     /**
-@var GPIO_DBCTL_T::DBCTL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DBCTL
-</font><br><p> <font size="2">
-Offset: 0x440  Interrupt De-bounce Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[3:0]</td><td>DBCLKSEL</td><td><div style="word-wrap: break-word;"><b>De-Bounce Sampling Cycle Selection
-</b><br>
-0000 = Sample interrupt input once per 1 clocks.
-<br>
-0001 = Sample interrupt input once per 2 clocks.
-<br>
-0010 = Sample interrupt input once per 4 clocks.
-<br>
-0011 = Sample interrupt input once per 8 clocks.
-<br>
-0100 = Sample interrupt input once per 16 clocks.
-<br>
-0101 = Sample interrupt input once per 32 clocks.
-<br>
-0110 = Sample interrupt input once per 64 clocks.
-<br>
-0111 = Sample interrupt input once per 128 clocks.
-<br>
-1000 = Sample interrupt input once per 256 clocks.
-<br>
-1001 = Sample interrupt input once per 2*256 clocks.
-<br>
-1010 = Sample interrupt input once per 4*256 clocks.
-<br>
-1011 = Sample interrupt input once per 8*256 clocks.
-<br>
-1100 = Sample interrupt input once per 16*256 clocks.
-<br>
-1101 = Sample interrupt input once per 32*256 clocks.
-<br>
-1110 = Sample interrupt input once per 64*256 clocks.
-<br>
-1111 = Sample interrupt input once per 128*256 clocks.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>DBCLKSRC</td><td><div style="word-wrap: break-word;"><b>De-Bounce Counter Clock Source Selection
-</b><br>
-0 = De-bounce counter clock source is the HCLK.
-<br>
-1 = De-bounce counter clock source is the 10 kHz internal low speed RC oscillator (LIRC).
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>ICLKON</td><td><div style="word-wrap: break-word;"><b>Interrupt Clock On Mode
-</b><br>
-0 = Edge detection circuit is active only if I/O pin corresponding RHIEN (Px_INTEN[n+16])/FLIEN (Px_INTEN[n]) bit is set to 1.
-<br>
-1 = All I/O pins edge detection circuit is always active after reset.
-<br>
-Note: It is recommended to disable this bit to save system power if no special application concern.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-
- */
+     * @var GPIO_DBCTL_T::DBCTL
+     * Offset: 0x440  Interrupt De-bounce Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[3:0]   |DBCLKSEL  |De-Bounce Sampling Cycle Selection
+     * |        |          |0000 = Sample interrupt input once per 1 clocks.
+     * |        |          |0001 = Sample interrupt input once per 2 clocks.
+     * |        |          |0010 = Sample interrupt input once per 4 clocks.
+     * |        |          |0011 = Sample interrupt input once per 8 clocks.
+     * |        |          |0100 = Sample interrupt input once per 16 clocks.
+     * |        |          |0101 = Sample interrupt input once per 32 clocks.
+     * |        |          |0110 = Sample interrupt input once per 64 clocks.
+     * |        |          |0111 = Sample interrupt input once per 128 clocks.
+     * |        |          |1000 = Sample interrupt input once per 256 clocks.
+     * |        |          |1001 = Sample interrupt input once per 2*256 clocks.
+     * |        |          |1010 = Sample interrupt input once per 4*256 clocks.
+     * |        |          |1011 = Sample interrupt input once per 8*256 clocks.
+     * |        |          |1100 = Sample interrupt input once per 16*256 clocks.
+     * |        |          |1101 = Sample interrupt input once per 32*256 clocks.
+     * |        |          |1110 = Sample interrupt input once per 64*256 clocks.
+     * |        |          |1111 = Sample interrupt input once per 128*256 clocks.
+     * |[4]     |DBCLKSRC  |De-Bounce Counter Clock Source Selection
+     * |        |          |0 = De-bounce counter clock source is the HCLK.
+     * |        |          |1 = De-bounce counter clock source is the 10 kHz internal low speed RC oscillator (LIRC).
+     * |[5]     |ICLKON    |Interrupt Clock On Mode
+     * |        |          |0 = Edge detection circuit is active only if I/O pin corresponding RHIEN (Px_INTEN[n+16])/FLIEN (Px_INTEN[n]) bit is set to 1.
+     * |        |          |1 = All I/O pins edge detection circuit is always active after reset.
+     * |        |          |Note: It is recommended to disable this bit to save system power if no special application concern.
+     */
 
     __IO uint32_t DBCTL;         /* Offset: 0x440  Interrupt De-bounce Control Register                              */
 

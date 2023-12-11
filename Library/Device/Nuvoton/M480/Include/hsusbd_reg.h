@@ -27,580 +27,254 @@ typedef struct
 {
 
     /**
-@var HSUSBD_EP_T::EPDAT
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">EPDAT
-</font><br><p> <font size="2">
-Offset: 0x00  Endpoint n Data Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:0]</td><td>EPDAT</td><td><div style="word-wrap: break-word;"><b>Endpoint A~L Data Register
-</b><br>
-Endpoint A~L data buffer for the buffer transaction (read or write).
-<br>
-Note: Only word access is supported.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_EP_T::EPDAT_BYTE
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">EPDAT_BYTE
-</font><br><p> <font size="2">
-Offset: 0x00  Endpoint n Data Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[7:0]</td><td>EPDAT</td><td><div style="word-wrap: break-word;"><b>Endpoint A~L Data Register
-</b><br>
-Endpoint A~L data buffer for the buffer transaction (read or write).
-<br>
-Note: Only byte access is supported.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_EP_T::EPINTSTS
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">EPINTSTS
-</font><br><p> <font size="2">
-Offset: 0x04  Endpoint n Interrupt Status Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>BUFFULLIF</td><td><div style="word-wrap: break-word;"><b>Buffer Full
-</b><br>
-For an IN endpoint, the currently selected buffer is full, or no buffer is available to the local side for writing (no space to write)
-<br>
-For an OUT endpoint, there is a buffer available on the local side, and there are FIFO full of bytes available to be read (entire packet is available for reading).
-<br>
-0 = The endpoint packet buffer is not full.
-<br>
-1 = The endpoint packet buffer is full.
-<br>
-Note: This bit is read-only.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>BUFEMPTYIF</td><td><div style="word-wrap: break-word;"><b>Buffer Empty
-</b><br>
-For an IN endpoint, a buffer is available to the local side for writing up to FIFO full of bytes.
-<br>
-0 = The endpoint buffer is not empty.
-<br>
-1 = The endpoint buffer is empty.
-<br>
-For an OUT endpoint:
-<br>
-0 = The currently selected buffer has not a count of 0.
-<br>
-1 = The currently selected buffer has a count of 0, or no buffer is available on the local side (nothing to read).
-<br>
-Note: This bit is read-only.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>SHORTTXIF</td><td><div style="word-wrap: break-word;"><b>Short Packet Transferred Interrupt
-</b><br>
-0 = The length of the last packet was not less than the Maximum Packet Size (EPMPS).
-<br>
-1 = The length of the last packet was less than the Maximum Packet Size (EPMPS).
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>TXPKIF</td><td><div style="word-wrap: break-word;"><b>Data Packet Transmitted Interrupt
-</b><br>
-0 = Not a data packet is transmitted from the endpoint to the host.
-<br>
-1 = A data packet is transmitted from the endpoint to the host.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>RXPKIF</td><td><div style="word-wrap: break-word;"><b>Data Packet Received Interrupt
-</b><br>
-0 = No data packet is received from the host by the endpoint.
-<br>
-1 = A data packet is received from the host by the endpoint.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>OUTTKIF</td><td><div style="word-wrap: break-word;"><b>Data OUT Token Interrupt
-</b><br>
-0 = A Data OUT token has not been received from the host.
-<br>
-1 = A Data OUT token has been received from the host
-<br>
-This bit also set by PING token (in high-speed only).
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[6]</td><td>INTKIF</td><td><div style="word-wrap: break-word;"><b>Data IN Token Interrupt
-</b><br>
-0 = Not Data IN token has been received from the host.
-<br>
-1 = A Data IN token has been received from the host.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[7]</td><td>PINGIF</td><td><div style="word-wrap: break-word;"><b>PING Token Interrupt
-</b><br>
-0 = A Data PING token has not been received from the host.
-<br>
-1 = A Data PING token has been received from the host.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>NAKIF</td><td><div style="word-wrap: break-word;"><b>USB NAK Sent
-</b><br>
-0 = The last USB IN packet could be provided, and was acknowledged with an ACK.
-<br>
-1 = The last USB IN packet could not be provided, and was acknowledged with a NAK.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>STALLIF</td><td><div style="word-wrap: break-word;"><b>USB STALL Sent
-</b><br>
-0 = The last USB packet could be accepted or provided because the endpoint was stalled, and was acknowledged with a STALL.
-<br>
-1 = The last USB packet could not be accepted or provided because the endpoint was stalled, and was acknowledged with a STALL.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>NYETIF</td><td><div style="word-wrap: break-word;"><b>NYET Sent
-</b><br>
-0 = The space available in the RAM is sufficient to accommodate the next on coming data packet.
-<br>
-1 = The space available in the RAM is not sufficient to accommodate the next on coming data packet.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>ERRIF</td><td><div style="word-wrap: break-word;"><b>ERR Sent
-</b><br>
-0 = No any error in the transaction.
-<br>
-1 = There occurs any error in the transaction.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>SHORTRXIF</td><td><div style="word-wrap: break-word;"><b>Bulk Out Short Packet Received
-</b><br>
-0 = No bulk out short packet is received.
-<br>
-1 = Received bulk out short packet (including zero length packet).
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_EP_T::EPINTEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">EPINTEN
-</font><br><p> <font size="2">
-Offset: 0x08  Endpoint n Interrupt Enable Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>BUFFULLIEN</td><td><div style="word-wrap: break-word;"><b>Buffer Full Interrupt
-</b><br>
-When set, this bit enables a local interrupt to be set when a buffer full condition is detected on the bus.
-<br>
-0 = Buffer full interrupt Disabled.
-<br>
-1 = Buffer full interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>BUFEMPTYIEN</td><td><div style="word-wrap: break-word;"><b>Buffer Empty Interrupt
-</b><br>
-When set, this bit enables a local interrupt to be set when a buffer empty condition is detected on the bus.
-<br>
-0 = Buffer empty interrupt Disabled.
-<br>
-1 = Buffer empty interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>SHORTTXIEN</td><td><div style="word-wrap: break-word;"><b>Short Packet Transferred Interrupt Enable Bit
-</b><br>
-When set, this bit enables a local interrupt to be set when a short data packet has been transferred to/from the host.
-<br>
-0 = Short data packet interrupt Disabled.
-<br>
-1 = Short data packet interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>TXPKIEN</td><td><div style="word-wrap: break-word;"><b>Data Packet Transmitted Interrupt Enable Bit
-</b><br>
-When set, this bit enables a local interrupt to be set when a data packet has been received from the host.
-<br>
-0 = Data packet has been received from the host interrupt Disabled.
-<br>
-1 = Data packet has been received from the host interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>RXPKIEN</td><td><div style="word-wrap: break-word;"><b>Data Packet Received Interrupt Enable Bit
-</b><br>
-When set, this bit enables a local interrupt to be set when a data packet has been transmitted to the host.
-<br>
-0 = Data packet has been transmitted to the host interrupt Disabled.
-<br>
-1 = Data packet has been transmitted to the host interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>OUTTKIEN</td><td><div style="word-wrap: break-word;"><b>Data OUT Token Interrupt Enable Bit
-</b><br>
-When set, this bit enables a local interrupt to be set when a Data OUT token has been received from the host.
-<br>
-0 = Data OUT token interrupt Disabled.
-<br>
-1 = Data OUT token interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[6]</td><td>INTKIEN</td><td><div style="word-wrap: break-word;"><b>Data IN Token Interrupt Enable Bit
-</b><br>
-When set, this bit enables a local interrupt to be set when a Data IN token has been received from the host.
-<br>
-0 = Data IN token interrupt Disabled.
-<br>
-1 = Data IN token interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[7]</td><td>PINGIEN</td><td><div style="word-wrap: break-word;"><b>PING Token Interrupt Enable Bit
-</b><br>
-When set, this bit enables a local interrupt to be set when a PING token has been received from the host.
-<br>
-0 = PING token interrupt Disabled.
-<br>
-1 = PING token interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>NAKIEN</td><td><div style="word-wrap: break-word;"><b>USB NAK Sent Interrupt Enable Bit
-</b><br>
-When set, this bit enables a local interrupt to be set when a NAK token is sent to the host.
-<br>
-0 = NAK token interrupt Disabled.
-<br>
-1 = NAK token interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>STALLIEN</td><td><div style="word-wrap: break-word;"><b>USB STALL Sent Interrupt Enable Bit
-</b><br>
-When set, this bit enables a local interrupt to be set when a stall token is sent to the host.
-<br>
-0 = STALL token interrupt Disabled.
-<br>
-1 = STALL token interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>NYETIEN</td><td><div style="word-wrap: break-word;"><b>NYET Interrupt Enable Bit
-</b><br>
-When set, this bit enables a local interrupt to be set whenever NYET condition occurs on the bus for this endpoint.
-<br>
-0 = NYET condition interrupt Disabled.
-<br>
-1 = NYET condition interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>ERRIEN</td><td><div style="word-wrap: break-word;"><b>ERR Interrupt Enable Bit
-</b><br>
-When set, this bit enables a local interrupt to be set whenever ERR condition occurs on the bus for this endpoint.
-<br>
-0 = Error event interrupt Disabled.
-<br>
-1 = Error event interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>SHORTRXIEN</td><td><div style="word-wrap: break-word;"><b>Bulk Out Short Packet Interrupt Enable Bit
-</b><br>
-When set, this bit enables a local interrupt to be set whenever bulk out short packet occurs on the bus for this endpoint.
-<br>
-0 = Bulk out interrupt Disabled.
-<br>
-1 = Bulk out interrupt Enabled.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_EP_T::EPDATCNT
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">EPDATCNT
-</font><br><p> <font size="2">
-Offset: 0x0C  Endpoint n Data Available Count Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[15:0]</td><td>DATCNT</td><td><div style="word-wrap: break-word;"><b>Data Count
-</b><br>
-For an IN endpoint (EPDIR(USBD_EPxCFG[3] is high.), this register returns the number of valid bytes in the IN endpoint packet buffer.
-<br>
-For an OUT endpoint (EPDIR(USBD_EPxCFG[3] is low.), this register returns the number of received valid bytes in the Host OUT transfer.
-<br>
-</div></td></tr><tr><td>
-[30:16]</td><td>DMALOOP</td><td><div style="word-wrap: break-word;"><b>DMA Loop
-</b><br>
-This register is the remaining DMA loop to complete. Each loop means 32-byte transfer.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_EP_T::EPRSPCTL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">EPRSPCTL
-</font><br><p> <font size="2">
-Offset: 0x10  Endpoint n Response Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>FLUSH</td><td><div style="word-wrap: break-word;"><b>Buffer Flush
-</b><br>
-Writing 1 to this bit causes the packet buffer to be flushed and the corresponding EP_AVAIL register to be cleared
-<br>
-This bit is self-clearing
-<br>
-This bit should always be written after an configuration event.
-<br>
-0 = The packet buffer is not flushed.
-<br>
-1 = The packet buffer is flushed by user.
-<br>
-</div></td></tr><tr><td>
-[2:1]</td><td>MODE</td><td><div style="word-wrap: break-word;"><b>Mode Control
-</b><br>
-The two bits decide the operation mode of the in-endpoint.
-<br>
-00: Auto-Validate Mode
-<br>
-01: Manual-Validate Mode
-<br>
-10: Fly Mode
-<br>
-11: Reserved
-<br>
-These bits are not valid for an out-endpoint
-<br>
-The auto validate mode will be activated when the reserved mode is selected
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>TOGGLE</td><td><div style="word-wrap: break-word;"><b>Endpoint Toggle
-</b><br>
-This bit is used to clear the endpoint data toggle bit
-<br>
-Reading this bit returns the current state of the endpoint data toggle bit.
-<br>
-The local CPU may use this bit to initialize the end-point's toggle in case of reception of a Set Interface request or a Clear Feature (ep_halt) request from the host
-<br>
-Only when toggle bit is "1", this bit can be written into the inversed write data bit[3].
-<br>
-0 = Not clear the endpoint data toggle bit.
-<br>
-1 = Clear the endpoint data toggle bit.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>HALT</td><td><div style="word-wrap: break-word;"><b>Endpoint Halt
-</b><br>
-This bit is used to send a STALL handshake as response to the token from the host
-<br>
-When an Endpoint Set Feature (ep_halt) is detected by the local CPU, it must write a '1' to this bit.
-<br>
-0 = Not send a STALL handshake as response to the token from the host.
-<br>
-1 = Send a STALL handshake as response to the token from the host.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>ZEROLEN</td><td><div style="word-wrap: break-word;"><b>Zero Length
-</b><br>
-This bit is used to send a zero-length packet response to an IN-token
-<br>
-When this bit is set, a zero packet is sent to the host on reception of an IN-token
-<br>
-This bit gets cleared once the zero length data packet is sent.
-<br>
-0 = A zero packet is not sent to the host on reception of an IN-token.
-<br>
-1 = A zero packet is sent to the host on reception of an IN-token.
-<br>
-</div></td></tr><tr><td>
-[6]</td><td>SHORTTXEN</td><td><div style="word-wrap: break-word;"><b>Short Packet Transfer Enable
-</b><br>
-This bit is applicable only in case of Auto-Validate Method
-<br>
-This bit is set to validate any remaining data in the buffer which is not equal to the MPS of the endpoint, and happens to be the last transfer
-<br>
-This bit gets cleared once the data packet is sent.
-<br>
-0 = Not validate any remaining data in the buffer which is not equal to the MPS of the endpoint.
-<br>
-1 = Validate any remaining data in the buffer which is not equal to the MPS of the endpoint.
-<br>
-</div></td></tr><tr><td>
-[7]</td><td>DISBUF</td><td><div style="word-wrap: break-word;"><b>Buffer Disable Bit
-</b><br>
-This bit is used to receive unknown size OUT short packet
-<br>
-The received packet size is reference USBD_EPxDATCNT register.
-<br>
-0 = Buffer Not Disabled when Bulk-OUT short packet is received.
-<br>
-1 = Buffer Disabled when Bulk-OUT short packet is received.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_EP_T::EPMPS
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">EPMPS
-</font><br><p> <font size="2">
-Offset: 0x14  Endpoint n Maximum Packet Size Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[10:0]</td><td>EPMPS</td><td><div style="word-wrap: break-word;"><b>Endpoint Maximum Packet Size
-</b><br>
-This field determines the Maximum Packet Size of the Endpoint.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_EP_T::EPTXCNT
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">EPTXCNT
-</font><br><p> <font size="2">
-Offset: 0x18  Endpoint n Transfer Count Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[10:0]</td><td>TXCNT</td><td><div style="word-wrap: break-word;"><b>Endpoint Transfer Count
-</b><br>
-For IN endpoints, this field determines the total number of bytes to be sent to the host in case of manual validation method.
-<br>
-For OUT endpoints, this field has no effect.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_EP_T::EPCFG
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">EPCFG
-</font><br><p> <font size="2">
-Offset: 0x1C  Endpoint n Configuration Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>EPEN</td><td><div style="word-wrap: break-word;"><b>Endpoint Valid
-</b><br>
-When set, this bit enables this endpoint
-<br>
-This bit has no effect on Endpoint 0, which is always enabled.
-<br>
-0 = The endpoint Disabled.
-<br>
-1 = The endpoint Enabled.
-<br>
-</div></td></tr><tr><td>
-[2:1]</td><td>EPTYPE</td><td><div style="word-wrap: break-word;"><b>Endpoint Type
-</b><br>
-This field selects the type of this endpoint. Endpoint 0 is forced to a Control type.
-<br>
-00 = Reserved.
-<br>
-01 = Bulk.
-<br>
-10 = Interrupt.
-<br>
-11 = Isochronous.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>EPDIR</td><td><div style="word-wrap: break-word;"><b>Endpoint Direction
-</b><br>
-0 = out-endpoint (Host OUT to Device).
-<br>
-1 = in-endpoint (Host IN to Device).
-<br>
-Note: A maximum of one OUT and IN endpoint is allowed for each endpoint number.
-<br>
-</div></td></tr><tr><td>
-[7:4]</td><td>EPNUM</td><td><div style="word-wrap: break-word;"><b>Endpoint Number
-</b><br>
-This field selects the number of the endpoint. Valid numbers 1 to 15.
-<br>
-Note: Do not support two endpoints have same endpoint number.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_EP_T::EPBUFST
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">EPBUFST
-</font><br><p> <font size="2">
-Offset: 0x20  Endpoint n RAM Start Address Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[11:0]</td><td>SADDR</td><td><div style="word-wrap: break-word;"><b>Endpoint Start Address
-</b><br>
-This is the start-address of the RAM space allocated for the endpoint A~L.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_EP_T::EPBUFEND
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">EPBUFEND
-</font><br><p> <font size="2">
-Offset: 0x24  Endpoint n RAM End Address Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[11:0]</td><td>EADDR</td><td><div style="word-wrap: break-word;"><b>Endpoint End Address
-</b><br>
-This is the end-address of the RAM space allocated for the endpoint A~L.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-
- */
+     * @var HSUSBD_EP_T::EPDAT
+     * Offset: 0x00  Endpoint n Data Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:0]  |EPDAT     |Endpoint A~L Data Register
+     * |        |          |Endpoint A~L data buffer for the buffer transaction (read or write).
+     * |        |          |Note: Only word access is supported.
+     * @var HSUSBD_EP_T::EPDAT_BYTE
+     * Offset: 0x00  Endpoint n Data Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[7:0]   |EPDAT     |Endpoint A~L Data Register
+     * |        |          |Endpoint A~L data buffer for the buffer transaction (read or write).
+     * |        |          |Note: Only byte access is supported.
+     * @var HSUSBD_EP_T::EPINTSTS
+     * Offset: 0x04  Endpoint n Interrupt Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |BUFFULLIF |Buffer Full
+     * |        |          |For an IN endpoint, the currently selected buffer is full, or no buffer is available to the local side for writing (no space to write)
+     * |        |          |For an OUT endpoint, there is a buffer available on the local side, and there are FIFO full of bytes available to be read (entire packet is available for reading).
+     * |        |          |0 = The endpoint packet buffer is not full.
+     * |        |          |1 = The endpoint packet buffer is full.
+     * |        |          |Note: This bit is read-only.
+     * |[1]     |BUFEMPTYIF|Buffer Empty
+     * |        |          |For an IN endpoint, a buffer is available to the local side for writing up to FIFO full of bytes.
+     * |        |          |0 = The endpoint buffer is not empty.
+     * |        |          |1 = The endpoint buffer is empty.
+     * |        |          |For an OUT endpoint:
+     * |        |          |0 = The currently selected buffer has not a count of 0.
+     * |        |          |1 = The currently selected buffer has a count of 0, or no buffer is available on the local side (nothing to read).
+     * |        |          |Note: This bit is read-only.
+     * |[2]     |SHORTTXIF |Short Packet Transferred Interrupt
+     * |        |          |0 = The length of the last packet was not less than the Maximum Packet Size (EPMPS).
+     * |        |          |1 = The length of the last packet was less than the Maximum Packet Size (EPMPS).
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[3]     |TXPKIF    |Data Packet Transmitted Interrupt
+     * |        |          |0 = Not a data packet is transmitted from the endpoint to the host.
+     * |        |          |1 = A data packet is transmitted from the endpoint to the host.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[4]     |RXPKIF    |Data Packet Received Interrupt
+     * |        |          |0 = No data packet is received from the host by the endpoint.
+     * |        |          |1 = A data packet is received from the host by the endpoint.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[5]     |OUTTKIF   |Data OUT Token Interrupt
+     * |        |          |0 = A Data OUT token has not been received from the host.
+     * |        |          |1 = A Data OUT token has been received from the host
+     * |        |          |This bit also set by PING token (in high-speed only).
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[6]     |INTKIF    |Data IN Token Interrupt
+     * |        |          |0 = Not Data IN token has been received from the host.
+     * |        |          |1 = A Data IN token has been received from the host.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[7]     |PINGIF    |PING Token Interrupt
+     * |        |          |0 = A Data PING token has not been received from the host.
+     * |        |          |1 = A Data PING token has been received from the host.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[8]     |NAKIF     |USB NAK Sent
+     * |        |          |0 = The last USB IN packet could be provided, and was acknowledged with an ACK.
+     * |        |          |1 = The last USB IN packet could not be provided, and was acknowledged with a NAK.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[9]     |STALLIF   |USB STALL Sent
+     * |        |          |0 = The last USB packet could be accepted or provided because the endpoint was stalled, and was acknowledged with a STALL.
+     * |        |          |1 = The last USB packet could not be accepted or provided because the endpoint was stalled, and was acknowledged with a STALL.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[10]    |NYETIF    |NYET Sent
+     * |        |          |0 = The space available in the RAM is sufficient to accommodate the next on coming data packet.
+     * |        |          |1 = The space available in the RAM is not sufficient to accommodate the next on coming data packet.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[11]    |ERRIF     |ERR Sent
+     * |        |          |0 = No any error in the transaction.
+     * |        |          |1 = There occurs any error in the transaction.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[12]    |SHORTRXIF |Bulk Out Short Packet Received
+     * |        |          |0 = No bulk out short packet is received.
+     * |        |          |1 = Received bulk out short packet (including zero length packet).
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * @var HSUSBD_EP_T::EPINTEN
+     * Offset: 0x08  Endpoint n Interrupt Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |BUFFULLIEN|Buffer Full Interrupt
+     * |        |          |When set, this bit enables a local interrupt to be set when a buffer full condition is detected on the bus.
+     * |        |          |0 = Buffer full interrupt Disabled.
+     * |        |          |1 = Buffer full interrupt Enabled.
+     * |[1]     |BUFEMPTYIEN|Buffer Empty Interrupt
+     * |        |          |When set, this bit enables a local interrupt to be set when a buffer empty condition is detected on the bus.
+     * |        |          |0 = Buffer empty interrupt Disabled.
+     * |        |          |1 = Buffer empty interrupt Enabled.
+     * |[2]     |SHORTTXIEN|Short Packet Transferred Interrupt Enable Bit
+     * |        |          |When set, this bit enables a local interrupt to be set when a short data packet has been transferred to/from the host.
+     * |        |          |0 = Short data packet interrupt Disabled.
+     * |        |          |1 = Short data packet interrupt Enabled.
+     * |[3]     |TXPKIEN   |Data Packet Transmitted Interrupt Enable Bit
+     * |        |          |When set, this bit enables a local interrupt to be set when a data packet has been received from the host.
+     * |        |          |0 = Data packet has been received from the host interrupt Disabled.
+     * |        |          |1 = Data packet has been received from the host interrupt Enabled.
+     * |[4]     |RXPKIEN   |Data Packet Received Interrupt Enable Bit
+     * |        |          |When set, this bit enables a local interrupt to be set when a data packet has been transmitted to the host.
+     * |        |          |0 = Data packet has been transmitted to the host interrupt Disabled.
+     * |        |          |1 = Data packet has been transmitted to the host interrupt Enabled.
+     * |[5]     |OUTTKIEN  |Data OUT Token Interrupt Enable Bit
+     * |        |          |When set, this bit enables a local interrupt to be set when a Data OUT token has been received from the host.
+     * |        |          |0 = Data OUT token interrupt Disabled.
+     * |        |          |1 = Data OUT token interrupt Enabled.
+     * |[6]     |INTKIEN   |Data IN Token Interrupt Enable Bit
+     * |        |          |When set, this bit enables a local interrupt to be set when a Data IN token has been received from the host.
+     * |        |          |0 = Data IN token interrupt Disabled.
+     * |        |          |1 = Data IN token interrupt Enabled.
+     * |[7]     |PINGIEN   |PING Token Interrupt Enable Bit
+     * |        |          |When set, this bit enables a local interrupt to be set when a PING token has been received from the host.
+     * |        |          |0 = PING token interrupt Disabled.
+     * |        |          |1 = PING token interrupt Enabled.
+     * |[8]     |NAKIEN    |USB NAK Sent Interrupt Enable Bit
+     * |        |          |When set, this bit enables a local interrupt to be set when a NAK token is sent to the host.
+     * |        |          |0 = NAK token interrupt Disabled.
+     * |        |          |1 = NAK token interrupt Enabled.
+     * |[9]     |STALLIEN  |USB STALL Sent Interrupt Enable Bit
+     * |        |          |When set, this bit enables a local interrupt to be set when a stall token is sent to the host.
+     * |        |          |0 = STALL token interrupt Disabled.
+     * |        |          |1 = STALL token interrupt Enabled.
+     * |[10]    |NYETIEN   |NYET Interrupt Enable Bit
+     * |        |          |When set, this bit enables a local interrupt to be set whenever NYET condition occurs on the bus for this endpoint.
+     * |        |          |0 = NYET condition interrupt Disabled.
+     * |        |          |1 = NYET condition interrupt Enabled.
+     * |[11]    |ERRIEN    |ERR Interrupt Enable Bit
+     * |        |          |When set, this bit enables a local interrupt to be set whenever ERR condition occurs on the bus for this endpoint.
+     * |        |          |0 = Error event interrupt Disabled.
+     * |        |          |1 = Error event interrupt Enabled.
+     * |[12]    |SHORTRXIEN|Bulk Out Short Packet Interrupt Enable Bit
+     * |        |          |When set, this bit enables a local interrupt to be set whenever bulk out short packet occurs on the bus for this endpoint.
+     * |        |          |0 = Bulk out interrupt Disabled.
+     * |        |          |1 = Bulk out interrupt Enabled.
+     * @var HSUSBD_EP_T::EPDATCNT
+     * Offset: 0x0C  Endpoint n Data Available Count Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |DATCNT    |Data Count
+     * |        |          |For an IN endpoint (EPDIR(USBD_EPxCFG[3] is high.), this register returns the number of valid bytes in the IN endpoint packet buffer.
+     * |        |          |For an OUT endpoint (EPDIR(USBD_EPxCFG[3] is low.), this register returns the number of received valid bytes in the Host OUT transfer.
+     * |[30:16] |DMALOOP   |DMA Loop
+     * |        |          |This register is the remaining DMA loop to complete. Each loop means 32-byte transfer.
+     * @var HSUSBD_EP_T::EPRSPCTL
+     * Offset: 0x10  Endpoint n Response Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |FLUSH     |Buffer Flush
+     * |        |          |Writing 1 to this bit causes the packet buffer to be flushed and the corresponding EP_AVAIL register to be cleared
+     * |        |          |This bit is self-clearing
+     * |        |          |This bit should always be written after an configuration event.
+     * |        |          |0 = The packet buffer is not flushed.
+     * |        |          |1 = The packet buffer is flushed by user.
+     * |[2:1]   |MODE      |Mode Control
+     * |        |          |The two bits decide the operation mode of the in-endpoint.
+     * |        |          |00: Auto-Validate Mode
+     * |        |          |01: Manual-Validate Mode
+     * |        |          |10: Fly Mode
+     * |        |          |11: Reserved
+     * |        |          |These bits are not valid for an out-endpoint
+     * |        |          |The auto validate mode will be activated when the reserved mode is selected
+     * |[3]     |TOGGLE    |Endpoint Toggle
+     * |        |          |This bit is used to clear the endpoint data toggle bit
+     * |        |          |Reading this bit returns the current state of the endpoint data toggle bit.
+     * |        |          |The local CPU may use this bit to initialize the end-point's toggle in case of reception of a Set Interface request or a Clear Feature (ep_halt) request from the host
+     * |        |          |Only when toggle bit is "1", this bit can be written into the inversed write data bit[3].
+     * |        |          |0 = Not clear the endpoint data toggle bit.
+     * |        |          |1 = Clear the endpoint data toggle bit.
+     * |[4]     |HALT      |Endpoint Halt
+     * |        |          |This bit is used to send a STALL handshake as response to the token from the host
+     * |        |          |When an Endpoint Set Feature (ep_halt) is detected by the local CPU, it must write a '1' to this bit.
+     * |        |          |0 = Not send a STALL handshake as response to the token from the host.
+     * |        |          |1 = Send a STALL handshake as response to the token from the host.
+     * |[5]     |ZEROLEN   |Zero Length
+     * |        |          |This bit is used to send a zero-length packet response to an IN-token
+     * |        |          |When this bit is set, a zero packet is sent to the host on reception of an IN-token
+     * |        |          |This bit gets cleared once the zero length data packet is sent.
+     * |        |          |0 = A zero packet is not sent to the host on reception of an IN-token.
+     * |        |          |1 = A zero packet is sent to the host on reception of an IN-token.
+     * |[6]     |SHORTTXEN |Short Packet Transfer Enable
+     * |        |          |This bit is applicable only in case of Auto-Validate Method
+     * |        |          |This bit is set to validate any remaining data in the buffer which is not equal to the MPS of the endpoint, and happens to be the last transfer
+     * |        |          |This bit gets cleared once the data packet is sent.
+     * |        |          |0 = Not validate any remaining data in the buffer which is not equal to the MPS of the endpoint.
+     * |        |          |1 = Validate any remaining data in the buffer which is not equal to the MPS of the endpoint.
+     * |[7]     |DISBUF    |Buffer Disable Bit
+     * |        |          |This bit is used to receive unknown size OUT short packet
+     * |        |          |The received packet size is reference USBD_EPxDATCNT register.
+     * |        |          |0 = Buffer Not Disabled when Bulk-OUT short packet is received.
+     * |        |          |1 = Buffer Disabled when Bulk-OUT short packet is received.
+     * @var HSUSBD_EP_T::EPMPS
+     * Offset: 0x14  Endpoint n Maximum Packet Size Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[10:0]  |EPMPS     |Endpoint Maximum Packet Size
+     * |        |          |This field determines the Maximum Packet Size of the Endpoint.
+     * @var HSUSBD_EP_T::EPTXCNT
+     * Offset: 0x18  Endpoint n Transfer Count Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[10:0]  |TXCNT     |Endpoint Transfer Count
+     * |        |          |For IN endpoints, this field determines the total number of bytes to be sent to the host in case of manual validation method.
+     * |        |          |For OUT endpoints, this field has no effect.
+     * @var HSUSBD_EP_T::EPCFG
+     * Offset: 0x1C  Endpoint n Configuration Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |EPEN      |Endpoint Valid
+     * |        |          |When set, this bit enables this endpoint
+     * |        |          |This bit has no effect on Endpoint 0, which is always enabled.
+     * |        |          |0 = The endpoint Disabled.
+     * |        |          |1 = The endpoint Enabled.
+     * |[2:1]   |EPTYPE    |Endpoint Type
+     * |        |          |This field selects the type of this endpoint. Endpoint 0 is forced to a Control type.
+     * |        |          |00 = Reserved.
+     * |        |          |01 = Bulk.
+     * |        |          |10 = Interrupt.
+     * |        |          |11 = Isochronous.
+     * |[3]     |EPDIR     |Endpoint Direction
+     * |        |          |0 = out-endpoint (Host OUT to Device).
+     * |        |          |1 = in-endpoint (Host IN to Device).
+     * |        |          |Note: A maximum of one OUT and IN endpoint is allowed for each endpoint number.
+     * |[7:4]   |EPNUM     |Endpoint Number
+     * |        |          |This field selects the number of the endpoint. Valid numbers 1 to 15.
+     * |        |          |Note: Do not support two endpoints have same endpoint number.
+     * @var HSUSBD_EP_T::EPBUFST
+     * Offset: 0x20  Endpoint n RAM Start Address Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[11:0]  |SADDR     |Endpoint Start Address
+     * |        |          |This is the start-address of the RAM space allocated for the endpoint A~L.
+     * @var HSUSBD_EP_T::EPBUFEND
+     * Offset: 0x24  Endpoint n RAM End Address Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[11:0]  |EADDR     |Endpoint End Address
+     * |        |          |This is the end-address of the RAM space allocated for the endpoint A~L.
+     */
 
     union
     {
@@ -625,1322 +299,571 @@ typedef struct
 {
 
     /**
-@var HSUSBD_T::GINTSTS
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GINTSTS
-</font><br><p> <font size="2">
-Offset: 0x00  Global Interrupt Status Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>USBIF</td><td><div style="word-wrap: break-word;"><b>USB Interrupt
-</b><br>
-This bit conveys the interrupt status for USB specific events endpoint
-<br>
-When set, USB interrupt status register should be read to determine the cause of the interrupt.
-<br>
-0 = No interrupt event occurred.
-<br>
-1 = The related interrupt event is occurred.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>CEPIF</td><td><div style="word-wrap: break-word;"><b>Control Endpoint Interrupt
-</b><br>
-This bit conveys the interrupt status for control endpoint
-<br>
-When set, Control-ep's interrupt status register should be read to determine the cause of the interrupt.
-<br>
-0 = No interrupt event occurred.
-<br>
-1 = The related interrupt event is occurred.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>EPAIF</td><td><div style="word-wrap: break-word;"><b>Endpoint a Interrupt
-</b><br>
-When set, the corresponding Endpoint A's interrupt status register should be read to determine the cause of the interrupt.
-<br>
-0 = No interrupt event occurred.
-<br>
-1 = The related interrupt event is occurred.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>EPBIF</td><td><div style="word-wrap: break-word;"><b>Endpoint B Interrupt
-</b><br>
-When set, the corresponding Endpoint B's interrupt status register should be read to determine the cause of the interrupt.
-<br>
-0 = No interrupt event occurred.
-<br>
-1 = The related interrupt event is occurred.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>EPCIF</td><td><div style="word-wrap: break-word;"><b>Endpoint C Interrupt
-</b><br>
-When set, the corresponding Endpoint C's interrupt status register should be read to determine the cause of the interrupt.
-<br>
-0 = No interrupt event occurred.
-<br>
-1 = The related interrupt event is occurred.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>EPDIF</td><td><div style="word-wrap: break-word;"><b>Endpoint D Interrupt
-</b><br>
-When set, the corresponding Endpoint D's interrupt status register should be read to determine the cause of the interrupt.
-<br>
-0 = No interrupt event occurred.
-<br>
-1 = The related interrupt event is occurred.
-<br>
-</div></td></tr><tr><td>
-[6]</td><td>EPEIF</td><td><div style="word-wrap: break-word;"><b>Endpoint E Interrupt
-</b><br>
-When set, the corresponding Endpoint E's interrupt status register should be read to determine the cause of the interrupt.
-<br>
-0 = No interrupt event occurred.
-<br>
-1 = The related interrupt event is occurred.
-<br>
-</div></td></tr><tr><td>
-[7]</td><td>EPFIF</td><td><div style="word-wrap: break-word;"><b>Endpoint F Interrupt
-</b><br>
-When set, the corresponding Endpoint F's interrupt status register should be read to determine the cause of the interrupt.
-<br>
-0 = No interrupt event occurred.
-<br>
-1 = The related interrupt event is occurred.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>EPGIF</td><td><div style="word-wrap: break-word;"><b>Endpoint G Interrupt
-</b><br>
-When set, the corresponding Endpoint G's interrupt status register should be read to determine the cause of the interrupt.
-<br>
-0 = No interrupt event occurred.
-<br>
-1 = The related interrupt event is occurred.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>EPHIF</td><td><div style="word-wrap: break-word;"><b>Endpoint H Interrupt
-</b><br>
-When set, the corresponding Endpoint H's interrupt status register should be read to determine the cause of the interrupt.
-<br>
-0 = No interrupt event occurred.
-<br>
-1 = The related interrupt event is occurred.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>EPIIF</td><td><div style="word-wrap: break-word;"><b>Endpoint I Interrupt
-</b><br>
-When set, the corresponding Endpoint I's interrupt status register should be read to determine the cause of the interrupt.
-<br>
-0 = No interrupt event occurred.
-<br>
-1 = The related interrupt event is occurred.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>EPJIF</td><td><div style="word-wrap: break-word;"><b>Endpoint J Interrupt
-</b><br>
-When set, the corresponding Endpoint J's interrupt status register should be read to determine the cause of the interrupt.
-<br>
-0 = No interrupt event occurred.
-<br>
-1 = The related interrupt event is occurred.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>EPKIF</td><td><div style="word-wrap: break-word;"><b>Endpoint K Interrupt
-</b><br>
-When set, the corresponding Endpoint K's interrupt status register should be read to determine the cause of the interrupt.
-<br>
-0 = No interrupt event occurred.
-<br>
-1 = The related interrupt event is occurred.
-<br>
-</div></td></tr><tr><td>
-[13]</td><td>EPLIF</td><td><div style="word-wrap: break-word;"><b>Endpoint L Interrupt
-</b><br>
-When set, the corresponding Endpoint L's interrupt status register should be read to determine the cause of the interrupt.
-<br>
-0 = No interrupt event occurred.
-<br>
-1 = The related interrupt event is occurred.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::GINTEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">GINTEN
-</font><br><p> <font size="2">
-Offset: 0x08  Global Interrupt Enable Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>USBIEN</td><td><div style="word-wrap: break-word;"><b>USB Interrupt Enable Bit
-</b><br>
-When set, this bit enables a local interrupt to be generated when a USB event occurs on the bus.
-<br>
-0 = The related interrupt Disabled.
-<br>
-1 = The related interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>CEPIEN</td><td><div style="word-wrap: break-word;"><b>Control Endpoint Interrupt Enable Bit
-</b><br>
-When set, this bit enables a local interrupt to be generated when an interrupt is pending for the control endpoint.
-<br>
-0 = The related interrupt Disabled.
-<br>
-1 = The related interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>EPAIEN</td><td><div style="word-wrap: break-word;"><b>Interrupt Enable Control for Endpoint a
-</b><br>
-When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint A.
-<br>
-0 = The related interrupt Disabled.
-<br>
-1 = The related interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>EPBIEN</td><td><div style="word-wrap: break-word;"><b>Interrupt Enable Control for Endpoint B
-</b><br>
-When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint B
-<br>
-0 = The related interrupt Disabled.
-<br>
-1 = The related interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>EPCIEN</td><td><div style="word-wrap: break-word;"><b>Interrupt Enable Control for Endpoint C
-</b><br>
-When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint C
-<br>
-0 = The related interrupt Disabled.
-<br>
-1 = The related interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>EPDIEN</td><td><div style="word-wrap: break-word;"><b>Interrupt Enable Control for Endpoint D
-</b><br>
-When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint D
-<br>
-0 = The related interrupt Disabled.
-<br>
-1 = The related interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[6]</td><td>EPEIEN</td><td><div style="word-wrap: break-word;"><b>Interrupt Enable Control for Endpoint E
-</b><br>
-When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint E
-<br>
-0 = The related interrupt Disabled.
-<br>
-1 = The related interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[7]</td><td>EPFIEN</td><td><div style="word-wrap: break-word;"><b>Interrupt Enable Control for Endpoint F
-</b><br>
-When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint F
-<br>
-0 = The related interrupt Disabled.
-<br>
-1 = The related interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>EPGIEN</td><td><div style="word-wrap: break-word;"><b>Interrupt Enable Control for Endpoint G
-</b><br>
-When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint G
-<br>
-0 = The related interrupt Disabled.
-<br>
-1 = The related interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>EPHIEN</td><td><div style="word-wrap: break-word;"><b>Interrupt Enable Control for Endpoint H
-</b><br>
-When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint H
-<br>
-0 = The related interrupt Disabled.
-<br>
-1 = The related interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>EPIIEN</td><td><div style="word-wrap: break-word;"><b>Interrupt Enable Control for Endpoint I
-</b><br>
-When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint I
-<br>
-0 = The related interrupt Disabled.
-<br>
-1 = The related interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>EPJIEN</td><td><div style="word-wrap: break-word;"><b>Interrupt Enable Control for Endpoint J
-</b><br>
-When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint J
-<br>
-0 = The related interrupt Disabled.
-<br>
-1 = The related interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>EPKIEN</td><td><div style="word-wrap: break-word;"><b>Interrupt Enable Control for Endpoint K
-</b><br>
-When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint K
-<br>
-0 = The related interrupt Disabled.
-<br>
-1 = The related interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[13]</td><td>EPLIEN</td><td><div style="word-wrap: break-word;"><b>Interrupt Enable Control for Endpoint L
-</b><br>
-When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint L
-<br>
-0 = The related interrupt Disabled.
-<br>
-1 = The related interrupt Enabled.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::BUSINTSTS
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">BUSINTSTS
-</font><br><p> <font size="2">
-Offset: 0x10  USB Bus Interrupt Status Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>SOFIF</td><td><div style="word-wrap: break-word;"><b>SOF Receive Control
-</b><br>
-This bit indicates when a start-of-frame packet has been received.
-<br>
-0 = No start-of-frame packet has been received.
-<br>
-1 = Start-of-frame packet has been received.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>RSTIF</td><td><div style="word-wrap: break-word;"><b>Reset Status
-</b><br>
-When set, this bit indicates that either the USB root port reset is end.
-<br>
-0 = No USB root port reset is end.
-<br>
-1 = USB root port reset is end.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>RESUMEIF</td><td><div style="word-wrap: break-word;"><b>Resume
-</b><br>
-When set, this bit indicates that a device resume has occurred.
-<br>
-0 = No device resume has occurred.
-<br>
-1 = Device resume has occurred.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>SUSPENDIF</td><td><div style="word-wrap: break-word;"><b>Suspend Request
-</b><br>
-This bit is set as default and it has to be cleared by writing '1' before the USB reset
-<br>
-This bit is also set when a USB Suspend request is detected from the host.
-<br>
-0 = No USB Suspend request is detected from the host.
-<br>
-1= USB Suspend request is detected from the host.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>HISPDIF</td><td><div style="word-wrap: break-word;"><b>High-speed Settle
-</b><br>
-0 = No valid high-speed reset protocol is detected.
-<br>
-1 = Valid high-speed reset protocol is over and the device has settled in high-speed.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>DMADONEIF</td><td><div style="word-wrap: break-word;"><b>DMA Completion Interrupt
-</b><br>
-0 = No DMA transfer over.
-<br>
-1 = DMA transfer is over.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[6]</td><td>PHYCLKVLDIF</td><td><div style="word-wrap: break-word;"><b>Usable Clock Interrupt
-</b><br>
-0 = Usable clock is not available.
-<br>
-1 = Usable clock is available from the transceiver.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>VBUSDETIF</td><td><div style="word-wrap: break-word;"><b>VBUS Detection Interrupt Status
-</b><br>
-0 = No VBUS is plug-in.
-<br>
-1 = VBUS is plug-in.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::BUSINTEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">BUSINTEN
-</font><br><p> <font size="2">
-Offset: 0x14  USB Bus Interrupt Enable Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>SOFIEN</td><td><div style="word-wrap: break-word;"><b>SOF Interrupt
-</b><br>
-This bit enables the SOF interrupt.
-<br>
-0 = SOF interrupt Disabled.
-<br>
-1 = SOF interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>RSTIEN</td><td><div style="word-wrap: break-word;"><b>Reset Status
-</b><br>
-This bit enables the USB-Reset interrupt.
-<br>
-0 = USB-Reset interrupt Disabled.
-<br>
-1 = USB-Reset interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>RESUMEIEN</td><td><div style="word-wrap: break-word;"><b>Resume
-</b><br>
-This bit enables the Resume interrupt.
-<br>
-0 = Resume interrupt Disabled.
-<br>
-1 = Resume interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>SUSPENDIEN</td><td><div style="word-wrap: break-word;"><b>Suspend Request
-</b><br>
-This bit enables the Suspend interrupt.
-<br>
-0 = Suspend interrupt Disabled.
-<br>
-1 = Suspend interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>HISPDIEN</td><td><div style="word-wrap: break-word;"><b>High-speed Settle
-</b><br>
-This bit enables the high-speed settle interrupt.
-<br>
-0 = High-speed settle interrupt Disabled.
-<br>
-1 = High-speed settle interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>DMADONEIEN</td><td><div style="word-wrap: break-word;"><b>DMA Completion Interrupt
-</b><br>
-This bit enables the DMA completion interrupt
-<br>
-0 = DMA completion interrupt Disabled.
-<br>
-1 = DMA completion interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[6]</td><td>PHYCLKVLDIEN</td><td><div style="word-wrap: break-word;"><b>Usable Clock Interrupt
-</b><br>
-This bit enables the usable clock interrupt.
-<br>
-0 = Usable clock interrupt Disabled.
-<br>
-1 = Usable clock interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>VBUSDETIEN</td><td><div style="word-wrap: break-word;"><b>VBUS Detection Interrupt Enable Bit
-</b><br>
-This bit enables the VBUS floating detection interrupt.
-<br>
-0 = VBUS floating detection interrupt Disabled.
-<br>
-1 = VBUS floating detection interrupt Enabled.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::OPER
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">OPER
-</font><br><p> <font size="2">
-Offset: 0x18  USB Operational Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>RESUMEEN</td><td><div style="word-wrap: break-word;"><b>Generate Resume
-</b><br>
-0 = No Resume sequence to be initiated to the host.
-<br>
-1 = A Resume sequence to be initiated to the host if device remote wakeup is enabled
-<br>
-This bit is self-clearing.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>HISPDEN</td><td><div style="word-wrap: break-word;"><b>USB High-speed
-</b><br>
-0 = The USB device controller to suppress the chirp-sequence during reset protocol, thereby allowing the USB device controller to settle in full-speed, even though it is connected to a USB2.0 Host.
-<br>
-1 = The USB device controller to initiate a chirp-sequence during reset protocol.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>CURSPD</td><td><div style="word-wrap: break-word;"><b>USB Current Speed
-</b><br>
-0 = The device has settled in Full Speed.
-<br>
-1 = The USB device controller has settled in High-speed.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::FRAMECNT
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">FRAMECNT
-</font><br><p> <font size="2">
-Offset: 0x1C  USB Frame Count Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[2:0]</td><td>MFRAMECNT</td><td><div style="word-wrap: break-word;"><b>Micro-frame Counter
-</b><br>
-This field contains the micro-frame number for the frame number in the frame counter field.
-<br>
-</div></td></tr><tr><td>
-[13:3]</td><td>FRAMECNT</td><td><div style="word-wrap: break-word;"><b>Frame Counter
-</b><br>
-This field contains the frame count from the most recent start-of-frame packet.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::FADDR
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">FADDR
-</font><br><p> <font size="2">
-Offset: 0x20  USB Function Address Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[6:0]</td><td>FADDR</td><td><div style="word-wrap: break-word;"><b>USB Function Address
-</b><br>
-This field contains the current USB address of the device
-<br>
-This field is cleared when a root port reset is detected
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::TEST
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">TEST
-</font><br><p> <font size="2">
-Offset: 0x24  USB Test Mode Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[2:0]</td><td>TESTMODE</td><td><div style="word-wrap: break-word;"><b>Test Mode Selection
-</b><br>
-000 = Normal Operation.
-<br>
-001 = Test_J.
-<br>
-010 = Test_K.
-<br>
-011 = Test_SE0_NAK.
-<br>
-100 = Test_Packet.
-<br>
-101 = Test_Force_Enable.
-<br>
-110 = Reserved.
-<br>
-111 = Reserved.
-<br>
-Note: This field is cleared when root port reset is detected.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::CEPDAT
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CEPDAT
-</font><br><p> <font size="2">
-Offset: 0x28  Control-Endpoint Data Buffer
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:0]</td><td>DAT</td><td><div style="word-wrap: break-word;"><b>Control-endpoint Data Buffer
-</b><br>
-Control endpoint data buffer for the buffer transaction (read or write).
-<br>
-Note: Only word access is supported.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::CEPDAT_BYTE
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CEPDAT_BYTE
-</font><br><p> <font size="2">
-Offset: 0x28  Control-Endpoint Data Buffer
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[7:0]</td><td>DAT</td><td><div style="word-wrap: break-word;"><b>Control-endpoint Data Buffer
-</b><br>
-Control endpoint data buffer for the buffer transaction (read or write).
-<br>
-Note: Only byte access is supported.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::CEPCTL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CEPCTL
-</font><br><p> <font size="2">
-Offset: 0x2C  Control-Endpoint Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>NAKCLR</td><td><div style="word-wrap: break-word;"><b>No Acknowledge Control
-</b><br>
-This bit plays a crucial role in any control transfer.
-<br>
-0 = The bit is being cleared by the local CPU by writing zero, the USB device controller will be responding with NAKs for the subsequent status phase
-<br>
-This mechanism holds the host from moving to the next request, until the local CPU is also ready to process the next request.
-<br>
-1 = This bit is set to one by the USB device controller, whenever a setup token is received
-<br>
-The local CPU can take its own time to finish off any house-keeping work based on the request and then clear this bit.
-<br>
-Note: Only when CPU writes data[1:0] is 2'b10 or 2'b00, this bit can be updated.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>STALLEN</td><td><div style="word-wrap: break-word;"><b>Stall Enable Bit
-</b><br>
-When this stall bit is set, the control endpoint sends a stall handshake in response to any in or out token thereafter
-<br>
-This is typically used for response to invalid/unsupported requests
-<br>
-When this bit is being set the NAK clear bit has to be cleared at the same time since the NAK clear bit has highest priority than STALL
-<br>
-It is automatically cleared on receipt of a next setup-token
-<br>
-So, the local CPU need not write again to clear this bit.
-<br>
-0 = No sends a stall handshake in response to any in or out token thereafter.
-<br>
-1 = The control endpoint sends a stall handshake in response to any in or out token thereafter.
-<br>
-Note: Only when CPU writes data[1:0] is 2'b10 or 2'b00, this bit can be updated.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>ZEROLEN</td><td><div style="word-wrap: break-word;"><b>Zero Packet Length
-</b><br>
-This bit is valid for Auto Validation mode only.
-<br>
-0 = No zero length packet to the host during Data stage to an IN token.
-<br>
-1 = USB device controller can send a zero length packet to the host during Data stage to an IN token
-<br>
-This bit gets cleared once the zero length data packet is sent
-<br>
-So, the local CPU need not write again to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>FLUSH</td><td><div style="word-wrap: break-word;"><b>CEP-flush Bit
-</b><br>
-0 = No the packet buffer and its corresponding USBD_CEPDATCNT register to be cleared.
-<br>
-1 = The packet buffer and its corresponding USBD_CEPDATCNT register to be cleared
-<br>
-This bit is self-cleaning.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::CEPINTEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CEPINTEN
-</font><br><p> <font size="2">
-Offset: 0x30  Control-Endpoint Interrupt Enable
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>SETUPTKIEN</td><td><div style="word-wrap: break-word;"><b>Setup Token Interrupt Enable Bit
-</b><br>
-0 = The SETUP token interrupt in Control Endpoint Disabled.
-<br>
-1 = The SETUP token interrupt in Control Endpoint Enabled.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>SETUPPKIEN</td><td><div style="word-wrap: break-word;"><b>Setup Packet Interrupt
-</b><br>
-0 = The SETUP packet interrupt in Control Endpoint Disabled.
-<br>
-1 = The SETUP packet interrupt in Control Endpoint Enabled.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>OUTTKIEN</td><td><div style="word-wrap: break-word;"><b>Out Token Interrupt
-</b><br>
-0 = The OUT token interrupt in Control Endpoint Disabled.
-<br>
-1 = The OUT token interrupt in Control Endpoint Enabled.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>INTKIEN</td><td><div style="word-wrap: break-word;"><b>In Token Interrupt
-</b><br>
-0 = The IN token interrupt in Control Endpoint Disabled.
-<br>
-1 = The IN token interrupt in Control Endpoint Enabled.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>PINGIEN</td><td><div style="word-wrap: break-word;"><b>Ping Token Interrupt
-</b><br>
-0 = The ping token interrupt in Control Endpoint Disabled.
-<br>
-1 = The ping token interrupt Control Endpoint Enabled.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>TXPKIEN</td><td><div style="word-wrap: break-word;"><b>Data Packet Transmitted Interrupt
-</b><br>
-0 = The data packet transmitted interrupt in Control Endpoint Disabled.
-<br>
-1 = The data packet transmitted interrupt in Control Endpoint Enabled.
-<br>
-</div></td></tr><tr><td>
-[6]</td><td>RXPKIEN</td><td><div style="word-wrap: break-word;"><b>Data Packet Received Interrupt
-</b><br>
-0 = The data received interrupt in Control Endpoint Disabled.
-<br>
-1 = The data received interrupt in Control Endpoint Enabled.
-<br>
-</div></td></tr><tr><td>
-[7]</td><td>NAKIEN</td><td><div style="word-wrap: break-word;"><b>NAK Sent Interrupt
-</b><br>
-0 = The NAK sent interrupt in Control Endpoint Disabled.
-<br>
-1 = The NAK sent interrupt in Control Endpoint Enabled.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>STALLIEN</td><td><div style="word-wrap: break-word;"><b>STALL Sent Interrupt
-</b><br>
-0 = The STALL sent interrupt in Control Endpoint Disabled.
-<br>
-1 = The STALL sent interrupt in Control Endpoint Enabled.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>ERRIEN</td><td><div style="word-wrap: break-word;"><b>USB Error Interrupt
-</b><br>
-0 = The USB Error interrupt in Control Endpoint Disabled.
-<br>
-1 = The USB Error interrupt in Control Endpoint Enabled.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>STSDONEIEN</td><td><div style="word-wrap: break-word;"><b>Status Completion Interrupt
-</b><br>
-0 = The Status Completion interrupt in Control Endpoint Disabled.
-<br>
-1 = The Status Completion interrupt in Control Endpoint Enabled.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>BUFFULLIEN</td><td><div style="word-wrap: break-word;"><b>Buffer Full Interrupt
-</b><br>
-0 = The buffer full interrupt in Control Endpoint Disabled.
-<br>
-1 = The buffer full interrupt in Control Endpoint Enabled.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>BUFEMPTYIEN</td><td><div style="word-wrap: break-word;"><b>Buffer Empty Interrupt
-</b><br>
-0 = The buffer empty interrupt in Control Endpoint Disabled.
-<br>
-1= The buffer empty interrupt in Control Endpoint Enabled.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::CEPINTSTS
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CEPINTSTS
-</font><br><p> <font size="2">
-Offset: 0x34  Control-Endpoint Interrupt Status
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>SETUPTKIF</td><td><div style="word-wrap: break-word;"><b>Setup Token Interrupt
-</b><br>
-0 = Not a Setup token is received.
-<br>
-1 = A Setup token is received. Writing 1 clears this status bit
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>SETUPPKIF</td><td><div style="word-wrap: break-word;"><b>Setup Packet Interrupt
-</b><br>
-This bit must be cleared (by writing 1) before the next setup packet can be received
-<br>
-If the bit is not cleared, then the successive setup packets will be overwritten in the setup packet buffer.
-<br>
-0 = Not a Setup packet has been received from the host.
-<br>
-1 = A Setup packet has been received from the host.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>OUTTKIF</td><td><div style="word-wrap: break-word;"><b>Out Token Interrupt
-</b><br>
-0 = The control-endpoint does not received an OUT token from the host.
-<br>
-1 = The control-endpoint receives an OUT token from the host.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>INTKIF</td><td><div style="word-wrap: break-word;"><b>in Token Interrupt
-</b><br>
-0 = The control-endpoint does not received an IN token from the host.
-<br>
-1 = The control-endpoint receives an IN token from the host.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>PINGIF</td><td><div style="word-wrap: break-word;"><b>Ping Token Interrupt
-</b><br>
-0 = The control-endpoint does not received a ping token from the host.
-<br>
-1 = The control-endpoint receives a ping token from the host.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>TXPKIF</td><td><div style="word-wrap: break-word;"><b>Data Packet Transmitted Interrupt
-</b><br>
-0 = Not a data packet is successfully transmitted to the host in response to an IN-token and an ACK-token is received for the same.
-<br>
-1 = A data packet is successfully transmitted to the host in response to an IN-token and an ACK-token is received for the same.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[6]</td><td>RXPKIF</td><td><div style="word-wrap: break-word;"><b>Data Packet Received Interrupt
-</b><br>
-0 = Not a data packet is successfully received from the host for an OUT-token and an ACK is sent to the host.
-<br>
-1 = A data packet is successfully received from the host for an OUT-token and an ACK is sent to the host.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[7]</td><td>NAKIF</td><td><div style="word-wrap: break-word;"><b>NAK Sent Interrupt
-</b><br>
-0 = Not a NAK-token is sent in response to an IN/OUT token.
-<br>
-1 = A NAK-token is sent in response to an IN/OUT token.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>STALLIF</td><td><div style="word-wrap: break-word;"><b>STALL Sent Interrupt
-</b><br>
-0 = Not a stall-token is sent in response to an IN/OUT token.
-<br>
-1 = A stall-token is sent in response to an IN/OUT token.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>ERRIF</td><td><div style="word-wrap: break-word;"><b>USB Error Interrupt
-</b><br>
-0 = No error had occurred during the transaction.
-<br>
-1 = An error had occurred during the transaction.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>STSDONEIF</td><td><div style="word-wrap: break-word;"><b>Status Completion Interrupt
-</b><br>
-0 = Not a USB transaction has completed successfully.
-<br>
-1 = The status stage of a USB transaction has completed successfully.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>BUFFULLIF</td><td><div style="word-wrap: break-word;"><b>Buffer Full Interrupt
-</b><br>
-0 = The control-endpoint buffer is not full.
-<br>
-1 = The control-endpoint buffer is full.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>BUFEMPTYIF</td><td><div style="word-wrap: break-word;"><b>Buffer Empty Interrupt
-</b><br>
-0 = The control-endpoint buffer is not empty.
-<br>
-1 = The control-endpoint buffer is empty.
-<br>
-Note: Write 1 to clear this bit to 0.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::CEPTXCNT
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CEPTXCNT
-</font><br><p> <font size="2">
-Offset: 0x38  Control-Endpoint In-transfer Data Count
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[7:0]</td><td>TXCNT</td><td><div style="word-wrap: break-word;"><b>In-transfer Data Count
-</b><br>
-There is no mode selection for the control endpoint (but it operates like manual mode).The local-CPU has to fill the control-endpoint buffer with the data to be sent for an in-token and to write the count of bytes in this register
-<br>
-When zero is written into this field, a zero length packet is sent to the host
-<br>
-When the count written in the register is more than the MPS, the data sent will be of only MPS.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::CEPRXCNT
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CEPRXCNT
-</font><br><p> <font size="2">
-Offset: 0x3C  Control-Endpoint Out-transfer Data Count
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[7:0]</td><td>RXCNT</td><td><div style="word-wrap: break-word;"><b>Out-transfer Data Count
-</b><br>
-The USB device controller maintains the count of the data received in case of an out transfer, during the control transfer.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::CEPDATCNT
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CEPDATCNT
-</font><br><p> <font size="2">
-Offset: 0x40  Control-Endpoint data count
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[15:0]</td><td>DATCNT</td><td><div style="word-wrap: break-word;"><b>Control-endpoint Data Count
-</b><br>
-The USB device controller maintains the count of the data of control-endpoint.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::SETUP1_0
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SETUP1_0
-</font><br><p> <font size="2">
-Offset: 0x44  Setup1 & Setup0 bytes
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[7:0]</td><td>SETUP0</td><td><div style="word-wrap: break-word;"><b>Setup Byte 0[7:0]
-</b><br>
-This register provides byte 0 of the last setup packet received
-<br>
-For a Standard Device Request, the following bmRequestType information is returned.
-<br>
-Bit 7(Direction):
-<br>
- 0: Host to device
-<br>
- 1: Device to host
-<br>
-Bit 6-5 (Type):
-<br>
- 00: Standard
-<br>
- 01: Class
-<br>
- 10: Vendor
-<br>
- 11: Reserved
-<br>
-Bit 4-0 (Recipient)
-<br>
- 00000: Device
-<br>
- 00001: Interface
-<br>
- 00010: Endpoint
-<br>
- 00011: Other
-<br>
- Others: Reserved
-<br>
-</div></td></tr><tr><td>
-[15:8]</td><td>SETUP1</td><td><div style="word-wrap: break-word;"><b>Setup Byte 1[15:8]
-</b><br>
-This register provides byte 1 of the last setup packet received
-<br>
-For a Standard Device Request, the following bRequest Code information is returned.
-<br>
-00000000 = Get Status.
-<br>
-00000001 = Clear Feature.
-<br>
-00000010 = Reserved.
-<br>
-00000011 = Set Feature.
-<br>
-00000100 = Reserved.
-<br>
-00000101 = Set Address.
-<br>
-00000110 = Get Descriptor.
-<br>
-00000111 = Set Descriptor.
-<br>
-00001000 = Get Configuration.
-<br>
-00001001 = Set Configuration.
-<br>
-00001010 = Get Interface.
-<br>
-00001011 = Set Interface.
-<br>
-00001100 = Sync Frame.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::SETUP3_2
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SETUP3_2
-</font><br><p> <font size="2">
-Offset: 0x48  Setup3 & Setup2 Bytes
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[7:0]</td><td>SETUP2</td><td><div style="word-wrap: break-word;"><b>Setup Byte 2 [7:0]
-</b><br>
-This register provides byte 2 of the last setup packet received
-<br>
-For a Standard Device Request, the least significant byte of the wValue field is returned
-<br>
-</div></td></tr><tr><td>
-[15:8]</td><td>SETUP3</td><td><div style="word-wrap: break-word;"><b>Setup Byte 3 [15:8]
-</b><br>
-This register provides byte 3 of the last setup packet received
-<br>
-For a Standard Device Request, the most significant byte of the wValue field is returned.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::SETUP5_4
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SETUP5_4
-</font><br><p> <font size="2">
-Offset: 0x4C  Setup5 & Setup4 Bytes
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[7:0]</td><td>SETUP4</td><td><div style="word-wrap: break-word;"><b>Setup Byte 4[7:0]
-</b><br>
-This register provides byte 4 of the last setup packet received
-<br>
-For a Standard Device Request, the least significant byte of the wIndex is returned.
-<br>
-</div></td></tr><tr><td>
-[15:8]</td><td>SETUP5</td><td><div style="word-wrap: break-word;"><b>Setup Byte 5[15:8]
-</b><br>
-This register provides byte 5 of the last setup packet received
-<br>
-For a Standard Device Request, the most significant byte of the wIndex field is returned.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::SETUP7_6
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SETUP7_6
-</font><br><p> <font size="2">
-Offset: 0x50  Setup7 & Setup6 Bytes
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[7:0]</td><td>SETUP6</td><td><div style="word-wrap: break-word;"><b>Setup Byte 6[7:0]
-</b><br>
-This register provides byte 6 of the last setup packet received
-<br>
-For a Standard Device Request, the least significant byte of the wLength field is returned.
-<br>
-</div></td></tr><tr><td>
-[15:8]</td><td>SETUP7</td><td><div style="word-wrap: break-word;"><b>Setup Byte 7[15:8]
-</b><br>
-This register provides byte 7 of the last setup packet received
-<br>
-For a Standard Device Request, the most significant byte of the wLength field is returned.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::CEPBUFST
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CEPBUFST
-</font><br><p> <font size="2">
-Offset: 0x54  Control Endpoint RAM Start Address Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[11:0]</td><td>SADDR</td><td><div style="word-wrap: break-word;"><b>Control-endpoint Start Address
-</b><br>
-This is the start-address of the RAM space allocated for the control-endpoint.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::CEPBUFEND
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CEPBUFEND
-</font><br><p> <font size="2">
-Offset: 0x58  Control Endpoint RAM End Address Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[11:0]</td><td>EADDR</td><td><div style="word-wrap: break-word;"><b>Control-endpoint End Address
-</b><br>
-This is the end-address of the RAM space allocated for the control-endpoint.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::DMACTL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DMACTL
-</font><br><p> <font size="2">
-Offset: 0x5C  DMA Control Status Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[3:0]</td><td>EPNUM</td><td><div style="word-wrap: break-word;"><b>DMA Endpoint Address Bits
-</b><br>
-Used to define the Endpoint Address
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>DMARD</td><td><div style="word-wrap: break-word;"><b>DMA Operation
-</b><br>
-0 : The operation is a DMA write (read from USB buffer)
-<br>
-DMA will check endpoint data available count (USBD_EPxDATCNT) according to EPNM setting before to perform DMA write operation.
-<br>
-1 : The operation is a DMA read (write to USB buffer).
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>DMAEN</td><td><div style="word-wrap: break-word;"><b>DMA Enable Bit
-</b><br>
-0 : DMA function Disabled.
-<br>
-1 : DMA function Enabled.
-<br>
-</div></td></tr><tr><td>
-[6]</td><td>SGEN</td><td><div style="word-wrap: break-word;"><b>Scatter Gather Function Enable Bit
-</b><br>
-0 : Scatter gather function Disabled.
-<br>
-1 : Scatter gather function Enabled.
-<br>
-</div></td></tr><tr><td>
-[7]</td><td>DMARST</td><td><div style="word-wrap: break-word;"><b>Reset DMA State Machine
-</b><br>
-0 : No reset the DMA state machine.
-<br>
-1 : Reset the DMA state machine.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>SVINEP</td><td><div style="word-wrap: break-word;"><b>Serve IN Endpoint
-</b><br>
-This bit is used to specify DMA serving endpoint-IN endpoint or OUT endpoint.
-<br>
-0: DMA serves OUT endpoint
-<br>
-1: DMA serves IN endpoint
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::DMACNT
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DMACNT
-</font><br><p> <font size="2">
-Offset: 0x60  DMA Count Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[19:0]</td><td>DMACNT</td><td><div style="word-wrap: break-word;"><b>DMA Transfer Count
-</b><br>
-The transfer count of the DMA operation to be performed is written to this register.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::DMAADDR
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DMAADDR
-</font><br><p> <font size="2">
-Offset: 0x700  AHB DMA Address Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:0]</td><td>DMAADDR</td><td><div style="word-wrap: break-word;"><b>DMAADDR
-</b><br>
-The register specifies the address from which the DMA has to read / write
-<br>
-The address must WORD (32-bit) aligned.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var HSUSBD_T::PHYCTL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PHYCTL
-</font><br><p> <font size="2">
-Offset: 0x704  USB PHY Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[8]</td><td>DPPUEN</td><td><div style="word-wrap: break-word;"><b>DP Pull-up
-</b><br>
-0 = Pull-up resistor on D+ Disabled.
-<br>
-1 = Pull-up resistor on D+ Enabled.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>PHYEN</td><td><div style="word-wrap: break-word;"><b>PHY Suspend Enable Bit
-</b><br>
-0 = The USB PHY is suspend.
-<br>
-1 = The USB PHY is not suspend.
-<br>
-</div></td></tr><tr><td>
-[24]</td><td>WKEN</td><td><div style="word-wrap: break-word;"><b>Wake-up Enable Bit
-</b><br>
-0 = The wake-up function Disabled.
-<br>
-1 = The wake-up function Enabled.
-<br>
-</div></td></tr><tr><td>
-[31]</td><td>VBUSDET</td><td><div style="word-wrap: break-word;"><b>VBUS Status
-</b><br>
-0 = The VBUS is not detected yet.
-<br>
-1 = The VBUS is detected.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-
- */
+     * @var HSUSBD_T::GINTSTS
+     * Offset: 0x00  Global Interrupt Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |USBIF     |USB Interrupt
+     * |        |          |This bit conveys the interrupt status for USB specific events endpoint
+     * |        |          |When set, USB interrupt status register should be read to determine the cause of the interrupt.
+     * |        |          |0 = No interrupt event occurred.
+     * |        |          |1 = The related interrupt event is occurred.
+     * |[1]     |CEPIF     |Control Endpoint Interrupt
+     * |        |          |This bit conveys the interrupt status for control endpoint
+     * |        |          |When set, Control-ep's interrupt status register should be read to determine the cause of the interrupt.
+     * |        |          |0 = No interrupt event occurred.
+     * |        |          |1 = The related interrupt event is occurred.
+     * |[2]     |EPAIF     |Endpoint a Interrupt
+     * |        |          |When set, the corresponding Endpoint A's interrupt status register should be read to determine the cause of the interrupt.
+     * |        |          |0 = No interrupt event occurred.
+     * |        |          |1 = The related interrupt event is occurred.
+     * |[3]     |EPBIF     |Endpoint B Interrupt
+     * |        |          |When set, the corresponding Endpoint B's interrupt status register should be read to determine the cause of the interrupt.
+     * |        |          |0 = No interrupt event occurred.
+     * |        |          |1 = The related interrupt event is occurred.
+     * |[4]     |EPCIF     |Endpoint C Interrupt
+     * |        |          |When set, the corresponding Endpoint C's interrupt status register should be read to determine the cause of the interrupt.
+     * |        |          |0 = No interrupt event occurred.
+     * |        |          |1 = The related interrupt event is occurred.
+     * |[5]     |EPDIF     |Endpoint D Interrupt
+     * |        |          |When set, the corresponding Endpoint D's interrupt status register should be read to determine the cause of the interrupt.
+     * |        |          |0 = No interrupt event occurred.
+     * |        |          |1 = The related interrupt event is occurred.
+     * |[6]     |EPEIF     |Endpoint E Interrupt
+     * |        |          |When set, the corresponding Endpoint E's interrupt status register should be read to determine the cause of the interrupt.
+     * |        |          |0 = No interrupt event occurred.
+     * |        |          |1 = The related interrupt event is occurred.
+     * |[7]     |EPFIF     |Endpoint F Interrupt
+     * |        |          |When set, the corresponding Endpoint F's interrupt status register should be read to determine the cause of the interrupt.
+     * |        |          |0 = No interrupt event occurred.
+     * |        |          |1 = The related interrupt event is occurred.
+     * |[8]     |EPGIF     |Endpoint G Interrupt
+     * |        |          |When set, the corresponding Endpoint G's interrupt status register should be read to determine the cause of the interrupt.
+     * |        |          |0 = No interrupt event occurred.
+     * |        |          |1 = The related interrupt event is occurred.
+     * |[9]     |EPHIF     |Endpoint H Interrupt
+     * |        |          |When set, the corresponding Endpoint H's interrupt status register should be read to determine the cause of the interrupt.
+     * |        |          |0 = No interrupt event occurred.
+     * |        |          |1 = The related interrupt event is occurred.
+     * |[10]    |EPIIF     |Endpoint I Interrupt
+     * |        |          |When set, the corresponding Endpoint I's interrupt status register should be read to determine the cause of the interrupt.
+     * |        |          |0 = No interrupt event occurred.
+     * |        |          |1 = The related interrupt event is occurred.
+     * |[11]    |EPJIF     |Endpoint J Interrupt
+     * |        |          |When set, the corresponding Endpoint J's interrupt status register should be read to determine the cause of the interrupt.
+     * |        |          |0 = No interrupt event occurred.
+     * |        |          |1 = The related interrupt event is occurred.
+     * |[12]    |EPKIF     |Endpoint K Interrupt
+     * |        |          |When set, the corresponding Endpoint K's interrupt status register should be read to determine the cause of the interrupt.
+     * |        |          |0 = No interrupt event occurred.
+     * |        |          |1 = The related interrupt event is occurred.
+     * |[13]    |EPLIF     |Endpoint L Interrupt
+     * |        |          |When set, the corresponding Endpoint L's interrupt status register should be read to determine the cause of the interrupt.
+     * |        |          |0 = No interrupt event occurred.
+     * |        |          |1 = The related interrupt event is occurred.
+     * @var HSUSBD_T::GINTEN
+     * Offset: 0x08  Global Interrupt Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |USBIEN    |USB Interrupt Enable Bit
+     * |        |          |When set, this bit enables a local interrupt to be generated when a USB event occurs on the bus.
+     * |        |          |0 = The related interrupt Disabled.
+     * |        |          |1 = The related interrupt Enabled.
+     * |[1]     |CEPIEN    |Control Endpoint Interrupt Enable Bit
+     * |        |          |When set, this bit enables a local interrupt to be generated when an interrupt is pending for the control endpoint.
+     * |        |          |0 = The related interrupt Disabled.
+     * |        |          |1 = The related interrupt Enabled.
+     * |[2]     |EPAIEN    |Interrupt Enable Control for Endpoint a
+     * |        |          |When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint A.
+     * |        |          |0 = The related interrupt Disabled.
+     * |        |          |1 = The related interrupt Enabled.
+     * |[3]     |EPBIEN    |Interrupt Enable Control for Endpoint B
+     * |        |          |When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint B
+     * |        |          |0 = The related interrupt Disabled.
+     * |        |          |1 = The related interrupt Enabled.
+     * |[4]     |EPCIEN    |Interrupt Enable Control for Endpoint C
+     * |        |          |When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint C
+     * |        |          |0 = The related interrupt Disabled.
+     * |        |          |1 = The related interrupt Enabled.
+     * |[5]     |EPDIEN    |Interrupt Enable Control for Endpoint D
+     * |        |          |When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint D
+     * |        |          |0 = The related interrupt Disabled.
+     * |        |          |1 = The related interrupt Enabled.
+     * |[6]     |EPEIEN    |Interrupt Enable Control for Endpoint E
+     * |        |          |When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint E
+     * |        |          |0 = The related interrupt Disabled.
+     * |        |          |1 = The related interrupt Enabled.
+     * |[7]     |EPFIEN    |Interrupt Enable Control for Endpoint F
+     * |        |          |When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint F
+     * |        |          |0 = The related interrupt Disabled.
+     * |        |          |1 = The related interrupt Enabled.
+     * |[8]     |EPGIEN    |Interrupt Enable Control for Endpoint G
+     * |        |          |When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint G
+     * |        |          |0 = The related interrupt Disabled.
+     * |        |          |1 = The related interrupt Enabled.
+     * |[9]     |EPHIEN    |Interrupt Enable Control for Endpoint H
+     * |        |          |When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint H
+     * |        |          |0 = The related interrupt Disabled.
+     * |        |          |1 = The related interrupt Enabled.
+     * |[10]    |EPIIEN    |Interrupt Enable Control for Endpoint I
+     * |        |          |When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint I
+     * |        |          |0 = The related interrupt Disabled.
+     * |        |          |1 = The related interrupt Enabled.
+     * |[11]    |EPJIEN    |Interrupt Enable Control for Endpoint J
+     * |        |          |When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint J
+     * |        |          |0 = The related interrupt Disabled.
+     * |        |          |1 = The related interrupt Enabled.
+     * |[12]    |EPKIEN    |Interrupt Enable Control for Endpoint K
+     * |        |          |When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint K
+     * |        |          |0 = The related interrupt Disabled.
+     * |        |          |1 = The related interrupt Enabled.
+     * |[13]    |EPLIEN    |Interrupt Enable Control for Endpoint L
+     * |        |          |When set, this bit enables a local interrupt to be generated when an interrupt is pending for the endpoint L
+     * |        |          |0 = The related interrupt Disabled.
+     * |        |          |1 = The related interrupt Enabled.
+     * @var HSUSBD_T::BUSINTSTS
+     * Offset: 0x10  USB Bus Interrupt Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SOFIF     |SOF Receive Control
+     * |        |          |This bit indicates when a start-of-frame packet has been received.
+     * |        |          |0 = No start-of-frame packet has been received.
+     * |        |          |1 = Start-of-frame packet has been received.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[1]     |RSTIF     |Reset Status
+     * |        |          |When set, this bit indicates that either the USB root port reset is end.
+     * |        |          |0 = No USB root port reset is end.
+     * |        |          |1 = USB root port reset is end.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[2]     |RESUMEIF  |Resume
+     * |        |          |When set, this bit indicates that a device resume has occurred.
+     * |        |          |0 = No device resume has occurred.
+     * |        |          |1 = Device resume has occurred.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[3]     |SUSPENDIF |Suspend Request
+     * |        |          |This bit is set as default and it has to be cleared by writing '1' before the USB reset
+     * |        |          |This bit is also set when a USB Suspend request is detected from the host.
+     * |        |          |0 = No USB Suspend request is detected from the host.
+     * |        |          |1= USB Suspend request is detected from the host.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[4]     |HISPDIF   |High-speed Settle
+     * |        |          |0 = No valid high-speed reset protocol is detected.
+     * |        |          |1 = Valid high-speed reset protocol is over and the device has settled in high-speed.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[5]     |DMADONEIF |DMA Completion Interrupt
+     * |        |          |0 = No DMA transfer over.
+     * |        |          |1 = DMA transfer is over.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[6]     |PHYCLKVLDIF|Usable Clock Interrupt
+     * |        |          |0 = Usable clock is not available.
+     * |        |          |1 = Usable clock is available from the transceiver.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[8]     |VBUSDETIF |VBUS Detection Interrupt Status
+     * |        |          |0 = No VBUS is plug-in.
+     * |        |          |1 = VBUS is plug-in.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * @var HSUSBD_T::BUSINTEN
+     * Offset: 0x14  USB Bus Interrupt Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SOFIEN    |SOF Interrupt
+     * |        |          |This bit enables the SOF interrupt.
+     * |        |          |0 = SOF interrupt Disabled.
+     * |        |          |1 = SOF interrupt Enabled.
+     * |[1]     |RSTIEN    |Reset Status
+     * |        |          |This bit enables the USB-Reset interrupt.
+     * |        |          |0 = USB-Reset interrupt Disabled.
+     * |        |          |1 = USB-Reset interrupt Enabled.
+     * |[2]     |RESUMEIEN |Resume
+     * |        |          |This bit enables the Resume interrupt.
+     * |        |          |0 = Resume interrupt Disabled.
+     * |        |          |1 = Resume interrupt Enabled.
+     * |[3]     |SUSPENDIEN|Suspend Request
+     * |        |          |This bit enables the Suspend interrupt.
+     * |        |          |0 = Suspend interrupt Disabled.
+     * |        |          |1 = Suspend interrupt Enabled.
+     * |[4]     |HISPDIEN  |High-speed Settle
+     * |        |          |This bit enables the high-speed settle interrupt.
+     * |        |          |0 = High-speed settle interrupt Disabled.
+     * |        |          |1 = High-speed settle interrupt Enabled.
+     * |[5]     |DMADONEIEN|DMA Completion Interrupt
+     * |        |          |This bit enables the DMA completion interrupt
+     * |        |          |0 = DMA completion interrupt Disabled.
+     * |        |          |1 = DMA completion interrupt Enabled.
+     * |[6]     |PHYCLKVLDIEN|Usable Clock Interrupt
+     * |        |          |This bit enables the usable clock interrupt.
+     * |        |          |0 = Usable clock interrupt Disabled.
+     * |        |          |1 = Usable clock interrupt Enabled.
+     * |[8]     |VBUSDETIEN|VBUS Detection Interrupt Enable Bit
+     * |        |          |This bit enables the VBUS floating detection interrupt.
+     * |        |          |0 = VBUS floating detection interrupt Disabled.
+     * |        |          |1 = VBUS floating detection interrupt Enabled.
+     * @var HSUSBD_T::OPER
+     * Offset: 0x18  USB Operational Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |RESUMEEN  |Generate Resume
+     * |        |          |0 = No Resume sequence to be initiated to the host.
+     * |        |          |1 = A Resume sequence to be initiated to the host if device remote wakeup is enabled
+     * |        |          |This bit is self-clearing.
+     * |[1]     |HISPDEN   |USB High-speed
+     * |        |          |0 = The USB device controller to suppress the chirp-sequence during reset protocol, thereby allowing the USB device controller to settle in full-speed, even though it is connected to a USB2.0 Host.
+     * |        |          |1 = The USB device controller to initiate a chirp-sequence during reset protocol.
+     * |[2]     |CURSPD    |USB Current Speed
+     * |        |          |0 = The device has settled in Full Speed.
+     * |        |          |1 = The USB device controller has settled in High-speed.
+     * @var HSUSBD_T::FRAMECNT
+     * Offset: 0x1C  USB Frame Count Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[2:0]   |MFRAMECNT |Micro-frame Counter
+     * |        |          |This field contains the micro-frame number for the frame number in the frame counter field.
+     * |[13:3]  |FRAMECNT  |Frame Counter
+     * |        |          |This field contains the frame count from the most recent start-of-frame packet.
+     * @var HSUSBD_T::FADDR
+     * Offset: 0x20  USB Function Address Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[6:0]   |FADDR     |USB Function Address
+     * |        |          |This field contains the current USB address of the device
+     * |        |          |This field is cleared when a root port reset is detected
+     * @var HSUSBD_T::TEST
+     * Offset: 0x24  USB Test Mode Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[2:0]   |TESTMODE  |Test Mode Selection
+     * |        |          |000 = Normal Operation.
+     * |        |          |001 = Test_J.
+     * |        |          |010 = Test_K.
+     * |        |          |011 = Test_SE0_NAK.
+     * |        |          |100 = Test_Packet.
+     * |        |          |101 = Test_Force_Enable.
+     * |        |          |110 = Reserved.
+     * |        |          |111 = Reserved.
+     * |        |          |Note: This field is cleared when root port reset is detected.
+     * @var HSUSBD_T::CEPDAT
+     * Offset: 0x28  Control-Endpoint Data Buffer
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:0]  |DAT       |Control-endpoint Data Buffer
+     * |        |          |Control endpoint data buffer for the buffer transaction (read or write).
+     * |        |          |Note: Only word access is supported.
+     * @var HSUSBD_T::CEPDAT_BYTE
+     * Offset: 0x28  Control-Endpoint Data Buffer
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[7:0]   |DAT       |Control-endpoint Data Buffer
+     * |        |          |Control endpoint data buffer for the buffer transaction (read or write).
+     * |        |          |Note: Only byte access is supported.
+     * @var HSUSBD_T::CEPCTL
+     * Offset: 0x2C  Control-Endpoint Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |NAKCLR    |No Acknowledge Control
+     * |        |          |This bit plays a crucial role in any control transfer.
+     * |        |          |0 = The bit is being cleared by the local CPU by writing zero, the USB device controller will be responding with NAKs for the subsequent status phase
+     * |        |          |This mechanism holds the host from moving to the next request, until the local CPU is also ready to process the next request.
+     * |        |          |1 = This bit is set to one by the USB device controller, whenever a setup token is received
+     * |        |          |The local CPU can take its own time to finish off any house-keeping work based on the request and then clear this bit.
+     * |        |          |Note: Only when CPU writes data[1:0] is 2'b10 or 2'b00, this bit can be updated.
+     * |[1]     |STALLEN   |Stall Enable Bit
+     * |        |          |When this stall bit is set, the control endpoint sends a stall handshake in response to any in or out token thereafter
+     * |        |          |This is typically used for response to invalid/unsupported requests
+     * |        |          |When this bit is being set the NAK clear bit has to be cleared at the same time since the NAK clear bit has highest priority than STALL
+     * |        |          |It is automatically cleared on receipt of a next setup-token
+     * |        |          |So, the local CPU need not write again to clear this bit.
+     * |        |          |0 = No sends a stall handshake in response to any in or out token thereafter.
+     * |        |          |1 = The control endpoint sends a stall handshake in response to any in or out token thereafter.
+     * |        |          |Note: Only when CPU writes data[1:0] is 2'b10 or 2'b00, this bit can be updated.
+     * |[2]     |ZEROLEN   |Zero Packet Length
+     * |        |          |This bit is valid for Auto Validation mode only.
+     * |        |          |0 = No zero length packet to the host during Data stage to an IN token.
+     * |        |          |1 = USB device controller can send a zero length packet to the host during Data stage to an IN token
+     * |        |          |This bit gets cleared once the zero length data packet is sent
+     * |        |          |So, the local CPU need not write again to clear this bit.
+     * |[3]     |FLUSH     |CEP-flush Bit
+     * |        |          |0 = No the packet buffer and its corresponding USBD_CEPDATCNT register to be cleared.
+     * |        |          |1 = The packet buffer and its corresponding USBD_CEPDATCNT register to be cleared
+     * |        |          |This bit is self-cleaning.
+     * @var HSUSBD_T::CEPINTEN
+     * Offset: 0x30  Control-Endpoint Interrupt Enable
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SETUPTKIEN|Setup Token Interrupt Enable Bit
+     * |        |          |0 = The SETUP token interrupt in Control Endpoint Disabled.
+     * |        |          |1 = The SETUP token interrupt in Control Endpoint Enabled.
+     * |[1]     |SETUPPKIEN|Setup Packet Interrupt
+     * |        |          |0 = The SETUP packet interrupt in Control Endpoint Disabled.
+     * |        |          |1 = The SETUP packet interrupt in Control Endpoint Enabled.
+     * |[2]     |OUTTKIEN  |Out Token Interrupt
+     * |        |          |0 = The OUT token interrupt in Control Endpoint Disabled.
+     * |        |          |1 = The OUT token interrupt in Control Endpoint Enabled.
+     * |[3]     |INTKIEN   |In Token Interrupt
+     * |        |          |0 = The IN token interrupt in Control Endpoint Disabled.
+     * |        |          |1 = The IN token interrupt in Control Endpoint Enabled.
+     * |[4]     |PINGIEN   |Ping Token Interrupt
+     * |        |          |0 = The ping token interrupt in Control Endpoint Disabled.
+     * |        |          |1 = The ping token interrupt Control Endpoint Enabled.
+     * |[5]     |TXPKIEN   |Data Packet Transmitted Interrupt
+     * |        |          |0 = The data packet transmitted interrupt in Control Endpoint Disabled.
+     * |        |          |1 = The data packet transmitted interrupt in Control Endpoint Enabled.
+     * |[6]     |RXPKIEN   |Data Packet Received Interrupt
+     * |        |          |0 = The data received interrupt in Control Endpoint Disabled.
+     * |        |          |1 = The data received interrupt in Control Endpoint Enabled.
+     * |[7]     |NAKIEN    |NAK Sent Interrupt
+     * |        |          |0 = The NAK sent interrupt in Control Endpoint Disabled.
+     * |        |          |1 = The NAK sent interrupt in Control Endpoint Enabled.
+     * |[8]     |STALLIEN  |STALL Sent Interrupt
+     * |        |          |0 = The STALL sent interrupt in Control Endpoint Disabled.
+     * |        |          |1 = The STALL sent interrupt in Control Endpoint Enabled.
+     * |[9]     |ERRIEN    |USB Error Interrupt
+     * |        |          |0 = The USB Error interrupt in Control Endpoint Disabled.
+     * |        |          |1 = The USB Error interrupt in Control Endpoint Enabled.
+     * |[10]    |STSDONEIEN|Status Completion Interrupt
+     * |        |          |0 = The Status Completion interrupt in Control Endpoint Disabled.
+     * |        |          |1 = The Status Completion interrupt in Control Endpoint Enabled.
+     * |[11]    |BUFFULLIEN|Buffer Full Interrupt
+     * |        |          |0 = The buffer full interrupt in Control Endpoint Disabled.
+     * |        |          |1 = The buffer full interrupt in Control Endpoint Enabled.
+     * |[12]    |BUFEMPTYIEN|Buffer Empty Interrupt
+     * |        |          |0 = The buffer empty interrupt in Control Endpoint Disabled.
+     * |        |          |1= The buffer empty interrupt in Control Endpoint Enabled.
+     * @var HSUSBD_T::CEPINTSTS
+     * Offset: 0x34  Control-Endpoint Interrupt Status
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SETUPTKIF |Setup Token Interrupt
+     * |        |          |0 = Not a Setup token is received.
+     * |        |          |1 = A Setup token is received. Writing 1 clears this status bit
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[1]     |SETUPPKIF |Setup Packet Interrupt
+     * |        |          |This bit must be cleared (by writing 1) before the next setup packet can be received
+     * |        |          |If the bit is not cleared, then the successive setup packets will be overwritten in the setup packet buffer.
+     * |        |          |0 = Not a Setup packet has been received from the host.
+     * |        |          |1 = A Setup packet has been received from the host.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[2]     |OUTTKIF   |Out Token Interrupt
+     * |        |          |0 = The control-endpoint does not received an OUT token from the host.
+     * |        |          |1 = The control-endpoint receives an OUT token from the host.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[3]     |INTKIF    |in Token Interrupt
+     * |        |          |0 = The control-endpoint does not received an IN token from the host.
+     * |        |          |1 = The control-endpoint receives an IN token from the host.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[4]     |PINGIF    |Ping Token Interrupt
+     * |        |          |0 = The control-endpoint does not received a ping token from the host.
+     * |        |          |1 = The control-endpoint receives a ping token from the host.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[5]     |TXPKIF    |Data Packet Transmitted Interrupt
+     * |        |          |0 = Not a data packet is successfully transmitted to the host in response to an IN-token and an ACK-token is received for the same.
+     * |        |          |1 = A data packet is successfully transmitted to the host in response to an IN-token and an ACK-token is received for the same.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[6]     |RXPKIF    |Data Packet Received Interrupt
+     * |        |          |0 = Not a data packet is successfully received from the host for an OUT-token and an ACK is sent to the host.
+     * |        |          |1 = A data packet is successfully received from the host for an OUT-token and an ACK is sent to the host.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[7]     |NAKIF     |NAK Sent Interrupt
+     * |        |          |0 = Not a NAK-token is sent in response to an IN/OUT token.
+     * |        |          |1 = A NAK-token is sent in response to an IN/OUT token.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[8]     |STALLIF   |STALL Sent Interrupt
+     * |        |          |0 = Not a stall-token is sent in response to an IN/OUT token.
+     * |        |          |1 = A stall-token is sent in response to an IN/OUT token.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[9]     |ERRIF     |USB Error Interrupt
+     * |        |          |0 = No error had occurred during the transaction.
+     * |        |          |1 = An error had occurred during the transaction.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[10]    |STSDONEIF |Status Completion Interrupt
+     * |        |          |0 = Not a USB transaction has completed successfully.
+     * |        |          |1 = The status stage of a USB transaction has completed successfully.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[11]    |BUFFULLIF |Buffer Full Interrupt
+     * |        |          |0 = The control-endpoint buffer is not full.
+     * |        |          |1 = The control-endpoint buffer is full.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[12]    |BUFEMPTYIF|Buffer Empty Interrupt
+     * |        |          |0 = The control-endpoint buffer is not empty.
+     * |        |          |1 = The control-endpoint buffer is empty.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * @var HSUSBD_T::CEPTXCNT
+     * Offset: 0x38  Control-Endpoint In-transfer Data Count
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[7:0]   |TXCNT     |In-transfer Data Count
+     * |        |          |There is no mode selection for the control endpoint (but it operates like manual mode).The local-CPU has to fill the control-endpoint buffer with the data to be sent for an in-token and to write the count of bytes in this register
+     * |        |          |When zero is written into this field, a zero length packet is sent to the host
+     * |        |          |When the count written in the register is more than the MPS, the data sent will be of only MPS.
+     * @var HSUSBD_T::CEPRXCNT
+     * Offset: 0x3C  Control-Endpoint Out-transfer Data Count
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[7:0]   |RXCNT     |Out-transfer Data Count
+     * |        |          |The USB device controller maintains the count of the data received in case of an out transfer, during the control transfer.
+     * @var HSUSBD_T::CEPDATCNT
+     * Offset: 0x40  Control-Endpoint data count
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |DATCNT    |Control-endpoint Data Count
+     * |        |          |The USB device controller maintains the count of the data of control-endpoint.
+     * @var HSUSBD_T::SETUP1_0
+     * Offset: 0x44  Setup1 & Setup0 bytes
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[7:0]   |SETUP0    |Setup Byte 0[7:0]
+     * |        |          |This register provides byte 0 of the last setup packet received
+     * |        |          |For a Standard Device Request, the following bmRequestType information is returned.
+     * |        |          |Bit 7(Direction):
+     * |        |          | 0: Host to device
+     * |        |          | 1: Device to host
+     * |        |          |Bit 6-5 (Type):
+     * |        |          | 00: Standard
+     * |        |          | 01: Class
+     * |        |          | 10: Vendor
+     * |        |          | 11: Reserved
+     * |        |          |Bit 4-0 (Recipient)
+     * |        |          | 00000: Device
+     * |        |          | 00001: Interface
+     * |        |          | 00010: Endpoint
+     * |        |          | 00011: Other
+     * |        |          | Others: Reserved
+     * |[15:8]  |SETUP1    |Setup Byte 1[15:8]
+     * |        |          |This register provides byte 1 of the last setup packet received
+     * |        |          |For a Standard Device Request, the following bRequest Code information is returned.
+     * |        |          |00000000 = Get Status.
+     * |        |          |00000001 = Clear Feature.
+     * |        |          |00000010 = Reserved.
+     * |        |          |00000011 = Set Feature.
+     * |        |          |00000100 = Reserved.
+     * |        |          |00000101 = Set Address.
+     * |        |          |00000110 = Get Descriptor.
+     * |        |          |00000111 = Set Descriptor.
+     * |        |          |00001000 = Get Configuration.
+     * |        |          |00001001 = Set Configuration.
+     * |        |          |00001010 = Get Interface.
+     * |        |          |00001011 = Set Interface.
+     * |        |          |00001100 = Sync Frame.
+     * @var HSUSBD_T::SETUP3_2
+     * Offset: 0x48  Setup3 & Setup2 Bytes
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[7:0]   |SETUP2    |Setup Byte 2 [7:0]
+     * |        |          |This register provides byte 2 of the last setup packet received
+     * |        |          |For a Standard Device Request, the least significant byte of the wValue field is returned
+     * |[15:8]  |SETUP3    |Setup Byte 3 [15:8]
+     * |        |          |This register provides byte 3 of the last setup packet received
+     * |        |          |For a Standard Device Request, the most significant byte of the wValue field is returned.
+     * @var HSUSBD_T::SETUP5_4
+     * Offset: 0x4C  Setup5 & Setup4 Bytes
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[7:0]   |SETUP4    |Setup Byte 4[7:0]
+     * |        |          |This register provides byte 4 of the last setup packet received
+     * |        |          |For a Standard Device Request, the least significant byte of the wIndex is returned.
+     * |[15:8]  |SETUP5    |Setup Byte 5[15:8]
+     * |        |          |This register provides byte 5 of the last setup packet received
+     * |        |          |For a Standard Device Request, the most significant byte of the wIndex field is returned.
+     * @var HSUSBD_T::SETUP7_6
+     * Offset: 0x50  Setup7 & Setup6 Bytes
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[7:0]   |SETUP6    |Setup Byte 6[7:0]
+     * |        |          |This register provides byte 6 of the last setup packet received
+     * |        |          |For a Standard Device Request, the least significant byte of the wLength field is returned.
+     * |[15:8]  |SETUP7    |Setup Byte 7[15:8]
+     * |        |          |This register provides byte 7 of the last setup packet received
+     * |        |          |For a Standard Device Request, the most significant byte of the wLength field is returned.
+     * @var HSUSBD_T::CEPBUFST
+     * Offset: 0x54  Control Endpoint RAM Start Address Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[11:0]  |SADDR     |Control-endpoint Start Address
+     * |        |          |This is the start-address of the RAM space allocated for the control-endpoint.
+     * @var HSUSBD_T::CEPBUFEND
+     * Offset: 0x58  Control Endpoint RAM End Address Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[11:0]  |EADDR     |Control-endpoint End Address
+     * |        |          |This is the end-address of the RAM space allocated for the control-endpoint.
+     * @var HSUSBD_T::DMACTL
+     * Offset: 0x5C  DMA Control Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[3:0]   |EPNUM     |DMA Endpoint Address Bits
+     * |        |          |Used to define the Endpoint Address
+     * |[4]     |DMARD     |DMA Operation
+     * |        |          |0 : The operation is a DMA write (read from USB buffer)
+     * |        |          |DMA will check endpoint data available count (USBD_EPxDATCNT) according to EPNM setting before to perform DMA write operation.
+     * |        |          |1 : The operation is a DMA read (write to USB buffer).
+     * |[5]     |DMAEN     |DMA Enable Bit
+     * |        |          |0 : DMA function Disabled.
+     * |        |          |1 : DMA function Enabled.
+     * |[6]     |SGEN      |Scatter Gather Function Enable Bit
+     * |        |          |0 : Scatter gather function Disabled.
+     * |        |          |1 : Scatter gather function Enabled.
+     * |[7]     |DMARST    |Reset DMA State Machine
+     * |        |          |0 : No reset the DMA state machine.
+     * |        |          |1 : Reset the DMA state machine.
+     * |[8]     |SVINEP    |Serve IN Endpoint
+     * |        |          |This bit is used to specify DMA serving endpoint-IN endpoint or OUT endpoint.
+     * |        |          |0: DMA serves OUT endpoint
+     * |        |          |1: DMA serves IN endpoint
+     * @var HSUSBD_T::DMACNT
+     * Offset: 0x60  DMA Count Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[19:0]  |DMACNT    |DMA Transfer Count
+     * |        |          |The transfer count of the DMA operation to be performed is written to this register.
+     * @var HSUSBD_T::DMAADDR
+     * Offset: 0x700  AHB DMA Address Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:0]  |DMAADDR   |DMAADDR
+     * |        |          |The register specifies the address from which the DMA has to read / write
+     * |        |          |The address must WORD (32-bit) aligned.
+     * @var HSUSBD_T::PHYCTL
+     * Offset: 0x704  USB PHY Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[8]     |DPPUEN    |DP Pull-up
+     * |        |          |0 = Pull-up resistor on D+ Disabled.
+     * |        |          |1 = Pull-up resistor on D+ Enabled.
+     * |[9]     |PHYEN     |PHY Suspend Enable Bit
+     * |        |          |0 = The USB PHY is suspend.
+     * |        |          |1 = The USB PHY is not suspend.
+     * |[24]    |WKEN      |Wake-up Enable Bit
+     * |        |          |0 = The wake-up function Disabled.
+     * |        |          |1 = The wake-up function Enabled.
+     * |[31]    |VBUSDET   |VBUS Status
+     * |        |          |0 = The VBUS is not detected yet.
+     * |        |          |1 = The VBUS is detected.
+     */
 
     __I  uint32_t GINTSTS;               /*!< [0x0000] Global Interrupt Status Register                                 */
     /// @cond HIDDEN_SYMBOLS

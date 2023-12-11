@@ -28,161 +28,72 @@ typedef struct
 
 
     /**
-@var CRC_T::CTL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CTL
-</font><br><p> <font size="2">
-Offset: 0x00  CRC Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>CRCEN</td><td><div style="word-wrap: break-word;"><b>CRC Channel Enable Bit
-</b><br>
-0 = No effect.
-<br>
-1 = CRC operation Enabled.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>CHKSINIT</td><td><div style="word-wrap: break-word;"><b>Checksum Initialization
-</b><br>
-0 = No effect.
-<br>
-1 = Initial checksum value by auto reload CRC_SEED register value to CRC_CHECKSUM register value.
-<br>
-Note: This bit will be cleared automatically.
-<br>
-</div></td></tr><tr><td>
-[24]</td><td>DATREV</td><td><div style="word-wrap: break-word;"><b>Write Data Bit Order Reverse
-</b><br>
-This bit is used to enable the bit order reverse function per byte for write data value in CRC_DAT register.
-<br>
-0 = Bit order reversed for CRC write data in Disabled.
-<br>
-1 = Bit order reversed for CRC write data in Enabled (per byte).
-<br>
-Note: If the write data is 0xAABBCCDD, the bit order reverse for CRC write data in is 0x55DD33BB.
-<br>
-</div></td></tr><tr><td>
-[25]</td><td>CHKSREV</td><td><div style="word-wrap: break-word;"><b>Checksum Bit Order Reverse
-</b><br>
-This bit is used to enable the bit order reverse function for checksum result in CRC_CHECKSUM register.
-<br>
-0 = Bit order reverse for CRC checksum Disabled.
-<br>
-1 = Bit order reverse for CRC checksum Enabled.
-<br>
-Note: If the checksum result is 0xDD7B0F2E, the bit order reverse for CRC checksum is 0x74F0DEBB.
-<br>
-</div></td></tr><tr><td>
-[26]</td><td>DATFMT</td><td><div style="word-wrap: break-word;"><b>Write Data 1's Complement
-</b><br>
-This bit is used to enable the 1's complement function for write data value in CRC_DAT register.
-<br>
-0 = 1's complement for CRC writes data in Disabled.
-<br>
-1 = 1's complement for CRC writes data in Enabled.
-<br>
-</div></td></tr><tr><td>
-[27]</td><td>CHKSFMT</td><td><div style="word-wrap: break-word;"><b>Checksum 1's Complement
-</b><br>
-This bit is used to enable the 1's complement function for checksum result in CRC_CHECKSUM register.
-<br>
-0 = 1's complement for CRC checksum Disabled.
-<br>
-1 = 1's complement for CRC checksum Enabled.
-<br>
-</div></td></tr><tr><td>
-[29:28]</td><td>DATLEN</td><td><div style="word-wrap: break-word;"><b>CPU Write Data Length
-</b><br>
-This field indicates the write data length.
-<br>
-00 = Data length is 8-bit mode.
-<br>
-01 = Data length is 16-bit mode.
-<br>
-1x = Data length is 32-bit mode.
-<br>
-Note: When the write data length is 8-bit mode, the valid data in CRC_DAT register is only DATA[7:0] bits; if the write data length is 16-bit mode, the valid data in CRC_DAT register is only DATA[15:0]
-<br>
-</div></td></tr><tr><td>
-[31:30]</td><td>CRCMODE</td><td><div style="word-wrap: break-word;"><b>CRC Polynomial Mode
-</b><br>
-This field indicates the CRC operation polynomial mode.
-<br>
-00 = CRC-CCITT Polynomial mode.
-<br>
-01 = CRC-8 Polynomial mode.
-<br>
-10 = CRC-16 Polynomial mode.
-<br>
-11 = CRC-32 Polynomial mode.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var CRC_T::DAT
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DAT
-</font><br><p> <font size="2">
-Offset: 0x04  CRC Write Data Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:0]</td><td>DATA</td><td><div style="word-wrap: break-word;"><b>CRC Write Data Bits
-</b><br>
-User can write data directly by CPU mode or use PDMA function to write data to this field to perform CRC operation.
-<br>
-Note: When the write data length is 8-bit mode, the valid data in CRC_DAT register is only DATA[7:0] bits; if the write data length is 16-bit mode, the valid data in CRC_DAT register is only DATA[15:0].
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var CRC_T::SEED
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SEED
-</font><br><p> <font size="2">
-Offset: 0x08  CRC Seed Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:0]</td><td>SEED</td><td><div style="word-wrap: break-word;"><b>CRC Seed Value
-</b><br>
-This field indicates the CRC seed value.
-<br>
-Note: This field will be reloaded as checksum initial value (CRC_CHECKSUM register) after perform CHKSINIT (CRC_CTL[1]).
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var CRC_T::CHECKSUM
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CHECKSUM
-</font><br><p> <font size="2">
-Offset: 0x0C  CRC Checksum Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:0]</td><td>CHECKSUM</td><td><div style="word-wrap: break-word;"><b>CRC Checksum Results
-</b><br>
-This field indicates the CRC checksum result.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-
- */
+     * @var CRC_T::CTL
+     * Offset: 0x00  CRC Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CRCEN     |CRC Channel Enable Bit
+     * |        |          |0 = No effect.
+     * |        |          |1 = CRC operation Enabled.
+     * |[1]     |CHKSINIT  |Checksum Initialization
+     * |        |          |0 = No effect.
+     * |        |          |1 = Initial checksum value by auto reload CRC_SEED register value to CRC_CHECKSUM register value.
+     * |        |          |Note: This bit will be cleared automatically.
+     * |[24]    |DATREV    |Write Data Bit Order Reverse
+     * |        |          |This bit is used to enable the bit order reverse function per byte for write data value in CRC_DAT register.
+     * |        |          |0 = Bit order reversed for CRC write data in Disabled.
+     * |        |          |1 = Bit order reversed for CRC write data in Enabled (per byte).
+     * |        |          |Note: If the write data is 0xAABBCCDD, the bit order reverse for CRC write data in is 0x55DD33BB.
+     * |[25]    |CHKSREV   |Checksum Bit Order Reverse
+     * |        |          |This bit is used to enable the bit order reverse function for checksum result in CRC_CHECKSUM register.
+     * |        |          |0 = Bit order reverse for CRC checksum Disabled.
+     * |        |          |1 = Bit order reverse for CRC checksum Enabled.
+     * |        |          |Note: If the checksum result is 0xDD7B0F2E, the bit order reverse for CRC checksum is 0x74F0DEBB.
+     * |[26]    |DATFMT    |Write Data 1's Complement
+     * |        |          |This bit is used to enable the 1's complement function for write data value in CRC_DAT register.
+     * |        |          |0 = 1's complement for CRC writes data in Disabled.
+     * |        |          |1 = 1's complement for CRC writes data in Enabled.
+     * |[27]    |CHKSFMT   |Checksum 1's Complement
+     * |        |          |This bit is used to enable the 1's complement function for checksum result in CRC_CHECKSUM register.
+     * |        |          |0 = 1's complement for CRC checksum Disabled.
+     * |        |          |1 = 1's complement for CRC checksum Enabled.
+     * |[29:28] |DATLEN    |CPU Write Data Length
+     * |        |          |This field indicates the write data length.
+     * |        |          |00 = Data length is 8-bit mode.
+     * |        |          |01 = Data length is 16-bit mode.
+     * |        |          |1x = Data length is 32-bit mode.
+     * |        |          |Note: When the write data length is 8-bit mode, the valid data in CRC_DAT register is only DATA[7:0] bits; if the write data length is 16-bit mode, the valid data in CRC_DAT register is only DATA[15:0]
+     * |[31:30] |CRCMODE   |CRC Polynomial Mode
+     * |        |          |This field indicates the CRC operation polynomial mode.
+     * |        |          |00 = CRC-CCITT Polynomial mode.
+     * |        |          |01 = CRC-8 Polynomial mode.
+     * |        |          |10 = CRC-16 Polynomial mode.
+     * |        |          |11 = CRC-32 Polynomial mode.
+     * @var CRC_T::DAT
+     * Offset: 0x04  CRC Write Data Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:0]  |DATA      |CRC Write Data Bits
+     * |        |          |User can write data directly by CPU mode or use PDMA function to write data to this field to perform CRC operation.
+     * |        |          |Note: When the write data length is 8-bit mode, the valid data in CRC_DAT register is only DATA[7:0] bits; if the write data length is 16-bit mode, the valid data in CRC_DAT register is only DATA[15:0].
+     * @var CRC_T::SEED
+     * Offset: 0x08  CRC Seed Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:0]  |SEED      |CRC Seed Value
+     * |        |          |This field indicates the CRC seed value.
+     * |        |          |Note: This field will be reloaded as checksum initial value (CRC_CHECKSUM register) after perform CHKSINIT (CRC_CTL[1]).
+     * @var CRC_T::CHECKSUM
+     * Offset: 0x0C  CRC Checksum Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:0]  |CHECKSUM  |CRC Checksum Results
+     * |        |          |This field indicates the CRC checksum result.
+     */
     __IO uint32_t CTL;                   /*!< [0x0000] CRC Control Register                                             */
     __IO uint32_t DAT;                   /*!< [0x0004] CRC Write Data Register                                          */
     __IO uint32_t SEED;                  /*!< [0x0008] CRC Seed Register                                                */

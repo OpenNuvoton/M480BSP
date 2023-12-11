@@ -26,44 +26,21 @@
 typedef struct
 {
     /**
-@var ECAPDAT_T::RCAPDAT
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">RCAPDAT
-</font><br><p> <font size="2">
-Offset: 0x20C  EPWM Rising Capture Data Register 0~5
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[15:0]</td><td>RCAPDAT</td><td><div style="word-wrap: break-word;"><b>EPWM Rising Capture Data (Read Only)
-</b><br>
-When rising capture condition happened, the EPWM counter value will be saved in this register.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var ECAPDAT_T::FCAPDAT
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">FCAPDAT
-</font><br><p> <font size="2">
-Offset: 0x210  EPWM Falling Capture Data Register 0~5
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[15:0]</td><td>FCAPDAT</td><td><div style="word-wrap: break-word;"><b>EPWM Falling Capture Data (Read Only)
-</b><br>
-When falling capture condition happened, the EPWM counter value will be saved in this register.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-
- */
+     * @var ECAPDAT_T::RCAPDAT
+     * Offset: 0x20C  EPWM Rising Capture Data Register 0~5
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |RCAPDAT   |EPWM Rising Capture Data (Read Only)
+     * |        |          |When rising capture condition happened, the EPWM counter value will be saved in this register.
+     * @var ECAPDAT_T::FCAPDAT
+     * Offset: 0x210  EPWM Falling Capture Data Register 0~5
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |FCAPDAT   |EPWM Falling Capture Data (Read Only)
+     * |        |          |When falling capture condition happened, the EPWM counter value will be saved in this register.
+     */
     __IO uint32_t RCAPDAT; /*!< [0x20C/0x214/0x21C/0x224/0x22C/0x234] EPWM Rising Capture Data Register 0~5 */
     __IO uint32_t FCAPDAT; /*!< [0x210/0x218/0x220/0x228/0x230/0x238] EPWM Falling Capture Data Register 0~5 */
 } ECAPDAT_T;
@@ -73,4647 +50,2037 @@ typedef struct
 
 
     /**
-@var EPWM_T::CTL0
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CTL0
-</font><br><p> <font size="2">
-Offset: 0x00  EPWM Control Register 0
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>CTRLD0</td><td><div style="word-wrap: break-word;"><b>Center Re-load
-</b><br>
-In up-down counter type, PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the center point of a period
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>CTRLD1</td><td><div style="word-wrap: break-word;"><b>Center Re-load
-</b><br>
-In up-down counter type, PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the center point of a period
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>CTRLD2</td><td><div style="word-wrap: break-word;"><b>Center Re-load
-</b><br>
-In up-down counter type, PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the center point of a period
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>CTRLD3</td><td><div style="word-wrap: break-word;"><b>Center Re-load
-</b><br>
-In up-down counter type, PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the center point of a period
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>CTRLD4</td><td><div style="word-wrap: break-word;"><b>Center Re-load
-</b><br>
-In up-down counter type, PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the center point of a period
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>CTRLD5</td><td><div style="word-wrap: break-word;"><b>Center Re-load
-</b><br>
-In up-down counter type, PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the center point of a period
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>WINLDEN0</td><td><div style="word-wrap: break-word;"><b>Window Load Enable Bits
-</b><br>
-0 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
-<br>
-1 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point of each period when valid reload window is set
-<br>
-The valid reload window is set by software write 1 to EPWM_LOAD register and cleared by hardware after load success.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>WINLDEN1</td><td><div style="word-wrap: break-word;"><b>Window Load Enable Bits
-</b><br>
-0 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
-<br>
-1 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point of each period when valid reload window is set
-<br>
-The valid reload window is set by software write 1 to EPWM_LOAD register and cleared by hardware after load success.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>WINLDEN2</td><td><div style="word-wrap: break-word;"><b>Window Load Enable Bits
-</b><br>
-0 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
-<br>
-1 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point of each period when valid reload window is set
-<br>
-The valid reload window is set by software write 1 to EPWM_LOAD register and cleared by hardware after load success.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>WINLDEN3</td><td><div style="word-wrap: break-word;"><b>Window Load Enable Bits
-</b><br>
-0 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
-<br>
-1 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point of each period when valid reload window is set
-<br>
-The valid reload window is set by software write 1 to EPWM_LOAD register and cleared by hardware after load success.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>WINLDEN4</td><td><div style="word-wrap: break-word;"><b>Window Load Enable Bits
-</b><br>
-0 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
-<br>
-1 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point of each period when valid reload window is set
-<br>
-The valid reload window is set by software write 1 to EPWM_LOAD register and cleared by hardware after load success.
-<br>
-</div></td></tr><tr><td>
-[13]</td><td>WINLDEN5</td><td><div style="word-wrap: break-word;"><b>Window Load Enable Bits
-</b><br>
-0 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
-<br>
-1 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point of each period when valid reload window is set
-<br>
-The valid reload window is set by software write 1 to EPWM_LOAD register and cleared by hardware after load success.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>IMMLDEN0</td><td><div style="word-wrap: break-word;"><b>Immediately Load Enable Bits
-</b><br>
-0 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
-<br>
-1 = PERIOD/CMPDAT will load to PBUF and CMPBUF immediately when software update PERIOD/CMPDAT.
-<br>
-Note: If IMMLDENn is enabled, WINLDENn and CTRLDn will be invalid.
-<br>
-</div></td></tr><tr><td>
-[17]</td><td>IMMLDEN1</td><td><div style="word-wrap: break-word;"><b>Immediately Load Enable Bits
-</b><br>
-0 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
-<br>
-1 = PERIOD/CMPDAT will load to PBUF and CMPBUF immediately when software update PERIOD/CMPDAT.
-<br>
-Note: If IMMLDENn is enabled, WINLDENn and CTRLDn will be invalid.
-<br>
-</div></td></tr><tr><td>
-[18]</td><td>IMMLDEN2</td><td><div style="word-wrap: break-word;"><b>Immediately Load Enable Bits
-</b><br>
-0 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
-<br>
-1 = PERIOD/CMPDAT will load to PBUF and CMPBUF immediately when software update PERIOD/CMPDAT.
-<br>
-Note: If IMMLDENn is enabled, WINLDENn and CTRLDn will be invalid.
-<br>
-</div></td></tr><tr><td>
-[19]</td><td>IMMLDEN3</td><td><div style="word-wrap: break-word;"><b>Immediately Load Enable Bits
-</b><br>
-0 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
-<br>
-1 = PERIOD/CMPDAT will load to PBUF and CMPBUF immediately when software update PERIOD/CMPDAT.
-<br>
-Note: If IMMLDENn is enabled, WINLDENn and CTRLDn will be invalid.
-<br>
-</div></td></tr><tr><td>
-[20]</td><td>IMMLDEN4</td><td><div style="word-wrap: break-word;"><b>Immediately Load Enable Bits
-</b><br>
-0 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
-<br>
-1 = PERIOD/CMPDAT will load to PBUF and CMPBUF immediately when software update PERIOD/CMPDAT.
-<br>
-Note: If IMMLDENn is enabled, WINLDENn and CTRLDn will be invalid.
-<br>
-</div></td></tr><tr><td>
-[21]</td><td>IMMLDEN5</td><td><div style="word-wrap: break-word;"><b>Immediately Load Enable Bits
-</b><br>
-0 = PERIOD will load to PBUF at the end point of each period
-<br>
-CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
-<br>
-1 = PERIOD/CMPDAT will load to PBUF and CMPBUF immediately when software update PERIOD/CMPDAT.
-<br>
-Note: If IMMLDENn is enabled, WINLDENn and CTRLDn will be invalid.
-<br>
-</div></td></tr><tr><td>
-[24]</td><td>GROUPEN</td><td><div style="word-wrap: break-word;"><b>Group Function Enable Bit(S)
-</b><br>
-0 = The output waveform of each EPWM channel are independent.
-<br>
-1 = Unify the EPWM_CH2 and EPWM_CH4 to output the same waveform as EPWM_CH0 and unify the EPWM_CH3 and EPWM_CH5 to output the same waveform as EPWM_CH1.
-<br>
-</div></td></tr><tr><td>
-[30]</td><td>DBGHALT</td><td><div style="word-wrap: break-word;"><b>ICE Debug Mode Counter Halt (Write Protect)
-</b><br>
-If counter halt is enabled, EPWM all counters will keep current value until exit ICE debug mode.
-<br>
-0 = ICE debug mode counter halt disable.
-<br>
-1 = ICE debug mode counter halt enable.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[31]</td><td>DBGTRIOFF</td><td><div style="word-wrap: break-word;"><b>ICE Debug Mode Acknowledge Disable (Write Protect)
-</b><br>
-0 = ICE debug mode acknowledgement effects EPWM output.
-<br>
-EPWM pin will be forced as tri-state while ICE debug mode acknowledged.
-<br>
-1 = ICE debug mode acknowledgement disabled.
-<br>
-EPWM pin will keep output no matter ICE debug mode acknowledged or not.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::CTL1
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CTL1
-</font><br><p> <font size="2">
-Offset: 0x04  EPWM Control Register 1
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[1:0]</td><td>CNTTYPE0</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Behavior Type
-</b><br>
-00 = Up counter type (supports in capture mode).
-<br>
-01 = Down count type (supports in capture mode).
-<br>
-10 = Up-down counter type.
-<br>
-11 = Reserved.
-<br>
-</div></td></tr><tr><td>
-[3:2]</td><td>CNTTYPE1</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Behavior Type
-</b><br>
-00 = Up counter type (supports in capture mode).
-<br>
-01 = Down count type (supports in capture mode).
-<br>
-10 = Up-down counter type.
-<br>
-11 = Reserved.
-<br>
-</div></td></tr><tr><td>
-[5:4]</td><td>CNTTYPE2</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Behavior Type
-</b><br>
-00 = Up counter type (supports in capture mode).
-<br>
-01 = Down count type (supports in capture mode).
-<br>
-10 = Up-down counter type.
-<br>
-11 = Reserved.
-<br>
-</div></td></tr><tr><td>
-[7:6]</td><td>CNTTYPE3</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Behavior Type
-</b><br>
-00 = Up counter type (supports in capture mode).
-<br>
-01 = Down count type (supports in capture mode).
-<br>
-10 = Up-down counter type.
-<br>
-11 = Reserved.
-<br>
-</div></td></tr><tr><td>
-[9:8]</td><td>CNTTYPE4</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Behavior Type
-</b><br>
-00 = Up counter type (supports in capture mode).
-<br>
-01 = Down count type (supports in capture mode).
-<br>
-10 = Up-down counter type.
-<br>
-11 = Reserved.
-<br>
-</div></td></tr><tr><td>
-[11:10]</td><td>CNTTYPE5</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Behavior Type
-</b><br>
-00 = Up counter type (supports in capture mode).
-<br>
-01 = Down count type (supports in capture mode).
-<br>
-10 = Up-down counter type.
-<br>
-11 = Reserved.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>CNTMODE0</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Mode
-</b><br>
-0 = Auto-reload mode.
-<br>
-1 = One-shot mode.
-<br>
-</div></td></tr><tr><td>
-[17]</td><td>CNTMODE1</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Mode
-</b><br>
-0 = Auto-reload mode.
-<br>
-1 = One-shot mode.
-<br>
-</div></td></tr><tr><td>
-[18]</td><td>CNTMODE2</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Mode
-</b><br>
-0 = Auto-reload mode.
-<br>
-1 = One-shot mode.
-<br>
-</div></td></tr><tr><td>
-[19]</td><td>CNTMODE3</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Mode
-</b><br>
-0 = Auto-reload mode.
-<br>
-1 = One-shot mode.
-<br>
-</div></td></tr><tr><td>
-[20]</td><td>CNTMODE4</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Mode
-</b><br>
-0 = Auto-reload mode.
-<br>
-1 = One-shot mode.
-<br>
-</div></td></tr><tr><td>
-[21]</td><td>CNTMODE5</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Mode
-</b><br>
-0 = Auto-reload mode.
-<br>
-1 = One-shot mode.
-<br>
-</div></td></tr><tr><td>
-[24]</td><td>OUTMODE0</td><td><div style="word-wrap: break-word;"><b>EPWM Output Mode
-</b><br>
-Each bit n controls the output mode of corresponding EPWM channel n.
-<br>
-0 = EPWM independent mode.
-<br>
-1 = EPWM complementary mode.
-<br>
-Note: When operating in group function, these bits must all set to the same mode.
-<br>
-</div></td></tr><tr><td>
-[25]</td><td>OUTMODE2</td><td><div style="word-wrap: break-word;"><b>EPWM Output Mode
-</b><br>
-Each bit n controls the output mode of corresponding EPWM channel n.
-<br>
-0 = EPWM independent mode.
-<br>
-1 = EPWM complementary mode.
-<br>
-Note: When operating in group function, these bits must all set to the same mode.
-<br>
-</div></td></tr><tr><td>
-[26]</td><td>OUTMODE4</td><td><div style="word-wrap: break-word;"><b>EPWM Output Mode
-</b><br>
-Each bit n controls the output mode of corresponding EPWM channel n.
-<br>
-0 = EPWM independent mode.
-<br>
-1 = EPWM complementary mode.
-<br>
-Note: When operating in group function, these bits must all set to the same mode.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::SYNC
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SYNC
-</font><br><p> <font size="2">
-Offset: 0x08  EPWM Synchronization Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>PHSEN0</td><td><div style="word-wrap: break-word;"><b>SYNC Phase Enable Bits
-</b><br>
-0 = EPWM counter disable to load PHS value.
-<br>
-1 = EPWM counter enable to load PHS value.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>PHSEN2</td><td><div style="word-wrap: break-word;"><b>SYNC Phase Enable Bits
-</b><br>
-0 = EPWM counter disable to load PHS value.
-<br>
-1 = EPWM counter enable to load PHS value.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>PHSEN4</td><td><div style="word-wrap: break-word;"><b>SYNC Phase Enable Bits
-</b><br>
-0 = EPWM counter disable to load PHS value.
-<br>
-1 = EPWM counter enable to load PHS value.
-<br>
-</div></td></tr><tr><td>
-[9:8]</td><td>SINSRC0</td><td><div style="word-wrap: break-word;"><b>EPWM0_SYNC_IN Source Selection
-</b><br>
-00 = Synchronize source from SYNC_IN or SWSYNC.
-<br>
-01 = Counter equal to 0.
-<br>
-10 = Counter equal to EPWM_CMPDATm, m denotes 1, 3, 5.
-<br>
-11 = SYNC_OUT will not be generated.
-<br>
-</div></td></tr><tr><td>
-[11:10]</td><td>SINSRC2</td><td><div style="word-wrap: break-word;"><b>EPWM0_SYNC_IN Source Selection
-</b><br>
-00 = Synchronize source from SYNC_IN or SWSYNC.
-<br>
-01 = Counter equal to 0.
-<br>
-10 = Counter equal to EPWM_CMPDATm, m denotes 1, 3, 5.
-<br>
-11 = SYNC_OUT will not be generated.
-<br>
-</div></td></tr><tr><td>
-[13:12]</td><td>SINSRC4</td><td><div style="word-wrap: break-word;"><b>EPWM0_SYNC_IN Source Selection
-</b><br>
-00 = Synchronize source from SYNC_IN or SWSYNC.
-<br>
-01 = Counter equal to 0.
-<br>
-10 = Counter equal to EPWM_CMPDATm, m denotes 1, 3, 5.
-<br>
-11 = SYNC_OUT will not be generated.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>SNFLTEN</td><td><div style="word-wrap: break-word;"><b>EPWM0_SYNC_IN Noise Filter Enable Bits
-</b><br>
-0 = Noise filter of input pin EPWM0_SYNC_IN is Disabled.
-<br>
-1 = Noise filter of input pin EPWM0_SYNC_IN is Enabled.
-<br>
-</div></td></tr><tr><td>
-[19:17]</td><td>SFLTCSEL</td><td><div style="word-wrap: break-word;"><b>SYNC Edge Detector Filter Clock Selection
-</b><br>
-000 = Filter clock = HCLK.
-<br>
-001 = Filter clock = HCLK/2.
-<br>
-010 = Filter clock = HCLK/4.
-<br>
-011 = Filter clock = HCLK/8.
-<br>
-100 = Filter clock = HCLK/16.
-<br>
-101 = Filter clock = HCLK/32.
-<br>
-110 = Filter clock = HCLK/64.
-<br>
-111 = Filter clock = HCLK/128.
-<br>
-</div></td></tr><tr><td>
-[22:20]</td><td>SFLTCNT</td><td><div style="word-wrap: break-word;"><b>SYNC Edge Detector Filter Count
-</b><br>
-The register bits control the counter number of edge detector.
-<br>
-</div></td></tr><tr><td>
-[23]</td><td>SINPINV</td><td><div style="word-wrap: break-word;"><b>SYNC Input Pin Inverse
-</b><br>
-0 = The state of pin SYNC is passed to the negative edge detector.
-<br>
-1 = The inversed state of pin SYNC is passed to the negative edge detector.
-<br>
-</div></td></tr><tr><td>
-[24]</td><td>PHSDIR0</td><td><div style="word-wrap: break-word;"><b>EPWM Phase Direction Control
-</b><br>
-0 = Control EPWM counter count decrement after synchronizing.
-<br>
-1 = Control EPWM counter count increment after synchronizing.
-<br>
-</div></td></tr><tr><td>
-[25]</td><td>PHSDIR2</td><td><div style="word-wrap: break-word;"><b>EPWM Phase Direction Control
-</b><br>
-0 = Control EPWM counter count decrement after synchronizing.
-<br>
-1 = Control EPWM counter count increment after synchronizing.
-<br>
-</div></td></tr><tr><td>
-[26]</td><td>PHSDIR4</td><td><div style="word-wrap: break-word;"><b>EPWM Phase Direction Control
-</b><br>
-0 = Control EPWM counter count decrement after synchronizing.
-<br>
-1 = Control EPWM counter count increment after synchronizing.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::SWSYNC
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SWSYNC
-</font><br><p> <font size="2">
-Offset: 0x0C  EPWM Software Control Synchronization Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>SWSYNC0</td><td><div style="word-wrap: break-word;"><b>Software SYNC Function
-</b><br>
-When SINSRCn (EPWM_SYNC[13:8]) is selected to 0, SYNC_OUT source is come from SYNC_IN or this bit.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>SWSYNC2</td><td><div style="word-wrap: break-word;"><b>Software SYNC Function
-</b><br>
-When SINSRCn (EPWM_SYNC[13:8]) is selected to 0, SYNC_OUT source is come from SYNC_IN or this bit.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>SWSYNC4</td><td><div style="word-wrap: break-word;"><b>Software SYNC Function
-</b><br>
-When SINSRCn (EPWM_SYNC[13:8]) is selected to 0, SYNC_OUT source is come from SYNC_IN or this bit.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::CLKSRC
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CLKSRC
-</font><br><p> <font size="2">
-Offset: 0x10  EPWM Clock Source Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[2:0]</td><td>ECLKSRC0</td><td><div style="word-wrap: break-word;"><b>EPWM_CH01 External Clock Source Select
-</b><br>
-000 = EPWMx_CLK, x denotes 0 or 1.
-<br>
-001 = TIMER0 overflow.
-<br>
-010 = TIMER1 overflow.
-<br>
-011 = TIMER2 overflow.
-<br>
-100 = TIMER3 overflow.
-<br>
-Others = Reserved.
-<br>
-</div></td></tr><tr><td>
-[10:8]</td><td>ECLKSRC2</td><td><div style="word-wrap: break-word;"><b>EPWM_CH23 External Clock Source Select
-</b><br>
-000 = EPWMx_CLK, x denotes 0 or 1.
-<br>
-001 = TIMER0 overflow.
-<br>
-010 = TIMER1 overflow.
-<br>
-011 = TIMER2 overflow.
-<br>
-100 = TIMER3 overflow.
-<br>
-Others = Reserved.
-<br>
-</div></td></tr><tr><td>
-[18:16]</td><td>ECLKSRC4</td><td><div style="word-wrap: break-word;"><b>EPWM_CH45 External Clock Source Select
-</b><br>
-000 = EPWMx_CLK, x denotes 0 or 1.
-<br>
-001 = TIMER0 overflow.
-<br>
-010 = TIMER1 overflow.
-<br>
-011 = TIMER2 overflow.
-<br>
-100 = TIMER3 overflow.
-<br>
-Others = Reserved.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::CLKPSC[3]
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CLKPSC[3]
-</font><br><p> <font size="2">
-Offset: 0x14  EPWM Clock Prescale Register 0/1, 2/3, 4/5
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[11:0]</td><td>CLKPSC</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Clock Prescale
-</b><br>
-The clock of EPWM counter is decided by clock prescaler
-<br>
-Each EPWM pair share one EPWM counter clock prescaler
-<br>
-The clock of EPWM counter is divided by (CLKPSC+ 1)
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::CNTEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CNTEN
-</font><br><p> <font size="2">
-Offset: 0x20  EPWM Counter Enable Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>CNTEN0</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Enable Bits
-</b><br>
-0 = EPWM Counter and clock prescaler Stop Running.
-<br>
-1 = EPWM Counter and clock prescaler Start Running.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>CNTEN1</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Enable Bits
-</b><br>
-0 = EPWM Counter and clock prescaler Stop Running.
-<br>
-1 = EPWM Counter and clock prescaler Start Running.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>CNTEN2</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Enable Bits
-</b><br>
-0 = EPWM Counter and clock prescaler Stop Running.
-<br>
-1 = EPWM Counter and clock prescaler Start Running.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>CNTEN3</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Enable Bits
-</b><br>
-0 = EPWM Counter and clock prescaler Stop Running.
-<br>
-1 = EPWM Counter and clock prescaler Start Running.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>CNTEN4</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Enable Bits
-</b><br>
-0 = EPWM Counter and clock prescaler Stop Running.
-<br>
-1 = EPWM Counter and clock prescaler Start Running.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>CNTEN5</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Enable Bits
-</b><br>
-0 = EPWM Counter and clock prescaler Stop Running.
-<br>
-1 = EPWM Counter and clock prescaler Start Running.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::CNTCLR
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CNTCLR
-</font><br><p> <font size="2">
-Offset: 0x24  EPWM Clear Counter Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>CNTCLR0</td><td><div style="word-wrap: break-word;"><b>Clear EPWM Counter Control Bit
-</b><br>
-It is automatically cleared by hardware. Each bit n controls the corresponding EPWM channel n.
-<br>
-0 = No effect.
-<br>
-1 = Clear 16-bit EPWM counter to 0000H.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>CNTCLR1</td><td><div style="word-wrap: break-word;"><b>Clear EPWM Counter Control Bit
-</b><br>
-It is automatically cleared by hardware. Each bit n controls the corresponding EPWM channel n.
-<br>
-0 = No effect.
-<br>
-1 = Clear 16-bit EPWM counter to 0000H.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>CNTCLR2</td><td><div style="word-wrap: break-word;"><b>Clear EPWM Counter Control Bit
-</b><br>
-It is automatically cleared by hardware. Each bit n controls the corresponding EPWM channel n.
-<br>
-0 = No effect.
-<br>
-1 = Clear 16-bit EPWM counter to 0000H.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>CNTCLR3</td><td><div style="word-wrap: break-word;"><b>Clear EPWM Counter Control Bit
-</b><br>
-It is automatically cleared by hardware. Each bit n controls the corresponding EPWM channel n.
-<br>
-0 = No effect.
-<br>
-1 = Clear 16-bit EPWM counter to 0000H.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>CNTCLR4</td><td><div style="word-wrap: break-word;"><b>Clear EPWM Counter Control Bit
-</b><br>
-It is automatically cleared by hardware. Each bit n controls the corresponding EPWM channel n.
-<br>
-0 = No effect.
-<br>
-1 = Clear 16-bit EPWM counter to 0000H.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>CNTCLR5</td><td><div style="word-wrap: break-word;"><b>Clear EPWM Counter Control Bit
-</b><br>
-It is automatically cleared by hardware. Each bit n controls the corresponding EPWM channel n.
-<br>
-0 = No effect.
-<br>
-1 = Clear 16-bit EPWM counter to 0000H.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::LOAD
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">LOAD
-</font><br><p> <font size="2">
-Offset: 0x28  EPWM Load Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>LOAD0</td><td><div style="word-wrap: break-word;"><b>Re-load EPWM Comparator Register (CMPDAT) Control Bit
-</b><br>
-This bit is software write, hardware clear when current EPWM period end.
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Set load window of window loading mode.
-<br>
-Read Operation:
-<br>
-0 = No load window is set.
-<br>
-1 = Load window is set.
-<br>
-Note: This bit only use in window loading mode, WINLDENn(EPWM_CTL0[13:8]) = 1.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>LOAD1</td><td><div style="word-wrap: break-word;"><b>Re-load EPWM Comparator Register (CMPDAT) Control Bit
-</b><br>
-This bit is software write, hardware clear when current EPWM period end.
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Set load window of window loading mode.
-<br>
-Read Operation:
-<br>
-0 = No load window is set.
-<br>
-1 = Load window is set.
-<br>
-Note: This bit only use in window loading mode, WINLDENn(EPWM_CTL0[13:8]) = 1.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>LOAD2</td><td><div style="word-wrap: break-word;"><b>Re-load EPWM Comparator Register (CMPDAT) Control Bit
-</b><br>
-This bit is software write, hardware clear when current EPWM period end.
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Set load window of window loading mode.
-<br>
-Read Operation:
-<br>
-0 = No load window is set.
-<br>
-1 = Load window is set.
-<br>
-Note: This bit only use in window loading mode, WINLDENn(EPWM_CTL0[13:8]) = 1.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>LOAD3</td><td><div style="word-wrap: break-word;"><b>Re-load EPWM Comparator Register (CMPDAT) Control Bit
-</b><br>
-This bit is software write, hardware clear when current EPWM period end.
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Set load window of window loading mode.
-<br>
-Read Operation:
-<br>
-0 = No load window is set.
-<br>
-1 = Load window is set.
-<br>
-Note: This bit only use in window loading mode, WINLDENn(EPWM_CTL0[13:8]) = 1.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>LOAD4</td><td><div style="word-wrap: break-word;"><b>Re-load EPWM Comparator Register (CMPDAT) Control Bit
-</b><br>
-This bit is software write, hardware clear when current EPWM period end.
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Set load window of window loading mode.
-<br>
-Read Operation:
-<br>
-0 = No load window is set.
-<br>
-1 = Load window is set.
-<br>
-Note: This bit only use in window loading mode, WINLDENn(EPWM_CTL0[13:8]) = 1.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>LOAD5</td><td><div style="word-wrap: break-word;"><b>Re-load EPWM Comparator Register (CMPDAT) Control Bit
-</b><br>
-This bit is software write, hardware clear when current EPWM period end.
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Set load window of window loading mode.
-<br>
-Read Operation:
-<br>
-0 = No load window is set.
-<br>
-1 = Load window is set.
-<br>
-Note: This bit only use in window loading mode, WINLDENn(EPWM_CTL0[13:8]) = 1.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::PERIOD[6]
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PERIOD[6]
-</font><br><p> <font size="2">
-Offset: 0x30  EPWM Period Register 0~5
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[15:0]</td><td>PERIOD</td><td><div style="word-wrap: break-word;"><b>EPWM Period Register
-</b><br>
-Up-Count mode: In this mode, EPWM counter counts from 0 to PERIOD, and restarts from 0.
-<br>
-Down-Count mode: In this mode, EPWM counter counts from PERIOD to 0, and restarts from PERIOD.
-<br>
-EPWM period time = (PERIOD+1) * EPWM_CLK period.
-<br>
-Up-Down-Count mode: In this mode, EPWM counter counts from 0 to PERIOD, then decrements to 0 and repeats again.
-<br>
-EPWM period time = 2 * PERIOD * EPWM_CLK period.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::CMPDAT[6]
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CMPDAT[6]
-</font><br><p> <font size="2">
-Offset: 0x50  EPWM Comparator Register 0
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[15:0]</td><td>CMP</td><td><div style="word-wrap: break-word;"><b>EPWM Comparator Register
-</b><br>
-CMP use to compare with CNTR to generate EPWM waveform, interrupt and trigger EADC/DAC.
-<br>
-In independent mode, CMPDAT0~5 denote as 6 independent EPWM_CH0~5 compared point.
-<br>
-In complementary mode, CMPDAT0, 2, 4 denote as first compared point, and CMPDAT1, 3, 5 denote as second compared point for the corresponding 3 complementary pairs EPWM_CH0 and EPWM_CH1, EPWM_CH2 and EPWM_CH3, EPWM_CH4 and EPWM_CH5.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::DTCTL[3]
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DTCTL[3]
-</font><br><p> <font size="2">
-Offset: 0x70  EPWM Dead-Time Control Register 0/1,2/3,4/5
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[11:0]</td><td>DTCNT</td><td><div style="word-wrap: break-word;"><b>Dead-time Counter (Write Protect)
-</b><br>
-The dead-time can be calculated from the following formula:
-<br>
-Dead-time = (DTCNT[11:0]+1) * EPWM_CLK period.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>DTEN</td><td><div style="word-wrap: break-word;"><b>Enable Dead-time Insertion for EPWM Pair (EPWM_CH0, EPWM_CH1) (EPWM_CH2, EPWM_CH3) (EPWM_CH4, EPWM_CH5) (Write Protect)
-</b><br>
-Dead-time insertion is only active when this pair of complementary EPWM is enabled
-<br>
-If dead- time insertion is inactive, the outputs of pin pair are complementary without any delay.
-<br>
-0 = Dead-time insertion Disabled on the pin pair.
-<br>
-1 = Dead-time insertion Enabled on the pin pair.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[24]</td><td>DTCKSEL</td><td><div style="word-wrap: break-word;"><b>Dead-time Clock Select (Write Protect)
-</b><br>
-0 = Dead-time clock source from EPWM_CLK.
-<br>
-1 = Dead-time clock source from prescaler output.
-<br>
-Note: This register is write protected. Refer toREGWRPROT register.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::PHS[3]
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PHS[3]
-</font><br><p> <font size="2">
-Offset: 0x80  EPWM Counter Phase Register 0/1,2/3,4/5
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[15:0]</td><td>PHS</td><td><div style="word-wrap: break-word;"><b>EPWM Synchronous Start Phase Bits
-</b><br>
-PHS determines the EPWM synchronous start phase value. These bits only use in synchronous function.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::CNT[6]
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CNT[6]
-</font><br><p> <font size="2">
-Offset: 0x90  EPWM Counter Register 0~5
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[15:0]</td><td>CNT</td><td><div style="word-wrap: break-word;"><b>EPWM Data Register (Read Only)
-</b><br>
-User can monitor CNTR to know the current value in 16-bit period counter.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>DIRF</td><td><div style="word-wrap: break-word;"><b>EPWM Direction Indicator Flag (Read Only)
-</b><br>
-0 = Counter is Down count.
-<br>
-1 = Counter is UP count.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::WGCTL0
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">WGCTL0
-</font><br><p> <font size="2">
-Offset: 0xB0  EPWM Generation Register 0
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[1:0]</td><td>ZPCTL0</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM zero point output Low.
-<br>
-10 = EPWM zero point output High.
-<br>
-11 = EPWM zero point output Toggle.
-<br>
-EPWM can control output level when EPWM counter count to zero.
-<br>
-</div></td></tr><tr><td>
-[3:2]</td><td>ZPCTL1</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM zero point output Low.
-<br>
-10 = EPWM zero point output High.
-<br>
-11 = EPWM zero point output Toggle.
-<br>
-EPWM can control output level when EPWM counter count to zero.
-<br>
-</div></td></tr><tr><td>
-[5:4]</td><td>ZPCTL2</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM zero point output Low.
-<br>
-10 = EPWM zero point output High.
-<br>
-11 = EPWM zero point output Toggle.
-<br>
-EPWM can control output level when EPWM counter count to zero.
-<br>
-</div></td></tr><tr><td>
-[7:6]</td><td>ZPCTL3</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM zero point output Low.
-<br>
-10 = EPWM zero point output High.
-<br>
-11 = EPWM zero point output Toggle.
-<br>
-EPWM can control output level when EPWM counter count to zero.
-<br>
-</div></td></tr><tr><td>
-[9:8]</td><td>ZPCTL4</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM zero point output Low.
-<br>
-10 = EPWM zero point output High.
-<br>
-11 = EPWM zero point output Toggle.
-<br>
-EPWM can control output level when EPWM counter count to zero.
-<br>
-</div></td></tr><tr><td>
-[11:10]</td><td>ZPCTL5</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM zero point output Low.
-<br>
-10 = EPWM zero point output High.
-<br>
-11 = EPWM zero point output Toggle.
-<br>
-EPWM can control output level when EPWM counter count to zero.
-<br>
-</div></td></tr><tr><td>
-[17:16]</td><td>PRDPCTL0</td><td><div style="word-wrap: break-word;"><b>EPWM Period (Center) Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM period (center) point output Low.
-<br>
-10 = EPWM period (center) point output High.
-<br>
-11 = EPWM period (center) point output Toggle.
-<br>
-EPWM can control output level when EPWM counter count to (PERIODn+1).
-<br>
-Note: This bit is center point control when EPWM counter operating in up-down counter type.
-<br>
-</div></td></tr><tr><td>
-[19:18]</td><td>PRDPCTL1</td><td><div style="word-wrap: break-word;"><b>EPWM Period (Center) Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM period (center) point output Low.
-<br>
-10 = EPWM period (center) point output High.
-<br>
-11 = EPWM period (center) point output Toggle.
-<br>
-EPWM can control output level when EPWM counter count to (PERIODn+1).
-<br>
-Note: This bit is center point control when EPWM counter operating in up-down counter type.
-<br>
-</div></td></tr><tr><td>
-[21:20]</td><td>PRDPCTL2</td><td><div style="word-wrap: break-word;"><b>EPWM Period (Center) Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM period (center) point output Low.
-<br>
-10 = EPWM period (center) point output High.
-<br>
-11 = EPWM period (center) point output Toggle.
-<br>
-EPWM can control output level when EPWM counter count to (PERIODn+1).
-<br>
-Note: This bit is center point control when EPWM counter operating in up-down counter type.
-<br>
-</div></td></tr><tr><td>
-[23:22]</td><td>PRDPCTL3</td><td><div style="word-wrap: break-word;"><b>EPWM Period (Center) Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM period (center) point output Low.
-<br>
-10 = EPWM period (center) point output High.
-<br>
-11 = EPWM period (center) point output Toggle.
-<br>
-EPWM can control output level when EPWM counter count to (PERIODn+1).
-<br>
-Note: This bit is center point control when EPWM counter operating in up-down counter type.
-<br>
-</div></td></tr><tr><td>
-[25:24]</td><td>PRDPCTL4</td><td><div style="word-wrap: break-word;"><b>EPWM Period (Center) Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM period (center) point output Low.
-<br>
-10 = EPWM period (center) point output High.
-<br>
-11 = EPWM period (center) point output Toggle.
-<br>
-EPWM can control output level when EPWM counter count to (PERIODn+1).
-<br>
-Note: This bit is center point control when EPWM counter operating in up-down counter type.
-<br>
-</div></td></tr><tr><td>
-[27:26]</td><td>PRDPCTL5</td><td><div style="word-wrap: break-word;"><b>EPWM Period (Center) Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM period (center) point output Low.
-<br>
-10 = EPWM period (center) point output High.
-<br>
-11 = EPWM period (center) point output Toggle.
-<br>
-EPWM can control output level when EPWM counter count to (PERIODn+1).
-<br>
-Note: This bit is center point control when EPWM counter operating in up-down counter type.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::WGCTL1
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">WGCTL1
-</font><br><p> <font size="2">
-Offset: 0xB4  EPWM Generation Register 1
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[1:0]</td><td>CMPUCTL0</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM compare up point output Low.
-<br>
-10 = EPWM compare up point output High.
-<br>
-11 = EPWM compare up point output Toggle.
-<br>
-EPWM can control output level when EPWM counter up count to CMPDAT.
-<br>
-Note: In complementary mode, CMPUCTL1, 3, 5 use as another CMPUCTL for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[3:2]</td><td>CMPUCTL1</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM compare up point output Low.
-<br>
-10 = EPWM compare up point output High.
-<br>
-11 = EPWM compare up point output Toggle.
-<br>
-EPWM can control output level when EPWM counter up count to CMPDAT.
-<br>
-Note: In complementary mode, CMPUCTL1, 3, 5 use as another CMPUCTL for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[5:4]</td><td>CMPUCTL2</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM compare up point output Low.
-<br>
-10 = EPWM compare up point output High.
-<br>
-11 = EPWM compare up point output Toggle.
-<br>
-EPWM can control output level when EPWM counter up count to CMPDAT.
-<br>
-Note: In complementary mode, CMPUCTL1, 3, 5 use as another CMPUCTL for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[7:6]</td><td>CMPUCTL3</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM compare up point output Low.
-<br>
-10 = EPWM compare up point output High.
-<br>
-11 = EPWM compare up point output Toggle.
-<br>
-EPWM can control output level when EPWM counter up count to CMPDAT.
-<br>
-Note: In complementary mode, CMPUCTL1, 3, 5 use as another CMPUCTL for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[9:8]</td><td>CMPUCTL4</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM compare up point output Low.
-<br>
-10 = EPWM compare up point output High.
-<br>
-11 = EPWM compare up point output Toggle.
-<br>
-EPWM can control output level when EPWM counter up count to CMPDAT.
-<br>
-Note: In complementary mode, CMPUCTL1, 3, 5 use as another CMPUCTL for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[11:10]</td><td>CMPUCTL5</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM compare up point output Low.
-<br>
-10 = EPWM compare up point output High.
-<br>
-11 = EPWM compare up point output Toggle.
-<br>
-EPWM can control output level when EPWM counter up count to CMPDAT.
-<br>
-Note: In complementary mode, CMPUCTL1, 3, 5 use as another CMPUCTL for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[17:16]</td><td>CMPDCTL0</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM compare down point output Low.
-<br>
-10 = EPWM compare down point output High.
-<br>
-11 = EPWM compare down point output Toggle.
-<br>
-EPWM can control output level when EPWM counter down count to CMPDAT.
-<br>
-Note: In complementary mode, CMPDCTL1, 3, 5 use as another CMPDCTL for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[19:18]</td><td>CMPDCTL1</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM compare down point output Low.
-<br>
-10 = EPWM compare down point output High.
-<br>
-11 = EPWM compare down point output Toggle.
-<br>
-EPWM can control output level when EPWM counter down count to CMPDAT.
-<br>
-Note: In complementary mode, CMPDCTL1, 3, 5 use as another CMPDCTL for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[21:20]</td><td>CMPDCTL2</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM compare down point output Low.
-<br>
-10 = EPWM compare down point output High.
-<br>
-11 = EPWM compare down point output Toggle.
-<br>
-EPWM can control output level when EPWM counter down count to CMPDAT.
-<br>
-Note: In complementary mode, CMPDCTL1, 3, 5 use as another CMPDCTL for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[23:22]</td><td>CMPDCTL3</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM compare down point output Low.
-<br>
-10 = EPWM compare down point output High.
-<br>
-11 = EPWM compare down point output Toggle.
-<br>
-EPWM can control output level when EPWM counter down count to CMPDAT.
-<br>
-Note: In complementary mode, CMPDCTL1, 3, 5 use as another CMPDCTL for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[25:24]</td><td>CMPDCTL4</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM compare down point output Low.
-<br>
-10 = EPWM compare down point output High.
-<br>
-11 = EPWM compare down point output Toggle.
-<br>
-EPWM can control output level when EPWM counter down count to CMPDAT.
-<br>
-Note: In complementary mode, CMPDCTL1, 3, 5 use as another CMPDCTL for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[27:26]</td><td>CMPDCTL5</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Point Control
-</b><br>
-00 = Do nothing.
-<br>
-01 = EPWM compare down point output Low.
-<br>
-10 = EPWM compare down point output High.
-<br>
-11 = EPWM compare down point output Toggle.
-<br>
-EPWM can control output level when EPWM counter down count to CMPDAT.
-<br>
-Note: In complementary mode, CMPDCTL1, 3, 5 use as another CMPDCTL for channel 0, 2, 4.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::MSKEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">MSKEN
-</font><br><p> <font size="2">
-Offset: 0xB8  EPWM Mask Enable Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>MSKEN0</td><td><div style="word-wrap: break-word;"><b>EPWM Mask Enable Bits
-</b><br>
-The EPWM output signal will be masked when this bit is enabled
-<br>
-The corresponding EPWM channel n will output MSKDATn (EPWM_MSK[5:0]) data.
-<br>
-0 = EPWM output signal is non-masked.
-<br>
-1 = EPWM output signal is masked and output MSKDATn data.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>MSKEN1</td><td><div style="word-wrap: break-word;"><b>EPWM Mask Enable Bits
-</b><br>
-The EPWM output signal will be masked when this bit is enabled
-<br>
-The corresponding EPWM channel n will output MSKDATn (EPWM_MSK[5:0]) data.
-<br>
-0 = EPWM output signal is non-masked.
-<br>
-1 = EPWM output signal is masked and output MSKDATn data.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>MSKEN2</td><td><div style="word-wrap: break-word;"><b>EPWM Mask Enable Bits
-</b><br>
-The EPWM output signal will be masked when this bit is enabled
-<br>
-The corresponding EPWM channel n will output MSKDATn (EPWM_MSK[5:0]) data.
-<br>
-0 = EPWM output signal is non-masked.
-<br>
-1 = EPWM output signal is masked and output MSKDATn data.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>MSKEN3</td><td><div style="word-wrap: break-word;"><b>EPWM Mask Enable Bits
-</b><br>
-The EPWM output signal will be masked when this bit is enabled
-<br>
-The corresponding EPWM channel n will output MSKDATn (EPWM_MSK[5:0]) data.
-<br>
-0 = EPWM output signal is non-masked.
-<br>
-1 = EPWM output signal is masked and output MSKDATn data.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>MSKEN4</td><td><div style="word-wrap: break-word;"><b>EPWM Mask Enable Bits
-</b><br>
-The EPWM output signal will be masked when this bit is enabled
-<br>
-The corresponding EPWM channel n will output MSKDATn (EPWM_MSK[5:0]) data.
-<br>
-0 = EPWM output signal is non-masked.
-<br>
-1 = EPWM output signal is masked and output MSKDATn data.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>MSKEN5</td><td><div style="word-wrap: break-word;"><b>EPWM Mask Enable Bits
-</b><br>
-The EPWM output signal will be masked when this bit is enabled
-<br>
-The corresponding EPWM channel n will output MSKDATn (EPWM_MSK[5:0]) data.
-<br>
-0 = EPWM output signal is non-masked.
-<br>
-1 = EPWM output signal is masked and output MSKDATn data.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::MSK
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">MSK
-</font><br><p> <font size="2">
-Offset: 0xBC  EPWM Mask Data Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>MSKDAT0</td><td><div style="word-wrap: break-word;"><b>EPWM Mask Data Bit
-</b><br>
-This data bit control the state of EPWMn output pin, if corresponding mask function is enabled.
-<br>
-0 = Output logic low to EPWM channel n.
-<br>
-1 = Output logic high to EPWM channel n.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>MSKDAT1</td><td><div style="word-wrap: break-word;"><b>EPWM Mask Data Bit
-</b><br>
-This data bit control the state of EPWMn output pin, if corresponding mask function is enabled.
-<br>
-0 = Output logic low to EPWM channel n.
-<br>
-1 = Output logic high to EPWM channel n.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>MSKDAT2</td><td><div style="word-wrap: break-word;"><b>EPWM Mask Data Bit
-</b><br>
-This data bit control the state of EPWMn output pin, if corresponding mask function is enabled.
-<br>
-0 = Output logic low to EPWM channel n.
-<br>
-1 = Output logic high to EPWM channel n.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>MSKDAT3</td><td><div style="word-wrap: break-word;"><b>EPWM Mask Data Bit
-</b><br>
-This data bit control the state of EPWMn output pin, if corresponding mask function is enabled.
-<br>
-0 = Output logic low to EPWM channel n.
-<br>
-1 = Output logic high to EPWM channel n.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>MSKDAT4</td><td><div style="word-wrap: break-word;"><b>EPWM Mask Data Bit
-</b><br>
-This data bit control the state of EPWMn output pin, if corresponding mask function is enabled.
-<br>
-0 = Output logic low to EPWM channel n.
-<br>
-1 = Output logic high to EPWM channel n.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>MSKDAT5</td><td><div style="word-wrap: break-word;"><b>EPWM Mask Data Bit
-</b><br>
-This data bit control the state of EPWMn output pin, if corresponding mask function is enabled.
-<br>
-0 = Output logic low to EPWM channel n.
-<br>
-1 = Output logic high to EPWM channel n.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::BNF
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">BNF
-</font><br><p> <font size="2">
-Offset: 0xC0  EPWM Brake Noise Filter Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>BRK0NFEN</td><td><div style="word-wrap: break-word;"><b>EPWM Brake 0 Noise Filter Enable Bit
-</b><br>
-0 = Noise filter of EPWM Brake 0 Disabled.
-<br>
-1 = Noise filter of EPWM Brake 0 Enabled.
-<br>
-</div></td></tr><tr><td>
-[3:1]</td><td>BRK0NFSEL</td><td><div style="word-wrap: break-word;"><b>Brake 0 Edge Detector Filter Clock Selection
-</b><br>
-000 = Filter clock = HCLK.
-<br>
-001 = Filter clock = HCLK/2.
-<br>
-010 = Filter clock = HCLK/4.
-<br>
-011 = Filter clock = HCLK/8.
-<br>
-100 = Filter clock = HCLK/16.
-<br>
-101 = Filter clock = HCLK/32.
-<br>
-110 = Filter clock = HCLK/64.
-<br>
-111 = Filter clock = HCLK/128.
-<br>
-</div></td></tr><tr><td>
-[6:4]</td><td>BRK0FCNT</td><td><div style="word-wrap: break-word;"><b>Brake 0 Edge Detector Filter Count
-</b><br>
-The register bits control the Brake0 filter counter to count from 0 to BRK1FCNT.
-<br>
-</div></td></tr><tr><td>
-[7]</td><td>BRK0PINV</td><td><div style="word-wrap: break-word;"><b>Brake 0 Pin Inverse
-</b><br>
-0 = The state of pin EPWMx_BRAKE0 is passed to the negative edge detector.
-<br>
-1 = The inversed state of pin EPWMx_BRAKE10 is passed to the negative edge detector.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>BRK1NFEN</td><td><div style="word-wrap: break-word;"><b>EPWM Brake 1 Noise Filter Enable Bit
-</b><br>
-0 = Noise filter of EPWM Brake 1 Disabled.
-<br>
-1 = Noise filter of EPWM Brake 1 Enabled.
-<br>
-</div></td></tr><tr><td>
-[11:9]</td><td>BRK1NFSEL</td><td><div style="word-wrap: break-word;"><b>Brake 1 Edge Detector Filter Clock Selection
-</b><br>
-000 = Filter clock = HCLK.
-<br>
-001 = Filter clock = HCLK/2.
-<br>
-010 = Filter clock = HCLK/4.
-<br>
-011 = Filter clock = HCLK/8.
-<br>
-100 = Filter clock = HCLK/16.
-<br>
-101 = Filter clock = HCLK/32.
-<br>
-110 = Filter clock = HCLK/64.
-<br>
-111 = Filter clock = HCLK/128.
-<br>
-</div></td></tr><tr><td>
-[14:12]</td><td>BRK1FCNT</td><td><div style="word-wrap: break-word;"><b>Brake 1 Edge Detector Filter Count
-</b><br>
-The register bits control the Brake1 filter counter to count from 0 to BRK1FCNT.
-<br>
-</div></td></tr><tr><td>
-[15]</td><td>BRK1PINV</td><td><div style="word-wrap: break-word;"><b>Brake 1 Pin Inverse
-</b><br>
-0 = The state of pin EPWMx_BRAKE1 is passed to the negative edge detector.
-<br>
-1 = The inversed state of pin EPWMx_BRAKE1 is passed to the negative edge detector.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>BK0SRC</td><td><div style="word-wrap: break-word;"><b>Brake 0 Pin Source Select
-</b><br>
-For EPWM0 setting:
-<br>
-0 = Brake 0 pin source come from EPWM0_BRAKE0.
-<br>
-1 = Brake 0 pin source come from EPWM1_BRAKE0.
-<br>
-For EPWM1 setting:
-<br>
-0 = Brake 0 pin source come from EPWM1_BRAKE0.
-<br>
-1 = Brake 0 pin source come from EPWM0_BRAKE0.
-<br>
-</div></td></tr><tr><td>
-[24]</td><td>BK1SRC</td><td><div style="word-wrap: break-word;"><b>Brake 1 Pin Source Select
-</b><br>
-For EPWM0 setting:
-<br>
-0 = Brake 1 pin source come from EPWM0_BRAKE1.
-<br>
-1 = Brake 1 pin source come from EPWM1_BRAKE1.
-<br>
-For EPWM1 setting:
-<br>
-0 = Brake 1 pin source come from EPWM1_BRAKE1.
-<br>
-1 = Brake 1 pin source come from EPWM0_BRAKE1.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::FAILBRK
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">FAILBRK
-</font><br><p> <font size="2">
-Offset: 0xC4  EPWM System Fail Brake Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>CSSBRKEN</td><td><div style="word-wrap: break-word;"><b>Clock Security System Detection Trigger EPWM Brake Function 0 Enable Bit
-</b><br>
-0 = Brake Function triggered by CSS detection Disabled.
-<br>
-1 = Brake Function triggered by CSS detection Enabled.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>BODBRKEN</td><td><div style="word-wrap: break-word;"><b>Brown-out Detection Trigger EPWM Brake Function 0 Enable Bit
-</b><br>
-0 = Brake Function triggered by BOD Disabled.
-<br>
-1 = Brake Function triggered by BOD Enabled.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>RAMBRKEN</td><td><div style="word-wrap: break-word;"><b>SRAM Parity Error Detection Trigger EPWM Brake Function 0 Enable Bit
-</b><br>
-0 = Brake Function triggered by SRAM parity error detection Disabled.
-<br>
-1 = Brake Function triggered by SRAM parity error detection Enabled.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>CORBRKEN</td><td><div style="word-wrap: break-word;"><b>Core Lockup Detection Trigger EPWM Brake Function 0 Enable Bit
-</b><br>
-0 = Brake Function triggered by Core lockup detection Disabled.
-<br>
-1 = Brake Function triggered by Core lockup detection Enabled.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::BRKCTL[3]
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">BRKCTL[3]
-</font><br><p> <font size="2">
-Offset: 0xC8  EPWM Brake Edge Detect Control Register 0/1,2/3,4/5
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>CPO0EBEN</td><td><div style="word-wrap: break-word;"><b>Enable ACMP0_O Digital Output As Edge-detect Brake Source (Write Protect)
-</b><br>
-0 = ACMP0_O as edge-detect brake source Disabled.
-<br>
-1 = ACMP0_O as edge-detect brake source Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>CPO1EBEN</td><td><div style="word-wrap: break-word;"><b>Enable ACMP1_O Digital Output As Edge-detect Brake Source (Write Protect)
-</b><br>
-0 = ACMP1_O as edge-detect brake source Disabled.
-<br>
-1 = ACMP1_O as edge-detect brake source Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>BRKP0EEN</td><td><div style="word-wrap: break-word;"><b>Enable EPWMx_BRAKE0 Pin As Edge-detect Brake Source (Write Protect)
-</b><br>
-0 = EPWMx_BRAKE0 pin as edge-detect brake source Disabled.
-<br>
-1 = EPWMx_BRAKE0 pin as edge-detect brake source Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>BRKP1EEN</td><td><div style="word-wrap: break-word;"><b>Enable EPWMx_BRAKE1 Pin As Edge-detect Brake Source (Write Protect)
-</b><br>
-0 = EPWMx_BRAKE1 pin as edge-detect brake source Disabled.
-<br>
-1 = EPWMx_BRAKE1 pin as edge-detect brake source Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[7]</td><td>SYSEBEN</td><td><div style="word-wrap: break-word;"><b>Enable System Fail As Edge-detect Brake Source (Write Protect)
-</b><br>
-0 = System Fail condition as edge-detect brake source Disabled.
-<br>
-1 = System Fail condition as edge-detect brake source Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>CPO0LBEN</td><td><div style="word-wrap: break-word;"><b>Enable ACMP0_O Digital Output As Level-detect Brake Source (Write Protect)
-</b><br>
-0 = ACMP0_O as level-detect brake source Disabled.
-<br>
-1 = ACMP0_O as level-detect brake source Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>CPO1LBEN</td><td><div style="word-wrap: break-word;"><b>Enable ACMP1_O Digital Output As Level-detect Brake Source (Write Protect)
-</b><br>
-0 = ACMP1_O as level-detect brake source Disabled.
-<br>
-1 = ACMP1_O as level-detect brake source Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>BRKP0LEN</td><td><div style="word-wrap: break-word;"><b>Enable BKP0 Pin As Level-detect Brake Source (Write Protect)
-</b><br>
-0 = EPWMx_BRAKE0 pin as level-detect brake source Disabled.
-<br>
-1 = EPWMx_BRAKE0 pin as level-detect brake source Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[13]</td><td>BRKP1LEN</td><td><div style="word-wrap: break-word;"><b>Enable BKP1 Pin As Level-detect Brake Source (Write Protect)
-</b><br>
-0 = EPWMx_BRAKE1 pin as level-detect brake source Disabled.
-<br>
-1 = EPWMx_BRAKE1 pin as level-detect brake source Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[15]</td><td>SYSLBEN</td><td><div style="word-wrap: break-word;"><b>Enable System Fail As Level-detect Brake Source (Write Protect)
-</b><br>
-0 = System Fail condition as level-detect brake source Disabled.
-<br>
-1 = System Fail condition as level-detect brake source Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[17:16]</td><td>BRKAEVEN</td><td><div style="word-wrap: break-word;"><b>EPWM Brake Action Select for Even Channel (Write Protect)
-</b><br>
-00 = EPWMx brake event will not affect even channels output.
-<br>
-01 = EPWM even channel output tri-state when EPWMx brake event happened.
-<br>
-10 = EPWM even channel output low level when EPWMx brake event happened.
-<br>
-11 = EPWM even channel output high level when EPWMx brake event happened.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[19:18]</td><td>BRKAODD</td><td><div style="word-wrap: break-word;"><b>EPWM Brake Action Select for Odd Channel (Write Protect)
-</b><br>
-00 = EPWMx brake event will not affect odd channels output.
-<br>
-01 = EPWM odd channel output tri-state when EPWMx brake event happened.
-<br>
-10 = EPWM odd channel output low level when EPWMx brake event happened.
-<br>
-11 = EPWM odd channel output high level when EPWMx brake event happened.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[20]</td><td>EADCEBEN</td><td><div style="word-wrap: break-word;"><b>Enable EADC Result Monitor (EADCRM) As Edge-detect Brake Source (Write Protect)
-</b><br>
-0 = EADCRM as edge-detect brake source Disabled.
-<br>
-1 = EADCRM as edge-detect brake source Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[28]</td><td>EADCLBEN</td><td><div style="word-wrap: break-word;"><b>Enable EADC Result Monitor (EADCRM) As Level-detect Brake Source (Write Protect)
-</b><br>
-0 = EADCRM as level-detect brake source Disabled.
-<br>
-1 = EADCRM as level-detect brake source Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::POLCTL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">POLCTL
-</font><br><p> <font size="2">
-Offset: 0xD4  EPWM Pin Polar Inverse Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>PINV0</td><td><div style="word-wrap: break-word;"><b>EPWM PIN Polar Inverse Control
-</b><br>
-The register controls polarity state of EPWM output.
-<br>
-0 = EPWM output polar inverse Disabled.
-<br>
-1 = EPWM output polar inverse Enabled.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>PINV1</td><td><div style="word-wrap: break-word;"><b>EPWM PIN Polar Inverse Control
-</b><br>
-The register controls polarity state of EPWM output.
-<br>
-0 = EPWM output polar inverse Disabled.
-<br>
-1 = EPWM output polar inverse Enabled.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>PINV2</td><td><div style="word-wrap: break-word;"><b>EPWM PIN Polar Inverse Control
-</b><br>
-The register controls polarity state of EPWM output.
-<br>
-0 = EPWM output polar inverse Disabled.
-<br>
-1 = EPWM output polar inverse Enabled.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>PINV3</td><td><div style="word-wrap: break-word;"><b>EPWM PIN Polar Inverse Control
-</b><br>
-The register controls polarity state of EPWM output.
-<br>
-0 = EPWM output polar inverse Disabled.
-<br>
-1 = EPWM output polar inverse Enabled.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>PINV4</td><td><div style="word-wrap: break-word;"><b>EPWM PIN Polar Inverse Control
-</b><br>
-The register controls polarity state of EPWM output.
-<br>
-0 = EPWM output polar inverse Disabled.
-<br>
-1 = EPWM output polar inverse Enabled.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>PINV5</td><td><div style="word-wrap: break-word;"><b>EPWM PIN Polar Inverse Control
-</b><br>
-The register controls polarity state of EPWM output.
-<br>
-0 = EPWM output polar inverse Disabled.
-<br>
-1 = EPWM output polar inverse Enabled.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::POEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">POEN
-</font><br><p> <font size="2">
-Offset: 0xD8  EPWM Output Enable Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>POEN0</td><td><div style="word-wrap: break-word;"><b>EPWM Pin Output Enable Bits
-</b><br>
-0 = EPWM pin at tri-state.
-<br>
-1 = EPWM pin in output mode.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>POEN1</td><td><div style="word-wrap: break-word;"><b>EPWM Pin Output Enable Bits
-</b><br>
-0 = EPWM pin at tri-state.
-<br>
-1 = EPWM pin in output mode.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>POEN2</td><td><div style="word-wrap: break-word;"><b>EPWM Pin Output Enable Bits
-</b><br>
-0 = EPWM pin at tri-state.
-<br>
-1 = EPWM pin in output mode.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>POEN3</td><td><div style="word-wrap: break-word;"><b>EPWM Pin Output Enable Bits
-</b><br>
-0 = EPWM pin at tri-state.
-<br>
-1 = EPWM pin in output mode.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>POEN4</td><td><div style="word-wrap: break-word;"><b>EPWM Pin Output Enable Bits
-</b><br>
-0 = EPWM pin at tri-state.
-<br>
-1 = EPWM pin in output mode.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>POEN5</td><td><div style="word-wrap: break-word;"><b>EPWM Pin Output Enable Bits
-</b><br>
-0 = EPWM pin at tri-state.
-<br>
-1 = EPWM pin in output mode.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::SWBRK
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SWBRK
-</font><br><p> <font size="2">
-Offset: 0xDC  EPWM Software Brake Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>BRKETRG0</td><td><div style="word-wrap: break-word;"><b>EPWM Edge Brake Software Trigger (Write Only) (Write Protect)
-</b><br>
-Write 1 to this bit will trigger edge brake, and set BRKEIFn to 1 in EPWM_INTSTS1 register.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>BRKETRG2</td><td><div style="word-wrap: break-word;"><b>EPWM Edge Brake Software Trigger (Write Only) (Write Protect)
-</b><br>
-Write 1 to this bit will trigger edge brake, and set BRKEIFn to 1 in EPWM_INTSTS1 register.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>BRKETRG4</td><td><div style="word-wrap: break-word;"><b>EPWM Edge Brake Software Trigger (Write Only) (Write Protect)
-</b><br>
-Write 1 to this bit will trigger edge brake, and set BRKEIFn to 1 in EPWM_INTSTS1 register.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>BRKLTRG0</td><td><div style="word-wrap: break-word;"><b>EPWM Level Brake Software Trigger (Write Only) (Write Protect)
-</b><br>
-Write 1 to this bit will trigger level brake, and set BRKLIFn to 1 in EPWM_INTSTS1 register.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>BRKLTRG2</td><td><div style="word-wrap: break-word;"><b>EPWM Level Brake Software Trigger (Write Only) (Write Protect)
-</b><br>
-Write 1 to this bit will trigger level brake, and set BRKLIFn to 1 in EPWM_INTSTS1 register.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>BRKLTRG4</td><td><div style="word-wrap: break-word;"><b>EPWM Level Brake Software Trigger (Write Only) (Write Protect)
-</b><br>
-Write 1 to this bit will trigger level brake, and set BRKLIFn to 1 in EPWM_INTSTS1 register.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::INTEN0
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">INTEN0
-</font><br><p> <font size="2">
-Offset: 0xE0  EPWM Interrupt Enable Register 0
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>ZIEN0</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Interrupt Enable Bits
-</b><br>
-0 = Zero point interrupt Disabled.
-<br>
-1 = Zero point interrupt Enabled.
-<br>
-Note: Odd channels will read always 0 at complementary mode.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>ZIEN1</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Interrupt Enable Bits
-</b><br>
-0 = Zero point interrupt Disabled.
-<br>
-1 = Zero point interrupt Enabled.
-<br>
-Note: Odd channels will read always 0 at complementary mode.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>ZIEN2</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Interrupt Enable Bits
-</b><br>
-0 = Zero point interrupt Disabled.
-<br>
-1 = Zero point interrupt Enabled.
-<br>
-Note: Odd channels will read always 0 at complementary mode.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>ZIEN3</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Interrupt Enable Bits
-</b><br>
-0 = Zero point interrupt Disabled.
-<br>
-1 = Zero point interrupt Enabled.
-<br>
-Note: Odd channels will read always 0 at complementary mode.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>ZIEN4</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Interrupt Enable Bits
-</b><br>
-0 = Zero point interrupt Disabled.
-<br>
-1 = Zero point interrupt Enabled.
-<br>
-Note: Odd channels will read always 0 at complementary mode.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>ZIEN5</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Interrupt Enable Bits
-</b><br>
-0 = Zero point interrupt Disabled.
-<br>
-1 = Zero point interrupt Enabled.
-<br>
-Note: Odd channels will read always 0 at complementary mode.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>PIEN0</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Interrupt Enable Bits
-</b><br>
-0 = Period point interrupt Disabled.
-<br>
-1 = Period point interrupt Enabled.
-<br>
-Note1: When up-down counter type period point means center point.
-<br>
-Note2: Odd channels will read always 0 at complementary mode.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>PIEN1</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Interrupt Enable Bits
-</b><br>
-0 = Period point interrupt Disabled.
-<br>
-1 = Period point interrupt Enabled.
-<br>
-Note1: When up-down counter type period point means center point.
-<br>
-Note2: Odd channels will read always 0 at complementary mode.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>PIEN2</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Interrupt Enable Bits
-</b><br>
-0 = Period point interrupt Disabled.
-<br>
-1 = Period point interrupt Enabled.
-<br>
-Note1: When up-down counter type period point means center point.
-<br>
-Note2: Odd channels will read always 0 at complementary mode.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>PIEN3</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Interrupt Enable Bits
-</b><br>
-0 = Period point interrupt Disabled.
-<br>
-1 = Period point interrupt Enabled.
-<br>
-Note1: When up-down counter type period point means center point.
-<br>
-Note2: Odd channels will read always 0 at complementary mode.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>PIEN4</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Interrupt Enable Bits
-</b><br>
-0 = Period point interrupt Disabled.
-<br>
-1 = Period point interrupt Enabled.
-<br>
-Note1: When up-down counter type period point means center point.
-<br>
-Note2: Odd channels will read always 0 at complementary mode.
-<br>
-</div></td></tr><tr><td>
-[13]</td><td>PIEN5</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Interrupt Enable Bits
-</b><br>
-0 = Period point interrupt Disabled.
-<br>
-1 = Period point interrupt Enabled.
-<br>
-Note1: When up-down counter type period point means center point.
-<br>
-Note2: Odd channels will read always 0 at complementary mode.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>CMPUIEN0</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Interrupt Enable Bits
-</b><br>
-0 = Compare up count interrupt Disabled.
-<br>
-1 = Compare up count interrupt Enabled.
-<br>
-Note: In complementary mode, CMPUIEN1, 3, 5 use as another CMPUIEN for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[17]</td><td>CMPUIEN1</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Interrupt Enable Bits
-</b><br>
-0 = Compare up count interrupt Disabled.
-<br>
-1 = Compare up count interrupt Enabled.
-<br>
-Note: In complementary mode, CMPUIEN1, 3, 5 use as another CMPUIEN for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[18]</td><td>CMPUIEN2</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Interrupt Enable Bits
-</b><br>
-0 = Compare up count interrupt Disabled.
-<br>
-1 = Compare up count interrupt Enabled.
-<br>
-Note: In complementary mode, CMPUIEN1, 3, 5 use as another CMPUIEN for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[19]</td><td>CMPUIEN3</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Interrupt Enable Bits
-</b><br>
-0 = Compare up count interrupt Disabled.
-<br>
-1 = Compare up count interrupt Enabled.
-<br>
-Note: In complementary mode, CMPUIEN1, 3, 5 use as another CMPUIEN for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[20]</td><td>CMPUIEN4</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Interrupt Enable Bits
-</b><br>
-0 = Compare up count interrupt Disabled.
-<br>
-1 = Compare up count interrupt Enabled.
-<br>
-Note: In complementary mode, CMPUIEN1, 3, 5 use as another CMPUIEN for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[21]</td><td>CMPUIEN5</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Interrupt Enable Bits
-</b><br>
-0 = Compare up count interrupt Disabled.
-<br>
-1 = Compare up count interrupt Enabled.
-<br>
-Note: In complementary mode, CMPUIEN1, 3, 5 use as another CMPUIEN for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[24]</td><td>CMPDIEN0</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Interrupt Enable Bits
-</b><br>
-0 = Compare down count interrupt Disabled.
-<br>
-1 = Compare down count interrupt Enabled.
-<br>
-Note: In complementary mode, CMPDIEN1, 3, 5 use as another CMPDIEN for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[25]</td><td>CMPDIEN1</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Interrupt Enable Bits
-</b><br>
-0 = Compare down count interrupt Disabled.
-<br>
-1 = Compare down count interrupt Enabled.
-<br>
-Note: In complementary mode, CMPDIEN1, 3, 5 use as another CMPDIEN for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[26]</td><td>CMPDIEN2</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Interrupt Enable Bits
-</b><br>
-0 = Compare down count interrupt Disabled.
-<br>
-1 = Compare down count interrupt Enabled.
-<br>
-Note: In complementary mode, CMPDIEN1, 3, 5 use as another CMPDIEN for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[27]</td><td>CMPDIEN3</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Interrupt Enable Bits
-</b><br>
-0 = Compare down count interrupt Disabled.
-<br>
-1 = Compare down count interrupt Enabled.
-<br>
-Note: In complementary mode, CMPDIEN1, 3, 5 use as another CMPDIEN for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[28]</td><td>CMPDIEN4</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Interrupt Enable Bits
-</b><br>
-0 = Compare down count interrupt Disabled.
-<br>
-1 = Compare down count interrupt Enabled.
-<br>
-Note: In complementary mode, CMPDIEN1, 3, 5 use as another CMPDIEN for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[29]</td><td>CMPDIEN5</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Interrupt Enable Bits
-</b><br>
-0 = Compare down count interrupt Disabled.
-<br>
-1 = Compare down count interrupt Enabled.
-<br>
-Note: In complementary mode, CMPDIEN1, 3, 5 use as another CMPDIEN for channel 0, 2, 4.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::INTEN1
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">INTEN1
-</font><br><p> <font size="2">
-Offset: 0xE4  EPWM Interrupt Enable Register 1
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>BRKEIEN0_1</td><td><div style="word-wrap: break-word;"><b>EPWM Edge-detect Brake Interrupt Enable for Channel0/1 (Write Protect)
-</b><br>
-0 = Edge-detect Brake interrupt for channel0/1 Disabled.
-<br>
-1 = Edge-detect Brake interrupt for channel0/1 Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>BRKEIEN2_3</td><td><div style="word-wrap: break-word;"><b>EPWM Edge-detect Brake Interrupt Enable for Channel2/3 (Write Protect)
-</b><br>
-0 = Edge-detect Brake interrupt for channel2/3 Disabled.
-<br>
-1 = Edge-detect Brake interrupt for channel2/3 Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>BRKEIEN4_5</td><td><div style="word-wrap: break-word;"><b>EPWM Edge-detect Brake Interrupt Enable for Channel4/5 (Write Protect)
-</b><br>
-0 = Edge-detect Brake interrupt for channel4/5 Disabled.
-<br>
-1 = Edge-detect Brake interrupt for channel4/5 Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>BRKLIEN0_1</td><td><div style="word-wrap: break-word;"><b>EPWM Level-detect Brake Interrupt Enable for Channel0/1 (Write Protect)
-</b><br>
-0 = Level-detect Brake interrupt for channel0/1 Disabled.
-<br>
-1 = Level-detect Brake interrupt for channel0/1 Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>BRKLIEN2_3</td><td><div style="word-wrap: break-word;"><b>EPWM Level-detect Brake Interrupt Enable for Channel2/3 (Write Protect)
-</b><br>
-0 = Level-detect Brake interrupt for channel2/3 Disabled.
-<br>
-1 = Level-detect Brake interrupt for channel2/3 Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>BRKLIEN4_5</td><td><div style="word-wrap: break-word;"><b>EPWM Level-detect Brake Interrupt Enable for Channel4/5 (Write Protect)
-</b><br>
-0 = Level-detect Brake interrupt for channel4/5 Disabled.
-<br>
-1 = Level-detect Brake interrupt for channel4/5 Enabled.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::INTSTS0
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">INTSTS0
-</font><br><p> <font size="2">
-Offset: 0xE8  EPWM Interrupt Flag Register 0
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>ZIF0</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Interrupt Flag
-</b><br>
-This bit is set by hardware when EPWM counter reaches zero, software can write 1 to clear this bit to zero.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>ZIF1</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Interrupt Flag
-</b><br>
-This bit is set by hardware when EPWM counter reaches zero, software can write 1 to clear this bit to zero.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>ZIF2</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Interrupt Flag
-</b><br>
-This bit is set by hardware when EPWM counter reaches zero, software can write 1 to clear this bit to zero.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>ZIF3</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Interrupt Flag
-</b><br>
-This bit is set by hardware when EPWM counter reaches zero, software can write 1 to clear this bit to zero.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>ZIF4</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Interrupt Flag
-</b><br>
-This bit is set by hardware when EPWM counter reaches zero, software can write 1 to clear this bit to zero.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>ZIF5</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Interrupt Flag
-</b><br>
-This bit is set by hardware when EPWM counter reaches zero, software can write 1 to clear this bit to zero.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>PIF0</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Interrupt Flag
-</b><br>
-This bit is set by hardware when EPWM counter reaches EPWM_PERIODn, software can write 1 to clear this bit to zero.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>PIF1</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Interrupt Flag
-</b><br>
-This bit is set by hardware when EPWM counter reaches EPWM_PERIODn, software can write 1 to clear this bit to zero.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>PIF2</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Interrupt Flag
-</b><br>
-This bit is set by hardware when EPWM counter reaches EPWM_PERIODn, software can write 1 to clear this bit to zero.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>PIF3</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Interrupt Flag
-</b><br>
-This bit is set by hardware when EPWM counter reaches EPWM_PERIODn, software can write 1 to clear this bit to zero.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>PIF4</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Interrupt Flag
-</b><br>
-This bit is set by hardware when EPWM counter reaches EPWM_PERIODn, software can write 1 to clear this bit to zero.
-<br>
-</div></td></tr><tr><td>
-[13]</td><td>PIF5</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Interrupt Flag
-</b><br>
-This bit is set by hardware when EPWM counter reaches EPWM_PERIODn, software can write 1 to clear this bit to zero.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>CMPUIF0</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Interrupt Flag
-</b><br>
-Flag is set by hardware when EPWM counter up count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
-<br>
-Note1: If CMPDAT equal to PERIOD, this flag is not working in up counter type selection.
-<br>
-Note2: In complementary mode, CMPUIF1, 3, 5 use as another CMPUIF for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[17]</td><td>CMPUIF1</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Interrupt Flag
-</b><br>
-Flag is set by hardware when EPWM counter up count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
-<br>
-Note1: If CMPDAT equal to PERIOD, this flag is not working in up counter type selection.
-<br>
-Note2: In complementary mode, CMPUIF1, 3, 5 use as another CMPUIF for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[18]</td><td>CMPUIF2</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Interrupt Flag
-</b><br>
-Flag is set by hardware when EPWM counter up count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
-<br>
-Note1: If CMPDAT equal to PERIOD, this flag is not working in up counter type selection.
-<br>
-Note2: In complementary mode, CMPUIF1, 3, 5 use as another CMPUIF for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[19]</td><td>CMPUIF3</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Interrupt Flag
-</b><br>
-Flag is set by hardware when EPWM counter up count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
-<br>
-Note1: If CMPDAT equal to PERIOD, this flag is not working in up counter type selection.
-<br>
-Note2: In complementary mode, CMPUIF1, 3, 5 use as another CMPUIF for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[20]</td><td>CMPUIF4</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Interrupt Flag
-</b><br>
-Flag is set by hardware when EPWM counter up count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
-<br>
-Note1: If CMPDAT equal to PERIOD, this flag is not working in up counter type selection.
-<br>
-Note2: In complementary mode, CMPUIF1, 3, 5 use as another CMPUIF for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[21]</td><td>CMPUIF5</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Interrupt Flag
-</b><br>
-Flag is set by hardware when EPWM counter up count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
-<br>
-Note1: If CMPDAT equal to PERIOD, this flag is not working in up counter type selection.
-<br>
-Note2: In complementary mode, CMPUIF1, 3, 5 use as another CMPUIF for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[24]</td><td>CMPDIF0</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Interrupt Flag
-</b><br>
-Flag is set by hardware when EPWM counter down count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
-<br>
-Note1: If CMPDAT equal to PERIOD, this flag is not working in down counter type selection.
-<br>
-Note2: In complementary mode, CMPDIF1, 3, 5 use as another CMPDIF for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[25]</td><td>CMPDIF1</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Interrupt Flag
-</b><br>
-Flag is set by hardware when EPWM counter down count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
-<br>
-Note1: If CMPDAT equal to PERIOD, this flag is not working in down counter type selection.
-<br>
-Note2: In complementary mode, CMPDIF1, 3, 5 use as another CMPDIF for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[26]</td><td>CMPDIF2</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Interrupt Flag
-</b><br>
-Flag is set by hardware when EPWM counter down count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
-<br>
-Note1: If CMPDAT equal to PERIOD, this flag is not working in down counter type selection.
-<br>
-Note2: In complementary mode, CMPDIF1, 3, 5 use as another CMPDIF for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[27]</td><td>CMPDIF3</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Interrupt Flag
-</b><br>
-Flag is set by hardware when EPWM counter down count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
-<br>
-Note1: If CMPDAT equal to PERIOD, this flag is not working in down counter type selection.
-<br>
-Note2: In complementary mode, CMPDIF1, 3, 5 use as another CMPDIF for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[28]</td><td>CMPDIF4</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Interrupt Flag
-</b><br>
-Flag is set by hardware when EPWM counter down count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
-<br>
-Note1: If CMPDAT equal to PERIOD, this flag is not working in down counter type selection.
-<br>
-Note2: In complementary mode, CMPDIF1, 3, 5 use as another CMPDIF for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[29]</td><td>CMPDIF5</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Interrupt Flag
-</b><br>
-Flag is set by hardware when EPWM counter down count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
-<br>
-Note1: If CMPDAT equal to PERIOD, this flag is not working in down counter type selection.
-<br>
-Note2: In complementary mode, CMPDIF1, 3, 5 use as another CMPDIF for channel 0, 2, 4.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::INTSTS1
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">INTSTS1
-</font><br><p> <font size="2">
-Offset: 0xEC  EPWM Interrupt Flag Register 1
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>BRKEIF0</td><td><div style="word-wrap: break-word;"><b>EPWM Channel0 Edge-detect Brake Interrupt Flag (Write Protect)
-</b><br>
-0 = EPWM channel0 edge-detect brake event do not happened.
-<br>
-1 = When EPWM channel0 edge-detect brake event happened, this bit is set to 1, writing 1 to clear.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>BRKEIF1</td><td><div style="word-wrap: break-word;"><b>EPWM Channel1 Edge-detect Brake Interrupt Flag (Write Protect)
-</b><br>
-0 = EPWM channel1 edge-detect brake event do not happened.
-<br>
-1 = When EPWM channel1 edge-detect brake event happened, this bit is set to 1, writing 1 to clear.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>BRKEIF2</td><td><div style="word-wrap: break-word;"><b>EPWM Channel2 Edge-detect Brake Interrupt Flag (Write Protect)
-</b><br>
-0 = EPWM channel2 edge-detect brake event do not happened.
-<br>
-1 = When EPWM channel2 edge-detect brake event happened, this bit is set to 1, writing 1 to clear.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>BRKEIF3</td><td><div style="word-wrap: break-word;"><b>EPWM Channel3 Edge-detect Brake Interrupt Flag (Write Protect)
-</b><br>
-0 = EPWM channel3 edge-detect brake event do not happened.
-<br>
-1 = When EPWM channel3 edge-detect brake event happened, this bit is set to 1, writing 1 to clear.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>BRKEIF4</td><td><div style="word-wrap: break-word;"><b>EPWM Channel4 Edge-detect Brake Interrupt Flag (Write Protect)
-</b><br>
-0 = EPWM channel4 edge-detect brake event do not happened.
-<br>
-1 = When EPWM channel4 edge-detect brake event happened, this bit is set to 1, writing 1 to clear.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>BRKEIF5</td><td><div style="word-wrap: break-word;"><b>EPWM Channel5 Edge-detect Brake Interrupt Flag (Write Protect)
-</b><br>
-0 = EPWM channel5 edge-detect brake event do not happened.
-<br>
-1 = When EPWM channel5 edge-detect brake event happened, this bit is set to 1, writing 1 to clear.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>BRKLIF0</td><td><div style="word-wrap: break-word;"><b>EPWM Channel0 Level-detect Brake Interrupt Flag (Write Protect)
-</b><br>
-0 = EPWM channel0 level-detect brake event do not happened.
-<br>
-1 = When EPWM channel0 level-detect brake event happened, this bit is set to 1, writing 1 to clear.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>BRKLIF1</td><td><div style="word-wrap: break-word;"><b>EPWM Channel1 Level-detect Brake Interrupt Flag (Write Protect)
-</b><br>
-0 = EPWM channel1 level-detect brake event do not happened.
-<br>
-1 = When EPWM channel1 level-detect brake event happened, this bit is set to 1, writing 1 to clear.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>BRKLIF2</td><td><div style="word-wrap: break-word;"><b>EPWM Channel2 Level-detect Brake Interrupt Flag (Write Protect)
-</b><br>
-0 = EPWM channel2 level-detect brake event do not happened.
-<br>
-1 = When EPWM channel2 level-detect brake event happened, this bit is set to 1, writing 1 to clear.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>BRKLIF3</td><td><div style="word-wrap: break-word;"><b>EPWM Channel3 Level-detect Brake Interrupt Flag (Write Protect)
-</b><br>
-0 = EPWM channel3 level-detect brake event do not happened.
-<br>
-1 = When EPWM channel3 level-detect brake event happened, this bit is set to 1, writing 1 to clear.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>BRKLIF4</td><td><div style="word-wrap: break-word;"><b>EPWM Channel4 Level-detect Brake Interrupt Flag (Write Protect)
-</b><br>
-0 = EPWM channel4 level-detect brake event do not happened.
-<br>
-1 = When EPWM channel4 level-detect brake event happened, this bit is set to 1, writing 1 to clear.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[13]</td><td>BRKLIF5</td><td><div style="word-wrap: break-word;"><b>EPWM Channel5 Level-detect Brake Interrupt Flag (Write Protect)
-</b><br>
-0 = EPWM channel5 level-detect brake event do not happened.
-<br>
-1 = When EEPWM channel5 level-detect brake event happened, this bit is set to 1, writing 1 to clear.
-<br>
-Note: This register is write protected. Refer toSYS_REGLCTL register.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>BRKESTS0</td><td><div style="word-wrap: break-word;"><b>EPWM Channel0 Edge-detect Brake Status (Read Only)
-</b><br>
-0 = EPWM channel0 edge-detect brake state is released.
-<br>
-1 = When EPWM channel0 edge-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel0 at brake state, writing 1 to clear.
-<br>
-</div></td></tr><tr><td>
-[17]</td><td>BRKESTS1</td><td><div style="word-wrap: break-word;"><b>EPWM Channel1 Edge-detect Brake Status (Read Only)
-</b><br>
-0 = EPWM channel1 edge-detect brake state is released.
-<br>
-1 = When EPWM channel1 edge-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel1 at brake state, writing 1 to clear.
-<br>
-</div></td></tr><tr><td>
-[18]</td><td>BRKESTS2</td><td><div style="word-wrap: break-word;"><b>EPWM Channel2 Edge-detect Brake Status (Read Only)
-</b><br>
-0 = EPWM channel2 edge-detect brake state is released.
-<br>
-1 = When EPWM channel2 edge-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel2 at brake state, writing 1 to clear.
-<br>
-</div></td></tr><tr><td>
-[19]</td><td>BRKESTS3</td><td><div style="word-wrap: break-word;"><b>EPWM Channel3 Edge-detect Brake Status (Read Only)
-</b><br>
-0 = EPWM channel3 edge-detect brake state is released.
-<br>
-1 = When EPWM channel3 edge-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel3 at brake state, writing 1 to clear.
-<br>
-</div></td></tr><tr><td>
-[20]</td><td>BRKESTS4</td><td><div style="word-wrap: break-word;"><b>EPWM Channel4 Edge-detect Brake Status (Read Only)
-</b><br>
-0 = EPWM channel4 edge-detect brake state is released.
-<br>
-1 = When EPWM channel4 edge-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel4 at brake state, writing 1 to clear.
-<br>
-</div></td></tr><tr><td>
-[21]</td><td>BRKESTS5</td><td><div style="word-wrap: break-word;"><b>EPWM Channel5 Edge-detect Brake Status (Read Only)
-</b><br>
-0 = EPWM channel5 edge-detect brake state is released.
-<br>
-1 = When EPWM channel5 edge-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel5 at brake state, writing 1 to clear.
-<br>
-</div></td></tr><tr><td>
-[24]</td><td>BRKLSTS0</td><td><div style="word-wrap: break-word;"><b>EPWM Channel0 Level-detect Brake Status (Read Only)
-</b><br>
-0 = EPWM channel0 level-detect brake state is released.
-<br>
-1 = When EPWM channel0 level-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel0 at brake state.
-<br>
-Note: This bit is read only and auto cleared by hardware
-<br>
-When enabled brake source return to high level, EPWM will release brake state until current EPWM period finished
-<br>
-The EPWM waveform will start output from next full EPWM period.
-<br>
-</div></td></tr><tr><td>
-[25]</td><td>BRKLSTS1</td><td><div style="word-wrap: break-word;"><b>EPWM Channel1 Level-detect Brake Status (Read Only)
-</b><br>
-0 = EPWM channel1 level-detect brake state is released.
-<br>
-1 = When EPWM channel1 level-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel1 at brake state.
-<br>
-Note: This bit is read only and auto cleared by hardware
-<br>
-When enabled brake source return to high level, EPWM will release brake state until current EPWM period finished
-<br>
-The EPWM waveform will start output from next full EPWM period.
-<br>
-</div></td></tr><tr><td>
-[26]</td><td>BRKLSTS2</td><td><div style="word-wrap: break-word;"><b>EPWM Channel2 Level-detect Brake Status (Read Only)
-</b><br>
-0 = EPWM channel2 level-detect brake state is released.
-<br>
-1 = When EPWM channel2 level-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel2 at brake state.
-<br>
-Note: This bit is read only and auto cleared by hardware
-<br>
-When enabled brake source return to high level, EPWM will release brake state until current EPWM period finished
-<br>
-The EPWM waveform will start output from next full EPWM period.
-<br>
-</div></td></tr><tr><td>
-[27]</td><td>BRKLSTS3</td><td><div style="word-wrap: break-word;"><b>EPWM Channel3 Level-detect Brake Status (Read Only)
-</b><br>
-0 = EPWM channel3 level-detect brake state is released.
-<br>
-1 = When EPWM channel3 level-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel3 at brake state.
-<br>
-Note: This bit is read only and auto cleared by hardware
-<br>
-When enabled brake source return to high level, EPWM will release brake state until current EPWM period finished
-<br>
-The EPWM waveform will start output from next full EPWM period.
-<br>
-</div></td></tr><tr><td>
-[28]</td><td>BRKLSTS4</td><td><div style="word-wrap: break-word;"><b>EPWM Channel4 Level-detect Brake Status (Read Only)
-</b><br>
-0 = EPWM channel4 level-detect brake state is released.
-<br>
-1 = When EPWM channel4 level-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel4 at brake state.
-<br>
-Note: This bit is read only and auto cleared by hardware
-<br>
-When enabled brake source return to high level, EPWM will release brake state until current EPWM period finished
-<br>
-The EPWM waveform will start output from next full EPWM period.
-<br>
-</div></td></tr><tr><td>
-[29]</td><td>BRKLSTS5</td><td><div style="word-wrap: break-word;"><b>EPWM Channel5 Level-detect Brake Status (Read Only)
-</b><br>
-0 = EPWM channel5 level-detect brake state is released.
-<br>
-1 = When EPWM channel5 level-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel5 at brake state.
-<br>
-Note: This bit is read only and auto cleared by hardware
-<br>
-When enabled brake source return to high level, EPWM will release brake state until current EPWM period finished
-<br>
-The EPWM waveform will start output from next full EPWM period.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::DACTRGEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">DACTRGEN
-</font><br><p> <font size="2">
-Offset: 0xF4  EPWM Trigger DAC Enable Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>ZTE0</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger EADC/DAC/DMA to start action when EPWM counter down count to zero if this bit is set to1.
-<br>
-0 = EPWM period point trigger DAC function Disabled.
-<br>
-1 = EPWM period point trigger DAC function Enabled.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>ZTE1</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger EADC/DAC/DMA to start action when EPWM counter down count to zero if this bit is set to1.
-<br>
-0 = EPWM period point trigger DAC function Disabled.
-<br>
-1 = EPWM period point trigger DAC function Enabled.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>ZTE2</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger EADC/DAC/DMA to start action when EPWM counter down count to zero if this bit is set to1.
-<br>
-0 = EPWM period point trigger DAC function Disabled.
-<br>
-1 = EPWM period point trigger DAC function Enabled.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>ZTE3</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger EADC/DAC/DMA to start action when EPWM counter down count to zero if this bit is set to1.
-<br>
-0 = EPWM period point trigger DAC function Disabled.
-<br>
-1 = EPWM period point trigger DAC function Enabled.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>ZTE4</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger EADC/DAC/DMA to start action when EPWM counter down count to zero if this bit is set to1.
-<br>
-0 = EPWM period point trigger DAC function Disabled.
-<br>
-1 = EPWM period point trigger DAC function Enabled.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>ZTE5</td><td><div style="word-wrap: break-word;"><b>EPWM Zero Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger EADC/DAC/DMA to start action when EPWM counter down count to zero if this bit is set to1.
-<br>
-0 = EPWM period point trigger DAC function Disabled.
-<br>
-1 = EPWM period point trigger DAC function Enabled.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>PTE0</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter up count to (PERIODn+1) if this bit is set to1.
-<br>
-0 = EPWM period point trigger DAC function Disabled.
-<br>
-1 = EPWM period point trigger DAC function Enabled.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>PTE1</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter up count to (PERIODn+1) if this bit is set to1.
-<br>
-0 = EPWM period point trigger DAC function Disabled.
-<br>
-1 = EPWM period point trigger DAC function Enabled.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>PTE2</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter up count to (PERIODn+1) if this bit is set to1.
-<br>
-0 = EPWM period point trigger DAC function Disabled.
-<br>
-1 = EPWM period point trigger DAC function Enabled.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>PTE3</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter up count to (PERIODn+1) if this bit is set to1.
-<br>
-0 = EPWM period point trigger DAC function Disabled.
-<br>
-1 = EPWM period point trigger DAC function Enabled.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>PTE4</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter up count to (PERIODn+1) if this bit is set to1.
-<br>
-0 = EPWM period point trigger DAC function Disabled.
-<br>
-1 = EPWM period point trigger DAC function Enabled.
-<br>
-</div></td></tr><tr><td>
-[13]</td><td>PTE5</td><td><div style="word-wrap: break-word;"><b>EPWM Period Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter up count to (PERIODn+1) if this bit is set to1.
-<br>
-0 = EPWM period point trigger DAC function Disabled.
-<br>
-1 = EPWM period point trigger DAC function Enabled.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>CUTRGE0</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter up count to CMPDAT if this bit is set to1.
-<br>
-0 = EPWM Compare Up point trigger DAC function Disabled.
-<br>
-1 = EPWM Compare Up point trigger DAC function Enabled.
-<br>
-Note1: This bit should keep at 0 when EPWM counter operating in down counter type.
-<br>
-Note2: In complementary mode, CUTRGE1, 3, 5 use as another CUTRGE for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[17]</td><td>CUTRGE1</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter up count to CMPDAT if this bit is set to1.
-<br>
-0 = EPWM Compare Up point trigger DAC function Disabled.
-<br>
-1 = EPWM Compare Up point trigger DAC function Enabled.
-<br>
-Note1: This bit should keep at 0 when EPWM counter operating in down counter type.
-<br>
-Note2: In complementary mode, CUTRGE1, 3, 5 use as another CUTRGE for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[18]</td><td>CUTRGE2</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter up count to CMPDAT if this bit is set to1.
-<br>
-0 = EPWM Compare Up point trigger DAC function Disabled.
-<br>
-1 = EPWM Compare Up point trigger DAC function Enabled.
-<br>
-Note1: This bit should keep at 0 when EPWM counter operating in down counter type.
-<br>
-Note2: In complementary mode, CUTRGE1, 3, 5 use as another CUTRGE for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[19]</td><td>CUTRGE3</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter up count to CMPDAT if this bit is set to1.
-<br>
-0 = EPWM Compare Up point trigger DAC function Disabled.
-<br>
-1 = EPWM Compare Up point trigger DAC function Enabled.
-<br>
-Note1: This bit should keep at 0 when EPWM counter operating in down counter type.
-<br>
-Note2: In complementary mode, CUTRGE1, 3, 5 use as another CUTRGE for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[20]</td><td>CUTRGE4</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter up count to CMPDAT if this bit is set to1.
-<br>
-0 = EPWM Compare Up point trigger DAC function Disabled.
-<br>
-1 = EPWM Compare Up point trigger DAC function Enabled.
-<br>
-Note1: This bit should keep at 0 when EPWM counter operating in down counter type.
-<br>
-Note2: In complementary mode, CUTRGE1, 3, 5 use as another CUTRGE for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[21]</td><td>CUTRGE5</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Up Count Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter up count to CMPDAT if this bit is set to1.
-<br>
-0 = EPWM Compare Up point trigger DAC function Disabled.
-<br>
-1 = EPWM Compare Up point trigger DAC function Enabled.
-<br>
-Note1: This bit should keep at 0 when EPWM counter operating in down counter type.
-<br>
-Note2: In complementary mode, CUTRGE1, 3, 5 use as another CUTRGE for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[24]</td><td>CDTRGE0</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter down count to CMPDAT if this bit is set to1.
-<br>
-0 = EPWM Compare Down count point trigger DAC function Disabled.
-<br>
-1 = EPWM Compare Down count point trigger DAC function Enabled.
-<br>
-Note1: This bit should keep at 0 when EPWM counter operating in up counter type.
-<br>
-Note2: In complementary mode, CDTRGE1, 3, 5 use as another CDTRGE for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[25]</td><td>CDTRGE1</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter down count to CMPDAT if this bit is set to1.
-<br>
-0 = EPWM Compare Down count point trigger DAC function Disabled.
-<br>
-1 = EPWM Compare Down count point trigger DAC function Enabled.
-<br>
-Note1: This bit should keep at 0 when EPWM counter operating in up counter type.
-<br>
-Note2: In complementary mode, CDTRGE1, 3, 5 use as another CDTRGE for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[26]</td><td>CDTRGE2</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter down count to CMPDAT if this bit is set to1.
-<br>
-0 = EPWM Compare Down count point trigger DAC function Disabled.
-<br>
-1 = EPWM Compare Down count point trigger DAC function Enabled.
-<br>
-Note1: This bit should keep at 0 when EPWM counter operating in up counter type.
-<br>
-Note2: In complementary mode, CDTRGE1, 3, 5 use as another CDTRGE for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[27]</td><td>CDTRGE3</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter down count to CMPDAT if this bit is set to1.
-<br>
-0 = EPWM Compare Down count point trigger DAC function Disabled.
-<br>
-1 = EPWM Compare Down count point trigger DAC function Enabled.
-<br>
-Note1: This bit should keep at 0 when EPWM counter operating in up counter type.
-<br>
-Note2: In complementary mode, CDTRGE1, 3, 5 use as another CDTRGE for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[28]</td><td>CDTRGE4</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter down count to CMPDAT if this bit is set to1.
-<br>
-0 = EPWM Compare Down count point trigger DAC function Disabled.
-<br>
-1 = EPWM Compare Down count point trigger DAC function Enabled.
-<br>
-Note1: This bit should keep at 0 when EPWM counter operating in up counter type.
-<br>
-Note2: In complementary mode, CDTRGE1, 3, 5 use as another CDTRGE for channel 0, 2, 4.
-<br>
-</div></td></tr><tr><td>
-[29]</td><td>CDTRGE5</td><td><div style="word-wrap: break-word;"><b>EPWM Compare Down Count Point Trigger DAC Enable Bits
-</b><br>
-EPWM can trigger DAC to start action when EPWM counter down count to CMPDAT if this bit is set to1.
-<br>
-0 = EPWM Compare Down count point trigger DAC function Disabled.
-<br>
-1 = EPWM Compare Down count point trigger DAC function Enabled.
-<br>
-Note1: This bit should keep at 0 when EPWM counter operating in up counter type.
-<br>
-Note2: In complementary mode, CDTRGE1, 3, 5 use as another CDTRGE for channel 0, 2, 4.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::EADCTS0
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">EADCTS0
-</font><br><p> <font size="2">
-Offset: 0xF8  EPWM Trigger EADC Source Select Register 0
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[3:0]</td><td>TRGSEL0</td><td><div style="word-wrap: break-word;"><b>EPWM_CH0 Trigger EADC Source Select
-</b><br>
-0000 = EPWM_CH0 zero point.
-<br>
-0001 = EPWM_CH0 period point.
-<br>
-0010 = EPWM_CH0 zero or period point.
-<br>
-0011 = EPWM_CH0 up-count CMPDAT point.
-<br>
-0100 = EPWM_CH0 down-count CMPDAT point.
-<br>
-0101 = EPWM_CH1 zero point.
-<br>
-0110 = EPWM_CH1 period point.
-<br>
-0111 = EPWM_CH1 zero or period point.
-<br>
-1000 = EPWM_CH1 up-count CMPDAT point.
-<br>
-1001 = EPWM_CH1 down-count CMPDAT point.
-<br>
-1010 = EPWM_CH0 up-count free CMPDAT point.
-<br>
-1011 = EPWM_CH0 down-count free CMPDAT point.
-<br>
-1100 = EPWM_CH2 up-count free CMPDAT point.
-<br>
-1101 = EPWM_CH2 down-count free CMPDAT point.
-<br>
-1110 = EPWM_CH4 up-count free CMPDAT point.
-<br>
-1111 = EPWM_CH4 down-count free CMPDAT point.
-<br>
-</div></td></tr><tr><td>
-[7]</td><td>TRGEN0</td><td><div style="word-wrap: break-word;"><b>EPWM_CH0 Trigger EADC enable bit
-</b><br>
-</div></td></tr><tr><td>
-[11:8]</td><td>TRGSEL1</td><td><div style="word-wrap: break-word;"><b>EPWM_CH1 Trigger EADC Source Select
-</b><br>
-0000 = EPWM_CH0 zero point.
-<br>
-0001 = EPWM_CH0 period point.
-<br>
-0010 = EPWM_CH0 zero or period point.
-<br>
-0011 = EPWM_CH0 up-count CMPDAT point.
-<br>
-0100 = EPWM_CH0 down-count CMPDAT point.
-<br>
-0101 = EPWM_CH1 zero point.
-<br>
-0110 = EPWM_CH1 period point.
-<br>
-0111 = EPWM_CH1 zero or period point.
-<br>
-1000 = EPWM_CH1 up-count CMPDAT point.
-<br>
-1001 = EPWM_CH1 down-count CMPDAT point.
-<br>
-1010 = EPWM_CH0 up-count free CMPDAT point.
-<br>
-1011 = EPWM_CH0 down-count free CMPDAT point.
-<br>
-1100 = EPWM_CH2 up-count free CMPDAT point.
-<br>
-1101 = EPWM_CH2 down-count free CMPDAT point.
-<br>
-1110 = EPWM_CH4 up-count free CMPDAT point.
-<br>
-1111 = EPWM_CH4 down-count free CMPDAT point.
-<br>
-</div></td></tr><tr><td>
-[15]</td><td>TRGEN1</td><td><div style="word-wrap: break-word;"><b>EPWM_CH1 Trigger EADC enable bit
-</b><br>
-</div></td></tr><tr><td>
-[19:16]</td><td>TRGSEL2</td><td><div style="word-wrap: break-word;"><b>EPWM_CH2 Trigger EADC Source Select
-</b><br>
-0000 = EPWM_CH2 zero point.
-<br>
-0001 = EPWM_CH2 period point.
-<br>
-0010 = EPWM_CH2 zero or period point.
-<br>
-0011 = EPWM_CH2 up-count CMPDAT point.
-<br>
-0100 = EPWM_CH2 down-count CMPDAT point.
-<br>
-0101 = EPWM_CH3 zero point.
-<br>
-0110 = EPWM_CH3 period point.
-<br>
-0111 = EPWM_CH3 zero or period point.
-<br>
-1000 = EPWM_CH3 up-count CMPDAT point.
-<br>
-1001 = EPWM_CH3 down-count CMPDAT point.
-<br>
-1010 = EPWM_CH0 up-count free CMPDAT point.
-<br>
-1011 = EPWM_CH0 down-count free CMPDAT point.
-<br>
-1100 = EPWM_CH2 up-count free CMPDAT point.
-<br>
-1101 = EPWM_CH2 down-count free CMPDAT point.
-<br>
-1110 = EPWM_CH4 up-count free CMPDAT point.
-<br>
-1111 = EPWM_CH4 down-count free CMPDAT point.
-<br>
-</div></td></tr><tr><td>
-[23]</td><td>TRGEN2</td><td><div style="word-wrap: break-word;"><b>EPWM_CH2 Trigger EADC enable bit
-</b><br>
-</div></td></tr><tr><td>
-[27:24]</td><td>TRGSEL3</td><td><div style="word-wrap: break-word;"><b>EPWM_CH3 Trigger EADC Source Select
-</b><br>
-0000 = EPWM_CH2 zero point.
-<br>
-0001 = EPWM_CH2 period point.
-<br>
-0010 = EPWM_CH2 zero or period point.
-<br>
-0011 = EPWM_CH2 up-count CMPDAT point.
-<br>
-0100 = EPWM_CH2 down-count CMPDAT point.
-<br>
-0101 = EPWM_CH3 zero point.
-<br>
-0110 = EPWM_CH3 period point.
-<br>
-0111 = EPWM_CH3 zero or period point.
-<br>
-1000 = EPWM_CH3 up-count CMPDAT point.
-<br>
-1001 = EPWM_CH3 down-count CMPDAT point.
-<br>
-1010 = EPWM_CH0 up-count free CMPDAT point.
-<br>
-1011 = EPWM_CH0 down-count free CMPDAT point.
-<br>
-1100 = EPWM_CH2 up-count free CMPDAT point.
-<br>
-1101 = EPWM_CH2 down-count free CMPDAT point.
-<br>
-1110 = EPWM_CH4 up-count free CMPDAT point.
-<br>
-1111 = EPWM_CH4 down-count free CMPDAT point.
-<br>
-</div></td></tr><tr><td>
-[31]</td><td>TRGEN3</td><td><div style="word-wrap: break-word;"><b>EPWM_CH3 Trigger EADC enable bit
-</b><br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::EADCTS1
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">EADCTS1
-</font><br><p> <font size="2">
-Offset: 0xFC  EPWM Trigger EADC Source Select Register 1
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[3:0]</td><td>TRGSEL4</td><td><div style="word-wrap: break-word;"><b>EPWM_CH4 Trigger EADC Source Select
-</b><br>
-0000 = EPWM_CH4 zero point.
-<br>
-0001 = EPWM_CH4 period point.
-<br>
-0010 = EPWM_CH4 zero or period point.
-<br>
-0011 = EPWM_CH4 up-count CMPDAT point.
-<br>
-0100 = EPWM_CH4 down-count CMPDAT point.
-<br>
-0101 = EPWM_CH5 zero point.
-<br>
-0110 = EPWM_CH5 period point.
-<br>
-0111 = EPWM_CH5 zero or period point.
-<br>
-1000 = EPWM_CH5 up-count CMPDAT point.
-<br>
-1001 = EPWM_CH5 down-count CMPDAT point.
-<br>
-1010 = EPWM_CH0 up-count free CMPDAT point.
-<br>
-1011 = EPWM_CH0 down-count free CMPDAT point.
-<br>
-1100 = EPWM_CH2 up-count free CMPDAT point.
-<br>
-1101 = EPWM_CH2 down-count free CMPDAT point.
-<br>
-1110 = EPWM_CH4 up-count free CMPDAT point.
-<br>
-1111 = EPWM_CH4 down-count free CMPDAT point.
-<br>
-</div></td></tr><tr><td>
-[7]</td><td>TRGEN4</td><td><div style="word-wrap: break-word;"><b>EPWM_CH4 Trigger EADC enable bit
-</b><br>
-</div></td></tr><tr><td>
-[11:8]</td><td>TRGSEL5</td><td><div style="word-wrap: break-word;"><b>EPWM_CH5 Trigger EADC Source Select
-</b><br>
-0000 = EPWM_CH4 zero point.
-<br>
-0001 = EPWM_CH4 period point.
-<br>
-0010 = EPWM_CH4 zero or period point.
-<br>
-0011 = EPWM_CH4 up-count CMPDAT point.
-<br>
-0100 = EPWM_CH4 down-count CMPDAT point.
-<br>
-0101 = EPWM_CH5 zero point.
-<br>
-0110 = EPWM_CH5 period point.
-<br>
-0111 = EPWM_CH5 zero or period point.
-<br>
-1000 = EPWM_CH5 up-count CMPDAT point.
-<br>
-1001 = EPWM_CH5 down-count CMPDAT point.
-<br>
-1010 = EPWM_CH0 up-count free CMPDAT point.
-<br>
-1011 = EPWM_CH0 down-count free CMPDAT point.
-<br>
-1100 = EPWM_CH2 up-count free CMPDAT point.
-<br>
-1101 = EPWM_CH2 down-count free CMPDAT point.
-<br>
-1110 = EPWM_CH4 up-count free CMPDAT point.
-<br>
-1111 = EPWM_CH4 down-count free CMPDAT point.
-<br>
-</div></td></tr><tr><td>
-[15]</td><td>TRGEN5</td><td><div style="word-wrap: break-word;"><b>EPWM_CH5 Trigger EADC enable bit
-</b><br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::FTCMPDAT[3]
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">FTCMPDAT[3]
-</font><br><p> <font size="2">
-Offset: 0x100  EPWM Free Trigger Compare Register 0/1,2/3,4/5
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[15:0]</td><td>FTCMP</td><td><div style="word-wrap: break-word;"><b>EPWM Free Trigger Compare Register
-</b><br>
-FTCMP use to compare with even CNTR to trigger EADC
-<br>
-FTCMPDAT0, 2, 4 corresponding complementary pairs EPWM_CH0 and EPWM_CH1, EPWM_CH2 and EPWM_CH3, EPWM_CH4 and EPWM_CH5.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::SSCTL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SSCTL
-</font><br><p> <font size="2">
-Offset: 0x110  EPWM Synchronous Start Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>SSEN0</td><td><div style="word-wrap: break-word;"><b>EPWM Synchronous Start Function Enable Bits
-</b><br>
-When synchronous start function is enabled, the EPWM counter enable register (EPWM_CNTEN) can be enabled by writing EPWM synchronous start trigger bit (CNTSEN).
-<br>
-0 = EPWM synchronous start function Disabled.
-<br>
-1 = EPWM synchronous start function Enabled.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>SSEN1</td><td><div style="word-wrap: break-word;"><b>EPWM Synchronous Start Function Enable Bits
-</b><br>
-When synchronous start function is enabled, the EPWM counter enable register (EPWM_CNTEN) can be enabled by writing EPWM synchronous start trigger bit (CNTSEN).
-<br>
-0 = EPWM synchronous start function Disabled.
-<br>
-1 = EPWM synchronous start function Enabled.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>SSEN2</td><td><div style="word-wrap: break-word;"><b>EPWM Synchronous Start Function Enable Bits
-</b><br>
-When synchronous start function is enabled, the EPWM counter enable register (EPWM_CNTEN) can be enabled by writing EPWM synchronous start trigger bit (CNTSEN).
-<br>
-0 = EPWM synchronous start function Disabled.
-<br>
-1 = EPWM synchronous start function Enabled.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>SSEN3</td><td><div style="word-wrap: break-word;"><b>EPWM Synchronous Start Function Enable Bits
-</b><br>
-When synchronous start function is enabled, the EPWM counter enable register (EPWM_CNTEN) can be enabled by writing EPWM synchronous start trigger bit (CNTSEN).
-<br>
-0 = EPWM synchronous start function Disabled.
-<br>
-1 = EPWM synchronous start function Enabled.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>SSEN4</td><td><div style="word-wrap: break-word;"><b>EPWM Synchronous Start Function Enable Bits
-</b><br>
-When synchronous start function is enabled, the EPWM counter enable register (EPWM_CNTEN) can be enabled by writing EPWM synchronous start trigger bit (CNTSEN).
-<br>
-0 = EPWM synchronous start function Disabled.
-<br>
-1 = EPWM synchronous start function Enabled.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>SSEN5</td><td><div style="word-wrap: break-word;"><b>EPWM Synchronous Start Function Enable Bits
-</b><br>
-When synchronous start function is enabled, the EPWM counter enable register (EPWM_CNTEN) can be enabled by writing EPWM synchronous start trigger bit (CNTSEN).
-<br>
-0 = EPWM synchronous start function Disabled.
-<br>
-1 = EPWM synchronous start function Enabled.
-<br>
-</div></td></tr><tr><td>
-[9:8]</td><td>SSRC</td><td><div style="word-wrap: break-word;"><b>EPWM Synchronous Start Source Select Bits
-</b><br>
-00 = Synchronous start source come from EPWM0.
-<br>
-01 = Synchronous start source come from EPWM1.
-<br>
-10 = Synchronous start source come from BPWM0.
-<br>
-11 = Synchronous start source come from BPWM1.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::SSTRG
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">SSTRG
-</font><br><p> <font size="2">
-Offset: 0x114  EPWM Synchronous Start Trigger Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>CNTSEN</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Synchronous Start Enable (Write Only)
-</b><br>
-PMW counter synchronous enable function is used to make selected EPWM channels (include EPWM0_CHx and EPWM1_CHx) start counting at the same time.
-<br>
-Writing this bit to 1 will also set the counter enable bit (CNTENn, n denotes channel 0 to 5) if correlated EPWM channel counter synchronous start function is enabled.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::LEBCTL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">LEBCTL
-</font><br><p> <font size="2">
-Offset: 0x118  EPWM Leading Edge Blanking Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>LEBEN</td><td><div style="word-wrap: break-word;"><b>EPWM Leading Edge Blanking Enable Bit
-</b><br>
-0 = EPWM Leading Edge Blanking Disabled.
-<br>
-1 = EPWM Leading Edge Blanking Enabled.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>SRCEN0</td><td><div style="word-wrap: break-word;"><b>EPWM Leading Edge Blanking Source From EPWM_CH0 Enable Bit
-</b><br>
-0 = EPWM Leading Edge Blanking Source from EPWM_CH0 Disabled.
-<br>
-1 = EPWM Leading Edge Blanking Source from EPWM_CH0 Enabled.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>SRCEN2</td><td><div style="word-wrap: break-word;"><b>EPWM Leading Edge Blanking Source From EPWM_CH2 Enable Bit
-</b><br>
-0 = EPWM Leading Edge Blanking Source from EPWM_CH2 Disabled.
-<br>
-1 = EPWM Leading Edge Blanking Source from EPWM_CH2 Enabled.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>SRCEN4</td><td><div style="word-wrap: break-word;"><b>EPWM Leading Edge Blanking Source From EPWM_CH4 Enable Bit
-</b><br>
-0 = EPWM Leading Edge Blanking Source from EPWM_CH4 Disabled.
-<br>
-1 = EPWM Leading Edge Blanking Source from EPWM_CH4 Enabled.
-<br>
-</div></td></tr><tr><td>
-[17:16]</td><td>TRGTYPE</td><td><div style="word-wrap: break-word;"><b>EPWM Leading Edge Blanking Trigger Type
-</b><br>
-0 = When detect leading edge blanking source rising edge, blanking counter start counting.
-<br>
-1 = When detect leading edge blanking source falling edge, blanking counter start counting.
-<br>
-2 = When detect leading edge blanking source rising or falling edge, blanking counter start counting.
-<br>
-3 = Reserved.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::LEBCNT
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">LEBCNT
-</font><br><p> <font size="2">
-Offset: 0x11C  EPWM Leading Edge Blanking Counter Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[8:0]</td><td>LEBCNT</td><td><div style="word-wrap: break-word;"><b>EPWM Leading Edge Blanking Counter
-</b><br>
-This counter value decides leading edge blanking window size
-<br>
-Blanking window size = LEBCNT+1, and LEB counter clock base is ECLK.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::STATUS
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">STATUS
-</font><br><p> <font size="2">
-Offset: 0x120  EPWM Status Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>CNTMAXF0</td><td><div style="word-wrap: break-word;"><b>Time-base Counter Equal to 0xFFFF Latched Flag
-</b><br>
-0 = indicates the time-base counter never reached its maximum value 0xFFFF.
-<br>
-1 = indicates the time-base counter reached its maximum value, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>CNTMAXF1</td><td><div style="word-wrap: break-word;"><b>Time-base Counter Equal to 0xFFFF Latched Flag
-</b><br>
-0 = indicates the time-base counter never reached its maximum value 0xFFFF.
-<br>
-1 = indicates the time-base counter reached its maximum value, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>CNTMAXF2</td><td><div style="word-wrap: break-word;"><b>Time-base Counter Equal to 0xFFFF Latched Flag
-</b><br>
-0 = indicates the time-base counter never reached its maximum value 0xFFFF.
-<br>
-1 = indicates the time-base counter reached its maximum value, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>CNTMAXF3</td><td><div style="word-wrap: break-word;"><b>Time-base Counter Equal to 0xFFFF Latched Flag
-</b><br>
-0 = indicates the time-base counter never reached its maximum value 0xFFFF.
-<br>
-1 = indicates the time-base counter reached its maximum value, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>CNTMAXF4</td><td><div style="word-wrap: break-word;"><b>Time-base Counter Equal to 0xFFFF Latched Flag
-</b><br>
-0 = indicates the time-base counter never reached its maximum value 0xFFFF.
-<br>
-1 = indicates the time-base counter reached its maximum value, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>CNTMAXF5</td><td><div style="word-wrap: break-word;"><b>Time-base Counter Equal to 0xFFFF Latched Flag
-</b><br>
-0 = indicates the time-base counter never reached its maximum value 0xFFFF.
-<br>
-1 = indicates the time-base counter reached its maximum value, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>SYNCINF0</td><td><div style="word-wrap: break-word;"><b>Input Synchronization Latched Flag
-</b><br>
-0 = Indicates no SYNC_IN event has occurred.
-<br>
-1 = Indicates an SYNC_IN event has occurred, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>SYNCINF2</td><td><div style="word-wrap: break-word;"><b>Input Synchronization Latched Flag
-</b><br>
-0 = Indicates no SYNC_IN event has occurred.
-<br>
-1 = Indicates an SYNC_IN event has occurred, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>SYNCINF4</td><td><div style="word-wrap: break-word;"><b>Input Synchronization Latched Flag
-</b><br>
-0 = Indicates no SYNC_IN event has occurred.
-<br>
-1 = Indicates an SYNC_IN event has occurred, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>EADCTRGF0</td><td><div style="word-wrap: break-word;"><b>EADC Start of Conversion Flag
-</b><br>
-0 = Indicates no EADC start of conversion trigger event has occurred.
-<br>
-1 = Indicates an EADC start of conversion trigger event has occurred, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[17]</td><td>EADCTRGF1</td><td><div style="word-wrap: break-word;"><b>EADC Start of Conversion Flag
-</b><br>
-0 = Indicates no EADC start of conversion trigger event has occurred.
-<br>
-1 = Indicates an EADC start of conversion trigger event has occurred, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[18]</td><td>EADCTRGF2</td><td><div style="word-wrap: break-word;"><b>EADC Start of Conversion Flag
-</b><br>
-0 = Indicates no EADC start of conversion trigger event has occurred.
-<br>
-1 = Indicates an EADC start of conversion trigger event has occurred, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[19]</td><td>EADCTRGF3</td><td><div style="word-wrap: break-word;"><b>EADC Start of Conversion Flag
-</b><br>
-0 = Indicates no EADC start of conversion trigger event has occurred.
-<br>
-1 = Indicates an EADC start of conversion trigger event has occurred, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[20]</td><td>EADCTRGF4</td><td><div style="word-wrap: break-word;"><b>EADC Start of Conversion Flag
-</b><br>
-0 = Indicates no EADC start of conversion trigger event has occurred.
-<br>
-1 = Indicates an EADC start of conversion trigger event has occurred, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[21]</td><td>EADCTRGF5</td><td><div style="word-wrap: break-word;"><b>EADC Start of Conversion Flag
-</b><br>
-0 = Indicates no EADC start of conversion trigger event has occurred.
-<br>
-1 = Indicates an EADC start of conversion trigger event has occurred, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[24]</td><td>DACTRGF</td><td><div style="word-wrap: break-word;"><b>DAC Start of Conversion Flag
-</b><br>
-0 = Indicates no DAC start of conversion trigger event has occurred.
-<br>
-1 = Indicates an DAC start of conversion trigger event has occurred, software can write 1 to clear this bit
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::IFA[6]
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">IFA[6]
-</font><br><p> <font size="2">
-Offset: 0x130  EPWM Interrupt Flag Accumulator Register 0~5
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[15:0]</td><td>IFACNT</td><td><div style="word-wrap: break-word;"><b>EPWM_CHn Interrupt Flag Counter
-</b><br>
-The register sets the count number which defines how many times of EPWM_CHn period occurs to set bit IFAIFn to request the EPWM period interrupt.
-<br>
-EPWM flag will be set in every IFACNT[15:0] times of EPWM period.
-<br>
-</div></td></tr><tr><td>
-[24]</td><td>STPMOD</td><td><div style="word-wrap: break-word;"><b>EPWM_CHn Interrupt Flag Accumulator Stop Mode Enable Bits
-</b><br>
-0 = EPWM_CHn interrupt flag accumulator stop mode disable.
-<br>
-1 = EPWM_CHn interrupt flag accumulator stop mode enable.
-<br>
-</div></td></tr><tr><td>
-[29:28]</td><td>IFASEL</td><td><div style="word-wrap: break-word;"><b>EPWM_CHn Interrupt Flag Accumulator Source Select
-</b><br>
-00 = CNT equal to Zero in channel n.
-<br>
-01 = CNT equal to PERIOD in channel n.
-<br>
-10 = CNT equal to CMPU in channel n.
-<br>
-11 = CNT equal to CMPD in channel n.
-<br>
-</div></td></tr><tr><td>
-[31]</td><td>IFAEN</td><td><div style="word-wrap: break-word;"><b>EPWM_CHn Interrupt Flag Accumulator Enable Bits
-</b><br>
-0 = EPWM_CHn interrupt flag accumulator disable.
-<br>
-1 = EPWM_CHn interrupt flag accumulator enable.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::AINTSTS
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">AINTSTS
-</font><br><p> <font size="2">
-Offset: 0x150  EPWM Accumulator Interrupt Flag Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>IFAIF0</td><td><div style="word-wrap: break-word;"><b>EPWM_CHn Interrupt Flag Accumulator Interrupt Flag
-</b><br>
-Flag is set by hardware when condition match IFASEL in EPWM_IFAn register, software can clear this bit by writing 1 to it.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>IFAIF1</td><td><div style="word-wrap: break-word;"><b>EPWM_CHn Interrupt Flag Accumulator Interrupt Flag
-</b><br>
-Flag is set by hardware when condition match IFASEL in EPWM_IFAn register, software can clear this bit by writing 1 to it.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>IFAIF2</td><td><div style="word-wrap: break-word;"><b>EPWM_CHn Interrupt Flag Accumulator Interrupt Flag
-</b><br>
-Flag is set by hardware when condition match IFASEL in EPWM_IFAn register, software can clear this bit by writing 1 to it.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>IFAIF3</td><td><div style="word-wrap: break-word;"><b>EPWM_CHn Interrupt Flag Accumulator Interrupt Flag
-</b><br>
-Flag is set by hardware when condition match IFASEL in EPWM_IFAn register, software can clear this bit by writing 1 to it.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>IFAIF4</td><td><div style="word-wrap: break-word;"><b>EPWM_CHn Interrupt Flag Accumulator Interrupt Flag
-</b><br>
-Flag is set by hardware when condition match IFASEL in EPWM_IFAn register, software can clear this bit by writing 1 to it.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>IFAIF5</td><td><div style="word-wrap: break-word;"><b>EPWM_CHn Interrupt Flag Accumulator Interrupt Flag
-</b><br>
-Flag is set by hardware when condition match IFASEL in EPWM_IFAn register, software can clear this bit by writing 1 to it.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::AINTEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">AINTEN
-</font><br><p> <font size="2">
-Offset: 0x154  EPWM Accumulator Interrupt Enable Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>IFAIEN0</td><td><div style="word-wrap: break-word;"><b>EPWM_CHn Interrupt Flag Accumulator Interrupt Enable Bits
-</b><br>
-0 = Interrupt Flag accumulator interrupt Disabled.
-<br>
-1 = Interrupt Flag accumulator interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>IFAIEN1</td><td><div style="word-wrap: break-word;"><b>EPWM_CHn Interrupt Flag Accumulator Interrupt Enable Bits
-</b><br>
-0 = Interrupt Flag accumulator interrupt Disabled.
-<br>
-1 = Interrupt Flag accumulator interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>IFAIEN2</td><td><div style="word-wrap: break-word;"><b>EPWM_CHn Interrupt Flag Accumulator Interrupt Enable Bits
-</b><br>
-0 = Interrupt Flag accumulator interrupt Disabled.
-<br>
-1 = Interrupt Flag accumulator interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>IFAIEN3</td><td><div style="word-wrap: break-word;"><b>EPWM_CHn Interrupt Flag Accumulator Interrupt Enable Bits
-</b><br>
-0 = Interrupt Flag accumulator interrupt Disabled.
-<br>
-1 = Interrupt Flag accumulator interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>IFAIEN4</td><td><div style="word-wrap: break-word;"><b>EPWM_CHn Interrupt Flag Accumulator Interrupt Enable Bits
-</b><br>
-0 = Interrupt Flag accumulator interrupt Disabled.
-<br>
-1 = Interrupt Flag accumulator interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>IFAIEN5</td><td><div style="word-wrap: break-word;"><b>EPWM_CHn Interrupt Flag Accumulator Interrupt Enable Bits
-</b><br>
-0 = Interrupt Flag accumulator interrupt Disabled.
-<br>
-1 = Interrupt Flag accumulator interrupt Enabled.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::APDMACTL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">APDMACTL
-</font><br><p> <font size="2">
-Offset: 0x158  EPWM Accumulator PDMA Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>APDMAEN0</td><td><div style="word-wrap: break-word;"><b>Channel N Accumulator PDMA Enable Bits
-</b><br>
-0 = Channel n PDMA function Disabled.
-<br>
-1 = Channel n PDMA function Enabled for the channel n to trigger PDMA to transfer memory data to register.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>APDMAEN1</td><td><div style="word-wrap: break-word;"><b>Channel N Accumulator PDMA Enable Bits
-</b><br>
-0 = Channel n PDMA function Disabled.
-<br>
-1 = Channel n PDMA function Enabled for the channel n to trigger PDMA to transfer memory data to register.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>APDMAEN2</td><td><div style="word-wrap: break-word;"><b>Channel N Accumulator PDMA Enable Bits
-</b><br>
-0 = Channel n PDMA function Disabled.
-<br>
-1 = Channel n PDMA function Enabled for the channel n to trigger PDMA to transfer memory data to register.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>APDMAEN3</td><td><div style="word-wrap: break-word;"><b>Channel N Accumulator PDMA Enable Bits
-</b><br>
-0 = Channel n PDMA function Disabled.
-<br>
-1 = Channel n PDMA function Enabled for the channel n to trigger PDMA to transfer memory data to register.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>APDMAEN4</td><td><div style="word-wrap: break-word;"><b>Channel N Accumulator PDMA Enable Bits
-</b><br>
-0 = Channel n PDMA function Disabled.
-<br>
-1 = Channel n PDMA function Enabled for the channel n to trigger PDMA to transfer memory data to register.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>APDMAEN5</td><td><div style="word-wrap: break-word;"><b>Channel N Accumulator PDMA Enable Bits
-</b><br>
-0 = Channel n PDMA function Disabled.
-<br>
-1 = Channel n PDMA function Enabled for the channel n to trigger PDMA to transfer memory data to register.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::CAPINEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CAPINEN
-</font><br><p> <font size="2">
-Offset: 0x200  EPWM Capture Input Enable Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>CAPINEN0</td><td><div style="word-wrap: break-word;"><b>Capture Input Enable Bits
-</b><br>
-0 = EPWM Channel capture input path Disabled
-<br>
-The input of EPWM channel capture function is always regarded as 0.
-<br>
-1 = EPWM Channel capture input path Enabled
-<br>
-The input of EPWM channel capture function comes from correlative multifunction pin.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>CAPINEN1</td><td><div style="word-wrap: break-word;"><b>Capture Input Enable Bits
-</b><br>
-0 = EPWM Channel capture input path Disabled
-<br>
-The input of EPWM channel capture function is always regarded as 0.
-<br>
-1 = EPWM Channel capture input path Enabled
-<br>
-The input of EPWM channel capture function comes from correlative multifunction pin.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>CAPINEN2</td><td><div style="word-wrap: break-word;"><b>Capture Input Enable Bits
-</b><br>
-0 = EPWM Channel capture input path Disabled
-<br>
-The input of EPWM channel capture function is always regarded as 0.
-<br>
-1 = EPWM Channel capture input path Enabled
-<br>
-The input of EPWM channel capture function comes from correlative multifunction pin.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>CAPINEN3</td><td><div style="word-wrap: break-word;"><b>Capture Input Enable Bits
-</b><br>
-0 = EPWM Channel capture input path Disabled
-<br>
-The input of EPWM channel capture function is always regarded as 0.
-<br>
-1 = EPWM Channel capture input path Enabled
-<br>
-The input of EPWM channel capture function comes from correlative multifunction pin.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>CAPINEN4</td><td><div style="word-wrap: break-word;"><b>Capture Input Enable Bits
-</b><br>
-0 = EPWM Channel capture input path Disabled
-<br>
-The input of EPWM channel capture function is always regarded as 0.
-<br>
-1 = EPWM Channel capture input path Enabled
-<br>
-The input of EPWM channel capture function comes from correlative multifunction pin.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>CAPINEN5</td><td><div style="word-wrap: break-word;"><b>Capture Input Enable Bits
-</b><br>
-0 = EPWM Channel capture input path Disabled
-<br>
-The input of EPWM channel capture function is always regarded as 0.
-<br>
-1 = EPWM Channel capture input path Enabled
-<br>
-The input of EPWM channel capture function comes from correlative multifunction pin.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::CAPCTL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CAPCTL
-</font><br><p> <font size="2">
-Offset: 0x204  EPWM Capture Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>CAPEN0</td><td><div style="word-wrap: break-word;"><b>Capture Function Enable Bits
-</b><br>
-0 = Capture function Disabled. RCAPDAT/FCAPDAT register will not be updated.
-<br>
-1 = Capture function Enabled
-<br>
-Capture latched the EPWM counter value when detected rising or falling edge of input signal and saved to RCAPDAT (Rising latch) and FCAPDAT (Falling latch).
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>CAPEN1</td><td><div style="word-wrap: break-word;"><b>Capture Function Enable Bits
-</b><br>
-0 = Capture function Disabled. RCAPDAT/FCAPDAT register will not be updated.
-<br>
-1 = Capture function Enabled
-<br>
-Capture latched the EPWM counter value when detected rising or falling edge of input signal and saved to RCAPDAT (Rising latch) and FCAPDAT (Falling latch).
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>CAPEN2</td><td><div style="word-wrap: break-word;"><b>Capture Function Enable Bits
-</b><br>
-0 = Capture function Disabled. RCAPDAT/FCAPDAT register will not be updated.
-<br>
-1 = Capture function Enabled
-<br>
-Capture latched the EPWM counter value when detected rising or falling edge of input signal and saved to RCAPDAT (Rising latch) and FCAPDAT (Falling latch).
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>CAPEN3</td><td><div style="word-wrap: break-word;"><b>Capture Function Enable Bits
-</b><br>
-0 = Capture function Disabled. RCAPDAT/FCAPDAT register will not be updated.
-<br>
-1 = Capture function Enabled
-<br>
-Capture latched the EPWM counter value when detected rising or falling edge of input signal and saved to RCAPDAT (Rising latch) and FCAPDAT (Falling latch).
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>CAPEN4</td><td><div style="word-wrap: break-word;"><b>Capture Function Enable Bits
-</b><br>
-0 = Capture function Disabled. RCAPDAT/FCAPDAT register will not be updated.
-<br>
-1 = Capture function Enabled
-<br>
-Capture latched the EPWM counter value when detected rising or falling edge of input signal and saved to RCAPDAT (Rising latch) and FCAPDAT (Falling latch).
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>CAPEN5</td><td><div style="word-wrap: break-word;"><b>Capture Function Enable Bits
-</b><br>
-0 = Capture function Disabled. RCAPDAT/FCAPDAT register will not be updated.
-<br>
-1 = Capture function Enabled
-<br>
-Capture latched the EPWM counter value when detected rising or falling edge of input signal and saved to RCAPDAT (Rising latch) and FCAPDAT (Falling latch).
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>CAPINV0</td><td><div style="word-wrap: break-word;"><b>Capture Inverter Enable Bits
-</b><br>
-0 = Capture source inverter Disabled.
-<br>
-1 = Capture source inverter Enabled. Reverse the input signal from GPIO.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>CAPINV1</td><td><div style="word-wrap: break-word;"><b>Capture Inverter Enable Bits
-</b><br>
-0 = Capture source inverter Disabled.
-<br>
-1 = Capture source inverter Enabled. Reverse the input signal from GPIO.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>CAPINV2</td><td><div style="word-wrap: break-word;"><b>Capture Inverter Enable Bits
-</b><br>
-0 = Capture source inverter Disabled.
-<br>
-1 = Capture source inverter Enabled. Reverse the input signal from GPIO.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>CAPINV3</td><td><div style="word-wrap: break-word;"><b>Capture Inverter Enable Bits
-</b><br>
-0 = Capture source inverter Disabled.
-<br>
-1 = Capture source inverter Enabled. Reverse the input signal from GPIO.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>CAPINV4</td><td><div style="word-wrap: break-word;"><b>Capture Inverter Enable Bits
-</b><br>
-0 = Capture source inverter Disabled.
-<br>
-1 = Capture source inverter Enabled. Reverse the input signal from GPIO.
-<br>
-</div></td></tr><tr><td>
-[13]</td><td>CAPINV5</td><td><div style="word-wrap: break-word;"><b>Capture Inverter Enable Bits
-</b><br>
-0 = Capture source inverter Disabled.
-<br>
-1 = Capture source inverter Enabled. Reverse the input signal from GPIO.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>RCRLDEN0</td><td><div style="word-wrap: break-word;"><b>Rising Capture Reload Enable Bits
-</b><br>
-0 = Rising capture reload counter Disabled.
-<br>
-1 = Rising capture reload counter Enabled.
-<br>
-</div></td></tr><tr><td>
-[17]</td><td>RCRLDEN1</td><td><div style="word-wrap: break-word;"><b>Rising Capture Reload Enable Bits
-</b><br>
-0 = Rising capture reload counter Disabled.
-<br>
-1 = Rising capture reload counter Enabled.
-<br>
-</div></td></tr><tr><td>
-[18]</td><td>RCRLDEN2</td><td><div style="word-wrap: break-word;"><b>Rising Capture Reload Enable Bits
-</b><br>
-0 = Rising capture reload counter Disabled.
-<br>
-1 = Rising capture reload counter Enabled.
-<br>
-</div></td></tr><tr><td>
-[19]</td><td>RCRLDEN3</td><td><div style="word-wrap: break-word;"><b>Rising Capture Reload Enable Bits
-</b><br>
-0 = Rising capture reload counter Disabled.
-<br>
-1 = Rising capture reload counter Enabled.
-<br>
-</div></td></tr><tr><td>
-[20]</td><td>RCRLDEN4</td><td><div style="word-wrap: break-word;"><b>Rising Capture Reload Enable Bits
-</b><br>
-0 = Rising capture reload counter Disabled.
-<br>
-1 = Rising capture reload counter Enabled.
-<br>
-</div></td></tr><tr><td>
-[21]</td><td>RCRLDEN5</td><td><div style="word-wrap: break-word;"><b>Rising Capture Reload Enable Bits
-</b><br>
-0 = Rising capture reload counter Disabled.
-<br>
-1 = Rising capture reload counter Enabled.
-<br>
-</div></td></tr><tr><td>
-[24]</td><td>FCRLDEN0</td><td><div style="word-wrap: break-word;"><b>Falling Capture Reload Enable Bits
-</b><br>
-0 = Falling capture reload counter Disabled.
-<br>
-1 = Falling capture reload counter Enabled.
-<br>
-</div></td></tr><tr><td>
-[25]</td><td>FCRLDEN1</td><td><div style="word-wrap: break-word;"><b>Falling Capture Reload Enable Bits
-</b><br>
-0 = Falling capture reload counter Disabled.
-<br>
-1 = Falling capture reload counter Enabled.
-<br>
-</div></td></tr><tr><td>
-[26]</td><td>FCRLDEN2</td><td><div style="word-wrap: break-word;"><b>Falling Capture Reload Enable Bits
-</b><br>
-0 = Falling capture reload counter Disabled.
-<br>
-1 = Falling capture reload counter Enabled.
-<br>
-</div></td></tr><tr><td>
-[27]</td><td>FCRLDEN3</td><td><div style="word-wrap: break-word;"><b>Falling Capture Reload Enable Bits
-</b><br>
-0 = Falling capture reload counter Disabled.
-<br>
-1 = Falling capture reload counter Enabled.
-<br>
-</div></td></tr><tr><td>
-[28]</td><td>FCRLDEN4</td><td><div style="word-wrap: break-word;"><b>Falling Capture Reload Enable Bits
-</b><br>
-0 = Falling capture reload counter Disabled.
-<br>
-1 = Falling capture reload counter Enabled.
-<br>
-</div></td></tr><tr><td>
-[29]</td><td>FCRLDEN5</td><td><div style="word-wrap: break-word;"><b>Falling Capture Reload Enable Bits
-</b><br>
-0 = Falling capture reload counter Disabled.
-<br>
-1 = Falling capture reload counter Enabled.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::CAPSTS
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CAPSTS
-</font><br><p> <font size="2">
-Offset: 0x208  EPWM Capture Status Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>CRLIFOV0</td><td><div style="word-wrap: break-word;"><b>Capture Rising Latch Interrupt Flag Overrun Status (Read Only)
-</b><br>
-This flag indicates if rising latch happened when the corresponding CRLIF is 1.
-<br>
-Note: This bit will be cleared automatically when user clear corresponding CRLIF.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>CRLIFOV1</td><td><div style="word-wrap: break-word;"><b>Capture Rising Latch Interrupt Flag Overrun Status (Read Only)
-</b><br>
-This flag indicates if rising latch happened when the corresponding CRLIF is 1.
-<br>
-Note: This bit will be cleared automatically when user clear corresponding CRLIF.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>CRLIFOV2</td><td><div style="word-wrap: break-word;"><b>Capture Rising Latch Interrupt Flag Overrun Status (Read Only)
-</b><br>
-This flag indicates if rising latch happened when the corresponding CRLIF is 1.
-<br>
-Note: This bit will be cleared automatically when user clear corresponding CRLIF.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>CRLIFOV3</td><td><div style="word-wrap: break-word;"><b>Capture Rising Latch Interrupt Flag Overrun Status (Read Only)
-</b><br>
-This flag indicates if rising latch happened when the corresponding CRLIF is 1.
-<br>
-Note: This bit will be cleared automatically when user clear corresponding CRLIF.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>CRLIFOV4</td><td><div style="word-wrap: break-word;"><b>Capture Rising Latch Interrupt Flag Overrun Status (Read Only)
-</b><br>
-This flag indicates if rising latch happened when the corresponding CRLIF is 1.
-<br>
-Note: This bit will be cleared automatically when user clear corresponding CRLIF.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>CRLIFOV5</td><td><div style="word-wrap: break-word;"><b>Capture Rising Latch Interrupt Flag Overrun Status (Read Only)
-</b><br>
-This flag indicates if rising latch happened when the corresponding CRLIF is 1.
-<br>
-Note: This bit will be cleared automatically when user clear corresponding CRLIF.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>CFLIFOV0</td><td><div style="word-wrap: break-word;"><b>Capture Falling Latch Interrupt Flag Overrun Status (Read Only)
-</b><br>
-This flag indicates if falling latch happened when the corresponding CFLIF is 1.
-<br>
-Note: This bit will be cleared automatically when user clear corresponding CFLIF.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>CFLIFOV1</td><td><div style="word-wrap: break-word;"><b>Capture Falling Latch Interrupt Flag Overrun Status (Read Only)
-</b><br>
-This flag indicates if falling latch happened when the corresponding CFLIF is 1.
-<br>
-Note: This bit will be cleared automatically when user clear corresponding CFLIF.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>CFLIFOV2</td><td><div style="word-wrap: break-word;"><b>Capture Falling Latch Interrupt Flag Overrun Status (Read Only)
-</b><br>
-This flag indicates if falling latch happened when the corresponding CFLIF is 1.
-<br>
-Note: This bit will be cleared automatically when user clear corresponding CFLIF.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>CFLIFOV3</td><td><div style="word-wrap: break-word;"><b>Capture Falling Latch Interrupt Flag Overrun Status (Read Only)
-</b><br>
-This flag indicates if falling latch happened when the corresponding CFLIF is 1.
-<br>
-Note: This bit will be cleared automatically when user clear corresponding CFLIF.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>CFLIFOV4</td><td><div style="word-wrap: break-word;"><b>Capture Falling Latch Interrupt Flag Overrun Status (Read Only)
-</b><br>
-This flag indicates if falling latch happened when the corresponding CFLIF is 1.
-<br>
-Note: This bit will be cleared automatically when user clear corresponding CFLIF.
-<br>
-</div></td></tr><tr><td>
-[13]</td><td>CFLIFOV5</td><td><div style="word-wrap: break-word;"><b>Capture Falling Latch Interrupt Flag Overrun Status (Read Only)
-</b><br>
-This flag indicates if falling latch happened when the corresponding CFLIF is 1.
-<br>
-Note: This bit will be cleared automatically when user clear corresponding CFLIF.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::PDMACTL
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PDMACTL
-</font><br><p> <font size="2">
-Offset: 0x23C  EPWM PDMA Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>CHEN0_1</td><td><div style="word-wrap: break-word;"><b>Channel 0/1 PDMA Enable
-</b><br>
-0 = Channel 0/1 PDMA function Disabled.
-<br>
-1 = Channel 0/1 PDMA function Enabled for the channel 0/1 captured data and transfer to memory.
-<br>
-</div></td></tr><tr><td>
-[2:1]</td><td>CAPMOD0_1</td><td><div style="word-wrap: break-word;"><b>Select EPWM_RCAPDAT0/1 or EPWM_FCAPDAT0/1 to Do PDMA Transfer
-</b><br>
-00 = Reserved.
-<br>
-01 = EPWM_RCAPDAT0/1.
-<br>
-10 = EPWM_FCAPDAT0/1.
-<br>
-11 = Both EPWM_RCAPDAT0/1 and EPWM_FCAPDAT0/1.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>CAPORD0_1</td><td><div style="word-wrap: break-word;"><b>Capture Channel 0/1 Rising/Falling Order
-</b><br>
-Set this bit to determine whether the EPWM_RCAPDAT0/1 or EPWM_FCAPDAT0/1 is the first captured data transferred to memory through PDMA when CAPMOD0_1 =11.
-<br>
-0 = EPWM_FCAPDAT0/1 is the first captured data to memory.
-<br>
-1 = EPWM_RCAPDAT0/1 is the first captured data to memory.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>CHSEL0_1</td><td><div style="word-wrap: break-word;"><b>Select Channel 0/1 to Do PDMA Transfer
-</b><br>
-0 = Channel0.
-<br>
-1 = Channel1.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>CHEN2_3</td><td><div style="word-wrap: break-word;"><b>Channel 2/3 PDMA Enable
-</b><br>
-0 = Channel 2/3 PDMA function Disabled.
-<br>
-1 = Channel 2/3 PDMA function Enabled for the channel 2/3 captured data and transfer to memory.
-<br>
-</div></td></tr><tr><td>
-[10:9]</td><td>CAPMOD2_3</td><td><div style="word-wrap: break-word;"><b>Select EPWM_RCAPDAT2/3 or EPWM_FCAODAT2/3 to Do PDMA Transfer
-</b><br>
-00 = Reserved.
-<br>
-01 = EPWM_RCAPDAT2/3.
-<br>
-10 = EPWM_FCAPDAT2/3.
-<br>
-11 = Both EPWM_RCAPDAT2/3 and EPWM_FCAPDAT2/3.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>CAPORD2_3</td><td><div style="word-wrap: break-word;"><b>Capture Channel 2/3 Rising/Falling Order
-</b><br>
-Set this bit to determine whether the EPWM_RCAPDAT2/3 or EPWM_FCAPDAT2/3 is the first captured data transferred to memory through PDMA when CAPMOD2_3 =11.
-<br>
-0 = EPWM_FCAPDAT2/3 is the first captured data to memory.
-<br>
-1 = EPWM_RCAPDAT2/3 is the first captured data to memory.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>CHSEL2_3</td><td><div style="word-wrap: break-word;"><b>Select Channel 2/3 to Do PDMA Transfer
-</b><br>
-0 = Channel2.
-<br>
-1 = Channel3.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>CHEN4_5</td><td><div style="word-wrap: break-word;"><b>Channel 4/5 PDMA Enable
-</b><br>
-0 = Channel 4/5 PDMA function Disabled.
-<br>
-1 = Channel 4/5 PDMA function Enabled for the channel 4/5 captured data and transfer to memory.
-<br>
-</div></td></tr><tr><td>
-[18:17]</td><td>CAPMOD4_5</td><td><div style="word-wrap: break-word;"><b>Select EPWM_RCAPDAT4/5 or EPWM_FCAPDAT4/5 to Do PDMA Transfer
-</b><br>
-00 = Reserved.
-<br>
-01 = EPWM_RCAPDAT4/5.
-<br>
-10 = EPWM_FCAPDAT4/5.
-<br>
-11 = Both EPWM_RCAPDAT4/5 and EPWM_FCAPDAT4/5.
-<br>
-</div></td></tr><tr><td>
-[19]</td><td>CAPORD4_5</td><td><div style="word-wrap: break-word;"><b>Capture Channel 4/5 Rising/Falling Order
-</b><br>
-Set this bit to determine whether the EPWM_RCAPDAT4/5 or EPWM_FCAPDAT4/5 is the first captured data transferred to memory through PDMA when CAPMOD4_5 =11.
-<br>
-0 = EPWM_FCAPDAT4/5 is the first captured data to memory.
-<br>
-1 = EPWM_RCAPDAT4/5 is the first captured data to memory.
-<br>
-</div></td></tr><tr><td>
-[20]</td><td>CHSEL4_5</td><td><div style="word-wrap: break-word;"><b>Select Channel 4/5 to Do PDMA Transfer
-</b><br>
-0 = Channel4.
-<br>
-1 = Channel5.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::PDMACAP[3]
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PDMACAP[3]
-</font><br><p> <font size="2">
-Offset: 0x240  EPWM Capture Channel 01 PDMA Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[15:0]</td><td>CAPBUF</td><td><div style="word-wrap: break-word;"><b>EPWM Capture PDMA Register (Read Only)
-</b><br>
-This register is use as a buffer to transfer EPWM capture rising or falling data to memory by PDMA.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::CAPIEN
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CAPIEN
-</font><br><p> <font size="2">
-Offset: 0x250  EPWM Capture Interrupt Enable Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>CAPRIEN0</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Rising Latch Interrupt Enable Bits
-</b><br>
-0 = Capture rising edge latch interrupt Disabled.
-<br>
-1 = Capture rising edge latch interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>CAPRIEN1</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Rising Latch Interrupt Enable Bits
-</b><br>
-0 = Capture rising edge latch interrupt Disabled.
-<br>
-1 = Capture rising edge latch interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>CAPRIEN2</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Rising Latch Interrupt Enable Bits
-</b><br>
-0 = Capture rising edge latch interrupt Disabled.
-<br>
-1 = Capture rising edge latch interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>CAPRIEN3</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Rising Latch Interrupt Enable Bits
-</b><br>
-0 = Capture rising edge latch interrupt Disabled.
-<br>
-1 = Capture rising edge latch interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>CAPRIEN4</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Rising Latch Interrupt Enable Bits
-</b><br>
-0 = Capture rising edge latch interrupt Disabled.
-<br>
-1 = Capture rising edge latch interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>CAPRIEN5</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Rising Latch Interrupt Enable Bits
-</b><br>
-0 = Capture rising edge latch interrupt Disabled.
-<br>
-1 = Capture rising edge latch interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>CAPFIEN0</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Falling Latch Interrupt Enable Bits
-</b><br>
-0 = Capture falling edge latch interrupt Disabled.
-<br>
-1 = Capture falling edge latch interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>CAPFIEN1</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Falling Latch Interrupt Enable Bits
-</b><br>
-0 = Capture falling edge latch interrupt Disabled.
-<br>
-1 = Capture falling edge latch interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>CAPFIEN2</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Falling Latch Interrupt Enable Bits
-</b><br>
-0 = Capture falling edge latch interrupt Disabled.
-<br>
-1 = Capture falling edge latch interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>CAPFIEN3</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Falling Latch Interrupt Enable Bits
-</b><br>
-0 = Capture falling edge latch interrupt Disabled.
-<br>
-1 = Capture falling edge latch interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>CAPFIEN4</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Falling Latch Interrupt Enable Bits
-</b><br>
-0 = Capture falling edge latch interrupt Disabled.
-<br>
-1 = Capture falling edge latch interrupt Enabled.
-<br>
-</div></td></tr><tr><td>
-[13]</td><td>CAPFIEN5</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Falling Latch Interrupt Enable Bits
-</b><br>
-0 = Capture falling edge latch interrupt Disabled.
-<br>
-1 = Capture falling edge latch interrupt Enabled.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::CAPIF
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CAPIF
-</font><br><p> <font size="2">
-Offset: 0x254  EPWM Capture Interrupt Flag Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>CRLIF0</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Rising Latch Interrupt Flag
-</b><br>
-This bit is writing 1 to clear.
-<br>
-0 = No capture rising latch condition happened.
-<br>
-1 = Capture rising latch condition happened, this flag will be set to high.
-<br>
-Note: When Capture with PDMA operating, CAPIF corresponding channel CRLIF will cleared by hardware after PDMA transfer data.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>CRLIF1</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Rising Latch Interrupt Flag
-</b><br>
-This bit is writing 1 to clear.
-<br>
-0 = No capture rising latch condition happened.
-<br>
-1 = Capture rising latch condition happened, this flag will be set to high.
-<br>
-Note: When Capture with PDMA operating, CAPIF corresponding channel CRLIF will cleared by hardware after PDMA transfer data.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>CRLIF2</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Rising Latch Interrupt Flag
-</b><br>
-This bit is writing 1 to clear.
-<br>
-0 = No capture rising latch condition happened.
-<br>
-1 = Capture rising latch condition happened, this flag will be set to high.
-<br>
-Note: When Capture with PDMA operating, CAPIF corresponding channel CRLIF will cleared by hardware after PDMA transfer data.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>CRLIF3</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Rising Latch Interrupt Flag
-</b><br>
-This bit is writing 1 to clear.
-<br>
-0 = No capture rising latch condition happened.
-<br>
-1 = Capture rising latch condition happened, this flag will be set to high.
-<br>
-Note: When Capture with PDMA operating, CAPIF corresponding channel CRLIF will cleared by hardware after PDMA transfer data.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>CRLIF4</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Rising Latch Interrupt Flag
-</b><br>
-This bit is writing 1 to clear.
-<br>
-0 = No capture rising latch condition happened.
-<br>
-1 = Capture rising latch condition happened, this flag will be set to high.
-<br>
-Note: When Capture with PDMA operating, CAPIF corresponding channel CRLIF will cleared by hardware after PDMA transfer data.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>CRLIF5</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Rising Latch Interrupt Flag
-</b><br>
-This bit is writing 1 to clear.
-<br>
-0 = No capture rising latch condition happened.
-<br>
-1 = Capture rising latch condition happened, this flag will be set to high.
-<br>
-Note: When Capture with PDMA operating, CAPIF corresponding channel CRLIF will cleared by hardware after PDMA transfer data.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>CFLIF0</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Falling Latch Interrupt Flag
-</b><br>
-This bit is writing 1 to clear.
-<br>
-0 = No capture falling latch condition happened.
-<br>
-1 = Capture falling latch condition happened, this flag will be set to high.
-<br>
-Note: When Capture with PDMA operating, CAPIF corresponding channel CFLIF will cleared by hardware after PDMA transfer data.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>CFLIF1</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Falling Latch Interrupt Flag
-</b><br>
-This bit is writing 1 to clear.
-<br>
-0 = No capture falling latch condition happened.
-<br>
-1 = Capture falling latch condition happened, this flag will be set to high.
-<br>
-Note: When Capture with PDMA operating, CAPIF corresponding channel CFLIF will cleared by hardware after PDMA transfer data.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>CFLIF2</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Falling Latch Interrupt Flag
-</b><br>
-This bit is writing 1 to clear.
-<br>
-0 = No capture falling latch condition happened.
-<br>
-1 = Capture falling latch condition happened, this flag will be set to high.
-<br>
-Note: When Capture with PDMA operating, CAPIF corresponding channel CFLIF will cleared by hardware after PDMA transfer data.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>CFLIF3</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Falling Latch Interrupt Flag
-</b><br>
-This bit is writing 1 to clear.
-<br>
-0 = No capture falling latch condition happened.
-<br>
-1 = Capture falling latch condition happened, this flag will be set to high.
-<br>
-Note: When Capture with PDMA operating, CAPIF corresponding channel CFLIF will cleared by hardware after PDMA transfer data.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>CFLIF4</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Falling Latch Interrupt Flag
-</b><br>
-This bit is writing 1 to clear.
-<br>
-0 = No capture falling latch condition happened.
-<br>
-1 = Capture falling latch condition happened, this flag will be set to high.
-<br>
-Note: When Capture with PDMA operating, CAPIF corresponding channel CFLIF will cleared by hardware after PDMA transfer data.
-<br>
-</div></td></tr><tr><td>
-[13]</td><td>CFLIF5</td><td><div style="word-wrap: break-word;"><b>EPWM Capture Falling Latch Interrupt Flag
-</b><br>
-This bit is writing 1 to clear.
-<br>
-0 = No capture falling latch condition happened.
-<br>
-1 = Capture falling latch condition happened, this flag will be set to high.
-<br>
-Note: When Capture with PDMA operating, CAPIF corresponding channel CFLIF will cleared by hardware after PDMA transfer data.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::PBUF[6]
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">PBUF[6]
-</font><br><p> <font size="2">
-Offset: 0x304  EPWM PERIOD0~5 Buffer
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[15:0]</td><td>PBUF</td><td><div style="word-wrap: break-word;"><b>EPWM Period Register Buffer (Read Only)
-</b><br>
-Used as PERIOD active register.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::CMPBUF[6]
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CMPBUF[6]
-</font><br><p> <font size="2">
-Offset: 0x31C  EPWM CMPDAT0~5 Buffer
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[15:0]</td><td>CMPBUF</td><td><div style="word-wrap: break-word;"><b>EPWM Comparator Register Buffer (Read Only)
-</b><br>
-Used as CMP active register.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::CPSCBUF[3]
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">CPSCBUF[3]
-</font><br><p> <font size="2">
-Offset: 0x334  EPWM CLKPSC0_1/2_3/4_5 Buffer
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[11:0]</td><td>CPSCBUF</td><td><div style="word-wrap: break-word;"><b>EPWM Counter Clock Prescale Buffer
-</b><br>
-Use as EPWM counter clock prescale active register.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::FTCBUF[3]
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">FTCBUF[3]
-</font><br><p> <font size="2">
-Offset: 0x340  EPWM FTCMPDAT0_1/2_3/4_5 Buffer
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[15:0]</td><td>FTCMPBUF</td><td><div style="word-wrap: break-word;"><b>EPWM FTCMPDAT Buffer (Read Only)
-</b><br>
-Used as FTCMPDAT active register.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var EPWM_T::FTCI
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">FTCI
-</font><br><p> <font size="2">
-Offset: 0x34C  EPWM FTCMPDAT Indicator Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>FTCMU0</td><td><div style="word-wrap: break-word;"><b>EPWM FTCMPDAT Up Indicator
-</b><br>
-Indicator will be set to high when FTCMPDATn equal to CNTn and DIRF=1, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>FTCMU2</td><td><div style="word-wrap: break-word;"><b>EPWM FTCMPDAT Up Indicator
-</b><br>
-Indicator will be set to high when FTCMPDATn equal to CNTn and DIRF=1, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>FTCMU4</td><td><div style="word-wrap: break-word;"><b>EPWM FTCMPDAT Up Indicator
-</b><br>
-Indicator will be set to high when FTCMPDATn equal to CNTn and DIRF=1, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>FTCMD0</td><td><div style="word-wrap: break-word;"><b>EPWM FTCMPDAT Down Indicator
-</b><br>
-Indicator will be set to high when FTCMPDATn equal to CNTn and DIRF=0, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>FTCMD2</td><td><div style="word-wrap: break-word;"><b>EPWM FTCMPDAT Down Indicator
-</b><br>
-Indicator will be set to high when FTCMPDATn equal to CNTn and DIRF=0, software can write 1 to clear this bit.
-<br>
-</div></td></tr><tr><td>
-[10]</td><td>FTCMD4</td><td><div style="word-wrap: break-word;"><b>EPWM FTCMPDAT Down Indicator
-</b><br>
-Indicator will be set to high when FTCMPDATn equal to CNTn and DIRF=0, software can write 1 to clear this bit.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-
- */
+     * @var EPWM_T::CTL0
+     * Offset: 0x00  EPWM Control Register 0
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CTRLD0    |Center Re-load
+     * |        |          |In up-down counter type, PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the center point of a period
+     * |[1]     |CTRLD1    |Center Re-load
+     * |        |          |In up-down counter type, PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the center point of a period
+     * |[2]     |CTRLD2    |Center Re-load
+     * |        |          |In up-down counter type, PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the center point of a period
+     * |[3]     |CTRLD3    |Center Re-load
+     * |        |          |In up-down counter type, PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the center point of a period
+     * |[4]     |CTRLD4    |Center Re-load
+     * |        |          |In up-down counter type, PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the center point of a period
+     * |[5]     |CTRLD5    |Center Re-load
+     * |        |          |In up-down counter type, PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the center point of a period
+     * |[8]     |WINLDEN0  |Window Load Enable Bits
+     * |        |          |0 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
+     * |        |          |1 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point of each period when valid reload window is set
+     * |        |          |The valid reload window is set by software write 1 to EPWM_LOAD register and cleared by hardware after load success.
+     * |[9]     |WINLDEN1  |Window Load Enable Bits
+     * |        |          |0 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
+     * |        |          |1 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point of each period when valid reload window is set
+     * |        |          |The valid reload window is set by software write 1 to EPWM_LOAD register and cleared by hardware after load success.
+     * |[10]    |WINLDEN2  |Window Load Enable Bits
+     * |        |          |0 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
+     * |        |          |1 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point of each period when valid reload window is set
+     * |        |          |The valid reload window is set by software write 1 to EPWM_LOAD register and cleared by hardware after load success.
+     * |[11]    |WINLDEN3  |Window Load Enable Bits
+     * |        |          |0 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
+     * |        |          |1 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point of each period when valid reload window is set
+     * |        |          |The valid reload window is set by software write 1 to EPWM_LOAD register and cleared by hardware after load success.
+     * |[12]    |WINLDEN4  |Window Load Enable Bits
+     * |        |          |0 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
+     * |        |          |1 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point of each period when valid reload window is set
+     * |        |          |The valid reload window is set by software write 1 to EPWM_LOAD register and cleared by hardware after load success.
+     * |[13]    |WINLDEN5  |Window Load Enable Bits
+     * |        |          |0 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
+     * |        |          |1 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point of each period when valid reload window is set
+     * |        |          |The valid reload window is set by software write 1 to EPWM_LOAD register and cleared by hardware after load success.
+     * |[16]    |IMMLDEN0  |Immediately Load Enable Bits
+     * |        |          |0 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
+     * |        |          |1 = PERIOD/CMPDAT will load to PBUF and CMPBUF immediately when software update PERIOD/CMPDAT.
+     * |        |          |Note: If IMMLDENn is enabled, WINLDENn and CTRLDn will be invalid.
+     * |[17]    |IMMLDEN1  |Immediately Load Enable Bits
+     * |        |          |0 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
+     * |        |          |1 = PERIOD/CMPDAT will load to PBUF and CMPBUF immediately when software update PERIOD/CMPDAT.
+     * |        |          |Note: If IMMLDENn is enabled, WINLDENn and CTRLDn will be invalid.
+     * |[18]    |IMMLDEN2  |Immediately Load Enable Bits
+     * |        |          |0 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
+     * |        |          |1 = PERIOD/CMPDAT will load to PBUF and CMPBUF immediately when software update PERIOD/CMPDAT.
+     * |        |          |Note: If IMMLDENn is enabled, WINLDENn and CTRLDn will be invalid.
+     * |[19]    |IMMLDEN3  |Immediately Load Enable Bits
+     * |        |          |0 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
+     * |        |          |1 = PERIOD/CMPDAT will load to PBUF and CMPBUF immediately when software update PERIOD/CMPDAT.
+     * |        |          |Note: If IMMLDENn is enabled, WINLDENn and CTRLDn will be invalid.
+     * |[20]    |IMMLDEN4  |Immediately Load Enable Bits
+     * |        |          |0 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
+     * |        |          |1 = PERIOD/CMPDAT will load to PBUF and CMPBUF immediately when software update PERIOD/CMPDAT.
+     * |        |          |Note: If IMMLDENn is enabled, WINLDENn and CTRLDn will be invalid.
+     * |[21]    |IMMLDEN5  |Immediately Load Enable Bits
+     * |        |          |0 = PERIOD will load to PBUF at the end point of each period
+     * |        |          |CMPDAT will load to CMPBUF at the end point or center point of each period by setting CTRLD bit.
+     * |        |          |1 = PERIOD/CMPDAT will load to PBUF and CMPBUF immediately when software update PERIOD/CMPDAT.
+     * |        |          |Note: If IMMLDENn is enabled, WINLDENn and CTRLDn will be invalid.
+     * |[24]    |GROUPEN   |Group Function Enable Bit(S)
+     * |        |          |0 = The output waveform of each EPWM channel are independent.
+     * |        |          |1 = Unify the EPWM_CH2 and EPWM_CH4 to output the same waveform as EPWM_CH0 and unify the EPWM_CH3 and EPWM_CH5 to output the same waveform as EPWM_CH1.
+     * |[30]    |DBGHALT   |ICE Debug Mode Counter Halt (Write Protect)
+     * |        |          |If counter halt is enabled, EPWM all counters will keep current value until exit ICE debug mode.
+     * |        |          |0 = ICE debug mode counter halt disable.
+     * |        |          |1 = ICE debug mode counter halt enable.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[31]    |DBGTRIOFF |ICE Debug Mode Acknowledge Disable (Write Protect)
+     * |        |          |0 = ICE debug mode acknowledgement effects EPWM output.
+     * |        |          |EPWM pin will be forced as tri-state while ICE debug mode acknowledged.
+     * |        |          |1 = ICE debug mode acknowledgement disabled.
+     * |        |          |EPWM pin will keep output no matter ICE debug mode acknowledged or not.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * @var EPWM_T::CTL1
+     * Offset: 0x04  EPWM Control Register 1
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[1:0]   |CNTTYPE0  |EPWM Counter Behavior Type
+     * |        |          |00 = Up counter type (supports in capture mode).
+     * |        |          |01 = Down count type (supports in capture mode).
+     * |        |          |10 = Up-down counter type.
+     * |        |          |11 = Reserved.
+     * |[3:2]   |CNTTYPE1  |EPWM Counter Behavior Type
+     * |        |          |00 = Up counter type (supports in capture mode).
+     * |        |          |01 = Down count type (supports in capture mode).
+     * |        |          |10 = Up-down counter type.
+     * |        |          |11 = Reserved.
+     * |[5:4]   |CNTTYPE2  |EPWM Counter Behavior Type
+     * |        |          |00 = Up counter type (supports in capture mode).
+     * |        |          |01 = Down count type (supports in capture mode).
+     * |        |          |10 = Up-down counter type.
+     * |        |          |11 = Reserved.
+     * |[7:6]   |CNTTYPE3  |EPWM Counter Behavior Type
+     * |        |          |00 = Up counter type (supports in capture mode).
+     * |        |          |01 = Down count type (supports in capture mode).
+     * |        |          |10 = Up-down counter type.
+     * |        |          |11 = Reserved.
+     * |[9:8]   |CNTTYPE4  |EPWM Counter Behavior Type
+     * |        |          |00 = Up counter type (supports in capture mode).
+     * |        |          |01 = Down count type (supports in capture mode).
+     * |        |          |10 = Up-down counter type.
+     * |        |          |11 = Reserved.
+     * |[11:10] |CNTTYPE5  |EPWM Counter Behavior Type
+     * |        |          |00 = Up counter type (supports in capture mode).
+     * |        |          |01 = Down count type (supports in capture mode).
+     * |        |          |10 = Up-down counter type.
+     * |        |          |11 = Reserved.
+     * |[16]    |CNTMODE0  |EPWM Counter Mode
+     * |        |          |0 = Auto-reload mode.
+     * |        |          |1 = One-shot mode.
+     * |[17]    |CNTMODE1  |EPWM Counter Mode
+     * |        |          |0 = Auto-reload mode.
+     * |        |          |1 = One-shot mode.
+     * |[18]    |CNTMODE2  |EPWM Counter Mode
+     * |        |          |0 = Auto-reload mode.
+     * |        |          |1 = One-shot mode.
+     * |[19]    |CNTMODE3  |EPWM Counter Mode
+     * |        |          |0 = Auto-reload mode.
+     * |        |          |1 = One-shot mode.
+     * |[20]    |CNTMODE4  |EPWM Counter Mode
+     * |        |          |0 = Auto-reload mode.
+     * |        |          |1 = One-shot mode.
+     * |[21]    |CNTMODE5  |EPWM Counter Mode
+     * |        |          |0 = Auto-reload mode.
+     * |        |          |1 = One-shot mode.
+     * |[24]    |OUTMODE0  |EPWM Output Mode
+     * |        |          |Each bit n controls the output mode of corresponding EPWM channel n.
+     * |        |          |0 = EPWM independent mode.
+     * |        |          |1 = EPWM complementary mode.
+     * |        |          |Note: When operating in group function, these bits must all set to the same mode.
+     * |[25]    |OUTMODE2  |EPWM Output Mode
+     * |        |          |Each bit n controls the output mode of corresponding EPWM channel n.
+     * |        |          |0 = EPWM independent mode.
+     * |        |          |1 = EPWM complementary mode.
+     * |        |          |Note: When operating in group function, these bits must all set to the same mode.
+     * |[26]    |OUTMODE4  |EPWM Output Mode
+     * |        |          |Each bit n controls the output mode of corresponding EPWM channel n.
+     * |        |          |0 = EPWM independent mode.
+     * |        |          |1 = EPWM complementary mode.
+     * |        |          |Note: When operating in group function, these bits must all set to the same mode.
+     * @var EPWM_T::SYNC
+     * Offset: 0x08  EPWM Synchronization Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |PHSEN0    |SYNC Phase Enable Bits
+     * |        |          |0 = EPWM counter disable to load PHS value.
+     * |        |          |1 = EPWM counter enable to load PHS value.
+     * |[1]     |PHSEN2    |SYNC Phase Enable Bits
+     * |        |          |0 = EPWM counter disable to load PHS value.
+     * |        |          |1 = EPWM counter enable to load PHS value.
+     * |[2]     |PHSEN4    |SYNC Phase Enable Bits
+     * |        |          |0 = EPWM counter disable to load PHS value.
+     * |        |          |1 = EPWM counter enable to load PHS value.
+     * |[9:8]   |SINSRC0   |EPWM0_SYNC_IN Source Selection
+     * |        |          |00 = Synchronize source from SYNC_IN or SWSYNC.
+     * |        |          |01 = Counter equal to 0.
+     * |        |          |10 = Counter equal to EPWM_CMPDATm, m denotes 1, 3, 5.
+     * |        |          |11 = SYNC_OUT will not be generated.
+     * |[11:10] |SINSRC2   |EPWM0_SYNC_IN Source Selection
+     * |        |          |00 = Synchronize source from SYNC_IN or SWSYNC.
+     * |        |          |01 = Counter equal to 0.
+     * |        |          |10 = Counter equal to EPWM_CMPDATm, m denotes 1, 3, 5.
+     * |        |          |11 = SYNC_OUT will not be generated.
+     * |[13:12] |SINSRC4   |EPWM0_SYNC_IN Source Selection
+     * |        |          |00 = Synchronize source from SYNC_IN or SWSYNC.
+     * |        |          |01 = Counter equal to 0.
+     * |        |          |10 = Counter equal to EPWM_CMPDATm, m denotes 1, 3, 5.
+     * |        |          |11 = SYNC_OUT will not be generated.
+     * |[16]    |SNFLTEN   |EPWM0_SYNC_IN Noise Filter Enable Bits
+     * |        |          |0 = Noise filter of input pin EPWM0_SYNC_IN is Disabled.
+     * |        |          |1 = Noise filter of input pin EPWM0_SYNC_IN is Enabled.
+     * |[19:17] |SFLTCSEL  |SYNC Edge Detector Filter Clock Selection
+     * |        |          |000 = Filter clock = HCLK.
+     * |        |          |001 = Filter clock = HCLK/2.
+     * |        |          |010 = Filter clock = HCLK/4.
+     * |        |          |011 = Filter clock = HCLK/8.
+     * |        |          |100 = Filter clock = HCLK/16.
+     * |        |          |101 = Filter clock = HCLK/32.
+     * |        |          |110 = Filter clock = HCLK/64.
+     * |        |          |111 = Filter clock = HCLK/128.
+     * |[22:20] |SFLTCNT   |SYNC Edge Detector Filter Count
+     * |        |          |The register bits control the counter number of edge detector.
+     * |[23]    |SINPINV   |SYNC Input Pin Inverse
+     * |        |          |0 = The state of pin SYNC is passed to the negative edge detector.
+     * |        |          |1 = The inversed state of pin SYNC is passed to the negative edge detector.
+     * |[24]    |PHSDIR0   |EPWM Phase Direction Control
+     * |        |          |0 = Control EPWM counter count decrement after synchronizing.
+     * |        |          |1 = Control EPWM counter count increment after synchronizing.
+     * |[25]    |PHSDIR2   |EPWM Phase Direction Control
+     * |        |          |0 = Control EPWM counter count decrement after synchronizing.
+     * |        |          |1 = Control EPWM counter count increment after synchronizing.
+     * |[26]    |PHSDIR4   |EPWM Phase Direction Control
+     * |        |          |0 = Control EPWM counter count decrement after synchronizing.
+     * |        |          |1 = Control EPWM counter count increment after synchronizing.
+     * @var EPWM_T::SWSYNC
+     * Offset: 0x0C  EPWM Software Control Synchronization Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SWSYNC0   |Software SYNC Function
+     * |        |          |When SINSRCn (EPWM_SYNC[13:8]) is selected to 0, SYNC_OUT source is come from SYNC_IN or this bit.
+     * |[1]     |SWSYNC2   |Software SYNC Function
+     * |        |          |When SINSRCn (EPWM_SYNC[13:8]) is selected to 0, SYNC_OUT source is come from SYNC_IN or this bit.
+     * |[2]     |SWSYNC4   |Software SYNC Function
+     * |        |          |When SINSRCn (EPWM_SYNC[13:8]) is selected to 0, SYNC_OUT source is come from SYNC_IN or this bit.
+     * @var EPWM_T::CLKSRC
+     * Offset: 0x10  EPWM Clock Source Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[2:0]   |ECLKSRC0  |EPWM_CH01 External Clock Source Select
+     * |        |          |000 = EPWMx_CLK, x denotes 0 or 1.
+     * |        |          |001 = TIMER0 overflow.
+     * |        |          |010 = TIMER1 overflow.
+     * |        |          |011 = TIMER2 overflow.
+     * |        |          |100 = TIMER3 overflow.
+     * |        |          |Others = Reserved.
+     * |[10:8]  |ECLKSRC2  |EPWM_CH23 External Clock Source Select
+     * |        |          |000 = EPWMx_CLK, x denotes 0 or 1.
+     * |        |          |001 = TIMER0 overflow.
+     * |        |          |010 = TIMER1 overflow.
+     * |        |          |011 = TIMER2 overflow.
+     * |        |          |100 = TIMER3 overflow.
+     * |        |          |Others = Reserved.
+     * |[18:16] |ECLKSRC4  |EPWM_CH45 External Clock Source Select
+     * |        |          |000 = EPWMx_CLK, x denotes 0 or 1.
+     * |        |          |001 = TIMER0 overflow.
+     * |        |          |010 = TIMER1 overflow.
+     * |        |          |011 = TIMER2 overflow.
+     * |        |          |100 = TIMER3 overflow.
+     * |        |          |Others = Reserved.
+     * @var EPWM_T::CLKPSC[3]
+     * Offset: 0x14  EPWM Clock Prescale Register 0/1, 2/3, 4/5
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[11:0]  |CLKPSC    |EPWM Counter Clock Prescale
+     * |        |          |The clock of EPWM counter is decided by clock prescaler
+     * |        |          |Each EPWM pair share one EPWM counter clock prescaler
+     * |        |          |The clock of EPWM counter is divided by (CLKPSC+ 1)
+     * @var EPWM_T::CNTEN
+     * Offset: 0x20  EPWM Counter Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CNTEN0    |EPWM Counter Enable Bits
+     * |        |          |0 = EPWM Counter and clock prescaler Stop Running.
+     * |        |          |1 = EPWM Counter and clock prescaler Start Running.
+     * |[1]     |CNTEN1    |EPWM Counter Enable Bits
+     * |        |          |0 = EPWM Counter and clock prescaler Stop Running.
+     * |        |          |1 = EPWM Counter and clock prescaler Start Running.
+     * |[2]     |CNTEN2    |EPWM Counter Enable Bits
+     * |        |          |0 = EPWM Counter and clock prescaler Stop Running.
+     * |        |          |1 = EPWM Counter and clock prescaler Start Running.
+     * |[3]     |CNTEN3    |EPWM Counter Enable Bits
+     * |        |          |0 = EPWM Counter and clock prescaler Stop Running.
+     * |        |          |1 = EPWM Counter and clock prescaler Start Running.
+     * |[4]     |CNTEN4    |EPWM Counter Enable Bits
+     * |        |          |0 = EPWM Counter and clock prescaler Stop Running.
+     * |        |          |1 = EPWM Counter and clock prescaler Start Running.
+     * |[5]     |CNTEN5    |EPWM Counter Enable Bits
+     * |        |          |0 = EPWM Counter and clock prescaler Stop Running.
+     * |        |          |1 = EPWM Counter and clock prescaler Start Running.
+     * @var EPWM_T::CNTCLR
+     * Offset: 0x24  EPWM Clear Counter Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CNTCLR0   |Clear EPWM Counter Control Bit
+     * |        |          |It is automatically cleared by hardware. Each bit n controls the corresponding EPWM channel n.
+     * |        |          |0 = No effect.
+     * |        |          |1 = Clear 16-bit EPWM counter to 0000H.
+     * |[1]     |CNTCLR1   |Clear EPWM Counter Control Bit
+     * |        |          |It is automatically cleared by hardware. Each bit n controls the corresponding EPWM channel n.
+     * |        |          |0 = No effect.
+     * |        |          |1 = Clear 16-bit EPWM counter to 0000H.
+     * |[2]     |CNTCLR2   |Clear EPWM Counter Control Bit
+     * |        |          |It is automatically cleared by hardware. Each bit n controls the corresponding EPWM channel n.
+     * |        |          |0 = No effect.
+     * |        |          |1 = Clear 16-bit EPWM counter to 0000H.
+     * |[3]     |CNTCLR3   |Clear EPWM Counter Control Bit
+     * |        |          |It is automatically cleared by hardware. Each bit n controls the corresponding EPWM channel n.
+     * |        |          |0 = No effect.
+     * |        |          |1 = Clear 16-bit EPWM counter to 0000H.
+     * |[4]     |CNTCLR4   |Clear EPWM Counter Control Bit
+     * |        |          |It is automatically cleared by hardware. Each bit n controls the corresponding EPWM channel n.
+     * |        |          |0 = No effect.
+     * |        |          |1 = Clear 16-bit EPWM counter to 0000H.
+     * |[5]     |CNTCLR5   |Clear EPWM Counter Control Bit
+     * |        |          |It is automatically cleared by hardware. Each bit n controls the corresponding EPWM channel n.
+     * |        |          |0 = No effect.
+     * |        |          |1 = Clear 16-bit EPWM counter to 0000H.
+     * @var EPWM_T::LOAD
+     * Offset: 0x28  EPWM Load Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |LOAD0     |Re-load EPWM Comparator Register (CMPDAT) Control Bit
+     * |        |          |This bit is software write, hardware clear when current EPWM period end.
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Set load window of window loading mode.
+     * |        |          |Read Operation:
+     * |        |          |0 = No load window is set.
+     * |        |          |1 = Load window is set.
+     * |        |          |Note: This bit only use in window loading mode, WINLDENn(EPWM_CTL0[13:8]) = 1.
+     * |[1]     |LOAD1     |Re-load EPWM Comparator Register (CMPDAT) Control Bit
+     * |        |          |This bit is software write, hardware clear when current EPWM period end.
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Set load window of window loading mode.
+     * |        |          |Read Operation:
+     * |        |          |0 = No load window is set.
+     * |        |          |1 = Load window is set.
+     * |        |          |Note: This bit only use in window loading mode, WINLDENn(EPWM_CTL0[13:8]) = 1.
+     * |[2]     |LOAD2     |Re-load EPWM Comparator Register (CMPDAT) Control Bit
+     * |        |          |This bit is software write, hardware clear when current EPWM period end.
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Set load window of window loading mode.
+     * |        |          |Read Operation:
+     * |        |          |0 = No load window is set.
+     * |        |          |1 = Load window is set.
+     * |        |          |Note: This bit only use in window loading mode, WINLDENn(EPWM_CTL0[13:8]) = 1.
+     * |[3]     |LOAD3     |Re-load EPWM Comparator Register (CMPDAT) Control Bit
+     * |        |          |This bit is software write, hardware clear when current EPWM period end.
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Set load window of window loading mode.
+     * |        |          |Read Operation:
+     * |        |          |0 = No load window is set.
+     * |        |          |1 = Load window is set.
+     * |        |          |Note: This bit only use in window loading mode, WINLDENn(EPWM_CTL0[13:8]) = 1.
+     * |[4]     |LOAD4     |Re-load EPWM Comparator Register (CMPDAT) Control Bit
+     * |        |          |This bit is software write, hardware clear when current EPWM period end.
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Set load window of window loading mode.
+     * |        |          |Read Operation:
+     * |        |          |0 = No load window is set.
+     * |        |          |1 = Load window is set.
+     * |        |          |Note: This bit only use in window loading mode, WINLDENn(EPWM_CTL0[13:8]) = 1.
+     * |[5]     |LOAD5     |Re-load EPWM Comparator Register (CMPDAT) Control Bit
+     * |        |          |This bit is software write, hardware clear when current EPWM period end.
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Set load window of window loading mode.
+     * |        |          |Read Operation:
+     * |        |          |0 = No load window is set.
+     * |        |          |1 = Load window is set.
+     * |        |          |Note: This bit only use in window loading mode, WINLDENn(EPWM_CTL0[13:8]) = 1.
+     * @var EPWM_T::PERIOD[6]
+     * Offset: 0x30  EPWM Period Register 0~5
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |PERIOD    |EPWM Period Register
+     * |        |          |Up-Count mode: In this mode, EPWM counter counts from 0 to PERIOD, and restarts from 0.
+     * |        |          |Down-Count mode: In this mode, EPWM counter counts from PERIOD to 0, and restarts from PERIOD.
+     * |        |          |EPWM period time = (PERIOD+1) * EPWM_CLK period.
+     * |        |          |Up-Down-Count mode: In this mode, EPWM counter counts from 0 to PERIOD, then decrements to 0 and repeats again.
+     * |        |          |EPWM period time = 2 * PERIOD * EPWM_CLK period.
+     * @var EPWM_T::CMPDAT[6]
+     * Offset: 0x50  EPWM Comparator Register 0
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |CMP       |EPWM Comparator Register
+     * |        |          |CMP use to compare with CNTR to generate EPWM waveform, interrupt and trigger EADC/DAC.
+     * |        |          |In independent mode, CMPDAT0~5 denote as 6 independent EPWM_CH0~5 compared point.
+     * |        |          |In complementary mode, CMPDAT0, 2, 4 denote as first compared point, and CMPDAT1, 3, 5 denote as second compared point for the corresponding 3 complementary pairs EPWM_CH0 and EPWM_CH1, EPWM_CH2 and EPWM_CH3, EPWM_CH4 and EPWM_CH5.
+     * @var EPWM_T::DTCTL[3]
+     * Offset: 0x70  EPWM Dead-Time Control Register 0/1,2/3,4/5
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[11:0]  |DTCNT     |Dead-time Counter (Write Protect)
+     * |        |          |The dead-time can be calculated from the following formula:
+     * |        |          |Dead-time = (DTCNT[11:0]+1) * EPWM_CLK period.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[16]    |DTEN      |Enable Dead-time Insertion for EPWM Pair (EPWM_CH0, EPWM_CH1) (EPWM_CH2, EPWM_CH3) (EPWM_CH4, EPWM_CH5) (Write Protect)
+     * |        |          |Dead-time insertion is only active when this pair of complementary EPWM is enabled
+     * |        |          |If dead- time insertion is inactive, the outputs of pin pair are complementary without any delay.
+     * |        |          |0 = Dead-time insertion Disabled on the pin pair.
+     * |        |          |1 = Dead-time insertion Enabled on the pin pair.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[24]    |DTCKSEL   |Dead-time Clock Select (Write Protect)
+     * |        |          |0 = Dead-time clock source from EPWM_CLK.
+     * |        |          |1 = Dead-time clock source from prescaler output.
+     * |        |          |Note: This register is write protected. Refer toREGWRPROT register.
+     * @var EPWM_T::PHS[3]
+     * Offset: 0x80  EPWM Counter Phase Register 0/1,2/3,4/5
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |PHS       |EPWM Synchronous Start Phase Bits
+     * |        |          |PHS determines the EPWM synchronous start phase value. These bits only use in synchronous function.
+     * @var EPWM_T::CNT[6]
+     * Offset: 0x90  EPWM Counter Register 0~5
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |CNT       |EPWM Data Register (Read Only)
+     * |        |          |User can monitor CNTR to know the current value in 16-bit period counter.
+     * |[16]    |DIRF      |EPWM Direction Indicator Flag (Read Only)
+     * |        |          |0 = Counter is Down count.
+     * |        |          |1 = Counter is UP count.
+     * @var EPWM_T::WGCTL0
+     * Offset: 0xB0  EPWM Generation Register 0
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[1:0]   |ZPCTL0    |EPWM Zero Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM zero point output Low.
+     * |        |          |10 = EPWM zero point output High.
+     * |        |          |11 = EPWM zero point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter count to zero.
+     * |[3:2]   |ZPCTL1    |EPWM Zero Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM zero point output Low.
+     * |        |          |10 = EPWM zero point output High.
+     * |        |          |11 = EPWM zero point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter count to zero.
+     * |[5:4]   |ZPCTL2    |EPWM Zero Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM zero point output Low.
+     * |        |          |10 = EPWM zero point output High.
+     * |        |          |11 = EPWM zero point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter count to zero.
+     * |[7:6]   |ZPCTL3    |EPWM Zero Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM zero point output Low.
+     * |        |          |10 = EPWM zero point output High.
+     * |        |          |11 = EPWM zero point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter count to zero.
+     * |[9:8]   |ZPCTL4    |EPWM Zero Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM zero point output Low.
+     * |        |          |10 = EPWM zero point output High.
+     * |        |          |11 = EPWM zero point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter count to zero.
+     * |[11:10] |ZPCTL5    |EPWM Zero Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM zero point output Low.
+     * |        |          |10 = EPWM zero point output High.
+     * |        |          |11 = EPWM zero point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter count to zero.
+     * |[17:16] |PRDPCTL0  |EPWM Period (Center) Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM period (center) point output Low.
+     * |        |          |10 = EPWM period (center) point output High.
+     * |        |          |11 = EPWM period (center) point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter count to (PERIODn+1).
+     * |        |          |Note: This bit is center point control when EPWM counter operating in up-down counter type.
+     * |[19:18] |PRDPCTL1  |EPWM Period (Center) Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM period (center) point output Low.
+     * |        |          |10 = EPWM period (center) point output High.
+     * |        |          |11 = EPWM period (center) point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter count to (PERIODn+1).
+     * |        |          |Note: This bit is center point control when EPWM counter operating in up-down counter type.
+     * |[21:20] |PRDPCTL2  |EPWM Period (Center) Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM period (center) point output Low.
+     * |        |          |10 = EPWM period (center) point output High.
+     * |        |          |11 = EPWM period (center) point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter count to (PERIODn+1).
+     * |        |          |Note: This bit is center point control when EPWM counter operating in up-down counter type.
+     * |[23:22] |PRDPCTL3  |EPWM Period (Center) Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM period (center) point output Low.
+     * |        |          |10 = EPWM period (center) point output High.
+     * |        |          |11 = EPWM period (center) point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter count to (PERIODn+1).
+     * |        |          |Note: This bit is center point control when EPWM counter operating in up-down counter type.
+     * |[25:24] |PRDPCTL4  |EPWM Period (Center) Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM period (center) point output Low.
+     * |        |          |10 = EPWM period (center) point output High.
+     * |        |          |11 = EPWM period (center) point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter count to (PERIODn+1).
+     * |        |          |Note: This bit is center point control when EPWM counter operating in up-down counter type.
+     * |[27:26] |PRDPCTL5  |EPWM Period (Center) Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM period (center) point output Low.
+     * |        |          |10 = EPWM period (center) point output High.
+     * |        |          |11 = EPWM period (center) point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter count to (PERIODn+1).
+     * |        |          |Note: This bit is center point control when EPWM counter operating in up-down counter type.
+     * @var EPWM_T::WGCTL1
+     * Offset: 0xB4  EPWM Generation Register 1
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[1:0]   |CMPUCTL0  |EPWM Compare Up Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM compare up point output Low.
+     * |        |          |10 = EPWM compare up point output High.
+     * |        |          |11 = EPWM compare up point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter up count to CMPDAT.
+     * |        |          |Note: In complementary mode, CMPUCTL1, 3, 5 use as another CMPUCTL for channel 0, 2, 4.
+     * |[3:2]   |CMPUCTL1  |EPWM Compare Up Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM compare up point output Low.
+     * |        |          |10 = EPWM compare up point output High.
+     * |        |          |11 = EPWM compare up point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter up count to CMPDAT.
+     * |        |          |Note: In complementary mode, CMPUCTL1, 3, 5 use as another CMPUCTL for channel 0, 2, 4.
+     * |[5:4]   |CMPUCTL2  |EPWM Compare Up Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM compare up point output Low.
+     * |        |          |10 = EPWM compare up point output High.
+     * |        |          |11 = EPWM compare up point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter up count to CMPDAT.
+     * |        |          |Note: In complementary mode, CMPUCTL1, 3, 5 use as another CMPUCTL for channel 0, 2, 4.
+     * |[7:6]   |CMPUCTL3  |EPWM Compare Up Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM compare up point output Low.
+     * |        |          |10 = EPWM compare up point output High.
+     * |        |          |11 = EPWM compare up point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter up count to CMPDAT.
+     * |        |          |Note: In complementary mode, CMPUCTL1, 3, 5 use as another CMPUCTL for channel 0, 2, 4.
+     * |[9:8]   |CMPUCTL4  |EPWM Compare Up Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM compare up point output Low.
+     * |        |          |10 = EPWM compare up point output High.
+     * |        |          |11 = EPWM compare up point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter up count to CMPDAT.
+     * |        |          |Note: In complementary mode, CMPUCTL1, 3, 5 use as another CMPUCTL for channel 0, 2, 4.
+     * |[11:10] |CMPUCTL5  |EPWM Compare Up Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM compare up point output Low.
+     * |        |          |10 = EPWM compare up point output High.
+     * |        |          |11 = EPWM compare up point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter up count to CMPDAT.
+     * |        |          |Note: In complementary mode, CMPUCTL1, 3, 5 use as another CMPUCTL for channel 0, 2, 4.
+     * |[17:16] |CMPDCTL0  |EPWM Compare Down Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM compare down point output Low.
+     * |        |          |10 = EPWM compare down point output High.
+     * |        |          |11 = EPWM compare down point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter down count to CMPDAT.
+     * |        |          |Note: In complementary mode, CMPDCTL1, 3, 5 use as another CMPDCTL for channel 0, 2, 4.
+     * |[19:18] |CMPDCTL1  |EPWM Compare Down Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM compare down point output Low.
+     * |        |          |10 = EPWM compare down point output High.
+     * |        |          |11 = EPWM compare down point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter down count to CMPDAT.
+     * |        |          |Note: In complementary mode, CMPDCTL1, 3, 5 use as another CMPDCTL for channel 0, 2, 4.
+     * |[21:20] |CMPDCTL2  |EPWM Compare Down Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM compare down point output Low.
+     * |        |          |10 = EPWM compare down point output High.
+     * |        |          |11 = EPWM compare down point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter down count to CMPDAT.
+     * |        |          |Note: In complementary mode, CMPDCTL1, 3, 5 use as another CMPDCTL for channel 0, 2, 4.
+     * |[23:22] |CMPDCTL3  |EPWM Compare Down Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM compare down point output Low.
+     * |        |          |10 = EPWM compare down point output High.
+     * |        |          |11 = EPWM compare down point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter down count to CMPDAT.
+     * |        |          |Note: In complementary mode, CMPDCTL1, 3, 5 use as another CMPDCTL for channel 0, 2, 4.
+     * |[25:24] |CMPDCTL4  |EPWM Compare Down Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM compare down point output Low.
+     * |        |          |10 = EPWM compare down point output High.
+     * |        |          |11 = EPWM compare down point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter down count to CMPDAT.
+     * |        |          |Note: In complementary mode, CMPDCTL1, 3, 5 use as another CMPDCTL for channel 0, 2, 4.
+     * |[27:26] |CMPDCTL5  |EPWM Compare Down Point Control
+     * |        |          |00 = Do nothing.
+     * |        |          |01 = EPWM compare down point output Low.
+     * |        |          |10 = EPWM compare down point output High.
+     * |        |          |11 = EPWM compare down point output Toggle.
+     * |        |          |EPWM can control output level when EPWM counter down count to CMPDAT.
+     * |        |          |Note: In complementary mode, CMPDCTL1, 3, 5 use as another CMPDCTL for channel 0, 2, 4.
+     * @var EPWM_T::MSKEN
+     * Offset: 0xB8  EPWM Mask Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |MSKEN0    |EPWM Mask Enable Bits
+     * |        |          |The EPWM output signal will be masked when this bit is enabled
+     * |        |          |The corresponding EPWM channel n will output MSKDATn (EPWM_MSK[5:0]) data.
+     * |        |          |0 = EPWM output signal is non-masked.
+     * |        |          |1 = EPWM output signal is masked and output MSKDATn data.
+     * |[1]     |MSKEN1    |EPWM Mask Enable Bits
+     * |        |          |The EPWM output signal will be masked when this bit is enabled
+     * |        |          |The corresponding EPWM channel n will output MSKDATn (EPWM_MSK[5:0]) data.
+     * |        |          |0 = EPWM output signal is non-masked.
+     * |        |          |1 = EPWM output signal is masked and output MSKDATn data.
+     * |[2]     |MSKEN2    |EPWM Mask Enable Bits
+     * |        |          |The EPWM output signal will be masked when this bit is enabled
+     * |        |          |The corresponding EPWM channel n will output MSKDATn (EPWM_MSK[5:0]) data.
+     * |        |          |0 = EPWM output signal is non-masked.
+     * |        |          |1 = EPWM output signal is masked and output MSKDATn data.
+     * |[3]     |MSKEN3    |EPWM Mask Enable Bits
+     * |        |          |The EPWM output signal will be masked when this bit is enabled
+     * |        |          |The corresponding EPWM channel n will output MSKDATn (EPWM_MSK[5:0]) data.
+     * |        |          |0 = EPWM output signal is non-masked.
+     * |        |          |1 = EPWM output signal is masked and output MSKDATn data.
+     * |[4]     |MSKEN4    |EPWM Mask Enable Bits
+     * |        |          |The EPWM output signal will be masked when this bit is enabled
+     * |        |          |The corresponding EPWM channel n will output MSKDATn (EPWM_MSK[5:0]) data.
+     * |        |          |0 = EPWM output signal is non-masked.
+     * |        |          |1 = EPWM output signal is masked and output MSKDATn data.
+     * |[5]     |MSKEN5    |EPWM Mask Enable Bits
+     * |        |          |The EPWM output signal will be masked when this bit is enabled
+     * |        |          |The corresponding EPWM channel n will output MSKDATn (EPWM_MSK[5:0]) data.
+     * |        |          |0 = EPWM output signal is non-masked.
+     * |        |          |1 = EPWM output signal is masked and output MSKDATn data.
+     * @var EPWM_T::MSK
+     * Offset: 0xBC  EPWM Mask Data Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |MSKDAT0   |EPWM Mask Data Bit
+     * |        |          |This data bit control the state of EPWMn output pin, if corresponding mask function is enabled.
+     * |        |          |0 = Output logic low to EPWM channel n.
+     * |        |          |1 = Output logic high to EPWM channel n.
+     * |[1]     |MSKDAT1   |EPWM Mask Data Bit
+     * |        |          |This data bit control the state of EPWMn output pin, if corresponding mask function is enabled.
+     * |        |          |0 = Output logic low to EPWM channel n.
+     * |        |          |1 = Output logic high to EPWM channel n.
+     * |[2]     |MSKDAT2   |EPWM Mask Data Bit
+     * |        |          |This data bit control the state of EPWMn output pin, if corresponding mask function is enabled.
+     * |        |          |0 = Output logic low to EPWM channel n.
+     * |        |          |1 = Output logic high to EPWM channel n.
+     * |[3]     |MSKDAT3   |EPWM Mask Data Bit
+     * |        |          |This data bit control the state of EPWMn output pin, if corresponding mask function is enabled.
+     * |        |          |0 = Output logic low to EPWM channel n.
+     * |        |          |1 = Output logic high to EPWM channel n.
+     * |[4]     |MSKDAT4   |EPWM Mask Data Bit
+     * |        |          |This data bit control the state of EPWMn output pin, if corresponding mask function is enabled.
+     * |        |          |0 = Output logic low to EPWM channel n.
+     * |        |          |1 = Output logic high to EPWM channel n.
+     * |[5]     |MSKDAT5   |EPWM Mask Data Bit
+     * |        |          |This data bit control the state of EPWMn output pin, if corresponding mask function is enabled.
+     * |        |          |0 = Output logic low to EPWM channel n.
+     * |        |          |1 = Output logic high to EPWM channel n.
+     * @var EPWM_T::BNF
+     * Offset: 0xC0  EPWM Brake Noise Filter Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |BRK0NFEN  |EPWM Brake 0 Noise Filter Enable Bit
+     * |        |          |0 = Noise filter of EPWM Brake 0 Disabled.
+     * |        |          |1 = Noise filter of EPWM Brake 0 Enabled.
+     * |[3:1]   |BRK0NFSEL |Brake 0 Edge Detector Filter Clock Selection
+     * |        |          |000 = Filter clock = HCLK.
+     * |        |          |001 = Filter clock = HCLK/2.
+     * |        |          |010 = Filter clock = HCLK/4.
+     * |        |          |011 = Filter clock = HCLK/8.
+     * |        |          |100 = Filter clock = HCLK/16.
+     * |        |          |101 = Filter clock = HCLK/32.
+     * |        |          |110 = Filter clock = HCLK/64.
+     * |        |          |111 = Filter clock = HCLK/128.
+     * |[6:4]   |BRK0FCNT  |Brake 0 Edge Detector Filter Count
+     * |        |          |The register bits control the Brake0 filter counter to count from 0 to BRK1FCNT.
+     * |[7]     |BRK0PINV  |Brake 0 Pin Inverse
+     * |        |          |0 = The state of pin EPWMx_BRAKE0 is passed to the negative edge detector.
+     * |        |          |1 = The inversed state of pin EPWMx_BRAKE10 is passed to the negative edge detector.
+     * |[8]     |BRK1NFEN  |EPWM Brake 1 Noise Filter Enable Bit
+     * |        |          |0 = Noise filter of EPWM Brake 1 Disabled.
+     * |        |          |1 = Noise filter of EPWM Brake 1 Enabled.
+     * |[11:9]  |BRK1NFSEL |Brake 1 Edge Detector Filter Clock Selection
+     * |        |          |000 = Filter clock = HCLK.
+     * |        |          |001 = Filter clock = HCLK/2.
+     * |        |          |010 = Filter clock = HCLK/4.
+     * |        |          |011 = Filter clock = HCLK/8.
+     * |        |          |100 = Filter clock = HCLK/16.
+     * |        |          |101 = Filter clock = HCLK/32.
+     * |        |          |110 = Filter clock = HCLK/64.
+     * |        |          |111 = Filter clock = HCLK/128.
+     * |[14:12] |BRK1FCNT  |Brake 1 Edge Detector Filter Count
+     * |        |          |The register bits control the Brake1 filter counter to count from 0 to BRK1FCNT.
+     * |[15]    |BRK1PINV  |Brake 1 Pin Inverse
+     * |        |          |0 = The state of pin EPWMx_BRAKE1 is passed to the negative edge detector.
+     * |        |          |1 = The inversed state of pin EPWMx_BRAKE1 is passed to the negative edge detector.
+     * |[16]    |BK0SRC    |Brake 0 Pin Source Select
+     * |        |          |For EPWM0 setting:
+     * |        |          |0 = Brake 0 pin source come from EPWM0_BRAKE0.
+     * |        |          |1 = Brake 0 pin source come from EPWM1_BRAKE0.
+     * |        |          |For EPWM1 setting:
+     * |        |          |0 = Brake 0 pin source come from EPWM1_BRAKE0.
+     * |        |          |1 = Brake 0 pin source come from EPWM0_BRAKE0.
+     * |[24]    |BK1SRC    |Brake 1 Pin Source Select
+     * |        |          |For EPWM0 setting:
+     * |        |          |0 = Brake 1 pin source come from EPWM0_BRAKE1.
+     * |        |          |1 = Brake 1 pin source come from EPWM1_BRAKE1.
+     * |        |          |For EPWM1 setting:
+     * |        |          |0 = Brake 1 pin source come from EPWM1_BRAKE1.
+     * |        |          |1 = Brake 1 pin source come from EPWM0_BRAKE1.
+     * @var EPWM_T::FAILBRK
+     * Offset: 0xC4  EPWM System Fail Brake Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CSSBRKEN  |Clock Security System Detection Trigger EPWM Brake Function 0 Enable Bit
+     * |        |          |0 = Brake Function triggered by CSS detection Disabled.
+     * |        |          |1 = Brake Function triggered by CSS detection Enabled.
+     * |[1]     |BODBRKEN  |Brown-out Detection Trigger EPWM Brake Function 0 Enable Bit
+     * |        |          |0 = Brake Function triggered by BOD Disabled.
+     * |        |          |1 = Brake Function triggered by BOD Enabled.
+     * |[2]     |RAMBRKEN  |SRAM Parity Error Detection Trigger EPWM Brake Function 0 Enable Bit
+     * |        |          |0 = Brake Function triggered by SRAM parity error detection Disabled.
+     * |        |          |1 = Brake Function triggered by SRAM parity error detection Enabled.
+     * |[3]     |CORBRKEN  |Core Lockup Detection Trigger EPWM Brake Function 0 Enable Bit
+     * |        |          |0 = Brake Function triggered by Core lockup detection Disabled.
+     * |        |          |1 = Brake Function triggered by Core lockup detection Enabled.
+     * @var EPWM_T::BRKCTL[3]
+     * Offset: 0xC8  EPWM Brake Edge Detect Control Register 0/1,2/3,4/5
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CPO0EBEN  |Enable ACMP0_O Digital Output As Edge-detect Brake Source (Write Protect)
+     * |        |          |0 = ACMP0_O as edge-detect brake source Disabled.
+     * |        |          |1 = ACMP0_O as edge-detect brake source Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[1]     |CPO1EBEN  |Enable ACMP1_O Digital Output As Edge-detect Brake Source (Write Protect)
+     * |        |          |0 = ACMP1_O as edge-detect brake source Disabled.
+     * |        |          |1 = ACMP1_O as edge-detect brake source Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[4]     |BRKP0EEN  |Enable EPWMx_BRAKE0 Pin As Edge-detect Brake Source (Write Protect)
+     * |        |          |0 = EPWMx_BRAKE0 pin as edge-detect brake source Disabled.
+     * |        |          |1 = EPWMx_BRAKE0 pin as edge-detect brake source Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[5]     |BRKP1EEN  |Enable EPWMx_BRAKE1 Pin As Edge-detect Brake Source (Write Protect)
+     * |        |          |0 = EPWMx_BRAKE1 pin as edge-detect brake source Disabled.
+     * |        |          |1 = EPWMx_BRAKE1 pin as edge-detect brake source Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[7]     |SYSEBEN   |Enable System Fail As Edge-detect Brake Source (Write Protect)
+     * |        |          |0 = System Fail condition as edge-detect brake source Disabled.
+     * |        |          |1 = System Fail condition as edge-detect brake source Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[8]     |CPO0LBEN  |Enable ACMP0_O Digital Output As Level-detect Brake Source (Write Protect)
+     * |        |          |0 = ACMP0_O as level-detect brake source Disabled.
+     * |        |          |1 = ACMP0_O as level-detect brake source Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[9]     |CPO1LBEN  |Enable ACMP1_O Digital Output As Level-detect Brake Source (Write Protect)
+     * |        |          |0 = ACMP1_O as level-detect brake source Disabled.
+     * |        |          |1 = ACMP1_O as level-detect brake source Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[12]    |BRKP0LEN  |Enable BKP0 Pin As Level-detect Brake Source (Write Protect)
+     * |        |          |0 = EPWMx_BRAKE0 pin as level-detect brake source Disabled.
+     * |        |          |1 = EPWMx_BRAKE0 pin as level-detect brake source Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[13]    |BRKP1LEN  |Enable BKP1 Pin As Level-detect Brake Source (Write Protect)
+     * |        |          |0 = EPWMx_BRAKE1 pin as level-detect brake source Disabled.
+     * |        |          |1 = EPWMx_BRAKE1 pin as level-detect brake source Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[15]    |SYSLBEN   |Enable System Fail As Level-detect Brake Source (Write Protect)
+     * |        |          |0 = System Fail condition as level-detect brake source Disabled.
+     * |        |          |1 = System Fail condition as level-detect brake source Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[17:16] |BRKAEVEN  |EPWM Brake Action Select for Even Channel (Write Protect)
+     * |        |          |00 = EPWMx brake event will not affect even channels output.
+     * |        |          |01 = EPWM even channel output tri-state when EPWMx brake event happened.
+     * |        |          |10 = EPWM even channel output low level when EPWMx brake event happened.
+     * |        |          |11 = EPWM even channel output high level when EPWMx brake event happened.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[19:18] |BRKAODD   |EPWM Brake Action Select for Odd Channel (Write Protect)
+     * |        |          |00 = EPWMx brake event will not affect odd channels output.
+     * |        |          |01 = EPWM odd channel output tri-state when EPWMx brake event happened.
+     * |        |          |10 = EPWM odd channel output low level when EPWMx brake event happened.
+     * |        |          |11 = EPWM odd channel output high level when EPWMx brake event happened.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[20]    |EADCEBEN  |Enable EADC Result Monitor (EADCRM) As Edge-detect Brake Source (Write Protect)
+     * |        |          |0 = EADCRM as edge-detect brake source Disabled.
+     * |        |          |1 = EADCRM as edge-detect brake source Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[28]    |EADCLBEN  |Enable EADC Result Monitor (EADCRM) As Level-detect Brake Source (Write Protect)
+     * |        |          |0 = EADCRM as level-detect brake source Disabled.
+     * |        |          |1 = EADCRM as level-detect brake source Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * @var EPWM_T::POLCTL
+     * Offset: 0xD4  EPWM Pin Polar Inverse Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |PINV0     |EPWM PIN Polar Inverse Control
+     * |        |          |The register controls polarity state of EPWM output.
+     * |        |          |0 = EPWM output polar inverse Disabled.
+     * |        |          |1 = EPWM output polar inverse Enabled.
+     * |[1]     |PINV1     |EPWM PIN Polar Inverse Control
+     * |        |          |The register controls polarity state of EPWM output.
+     * |        |          |0 = EPWM output polar inverse Disabled.
+     * |        |          |1 = EPWM output polar inverse Enabled.
+     * |[2]     |PINV2     |EPWM PIN Polar Inverse Control
+     * |        |          |The register controls polarity state of EPWM output.
+     * |        |          |0 = EPWM output polar inverse Disabled.
+     * |        |          |1 = EPWM output polar inverse Enabled.
+     * |[3]     |PINV3     |EPWM PIN Polar Inverse Control
+     * |        |          |The register controls polarity state of EPWM output.
+     * |        |          |0 = EPWM output polar inverse Disabled.
+     * |        |          |1 = EPWM output polar inverse Enabled.
+     * |[4]     |PINV4     |EPWM PIN Polar Inverse Control
+     * |        |          |The register controls polarity state of EPWM output.
+     * |        |          |0 = EPWM output polar inverse Disabled.
+     * |        |          |1 = EPWM output polar inverse Enabled.
+     * |[5]     |PINV5     |EPWM PIN Polar Inverse Control
+     * |        |          |The register controls polarity state of EPWM output.
+     * |        |          |0 = EPWM output polar inverse Disabled.
+     * |        |          |1 = EPWM output polar inverse Enabled.
+     * @var EPWM_T::POEN
+     * Offset: 0xD8  EPWM Output Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |POEN0     |EPWM Pin Output Enable Bits
+     * |        |          |0 = EPWM pin at tri-state.
+     * |        |          |1 = EPWM pin in output mode.
+     * |[1]     |POEN1     |EPWM Pin Output Enable Bits
+     * |        |          |0 = EPWM pin at tri-state.
+     * |        |          |1 = EPWM pin in output mode.
+     * |[2]     |POEN2     |EPWM Pin Output Enable Bits
+     * |        |          |0 = EPWM pin at tri-state.
+     * |        |          |1 = EPWM pin in output mode.
+     * |[3]     |POEN3     |EPWM Pin Output Enable Bits
+     * |        |          |0 = EPWM pin at tri-state.
+     * |        |          |1 = EPWM pin in output mode.
+     * |[4]     |POEN4     |EPWM Pin Output Enable Bits
+     * |        |          |0 = EPWM pin at tri-state.
+     * |        |          |1 = EPWM pin in output mode.
+     * |[5]     |POEN5     |EPWM Pin Output Enable Bits
+     * |        |          |0 = EPWM pin at tri-state.
+     * |        |          |1 = EPWM pin in output mode.
+     * @var EPWM_T::SWBRK
+     * Offset: 0xDC  EPWM Software Brake Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |BRKETRG0  |EPWM Edge Brake Software Trigger (Write Only) (Write Protect)
+     * |        |          |Write 1 to this bit will trigger edge brake, and set BRKEIFn to 1 in EPWM_INTSTS1 register.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[1]     |BRKETRG2  |EPWM Edge Brake Software Trigger (Write Only) (Write Protect)
+     * |        |          |Write 1 to this bit will trigger edge brake, and set BRKEIFn to 1 in EPWM_INTSTS1 register.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[2]     |BRKETRG4  |EPWM Edge Brake Software Trigger (Write Only) (Write Protect)
+     * |        |          |Write 1 to this bit will trigger edge brake, and set BRKEIFn to 1 in EPWM_INTSTS1 register.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[8]     |BRKLTRG0  |EPWM Level Brake Software Trigger (Write Only) (Write Protect)
+     * |        |          |Write 1 to this bit will trigger level brake, and set BRKLIFn to 1 in EPWM_INTSTS1 register.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[9]     |BRKLTRG2  |EPWM Level Brake Software Trigger (Write Only) (Write Protect)
+     * |        |          |Write 1 to this bit will trigger level brake, and set BRKLIFn to 1 in EPWM_INTSTS1 register.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[10]    |BRKLTRG4  |EPWM Level Brake Software Trigger (Write Only) (Write Protect)
+     * |        |          |Write 1 to this bit will trigger level brake, and set BRKLIFn to 1 in EPWM_INTSTS1 register.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * @var EPWM_T::INTEN0
+     * Offset: 0xE0  EPWM Interrupt Enable Register 0
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |ZIEN0     |EPWM Zero Point Interrupt Enable Bits
+     * |        |          |0 = Zero point interrupt Disabled.
+     * |        |          |1 = Zero point interrupt Enabled.
+     * |        |          |Note: Odd channels will read always 0 at complementary mode.
+     * |[1]     |ZIEN1     |EPWM Zero Point Interrupt Enable Bits
+     * |        |          |0 = Zero point interrupt Disabled.
+     * |        |          |1 = Zero point interrupt Enabled.
+     * |        |          |Note: Odd channels will read always 0 at complementary mode.
+     * |[2]     |ZIEN2     |EPWM Zero Point Interrupt Enable Bits
+     * |        |          |0 = Zero point interrupt Disabled.
+     * |        |          |1 = Zero point interrupt Enabled.
+     * |        |          |Note: Odd channels will read always 0 at complementary mode.
+     * |[3]     |ZIEN3     |EPWM Zero Point Interrupt Enable Bits
+     * |        |          |0 = Zero point interrupt Disabled.
+     * |        |          |1 = Zero point interrupt Enabled.
+     * |        |          |Note: Odd channels will read always 0 at complementary mode.
+     * |[4]     |ZIEN4     |EPWM Zero Point Interrupt Enable Bits
+     * |        |          |0 = Zero point interrupt Disabled.
+     * |        |          |1 = Zero point interrupt Enabled.
+     * |        |          |Note: Odd channels will read always 0 at complementary mode.
+     * |[5]     |ZIEN5     |EPWM Zero Point Interrupt Enable Bits
+     * |        |          |0 = Zero point interrupt Disabled.
+     * |        |          |1 = Zero point interrupt Enabled.
+     * |        |          |Note: Odd channels will read always 0 at complementary mode.
+     * |[8]     |PIEN0     |EPWM Period Point Interrupt Enable Bits
+     * |        |          |0 = Period point interrupt Disabled.
+     * |        |          |1 = Period point interrupt Enabled.
+     * |        |          |Note1: When up-down counter type period point means center point.
+     * |        |          |Note2: Odd channels will read always 0 at complementary mode.
+     * |[9]     |PIEN1     |EPWM Period Point Interrupt Enable Bits
+     * |        |          |0 = Period point interrupt Disabled.
+     * |        |          |1 = Period point interrupt Enabled.
+     * |        |          |Note1: When up-down counter type period point means center point.
+     * |        |          |Note2: Odd channels will read always 0 at complementary mode.
+     * |[10]    |PIEN2     |EPWM Period Point Interrupt Enable Bits
+     * |        |          |0 = Period point interrupt Disabled.
+     * |        |          |1 = Period point interrupt Enabled.
+     * |        |          |Note1: When up-down counter type period point means center point.
+     * |        |          |Note2: Odd channels will read always 0 at complementary mode.
+     * |[11]    |PIEN3     |EPWM Period Point Interrupt Enable Bits
+     * |        |          |0 = Period point interrupt Disabled.
+     * |        |          |1 = Period point interrupt Enabled.
+     * |        |          |Note1: When up-down counter type period point means center point.
+     * |        |          |Note2: Odd channels will read always 0 at complementary mode.
+     * |[12]    |PIEN4     |EPWM Period Point Interrupt Enable Bits
+     * |        |          |0 = Period point interrupt Disabled.
+     * |        |          |1 = Period point interrupt Enabled.
+     * |        |          |Note1: When up-down counter type period point means center point.
+     * |        |          |Note2: Odd channels will read always 0 at complementary mode.
+     * |[13]    |PIEN5     |EPWM Period Point Interrupt Enable Bits
+     * |        |          |0 = Period point interrupt Disabled.
+     * |        |          |1 = Period point interrupt Enabled.
+     * |        |          |Note1: When up-down counter type period point means center point.
+     * |        |          |Note2: Odd channels will read always 0 at complementary mode.
+     * |[16]    |CMPUIEN0  |EPWM Compare Up Count Interrupt Enable Bits
+     * |        |          |0 = Compare up count interrupt Disabled.
+     * |        |          |1 = Compare up count interrupt Enabled.
+     * |        |          |Note: In complementary mode, CMPUIEN1, 3, 5 use as another CMPUIEN for channel 0, 2, 4.
+     * |[17]    |CMPUIEN1  |EPWM Compare Up Count Interrupt Enable Bits
+     * |        |          |0 = Compare up count interrupt Disabled.
+     * |        |          |1 = Compare up count interrupt Enabled.
+     * |        |          |Note: In complementary mode, CMPUIEN1, 3, 5 use as another CMPUIEN for channel 0, 2, 4.
+     * |[18]    |CMPUIEN2  |EPWM Compare Up Count Interrupt Enable Bits
+     * |        |          |0 = Compare up count interrupt Disabled.
+     * |        |          |1 = Compare up count interrupt Enabled.
+     * |        |          |Note: In complementary mode, CMPUIEN1, 3, 5 use as another CMPUIEN for channel 0, 2, 4.
+     * |[19]    |CMPUIEN3  |EPWM Compare Up Count Interrupt Enable Bits
+     * |        |          |0 = Compare up count interrupt Disabled.
+     * |        |          |1 = Compare up count interrupt Enabled.
+     * |        |          |Note: In complementary mode, CMPUIEN1, 3, 5 use as another CMPUIEN for channel 0, 2, 4.
+     * |[20]    |CMPUIEN4  |EPWM Compare Up Count Interrupt Enable Bits
+     * |        |          |0 = Compare up count interrupt Disabled.
+     * |        |          |1 = Compare up count interrupt Enabled.
+     * |        |          |Note: In complementary mode, CMPUIEN1, 3, 5 use as another CMPUIEN for channel 0, 2, 4.
+     * |[21]    |CMPUIEN5  |EPWM Compare Up Count Interrupt Enable Bits
+     * |        |          |0 = Compare up count interrupt Disabled.
+     * |        |          |1 = Compare up count interrupt Enabled.
+     * |        |          |Note: In complementary mode, CMPUIEN1, 3, 5 use as another CMPUIEN for channel 0, 2, 4.
+     * |[24]    |CMPDIEN0  |EPWM Compare Down Count Interrupt Enable Bits
+     * |        |          |0 = Compare down count interrupt Disabled.
+     * |        |          |1 = Compare down count interrupt Enabled.
+     * |        |          |Note: In complementary mode, CMPDIEN1, 3, 5 use as another CMPDIEN for channel 0, 2, 4.
+     * |[25]    |CMPDIEN1  |EPWM Compare Down Count Interrupt Enable Bits
+     * |        |          |0 = Compare down count interrupt Disabled.
+     * |        |          |1 = Compare down count interrupt Enabled.
+     * |        |          |Note: In complementary mode, CMPDIEN1, 3, 5 use as another CMPDIEN for channel 0, 2, 4.
+     * |[26]    |CMPDIEN2  |EPWM Compare Down Count Interrupt Enable Bits
+     * |        |          |0 = Compare down count interrupt Disabled.
+     * |        |          |1 = Compare down count interrupt Enabled.
+     * |        |          |Note: In complementary mode, CMPDIEN1, 3, 5 use as another CMPDIEN for channel 0, 2, 4.
+     * |[27]    |CMPDIEN3  |EPWM Compare Down Count Interrupt Enable Bits
+     * |        |          |0 = Compare down count interrupt Disabled.
+     * |        |          |1 = Compare down count interrupt Enabled.
+     * |        |          |Note: In complementary mode, CMPDIEN1, 3, 5 use as another CMPDIEN for channel 0, 2, 4.
+     * |[28]    |CMPDIEN4  |EPWM Compare Down Count Interrupt Enable Bits
+     * |        |          |0 = Compare down count interrupt Disabled.
+     * |        |          |1 = Compare down count interrupt Enabled.
+     * |        |          |Note: In complementary mode, CMPDIEN1, 3, 5 use as another CMPDIEN for channel 0, 2, 4.
+     * |[29]    |CMPDIEN5  |EPWM Compare Down Count Interrupt Enable Bits
+     * |        |          |0 = Compare down count interrupt Disabled.
+     * |        |          |1 = Compare down count interrupt Enabled.
+     * |        |          |Note: In complementary mode, CMPDIEN1, 3, 5 use as another CMPDIEN for channel 0, 2, 4.
+     * @var EPWM_T::INTEN1
+     * Offset: 0xE4  EPWM Interrupt Enable Register 1
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |BRKEIEN0_1|EPWM Edge-detect Brake Interrupt Enable for Channel0/1 (Write Protect)
+     * |        |          |0 = Edge-detect Brake interrupt for channel0/1 Disabled.
+     * |        |          |1 = Edge-detect Brake interrupt for channel0/1 Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[1]     |BRKEIEN2_3|EPWM Edge-detect Brake Interrupt Enable for Channel2/3 (Write Protect)
+     * |        |          |0 = Edge-detect Brake interrupt for channel2/3 Disabled.
+     * |        |          |1 = Edge-detect Brake interrupt for channel2/3 Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[2]     |BRKEIEN4_5|EPWM Edge-detect Brake Interrupt Enable for Channel4/5 (Write Protect)
+     * |        |          |0 = Edge-detect Brake interrupt for channel4/5 Disabled.
+     * |        |          |1 = Edge-detect Brake interrupt for channel4/5 Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[8]     |BRKLIEN0_1|EPWM Level-detect Brake Interrupt Enable for Channel0/1 (Write Protect)
+     * |        |          |0 = Level-detect Brake interrupt for channel0/1 Disabled.
+     * |        |          |1 = Level-detect Brake interrupt for channel0/1 Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[9]     |BRKLIEN2_3|EPWM Level-detect Brake Interrupt Enable for Channel2/3 (Write Protect)
+     * |        |          |0 = Level-detect Brake interrupt for channel2/3 Disabled.
+     * |        |          |1 = Level-detect Brake interrupt for channel2/3 Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[10]    |BRKLIEN4_5|EPWM Level-detect Brake Interrupt Enable for Channel4/5 (Write Protect)
+     * |        |          |0 = Level-detect Brake interrupt for channel4/5 Disabled.
+     * |        |          |1 = Level-detect Brake interrupt for channel4/5 Enabled.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * @var EPWM_T::INTSTS0
+     * Offset: 0xE8  EPWM Interrupt Flag Register 0
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |ZIF0      |EPWM Zero Point Interrupt Flag
+     * |        |          |This bit is set by hardware when EPWM counter reaches zero, software can write 1 to clear this bit to zero.
+     * |[1]     |ZIF1      |EPWM Zero Point Interrupt Flag
+     * |        |          |This bit is set by hardware when EPWM counter reaches zero, software can write 1 to clear this bit to zero.
+     * |[2]     |ZIF2      |EPWM Zero Point Interrupt Flag
+     * |        |          |This bit is set by hardware when EPWM counter reaches zero, software can write 1 to clear this bit to zero.
+     * |[3]     |ZIF3      |EPWM Zero Point Interrupt Flag
+     * |        |          |This bit is set by hardware when EPWM counter reaches zero, software can write 1 to clear this bit to zero.
+     * |[4]     |ZIF4      |EPWM Zero Point Interrupt Flag
+     * |        |          |This bit is set by hardware when EPWM counter reaches zero, software can write 1 to clear this bit to zero.
+     * |[5]     |ZIF5      |EPWM Zero Point Interrupt Flag
+     * |        |          |This bit is set by hardware when EPWM counter reaches zero, software can write 1 to clear this bit to zero.
+     * |[8]     |PIF0      |EPWM Period Point Interrupt Flag
+     * |        |          |This bit is set by hardware when EPWM counter reaches EPWM_PERIODn, software can write 1 to clear this bit to zero.
+     * |[9]     |PIF1      |EPWM Period Point Interrupt Flag
+     * |        |          |This bit is set by hardware when EPWM counter reaches EPWM_PERIODn, software can write 1 to clear this bit to zero.
+     * |[10]    |PIF2      |EPWM Period Point Interrupt Flag
+     * |        |          |This bit is set by hardware when EPWM counter reaches EPWM_PERIODn, software can write 1 to clear this bit to zero.
+     * |[11]    |PIF3      |EPWM Period Point Interrupt Flag
+     * |        |          |This bit is set by hardware when EPWM counter reaches EPWM_PERIODn, software can write 1 to clear this bit to zero.
+     * |[12]    |PIF4      |EPWM Period Point Interrupt Flag
+     * |        |          |This bit is set by hardware when EPWM counter reaches EPWM_PERIODn, software can write 1 to clear this bit to zero.
+     * |[13]    |PIF5      |EPWM Period Point Interrupt Flag
+     * |        |          |This bit is set by hardware when EPWM counter reaches EPWM_PERIODn, software can write 1 to clear this bit to zero.
+     * |[16]    |CMPUIF0   |EPWM Compare Up Count Interrupt Flag
+     * |        |          |Flag is set by hardware when EPWM counter up count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
+     * |        |          |Note1: If CMPDAT equal to PERIOD, this flag is not working in up counter type selection.
+     * |        |          |Note2: In complementary mode, CMPUIF1, 3, 5 use as another CMPUIF for channel 0, 2, 4.
+     * |[17]    |CMPUIF1   |EPWM Compare Up Count Interrupt Flag
+     * |        |          |Flag is set by hardware when EPWM counter up count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
+     * |        |          |Note1: If CMPDAT equal to PERIOD, this flag is not working in up counter type selection.
+     * |        |          |Note2: In complementary mode, CMPUIF1, 3, 5 use as another CMPUIF for channel 0, 2, 4.
+     * |[18]    |CMPUIF2   |EPWM Compare Up Count Interrupt Flag
+     * |        |          |Flag is set by hardware when EPWM counter up count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
+     * |        |          |Note1: If CMPDAT equal to PERIOD, this flag is not working in up counter type selection.
+     * |        |          |Note2: In complementary mode, CMPUIF1, 3, 5 use as another CMPUIF for channel 0, 2, 4.
+     * |[19]    |CMPUIF3   |EPWM Compare Up Count Interrupt Flag
+     * |        |          |Flag is set by hardware when EPWM counter up count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
+     * |        |          |Note1: If CMPDAT equal to PERIOD, this flag is not working in up counter type selection.
+     * |        |          |Note2: In complementary mode, CMPUIF1, 3, 5 use as another CMPUIF for channel 0, 2, 4.
+     * |[20]    |CMPUIF4   |EPWM Compare Up Count Interrupt Flag
+     * |        |          |Flag is set by hardware when EPWM counter up count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
+     * |        |          |Note1: If CMPDAT equal to PERIOD, this flag is not working in up counter type selection.
+     * |        |          |Note2: In complementary mode, CMPUIF1, 3, 5 use as another CMPUIF for channel 0, 2, 4.
+     * |[21]    |CMPUIF5   |EPWM Compare Up Count Interrupt Flag
+     * |        |          |Flag is set by hardware when EPWM counter up count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
+     * |        |          |Note1: If CMPDAT equal to PERIOD, this flag is not working in up counter type selection.
+     * |        |          |Note2: In complementary mode, CMPUIF1, 3, 5 use as another CMPUIF for channel 0, 2, 4.
+     * |[24]    |CMPDIF0   |EPWM Compare Down Count Interrupt Flag
+     * |        |          |Flag is set by hardware when EPWM counter down count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
+     * |        |          |Note1: If CMPDAT equal to PERIOD, this flag is not working in down counter type selection.
+     * |        |          |Note2: In complementary mode, CMPDIF1, 3, 5 use as another CMPDIF for channel 0, 2, 4.
+     * |[25]    |CMPDIF1   |EPWM Compare Down Count Interrupt Flag
+     * |        |          |Flag is set by hardware when EPWM counter down count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
+     * |        |          |Note1: If CMPDAT equal to PERIOD, this flag is not working in down counter type selection.
+     * |        |          |Note2: In complementary mode, CMPDIF1, 3, 5 use as another CMPDIF for channel 0, 2, 4.
+     * |[26]    |CMPDIF2   |EPWM Compare Down Count Interrupt Flag
+     * |        |          |Flag is set by hardware when EPWM counter down count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
+     * |        |          |Note1: If CMPDAT equal to PERIOD, this flag is not working in down counter type selection.
+     * |        |          |Note2: In complementary mode, CMPDIF1, 3, 5 use as another CMPDIF for channel 0, 2, 4.
+     * |[27]    |CMPDIF3   |EPWM Compare Down Count Interrupt Flag
+     * |        |          |Flag is set by hardware when EPWM counter down count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
+     * |        |          |Note1: If CMPDAT equal to PERIOD, this flag is not working in down counter type selection.
+     * |        |          |Note2: In complementary mode, CMPDIF1, 3, 5 use as another CMPDIF for channel 0, 2, 4.
+     * |[28]    |CMPDIF4   |EPWM Compare Down Count Interrupt Flag
+     * |        |          |Flag is set by hardware when EPWM counter down count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
+     * |        |          |Note1: If CMPDAT equal to PERIOD, this flag is not working in down counter type selection.
+     * |        |          |Note2: In complementary mode, CMPDIF1, 3, 5 use as another CMPDIF for channel 0, 2, 4.
+     * |[29]    |CMPDIF5   |EPWM Compare Down Count Interrupt Flag
+     * |        |          |Flag is set by hardware when EPWM counter down count and reaches EPWM_CMPDATn, software can clear this bit by writing 1 to it.
+     * |        |          |Note1: If CMPDAT equal to PERIOD, this flag is not working in down counter type selection.
+     * |        |          |Note2: In complementary mode, CMPDIF1, 3, 5 use as another CMPDIF for channel 0, 2, 4.
+     * @var EPWM_T::INTSTS1
+     * Offset: 0xEC  EPWM Interrupt Flag Register 1
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |BRKEIF0   |EPWM Channel0 Edge-detect Brake Interrupt Flag (Write Protect)
+     * |        |          |0 = EPWM channel0 edge-detect brake event do not happened.
+     * |        |          |1 = When EPWM channel0 edge-detect brake event happened, this bit is set to 1, writing 1 to clear.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[1]     |BRKEIF1   |EPWM Channel1 Edge-detect Brake Interrupt Flag (Write Protect)
+     * |        |          |0 = EPWM channel1 edge-detect brake event do not happened.
+     * |        |          |1 = When EPWM channel1 edge-detect brake event happened, this bit is set to 1, writing 1 to clear.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[2]     |BRKEIF2   |EPWM Channel2 Edge-detect Brake Interrupt Flag (Write Protect)
+     * |        |          |0 = EPWM channel2 edge-detect brake event do not happened.
+     * |        |          |1 = When EPWM channel2 edge-detect brake event happened, this bit is set to 1, writing 1 to clear.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[3]     |BRKEIF3   |EPWM Channel3 Edge-detect Brake Interrupt Flag (Write Protect)
+     * |        |          |0 = EPWM channel3 edge-detect brake event do not happened.
+     * |        |          |1 = When EPWM channel3 edge-detect brake event happened, this bit is set to 1, writing 1 to clear.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[4]     |BRKEIF4   |EPWM Channel4 Edge-detect Brake Interrupt Flag (Write Protect)
+     * |        |          |0 = EPWM channel4 edge-detect brake event do not happened.
+     * |        |          |1 = When EPWM channel4 edge-detect brake event happened, this bit is set to 1, writing 1 to clear.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[5]     |BRKEIF5   |EPWM Channel5 Edge-detect Brake Interrupt Flag (Write Protect)
+     * |        |          |0 = EPWM channel5 edge-detect brake event do not happened.
+     * |        |          |1 = When EPWM channel5 edge-detect brake event happened, this bit is set to 1, writing 1 to clear.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[8]     |BRKLIF0   |EPWM Channel0 Level-detect Brake Interrupt Flag (Write Protect)
+     * |        |          |0 = EPWM channel0 level-detect brake event do not happened.
+     * |        |          |1 = When EPWM channel0 level-detect brake event happened, this bit is set to 1, writing 1 to clear.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[9]     |BRKLIF1   |EPWM Channel1 Level-detect Brake Interrupt Flag (Write Protect)
+     * |        |          |0 = EPWM channel1 level-detect brake event do not happened.
+     * |        |          |1 = When EPWM channel1 level-detect brake event happened, this bit is set to 1, writing 1 to clear.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[10]    |BRKLIF2   |EPWM Channel2 Level-detect Brake Interrupt Flag (Write Protect)
+     * |        |          |0 = EPWM channel2 level-detect brake event do not happened.
+     * |        |          |1 = When EPWM channel2 level-detect brake event happened, this bit is set to 1, writing 1 to clear.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[11]    |BRKLIF3   |EPWM Channel3 Level-detect Brake Interrupt Flag (Write Protect)
+     * |        |          |0 = EPWM channel3 level-detect brake event do not happened.
+     * |        |          |1 = When EPWM channel3 level-detect brake event happened, this bit is set to 1, writing 1 to clear.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[12]    |BRKLIF4   |EPWM Channel4 Level-detect Brake Interrupt Flag (Write Protect)
+     * |        |          |0 = EPWM channel4 level-detect brake event do not happened.
+     * |        |          |1 = When EPWM channel4 level-detect brake event happened, this bit is set to 1, writing 1 to clear.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[13]    |BRKLIF5   |EPWM Channel5 Level-detect Brake Interrupt Flag (Write Protect)
+     * |        |          |0 = EPWM channel5 level-detect brake event do not happened.
+     * |        |          |1 = When EEPWM channel5 level-detect brake event happened, this bit is set to 1, writing 1 to clear.
+     * |        |          |Note: This register is write protected. Refer toSYS_REGLCTL register.
+     * |[16]    |BRKESTS0  |EPWM Channel0 Edge-detect Brake Status (Read Only)
+     * |        |          |0 = EPWM channel0 edge-detect brake state is released.
+     * |        |          |1 = When EPWM channel0 edge-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel0 at brake state, writing 1 to clear.
+     * |[17]    |BRKESTS1  |EPWM Channel1 Edge-detect Brake Status (Read Only)
+     * |        |          |0 = EPWM channel1 edge-detect brake state is released.
+     * |        |          |1 = When EPWM channel1 edge-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel1 at brake state, writing 1 to clear.
+     * |[18]    |BRKESTS2  |EPWM Channel2 Edge-detect Brake Status (Read Only)
+     * |        |          |0 = EPWM channel2 edge-detect brake state is released.
+     * |        |          |1 = When EPWM channel2 edge-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel2 at brake state, writing 1 to clear.
+     * |[19]    |BRKESTS3  |EPWM Channel3 Edge-detect Brake Status (Read Only)
+     * |        |          |0 = EPWM channel3 edge-detect brake state is released.
+     * |        |          |1 = When EPWM channel3 edge-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel3 at brake state, writing 1 to clear.
+     * |[20]    |BRKESTS4  |EPWM Channel4 Edge-detect Brake Status (Read Only)
+     * |        |          |0 = EPWM channel4 edge-detect brake state is released.
+     * |        |          |1 = When EPWM channel4 edge-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel4 at brake state, writing 1 to clear.
+     * |[21]    |BRKESTS5  |EPWM Channel5 Edge-detect Brake Status (Read Only)
+     * |        |          |0 = EPWM channel5 edge-detect brake state is released.
+     * |        |          |1 = When EPWM channel5 edge-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel5 at brake state, writing 1 to clear.
+     * |[24]    |BRKLSTS0  |EPWM Channel0 Level-detect Brake Status (Read Only)
+     * |        |          |0 = EPWM channel0 level-detect brake state is released.
+     * |        |          |1 = When EPWM channel0 level-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel0 at brake state.
+     * |        |          |Note: This bit is read only and auto cleared by hardware
+     * |        |          |When enabled brake source return to high level, EPWM will release brake state until current EPWM period finished
+     * |        |          |The EPWM waveform will start output from next full EPWM period.
+     * |[25]    |BRKLSTS1  |EPWM Channel1 Level-detect Brake Status (Read Only)
+     * |        |          |0 = EPWM channel1 level-detect brake state is released.
+     * |        |          |1 = When EPWM channel1 level-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel1 at brake state.
+     * |        |          |Note: This bit is read only and auto cleared by hardware
+     * |        |          |When enabled brake source return to high level, EPWM will release brake state until current EPWM period finished
+     * |        |          |The EPWM waveform will start output from next full EPWM period.
+     * |[26]    |BRKLSTS2  |EPWM Channel2 Level-detect Brake Status (Read Only)
+     * |        |          |0 = EPWM channel2 level-detect brake state is released.
+     * |        |          |1 = When EPWM channel2 level-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel2 at brake state.
+     * |        |          |Note: This bit is read only and auto cleared by hardware
+     * |        |          |When enabled brake source return to high level, EPWM will release brake state until current EPWM period finished
+     * |        |          |The EPWM waveform will start output from next full EPWM period.
+     * |[27]    |BRKLSTS3  |EPWM Channel3 Level-detect Brake Status (Read Only)
+     * |        |          |0 = EPWM channel3 level-detect brake state is released.
+     * |        |          |1 = When EPWM channel3 level-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel3 at brake state.
+     * |        |          |Note: This bit is read only and auto cleared by hardware
+     * |        |          |When enabled brake source return to high level, EPWM will release brake state until current EPWM period finished
+     * |        |          |The EPWM waveform will start output from next full EPWM period.
+     * |[28]    |BRKLSTS4  |EPWM Channel4 Level-detect Brake Status (Read Only)
+     * |        |          |0 = EPWM channel4 level-detect brake state is released.
+     * |        |          |1 = When EPWM channel4 level-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel4 at brake state.
+     * |        |          |Note: This bit is read only and auto cleared by hardware
+     * |        |          |When enabled brake source return to high level, EPWM will release brake state until current EPWM period finished
+     * |        |          |The EPWM waveform will start output from next full EPWM period.
+     * |[29]    |BRKLSTS5  |EPWM Channel5 Level-detect Brake Status (Read Only)
+     * |        |          |0 = EPWM channel5 level-detect brake state is released.
+     * |        |          |1 = When EPWM channel5 level-detect brake detects a falling edge of any enabled brake source; this flag will be set to indicate the EPWM channel5 at brake state.
+     * |        |          |Note: This bit is read only and auto cleared by hardware
+     * |        |          |When enabled brake source return to high level, EPWM will release brake state until current EPWM period finished
+     * |        |          |The EPWM waveform will start output from next full EPWM period.
+     * @var EPWM_T::DACTRGEN
+     * Offset: 0xF4  EPWM Trigger DAC Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |ZTE0      |EPWM Zero Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger EADC/DAC/DMA to start action when EPWM counter down count to zero if this bit is set to1.
+     * |        |          |0 = EPWM period point trigger DAC function Disabled.
+     * |        |          |1 = EPWM period point trigger DAC function Enabled.
+     * |[1]     |ZTE1      |EPWM Zero Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger EADC/DAC/DMA to start action when EPWM counter down count to zero if this bit is set to1.
+     * |        |          |0 = EPWM period point trigger DAC function Disabled.
+     * |        |          |1 = EPWM period point trigger DAC function Enabled.
+     * |[2]     |ZTE2      |EPWM Zero Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger EADC/DAC/DMA to start action when EPWM counter down count to zero if this bit is set to1.
+     * |        |          |0 = EPWM period point trigger DAC function Disabled.
+     * |        |          |1 = EPWM period point trigger DAC function Enabled.
+     * |[3]     |ZTE3      |EPWM Zero Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger EADC/DAC/DMA to start action when EPWM counter down count to zero if this bit is set to1.
+     * |        |          |0 = EPWM period point trigger DAC function Disabled.
+     * |        |          |1 = EPWM period point trigger DAC function Enabled.
+     * |[4]     |ZTE4      |EPWM Zero Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger EADC/DAC/DMA to start action when EPWM counter down count to zero if this bit is set to1.
+     * |        |          |0 = EPWM period point trigger DAC function Disabled.
+     * |        |          |1 = EPWM period point trigger DAC function Enabled.
+     * |[5]     |ZTE5      |EPWM Zero Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger EADC/DAC/DMA to start action when EPWM counter down count to zero if this bit is set to1.
+     * |        |          |0 = EPWM period point trigger DAC function Disabled.
+     * |        |          |1 = EPWM period point trigger DAC function Enabled.
+     * |[8]     |PTE0      |EPWM Period Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter up count to (PERIODn+1) if this bit is set to1.
+     * |        |          |0 = EPWM period point trigger DAC function Disabled.
+     * |        |          |1 = EPWM period point trigger DAC function Enabled.
+     * |[9]     |PTE1      |EPWM Period Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter up count to (PERIODn+1) if this bit is set to1.
+     * |        |          |0 = EPWM period point trigger DAC function Disabled.
+     * |        |          |1 = EPWM period point trigger DAC function Enabled.
+     * |[10]    |PTE2      |EPWM Period Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter up count to (PERIODn+1) if this bit is set to1.
+     * |        |          |0 = EPWM period point trigger DAC function Disabled.
+     * |        |          |1 = EPWM period point trigger DAC function Enabled.
+     * |[11]    |PTE3      |EPWM Period Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter up count to (PERIODn+1) if this bit is set to1.
+     * |        |          |0 = EPWM period point trigger DAC function Disabled.
+     * |        |          |1 = EPWM period point trigger DAC function Enabled.
+     * |[12]    |PTE4      |EPWM Period Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter up count to (PERIODn+1) if this bit is set to1.
+     * |        |          |0 = EPWM period point trigger DAC function Disabled.
+     * |        |          |1 = EPWM period point trigger DAC function Enabled.
+     * |[13]    |PTE5      |EPWM Period Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter up count to (PERIODn+1) if this bit is set to1.
+     * |        |          |0 = EPWM period point trigger DAC function Disabled.
+     * |        |          |1 = EPWM period point trigger DAC function Enabled.
+     * |[16]    |CUTRGE0   |EPWM Compare Up Count Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter up count to CMPDAT if this bit is set to1.
+     * |        |          |0 = EPWM Compare Up point trigger DAC function Disabled.
+     * |        |          |1 = EPWM Compare Up point trigger DAC function Enabled.
+     * |        |          |Note1: This bit should keep at 0 when EPWM counter operating in down counter type.
+     * |        |          |Note2: In complementary mode, CUTRGE1, 3, 5 use as another CUTRGE for channel 0, 2, 4.
+     * |[17]    |CUTRGE1   |EPWM Compare Up Count Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter up count to CMPDAT if this bit is set to1.
+     * |        |          |0 = EPWM Compare Up point trigger DAC function Disabled.
+     * |        |          |1 = EPWM Compare Up point trigger DAC function Enabled.
+     * |        |          |Note1: This bit should keep at 0 when EPWM counter operating in down counter type.
+     * |        |          |Note2: In complementary mode, CUTRGE1, 3, 5 use as another CUTRGE for channel 0, 2, 4.
+     * |[18]    |CUTRGE2   |EPWM Compare Up Count Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter up count to CMPDAT if this bit is set to1.
+     * |        |          |0 = EPWM Compare Up point trigger DAC function Disabled.
+     * |        |          |1 = EPWM Compare Up point trigger DAC function Enabled.
+     * |        |          |Note1: This bit should keep at 0 when EPWM counter operating in down counter type.
+     * |        |          |Note2: In complementary mode, CUTRGE1, 3, 5 use as another CUTRGE for channel 0, 2, 4.
+     * |[19]    |CUTRGE3   |EPWM Compare Up Count Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter up count to CMPDAT if this bit is set to1.
+     * |        |          |0 = EPWM Compare Up point trigger DAC function Disabled.
+     * |        |          |1 = EPWM Compare Up point trigger DAC function Enabled.
+     * |        |          |Note1: This bit should keep at 0 when EPWM counter operating in down counter type.
+     * |        |          |Note2: In complementary mode, CUTRGE1, 3, 5 use as another CUTRGE for channel 0, 2, 4.
+     * |[20]    |CUTRGE4   |EPWM Compare Up Count Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter up count to CMPDAT if this bit is set to1.
+     * |        |          |0 = EPWM Compare Up point trigger DAC function Disabled.
+     * |        |          |1 = EPWM Compare Up point trigger DAC function Enabled.
+     * |        |          |Note1: This bit should keep at 0 when EPWM counter operating in down counter type.
+     * |        |          |Note2: In complementary mode, CUTRGE1, 3, 5 use as another CUTRGE for channel 0, 2, 4.
+     * |[21]    |CUTRGE5   |EPWM Compare Up Count Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter up count to CMPDAT if this bit is set to1.
+     * |        |          |0 = EPWM Compare Up point trigger DAC function Disabled.
+     * |        |          |1 = EPWM Compare Up point trigger DAC function Enabled.
+     * |        |          |Note1: This bit should keep at 0 when EPWM counter operating in down counter type.
+     * |        |          |Note2: In complementary mode, CUTRGE1, 3, 5 use as another CUTRGE for channel 0, 2, 4.
+     * |[24]    |CDTRGE0   |EPWM Compare Down Count Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter down count to CMPDAT if this bit is set to1.
+     * |        |          |0 = EPWM Compare Down count point trigger DAC function Disabled.
+     * |        |          |1 = EPWM Compare Down count point trigger DAC function Enabled.
+     * |        |          |Note1: This bit should keep at 0 when EPWM counter operating in up counter type.
+     * |        |          |Note2: In complementary mode, CDTRGE1, 3, 5 use as another CDTRGE for channel 0, 2, 4.
+     * |[25]    |CDTRGE1   |EPWM Compare Down Count Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter down count to CMPDAT if this bit is set to1.
+     * |        |          |0 = EPWM Compare Down count point trigger DAC function Disabled.
+     * |        |          |1 = EPWM Compare Down count point trigger DAC function Enabled.
+     * |        |          |Note1: This bit should keep at 0 when EPWM counter operating in up counter type.
+     * |        |          |Note2: In complementary mode, CDTRGE1, 3, 5 use as another CDTRGE for channel 0, 2, 4.
+     * |[26]    |CDTRGE2   |EPWM Compare Down Count Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter down count to CMPDAT if this bit is set to1.
+     * |        |          |0 = EPWM Compare Down count point trigger DAC function Disabled.
+     * |        |          |1 = EPWM Compare Down count point trigger DAC function Enabled.
+     * |        |          |Note1: This bit should keep at 0 when EPWM counter operating in up counter type.
+     * |        |          |Note2: In complementary mode, CDTRGE1, 3, 5 use as another CDTRGE for channel 0, 2, 4.
+     * |[27]    |CDTRGE3   |EPWM Compare Down Count Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter down count to CMPDAT if this bit is set to1.
+     * |        |          |0 = EPWM Compare Down count point trigger DAC function Disabled.
+     * |        |          |1 = EPWM Compare Down count point trigger DAC function Enabled.
+     * |        |          |Note1: This bit should keep at 0 when EPWM counter operating in up counter type.
+     * |        |          |Note2: In complementary mode, CDTRGE1, 3, 5 use as another CDTRGE for channel 0, 2, 4.
+     * |[28]    |CDTRGE4   |EPWM Compare Down Count Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter down count to CMPDAT if this bit is set to1.
+     * |        |          |0 = EPWM Compare Down count point trigger DAC function Disabled.
+     * |        |          |1 = EPWM Compare Down count point trigger DAC function Enabled.
+     * |        |          |Note1: This bit should keep at 0 when EPWM counter operating in up counter type.
+     * |        |          |Note2: In complementary mode, CDTRGE1, 3, 5 use as another CDTRGE for channel 0, 2, 4.
+     * |[29]    |CDTRGE5   |EPWM Compare Down Count Point Trigger DAC Enable Bits
+     * |        |          |EPWM can trigger DAC to start action when EPWM counter down count to CMPDAT if this bit is set to1.
+     * |        |          |0 = EPWM Compare Down count point trigger DAC function Disabled.
+     * |        |          |1 = EPWM Compare Down count point trigger DAC function Enabled.
+     * |        |          |Note1: This bit should keep at 0 when EPWM counter operating in up counter type.
+     * |        |          |Note2: In complementary mode, CDTRGE1, 3, 5 use as another CDTRGE for channel 0, 2, 4.
+     * @var EPWM_T::EADCTS0
+     * Offset: 0xF8  EPWM Trigger EADC Source Select Register 0
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[3:0]   |TRGSEL0   |EPWM_CH0 Trigger EADC Source Select
+     * |        |          |0000 = EPWM_CH0 zero point.
+     * |        |          |0001 = EPWM_CH0 period point.
+     * |        |          |0010 = EPWM_CH0 zero or period point.
+     * |        |          |0011 = EPWM_CH0 up-count CMPDAT point.
+     * |        |          |0100 = EPWM_CH0 down-count CMPDAT point.
+     * |        |          |0101 = EPWM_CH1 zero point.
+     * |        |          |0110 = EPWM_CH1 period point.
+     * |        |          |0111 = EPWM_CH1 zero or period point.
+     * |        |          |1000 = EPWM_CH1 up-count CMPDAT point.
+     * |        |          |1001 = EPWM_CH1 down-count CMPDAT point.
+     * |        |          |1010 = EPWM_CH0 up-count free CMPDAT point.
+     * |        |          |1011 = EPWM_CH0 down-count free CMPDAT point.
+     * |        |          |1100 = EPWM_CH2 up-count free CMPDAT point.
+     * |        |          |1101 = EPWM_CH2 down-count free CMPDAT point.
+     * |        |          |1110 = EPWM_CH4 up-count free CMPDAT point.
+     * |        |          |1111 = EPWM_CH4 down-count free CMPDAT point.
+     * |[7]     |TRGEN0    |EPWM_CH0 Trigger EADC enable bit
+     * |[11:8]  |TRGSEL1   |EPWM_CH1 Trigger EADC Source Select
+     * |        |          |0000 = EPWM_CH0 zero point.
+     * |        |          |0001 = EPWM_CH0 period point.
+     * |        |          |0010 = EPWM_CH0 zero or period point.
+     * |        |          |0011 = EPWM_CH0 up-count CMPDAT point.
+     * |        |          |0100 = EPWM_CH0 down-count CMPDAT point.
+     * |        |          |0101 = EPWM_CH1 zero point.
+     * |        |          |0110 = EPWM_CH1 period point.
+     * |        |          |0111 = EPWM_CH1 zero or period point.
+     * |        |          |1000 = EPWM_CH1 up-count CMPDAT point.
+     * |        |          |1001 = EPWM_CH1 down-count CMPDAT point.
+     * |        |          |1010 = EPWM_CH0 up-count free CMPDAT point.
+     * |        |          |1011 = EPWM_CH0 down-count free CMPDAT point.
+     * |        |          |1100 = EPWM_CH2 up-count free CMPDAT point.
+     * |        |          |1101 = EPWM_CH2 down-count free CMPDAT point.
+     * |        |          |1110 = EPWM_CH4 up-count free CMPDAT point.
+     * |        |          |1111 = EPWM_CH4 down-count free CMPDAT point.
+     * |[15]    |TRGEN1    |EPWM_CH1 Trigger EADC enable bit
+     * |[19:16] |TRGSEL2   |EPWM_CH2 Trigger EADC Source Select
+     * |        |          |0000 = EPWM_CH2 zero point.
+     * |        |          |0001 = EPWM_CH2 period point.
+     * |        |          |0010 = EPWM_CH2 zero or period point.
+     * |        |          |0011 = EPWM_CH2 up-count CMPDAT point.
+     * |        |          |0100 = EPWM_CH2 down-count CMPDAT point.
+     * |        |          |0101 = EPWM_CH3 zero point.
+     * |        |          |0110 = EPWM_CH3 period point.
+     * |        |          |0111 = EPWM_CH3 zero or period point.
+     * |        |          |1000 = EPWM_CH3 up-count CMPDAT point.
+     * |        |          |1001 = EPWM_CH3 down-count CMPDAT point.
+     * |        |          |1010 = EPWM_CH0 up-count free CMPDAT point.
+     * |        |          |1011 = EPWM_CH0 down-count free CMPDAT point.
+     * |        |          |1100 = EPWM_CH2 up-count free CMPDAT point.
+     * |        |          |1101 = EPWM_CH2 down-count free CMPDAT point.
+     * |        |          |1110 = EPWM_CH4 up-count free CMPDAT point.
+     * |        |          |1111 = EPWM_CH4 down-count free CMPDAT point.
+     * |[23]    |TRGEN2    |EPWM_CH2 Trigger EADC enable bit
+     * |[27:24] |TRGSEL3   |EPWM_CH3 Trigger EADC Source Select
+     * |        |          |0000 = EPWM_CH2 zero point.
+     * |        |          |0001 = EPWM_CH2 period point.
+     * |        |          |0010 = EPWM_CH2 zero or period point.
+     * |        |          |0011 = EPWM_CH2 up-count CMPDAT point.
+     * |        |          |0100 = EPWM_CH2 down-count CMPDAT point.
+     * |        |          |0101 = EPWM_CH3 zero point.
+     * |        |          |0110 = EPWM_CH3 period point.
+     * |        |          |0111 = EPWM_CH3 zero or period point.
+     * |        |          |1000 = EPWM_CH3 up-count CMPDAT point.
+     * |        |          |1001 = EPWM_CH3 down-count CMPDAT point.
+     * |        |          |1010 = EPWM_CH0 up-count free CMPDAT point.
+     * |        |          |1011 = EPWM_CH0 down-count free CMPDAT point.
+     * |        |          |1100 = EPWM_CH2 up-count free CMPDAT point.
+     * |        |          |1101 = EPWM_CH2 down-count free CMPDAT point.
+     * |        |          |1110 = EPWM_CH4 up-count free CMPDAT point.
+     * |        |          |1111 = EPWM_CH4 down-count free CMPDAT point.
+     * |[31]    |TRGEN3    |EPWM_CH3 Trigger EADC enable bit
+     * @var EPWM_T::EADCTS1
+     * Offset: 0xFC  EPWM Trigger EADC Source Select Register 1
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[3:0]   |TRGSEL4   |EPWM_CH4 Trigger EADC Source Select
+     * |        |          |0000 = EPWM_CH4 zero point.
+     * |        |          |0001 = EPWM_CH4 period point.
+     * |        |          |0010 = EPWM_CH4 zero or period point.
+     * |        |          |0011 = EPWM_CH4 up-count CMPDAT point.
+     * |        |          |0100 = EPWM_CH4 down-count CMPDAT point.
+     * |        |          |0101 = EPWM_CH5 zero point.
+     * |        |          |0110 = EPWM_CH5 period point.
+     * |        |          |0111 = EPWM_CH5 zero or period point.
+     * |        |          |1000 = EPWM_CH5 up-count CMPDAT point.
+     * |        |          |1001 = EPWM_CH5 down-count CMPDAT point.
+     * |        |          |1010 = EPWM_CH0 up-count free CMPDAT point.
+     * |        |          |1011 = EPWM_CH0 down-count free CMPDAT point.
+     * |        |          |1100 = EPWM_CH2 up-count free CMPDAT point.
+     * |        |          |1101 = EPWM_CH2 down-count free CMPDAT point.
+     * |        |          |1110 = EPWM_CH4 up-count free CMPDAT point.
+     * |        |          |1111 = EPWM_CH4 down-count free CMPDAT point.
+     * |[7]     |TRGEN4    |EPWM_CH4 Trigger EADC enable bit
+     * |[11:8]  |TRGSEL5   |EPWM_CH5 Trigger EADC Source Select
+     * |        |          |0000 = EPWM_CH4 zero point.
+     * |        |          |0001 = EPWM_CH4 period point.
+     * |        |          |0010 = EPWM_CH4 zero or period point.
+     * |        |          |0011 = EPWM_CH4 up-count CMPDAT point.
+     * |        |          |0100 = EPWM_CH4 down-count CMPDAT point.
+     * |        |          |0101 = EPWM_CH5 zero point.
+     * |        |          |0110 = EPWM_CH5 period point.
+     * |        |          |0111 = EPWM_CH5 zero or period point.
+     * |        |          |1000 = EPWM_CH5 up-count CMPDAT point.
+     * |        |          |1001 = EPWM_CH5 down-count CMPDAT point.
+     * |        |          |1010 = EPWM_CH0 up-count free CMPDAT point.
+     * |        |          |1011 = EPWM_CH0 down-count free CMPDAT point.
+     * |        |          |1100 = EPWM_CH2 up-count free CMPDAT point.
+     * |        |          |1101 = EPWM_CH2 down-count free CMPDAT point.
+     * |        |          |1110 = EPWM_CH4 up-count free CMPDAT point.
+     * |        |          |1111 = EPWM_CH4 down-count free CMPDAT point.
+     * |[15]    |TRGEN5    |EPWM_CH5 Trigger EADC enable bit
+     * @var EPWM_T::FTCMPDAT[3]
+     * Offset: 0x100  EPWM Free Trigger Compare Register 0/1,2/3,4/5
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |FTCMP     |EPWM Free Trigger Compare Register
+     * |        |          |FTCMP use to compare with even CNTR to trigger EADC
+     * |        |          |FTCMPDAT0, 2, 4 corresponding complementary pairs EPWM_CH0 and EPWM_CH1, EPWM_CH2 and EPWM_CH3, EPWM_CH4 and EPWM_CH5.
+     * @var EPWM_T::SSCTL
+     * Offset: 0x110  EPWM Synchronous Start Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SSEN0     |EPWM Synchronous Start Function Enable Bits
+     * |        |          |When synchronous start function is enabled, the EPWM counter enable register (EPWM_CNTEN) can be enabled by writing EPWM synchronous start trigger bit (CNTSEN).
+     * |        |          |0 = EPWM synchronous start function Disabled.
+     * |        |          |1 = EPWM synchronous start function Enabled.
+     * |[1]     |SSEN1     |EPWM Synchronous Start Function Enable Bits
+     * |        |          |When synchronous start function is enabled, the EPWM counter enable register (EPWM_CNTEN) can be enabled by writing EPWM synchronous start trigger bit (CNTSEN).
+     * |        |          |0 = EPWM synchronous start function Disabled.
+     * |        |          |1 = EPWM synchronous start function Enabled.
+     * |[2]     |SSEN2     |EPWM Synchronous Start Function Enable Bits
+     * |        |          |When synchronous start function is enabled, the EPWM counter enable register (EPWM_CNTEN) can be enabled by writing EPWM synchronous start trigger bit (CNTSEN).
+     * |        |          |0 = EPWM synchronous start function Disabled.
+     * |        |          |1 = EPWM synchronous start function Enabled.
+     * |[3]     |SSEN3     |EPWM Synchronous Start Function Enable Bits
+     * |        |          |When synchronous start function is enabled, the EPWM counter enable register (EPWM_CNTEN) can be enabled by writing EPWM synchronous start trigger bit (CNTSEN).
+     * |        |          |0 = EPWM synchronous start function Disabled.
+     * |        |          |1 = EPWM synchronous start function Enabled.
+     * |[4]     |SSEN4     |EPWM Synchronous Start Function Enable Bits
+     * |        |          |When synchronous start function is enabled, the EPWM counter enable register (EPWM_CNTEN) can be enabled by writing EPWM synchronous start trigger bit (CNTSEN).
+     * |        |          |0 = EPWM synchronous start function Disabled.
+     * |        |          |1 = EPWM synchronous start function Enabled.
+     * |[5]     |SSEN5     |EPWM Synchronous Start Function Enable Bits
+     * |        |          |When synchronous start function is enabled, the EPWM counter enable register (EPWM_CNTEN) can be enabled by writing EPWM synchronous start trigger bit (CNTSEN).
+     * |        |          |0 = EPWM synchronous start function Disabled.
+     * |        |          |1 = EPWM synchronous start function Enabled.
+     * |[9:8]   |SSRC      |EPWM Synchronous Start Source Select Bits
+     * |        |          |00 = Synchronous start source come from EPWM0.
+     * |        |          |01 = Synchronous start source come from EPWM1.
+     * |        |          |10 = Synchronous start source come from BPWM0.
+     * |        |          |11 = Synchronous start source come from BPWM1.
+     * @var EPWM_T::SSTRG
+     * Offset: 0x114  EPWM Synchronous Start Trigger Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CNTSEN    |EPWM Counter Synchronous Start Enable (Write Only)
+     * |        |          |PMW counter synchronous enable function is used to make selected EPWM channels (include EPWM0_CHx and EPWM1_CHx) start counting at the same time.
+     * |        |          |Writing this bit to 1 will also set the counter enable bit (CNTENn, n denotes channel 0 to 5) if correlated EPWM channel counter synchronous start function is enabled.
+     * @var EPWM_T::LEBCTL
+     * Offset: 0x118  EPWM Leading Edge Blanking Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |LEBEN     |EPWM Leading Edge Blanking Enable Bit
+     * |        |          |0 = EPWM Leading Edge Blanking Disabled.
+     * |        |          |1 = EPWM Leading Edge Blanking Enabled.
+     * |[8]     |SRCEN0    |EPWM Leading Edge Blanking Source From EPWM_CH0 Enable Bit
+     * |        |          |0 = EPWM Leading Edge Blanking Source from EPWM_CH0 Disabled.
+     * |        |          |1 = EPWM Leading Edge Blanking Source from EPWM_CH0 Enabled.
+     * |[9]     |SRCEN2    |EPWM Leading Edge Blanking Source From EPWM_CH2 Enable Bit
+     * |        |          |0 = EPWM Leading Edge Blanking Source from EPWM_CH2 Disabled.
+     * |        |          |1 = EPWM Leading Edge Blanking Source from EPWM_CH2 Enabled.
+     * |[10]    |SRCEN4    |EPWM Leading Edge Blanking Source From EPWM_CH4 Enable Bit
+     * |        |          |0 = EPWM Leading Edge Blanking Source from EPWM_CH4 Disabled.
+     * |        |          |1 = EPWM Leading Edge Blanking Source from EPWM_CH4 Enabled.
+     * |[17:16] |TRGTYPE   |EPWM Leading Edge Blanking Trigger Type
+     * |        |          |0 = When detect leading edge blanking source rising edge, blanking counter start counting.
+     * |        |          |1 = When detect leading edge blanking source falling edge, blanking counter start counting.
+     * |        |          |2 = When detect leading edge blanking source rising or falling edge, blanking counter start counting.
+     * |        |          |3 = Reserved.
+     * @var EPWM_T::LEBCNT
+     * Offset: 0x11C  EPWM Leading Edge Blanking Counter Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[8:0]   |LEBCNT    |EPWM Leading Edge Blanking Counter
+     * |        |          |This counter value decides leading edge blanking window size
+     * |        |          |Blanking window size = LEBCNT+1, and LEB counter clock base is ECLK.
+     * @var EPWM_T::STATUS
+     * Offset: 0x120  EPWM Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CNTMAXF0  |Time-base Counter Equal to 0xFFFF Latched Flag
+     * |        |          |0 = indicates the time-base counter never reached its maximum value 0xFFFF.
+     * |        |          |1 = indicates the time-base counter reached its maximum value, software can write 1 to clear this bit.
+     * |[1]     |CNTMAXF1  |Time-base Counter Equal to 0xFFFF Latched Flag
+     * |        |          |0 = indicates the time-base counter never reached its maximum value 0xFFFF.
+     * |        |          |1 = indicates the time-base counter reached its maximum value, software can write 1 to clear this bit.
+     * |[2]     |CNTMAXF2  |Time-base Counter Equal to 0xFFFF Latched Flag
+     * |        |          |0 = indicates the time-base counter never reached its maximum value 0xFFFF.
+     * |        |          |1 = indicates the time-base counter reached its maximum value, software can write 1 to clear this bit.
+     * |[3]     |CNTMAXF3  |Time-base Counter Equal to 0xFFFF Latched Flag
+     * |        |          |0 = indicates the time-base counter never reached its maximum value 0xFFFF.
+     * |        |          |1 = indicates the time-base counter reached its maximum value, software can write 1 to clear this bit.
+     * |[4]     |CNTMAXF4  |Time-base Counter Equal to 0xFFFF Latched Flag
+     * |        |          |0 = indicates the time-base counter never reached its maximum value 0xFFFF.
+     * |        |          |1 = indicates the time-base counter reached its maximum value, software can write 1 to clear this bit.
+     * |[5]     |CNTMAXF5  |Time-base Counter Equal to 0xFFFF Latched Flag
+     * |        |          |0 = indicates the time-base counter never reached its maximum value 0xFFFF.
+     * |        |          |1 = indicates the time-base counter reached its maximum value, software can write 1 to clear this bit.
+     * |[8]     |SYNCINF0  |Input Synchronization Latched Flag
+     * |        |          |0 = Indicates no SYNC_IN event has occurred.
+     * |        |          |1 = Indicates an SYNC_IN event has occurred, software can write 1 to clear this bit.
+     * |[9]     |SYNCINF2  |Input Synchronization Latched Flag
+     * |        |          |0 = Indicates no SYNC_IN event has occurred.
+     * |        |          |1 = Indicates an SYNC_IN event has occurred, software can write 1 to clear this bit.
+     * |[10]    |SYNCINF4  |Input Synchronization Latched Flag
+     * |        |          |0 = Indicates no SYNC_IN event has occurred.
+     * |        |          |1 = Indicates an SYNC_IN event has occurred, software can write 1 to clear this bit.
+     * |[16]    |EADCTRGF0 |EADC Start of Conversion Flag
+     * |        |          |0 = Indicates no EADC start of conversion trigger event has occurred.
+     * |        |          |1 = Indicates an EADC start of conversion trigger event has occurred, software can write 1 to clear this bit.
+     * |[17]    |EADCTRGF1 |EADC Start of Conversion Flag
+     * |        |          |0 = Indicates no EADC start of conversion trigger event has occurred.
+     * |        |          |1 = Indicates an EADC start of conversion trigger event has occurred, software can write 1 to clear this bit.
+     * |[18]    |EADCTRGF2 |EADC Start of Conversion Flag
+     * |        |          |0 = Indicates no EADC start of conversion trigger event has occurred.
+     * |        |          |1 = Indicates an EADC start of conversion trigger event has occurred, software can write 1 to clear this bit.
+     * |[19]    |EADCTRGF3 |EADC Start of Conversion Flag
+     * |        |          |0 = Indicates no EADC start of conversion trigger event has occurred.
+     * |        |          |1 = Indicates an EADC start of conversion trigger event has occurred, software can write 1 to clear this bit.
+     * |[20]    |EADCTRGF4 |EADC Start of Conversion Flag
+     * |        |          |0 = Indicates no EADC start of conversion trigger event has occurred.
+     * |        |          |1 = Indicates an EADC start of conversion trigger event has occurred, software can write 1 to clear this bit.
+     * |[21]    |EADCTRGF5 |EADC Start of Conversion Flag
+     * |        |          |0 = Indicates no EADC start of conversion trigger event has occurred.
+     * |        |          |1 = Indicates an EADC start of conversion trigger event has occurred, software can write 1 to clear this bit.
+     * |[24]    |DACTRGF   |DAC Start of Conversion Flag
+     * |        |          |0 = Indicates no DAC start of conversion trigger event has occurred.
+     * |        |          |1 = Indicates an DAC start of conversion trigger event has occurred, software can write 1 to clear this bit
+     * @var EPWM_T::IFA[6]
+     * Offset: 0x130  EPWM Interrupt Flag Accumulator Register 0~5
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |IFACNT    |EPWM_CHn Interrupt Flag Counter
+     * |        |          |The register sets the count number which defines how many times of EPWM_CHn period occurs to set bit IFAIFn to request the EPWM period interrupt.
+     * |        |          |EPWM flag will be set in every IFACNT[15:0] times of EPWM period.
+     * |[24]    |STPMOD    |EPWM_CHn Interrupt Flag Accumulator Stop Mode Enable Bits
+     * |        |          |0 = EPWM_CHn interrupt flag accumulator stop mode disable.
+     * |        |          |1 = EPWM_CHn interrupt flag accumulator stop mode enable.
+     * |[29:28] |IFASEL    |EPWM_CHn Interrupt Flag Accumulator Source Select
+     * |        |          |00 = CNT equal to Zero in channel n.
+     * |        |          |01 = CNT equal to PERIOD in channel n.
+     * |        |          |10 = CNT equal to CMPU in channel n.
+     * |        |          |11 = CNT equal to CMPD in channel n.
+     * |[31]    |IFAEN     |EPWM_CHn Interrupt Flag Accumulator Enable Bits
+     * |        |          |0 = EPWM_CHn interrupt flag accumulator disable.
+     * |        |          |1 = EPWM_CHn interrupt flag accumulator enable.
+     * @var EPWM_T::AINTSTS
+     * Offset: 0x150  EPWM Accumulator Interrupt Flag Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |IFAIF0    |EPWM_CHn Interrupt Flag Accumulator Interrupt Flag
+     * |        |          |Flag is set by hardware when condition match IFASEL in EPWM_IFAn register, software can clear this bit by writing 1 to it.
+     * |[1]     |IFAIF1    |EPWM_CHn Interrupt Flag Accumulator Interrupt Flag
+     * |        |          |Flag is set by hardware when condition match IFASEL in EPWM_IFAn register, software can clear this bit by writing 1 to it.
+     * |[2]     |IFAIF2    |EPWM_CHn Interrupt Flag Accumulator Interrupt Flag
+     * |        |          |Flag is set by hardware when condition match IFASEL in EPWM_IFAn register, software can clear this bit by writing 1 to it.
+     * |[3]     |IFAIF3    |EPWM_CHn Interrupt Flag Accumulator Interrupt Flag
+     * |        |          |Flag is set by hardware when condition match IFASEL in EPWM_IFAn register, software can clear this bit by writing 1 to it.
+     * |[4]     |IFAIF4    |EPWM_CHn Interrupt Flag Accumulator Interrupt Flag
+     * |        |          |Flag is set by hardware when condition match IFASEL in EPWM_IFAn register, software can clear this bit by writing 1 to it.
+     * |[5]     |IFAIF5    |EPWM_CHn Interrupt Flag Accumulator Interrupt Flag
+     * |        |          |Flag is set by hardware when condition match IFASEL in EPWM_IFAn register, software can clear this bit by writing 1 to it.
+     * @var EPWM_T::AINTEN
+     * Offset: 0x154  EPWM Accumulator Interrupt Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |IFAIEN0   |EPWM_CHn Interrupt Flag Accumulator Interrupt Enable Bits
+     * |        |          |0 = Interrupt Flag accumulator interrupt Disabled.
+     * |        |          |1 = Interrupt Flag accumulator interrupt Enabled.
+     * |[1]     |IFAIEN1   |EPWM_CHn Interrupt Flag Accumulator Interrupt Enable Bits
+     * |        |          |0 = Interrupt Flag accumulator interrupt Disabled.
+     * |        |          |1 = Interrupt Flag accumulator interrupt Enabled.
+     * |[2]     |IFAIEN2   |EPWM_CHn Interrupt Flag Accumulator Interrupt Enable Bits
+     * |        |          |0 = Interrupt Flag accumulator interrupt Disabled.
+     * |        |          |1 = Interrupt Flag accumulator interrupt Enabled.
+     * |[3]     |IFAIEN3   |EPWM_CHn Interrupt Flag Accumulator Interrupt Enable Bits
+     * |        |          |0 = Interrupt Flag accumulator interrupt Disabled.
+     * |        |          |1 = Interrupt Flag accumulator interrupt Enabled.
+     * |[4]     |IFAIEN4   |EPWM_CHn Interrupt Flag Accumulator Interrupt Enable Bits
+     * |        |          |0 = Interrupt Flag accumulator interrupt Disabled.
+     * |        |          |1 = Interrupt Flag accumulator interrupt Enabled.
+     * |[5]     |IFAIEN5   |EPWM_CHn Interrupt Flag Accumulator Interrupt Enable Bits
+     * |        |          |0 = Interrupt Flag accumulator interrupt Disabled.
+     * |        |          |1 = Interrupt Flag accumulator interrupt Enabled.
+     * @var EPWM_T::APDMACTL
+     * Offset: 0x158  EPWM Accumulator PDMA Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |APDMAEN0  |Channel N Accumulator PDMA Enable Bits
+     * |        |          |0 = Channel n PDMA function Disabled.
+     * |        |          |1 = Channel n PDMA function Enabled for the channel n to trigger PDMA to transfer memory data to register.
+     * |[1]     |APDMAEN1  |Channel N Accumulator PDMA Enable Bits
+     * |        |          |0 = Channel n PDMA function Disabled.
+     * |        |          |1 = Channel n PDMA function Enabled for the channel n to trigger PDMA to transfer memory data to register.
+     * |[2]     |APDMAEN2  |Channel N Accumulator PDMA Enable Bits
+     * |        |          |0 = Channel n PDMA function Disabled.
+     * |        |          |1 = Channel n PDMA function Enabled for the channel n to trigger PDMA to transfer memory data to register.
+     * |[3]     |APDMAEN3  |Channel N Accumulator PDMA Enable Bits
+     * |        |          |0 = Channel n PDMA function Disabled.
+     * |        |          |1 = Channel n PDMA function Enabled for the channel n to trigger PDMA to transfer memory data to register.
+     * |[4]     |APDMAEN4  |Channel N Accumulator PDMA Enable Bits
+     * |        |          |0 = Channel n PDMA function Disabled.
+     * |        |          |1 = Channel n PDMA function Enabled for the channel n to trigger PDMA to transfer memory data to register.
+     * |[5]     |APDMAEN5  |Channel N Accumulator PDMA Enable Bits
+     * |        |          |0 = Channel n PDMA function Disabled.
+     * |        |          |1 = Channel n PDMA function Enabled for the channel n to trigger PDMA to transfer memory data to register.
+     * @var EPWM_T::CAPINEN
+     * Offset: 0x200  EPWM Capture Input Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CAPINEN0  |Capture Input Enable Bits
+     * |        |          |0 = EPWM Channel capture input path Disabled
+     * |        |          |The input of EPWM channel capture function is always regarded as 0.
+     * |        |          |1 = EPWM Channel capture input path Enabled
+     * |        |          |The input of EPWM channel capture function comes from correlative multifunction pin.
+     * |[1]     |CAPINEN1  |Capture Input Enable Bits
+     * |        |          |0 = EPWM Channel capture input path Disabled
+     * |        |          |The input of EPWM channel capture function is always regarded as 0.
+     * |        |          |1 = EPWM Channel capture input path Enabled
+     * |        |          |The input of EPWM channel capture function comes from correlative multifunction pin.
+     * |[2]     |CAPINEN2  |Capture Input Enable Bits
+     * |        |          |0 = EPWM Channel capture input path Disabled
+     * |        |          |The input of EPWM channel capture function is always regarded as 0.
+     * |        |          |1 = EPWM Channel capture input path Enabled
+     * |        |          |The input of EPWM channel capture function comes from correlative multifunction pin.
+     * |[3]     |CAPINEN3  |Capture Input Enable Bits
+     * |        |          |0 = EPWM Channel capture input path Disabled
+     * |        |          |The input of EPWM channel capture function is always regarded as 0.
+     * |        |          |1 = EPWM Channel capture input path Enabled
+     * |        |          |The input of EPWM channel capture function comes from correlative multifunction pin.
+     * |[4]     |CAPINEN4  |Capture Input Enable Bits
+     * |        |          |0 = EPWM Channel capture input path Disabled
+     * |        |          |The input of EPWM channel capture function is always regarded as 0.
+     * |        |          |1 = EPWM Channel capture input path Enabled
+     * |        |          |The input of EPWM channel capture function comes from correlative multifunction pin.
+     * |[5]     |CAPINEN5  |Capture Input Enable Bits
+     * |        |          |0 = EPWM Channel capture input path Disabled
+     * |        |          |The input of EPWM channel capture function is always regarded as 0.
+     * |        |          |1 = EPWM Channel capture input path Enabled
+     * |        |          |The input of EPWM channel capture function comes from correlative multifunction pin.
+     * @var EPWM_T::CAPCTL
+     * Offset: 0x204  EPWM Capture Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CAPEN0    |Capture Function Enable Bits
+     * |        |          |0 = Capture function Disabled. RCAPDAT/FCAPDAT register will not be updated.
+     * |        |          |1 = Capture function Enabled
+     * |        |          |Capture latched the EPWM counter value when detected rising or falling edge of input signal and saved to RCAPDAT (Rising latch) and FCAPDAT (Falling latch).
+     * |[1]     |CAPEN1    |Capture Function Enable Bits
+     * |        |          |0 = Capture function Disabled. RCAPDAT/FCAPDAT register will not be updated.
+     * |        |          |1 = Capture function Enabled
+     * |        |          |Capture latched the EPWM counter value when detected rising or falling edge of input signal and saved to RCAPDAT (Rising latch) and FCAPDAT (Falling latch).
+     * |[2]     |CAPEN2    |Capture Function Enable Bits
+     * |        |          |0 = Capture function Disabled. RCAPDAT/FCAPDAT register will not be updated.
+     * |        |          |1 = Capture function Enabled
+     * |        |          |Capture latched the EPWM counter value when detected rising or falling edge of input signal and saved to RCAPDAT (Rising latch) and FCAPDAT (Falling latch).
+     * |[3]     |CAPEN3    |Capture Function Enable Bits
+     * |        |          |0 = Capture function Disabled. RCAPDAT/FCAPDAT register will not be updated.
+     * |        |          |1 = Capture function Enabled
+     * |        |          |Capture latched the EPWM counter value when detected rising or falling edge of input signal and saved to RCAPDAT (Rising latch) and FCAPDAT (Falling latch).
+     * |[4]     |CAPEN4    |Capture Function Enable Bits
+     * |        |          |0 = Capture function Disabled. RCAPDAT/FCAPDAT register will not be updated.
+     * |        |          |1 = Capture function Enabled
+     * |        |          |Capture latched the EPWM counter value when detected rising or falling edge of input signal and saved to RCAPDAT (Rising latch) and FCAPDAT (Falling latch).
+     * |[5]     |CAPEN5    |Capture Function Enable Bits
+     * |        |          |0 = Capture function Disabled. RCAPDAT/FCAPDAT register will not be updated.
+     * |        |          |1 = Capture function Enabled
+     * |        |          |Capture latched the EPWM counter value when detected rising or falling edge of input signal and saved to RCAPDAT (Rising latch) and FCAPDAT (Falling latch).
+     * |[8]     |CAPINV0   |Capture Inverter Enable Bits
+     * |        |          |0 = Capture source inverter Disabled.
+     * |        |          |1 = Capture source inverter Enabled. Reverse the input signal from GPIO.
+     * |[9]     |CAPINV1   |Capture Inverter Enable Bits
+     * |        |          |0 = Capture source inverter Disabled.
+     * |        |          |1 = Capture source inverter Enabled. Reverse the input signal from GPIO.
+     * |[10]    |CAPINV2   |Capture Inverter Enable Bits
+     * |        |          |0 = Capture source inverter Disabled.
+     * |        |          |1 = Capture source inverter Enabled. Reverse the input signal from GPIO.
+     * |[11]    |CAPINV3   |Capture Inverter Enable Bits
+     * |        |          |0 = Capture source inverter Disabled.
+     * |        |          |1 = Capture source inverter Enabled. Reverse the input signal from GPIO.
+     * |[12]    |CAPINV4   |Capture Inverter Enable Bits
+     * |        |          |0 = Capture source inverter Disabled.
+     * |        |          |1 = Capture source inverter Enabled. Reverse the input signal from GPIO.
+     * |[13]    |CAPINV5   |Capture Inverter Enable Bits
+     * |        |          |0 = Capture source inverter Disabled.
+     * |        |          |1 = Capture source inverter Enabled. Reverse the input signal from GPIO.
+     * |[16]    |RCRLDEN0  |Rising Capture Reload Enable Bits
+     * |        |          |0 = Rising capture reload counter Disabled.
+     * |        |          |1 = Rising capture reload counter Enabled.
+     * |[17]    |RCRLDEN1  |Rising Capture Reload Enable Bits
+     * |        |          |0 = Rising capture reload counter Disabled.
+     * |        |          |1 = Rising capture reload counter Enabled.
+     * |[18]    |RCRLDEN2  |Rising Capture Reload Enable Bits
+     * |        |          |0 = Rising capture reload counter Disabled.
+     * |        |          |1 = Rising capture reload counter Enabled.
+     * |[19]    |RCRLDEN3  |Rising Capture Reload Enable Bits
+     * |        |          |0 = Rising capture reload counter Disabled.
+     * |        |          |1 = Rising capture reload counter Enabled.
+     * |[20]    |RCRLDEN4  |Rising Capture Reload Enable Bits
+     * |        |          |0 = Rising capture reload counter Disabled.
+     * |        |          |1 = Rising capture reload counter Enabled.
+     * |[21]    |RCRLDEN5  |Rising Capture Reload Enable Bits
+     * |        |          |0 = Rising capture reload counter Disabled.
+     * |        |          |1 = Rising capture reload counter Enabled.
+     * |[24]    |FCRLDEN0  |Falling Capture Reload Enable Bits
+     * |        |          |0 = Falling capture reload counter Disabled.
+     * |        |          |1 = Falling capture reload counter Enabled.
+     * |[25]    |FCRLDEN1  |Falling Capture Reload Enable Bits
+     * |        |          |0 = Falling capture reload counter Disabled.
+     * |        |          |1 = Falling capture reload counter Enabled.
+     * |[26]    |FCRLDEN2  |Falling Capture Reload Enable Bits
+     * |        |          |0 = Falling capture reload counter Disabled.
+     * |        |          |1 = Falling capture reload counter Enabled.
+     * |[27]    |FCRLDEN3  |Falling Capture Reload Enable Bits
+     * |        |          |0 = Falling capture reload counter Disabled.
+     * |        |          |1 = Falling capture reload counter Enabled.
+     * |[28]    |FCRLDEN4  |Falling Capture Reload Enable Bits
+     * |        |          |0 = Falling capture reload counter Disabled.
+     * |        |          |1 = Falling capture reload counter Enabled.
+     * |[29]    |FCRLDEN5  |Falling Capture Reload Enable Bits
+     * |        |          |0 = Falling capture reload counter Disabled.
+     * |        |          |1 = Falling capture reload counter Enabled.
+     * @var EPWM_T::CAPSTS
+     * Offset: 0x208  EPWM Capture Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CRLIFOV0  |Capture Rising Latch Interrupt Flag Overrun Status (Read Only)
+     * |        |          |This flag indicates if rising latch happened when the corresponding CRLIF is 1.
+     * |        |          |Note: This bit will be cleared automatically when user clear corresponding CRLIF.
+     * |[1]     |CRLIFOV1  |Capture Rising Latch Interrupt Flag Overrun Status (Read Only)
+     * |        |          |This flag indicates if rising latch happened when the corresponding CRLIF is 1.
+     * |        |          |Note: This bit will be cleared automatically when user clear corresponding CRLIF.
+     * |[2]     |CRLIFOV2  |Capture Rising Latch Interrupt Flag Overrun Status (Read Only)
+     * |        |          |This flag indicates if rising latch happened when the corresponding CRLIF is 1.
+     * |        |          |Note: This bit will be cleared automatically when user clear corresponding CRLIF.
+     * |[3]     |CRLIFOV3  |Capture Rising Latch Interrupt Flag Overrun Status (Read Only)
+     * |        |          |This flag indicates if rising latch happened when the corresponding CRLIF is 1.
+     * |        |          |Note: This bit will be cleared automatically when user clear corresponding CRLIF.
+     * |[4]     |CRLIFOV4  |Capture Rising Latch Interrupt Flag Overrun Status (Read Only)
+     * |        |          |This flag indicates if rising latch happened when the corresponding CRLIF is 1.
+     * |        |          |Note: This bit will be cleared automatically when user clear corresponding CRLIF.
+     * |[5]     |CRLIFOV5  |Capture Rising Latch Interrupt Flag Overrun Status (Read Only)
+     * |        |          |This flag indicates if rising latch happened when the corresponding CRLIF is 1.
+     * |        |          |Note: This bit will be cleared automatically when user clear corresponding CRLIF.
+     * |[8]     |CFLIFOV0  |Capture Falling Latch Interrupt Flag Overrun Status (Read Only)
+     * |        |          |This flag indicates if falling latch happened when the corresponding CFLIF is 1.
+     * |        |          |Note: This bit will be cleared automatically when user clear corresponding CFLIF.
+     * |[9]     |CFLIFOV1  |Capture Falling Latch Interrupt Flag Overrun Status (Read Only)
+     * |        |          |This flag indicates if falling latch happened when the corresponding CFLIF is 1.
+     * |        |          |Note: This bit will be cleared automatically when user clear corresponding CFLIF.
+     * |[10]    |CFLIFOV2  |Capture Falling Latch Interrupt Flag Overrun Status (Read Only)
+     * |        |          |This flag indicates if falling latch happened when the corresponding CFLIF is 1.
+     * |        |          |Note: This bit will be cleared automatically when user clear corresponding CFLIF.
+     * |[11]    |CFLIFOV3  |Capture Falling Latch Interrupt Flag Overrun Status (Read Only)
+     * |        |          |This flag indicates if falling latch happened when the corresponding CFLIF is 1.
+     * |        |          |Note: This bit will be cleared automatically when user clear corresponding CFLIF.
+     * |[12]    |CFLIFOV4  |Capture Falling Latch Interrupt Flag Overrun Status (Read Only)
+     * |        |          |This flag indicates if falling latch happened when the corresponding CFLIF is 1.
+     * |        |          |Note: This bit will be cleared automatically when user clear corresponding CFLIF.
+     * |[13]    |CFLIFOV5  |Capture Falling Latch Interrupt Flag Overrun Status (Read Only)
+     * |        |          |This flag indicates if falling latch happened when the corresponding CFLIF is 1.
+     * |        |          |Note: This bit will be cleared automatically when user clear corresponding CFLIF.
+     * @var EPWM_T::PDMACTL
+     * Offset: 0x23C  EPWM PDMA Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CHEN0_1   |Channel 0/1 PDMA Enable
+     * |        |          |0 = Channel 0/1 PDMA function Disabled.
+     * |        |          |1 = Channel 0/1 PDMA function Enabled for the channel 0/1 captured data and transfer to memory.
+     * |[2:1]   |CAPMOD0_1 |Select EPWM_RCAPDAT0/1 or EPWM_FCAPDAT0/1 to Do PDMA Transfer
+     * |        |          |00 = Reserved.
+     * |        |          |01 = EPWM_RCAPDAT0/1.
+     * |        |          |10 = EPWM_FCAPDAT0/1.
+     * |        |          |11 = Both EPWM_RCAPDAT0/1 and EPWM_FCAPDAT0/1.
+     * |[3]     |CAPORD0_1 |Capture Channel 0/1 Rising/Falling Order
+     * |        |          |Set this bit to determine whether the EPWM_RCAPDAT0/1 or EPWM_FCAPDAT0/1 is the first captured data transferred to memory through PDMA when CAPMOD0_1 =11.
+     * |        |          |0 = EPWM_FCAPDAT0/1 is the first captured data to memory.
+     * |        |          |1 = EPWM_RCAPDAT0/1 is the first captured data to memory.
+     * |[4]     |CHSEL0_1  |Select Channel 0/1 to Do PDMA Transfer
+     * |        |          |0 = Channel0.
+     * |        |          |1 = Channel1.
+     * |[8]     |CHEN2_3   |Channel 2/3 PDMA Enable
+     * |        |          |0 = Channel 2/3 PDMA function Disabled.
+     * |        |          |1 = Channel 2/3 PDMA function Enabled for the channel 2/3 captured data and transfer to memory.
+     * |[10:9]  |CAPMOD2_3 |Select EPWM_RCAPDAT2/3 or EPWM_FCAODAT2/3 to Do PDMA Transfer
+     * |        |          |00 = Reserved.
+     * |        |          |01 = EPWM_RCAPDAT2/3.
+     * |        |          |10 = EPWM_FCAPDAT2/3.
+     * |        |          |11 = Both EPWM_RCAPDAT2/3 and EPWM_FCAPDAT2/3.
+     * |[11]    |CAPORD2_3 |Capture Channel 2/3 Rising/Falling Order
+     * |        |          |Set this bit to determine whether the EPWM_RCAPDAT2/3 or EPWM_FCAPDAT2/3 is the first captured data transferred to memory through PDMA when CAPMOD2_3 =11.
+     * |        |          |0 = EPWM_FCAPDAT2/3 is the first captured data to memory.
+     * |        |          |1 = EPWM_RCAPDAT2/3 is the first captured data to memory.
+     * |[12]    |CHSEL2_3  |Select Channel 2/3 to Do PDMA Transfer
+     * |        |          |0 = Channel2.
+     * |        |          |1 = Channel3.
+     * |[16]    |CHEN4_5   |Channel 4/5 PDMA Enable
+     * |        |          |0 = Channel 4/5 PDMA function Disabled.
+     * |        |          |1 = Channel 4/5 PDMA function Enabled for the channel 4/5 captured data and transfer to memory.
+     * |[18:17] |CAPMOD4_5 |Select EPWM_RCAPDAT4/5 or EPWM_FCAPDAT4/5 to Do PDMA Transfer
+     * |        |          |00 = Reserved.
+     * |        |          |01 = EPWM_RCAPDAT4/5.
+     * |        |          |10 = EPWM_FCAPDAT4/5.
+     * |        |          |11 = Both EPWM_RCAPDAT4/5 and EPWM_FCAPDAT4/5.
+     * |[19]    |CAPORD4_5 |Capture Channel 4/5 Rising/Falling Order
+     * |        |          |Set this bit to determine whether the EPWM_RCAPDAT4/5 or EPWM_FCAPDAT4/5 is the first captured data transferred to memory through PDMA when CAPMOD4_5 =11.
+     * |        |          |0 = EPWM_FCAPDAT4/5 is the first captured data to memory.
+     * |        |          |1 = EPWM_RCAPDAT4/5 is the first captured data to memory.
+     * |[20]    |CHSEL4_5  |Select Channel 4/5 to Do PDMA Transfer
+     * |        |          |0 = Channel4.
+     * |        |          |1 = Channel5.
+     * @var EPWM_T::PDMACAP[3]
+     * Offset: 0x240  EPWM Capture Channel 01 PDMA Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |CAPBUF    |EPWM Capture PDMA Register (Read Only)
+     * |        |          |This register is use as a buffer to transfer EPWM capture rising or falling data to memory by PDMA.
+     * @var EPWM_T::CAPIEN
+     * Offset: 0x250  EPWM Capture Interrupt Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CAPRIEN0  |EPWM Capture Rising Latch Interrupt Enable Bits
+     * |        |          |0 = Capture rising edge latch interrupt Disabled.
+     * |        |          |1 = Capture rising edge latch interrupt Enabled.
+     * |[1]     |CAPRIEN1  |EPWM Capture Rising Latch Interrupt Enable Bits
+     * |        |          |0 = Capture rising edge latch interrupt Disabled.
+     * |        |          |1 = Capture rising edge latch interrupt Enabled.
+     * |[2]     |CAPRIEN2  |EPWM Capture Rising Latch Interrupt Enable Bits
+     * |        |          |0 = Capture rising edge latch interrupt Disabled.
+     * |        |          |1 = Capture rising edge latch interrupt Enabled.
+     * |[3]     |CAPRIEN3  |EPWM Capture Rising Latch Interrupt Enable Bits
+     * |        |          |0 = Capture rising edge latch interrupt Disabled.
+     * |        |          |1 = Capture rising edge latch interrupt Enabled.
+     * |[4]     |CAPRIEN4  |EPWM Capture Rising Latch Interrupt Enable Bits
+     * |        |          |0 = Capture rising edge latch interrupt Disabled.
+     * |        |          |1 = Capture rising edge latch interrupt Enabled.
+     * |[5]     |CAPRIEN5  |EPWM Capture Rising Latch Interrupt Enable Bits
+     * |        |          |0 = Capture rising edge latch interrupt Disabled.
+     * |        |          |1 = Capture rising edge latch interrupt Enabled.
+     * |[8]     |CAPFIEN0  |EPWM Capture Falling Latch Interrupt Enable Bits
+     * |        |          |0 = Capture falling edge latch interrupt Disabled.
+     * |        |          |1 = Capture falling edge latch interrupt Enabled.
+     * |[9]     |CAPFIEN1  |EPWM Capture Falling Latch Interrupt Enable Bits
+     * |        |          |0 = Capture falling edge latch interrupt Disabled.
+     * |        |          |1 = Capture falling edge latch interrupt Enabled.
+     * |[10]    |CAPFIEN2  |EPWM Capture Falling Latch Interrupt Enable Bits
+     * |        |          |0 = Capture falling edge latch interrupt Disabled.
+     * |        |          |1 = Capture falling edge latch interrupt Enabled.
+     * |[11]    |CAPFIEN3  |EPWM Capture Falling Latch Interrupt Enable Bits
+     * |        |          |0 = Capture falling edge latch interrupt Disabled.
+     * |        |          |1 = Capture falling edge latch interrupt Enabled.
+     * |[12]    |CAPFIEN4  |EPWM Capture Falling Latch Interrupt Enable Bits
+     * |        |          |0 = Capture falling edge latch interrupt Disabled.
+     * |        |          |1 = Capture falling edge latch interrupt Enabled.
+     * |[13]    |CAPFIEN5  |EPWM Capture Falling Latch Interrupt Enable Bits
+     * |        |          |0 = Capture falling edge latch interrupt Disabled.
+     * |        |          |1 = Capture falling edge latch interrupt Enabled.
+     * @var EPWM_T::CAPIF
+     * Offset: 0x254  EPWM Capture Interrupt Flag Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CRLIF0    |EPWM Capture Rising Latch Interrupt Flag
+     * |        |          |This bit is writing 1 to clear.
+     * |        |          |0 = No capture rising latch condition happened.
+     * |        |          |1 = Capture rising latch condition happened, this flag will be set to high.
+     * |        |          |Note: When Capture with PDMA operating, CAPIF corresponding channel CRLIF will cleared by hardware after PDMA transfer data.
+     * |[1]     |CRLIF1    |EPWM Capture Rising Latch Interrupt Flag
+     * |        |          |This bit is writing 1 to clear.
+     * |        |          |0 = No capture rising latch condition happened.
+     * |        |          |1 = Capture rising latch condition happened, this flag will be set to high.
+     * |        |          |Note: When Capture with PDMA operating, CAPIF corresponding channel CRLIF will cleared by hardware after PDMA transfer data.
+     * |[2]     |CRLIF2    |EPWM Capture Rising Latch Interrupt Flag
+     * |        |          |This bit is writing 1 to clear.
+     * |        |          |0 = No capture rising latch condition happened.
+     * |        |          |1 = Capture rising latch condition happened, this flag will be set to high.
+     * |        |          |Note: When Capture with PDMA operating, CAPIF corresponding channel CRLIF will cleared by hardware after PDMA transfer data.
+     * |[3]     |CRLIF3    |EPWM Capture Rising Latch Interrupt Flag
+     * |        |          |This bit is writing 1 to clear.
+     * |        |          |0 = No capture rising latch condition happened.
+     * |        |          |1 = Capture rising latch condition happened, this flag will be set to high.
+     * |        |          |Note: When Capture with PDMA operating, CAPIF corresponding channel CRLIF will cleared by hardware after PDMA transfer data.
+     * |[4]     |CRLIF4    |EPWM Capture Rising Latch Interrupt Flag
+     * |        |          |This bit is writing 1 to clear.
+     * |        |          |0 = No capture rising latch condition happened.
+     * |        |          |1 = Capture rising latch condition happened, this flag will be set to high.
+     * |        |          |Note: When Capture with PDMA operating, CAPIF corresponding channel CRLIF will cleared by hardware after PDMA transfer data.
+     * |[5]     |CRLIF5    |EPWM Capture Rising Latch Interrupt Flag
+     * |        |          |This bit is writing 1 to clear.
+     * |        |          |0 = No capture rising latch condition happened.
+     * |        |          |1 = Capture rising latch condition happened, this flag will be set to high.
+     * |        |          |Note: When Capture with PDMA operating, CAPIF corresponding channel CRLIF will cleared by hardware after PDMA transfer data.
+     * |[8]     |CFLIF0    |EPWM Capture Falling Latch Interrupt Flag
+     * |        |          |This bit is writing 1 to clear.
+     * |        |          |0 = No capture falling latch condition happened.
+     * |        |          |1 = Capture falling latch condition happened, this flag will be set to high.
+     * |        |          |Note: When Capture with PDMA operating, CAPIF corresponding channel CFLIF will cleared by hardware after PDMA transfer data.
+     * |[9]     |CFLIF1    |EPWM Capture Falling Latch Interrupt Flag
+     * |        |          |This bit is writing 1 to clear.
+     * |        |          |0 = No capture falling latch condition happened.
+     * |        |          |1 = Capture falling latch condition happened, this flag will be set to high.
+     * |        |          |Note: When Capture with PDMA operating, CAPIF corresponding channel CFLIF will cleared by hardware after PDMA transfer data.
+     * |[10]    |CFLIF2    |EPWM Capture Falling Latch Interrupt Flag
+     * |        |          |This bit is writing 1 to clear.
+     * |        |          |0 = No capture falling latch condition happened.
+     * |        |          |1 = Capture falling latch condition happened, this flag will be set to high.
+     * |        |          |Note: When Capture with PDMA operating, CAPIF corresponding channel CFLIF will cleared by hardware after PDMA transfer data.
+     * |[11]    |CFLIF3    |EPWM Capture Falling Latch Interrupt Flag
+     * |        |          |This bit is writing 1 to clear.
+     * |        |          |0 = No capture falling latch condition happened.
+     * |        |          |1 = Capture falling latch condition happened, this flag will be set to high.
+     * |        |          |Note: When Capture with PDMA operating, CAPIF corresponding channel CFLIF will cleared by hardware after PDMA transfer data.
+     * |[12]    |CFLIF4    |EPWM Capture Falling Latch Interrupt Flag
+     * |        |          |This bit is writing 1 to clear.
+     * |        |          |0 = No capture falling latch condition happened.
+     * |        |          |1 = Capture falling latch condition happened, this flag will be set to high.
+     * |        |          |Note: When Capture with PDMA operating, CAPIF corresponding channel CFLIF will cleared by hardware after PDMA transfer data.
+     * |[13]    |CFLIF5    |EPWM Capture Falling Latch Interrupt Flag
+     * |        |          |This bit is writing 1 to clear.
+     * |        |          |0 = No capture falling latch condition happened.
+     * |        |          |1 = Capture falling latch condition happened, this flag will be set to high.
+     * |        |          |Note: When Capture with PDMA operating, CAPIF corresponding channel CFLIF will cleared by hardware after PDMA transfer data.
+     * @var EPWM_T::PBUF[6]
+     * Offset: 0x304  EPWM PERIOD0~5 Buffer
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |PBUF      |EPWM Period Register Buffer (Read Only)
+     * |        |          |Used as PERIOD active register.
+     * @var EPWM_T::CMPBUF[6]
+     * Offset: 0x31C  EPWM CMPDAT0~5 Buffer
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |CMPBUF    |EPWM Comparator Register Buffer (Read Only)
+     * |        |          |Used as CMP active register.
+     * @var EPWM_T::CPSCBUF[3]
+     * Offset: 0x334  EPWM CLKPSC0_1/2_3/4_5 Buffer
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[11:0]  |CPSCBUF   |EPWM Counter Clock Prescale Buffer
+     * |        |          |Use as EPWM counter clock prescale active register.
+     * @var EPWM_T::FTCBUF[3]
+     * Offset: 0x340  EPWM FTCMPDAT0_1/2_3/4_5 Buffer
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |FTCMPBUF  |EPWM FTCMPDAT Buffer (Read Only)
+     * |        |          |Used as FTCMPDAT active register.
+     * @var EPWM_T::FTCI
+     * Offset: 0x34C  EPWM FTCMPDAT Indicator Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |FTCMU0    |EPWM FTCMPDAT Up Indicator
+     * |        |          |Indicator will be set to high when FTCMPDATn equal to CNTn and DIRF=1, software can write 1 to clear this bit.
+     * |[1]     |FTCMU2    |EPWM FTCMPDAT Up Indicator
+     * |        |          |Indicator will be set to high when FTCMPDATn equal to CNTn and DIRF=1, software can write 1 to clear this bit.
+     * |[2]     |FTCMU4    |EPWM FTCMPDAT Up Indicator
+     * |        |          |Indicator will be set to high when FTCMPDATn equal to CNTn and DIRF=1, software can write 1 to clear this bit.
+     * |[8]     |FTCMD0    |EPWM FTCMPDAT Down Indicator
+     * |        |          |Indicator will be set to high when FTCMPDATn equal to CNTn and DIRF=0, software can write 1 to clear this bit.
+     * |[9]     |FTCMD2    |EPWM FTCMPDAT Down Indicator
+     * |        |          |Indicator will be set to high when FTCMPDATn equal to CNTn and DIRF=0, software can write 1 to clear this bit.
+     * |[10]    |FTCMD4    |EPWM FTCMPDAT Down Indicator
+     * |        |          |Indicator will be set to high when FTCMPDATn equal to CNTn and DIRF=0, software can write 1 to clear this bit.
+     */
     __IO uint32_t CTL0;                  /*!< [0x0000] EPWM Control Register 0                                           */
     __IO uint32_t CTL1;                  /*!< [0x0004] EPWM Control Register 1                                           */
     __IO uint32_t SYNC;                  /*!< [0x0008] EPWM Synchronization Register                                     */

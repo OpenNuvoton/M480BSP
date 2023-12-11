@@ -27,1161 +27,511 @@ typedef struct
 {
 
     /**
-@var USBH_T::HcRevision
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcRevision
-</font><br><p> <font size="2">
-Offset: 0x00  Host Controller Revision Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[7:0]</td><td>REV</td><td><div style="word-wrap: break-word;"><b>Revision Number
-</b><br>
-Indicates the Open HCI Specification revision number implemented by the Hardware
-<br>
-Host Controller supports 1.1 specification.
-<br>
-(X.Y = XYh).
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcControl
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcControl
-</font><br><p> <font size="2">
-Offset: 0x04  Host Controller Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[1:0]</td><td>CBSR</td><td><div style="word-wrap: break-word;"><b>Control Bulk Service Ratio
-</b><br>
-This specifies the service ratio between Control and Bulk EDs
-<br>
-Before processing any of the non-periodic lists, HC must compare the ratio specified with its internal count on how many nonempty Control EDs have been processed, in determining whether to continue serving another Control ED or switching to Bulk EDs
-<br>
-The internal count will be retained when crossing the frame boundary
-<br>
-In case of reset, HCD is responsible for restoring this
-<br>
-Value.
-<br>
-00 = Number of Control EDs over Bulk EDs served is 1:1.
-<br>
-01 = Number of Control EDs over Bulk EDs served is 2:1.
-<br>
-10 = Number of Control EDs over Bulk EDs served is 3:1.
-<br>
-11 = Number of Control EDs over Bulk EDs served is 4:1.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>PLE</td><td><div style="word-wrap: break-word;"><b>Periodic List Enable Bit
-</b><br>
-When set, this bit enables processing of the Periodic (interrupt and isochronous) list
-<br>
-The Host Controller checks this bit prior to attempting any periodic transfers in a frame.
-<br>
-0 = Processing of the Periodic (Interrupt and Isochronous) list after next SOF (Start-Of-Frame) Disabled.
-<br>
-1 = Processing of the Periodic (Interrupt and Isochronous) list in the next frame Enabled.
-<br>
-Note: To enable the processing of the Isochronous list, user has to set both PLE and IE (HcControl[3]) high.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>IE</td><td><div style="word-wrap: break-word;"><b>Isochronous List Enable Bit
-</b><br>
-Both ISOEn and PLE (HcControl[2]) high enables Host Controller to process the Isochronous list
-<br>
-Either ISOEn or PLE (HcControl[2]) is low disables Host Controller to process the Isochronous list.
-<br>
-0 = Processing of the Isochronous list after next SOF (Start-Of-Frame) Disabled.
-<br>
-1 = Processing of the Isochronous list in the next frame Enabled, if the PLE (HcControl[2]) is high, too.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>CLE</td><td><div style="word-wrap: break-word;"><b>Control List Enable Bit
-</b><br>
-0 = Processing of the Control list after next SOF (Start-Of-Frame) Disabled.
-<br>
-1 = Processing of the Control list in the next frame Enabled.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>BLE</td><td><div style="word-wrap: break-word;"><b>Bulk List Enable Bit
-</b><br>
-0 = Processing of the Bulk list after next SOF (Start-Of-Frame) Disabled.
-<br>
-1 = Processing of the Bulk list in the next frame Enabled.
-<br>
-</div></td></tr><tr><td>
-[7:6]</td><td>HCFS</td><td><div style="word-wrap: break-word;"><b>Host Controller Functional State
-</b><br>
-This field sets the Host Controller state
-<br>
-The Controller may force a state change from USBSUSPEND to USBRESUME after detecting resume signaling from a downstream port
-<br>
-States are:
-<br>
-00 = USBSUSPEND.
-<br>
-01 = USBOPERATIONAL.
-<br>
-10 = USBRESUME.
-<br>
-11 = USBRESET.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcCommandStatus
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcCommandStatus
-</font><br><p> <font size="2">
-Offset: 0x08  Host Controller Command Status Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>HCR</td><td><div style="word-wrap: break-word;"><b>Host Controller Reset
-</b><br>
-This bit is set to initiate the software reset of Host Controller
-<br>
-This bit is cleared by the Host Controller, upon completed of the reset operation.
-<br>
-This bit, when set, didn't reset the Root Hub and no subsequent reset signaling be asserted to its downstream ports.
-<br>
-0 = Host Controller is not in software reset state.
-<br>
-1 = Host Controller is in software reset state.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>CLF</td><td><div style="word-wrap: break-word;"><b>Control List Filled
-</b><br>
-Set high to indicate there is an active TD on the Control List
-<br>
-It may be set by either software or the Host Controller and cleared by the Host Controller each time it begins processing the head of the Control List.
-<br>
-0 = No active TD found or Host Controller begins to process the head of the Control list.
-<br>
-1 = An active TD added or found on the Control list.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>BLF</td><td><div style="word-wrap: break-word;"><b>Bulk List Filled
-</b><br>
-Set high to indicate there is an active TD on the Bulk list
-<br>
-This bit may be set by either software or the Host Controller and cleared by the Host Controller each time it begins processing the head of the Bulk list.
-<br>
-0 = No active TD found or Host Controller begins to process the head of the Bulk list.
-<br>
-1 = An active TD added or found on the Bulk list.
-<br>
-</div></td></tr><tr><td>
-[17:16]</td><td>SOC</td><td><div style="word-wrap: break-word;"><b>Schedule Overrun Count
-</b><br>
-These bits are incremented on each scheduling overrun error
-<br>
-It is initialized to 00b and wraps around at 11b
-<br>
-This will be incremented when a scheduling overrun is detected even if SO (HcInterruptStatus[0]) has already been set.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcInterruptStatus
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcInterruptStatus
-</font><br><p> <font size="2">
-Offset: 0x0C  Host Controller Interrupt Status Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>SO</td><td><div style="word-wrap: break-word;"><b>Scheduling Overrun
-</b><br>
-Set when the List Processor determines a Schedule Overrun has occurred.
-<br>
-0 = Schedule Overrun didn't occur.
-<br>
-1 = Schedule Overrun has occurred.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>WDH</td><td><div style="word-wrap: break-word;"><b>Write Back Done Head
-</b><br>
-Set after the Host Controller has written HcDoneHead to HccaDoneHead
-<br>
-Further updates of the HccaDoneHead will not occur until this bit has been cleared.
-<br>
-0 =.Host Controller didn't update HccaDoneHead.
-<br>
-1 =.Host Controller has written HcDoneHead to HccaDoneHead.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>SF</td><td><div style="word-wrap: break-word;"><b>Start of Frame
-</b><br>
-Set when the Frame Management functional block signals a 'Start of Frame' event
-<br>
-Host Control generates a SOF token at the same time.
-<br>
-0 =.Not the start of a frame.
-<br>
-1 =.Indicate the start of a frame and Host Controller generates a SOF token.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>RD</td><td><div style="word-wrap: break-word;"><b>Resume Detected
-</b><br>
-Set when Host Controller detects resume signaling on a downstream port.
-<br>
-0 = No resume signaling detected on a downstream port.
-<br>
-1 = Resume signaling detected on a downstream port.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>FNO</td><td><div style="word-wrap: break-word;"><b>Frame Number Overflow
-</b><br>
-This bit is set when bit 15 of Frame Number changes from 1 to 0 or from 0 to 1.
-<br>
-0 = The bit 15 of Frame Number didn't change.
-<br>
-1 = The bit 15 of Frame Number changes from 1 to 0 or from 0 to 1.
-<br>
-</div></td></tr><tr><td>
-[6]</td><td>RHSC</td><td><div style="word-wrap: break-word;"><b>Root Hub Status Change
-</b><br>
-This bit is set when the content of HcRhStatus or the content of HcRhPortStatus register has changed.
-<br>
-0 = The content of HcRhStatus and the content of HcRhPortStatus register didn't change.
-<br>
-1 = The content of HcRhStatus or the content of HcRhPortStatus register has changed.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcInterruptEnable
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcInterruptEnable
-</font><br><p> <font size="2">
-Offset: 0x10  Host Controller Interrupt Enable Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>SO</td><td><div style="word-wrap: break-word;"><b>Scheduling Overrun Enable Bit
-</b><br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Interrupt generation due to SO (HcInterruptStatus[0]) Enabled.
-<br>
-Read Operation:
-<br>
-0 = Interrupt generation due to SO (HcInterruptStatus[0]) Disabled.
-<br>
-1 = Interrupt generation due to SO (HcInterruptStatus[0]) Enabled.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>WDH</td><td><div style="word-wrap: break-word;"><b>Write Back Done Head Enable Bit
-</b><br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Interrupt generation due to WDH (HcInterruptStatus[1]) Enabled.
-<br>
-Read Operation:
-<br>
-0 = Interrupt generation due to WDH (HcInterruptStatus[1]) Disabled.
-<br>
-1 = Interrupt generation due to WDH (HcInterruptStatus[1]) Enabled.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>SF</td><td><div style="word-wrap: break-word;"><b>Start of Frame Enable Bit
-</b><br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Interrupt generation due to SF (HcInterruptStatus[2]) Enabled.
-<br>
-Read Operation:
-<br>
-0 = Interrupt generation due to SF (HcInterruptStatus[2]) Disabled.
-<br>
-1 = Interrupt generation due to SF (HcInterruptStatus[2]) Enabled.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>RD</td><td><div style="word-wrap: break-word;"><b>Resume Detected Enable Bit
-</b><br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Interrupt generation due to RD (HcInterruptStatus[3]) Enabled.
-<br>
-Read Operation:
-<br>
-0 = Interrupt generation due to RD (HcInterruptStatus[3]) Disabled.
-<br>
-1 = Interrupt generation due to RD (HcInterruptStatus[3]) Enabled.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>FNO</td><td><div style="word-wrap: break-word;"><b>Frame Number Overflow Enable Bit
-</b><br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Interrupt generation due to FNO (HcInterruptStatus[5]) Enabled.
-<br>
-Read Operation:
-<br>
-0 = Interrupt generation due to FNO (HcInterruptStatus[5]) Disabled.
-<br>
-1 = Interrupt generation due to FNO (HcInterruptStatus[5]) Enabled.
-<br>
-</div></td></tr><tr><td>
-[6]</td><td>RHSC</td><td><div style="word-wrap: break-word;"><b>Root Hub Status Change Enable Bit
-</b><br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Interrupt generation due to RHSC (HcInterruptStatus[6]) Enabled.
-<br>
-Read Operation:
-<br>
-0 = Interrupt generation due to RHSC (HcInterruptStatus[6]) Disabled.
-<br>
-1 = Interrupt generation due to RHSC (HcInterruptStatus[6]) Enabled.
-<br>
-</div></td></tr><tr><td>
-[31]</td><td>MIE</td><td><div style="word-wrap: break-word;"><b>Master Interrupt Enable Bit
-</b><br>
-This bit is a global interrupt enable
-<br>
-A write of '1' allows interrupts to be enabled via the specific enable bits listed above.
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Interrupt generation due to RHSC (HcInterruptStatus[6]), FNO (HcInterruptStatus[5]), RD (HcInterruptStatus[3]), SF (HcInterruptStatus[2]), WDH (HcInterruptStatus[1]) or SO (HcInterruptStatus[0]) Enabled if the corresponding bit in HcInterruptEnable is high.
-<br>
-Read Operation:
-<br>
-0 = Interrupt generation due to RHSC (HcInterruptStatus[6]), FNO (HcInterruptStatus[5]), RD (HcInterruptStatus[3]), SF (HcInterruptStatus[2]), WDH (HcInterruptStatus[1]) or SO (HcInterruptStatus[0]) Disabled even if the corresponding bit in HcInterruptEnable is high.
-<br>
-1 = Interrupt generation due to RHSC (HcInterruptStatus[6]), FNO (HcInterruptStatus[5]), RD (HcInterruptStatus[3]), SF (HcInterruptStatus[2]), WDH (HcInterruptStatus[1]) or SO (HcInterruptStatus[0]) Enabled if the corresponding bit in HcInterruptEnable is high.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcInterruptDisable
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcInterruptDisable
-</font><br><p> <font size="2">
-Offset: 0x14  Host Controller Interrupt Disable Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>SO</td><td><div style="word-wrap: break-word;"><b>Scheduling Overrun Disable Bit
-</b><br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Interrupt generation due to SO (HcInterruptStatus[0]) Disabled.
-<br>
-Read Operation:
-<br>
-0 = Interrupt generation due to SO (HcInterruptStatus[0]) Disabled.
-<br>
-1 = Interrupt generation due to SO (HcInterruptStatus[0]) Enabled.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>WDH</td><td><div style="word-wrap: break-word;"><b>Write Back Done Head Disable Bit
-</b><br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Interrupt generation due to WDH (HcInterruptStatus[1]) Disabled.
-<br>
-Read Operation:
-<br>
-0 = Interrupt generation due to WDH (HcInterruptStatus[1]) Disabled.
-<br>
-1 = Interrupt generation due to WDH (HcInterruptStatus[1]) Enabled.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>SF</td><td><div style="word-wrap: break-word;"><b>Start of Frame Disable Bit
-</b><br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Interrupt generation due to SF (HcInterruptStatus[2]) Disabled.
-<br>
-Read Operation:
-<br>
-0 = Interrupt generation due to SF (HcInterruptStatus[2]) Disabled.
-<br>
-1 = Interrupt generation due to SF (HcInterruptStatus[2]) Enabled.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>RD</td><td><div style="word-wrap: break-word;"><b>Resume Detected Disable Bit
-</b><br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Interrupt generation due to RD (HcInterruptStatus[3]) Disabled.
-<br>
-Read Operation:
-<br>
-0 = Interrupt generation due to RD (HcInterruptStatus[3]) Disabled.
-<br>
-1 = Interrupt generation due to RD (HcInterruptStatus[3]) Enabled.
-<br>
-</div></td></tr><tr><td>
-[5]</td><td>FNO</td><td><div style="word-wrap: break-word;"><b>Frame Number Overflow Disable Bit
-</b><br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Interrupt generation due to FNO (HcInterruptStatus[5]) Disabled.
-<br>
-Read Operation:
-<br>
-0 = Interrupt generation due to FNO (HcInterruptStatus[5]) Disabled.
-<br>
-1 = Interrupt generation due to FNO (HcInterruptStatus[5]) Enabled.
-<br>
-</div></td></tr><tr><td>
-[6]</td><td>RHSC</td><td><div style="word-wrap: break-word;"><b>Root Hub Status Change Disable Bit
-</b><br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Interrupt generation due to RHSC (HcInterruptStatus[6]) Disabled.
-<br>
-Read Operation:
-<br>
-0 = Interrupt generation due to RHSC (HcInterruptStatus[6]) Disabled.
-<br>
-1 = Interrupt generation due to RHSC (HcInterruptStatus[6]) Enabled.
-<br>
-</div></td></tr><tr><td>
-[31]</td><td>MIE</td><td><div style="word-wrap: break-word;"><b>Master Interrupt Disable Bit
-</b><br>
-Global interrupt disable. Writing '1' to disable all interrupts.
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Interrupt generation due to RHSC (HcInterruptStatus[6]), FNO (HcInterruptStatus[5]), RD (HcInterruptStatus[3]), SF (HcInterruptStatus[2]), WDH (HcInterruptStatus[1]) or SO (HcInterruptStatus[0]) Disabled if the corresponding bit in HcInterruptEnable is high.
-<br>
-Read Operation:
-<br>
-0 = Interrupt generation due to RHSC (HcInterruptStatus[6]), FNO (HcInterruptStatus[5]), RD (HcInterruptStatus[3]), SF (HcInterruptStatus[2]), WDH (HcInterruptStatus[1]) or SO (HcInterruptStatus[0]) Disabled even if the corresponding bit in HcInterruptEnable is high.
-<br>
-1 = Interrupt generation due to RHSC (HcInterruptStatus[6]), FNO (HcInterruptStatus[5]), RD (HcInterruptStatus[3]), SF (HcInterruptStatus[2]), WDH (HcInterruptStatus[1]) or SO (HcInterruptStatus[0]) Enabled if the corresponding bit in HcInterruptEnable is high.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcHCCA
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcHCCA
-</font><br><p> <font size="2">
-Offset: 0x18  Host Controller Communication Area Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:8]</td><td>HCCA</td><td><div style="word-wrap: break-word;"><b>Host Controller Communication Area
-</b><br>
-Pointer to indicate base address of the Host Controller Communication Area (HCCA).
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcPeriodCurrentED
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcPeriodCurrentED
-</font><br><p> <font size="2">
-Offset: 0x1C  Host Controller Period Current ED Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:4]</td><td>PCED</td><td><div style="word-wrap: break-word;"><b>Periodic Current ED
-</b><br>
-Pointer to indicate physical address of the current Isochronous or Interrupt Endpoint Descriptor.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcControlHeadED
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcControlHeadED
-</font><br><p> <font size="2">
-Offset: 0x20  Host Controller Control Head ED Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:4]</td><td>CHED</td><td><div style="word-wrap: break-word;"><b>Control Head ED
-</b><br>
-Pointer to indicate physical address of the first Endpoint Descriptor of the Control list.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcControlCurrentED
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcControlCurrentED
-</font><br><p> <font size="2">
-Offset: 0x24  Host Controller Control Current ED Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:4]</td><td>CCED</td><td><div style="word-wrap: break-word;"><b>Control Current Head ED
-</b><br>
-Pointer to indicate the physical address of the current Endpoint Descriptor of the Control list.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcBulkHeadED
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcBulkHeadED
-</font><br><p> <font size="2">
-Offset: 0x28  Host Controller Bulk Head ED Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:4]</td><td>BHED</td><td><div style="word-wrap: break-word;"><b>Bulk Head ED
-</b><br>
-Pointer to indicate the physical address of the first Endpoint Descriptor of the Bulk list.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcBulkCurrentED
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcBulkCurrentED
-</font><br><p> <font size="2">
-Offset: 0x2C  Host Controller Bulk Current ED Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:4]</td><td>BCED</td><td><div style="word-wrap: break-word;"><b>Bulk Current Head ED
-</b><br>
-Pointer to indicate the physical address of the current endpoint of the Bulk list.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcDoneHead
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcDoneHead
-</font><br><p> <font size="2">
-Offset: 0x30  Host Controller Done Head Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:4]</td><td>DH</td><td><div style="word-wrap: break-word;"><b>Done Head
-</b><br>
-Pointer to indicate the physical address of the last completed Transfer Descriptor that was added to the Done queue.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcFmInterval
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcFmInterval
-</font><br><p> <font size="2">
-Offset: 0x34  Host Controller Frame Interval Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[13:0]</td><td>FI</td><td><div style="word-wrap: break-word;"><b>Frame Interval
-</b><br>
-This field specifies the length of a frame as (bit times - 1)
-<br>
-For 12,000 bit times in a frame, a value of 11,999 is stored here.
-<br>
-</div></td></tr><tr><td>
-[30:16]</td><td>FSMPS</td><td><div style="word-wrap: break-word;"><b>FS Largest Data Packet
-</b><br>
-This field specifies a value that is loaded into the Largest Data Packet Counter at the beginning of each frame.
-<br>
-</div></td></tr><tr><td>
-[31]</td><td>FIT</td><td><div style="word-wrap: break-word;"><b>Frame Interval Toggle
-</b><br>
-This bit is toggled by Host Controller Driver when it loads a new value into FI (HcFmInterval[13:0]).
-<br>
-0 = Host Controller Driver didn't load new value into FI (HcFmInterval[13:0]).
-<br>
-1 = Host Controller Driver loads a new value into FI (HcFmInterval[13:0]).
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcFmRemaining
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcFmRemaining
-</font><br><p> <font size="2">
-Offset: 0x38  Host Controller Frame Remaining Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[13:0]</td><td>FR</td><td><div style="word-wrap: break-word;"><b>Frame Remaining
-</b><br>
-When the Host Controller is in the USBOPERATIONAL state, this 14-bit field decrements each 12 MHz clock period
-<br>
-When the count reaches 0, (end of frame) the counter reloads with Frame Interval
-<br>
-In addition, the counter loads when the Host Controller transitions into USBOPERATIONAL.
-<br>
-</div></td></tr><tr><td>
-[31]</td><td>FRT</td><td><div style="word-wrap: break-word;"><b>Frame Remaining Toggle
-</b><br>
-This bit is loaded from the FIT (HcFmInterval[31]) whenever FR (HcFmRemaining[13:0]) reaches 0.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcFmNumber
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcFmNumber
-</font><br><p> <font size="2">
-Offset: 0x3C  Host Controller Frame Number Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[15:0]</td><td>FN</td><td><div style="word-wrap: break-word;"><b>Frame Number
-</b><br>
-This 16-bit incrementing counter field is incremented coincident with the re-load of FR (HcFmRemaining[13:0])
-<br>
-The count rolls over from 'FFFFh' to '0h.'
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcPeriodicStart
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcPeriodicStart
-</font><br><p> <font size="2">
-Offset: 0x40  Host Controller Periodic Start Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[13:0]</td><td>PS</td><td><div style="word-wrap: break-word;"><b>Periodic Start
-</b><br>
-This field contains a value used by the List Processor to determine where in a frame the Periodic List processing must begin.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcLSThreshold
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcLSThreshold
-</font><br><p> <font size="2">
-Offset: 0x44  Host Controller Low-speed Threshold Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[11:0]</td><td>LST</td><td><div style="word-wrap: break-word;"><b>Low-speed Threshold
-</b><br>
-This field contains a value which is compared to the FR (HcFmRemaining[13:0]) field prior to initiating a Low-speed transaction
-<br>
-The transaction is started only if FR (HcFmRemaining[13:0]) >= this field
-<br>
-The value is calculated by Host Controller Driver with the consideration of transmission and setup overhead.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcRhDescriptorA
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcRhDescriptorA
-</font><br><p> <font size="2">
-Offset: 0x48  Host Controller Root Hub Descriptor A Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[7:0]</td><td>NDP</td><td><div style="word-wrap: break-word;"><b>Number Downstream Ports
-</b><br>
-USB host control supports two downstream ports and only one port is available in this series of chip.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>PSM</td><td><div style="word-wrap: break-word;"><b>Power Switching Mode
-</b><br>
-This bit is used to specify how the power switching of the Root Hub ports is controlled.
-<br>
-0 = Global Switching.
-<br>
-1 = Individual Switching.
-<br>
-</div></td></tr><tr><td>
-[11]</td><td>OCPM</td><td><div style="word-wrap: break-word;"><b>over Current Protection Mode
-</b><br>
-This bit describes how the over current status for the Root Hub ports reported
-<br>
-This bit is only valid when NOCP (HcRhDescriptorA[12]) is cleared.
-<br>
-0 = Global Over current.
-<br>
-1 = Individual Over current.
-<br>
-</div></td></tr><tr><td>
-[12]</td><td>NOCP</td><td><div style="word-wrap: break-word;"><b>No over Current Protection
-</b><br>
-This bit describes how the over current status for the Root Hub ports reported.
-<br>
-0 = Over current status is reported.
-<br>
-1 = Over current status is not reported.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcRhDescriptorB
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcRhDescriptorB
-</font><br><p> <font size="2">
-Offset: 0x4C  Host Controller Root Hub Descriptor B Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[31:16]</td><td>PPCM</td><td><div style="word-wrap: break-word;"><b>Port Power Control Mask
-</b><br>
-Global power switching
-<br>
-This field is only valid if PowerSwitchingMode is set (individual port switching)
-<br>
-When set, the port only responds to individual port power switching commands (Set/ClearPortPower)
-<br>
-When cleared, the port only responds to global power switching commands (Set/ClearGlobalPower).
-<br>
-0 = Port power controlled by global power switching.
-<br>
-1 = Port power controlled by port power switching.
-<br>
-Note: PPCM[15:2] and PPCM[0] are reserved.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcRhStatus
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcRhStatus
-</font><br><p> <font size="2">
-Offset: 0x50  Host Controller Root Hub Status Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>LPS</td><td><div style="word-wrap: break-word;"><b>Clear Global Power
-</b><br>
-In global power mode (PSM (HcRhDescriptorA[8]) = 0), this bit is written to one to clear all ports' power.
-<br>
-This bit always read as zero.
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Clear global power.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>OCI</td><td><div style="word-wrap: break-word;"><b>over Current Indicator
-</b><br>
-This bit reflects the state of the over current status pin
-<br>
-This field is only valid if NOCP (HcRhDesA[12]) and OCPM (HcRhDesA[11]) are cleared.
-<br>
-0 = No over current condition.
-<br>
-1 = Over current condition.
-<br>
-</div></td></tr><tr><td>
-[15]</td><td>DRWE</td><td><div style="word-wrap: break-word;"><b>Device Remote Wakeup Enable Bit
-</b><br>
-This bit controls if port's Connect Status Change as a remote wake-up event.
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Connect Status Change as a remote wake-up event Enabled.
-<br>
-Read Operation:
-<br>
-0 = Connect Status Change as a remote wake-up event Disabled.
-<br>
-1 = Connect Status Change as a remote wake-up event Enabled.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>LPSC</td><td><div style="word-wrap: break-word;"><b>Set Global Power
-</b><br>
-In global power mode (PSM (HcRhDescriptorA[8]) = 0), this bit is written to one to enable power to all ports.
-<br>
-This bit always read as zero.
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Set global power.
-<br>
-</div></td></tr><tr><td>
-[17]</td><td>OCIC</td><td><div style="word-wrap: break-word;"><b>over Current Indicator Change
-</b><br>
-This bit is set by hardware when a change has occurred in OCI (HcRhStatus[1]).
-<br>
-Write 1 to clear this bit to zero.
-<br>
-0 = OCI (HcRhStatus[1]) didn't change.
-<br>
-1 = OCI (HcRhStatus[1]) change.
-<br>
-</div></td></tr><tr><td>
-[31]</td><td>CRWE</td><td><div style="word-wrap: break-word;"><b>Clear Remote Wake-up Enable Bit
-</b><br>
-This bit is use to clear DRWE (HcRhStatus[15]).
-<br>
-This bit always read as zero.
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Clear DRWE (HcRhStatus[15]).
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcRhPortStatus[2]
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcRhPortStatus[2]
-</font><br><p> <font size="2">
-Offset: 0x54  Host Controller Root Hub Port Status
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[0]</td><td>CCS</td><td><div style="word-wrap: break-word;"><b>CurrentConnectStatus (Read) or ClearPortEnable Bit (Write)
-</b><br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Clear port enable.
-<br>
-Read Operation:
-<br>
-0 = No device connected.
-<br>
-1 = Device connected.
-<br>
-</div></td></tr><tr><td>
-[1]</td><td>PES</td><td><div style="word-wrap: break-word;"><b>Port Enable Status
-</b><br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Set port enable.
-<br>
-Read Operation:
-<br>
-0 = Port Disabled.
-<br>
-1 = Port Enabled.
-<br>
-</div></td></tr><tr><td>
-[2]</td><td>PSS</td><td><div style="word-wrap: break-word;"><b>Port Suspend Status
-</b><br>
-This bit indicates the port is suspended
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Set port suspend.
-<br>
-Read Operation:
-<br>
-0 = Port is not suspended.
-<br>
-1 = Port is selectively suspended.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>POCI</td><td><div style="word-wrap: break-word;"><b>Port over Current Indicator (Read) or Clear Port Suspend (Write)
-</b><br>
-This bit reflects the state of the over current status pin dedicated to this port
-<br>
-This field is only valid if NOCP (HcRhDescriptorA[12]) is cleared and OCPM (HcRhDescriptorA[11]) is set.
-<br>
-This bit is also used to initiate the selective result sequence for the port.
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Clear port suspend.
-<br>
-Read Operation:
-<br>
-0 = No over current condition.
-<br>
-1 = Over current condition.
-<br>
-</div></td></tr><tr><td>
-[4]</td><td>PRS</td><td><div style="word-wrap: break-word;"><b>Port Reset Status
-</b><br>
-This bit reflects the reset state of the port.
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Set port reset.
-<br>
-Read Operation
-<br>
-0 = Port reset signal is not active.
-<br>
-1 = Port reset signal is active.
-<br>
-</div></td></tr><tr><td>
-[8]</td><td>PPS</td><td><div style="word-wrap: break-word;"><b>Port Power Status
-</b><br>
-This bit reflects the power state of the port regardless of the power switching mode.
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Port Power Enabled.
-<br>
-Read Operation:
-<br>
-0 = Port power is Disabled.
-<br>
-1 = Port power is Enabled.
-<br>
-</div></td></tr><tr><td>
-[9]</td><td>LSDA</td><td><div style="word-wrap: break-word;"><b>Low Speed Device Attached (Read) or Clear Port Power (Write)
-</b><br>
-This bit defines the speed (and bud idle) of the attached device
-<br>
-It is only valid when CCS (HcRhPortStatus1[0]) is set.
-<br>
-This bit is also used to clear port power.
-<br>
-Write Operation:
-<br>
-0 = No effect.
-<br>
-1 = Clear PPS (HcRhPortStatus1[8]).
-<br>
-Read Operation:
-<br>
-0 = Full Speed device.
-<br>
-1 = Low-speed device.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>CSC</td><td><div style="word-wrap: break-word;"><b>Connect Status Change
-</b><br>
-This bit indicates connect or disconnect event has been detected (CCS (HcRhPortStatus1[0]) changed).
-<br>
-Write 1 to clear this bit to zero.
-<br>
-0 = No connect/disconnect event (CCS (HcRhPortStatus1[0]) didn't change).
-<br>
-1 = Hardware detection of connect/disconnect event (CCS (HcRhPortStatus1[0]) changed).
-<br>
-</div></td></tr><tr><td>
-[17]</td><td>PESC</td><td><div style="word-wrap: break-word;"><b>Port Enable Status Change
-</b><br>
-This bit indicates that the port has been disabled (PES (HcRhPortStatus1[1]) cleared) due to a hardware event.
-<br>
-Write 1 to clear this bit to zero.
-<br>
-0 = PES (HcRhPortStatus1[1]) didn't change.
-<br>
-1 = PES (HcRhPortStatus1[1]) changed.
-<br>
-</div></td></tr><tr><td>
-[18]</td><td>PSSC</td><td><div style="word-wrap: break-word;"><b>Port Suspend Status Change
-</b><br>
-This bit indicates the completion of the selective resume sequence for the port.
-<br>
-Write 1 to clear this bit to zero.
-<br>
-0 = Port resume is not completed.
-<br>
-1 = Port resume completed.
-<br>
-</div></td></tr><tr><td>
-[19]</td><td>OCIC</td><td><div style="word-wrap: break-word;"><b>Port over Current Indicator Change
-</b><br>
-This bit is set when POCI (HcRhPortStatus1[3]) changes.
-<br>
-Write 1 to clear this bit to zero.
-<br>
-0 = POCI (HcRhPortStatus1[3]) didn't change.
-<br>
-1 = POCI (HcRhPortStatus1[3]) changes.
-<br>
-</div></td></tr><tr><td>
-[20]</td><td>PRSC</td><td><div style="word-wrap: break-word;"><b>Port Reset Status Change
-</b><br>
-This bit indicates that the port reset signal has completed.
-<br>
-Write 1 to clear this bit to zero.
-<br>
-0 = Port reset is not complete.
-<br>
-1 = Port reset is complete.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcPhyControl
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcPhyControl
-</font><br><p> <font size="2">
-Offset: 0x200  Host Controller PHY Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[27]</td><td>STBYEN</td><td><div style="word-wrap: break-word;"><b>USB Transceiver Standby Enable Bit
-</b><br>
-This bit controls if USB transceiver could enter the standby mode to reduce power consumption.
-<br>
-0 = The USB transceiver would never enter the standby mode.
-<br>
-1 = The USB transceiver will enter standby mode while port is in power off state (port power is inactive).
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-@var USBH_T::HcMiscControl
-
-\htmlonly
-
-<html><table class="fixed" border="1" style="border-collapse:collapse;" borderColor=black ><col width="75px" /><col width="125px" /><col width="700px" /><caption align="left"><font size="3">HcMiscControl
-</font><br><p> <font size="2">
-Offset: 0x204  Host Controller Miscellaneous Control Register
-</font></caption><thread><tr bgcolor="#8A0808" ><td><font color=white><b>Bits</b></font></td><td><font color=white><b>Field</b></font></td><td><font color=white><b>Descriptions</b></font></td></tr></thread><tbody>
-<tr><td>
-[1]</td><td>ABORT</td><td><div style="word-wrap: break-word;"><b>AHB Bus ERROR Response
-</b><br>
-This bit indicates there is an ERROR response received in AHB bus.
-<br>
-0 = No ERROR response received.
-<br>
-1 = ERROR response received.
-<br>
-</div></td></tr><tr><td>
-[3]</td><td>OCAL</td><td><div style="word-wrap: break-word;"><b>over Current Active Low
-</b><br>
-This bit controls the polarity of over current flag from external power IC.
-<br>
-0 = Over current flag is high active.
-<br>
-1 = Over current flag is low active.
-<br>
-</div></td></tr><tr><td>
-[16]</td><td>DPRT1</td><td><div style="word-wrap: break-word;"><b>Disable Port 1
-</b><br>
-This bit controls if the connection between USB host controller and transceiver of port 1 is disabled
-<br>
-If the connection is disabled, the USB host controller will not recognize any event of USB bus.
-<br>
-Set this bit high, the transceiver of port 1 will also be forced into the standby mode no matter what USB host controller operation is.
-<br>
-0 = The connection between USB host controller and transceiver of port 1 Enabled.
-<br>
-1 = The connection between USB host controller and transceiver of port 1 Disabled and the transceiver of port 1 will also be forced into the standby mode.
-<br>
-</div></td></tr></tbody></table></html>
-
-\endhtmlonly
-
-
-
- */
+     * @var USBH_T::HcRevision
+     * Offset: 0x00  Host Controller Revision Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[7:0]   |REV       |Revision Number
+     * |        |          |Indicates the Open HCI Specification revision number implemented by the Hardware
+     * |        |          |Host Controller supports 1.1 specification.
+     * |        |          |(X.Y = XYh).
+     * @var USBH_T::HcControl
+     * Offset: 0x04  Host Controller Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[1:0]   |CBSR      |Control Bulk Service Ratio
+     * |        |          |This specifies the service ratio between Control and Bulk EDs
+     * |        |          |Before processing any of the non-periodic lists, HC must compare the ratio specified with its internal count on how many nonempty Control EDs have been processed, in determining whether to continue serving another Control ED or switching to Bulk EDs
+     * |        |          |The internal count will be retained when crossing the frame boundary
+     * |        |          |In case of reset, HCD is responsible for restoring this
+     * |        |          |Value.
+     * |        |          |00 = Number of Control EDs over Bulk EDs served is 1:1.
+     * |        |          |01 = Number of Control EDs over Bulk EDs served is 2:1.
+     * |        |          |10 = Number of Control EDs over Bulk EDs served is 3:1.
+     * |        |          |11 = Number of Control EDs over Bulk EDs served is 4:1.
+     * |[2]     |PLE       |Periodic List Enable Bit
+     * |        |          |When set, this bit enables processing of the Periodic (interrupt and isochronous) list
+     * |        |          |The Host Controller checks this bit prior to attempting any periodic transfers in a frame.
+     * |        |          |0 = Processing of the Periodic (Interrupt and Isochronous) list after next SOF (Start-Of-Frame) Disabled.
+     * |        |          |1 = Processing of the Periodic (Interrupt and Isochronous) list in the next frame Enabled.
+     * |        |          |Note: To enable the processing of the Isochronous list, user has to set both PLE and IE (HcControl[3]) high.
+     * |[3]     |IE        |Isochronous List Enable Bit
+     * |        |          |Both ISOEn and PLE (HcControl[2]) high enables Host Controller to process the Isochronous list
+     * |        |          |Either ISOEn or PLE (HcControl[2]) is low disables Host Controller to process the Isochronous list.
+     * |        |          |0 = Processing of the Isochronous list after next SOF (Start-Of-Frame) Disabled.
+     * |        |          |1 = Processing of the Isochronous list in the next frame Enabled, if the PLE (HcControl[2]) is high, too.
+     * |[4]     |CLE       |Control List Enable Bit
+     * |        |          |0 = Processing of the Control list after next SOF (Start-Of-Frame) Disabled.
+     * |        |          |1 = Processing of the Control list in the next frame Enabled.
+     * |[5]     |BLE       |Bulk List Enable Bit
+     * |        |          |0 = Processing of the Bulk list after next SOF (Start-Of-Frame) Disabled.
+     * |        |          |1 = Processing of the Bulk list in the next frame Enabled.
+     * |[7:6]   |HCFS      |Host Controller Functional State
+     * |        |          |This field sets the Host Controller state
+     * |        |          |The Controller may force a state change from USBSUSPEND to USBRESUME after detecting resume signaling from a downstream port
+     * |        |          |States are:
+     * |        |          |00 = USBSUSPEND.
+     * |        |          |01 = USBOPERATIONAL.
+     * |        |          |10 = USBRESUME.
+     * |        |          |11 = USBRESET.
+     * @var USBH_T::HcCommandStatus
+     * Offset: 0x08  Host Controller Command Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |HCR       |Host Controller Reset
+     * |        |          |This bit is set to initiate the software reset of Host Controller
+     * |        |          |This bit is cleared by the Host Controller, upon completed of the reset operation.
+     * |        |          |This bit, when set, didn't reset the Root Hub and no subsequent reset signaling be asserted to its downstream ports.
+     * |        |          |0 = Host Controller is not in software reset state.
+     * |        |          |1 = Host Controller is in software reset state.
+     * |[1]     |CLF       |Control List Filled
+     * |        |          |Set high to indicate there is an active TD on the Control List
+     * |        |          |It may be set by either software or the Host Controller and cleared by the Host Controller each time it begins processing the head of the Control List.
+     * |        |          |0 = No active TD found or Host Controller begins to process the head of the Control list.
+     * |        |          |1 = An active TD added or found on the Control list.
+     * |[2]     |BLF       |Bulk List Filled
+     * |        |          |Set high to indicate there is an active TD on the Bulk list
+     * |        |          |This bit may be set by either software or the Host Controller and cleared by the Host Controller each time it begins processing the head of the Bulk list.
+     * |        |          |0 = No active TD found or Host Controller begins to process the head of the Bulk list.
+     * |        |          |1 = An active TD added or found on the Bulk list.
+     * |[17:16] |SOC       |Schedule Overrun Count
+     * |        |          |These bits are incremented on each scheduling overrun error
+     * |        |          |It is initialized to 00b and wraps around at 11b
+     * |        |          |This will be incremented when a scheduling overrun is detected even if SO (HcInterruptStatus[0]) has already been set.
+     * @var USBH_T::HcInterruptStatus
+     * Offset: 0x0C  Host Controller Interrupt Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SO        |Scheduling Overrun
+     * |        |          |Set when the List Processor determines a Schedule Overrun has occurred.
+     * |        |          |0 = Schedule Overrun didn't occur.
+     * |        |          |1 = Schedule Overrun has occurred.
+     * |[1]     |WDH       |Write Back Done Head
+     * |        |          |Set after the Host Controller has written HcDoneHead to HccaDoneHead
+     * |        |          |Further updates of the HccaDoneHead will not occur until this bit has been cleared.
+     * |        |          |0 =.Host Controller didn't update HccaDoneHead.
+     * |        |          |1 =.Host Controller has written HcDoneHead to HccaDoneHead.
+     * |[2]     |SF        |Start of Frame
+     * |        |          |Set when the Frame Management functional block signals a 'Start of Frame' event
+     * |        |          |Host Control generates a SOF token at the same time.
+     * |        |          |0 =.Not the start of a frame.
+     * |        |          |1 =.Indicate the start of a frame and Host Controller generates a SOF token.
+     * |[3]     |RD        |Resume Detected
+     * |        |          |Set when Host Controller detects resume signaling on a downstream port.
+     * |        |          |0 = No resume signaling detected on a downstream port.
+     * |        |          |1 = Resume signaling detected on a downstream port.
+     * |[5]     |FNO       |Frame Number Overflow
+     * |        |          |This bit is set when bit 15 of Frame Number changes from 1 to 0 or from 0 to 1.
+     * |        |          |0 = The bit 15 of Frame Number didn't change.
+     * |        |          |1 = The bit 15 of Frame Number changes from 1 to 0 or from 0 to 1.
+     * |[6]     |RHSC      |Root Hub Status Change
+     * |        |          |This bit is set when the content of HcRhStatus or the content of HcRhPortStatus register has changed.
+     * |        |          |0 = The content of HcRhStatus and the content of HcRhPortStatus register didn't change.
+     * |        |          |1 = The content of HcRhStatus or the content of HcRhPortStatus register has changed.
+     * @var USBH_T::HcInterruptEnable
+     * Offset: 0x10  Host Controller Interrupt Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SO        |Scheduling Overrun Enable Bit
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Interrupt generation due to SO (HcInterruptStatus[0]) Enabled.
+     * |        |          |Read Operation:
+     * |        |          |0 = Interrupt generation due to SO (HcInterruptStatus[0]) Disabled.
+     * |        |          |1 = Interrupt generation due to SO (HcInterruptStatus[0]) Enabled.
+     * |[1]     |WDH       |Write Back Done Head Enable Bit
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Interrupt generation due to WDH (HcInterruptStatus[1]) Enabled.
+     * |        |          |Read Operation:
+     * |        |          |0 = Interrupt generation due to WDH (HcInterruptStatus[1]) Disabled.
+     * |        |          |1 = Interrupt generation due to WDH (HcInterruptStatus[1]) Enabled.
+     * |[2]     |SF        |Start of Frame Enable Bit
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Interrupt generation due to SF (HcInterruptStatus[2]) Enabled.
+     * |        |          |Read Operation:
+     * |        |          |0 = Interrupt generation due to SF (HcInterruptStatus[2]) Disabled.
+     * |        |          |1 = Interrupt generation due to SF (HcInterruptStatus[2]) Enabled.
+     * |[3]     |RD        |Resume Detected Enable Bit
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Interrupt generation due to RD (HcInterruptStatus[3]) Enabled.
+     * |        |          |Read Operation:
+     * |        |          |0 = Interrupt generation due to RD (HcInterruptStatus[3]) Disabled.
+     * |        |          |1 = Interrupt generation due to RD (HcInterruptStatus[3]) Enabled.
+     * |[5]     |FNO       |Frame Number Overflow Enable Bit
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Interrupt generation due to FNO (HcInterruptStatus[5]) Enabled.
+     * |        |          |Read Operation:
+     * |        |          |0 = Interrupt generation due to FNO (HcInterruptStatus[5]) Disabled.
+     * |        |          |1 = Interrupt generation due to FNO (HcInterruptStatus[5]) Enabled.
+     * |[6]     |RHSC      |Root Hub Status Change Enable Bit
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Interrupt generation due to RHSC (HcInterruptStatus[6]) Enabled.
+     * |        |          |Read Operation:
+     * |        |          |0 = Interrupt generation due to RHSC (HcInterruptStatus[6]) Disabled.
+     * |        |          |1 = Interrupt generation due to RHSC (HcInterruptStatus[6]) Enabled.
+     * |[31]    |MIE       |Master Interrupt Enable Bit
+     * |        |          |This bit is a global interrupt enable
+     * |        |          |A write of '1' allows interrupts to be enabled via the specific enable bits listed above.
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Interrupt generation due to RHSC (HcInterruptStatus[6]), FNO (HcInterruptStatus[5]), RD (HcInterruptStatus[3]), SF (HcInterruptStatus[2]), WDH (HcInterruptStatus[1]) or SO (HcInterruptStatus[0]) Enabled if the corresponding bit in HcInterruptEnable is high.
+     * |        |          |Read Operation:
+     * |        |          |0 = Interrupt generation due to RHSC (HcInterruptStatus[6]), FNO (HcInterruptStatus[5]), RD (HcInterruptStatus[3]), SF (HcInterruptStatus[2]), WDH (HcInterruptStatus[1]) or SO (HcInterruptStatus[0]) Disabled even if the corresponding bit in HcInterruptEnable is high.
+     * |        |          |1 = Interrupt generation due to RHSC (HcInterruptStatus[6]), FNO (HcInterruptStatus[5]), RD (HcInterruptStatus[3]), SF (HcInterruptStatus[2]), WDH (HcInterruptStatus[1]) or SO (HcInterruptStatus[0]) Enabled if the corresponding bit in HcInterruptEnable is high.
+     * @var USBH_T::HcInterruptDisable
+     * Offset: 0x14  Host Controller Interrupt Disable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SO        |Scheduling Overrun Disable Bit
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Interrupt generation due to SO (HcInterruptStatus[0]) Disabled.
+     * |        |          |Read Operation:
+     * |        |          |0 = Interrupt generation due to SO (HcInterruptStatus[0]) Disabled.
+     * |        |          |1 = Interrupt generation due to SO (HcInterruptStatus[0]) Enabled.
+     * |[1]     |WDH       |Write Back Done Head Disable Bit
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Interrupt generation due to WDH (HcInterruptStatus[1]) Disabled.
+     * |        |          |Read Operation:
+     * |        |          |0 = Interrupt generation due to WDH (HcInterruptStatus[1]) Disabled.
+     * |        |          |1 = Interrupt generation due to WDH (HcInterruptStatus[1]) Enabled.
+     * |[2]     |SF        |Start of Frame Disable Bit
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Interrupt generation due to SF (HcInterruptStatus[2]) Disabled.
+     * |        |          |Read Operation:
+     * |        |          |0 = Interrupt generation due to SF (HcInterruptStatus[2]) Disabled.
+     * |        |          |1 = Interrupt generation due to SF (HcInterruptStatus[2]) Enabled.
+     * |[3]     |RD        |Resume Detected Disable Bit
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Interrupt generation due to RD (HcInterruptStatus[3]) Disabled.
+     * |        |          |Read Operation:
+     * |        |          |0 = Interrupt generation due to RD (HcInterruptStatus[3]) Disabled.
+     * |        |          |1 = Interrupt generation due to RD (HcInterruptStatus[3]) Enabled.
+     * |[5]     |FNO       |Frame Number Overflow Disable Bit
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Interrupt generation due to FNO (HcInterruptStatus[5]) Disabled.
+     * |        |          |Read Operation:
+     * |        |          |0 = Interrupt generation due to FNO (HcInterruptStatus[5]) Disabled.
+     * |        |          |1 = Interrupt generation due to FNO (HcInterruptStatus[5]) Enabled.
+     * |[6]     |RHSC      |Root Hub Status Change Disable Bit
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Interrupt generation due to RHSC (HcInterruptStatus[6]) Disabled.
+     * |        |          |Read Operation:
+     * |        |          |0 = Interrupt generation due to RHSC (HcInterruptStatus[6]) Disabled.
+     * |        |          |1 = Interrupt generation due to RHSC (HcInterruptStatus[6]) Enabled.
+     * |[31]    |MIE       |Master Interrupt Disable Bit
+     * |        |          |Global interrupt disable. Writing '1' to disable all interrupts.
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Interrupt generation due to RHSC (HcInterruptStatus[6]), FNO (HcInterruptStatus[5]), RD (HcInterruptStatus[3]), SF (HcInterruptStatus[2]), WDH (HcInterruptStatus[1]) or SO (HcInterruptStatus[0]) Disabled if the corresponding bit in HcInterruptEnable is high.
+     * |        |          |Read Operation:
+     * |        |          |0 = Interrupt generation due to RHSC (HcInterruptStatus[6]), FNO (HcInterruptStatus[5]), RD (HcInterruptStatus[3]), SF (HcInterruptStatus[2]), WDH (HcInterruptStatus[1]) or SO (HcInterruptStatus[0]) Disabled even if the corresponding bit in HcInterruptEnable is high.
+     * |        |          |1 = Interrupt generation due to RHSC (HcInterruptStatus[6]), FNO (HcInterruptStatus[5]), RD (HcInterruptStatus[3]), SF (HcInterruptStatus[2]), WDH (HcInterruptStatus[1]) or SO (HcInterruptStatus[0]) Enabled if the corresponding bit in HcInterruptEnable is high.
+     * @var USBH_T::HcHCCA
+     * Offset: 0x18  Host Controller Communication Area Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:8]  |HCCA      |Host Controller Communication Area
+     * |        |          |Pointer to indicate base address of the Host Controller Communication Area (HCCA).
+     * @var USBH_T::HcPeriodCurrentED
+     * Offset: 0x1C  Host Controller Period Current ED Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:4]  |PCED      |Periodic Current ED
+     * |        |          |Pointer to indicate physical address of the current Isochronous or Interrupt Endpoint Descriptor.
+     * @var USBH_T::HcControlHeadED
+     * Offset: 0x20  Host Controller Control Head ED Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:4]  |CHED      |Control Head ED
+     * |        |          |Pointer to indicate physical address of the first Endpoint Descriptor of the Control list.
+     * @var USBH_T::HcControlCurrentED
+     * Offset: 0x24  Host Controller Control Current ED Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:4]  |CCED      |Control Current Head ED
+     * |        |          |Pointer to indicate the physical address of the current Endpoint Descriptor of the Control list.
+     * @var USBH_T::HcBulkHeadED
+     * Offset: 0x28  Host Controller Bulk Head ED Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:4]  |BHED      |Bulk Head ED
+     * |        |          |Pointer to indicate the physical address of the first Endpoint Descriptor of the Bulk list.
+     * @var USBH_T::HcBulkCurrentED
+     * Offset: 0x2C  Host Controller Bulk Current ED Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:4]  |BCED      |Bulk Current Head ED
+     * |        |          |Pointer to indicate the physical address of the current endpoint of the Bulk list.
+     * @var USBH_T::HcDoneHead
+     * Offset: 0x30  Host Controller Done Head Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:4]  |DH        |Done Head
+     * |        |          |Pointer to indicate the physical address of the last completed Transfer Descriptor that was added to the Done queue.
+     * @var USBH_T::HcFmInterval
+     * Offset: 0x34  Host Controller Frame Interval Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[13:0]  |FI        |Frame Interval
+     * |        |          |This field specifies the length of a frame as (bit times - 1)
+     * |        |          |For 12,000 bit times in a frame, a value of 11,999 is stored here.
+     * |[30:16] |FSMPS     |FS Largest Data Packet
+     * |        |          |This field specifies a value that is loaded into the Largest Data Packet Counter at the beginning of each frame.
+     * |[31]    |FIT       |Frame Interval Toggle
+     * |        |          |This bit is toggled by Host Controller Driver when it loads a new value into FI (HcFmInterval[13:0]).
+     * |        |          |0 = Host Controller Driver didn't load new value into FI (HcFmInterval[13:0]).
+     * |        |          |1 = Host Controller Driver loads a new value into FI (HcFmInterval[13:0]).
+     * @var USBH_T::HcFmRemaining
+     * Offset: 0x38  Host Controller Frame Remaining Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[13:0]  |FR        |Frame Remaining
+     * |        |          |When the Host Controller is in the USBOPERATIONAL state, this 14-bit field decrements each 12 MHz clock period
+     * |        |          |When the count reaches 0, (end of frame) the counter reloads with Frame Interval
+     * |        |          |In addition, the counter loads when the Host Controller transitions into USBOPERATIONAL.
+     * |[31]    |FRT       |Frame Remaining Toggle
+     * |        |          |This bit is loaded from the FIT (HcFmInterval[31]) whenever FR (HcFmRemaining[13:0]) reaches 0.
+     * @var USBH_T::HcFmNumber
+     * Offset: 0x3C  Host Controller Frame Number Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |FN        |Frame Number
+     * |        |          |This 16-bit incrementing counter field is incremented coincident with the re-load of FR (HcFmRemaining[13:0])
+     * |        |          |The count rolls over from 'FFFFh' to '0h.'
+     * @var USBH_T::HcPeriodicStart
+     * Offset: 0x40  Host Controller Periodic Start Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[13:0]  |PS        |Periodic Start
+     * |        |          |This field contains a value used by the List Processor to determine where in a frame the Periodic List processing must begin.
+     * @var USBH_T::HcLSThreshold
+     * Offset: 0x44  Host Controller Low-speed Threshold Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[11:0]  |LST       |Low-speed Threshold
+     * |        |          |This field contains a value which is compared to the FR (HcFmRemaining[13:0]) field prior to initiating a Low-speed transaction
+     * |        |          |The transaction is started only if FR (HcFmRemaining[13:0]) >= this field
+     * |        |          |The value is calculated by Host Controller Driver with the consideration of transmission and setup overhead.
+     * @var USBH_T::HcRhDescriptorA
+     * Offset: 0x48  Host Controller Root Hub Descriptor A Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[7:0]   |NDP       |Number Downstream Ports
+     * |        |          |USB host control supports two downstream ports and only one port is available in this series of chip.
+     * |[8]     |PSM       |Power Switching Mode
+     * |        |          |This bit is used to specify how the power switching of the Root Hub ports is controlled.
+     * |        |          |0 = Global Switching.
+     * |        |          |1 = Individual Switching.
+     * |[11]    |OCPM      |over Current Protection Mode
+     * |        |          |This bit describes how the over current status for the Root Hub ports reported
+     * |        |          |This bit is only valid when NOCP (HcRhDescriptorA[12]) is cleared.
+     * |        |          |0 = Global Over current.
+     * |        |          |1 = Individual Over current.
+     * |[12]    |NOCP      |No over Current Protection
+     * |        |          |This bit describes how the over current status for the Root Hub ports reported.
+     * |        |          |0 = Over current status is reported.
+     * |        |          |1 = Over current status is not reported.
+     * @var USBH_T::HcRhDescriptorB
+     * Offset: 0x4C  Host Controller Root Hub Descriptor B Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:16] |PPCM      |Port Power Control Mask
+     * |        |          |Global power switching
+     * |        |          |This field is only valid if PowerSwitchingMode is set (individual port switching)
+     * |        |          |When set, the port only responds to individual port power switching commands (Set/ClearPortPower)
+     * |        |          |When cleared, the port only responds to global power switching commands (Set/ClearGlobalPower).
+     * |        |          |0 = Port power controlled by global power switching.
+     * |        |          |1 = Port power controlled by port power switching.
+     * |        |          |Note: PPCM[15:2] and PPCM[0] are reserved.
+     * @var USBH_T::HcRhStatus
+     * Offset: 0x50  Host Controller Root Hub Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |LPS       |Clear Global Power
+     * |        |          |In global power mode (PSM (HcRhDescriptorA[8]) = 0), this bit is written to one to clear all ports' power.
+     * |        |          |This bit always read as zero.
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Clear global power.
+     * |[1]     |OCI       |over Current Indicator
+     * |        |          |This bit reflects the state of the over current status pin
+     * |        |          |This field is only valid if NOCP (HcRhDesA[12]) and OCPM (HcRhDesA[11]) are cleared.
+     * |        |          |0 = No over current condition.
+     * |        |          |1 = Over current condition.
+     * |[15]    |DRWE      |Device Remote Wakeup Enable Bit
+     * |        |          |This bit controls if port's Connect Status Change as a remote wake-up event.
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Connect Status Change as a remote wake-up event Enabled.
+     * |        |          |Read Operation:
+     * |        |          |0 = Connect Status Change as a remote wake-up event Disabled.
+     * |        |          |1 = Connect Status Change as a remote wake-up event Enabled.
+     * |[16]    |LPSC      |Set Global Power
+     * |        |          |In global power mode (PSM (HcRhDescriptorA[8]) = 0), this bit is written to one to enable power to all ports.
+     * |        |          |This bit always read as zero.
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Set global power.
+     * |[17]    |OCIC      |over Current Indicator Change
+     * |        |          |This bit is set by hardware when a change has occurred in OCI (HcRhStatus[1]).
+     * |        |          |Write 1 to clear this bit to zero.
+     * |        |          |0 = OCI (HcRhStatus[1]) didn't change.
+     * |        |          |1 = OCI (HcRhStatus[1]) change.
+     * |[31]    |CRWE      |Clear Remote Wake-up Enable Bit
+     * |        |          |This bit is use to clear DRWE (HcRhStatus[15]).
+     * |        |          |This bit always read as zero.
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Clear DRWE (HcRhStatus[15]).
+     * @var USBH_T::HcRhPortStatus[2]
+     * Offset: 0x54  Host Controller Root Hub Port Status
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CCS       |CurrentConnectStatus (Read) or ClearPortEnable Bit (Write)
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Clear port enable.
+     * |        |          |Read Operation:
+     * |        |          |0 = No device connected.
+     * |        |          |1 = Device connected.
+     * |[1]     |PES       |Port Enable Status
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Set port enable.
+     * |        |          |Read Operation:
+     * |        |          |0 = Port Disabled.
+     * |        |          |1 = Port Enabled.
+     * |[2]     |PSS       |Port Suspend Status
+     * |        |          |This bit indicates the port is suspended
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Set port suspend.
+     * |        |          |Read Operation:
+     * |        |          |0 = Port is not suspended.
+     * |        |          |1 = Port is selectively suspended.
+     * |[3]     |POCI      |Port over Current Indicator (Read) or Clear Port Suspend (Write)
+     * |        |          |This bit reflects the state of the over current status pin dedicated to this port
+     * |        |          |This field is only valid if NOCP (HcRhDescriptorA[12]) is cleared and OCPM (HcRhDescriptorA[11]) is set.
+     * |        |          |This bit is also used to initiate the selective result sequence for the port.
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Clear port suspend.
+     * |        |          |Read Operation:
+     * |        |          |0 = No over current condition.
+     * |        |          |1 = Over current condition.
+     * |[4]     |PRS       |Port Reset Status
+     * |        |          |This bit reflects the reset state of the port.
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Set port reset.
+     * |        |          |Read Operation
+     * |        |          |0 = Port reset signal is not active.
+     * |        |          |1 = Port reset signal is active.
+     * |[8]     |PPS       |Port Power Status
+     * |        |          |This bit reflects the power state of the port regardless of the power switching mode.
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Port Power Enabled.
+     * |        |          |Read Operation:
+     * |        |          |0 = Port power is Disabled.
+     * |        |          |1 = Port power is Enabled.
+     * |[9]     |LSDA      |Low Speed Device Attached (Read) or Clear Port Power (Write)
+     * |        |          |This bit defines the speed (and bud idle) of the attached device
+     * |        |          |It is only valid when CCS (HcRhPortStatus1[0]) is set.
+     * |        |          |This bit is also used to clear port power.
+     * |        |          |Write Operation:
+     * |        |          |0 = No effect.
+     * |        |          |1 = Clear PPS (HcRhPortStatus1[8]).
+     * |        |          |Read Operation:
+     * |        |          |0 = Full Speed device.
+     * |        |          |1 = Low-speed device.
+     * |[16]    |CSC       |Connect Status Change
+     * |        |          |This bit indicates connect or disconnect event has been detected (CCS (HcRhPortStatus1[0]) changed).
+     * |        |          |Write 1 to clear this bit to zero.
+     * |        |          |0 = No connect/disconnect event (CCS (HcRhPortStatus1[0]) didn't change).
+     * |        |          |1 = Hardware detection of connect/disconnect event (CCS (HcRhPortStatus1[0]) changed).
+     * |[17]    |PESC      |Port Enable Status Change
+     * |        |          |This bit indicates that the port has been disabled (PES (HcRhPortStatus1[1]) cleared) due to a hardware event.
+     * |        |          |Write 1 to clear this bit to zero.
+     * |        |          |0 = PES (HcRhPortStatus1[1]) didn't change.
+     * |        |          |1 = PES (HcRhPortStatus1[1]) changed.
+     * |[18]    |PSSC      |Port Suspend Status Change
+     * |        |          |This bit indicates the completion of the selective resume sequence for the port.
+     * |        |          |Write 1 to clear this bit to zero.
+     * |        |          |0 = Port resume is not completed.
+     * |        |          |1 = Port resume completed.
+     * |[19]    |OCIC      |Port over Current Indicator Change
+     * |        |          |This bit is set when POCI (HcRhPortStatus1[3]) changes.
+     * |        |          |Write 1 to clear this bit to zero.
+     * |        |          |0 = POCI (HcRhPortStatus1[3]) didn't change.
+     * |        |          |1 = POCI (HcRhPortStatus1[3]) changes.
+     * |[20]    |PRSC      |Port Reset Status Change
+     * |        |          |This bit indicates that the port reset signal has completed.
+     * |        |          |Write 1 to clear this bit to zero.
+     * |        |          |0 = Port reset is not complete.
+     * |        |          |1 = Port reset is complete.
+     * @var USBH_T::HcPhyControl
+     * Offset: 0x200  Host Controller PHY Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[27]    |STBYEN    |USB Transceiver Standby Enable Bit
+     * |        |          |This bit controls if USB transceiver could enter the standby mode to reduce power consumption.
+     * |        |          |0 = The USB transceiver would never enter the standby mode.
+     * |        |          |1 = The USB transceiver will enter standby mode while port is in power off state (port power is inactive).
+     * @var USBH_T::HcMiscControl
+     * Offset: 0x204  Host Controller Miscellaneous Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[1]     |ABORT     |AHB Bus ERROR Response
+     * |        |          |This bit indicates there is an ERROR response received in AHB bus.
+     * |        |          |0 = No ERROR response received.
+     * |        |          |1 = ERROR response received.
+     * |[3]     |OCAL      |over Current Active Low
+     * |        |          |This bit controls the polarity of over current flag from external power IC.
+     * |        |          |0 = Over current flag is high active.
+     * |        |          |1 = Over current flag is low active.
+     * |[16]    |DPRT1     |Disable Port 1
+     * |        |          |This bit controls if the connection between USB host controller and transceiver of port 1 is disabled
+     * |        |          |If the connection is disabled, the USB host controller will not recognize any event of USB bus.
+     * |        |          |Set this bit high, the transceiver of port 1 will also be forced into the standby mode no matter what USB host controller operation is.
+     * |        |          |0 = The connection between USB host controller and transceiver of port 1 Enabled.
+     * |        |          |1 = The connection between USB host controller and transceiver of port 1 Disabled and the transceiver of port 1 will also be forced into the standby mode.
+     */
     __I  uint32_t HcRevision;            /*!< [0x0000] Host Controller Revision Register                                */
     __IO uint32_t HcControl;             /*!< [0x0004] Host Controller Control Register                                 */
     __IO uint32_t HcCommandStatus;       /*!< [0x0008] Host Controller Command Status Register                          */
