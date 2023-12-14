@@ -781,7 +781,7 @@ uint32_t CAN_SetBaudRate(CAN_T *tCAN, uint32_t u32BaudRate)
     int tsegall, tseg = 0, tseg1 = 0, tseg2 = 0;
     int spt_error = 1000, spt = 0, sampl_pt;
     uint64_t clock_freq = (uint64_t)0, u64PCLK_DIV = (uint64_t)1;
-    uint32_t sjw = (uint32_t)1;
+    uint32_t sjw = (uint32_t)SJW_MAX;
 
     CAN_EnterInitMode(tCAN, (uint8_t)0);
 
