@@ -1,7 +1,7 @@
 /**************************************************************************//**
  * @file     main.c
  * @version  V1.00
- * @brief    Use pin PA.11 to demonstrates timer event counter function
+ * @brief    Use pin PB.5 to demonstrates timer event counter function
  *
  *
  * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
