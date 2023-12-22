@@ -1027,14 +1027,14 @@ int32_t FMC_WriteConfig(uint32_t u32Config[], uint32_t u32Count)
 /**
   * @brief Run CRC32 checksum calculation and get result.
   * @param[in] u32addr   Starting flash address. It must be a page aligned address.
-  * @param[in] u32count  Byte count of flash to be calculated. It must be multiple of 512 bytes.
+  * @param[in] u32count  Byte count of flash to be calculated. It must be multiple of 4 KB.
   * @return Success or not.
   * @retval   0           Success.
   * @retval   0xFFFFFFFF  Invalid parameter or command failed.
   *
   * @note     Global error code g_FMC_i32ErrCode
   *           -1  Run/Read check sum time-out failed
-  *           -2  u32addr or u32count must be aligned with 512
+  *           -2  u32addr or u32count must be aligned with 4K
   */
 uint32_t  FMC_GetChkSum(uint32_t u32addr, uint32_t u32count)
 {
@@ -1042,7 +1042,7 @@ uint32_t  FMC_GetChkSum(uint32_t u32addr, uint32_t u32count)
 
     g_FMC_i32ErrCode = 0;
 
-    if ((u32addr % 512UL) || (u32count % 512UL))
+    if ((u32addr % 4096UL) || (u32count % 4096UL))
     {
         g_FMC_i32ErrCode = -2;
         return 0xFFFFFFFF;
@@ -1080,7 +1080,7 @@ uint32_t  FMC_GetChkSum(uint32_t u32addr, uint32_t u32count)
 /**
   * @brief Run flash all one verification and get result.
   * @param[in] u32addr   Starting flash address. It must be a page aligned address.
-  * @param[in] u32count  Byte count of flash to be calculated. It must be multiple of 512 bytes.
+  * @param[in] u32count  Byte count of flash to be calculated. It must be multiple of 4KB bytes.
   * @retval   READ_ALLONE_YES      The contents of verified flash area are 0xFFFFFFFF.
   * @retval   READ_ALLONE_NOT  Some contents of verified flash area are not 0xFFFFFFFF.
   * @retval   READ_ALLONE_CMD_FAIL  Unexpected error occurred.
