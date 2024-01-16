@@ -403,6 +403,8 @@ int  usbh_umas_reset_disk(int drv_no)
 
     msc_debug_msg("usbh_umas_reset_disk ...\n");
 
+    usbh_pooling_hubs();
+
     msc = find_msc_by_drive(drv_no);
     if (msc == NULL)
         return UMAS_ERR_DRIVE_NOT_FOUND;
