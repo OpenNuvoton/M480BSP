@@ -19,7 +19,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign">
-   <div id="projectname">M480 BSP<span id="projectnumber">&#160;V3.05.005</span>
+   <div id="projectname">M480 BSP<span id="projectnumber">&#160;V3.05.006</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -637,7 +637,7 @@ $(function() {
 <div class="line"><a id="l00781" name="l00781"></a><span class="lineno">  781</span>    <span class="keywordtype">int</span> tsegall, tseg = 0, tseg1 = 0, tseg2 = 0;</div>
 <div class="line"><a id="l00782" name="l00782"></a><span class="lineno">  782</span>    <span class="keywordtype">int</span> spt_error = 1000, spt = 0, sampl_pt;</div>
 <div class="line"><a id="l00783" name="l00783"></a><span class="lineno">  783</span>    uint64_t clock_freq = (uint64_t)0, u64PCLK_DIV = (uint64_t)1;</div>
-<div class="line"><a id="l00784" name="l00784"></a><span class="lineno">  784</span>    uint32_t sjw = (uint32_t)1;</div>
+<div class="line"><a id="l00784" name="l00784"></a><span class="lineno">  784</span>    uint32_t sjw = (uint32_t)SJW_MAX;</div>
 <div class="line"><a id="l00785" name="l00785"></a><span class="lineno">  785</span> </div>
 <div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span>    <a class="code hl_function" href="group___c_a_n___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gac501062694c3d6000c646260f0b827d1">CAN_EnterInitMode</a>(tCAN, (uint8_t)0);</div>
 <div class="line"><a id="l00787" name="l00787"></a><span class="lineno">  787</span> </div>
@@ -923,31 +923,31 @@ $(function() {
 <div class="line"><a id="l01188" name="l01188"></a><span class="lineno"> 1188</span>    uint32_t u32TimeOutCount;</div>
 <div class="line"><a id="l01189" name="l01189"></a><span class="lineno"> 1189</span>    uint32_t u32EOB_Flag = 0ul;</div>
 <div class="line"><a id="l01190" name="l01190"></a><span class="lineno"> 1190</span> </div>
-<div class="line"><a id="l01191" name="l01191"></a><span class="lineno"> 1191</span>    <span class="keywordflow">for</span>(i = 1ul; i &lt; u32MsgCount; i++)</div>
+<div class="line"><a id="l01191" name="l01191"></a><span class="lineno"> 1191</span>    <span class="keywordflow">for</span>(i = 1ul; i &lt;= u32MsgCount; i++)</div>
 <div class="line"><a id="l01192" name="l01192"></a><span class="lineno"> 1192</span>    {</div>
 <div class="line"><a id="l01193" name="l01193"></a><span class="lineno"> 1193</span>        u32TimeOutCount = 0ul;</div>
 <div class="line"><a id="l01194" name="l01194"></a><span class="lineno"> 1194</span> </div>
-<div class="line"><a id="l01195" name="l01195"></a><span class="lineno"> 1195</span>        u32MsgNum += (i - 1ul);</div>
-<div class="line"><a id="l01196" name="l01196"></a><span class="lineno"> 1196</span> </div>
-<div class="line"><a id="l01197" name="l01197"></a><span class="lineno"> 1197</span>        <span class="keywordflow">if</span>(i == u32MsgCount)</div>
-<div class="line"><a id="l01198" name="l01198"></a><span class="lineno"> 1198</span>        {</div>
-<div class="line"><a id="l01199" name="l01199"></a><span class="lineno"> 1199</span>            u32EOB_Flag = 1ul;</div>
-<div class="line"><a id="l01200" name="l01200"></a><span class="lineno"> 1200</span>        }</div>
-<div class="line"><a id="l01201" name="l01201"></a><span class="lineno"> 1201</span>        <span class="keywordflow">else</span></div>
-<div class="line"><a id="l01202" name="l01202"></a><span class="lineno"> 1202</span>        {</div>
-<div class="line"><a id="l01203" name="l01203"></a><span class="lineno"> 1203</span>        }</div>
-<div class="line"><a id="l01204" name="l01204"></a><span class="lineno"> 1204</span> </div>
-<div class="line"><a id="l01205" name="l01205"></a><span class="lineno"> 1205</span>        <span class="keywordflow">while</span>(<a class="code hl_function" href="group___c_a_n___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga80fa48276705d360e0d26cd0615f72d1">CAN_SetRxMsgObj</a>(tCAN, (uint8_t)u32MsgNum, (uint8_t)u32IDType, u32ID, (uint8_t)u32EOB_Flag) == (int32_t)<a class="code hl_define" href="group___legacy___constants.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a>)</div>
-<div class="line"><a id="l01206" name="l01206"></a><span class="lineno"> 1206</span>        {</div>
-<div class="line"><a id="l01207" name="l01207"></a><span class="lineno"> 1207</span>            <span class="keywordflow">if</span>(++u32TimeOutCount &gt;= RETRY_COUNTS)</div>
-<div class="line"><a id="l01208" name="l01208"></a><span class="lineno"> 1208</span>            {</div>
-<div class="line"><a id="l01209" name="l01209"></a><span class="lineno"> 1209</span>                rev = (int32_t)<a class="code hl_define" href="group___legacy___constants.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a>;</div>
-<div class="line"><a id="l01210" name="l01210"></a><span class="lineno"> 1210</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l01211" name="l01211"></a><span class="lineno"> 1211</span>            }</div>
-<div class="line"><a id="l01212" name="l01212"></a><span class="lineno"> 1212</span>            <span class="keywordflow">else</span></div>
-<div class="line"><a id="l01213" name="l01213"></a><span class="lineno"> 1213</span>            {</div>
-<div class="line"><a id="l01214" name="l01214"></a><span class="lineno"> 1214</span>            }</div>
-<div class="line"><a id="l01215" name="l01215"></a><span class="lineno"> 1215</span>        }</div>
+<div class="line"><a id="l01195" name="l01195"></a><span class="lineno"> 1195</span>        <span class="keywordflow">if</span>(i == u32MsgCount)</div>
+<div class="line"><a id="l01196" name="l01196"></a><span class="lineno"> 1196</span>        {</div>
+<div class="line"><a id="l01197" name="l01197"></a><span class="lineno"> 1197</span>            u32EOB_Flag = 1ul;</div>
+<div class="line"><a id="l01198" name="l01198"></a><span class="lineno"> 1198</span>        }</div>
+<div class="line"><a id="l01199" name="l01199"></a><span class="lineno"> 1199</span>        <span class="keywordflow">else</span></div>
+<div class="line"><a id="l01200" name="l01200"></a><span class="lineno"> 1200</span>        {</div>
+<div class="line"><a id="l01201" name="l01201"></a><span class="lineno"> 1201</span>        }</div>
+<div class="line"><a id="l01202" name="l01202"></a><span class="lineno"> 1202</span> </div>
+<div class="line"><a id="l01203" name="l01203"></a><span class="lineno"> 1203</span>        <span class="keywordflow">while</span>(<a class="code hl_function" href="group___c_a_n___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga80fa48276705d360e0d26cd0615f72d1">CAN_SetRxMsgObj</a>(tCAN, (uint8_t)u32MsgNum, (uint8_t)u32IDType, u32ID, (uint8_t)u32EOB_Flag) == (int32_t)<a class="code hl_define" href="group___legacy___constants.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a>)</div>
+<div class="line"><a id="l01204" name="l01204"></a><span class="lineno"> 1204</span>        {</div>
+<div class="line"><a id="l01205" name="l01205"></a><span class="lineno"> 1205</span>            <span class="keywordflow">if</span>(++u32TimeOutCount &gt;= RETRY_COUNTS)</div>
+<div class="line"><a id="l01206" name="l01206"></a><span class="lineno"> 1206</span>            {</div>
+<div class="line"><a id="l01207" name="l01207"></a><span class="lineno"> 1207</span>                rev = (int32_t)<a class="code hl_define" href="group___legacy___constants.html#gaa93f0eb578d23995850d61f7d61c55c1">FALSE</a>;</div>
+<div class="line"><a id="l01208" name="l01208"></a><span class="lineno"> 1208</span>                <span class="keywordflow">return</span> rev;</div>
+<div class="line"><a id="l01209" name="l01209"></a><span class="lineno"> 1209</span>            }</div>
+<div class="line"><a id="l01210" name="l01210"></a><span class="lineno"> 1210</span>            <span class="keywordflow">else</span></div>
+<div class="line"><a id="l01211" name="l01211"></a><span class="lineno"> 1211</span>            {</div>
+<div class="line"><a id="l01212" name="l01212"></a><span class="lineno"> 1212</span>            }</div>
+<div class="line"><a id="l01213" name="l01213"></a><span class="lineno"> 1213</span>        }</div>
+<div class="line"><a id="l01214" name="l01214"></a><span class="lineno"> 1214</span> </div>
+<div class="line"><a id="l01215" name="l01215"></a><span class="lineno"> 1215</span>        u32MsgNum++;</div>
 <div class="line"><a id="l01216" name="l01216"></a><span class="lineno"> 1216</span>    }</div>
 <div class="line"><a id="l01217" name="l01217"></a><span class="lineno"> 1217</span> </div>
 <div class="line"><a id="l01218" name="l01218"></a><span class="lineno"> 1218</span>    <span class="keywordflow">return</span> rev;</div>
@@ -1144,7 +1144,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 16 2023 13:35:49 for M480 BSP by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Fri Jan 12 2024 10:46:53 for M480 BSP by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

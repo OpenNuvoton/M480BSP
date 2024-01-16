@@ -19,7 +19,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign">
-   <div id="projectname">M480 BSP<span id="projectnumber">&#160;V3.05.005</span>
+   <div id="projectname">M480 BSP<span id="projectnumber">&#160;V3.05.006</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -187,7 +187,7 @@ Variables</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">u32addr</td><td>Starting flash address. It must be a page aligned address. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">u32count</td><td>Byte count of flash to be calculated. It must be multiple of 512 bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32count</td><td>Byte count of flash to be calculated. It must be multiple of 4KB bytes. </td></tr>
   </table>
   </dd>
 </dl>
@@ -566,7 +566,7 @@ Variables</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">u32addr</td><td>Starting flash address. It must be a page aligned address. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">u32count</td><td>Byte count of flash to be calculated. It must be multiple of 512 bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">u32count</td><td>Byte count of flash to be calculated. It must be multiple of 4 KB. </td></tr>
   </table>
   </dd>
 </dl>
@@ -578,7 +578,7 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Global error code g_FMC_i32ErrCode -1 Run/Read check sum time-out failed -2 u32addr or u32count must be aligned with 512 </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Global error code g_FMC_i32ErrCode -1 Run/Read check sum time-out failed -2 u32addr or u32count must be aligned with 4K </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="fmc_8c_source.html#l01039">1039</a> of file <a class="el" href="fmc_8c_source.html">fmc.c</a>.</p>
 
@@ -1501,7 +1501,7 @@ Global error code g_FMC_i32ErrCode -1 Command time-out </dd></dl>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 16 2023 13:35:56 for M480 BSP by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Fri Jan 12 2024 10:46:57 for M480 BSP by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

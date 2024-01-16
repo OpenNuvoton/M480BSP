@@ -19,7 +19,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign">
-   <div id="projectname">M480 BSP<span id="projectnumber">&#160;V3.05.005</span>
+   <div id="projectname">M480 BSP<span id="projectnumber">&#160;V3.05.006</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -59,6 +59,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gac1369083b86764d1cb08568fe38e84be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gac1369083b86764d1cb08568fe38e84be">usbh_core_init</a> (void)</td></tr>
 <tr class="memdesc:gac1369083b86764d1cb08568fe38e84be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize M480 USB Host controller and USB stack.  <a href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gac1369083b86764d1cb08568fe38e84be">More...</a><br /></td></tr>
 <tr class="separator:gac1369083b86764d1cb08568fe38e84be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadaeda5496eb89cd8f4ad36e197f00bb0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gadaeda5496eb89cd8f4ad36e197f00bb0">usbh_core_init_ex</a> (int ovc_alv)</td></tr>
+<tr class="memdesc:gadaeda5496eb89cd8f4ad36e197f00bb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize M480 USB Host controller and USB stack.  <a href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#gadaeda5496eb89cd8f4ad36e197f00bb0">More...</a><br /></td></tr>
+<tr class="separator:gadaeda5496eb89cd8f4ad36e197f00bb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4a3e0284e580aca340236c698d31fc92"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga4a3e0284e580aca340236c698d31fc92">usbh_pooling_hubs</a> (void)</td></tr>
 <tr class="memdesc:ga4a3e0284e580aca340236c698d31fc92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Let USB stack polls all root hubs and downstream hubs. If there's any hub port change found, USB stack will manage the hub events in this function call. In this function, USB stack enumerates newly connected devices and remove staff of disconnected devices. User's application should periodically invoke this function.  <a href="group___u_s_b_h___e_x_p_o_r_t_e_d___f_u_n_c_t_i_o_n_s.html#ga4a3e0284e580aca340236c698d31fc92">More...</a><br /></td></tr>
 <tr class="separator:ga4a3e0284e580aca340236c698d31fc92"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -645,7 +648,36 @@ Variables</h2></td></tr>
 <p>Initialize M480 USB Host controller and USB stack. </p>
 <dl class="section return"><dt>Returns</dt><dd>None. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="usb__core_8c_source.html#l00039">39</a> of file <a class="el" href="usb__core_8c_source.html">usb_core.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="usb__core_8c_source.html#l00041">41</a> of file <a class="el" href="usb__core_8c_source.html">usb_core.c</a>.</p>
+
+</div>
+</div>
+<a id="gadaeda5496eb89cd8f4ad36e197f00bb0" name="gadaeda5496eb89cd8f4ad36e197f00bb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadaeda5496eb89cd8f4ad36e197f00bb0">&#9670;&nbsp;</a></span>usbh_core_init_ex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void usbh_core_init_ex </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ovc_alv</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize M480 USB Host controller and USB stack. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ovc_alv</td><td>Over-current active level setting 0: active low 1: active high </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="usb__core_8c_source.html#l00091">91</a> of file <a class="el" href="usb__core_8c_source.html">usb_core.c</a>.</p>
 
 </div>
 </div>
@@ -1217,7 +1249,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>None. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="usb__core_8c_source.html#l00086">86</a> of file <a class="el" href="usb__core_8c_source.html">usb_core.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="usb__core_8c_source.html#l00104">104</a> of file <a class="el" href="usb__core_8c_source.html">usb_core.c</a>.</p>
 
 </div>
 </div>
@@ -1270,7 +1302,7 @@ Variables</h2></td></tr>
 <p>Resume USB Host controller and devices. </p>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="usb__core_8c_source.html#l00176">176</a> of file <a class="el" href="usb__core_8c_source.html">usb_core.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="usb__core_8c_source.html#l00194">194</a> of file <a class="el" href="usb__core_8c_source.html">usb_core.c</a>.</p>
 
 </div>
 </div>
@@ -1293,7 +1325,7 @@ Variables</h2></td></tr>
 <p>Suspend USB Host Controller and devices. </p>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="usb__core_8c_source.html#l00115">115</a> of file <a class="el" href="usb__core_8c_source.html">usb_core.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="usb__core_8c_source.html#l00133">133</a> of file <a class="el" href="usb__core_8c_source.html">usb_core.c</a>.</p>
 
 </div>
 </div>
@@ -2846,7 +2878,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 16 2023 13:35:58 for M480 BSP by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Fri Jan 12 2024 10:46:58 for M480 BSP by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>
