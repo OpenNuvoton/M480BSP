@@ -17,15 +17,15 @@
         EXTERN  __iar_program_start
         EXTERN  HardFault_Handler
         EXTERN  SystemInit
-        PUBLIC  __vector_table
-        PUBLIC  __vector_table_0x1c
+        PUBLIC  __vector1_table
+        PUBLIC  __vector1_table_0x1c
         PUBLIC  __Vectors
         PUBLIC  __Vectors_End
         PUBLIC  __Vectors_Size
 
         DATA
 
-__vector_table
+__vector1_table
         DCD     sfe(CSTACK)
         DCD     Reset_Handler
 
@@ -34,7 +34,7 @@ __vector_table
         DCD     MemManage_Handler
         DCD     BusFault_Handler
         DCD     UsageFault_Handler
-__vector_table_0x1c
+__vector1_table_0x1c
         DCD     0
         DCD     0
         DCD     0
@@ -157,7 +157,7 @@ __vector_table_0x1c
         DCD     Default_Handler           ; 108: CAN2
 __Vectors_End
 
-__Vectors       EQU   __vector_table
+__Vectors       EQU   __vector1_table
 __Vectors_Size  EQU   __Vectors_End - __Vectors
 
 

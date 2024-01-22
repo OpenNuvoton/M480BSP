@@ -528,7 +528,7 @@ int32_t SDH_CardDetection(SDH_T *sdh)
 
         for (i = 0ul; i < 5000ul; i++)
         {
-            __nop();
+            __NOP();
         }
 
         if ((sdh->INTSTS & SDH_INTSTS_CDSTS_Msk) == SDH_INTSTS_CDSTS_Msk)   /* Card insert */

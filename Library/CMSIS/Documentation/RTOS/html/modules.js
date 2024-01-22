@@ -1,4 +1,5 @@
 var modules =
 [
-    [ "CMSIS-RTOS API", "group___c_m_s_i_s___r_t_o_s.html", "group___c_m_s_i_s___r_t_o_s" ]
+    [ "CMSIS-RTOS API", "group__CMSIS__RTOS.html", "group__CMSIS__RTOS" ],
+    [ "RTX Specific Functions", "group__RTX__Global__Functions.html", "group__RTX__Global__Functions" ]
 ];

@@ -1,14 +1,14 @@
 var modules =
 [
-    [ "Basic Math Functions", "group__group_math.html", "group__group_math" ],
-    [ "Fast Math Functions", "group__group_fast_math.html", "group__group_fast_math" ],
-    [ "Complex Math Functions", "group__group_cmplx_math.html", "group__group_cmplx_math" ],
-    [ "Filtering Functions", "group__group_filters.html", "group__group_filters" ],
-    [ "Matrix Functions", "group__group_matrix.html", "group__group_matrix" ],
-    [ "Transform Functions", "group__group_transforms.html", "group__group_transforms" ],
-    [ "Controller Functions", "group__group_controller.html", "group__group_controller" ],
-    [ "Statistics Functions", "group__group_stats.html", "group__group_stats" ],
-    [ "Support Functions", "group__group_support.html", "group__group_support" ],
-    [ "Interpolation Functions", "group__group_interpolation.html", "group__group_interpolation" ],
-    [ "Examples", "group__group_examples.html", "group__group_examples" ]
+    [ "Basic Math Functions", "group__groupMath.html", "group__groupMath" ],
+    [ "Fast Math Functions", "group__groupFastMath.html", "group__groupFastMath" ],
+    [ "Complex Math Functions", "group__groupCmplxMath.html", "group__groupCmplxMath" ],
+    [ "Filtering Functions", "group__groupFilters.html", "group__groupFilters" ],
+    [ "Matrix Functions", "group__groupMatrix.html", "group__groupMatrix" ],
+    [ "Transform Functions", "group__groupTransforms.html", "group__groupTransforms" ],
+    [ "Controller Functions", "group__groupController.html", "group__groupController" ],
+    [ "Statistics Functions", "group__groupStats.html", "group__groupStats" ],
+    [ "Support Functions", "group__groupSupport.html", "group__groupSupport" ],
+    [ "Interpolation Functions", "group__groupInterpolation.html", "group__groupInterpolation" ],
+    [ "Examples", "group__groupExamples.html", "group__groupExamples" ]
 ];

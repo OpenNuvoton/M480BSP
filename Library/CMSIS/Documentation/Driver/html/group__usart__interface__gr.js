@@ -1,9 +1,9 @@
 var group__usart__interface__gr =
 [
     [ "Status Error Codes", "group__usart__execution__status.html", "group__usart__execution__status" ],
-    [ "USART Events", "group___u_s_a_r_t__events.html", "group___u_s_a_r_t__events" ],
-    [ "USART Control Codes", "group___u_s_a_r_t__control.html", "group___u_s_a_r_t__control" ],
-    [ "ARM_DRIVER_USART", "group__usart__interface__gr.html#struct_a_r_m___d_r_i_v_e_r___u_s_a_r_t", [
+    [ "USART Events", "group__USART__events.html", "group__USART__events" ],
+    [ "USART Control Codes", "group__USART__control.html", "group__USART__control" ],
+    [ "ARM_DRIVER_USART", "group__usart__interface__gr.html#structARM__DRIVER__USART", [
       [ "GetVersion", "group__usart__interface__gr.html#a8834b281da48583845c044a81566c1b3", null ],
       [ "GetCapabilities", "group__usart__interface__gr.html#a9cec078ea816ece7b2d989f35caadb12", null ],
       [ "Initialize", "group__usart__interface__gr.html#a1a68601c09df8d37f3500ad373333962", null ],
@@ -19,7 +19,7 @@ var group__usart__interface__gr =
       [ "SetModemControl", "group__usart__interface__gr.html#af6703d4078818df27ab9f8a7a8ad7b7b", null ],
       [ "GetModemStatus", "group__usart__interface__gr.html#a517a7a98a444126734782beb4951a9db", null ]
     ] ],
-    [ "ARM_USART_CAPABILITIES", "group__usart__interface__gr.html#struct_a_r_m___u_s_a_r_t___c_a_p_a_b_i_l_i_t_i_e_s", [
+    [ "ARM_USART_CAPABILITIES", "group__usart__interface__gr.html#structARM__USART__CAPABILITIES", [
       [ "asynchronous", "group__usart__interface__gr.html#a75ba2507ea29601a309393e794f4413d", null ],
       [ "synchronous_master", "group__usart__interface__gr.html#afb385bfd9fb2d714bb58aa7d8d9d7d51", null ],
       [ "synchronous_slave", "group__usart__interface__gr.html#a37dcd87df8762e2bc9af9fea368b1537", null ],
@@ -40,29 +40,32 @@ var group__usart__interface__gr =
       [ "event_cts", "group__usart__interface__gr.html#a4ebe5ddec8d99a63843f2a3c70ac85f9", null ],
       [ "event_dsr", "group__usart__interface__gr.html#aefdb61f16498d650b5a7f5f9b62779df", null ],
       [ "event_dcd", "group__usart__interface__gr.html#a7c1dd043d0db9738d6b5fa8d89211446", null ],
-      [ "event_ri", "group__usart__interface__gr.html#ab55f90aec5f909ff3a75bf36e61312ea", null ]
+      [ "event_ri", "group__usart__interface__gr.html#ab55f90aec5f909ff3a75bf36e61312ea", null ],
+      [ "reserved", "group__usart__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
-    [ "ARM_USART_STATUS", "group__usart__interface__gr.html#struct_a_r_m___u_s_a_r_t___s_t_a_t_u_s", [
+    [ "ARM_USART_STATUS", "group__usart__interface__gr.html#structARM__USART__STATUS", [
       [ "tx_busy", "group__usart__interface__gr.html#a2c6d2b67fba3f3e084e96a6bc7fcac6b", null ],
       [ "rx_busy", "group__usart__interface__gr.html#a9f5baee58ed41b382628a82a0b1cbcb4", null ],
       [ "tx_underflow", "group__usart__interface__gr.html#a048f45e9d2257a21821f81d9edd17b72", null ],
       [ "rx_overflow", "group__usart__interface__gr.html#ac403aefd9bce8b0172e1996c0f3dd8aa", null ],
       [ "rx_break", "group__usart__interface__gr.html#aa5e3fa74f444688f9e727ffc1e988e5d", null ],
       [ "rx_framing_error", "group__usart__interface__gr.html#af1d1cfd8b231843d5cc23e6a2b1ca8d0", null ],
-      [ "rx_parity_error", "group__usart__interface__gr.html#affb21b610e2d0d71727702441c238f4f", null ]
+      [ "rx_parity_error", "group__usart__interface__gr.html#affb21b610e2d0d71727702441c238f4f", null ],
+      [ "reserved", "group__usart__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
-    [ "ARM_USART_MODEM_STATUS", "group__usart__interface__gr.html#struct_a_r_m___u_s_a_r_t___m_o_d_e_m___s_t_a_t_u_s", [
+    [ "ARM_USART_MODEM_STATUS", "group__usart__interface__gr.html#structARM__USART__MODEM__STATUS", [
       [ "cts", "group__usart__interface__gr.html#a0a4ccfb729b3a40a5fd611021268c262", null ],
       [ "dsr", "group__usart__interface__gr.html#a437895b17519a16f920ae07461dd67d2", null ],
       [ "dcd", "group__usart__interface__gr.html#aa56a9ad6e266df78157f0e04feb4b78c", null ],
-      [ "ri", "group__usart__interface__gr.html#aa6cf03b82235bedc0acf00acb46130fb", null ]
+      [ "ri", "group__usart__interface__gr.html#aa6cf03b82235bedc0acf00acb46130fb", null ],
+      [ "reserved", "group__usart__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_USART_SignalEvent_t", "group__usart__interface__gr.html#gaa578c3829eea207e9e48df6cb6f038a1", null ],
     [ "ARM_USART_MODEM_CONTROL", "group__usart__interface__gr.html#ga7b89d709f048b6a956aa211f63e75f6f", [
-      [ "ARM_USART_RTS_CLEAR", "_driver___u_s_a_r_t_8h.html#ga7b89d709f048b6a956aa211f63e75f6fab4d04e682d04f70c6aeba130656d3ec6", null ],
-      [ "ARM_USART_RTS_SET", "_driver___u_s_a_r_t_8h.html#ga7b89d709f048b6a956aa211f63e75f6fa7f9d445e6e56642c4c4251a00bfa7434", null ],
-      [ "ARM_USART_DTR_CLEAR", "_driver___u_s_a_r_t_8h.html#ga7b89d709f048b6a956aa211f63e75f6fa3ad44ce9f16c136ccad45c09ec65cb4c", null ],
-      [ "ARM_USART_DTR_SET", "_driver___u_s_a_r_t_8h.html#ga7b89d709f048b6a956aa211f63e75f6fab938a21e1b59a2b92424e2521b9469d4", null ]
+      [ "ARM_USART_RTS_CLEAR", "Driver__USART_8h.html#ga7b89d709f048b6a956aa211f63e75f6fab4d04e682d04f70c6aeba130656d3ec6", null ],
+      [ "ARM_USART_RTS_SET", "Driver__USART_8h.html#ga7b89d709f048b6a956aa211f63e75f6fa7f9d445e6e56642c4c4251a00bfa7434", null ],
+      [ "ARM_USART_DTR_CLEAR", "Driver__USART_8h.html#ga7b89d709f048b6a956aa211f63e75f6fa3ad44ce9f16c136ccad45c09ec65cb4c", null ],
+      [ "ARM_USART_DTR_SET", "Driver__USART_8h.html#ga7b89d709f048b6a956aa211f63e75f6fab938a21e1b59a2b92424e2521b9469d4", null ]
     ] ],
     [ "ARM_USART_GetVersion", "group__usart__interface__gr.html#gabca6151cef47565832decaf484781b61", null ],
     [ "ARM_USART_GetCapabilities", "group__usart__interface__gr.html#gad2d3ace1fe7627bb72945efefaeddf0a", null ],

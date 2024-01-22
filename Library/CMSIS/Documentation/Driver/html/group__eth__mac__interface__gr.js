@@ -1,10 +1,10 @@
 var group__eth__mac__interface__gr =
 [
-    [ "Ethernet MAC Events", "group___e_t_h___m_a_c__events.html", "group___e_t_h___m_a_c__events" ],
+    [ "Ethernet MAC Events", "group__ETH__MAC__events.html", "group__ETH__MAC__events" ],
     [ "Ethernet MAC Control Codes", "group__eth__mac__control.html", "group__eth__mac__control" ],
     [ "Ethernet MAC Timer Control Codes", "group__eth__mac__time__control.html", "group__eth__mac__time__control" ],
     [ "Ethernet MAC Frame Transmit Flags", "group__eth__mac__frame__transmit__ctrls.html", "group__eth__mac__frame__transmit__ctrls" ],
-    [ "ARM_ETH_MAC_CAPABILITIES", "group__eth__mac__interface__gr.html#struct_a_r_m___e_t_h___m_a_c___c_a_p_a_b_i_l_i_t_i_e_s", [
+    [ "ARM_ETH_MAC_CAPABILITIES", "group__eth__mac__interface__gr.html#structARM__ETH__MAC__CAPABILITIES", [
       [ "checksum_offload_rx_ip4", "group__eth__mac__interface__gr.html#a0051111be2e389c3161da1c444746216", null ],
       [ "checksum_offload_rx_ip6", "group__eth__mac__interface__gr.html#a674b2306c64901e924b3cb7bb882f32f", null ],
       [ "checksum_offload_rx_udp", "group__eth__mac__interface__gr.html#a5a447f05a5fbfd35896aad9cd769511c", null ],
@@ -20,9 +20,10 @@ var group__eth__mac__interface__gr =
       [ "event_rx_frame", "group__eth__mac__interface__gr.html#a8c8f1ac2bf053a9bac98c476646a6018", null ],
       [ "event_tx_frame", "group__eth__mac__interface__gr.html#a1b4af3590d59ea4f8e845b4239a4e445", null ],
       [ "event_wakeup", "group__eth__mac__interface__gr.html#a7536d9b9818b20b6974a712e0449439b", null ],
-      [ "precision_timer", "group__eth__mac__interface__gr.html#a881a863974d32f95d7829f768ac47aa2", null ]
+      [ "precision_timer", "group__eth__mac__interface__gr.html#a881a863974d32f95d7829f768ac47aa2", null ],
+      [ "reserved", "group__eth__mac__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
-    [ "ARM_DRIVER_ETH_MAC", "group__eth__mac__interface__gr.html#struct_a_r_m___d_r_i_v_e_r___e_t_h___m_a_c", [
+    [ "ARM_DRIVER_ETH_MAC", "group__eth__mac__interface__gr.html#structARM__DRIVER__ETH__MAC", [
       [ "GetVersion", "group__eth__mac__interface__gr.html#a8834b281da48583845c044a81566c1b3", null ],
       [ "GetCapabilities", "group__eth__mac__interface__gr.html#a9fd725bb058c584a9ced9c579561cdf1", null ],
       [ "Initialize", "group__eth__mac__interface__gr.html#aa34417c70cb8b43567c59aa530866cc7", null ],
@@ -41,7 +42,7 @@ var group__eth__mac__interface__gr =
       [ "PHY_Read", "group__eth__mac__interface__gr.html#a0f2ddb734e4242077275761400b26e35", null ],
       [ "PHY_Write", "group__eth__mac__interface__gr.html#ac3efe9bdc31c3b1d7fd8eb82bbfb4c13", null ]
     ] ],
-    [ "ARM_ETH_MAC_TIME", "group__eth__mac__interface__gr.html#struct_a_r_m___e_t_h___m_a_c___t_i_m_e", [
+    [ "ARM_ETH_MAC_TIME", "group__eth__mac__interface__gr.html#structARM__ETH__MAC__TIME", [
       [ "ns", "group__eth__mac__interface__gr.html#a048317f84621fb38ed0bf8c8255e26f0", null ],
       [ "sec", "group__eth__mac__interface__gr.html#aaf5f5a3fa5d596a9136b4331f2b54bfc", null ]
     ] ],

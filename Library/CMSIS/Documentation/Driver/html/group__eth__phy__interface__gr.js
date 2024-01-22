@@ -1,7 +1,7 @@
 var group__eth__phy__interface__gr =
 [
     [ "Ethernet PHY Mode", "group__eth__phy__mode__ctrls.html", "group__eth__phy__mode__ctrls" ],
-    [ "ARM_DRIVER_ETH_PHY", "group__eth__phy__interface__gr.html#struct_a_r_m___d_r_i_v_e_r___e_t_h___p_h_y", [
+    [ "ARM_DRIVER_ETH_PHY", "group__eth__phy__interface__gr.html#structARM__DRIVER__ETH__PHY", [
       [ "GetVersion", "group__eth__phy__interface__gr.html#a8834b281da48583845c044a81566c1b3", null ],
       [ "Initialize", "group__eth__phy__interface__gr.html#a9f9e7173bf8fed4d774fa48da53739ba", null ],
       [ "Uninitialize", "group__eth__phy__interface__gr.html#adcf20681a1402869ecb5c6447fada17b", null ],

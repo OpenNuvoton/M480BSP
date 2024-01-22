@@ -1,13 +1,11 @@
 var NAVTREEINDEX2 =
 {
-"structarm__biquad__cascade__df2_t__instance__f64.html":[4,6],
-"structarm__biquad__cascade__df2_t__instance__f64.html#a0bde57b618e3f9059b23b0de64e12ce3":[4,6,2],
-"structarm__biquad__cascade__df2_t__instance__f64.html#ad55380ff835b533aa5168f836db8a4de":[4,6,0],
-"structarm__biquad__cascade__df2_t__instance__f64.html#ae2f0180f9038c0393e1d6921bb3b878b":[4,6,1],
-"structarm__biquad__cascade__stereo__df2_t__instance__f32.html":[4,7],
-"structarm__biquad__cascade__stereo__df2_t__instance__f32.html#a2cb00048bb1fe957a03c1ff56dfaf8f0":[4,7,2],
-"structarm__biquad__cascade__stereo__df2_t__instance__f32.html#a5655328252da5c2c2425ceed253bc4f1":[4,7,0],
-"structarm__biquad__cascade__stereo__df2_t__instance__f32.html#a58b15644de62a632c5e9d4a563569dc6":[4,7,1],
+"structarm__biquad__cascade__df2T__instance__f64.html#ad55380ff835b533aa5168f836db8a4de":[4,6,0],
+"structarm__biquad__cascade__df2T__instance__f64.html#ae2f0180f9038c0393e1d6921bb3b878b":[4,6,1],
+"structarm__biquad__cascade__stereo__df2T__instance__f32.html":[4,7],
+"structarm__biquad__cascade__stereo__df2T__instance__f32.html#a2cb00048bb1fe957a03c1ff56dfaf8f0":[4,7,2],
+"structarm__biquad__cascade__stereo__df2T__instance__f32.html#a5655328252da5c2c2425ceed253bc4f1":[4,7,0],
+"structarm__biquad__cascade__stereo__df2T__instance__f32.html#a58b15644de62a632c5e9d4a563569dc6":[4,7,1],
 "structarm__biquad__casd__df1__inst__f32.html":[4,8],
 "structarm__biquad__casd__df1__inst__f32.html#a8c245d79e0d8cfabc82409d4b54fb682":[4,8,2],
 "structarm__biquad__casd__df1__inst__f32.html#af69820c37a87252c46453e4cfe120585":[4,8,0],
@@ -249,5 +247,7 @@ var NAVTREEINDEX2 =
 "structarm__lms__norm__instance__q15.html#a9ee7a45f4f315d7996a969e25fdc7146":[4,48,2],
 "structarm__lms__norm__instance__q15.html#aa0d435fbcf7dedb7179d4467e9b79e9f":[4,48,4],
 "structarm__lms__norm__instance__q15.html#aa4de490b3bdbd03561b76ee07901c8e3":[4,48,5],
-"structarm__lms__norm__instance__q15.html#ae7bca648c75a2ffa02d87852bb78bc8a":[4,48,3]
+"structarm__lms__norm__instance__q15.html#ae7bca648c75a2ffa02d87852bb78bc8a":[4,48,3],
+"structarm__lms__norm__instance__q31.html":[4,49],
+"structarm__lms__norm__instance__q31.html#a28d7b9e437817f83397e081967e90f3c":[4,49,4]
 };

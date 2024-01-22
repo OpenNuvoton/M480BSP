@@ -1,11 +1,11 @@
 var group__flash__interface__gr =
 [
-    [ "Flash Events", "group___flash__events.html", "group___flash__events" ],
-    [ "ARM_FLASH_SECTOR", "group__flash__interface__gr.html#struct_a_r_m___f_l_a_s_h___s_e_c_t_o_r", [
+    [ "Flash Events", "group__Flash__events.html", "group__Flash__events" ],
+    [ "ARM_FLASH_SECTOR", "group__flash__interface__gr.html#structARM__FLASH__SECTOR", [
       [ "start", "group__flash__interface__gr.html#a61eb63d26b2fa6c2971603ceccffb14b", null ],
       [ "end", "group__flash__interface__gr.html#a204a3f4fa39b9c007f9784d3e4af4667", null ]
     ] ],
-    [ "ARM_FLASH_INFO", "group__flash__interface__gr.html#struct_a_r_m___f_l_a_s_h___i_n_f_o", [
+    [ "ARM_FLASH_INFO", "group__flash__interface__gr.html#structARM__FLASH__INFO", [
       [ "sector_info", "group__flash__interface__gr.html#a8dfb9d5160358e45293bba527762238d", null ],
       [ "sector_count", "group__flash__interface__gr.html#a50947f9a42bbaa2d68d6e5079150d7bf", null ],
       [ "sector_size", "group__flash__interface__gr.html#a7d37def484362c6e97a2d75144080b1d", null ],
@@ -13,7 +13,7 @@ var group__flash__interface__gr =
       [ "program_unit", "group__flash__interface__gr.html#a483c41066757e2865bf3a27a2a627a54", null ],
       [ "erased_value", "group__flash__interface__gr.html#a85c3826bf20669d38e466dfd376994db", null ]
     ] ],
-    [ "ARM_DRIVER_FLASH", "group__flash__interface__gr.html#struct_a_r_m___d_r_i_v_e_r___f_l_a_s_h", [
+    [ "ARM_DRIVER_FLASH", "group__flash__interface__gr.html#structARM__DRIVER__FLASH", [
       [ "GetVersion", "group__flash__interface__gr.html#a8834b281da48583845c044a81566c1b3", null ],
       [ "GetCapabilities", "group__flash__interface__gr.html#a25076bd7274af5d3b0af6380ed1f0331", null ],
       [ "Initialize", "group__flash__interface__gr.html#a2d1eb2b5c3ee21ba5c92c37e89412567", null ],
@@ -26,14 +26,16 @@ var group__flash__interface__gr =
       [ "GetStatus", "group__flash__interface__gr.html#afc1db6f33f777784f3c95efc816d4856", null ],
       [ "GetInfo", "group__flash__interface__gr.html#ae64d4ee61b7a7ee0b38a0ef2b61f1db2", null ]
     ] ],
-    [ "ARM_FLASH_CAPABILITIES", "group__flash__interface__gr.html#struct_a_r_m___f_l_a_s_h___c_a_p_a_b_i_l_i_t_i_e_s", [
+    [ "ARM_FLASH_CAPABILITIES", "group__flash__interface__gr.html#structARM__FLASH__CAPABILITIES", [
       [ "event_ready", "group__flash__interface__gr.html#add296ba516c8fc17ba51e30f2a00f0a9", null ],
       [ "data_width", "group__flash__interface__gr.html#a04c173610dd0a545ecae308e342aafb0", null ],
-      [ "erase_chip", "group__flash__interface__gr.html#af5ec2b569c193fc5024c2739f46b328a", null ]
+      [ "erase_chip", "group__flash__interface__gr.html#af5ec2b569c193fc5024c2739f46b328a", null ],
+      [ "reserved", "group__flash__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
-    [ "ARM_FLASH_STATUS", "group__flash__interface__gr.html#struct_a_r_m___f_l_a_s_h___s_t_a_t_u_s", [
+    [ "ARM_FLASH_STATUS", "group__flash__interface__gr.html#structARM__FLASH__STATUS", [
       [ "busy", "group__flash__interface__gr.html#a50c88f3c1d787773e2ac1b59533f034a", null ],
-      [ "error", "group__flash__interface__gr.html#aa8d183302fdfa4a6892f1d80300cdb32", null ]
+      [ "error", "group__flash__interface__gr.html#aa8d183302fdfa4a6892f1d80300cdb32", null ],
+      [ "reserved", "group__flash__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_Flash_SignalEvent_t", "group__flash__interface__gr.html#gabeb4ad43b1e6fa4ed956cd5c9371d327", null ],
     [ "ARM_Flash_GetVersion", "group__flash__interface__gr.html#ga1cfe24b2ffa571ee50ae544bd922b604", null ],

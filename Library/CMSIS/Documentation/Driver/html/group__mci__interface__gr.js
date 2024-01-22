@@ -5,7 +5,7 @@ var group__mci__interface__gr =
     [ "MCI Send Command Flags", "group__mci__send__command__flags__ctrls.html", "group__mci__send__command__flags__ctrls" ],
     [ "MCI Transfer Controls", "group__mci__transfer__ctrls.html", "group__mci__transfer__ctrls" ],
     [ "MCI Card Power Controls", "group__mci__card__power__ctrls.html", "group__mci__card__power__ctrls" ],
-    [ "ARM_DRIVER_MCI", "group__mci__interface__gr.html#struct_a_r_m___d_r_i_v_e_r___m_c_i", [
+    [ "ARM_DRIVER_MCI", "group__mci__interface__gr.html#structARM__DRIVER__MCI", [
       [ "GetVersion", "group__mci__interface__gr.html#a8834b281da48583845c044a81566c1b3", null ],
       [ "GetCapabilities", "group__mci__interface__gr.html#a5648b4224e0346ba5e20fefc7e83aee8", null ],
       [ "Initialize", "group__mci__interface__gr.html#ae51ec82c310aff0edda6220f9ebfd822", null ],
@@ -20,7 +20,7 @@ var group__mci__interface__gr =
       [ "Control", "group__mci__interface__gr.html#a6e0f47a92f626a971c5197fca6545505", null ],
       [ "GetStatus", "group__mci__interface__gr.html#a2dc63353d6869c0ea2d3d29155c88b49", null ]
     ] ],
-    [ "ARM_MCI_CAPABILITIES", "group__mci__interface__gr.html#struct_a_r_m___m_c_i___c_a_p_a_b_i_l_i_t_i_e_s", [
+    [ "ARM_MCI_CAPABILITIES", "group__mci__interface__gr.html#structARM__MCI__CAPABILITIES", [
       [ "cd_state", "group__mci__interface__gr.html#af47e73979b028c86c7c1fbe39b095140", null ],
       [ "cd_event", "group__mci__interface__gr.html#abcabfa504d3226c723d9bf5debe2f164", null ],
       [ "wp_state", "group__mci__interface__gr.html#a02df0162d3a653c36158a7b6a76f6175", null ],
@@ -49,9 +49,10 @@ var group__mci__interface__gr =
       [ "mmc_boot", "group__mci__interface__gr.html#a072a194948489d4dbd2409b94fdca56b", null ],
       [ "rst_n", "group__mci__interface__gr.html#a2e8bd27f2c5c3093c4fec557890b97d4", null ],
       [ "ccs", "group__mci__interface__gr.html#a13c956ba993083f1e59379968e2badbe", null ],
-      [ "ccs_timeout", "group__mci__interface__gr.html#a9739c230a13b46482feb5475d257e482", null ]
+      [ "ccs_timeout", "group__mci__interface__gr.html#a9739c230a13b46482feb5475d257e482", null ],
+      [ "reserved", "group__mci__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
-    [ "ARM_MCI_STATUS", "group__mci__interface__gr.html#struct_a_r_m___m_c_i___s_t_a_t_u_s", [
+    [ "ARM_MCI_STATUS", "group__mci__interface__gr.html#structARM__MCI__STATUS", [
       [ "command_active", "group__mci__interface__gr.html#aa22ef7c7597e90835bd67d5795ba757e", null ],
       [ "command_timeout", "group__mci__interface__gr.html#a56e426979c3872254c156e9ae7eead5b", null ],
       [ "command_error", "group__mci__interface__gr.html#afca11cd2ce661c67455a6d75328848cc", null ],
@@ -59,7 +60,8 @@ var group__mci__interface__gr =
       [ "transfer_timeout", "group__mci__interface__gr.html#a598ae4a196316d6dcb97d07fd337ecdd", null ],
       [ "transfer_error", "group__mci__interface__gr.html#a21d4bc1a03e161bd33693619039a6afa", null ],
       [ "sdio_interrupt", "group__mci__interface__gr.html#a61e2a440b27d7d22c866ad4427f4b825", null ],
-      [ "ccs", "group__mci__interface__gr.html#a13c956ba993083f1e59379968e2badbe", null ]
+      [ "ccs", "group__mci__interface__gr.html#a13c956ba993083f1e59379968e2badbe", null ],
+      [ "reserved", "group__mci__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_MCI_SignalEvent_t", "group__mci__interface__gr.html#ga0d14651f6788c1ffd81544602565faf1", null ],
     [ "ARM_MCI_GetVersion", "group__mci__interface__gr.html#ga3418183015dbf3025b94eebaedb00ab1", null ],

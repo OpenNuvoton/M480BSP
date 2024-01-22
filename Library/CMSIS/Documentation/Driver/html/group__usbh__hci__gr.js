@@ -1,6 +1,6 @@
 var group__usbh__hci__gr =
 [
-    [ "ARM_DRIVER_USBH_HCI", "group__usbh__hci__gr.html#struct_a_r_m___d_r_i_v_e_r___u_s_b_h___h_c_i", [
+    [ "ARM_DRIVER_USBH_HCI", "group__usbh__hci__gr.html#structARM__DRIVER__USBH__HCI", [
       [ "GetVersion", "group__usbh__hci__gr.html#a8834b281da48583845c044a81566c1b3", null ],
       [ "GetCapabilities", "group__usbh__hci__gr.html#a7a41769405bb3bb4cc9eaba26cf220d4", null ],
       [ "Initialize", "group__usbh__hci__gr.html#a40cbaad9fd2458b1008d31e1469903bb", null ],
@@ -8,8 +8,9 @@ var group__usbh__hci__gr =
       [ "PowerControl", "group__usbh__hci__gr.html#aba8f1c8019af95ffe19c32403e3240ef", null ],
       [ "PortVbusOnOff", "group__usbh__hci__gr.html#ab859fb9f73a60ffa1ce71ed961d4744f", null ]
     ] ],
-    [ "ARM_USBH_HCI_CAPABILITIES", "group__usbh__hci__gr.html#struct_a_r_m___u_s_b_h___h_c_i___c_a_p_a_b_i_l_i_t_i_e_s", [
-      [ "port_mask", "group__usbh__hci__gr.html#ac37c09b54483c2a1e41fa8a976721fc4", null ]
+    [ "ARM_USBH_HCI_CAPABILITIES", "group__usbh__hci__gr.html#structARM__USBH__HCI__CAPABILITIES", [
+      [ "port_mask", "group__usbh__hci__gr.html#ac37c09b54483c2a1e41fa8a976721fc4", null ],
+      [ "reserved", "group__usbh__hci__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
     [ "ARM_USBH_HCI_Interrupt_t", "group__usbh__hci__gr.html#gac60df9d1f2b3a769f2c30141800a9806", null ],
     [ "ARM_USBH_HCI_GetVersion", "group__usbh__hci__gr.html#ga10109d0c2a9a128225b5e893d3f72d08", null ],

@@ -1,33 +1,32 @@
-/* -----------------------------------------------------------------------------
- * Copyright (c) 2013-2014 ARM Ltd.
+/*
+ * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
  *
- * This software is provided 'as-is', without any express or implied warranty.
- * In no event will the authors be held liable for any damages arising from
- * the use of this software. Permission is granted to anyone to use this
- * software for any purpose, including commercial applications, and to alter
- * it and redistribute it freely, subject to the following restrictions:
+ * SPDX-License-Identifier: Apache-2.0
  *
- * 1. The origin of this software must not be misrepresented; you must not
- *    claim that you wrote the original software. If you use this software in
- *    a product, an acknowledgment in the product documentation would be
- *    appreciated but is not required.
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * 2. Altered source versions must be plainly marked as such, and must not be
- *    misrepresented as being the original software.
+ * www.apache.org/licenses/LICENSE-2.0
  *
- * 3. This notice may not be removed or altered from any source distribution.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
- *
- * $Date:        30. May 2014
- * $Revision:    V2.01
+ * $Date:        2. Feb 2017
+ * $Revision:    V2.2
  *
  * Project:      NAND Flash Driver definitions
- * -------------------------------------------------------------------------- */
+ */
 
 /* History:
- *  Version 2.01
+ *  Version 2.2
+ *    ARM_NAND_STATUS made volatile
+ *  Version 2.1
  *    Updated ARM_NAND_ECC_INFO structure and ARM_NAND_ECC_xxx definitions
- *  Version 2.00
+ *  Version 2.0
  *    New simplified driver:
  *      complexity moved to upper layer (command agnostic)
  *    Added support for:
@@ -42,12 +41,17 @@
  *    Initial release
  */
 
-#ifndef __DRIVER_NAND_H
-#define __DRIVER_NAND_H
+#ifndef DRIVER_NAND_H_
+#define DRIVER_NAND_H_
+
+#ifdef  __cplusplus
+extern "C"
+{
+#endif
 
 #include "Driver_Common.h"
 
-#define ARM_NAND_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,01)  /* API version */
+#define ARM_NAND_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,2)  /* API version */
 
 
 /****** NAND Device Power *****/
@@ -186,9 +190,10 @@ typedef struct _ARM_NAND_ECC_INFO {
 /**
 \brief NAND Status
 */
-typedef struct _ARM_NAND_STATUS {
+typedef volatile struct _ARM_NAND_STATUS {
   uint32_t busy      : 1;               ///< Driver busy flag
   uint32_t ecc_error : 1;               ///< ECC error detected (cleared on next Read/WriteData or ExecuteSequence)
+  uint32_t reserved  : 30;
 } ARM_NAND_STATUS;
 
 
@@ -370,6 +375,7 @@ typedef struct _ARM_NAND_CAPABILITIES {
   uint32_t driver_strength_18  : 1;     ///< Supports Driver Strength 2.0x = 18 Ohms
   uint32_t driver_strength_25  : 1;     ///< Supports Driver Strength 1.4x = 25 Ohms
   uint32_t driver_strength_50  : 1;     ///< Supports Driver Strength 0.7x = 50 Ohms
+  uint32_t reserved            : 2;     ///< Reserved (must be zero)
 } ARM_NAND_CAPABILITIES;
 
 
@@ -400,4 +406,8 @@ typedef struct _ARM_DRIVER_NAND {
   int32_t               (*InquireECC)     ( int32_t index, ARM_NAND_ECC_INFO *info);                          ///< Pointer to \ref ARM_NAND_InquireECC : Inquire about available ECC. 
 } const ARM_DRIVER_NAND;
 
-#endif /* __DRIVER_NAND_H */
+#ifdef  __cplusplus
+}
+#endif
+
+#endif /* DRIVER_NAND_H_ */

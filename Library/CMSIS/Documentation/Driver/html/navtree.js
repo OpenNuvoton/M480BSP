@@ -2,34 +2,34 @@ var NAVTREE =
 [
   [ "CMSIS-Driver", "index.html", [
     [ "Overview", "index.html", null ],
-    [ "Revision History of CMSIS-Driver", "driver_revision_history.html", null ],
-    [ "Theory of Operation", "_theory_operation.html", [
-      [ "Common Driver Functions", "_theory_operation.html#DriverFunctions", [
-        [ "Cortex-M Processor Mode", "_theory_operation.html#ProcessorMode", null ]
+    [ "Revision History of CMSIS-Driver", "driver_revisionHistory.html", null ],
+    [ "Theory of Operation", "theoryOperation.html", [
+      [ "Common Driver Functions", "theoryOperation.html#DriverFunctions", [
+        [ "Cortex-M Processor Mode", "theoryOperation.html#ProcessorMode", null ]
       ] ],
-      [ "Function Call Sequence", "_theory_operation.html#CallSequence", [
-        [ "Start Sequence", "_theory_operation.html#CS_start", null ],
-        [ "Stop Sequence", "_theory_operation.html#CS_stop", null ]
+      [ "Function Call Sequence", "theoryOperation.html#CallSequence", [
+        [ "Start Sequence", "theoryOperation.html#CS_start", null ],
+        [ "Stop Sequence", "theoryOperation.html#CS_stop", null ]
       ] ],
-      [ "Shared I/O Pins", "_theory_operation.html#Share_IO", null ],
-      [ "Data Transfer Functions", "_theory_operation.html#Data_Xfer_Functions", null ],
-      [ "Access Struct", "_theory_operation.html#AccessStruct", [
-        [ "Driver Instances", "_theory_operation.html#DriverInstances", null ]
+      [ "Shared I/O Pins", "theoryOperation.html#Share_IO", null ],
+      [ "Data Transfer Functions", "theoryOperation.html#Data_Xfer_Functions", null ],
+      [ "Access Struct", "theoryOperation.html#AccessStruct", [
+        [ "Driver Instances", "theoryOperation.html#DriverInstances", null ]
       ] ],
-      [ "Driver Configuration", "_theory_operation.html#DriverConfiguration", null ],
-      [ "Code Example", "_theory_operation.html#CodeExample", null ]
+      [ "Driver Configuration", "theoryOperation.html#DriverConfiguration", null ],
+      [ "Code Example", "theoryOperation.html#CodeExample", null ]
     ] ],
-    [ "Reference Implementation", "_reference_implementation.html", [
-      [ "Driver Header Files", "_reference_implementation.html#DriverHeaderFiles", null ],
-      [ "Driver Template Files", "_reference_implementation.html#DriverTemplates", null ],
-      [ "Driver Examples", "_reference_implementation.html#DriverExamples", null ]
+    [ "Reference Implementation", "referenceImplementation.html", [
+      [ "Driver Header Files", "referenceImplementation.html#DriverHeaderFiles", null ],
+      [ "Driver Template Files", "referenceImplementation.html#DriverTemplates", null ],
+      [ "Driver Examples", "referenceImplementation.html#DriverExamples", null ]
     ] ],
-    [ "Driver Validation", "_driver_validation.html", [
-      [ "Sample Test Output", "_driver_validation.html#test_output", null ],
-      [ "Setup for Loop Back Communication", "_driver_validation.html#loop_back_setup", null ]
+    [ "Driver Validation", "driverValidation.html", [
+      [ "Sample Test Output", "driverValidation.html#test_output", null ],
+      [ "Setup for Loop Back Communication", "driverValidation.html#loop_back_setup", null ]
     ] ],
     [ "Reference", "modules.html", "modules" ],
-    [ "Data Structures", "annotated.html", null ],
+    [ "Data Structures", "annotated.html", "annotated" ],
     [ "Data Structure Index", "classes.html", null ],
     [ "Data Fields", "functions.html", [
       [ "All", "functions.html", "functions_dup" ],
@@ -40,14 +40,16 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_driver___c_a_n_8h.html#ga11c12020b81a63a73a8b53e96a7e3deaa3b6d191c99f1eba4f01bcc5fbfaf67f3",
-"group__can__interface__gr.html#ga00ec0715f6755a49dae5b60dca182630",
-"group__i2c__control__gr.html",
-"group__nand__interface__gr.html#a0e7d3b9258d468492b22de55d855a06e",
-"group__spi__misc__ctrls.html#gafc00fe35bb4c89b076d014b43168b2b3",
-"group__usbh__host__gr.html#gad1e73f778c95dd46d4396e7741a97f0b"
+"Driver__CAN_8h.html#ga11c12020b81a63a73a8b53e96a7e3deaa3b6d191c99f1eba4f01bcc5fbfaf67f3",
+"group__can__interface__gr.html#a9706173b2ed538efeb5ee4a952e2272f",
+"group__flash__interface__gr.html#gae23af293e9f8a67cdb19c7d0d562d415",
+"group__nand__driver__seq__exec__codes.html",
+"group__spi__interface__gr.html#aba8f1c8019af95ffe19c32403e3240ef",
+"group__usbd__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650"
 ];
 
+var SYNCONMSG = 'click to disable panel synchronisation';
+var SYNCOFFMSG = 'click to enable panel synchronisation';
 var SYNCONMSG = 'click to disable panel synchronisation';
 var SYNCOFFMSG = 'click to enable panel synchronisation';
 var navTreeSubIndices = new Array();
@@ -115,7 +117,7 @@ function getScript(scriptName,func,show)
   script.onload = func; 
   script.src = scriptName+'.js'; 
   if ($.browser.msie && $.browser.version<=8) { 
-    // script.onload does work with older versions of IE
+    // script.onload does not work with older versions of IE
     script.onreadystatechange = function() {
       if (script.readyState=='complete' || script.readyState=='loaded') { 
         func(); if (show) showRoot(); 
@@ -127,24 +129,22 @@ function getScript(scriptName,func,show)
 
 function createIndent(o,domNode,node,level)
 {
-  if (node.parentNode && node.parentNode.parentNode) {
-    createIndent(o,domNode,node.parentNode,level+1);
-  }
-  var imgNode = document.createElement("img");
-  imgNode.width = 16;
-  imgNode.height = 22;
-  if (level==0 && node.childrenData) {
+  var level=-1;
+  var n = node;
+  while (n.parentNode) { level++; n=n.parentNode; }
+  if (node.childrenData) {
+    var imgNode = document.createElement("img");
+    imgNode.style.paddingLeft=(16*level).toString()+'px';
+    imgNode.width  = 16;
+    imgNode.height = 22;
+    imgNode.border = 0;
     node.plus_img = imgNode;
     node.expandToggle = document.createElement("a");
     node.expandToggle.href = "javascript:void(0)";
     node.expandToggle.onclick = function() {
       if (node.expanded) {
         $(node.getChildrenUL()).slideUp("fast");
-        if (node.isLast) {
-          node.plus_img.src = node.relpath+"ftv2plastnode.png";
-        } else {
-          node.plus_img.src = node.relpath+"ftv2pnode.png";
-        }
+        node.plus_img.src = node.relpath+"ftv2pnode.png";
         node.expanded = false;
       } else {
         expandNode(o, node, false, false);
@@ -152,33 +152,43 @@ function createIndent(o,domNode,node,level)
     }
     node.expandToggle.appendChild(imgNode);
     domNode.appendChild(node.expandToggle);
+    imgNode.src = node.relpath+"ftv2pnode.png";
   } else {
-    domNode.appendChild(imgNode);
+    var span = document.createElement("span");
+    span.style.display = 'inline-block';
+    span.style.width   = 16*(level+1)+'px';
+    span.style.height  = '22px';
+    span.innerHTML = '&#160;';
+    domNode.appendChild(span);
+  } 
+}
+
+var animationInProgress = false;
+
+function gotoAnchor(anchor,aname,updateLocation)
+{
+  var pos, docContent = $('#doc-content');
+  if (anchor.parent().attr('class')=='memItemLeft' ||
+      anchor.parent().attr('class')=='fieldtype' ||
+      anchor.parent().is(':header')) 
+  {
+    pos = anchor.parent().position().top;
+  } else if (anchor.position()) {
+    pos = anchor.position().top;
   }
-  if (level==0) {
-    if (node.isLast) {
-      if (node.childrenData) {
-        imgNode.src = node.relpath+"ftv2plastnode.png";
-      } else {
-        imgNode.src = node.relpath+"ftv2lastnode.png";
-        domNode.appendChild(imgNode);
-      }
-    } else {
-      if (node.childrenData) {
-        imgNode.src = node.relpath+"ftv2pnode.png";
-      } else {
-        imgNode.src = node.relpath+"ftv2node.png";
-        domNode.appendChild(imgNode);
-      }
-    }
-  } else {
-    if (node.isLast) {
-      imgNode.src = node.relpath+"ftv2blank.png";
-    } else {
-      imgNode.src = node.relpath+"ftv2vertline.png";
-    }
+  if (pos) {
+    var dist = Math.abs(Math.min(
+               pos-docContent.offset().top,
+               docContent[0].scrollHeight-
+               docContent.height()-docContent.scrollTop()));
+    animationInProgress=true;
+    docContent.animate({
+      scrollTop: pos + docContent.scrollTop() - docContent.offset().top
+    },Math.max(50,Math.min(500,dist)),function(){
+      if (updateLocation) window.location.href=aname;
+      animationInProgress=false;
+    });
   }
-  imgNode.border = "0";
 }
 
 function newNode(o, po, text, link, childrenData, lastNode)
@@ -222,7 +232,7 @@ function newNode(o, po, text, link, childrenData, lastNode)
       var aname = '#'+link.split('#')[1];
       var srcPage = stripPath($(location).attr('pathname'));
       var targetPage = stripPath(link.split('#')[0]);
-      a.href = srcPage!=targetPage ? url : '#';
+      a.href = srcPage!=targetPage ? url : "javascript:void(0)"; 
       a.onclick = function(){
         storeLink(link);
         if (!$(a).parent().parent().hasClass('selected'))
@@ -232,23 +242,8 @@ function newNode(o, po, text, link, childrenData, lastNode)
           $(a).parent().parent().addClass('selected');
           $(a).parent().parent().attr('id','selected');
         }
-        var pos, anchor = $(aname), docContent = $('#doc-content');
-        if (anchor.parent().attr('class')=='memItemLeft') {
-          pos = anchor.parent().position().top;
-        } else if (anchor.position()) {
-          pos = anchor.position().top;
-        }
-        if (pos) {
-          var dist = Math.abs(Math.min(
-                     pos-docContent.offset().top,
-                     docContent[0].scrollHeight-
-                     docContent.height()-docContent.scrollTop()));
-          docContent.animate({
-            scrollTop: pos + docContent.scrollTop() - docContent.offset().top
-          },Math.max(50,Math.min(500,dist)),function(){
-            window.location.replace(aname);
-          });
-        }
+        var anchor = $(aname);
+        gotoAnchor(anchor,aname,true);
       };
     } else {
       a.href = url;
@@ -329,7 +324,8 @@ function glowEffect(n,duration)
 
 function highlightAnchor()
 {
-  var anchor = $($(location).attr('hash'));
+  var aname = $(location).attr('hash');
+  var anchor = $(aname);
   if (anchor.parent().attr('class')=='memItemLeft'){
     var rows = $('.memberdecls tr[class$="'+
                window.location.hash.substring(1)+'"]');
@@ -343,6 +339,7 @@ function highlightAnchor()
   } else {
     glowEffect(anchor.next(),1000); // normal member
   }
+  gotoAnchor(anchor,aname,false);
 }
 
 function selectAndHighlight(hash,n)
@@ -360,6 +357,11 @@ function selectAndHighlight(hash,n)
     $(n.itemDiv).addClass('selected');
     $(n.itemDiv).attr('id','selected');
   }
+  if ($('#nav-tree-contents .item:first').hasClass('selected')) {
+    $('#nav-sync').css('top','30px');
+  } else {
+    $('#nav-sync').css('top','5px');
+  }
   showRoot();
 }
 
@@ -376,7 +378,7 @@ function showNode(o, node, index, hash)
       if (!node.childrenVisited) {
         getNode(o, node);
       }
-      $(node.getChildrenUL()).show();
+      $(node.getChildrenUL()).css({'display':'block'});
       if (node.isLast) {
         node.plus_img.src = node.relpath+"ftv2mlastnode.png";
       } else {
@@ -396,7 +398,7 @@ function showNode(o, node, index, hash)
           },true);
         } else {
           var rootBase = stripPath(o.toroot.replace(/\..+$/, ''));
-          if (rootBase=="index" || rootBase=="pages") {
+          if (rootBase=="index" || rootBase=="pages" || rootBase=="search") {
             expandNode(o, n, true, true);
           }
           selectAndHighlight(hash,n);
@@ -408,8 +410,22 @@ function showNode(o, node, index, hash)
   }
 }
 
+function removeToInsertLater(element) {
+  var parentNode = element.parentNode;
+  var nextSibling = element.nextSibling;
+  parentNode.removeChild(element);
+  return function() {
+    if (nextSibling) {
+      parentNode.insertBefore(element, nextSibling);
+    } else {
+      parentNode.appendChild(element);
+    }
+  };
+}
+
 function getNode(o, po)
 {
+  var insertFunction = removeToInsertLater(po.li);
   po.childrenVisited = true;
   var l = po.childrenData.length-1;
   for (var i in po.childrenData) {
@@ -417,6 +433,7 @@ function getNode(o, po)
     po.children[i] = newNode(o, po, nodeData[0], nodeData[1], nodeData[2],
       i==l);
   }
+  insertFunction();
 }
 
 function gotoNode(o,subIndex,root,hash,relpath)
@@ -443,11 +460,6 @@ function navTo(o,root,hash,relpath)
     if (parts.length>1) hash = '#'+parts[1];
     else hash='';
   }
-  if (root==NAVTREE[0][1]) {
-    $('#nav-sync').css('top','30px');
-  } else {
-    $('#nav-sync').css('top','5px');
-  }
   if (hash.match(/^#l\d+$/)) {
     var anchor=$('a[name='+hash.substring(1)+']');
     glowEffect(anchor.parent(),1000); // line number
@@ -457,6 +469,7 @@ function navTo(o,root,hash,relpath)
   var url=root+hash;
   var i=-1;
   while (NAVTREEINDEX[i+1]<=url) i++;
+  if (i==-1) { i=0; root=NAVTREE[0][1]; } // fallback: show index
   if (navTreeSubIndices[i]) {
     gotoNode(o,i,root,hash,relpath)
   } else {
@@ -476,7 +489,7 @@ function showSyncOff(n,relpath)
 
 function showSyncOn(n,relpath)
 {
-    n.html('<img src="'+relpath+'sync_on.png"/ title="'+SYNCONMSG+'">');
+    n.html('<img src="'+relpath+'sync_on.png" title="'+SYNCONMSG+'"/>');
 }
 
 function toggleSyncButton(relpath)
@@ -524,7 +537,10 @@ function initNavTree(toroot,relpath)
     navSync.click(function(){ toggleSyncButton(relpath); });
   }
 
-  navTo(o,toroot,window.location.hash,relpath);
+  $(window).load(function(){
+    navTo(o,toroot,window.location.hash,relpath);
+    showRoot();
+  });
 
   $(window).bind('hashchange', function(){
      if (window.location.hash && window.location.hash.length>1){
@@ -540,9 +556,12 @@ function initNavTree(toroot,relpath)
        }
        var link=stripPath2($(location).attr('pathname'));
        navTo(o,link,$(location).attr('hash'),relpath);
+     } else if (!animationInProgress) {
+       $('#doc-content').scrollTop(0);
+       $('.item').removeClass('selected');
+       $('.item').removeAttr('id');
+       navTo(o,toroot,window.location.hash,relpath);
      }
   })
-
-  $(window).load(showRoot);
 }
 

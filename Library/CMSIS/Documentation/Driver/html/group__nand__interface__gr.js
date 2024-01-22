@@ -1,16 +1,17 @@
 var group__nand__interface__gr =
 [
     [ "Status Error Codes", "group__nand__execution__status.html", "group__nand__execution__status" ],
-    [ "NAND Events", "group___n_a_n_d__events.html", "group___n_a_n_d__events" ],
+    [ "NAND Events", "group__NAND__events.html", "group__NAND__events" ],
     [ "NAND Flags", "group__nand__driver__flag__codes.html", "group__nand__driver__flag__codes" ],
     [ "NAND Control Codes", "group__nand__control__gr.html", "group__nand__control__gr" ],
     [ "NAND ECC Codes", "group__nand__driver__ecc__codes.html", "group__nand__driver__ecc__codes" ],
     [ "NAND Sequence Execution Codes", "group__nand__driver__seq__exec__codes.html", "group__nand__driver__seq__exec__codes" ],
-    [ "ARM_NAND_STATUS", "group__nand__interface__gr.html#struct_a_r_m___n_a_n_d___s_t_a_t_u_s", [
+    [ "ARM_NAND_STATUS", "group__nand__interface__gr.html#structARM__NAND__STATUS", [
       [ "busy", "group__nand__interface__gr.html#a50c88f3c1d787773e2ac1b59533f034a", null ],
-      [ "ecc_error", "group__nand__interface__gr.html#a7707d2200a3bf8f49b148ffc8ded7636", null ]
+      [ "ecc_error", "group__nand__interface__gr.html#a7707d2200a3bf8f49b148ffc8ded7636", null ],
+      [ "reserved", "group__nand__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
-    [ "ARM_DRIVER_NAND", "group__nand__interface__gr.html#struct_a_r_m___d_r_i_v_e_r___n_a_n_d", [
+    [ "ARM_DRIVER_NAND", "group__nand__interface__gr.html#structARM__DRIVER__NAND", [
       [ "GetVersion", "group__nand__interface__gr.html#a8834b281da48583845c044a81566c1b3", null ],
       [ "GetCapabilities", "group__nand__interface__gr.html#adab9d081aee3e5d1f83c6911e45ceaa6", null ],
       [ "Initialize", "group__nand__interface__gr.html#a28b29ab7b6114bb97175bd40d18854ac", null ],
@@ -30,7 +31,7 @@ var group__nand__interface__gr =
       [ "GetStatus", "group__nand__interface__gr.html#aa43ee108ee5bf29e40485ca89b34188b", null ],
       [ "InquireECC", "group__nand__interface__gr.html#aecd239806e9f08b77ce0d00f61e78cf8", null ]
     ] ],
-    [ "ARM_NAND_CAPABILITIES", "group__nand__interface__gr.html#struct_a_r_m___n_a_n_d___c_a_p_a_b_i_l_i_t_i_e_s", [
+    [ "ARM_NAND_CAPABILITIES", "group__nand__interface__gr.html#structARM__NAND__CAPABILITIES", [
       [ "event_device_ready", "group__nand__interface__gr.html#a5f347e9b63764bbb657f52dc20682128", null ],
       [ "reentrant_operation", "group__nand__interface__gr.html#ae0514834750c7452431717a881471e2b", null ],
       [ "sequence_operation", "group__nand__interface__gr.html#afa4b798731b1154878c26dda3f090acf", null ],
@@ -51,9 +52,10 @@ var group__nand__interface__gr =
       [ "ddr2_timing_mode", "group__nand__interface__gr.html#a6d9b66da0e56d04d545e0bb6841891b2", null ],
       [ "driver_strength_18", "group__nand__interface__gr.html#ae672b2a65dd3d0b93812c088491c4552", null ],
       [ "driver_strength_25", "group__nand__interface__gr.html#ae87c19872b838dac7d3136a3fd466f6a", null ],
-      [ "driver_strength_50", "group__nand__interface__gr.html#aef3d6e1522a6cf7fb87fd113dcd43ad5", null ]
+      [ "driver_strength_50", "group__nand__interface__gr.html#aef3d6e1522a6cf7fb87fd113dcd43ad5", null ],
+      [ "reserved", "group__nand__interface__gr.html#aa43c4c21b173ada1b6b7568956f0d650", null ]
     ] ],
-    [ "ARM_NAND_ECC_INFO", "group__nand__interface__gr.html#struct_a_r_m___n_a_n_d___e_c_c___i_n_f_o", [
+    [ "ARM_NAND_ECC_INFO", "group__nand__interface__gr.html#structARM__NAND__ECC__INFO", [
       [ "type", "group__nand__interface__gr.html#ad44b615021ed3ccb734fcaf583ef4a03", null ],
       [ "page_layout", "group__nand__interface__gr.html#a5952ba4313bda7833fefd358f5aff979", null ],
       [ "page_count", "group__nand__interface__gr.html#aa993bc236650aa405b01d00b7ca72904", null ],
