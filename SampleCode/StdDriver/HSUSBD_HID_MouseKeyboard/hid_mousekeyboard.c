@@ -396,7 +396,8 @@ void HID_ClassRequest(void)
                 HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_STSDONEIEN_Msk);
             }
             else if(((gUsbCmd.wValue >> 8) & 0xff) == 2) {    /* Request Type = Output */
-                HSUSBD_CtrlOut(au8LED_Status, (gUsbCmd.wLength & 0xff));
+                if (HSUSBD_CtrlOut(au8LED_Status, (gUsbCmd.wLength & 0xff)) == HSUSBD_ERR_TIMEOUT)
+                    HSUSBD_SET_CEP_STATE(HSUSBD_CEPCTL_FLUSH);
                 HSUSBD_CLR_CEP_INT_FLAG(HSUSBD_CEPINTSTS_RXPKIF_Msk);
                 HSUSBD_ENABLE_CEP_INT(HSUSBD_CEPINTEN_RXPKIEN_Msk);
 

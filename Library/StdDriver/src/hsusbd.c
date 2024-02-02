@@ -673,9 +673,10 @@ void HSUSBD_CtrlIn(void)
  *
  * @details     This function is used to start Control OUT transfer
  */
-void HSUSBD_CtrlOut(uint8_t pu8Buf[], uint32_t u32Size)
+int32_t HSUSBD_CtrlOut(uint8_t pu8Buf[], uint32_t u32Size)
 {
     uint32_t volatile i;
+    uint32_t u32TimeOutCnt = HSUSBD_TIMEOUT;
     while(1)
     {
         if ((HSUSBD->CEPINTSTS & HSUSBD_CEPINTSTS_RXPKIF_Msk) == HSUSBD_CEPINTSTS_RXPKIF_Msk)
@@ -687,7 +688,10 @@ void HSUSBD_CtrlOut(uint8_t pu8Buf[], uint32_t u32Size)
             HSUSBD->CEPINTSTS = HSUSBD_CEPINTSTS_RXPKIF_Msk;
             break;
         }
+        if(--u32TimeOutCnt == 0) return HSUSBD_ERR_TIMEOUT;
     }
+
+    return HSUSBD_OK;
 }
 
 /**

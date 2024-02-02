@@ -75,6 +75,14 @@ extern "C"
 #define HSUSBD_EP_CFG_DIR_OUT              ((uint32_t)0x00000000ul)      /*!<OUT endpoint  \hideinitializer */
 #define HSUSBD_EP_CFG_DIR_IN               ((uint32_t)0x00000008ul)      /*!<IN endpoint  \hideinitializer */
 
+/*---------------------------------------------------------------------------------------------------------*/
+/* HSUSBD Define Error Code                                                                                */
+/*---------------------------------------------------------------------------------------------------------*/
+#define HSUSBD_TIMEOUT                     SystemCoreClock               /*!< HSUSBD time-out counter (1 second time-out) \hideinitializer */
+#define HSUSBD_OK                          ( 0L)                         /*!< HSUSBD operation OK \hideinitializer */
+#define HSUSBD_ERR_FAIL                    (-1L)                         /*!< HSUSBD operation failed \hideinitializer */
+#define HSUSBD_ERR_TIMEOUT                 (-2L)                         /*!< HSUSBD operation abort due to timeout error \hideinitializer */
+
 
 /*@}*/ /* end of group HSUSBD_EXPORTED_CONSTANTS */
 
@@ -361,7 +369,7 @@ void HSUSBD_StandardRequest(void);
 void HSUSBD_UpdateDeviceState(void);
 void HSUSBD_PrepareCtrlIn(uint8_t pu8Buf[], uint32_t u32Size);
 void HSUSBD_CtrlIn(void);
-void HSUSBD_CtrlOut(uint8_t pu8Buf[], uint32_t u32Size);
+int32_t HSUSBD_CtrlOut(uint8_t pu8Buf[], uint32_t u32Size);
 void HSUSBD_SwReset(void);
 void HSUSBD_SetVendorRequest(HSUSBD_VENDOR_REQ pfnVendorReq);
 

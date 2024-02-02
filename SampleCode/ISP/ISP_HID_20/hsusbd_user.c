@@ -617,7 +617,7 @@ void HSUSBD_CtrlIn(void)
  *
  * @details     This function is used to start Control OUT transfer
  */
-void HSUSBD_CtrlOut(uint8_t pu8Buf[], uint32_t u32Size)
+int32_t HSUSBD_CtrlOut(uint8_t pu8Buf[], uint32_t u32Size)
 {
     uint32_t volatile i;
 
@@ -634,6 +634,7 @@ void HSUSBD_CtrlOut(uint8_t pu8Buf[], uint32_t u32Size)
             break;
         }
     }
+    return 0;
 }
 
 /**
