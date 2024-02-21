@@ -78,7 +78,11 @@ void WAVPlayer(void)
         }
 
         res = f_read(&wavFileObject, &aPCMBuffer[u8PCMBufferTargetIdx][0], PCM_BUFFER_SIZE*4, &ReturnSize);
-        if(f_eof(&wavFileObject))   break;
+        if (ReturnSize < PCM_BUFFER_SIZE*4)
+            memset(&aPCMBuffer[u8PCMBufferTargetIdx][ReturnSize], 0, PCM_BUFFER_SIZE*4 - ReturnSize);
+
+        if(f_eof(&wavFileObject) && (ReturnSize == 0))
+            break;
         aPCMBuffer_Full[u8PCMBufferTargetIdx] = 1;
 
         if(bAudioPlaying)
@@ -96,5 +100,8 @@ void WAVPlayer(void)
     I2S_DISABLE_TX(I2S0);
     I2S_DISABLE_TXDMA(I2S0);
     f_close(&wavFileObject);
+    bAudioPlaying = 0;
+    aPCMBuffer_Full[0] = 0;
+    aPCMBuffer_Full[1] = 0; 
 }
 
