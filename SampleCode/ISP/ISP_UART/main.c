@@ -2,10 +2,10 @@
  * @file     main.c
  * @brief    ISP tool main function
  * @version  0x32
- * @date     14, June, 2017
+ * @date     26, February, 2024
  *
  * @note
- * Copyright (C) 2017-2018 Nuvoton Technology Corp. All rights reserved.
+ * Copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #include <stdio.h>
 #include "targetdev.h"
@@ -63,6 +63,8 @@ void SYS_Init(void)
 
 int main(void)
 {
+    uint8_t u8SysTickCnt = 0;
+
     /* Unlock protected registers */
     SYS_UnlockReg();
     /* Init System, peripheral clock and multi-function I/O */
@@ -73,8 +75,8 @@ int main(void)
     FMC->ISPCTL |= FMC_ISPCTL_ISPEN_Msk;
     g_apromSize = GetApromSize();
     GetDataFlashInfo(&g_dataFlashAddr, &g_dataFlashSize);
-    SysTick->LOAD = 300000 * CyclesPerUs;
-    SysTick->VAL   = (0x00);
+    SysTick->LOAD = 0xFFFFFF;
+    SysTick->VAL  = (0x00);
     SysTick->CTRL = SysTick->CTRL | SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;//using cpu clock
 
     while (1)
@@ -95,10 +97,14 @@ int main(void)
             }
         }
 
-        //if((SysTick->CTRL & (1 << 16)) != 0)//timeout, then goto APROM
-        if (SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk)
+        if (SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk)//timeout, then goto APROM
         {
-            goto _APROM;
+            SysTick->VAL = 0;
+            u8SysTickCnt++;
+            if (u8SysTickCnt >= 5)
+            {
+                goto _APROM;
+            }
         }
     }
 
