@@ -8,6 +8,7 @@
 #ifndef __TFTP_H__
 #define __TFTP_H__
 
+#include "netif/m480_eth.h"
 
 #define TFTP_OPCODE_RRQ         1
 #define TFTP_OPCODE_WRQ         2
@@ -19,6 +20,14 @@
 #define TFTP_TIMEOUT            500    //msec
 #define TFTP_MAX_RETRIES        5
 #define TFTP_BLOCK_LENGTH       512
+
+#define BUFP_STATIC_NUM  RX_DESCRIPTOR_NUM
+#if (BUFP_STATIC_NUM > 15)
+  #error "BUFP_STATIC_NUM over range!"
+#endif
+#define BUFP_STATIC_SIZE       0x800UL
+#define BUFP_IDENTIFITER_ADDR (0x20028000UL - 4)
+#define BUFP_IDENTIFITER       0x5A5A3C3CUL
 
 enum tftp_error
 {

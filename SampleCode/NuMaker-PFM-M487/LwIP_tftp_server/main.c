@@ -34,6 +34,7 @@
 
 
 #include <stdio.h>
+#include <string.h>
 
 /* Kernel includes. */
 #include "FreeRTOS.h"
@@ -278,6 +279,26 @@ void vApplicationTickHook( void )
 #endif /* mainCREATE_SIMPLE_BLINKY_DEMO_ONLY */
 }
 
+u32_t bufp_static_table[BUFP_STATIC_NUM] = {0};
+u8_t *rx_bufp[RX_DESCRIPTOR_NUM];
+extern struct eth_descriptor rx_desc[];
+void init_static_buffer(void)
+{
+    u16_t i;
+
+    memset((void *)0x20020000UL, 0, (size_t)0x8000);
+
+    for(i = 0; i < BUFP_STATIC_NUM; i++)
+    {
+        bufp_static_table[i] = 0x20020000UL + BUFP_STATIC_SIZE * i;
+        rx_bufp[i] = (u8_t *)bufp_static_table[i];
+        rx_desc[i].buf = rx_bufp[i]; // overwrite
+    }
+
+    // hard coding identifier at the end of SRAM
+    *(u32_t *)BUFP_IDENTIFITER_ADDR = BUFP_IDENTIFITER;
+}
+
 static void vNetTask( void *pvParameters )
 {
     ip_addr_t ipaddr;
@@ -293,6 +314,8 @@ static void vNetTask( void *pvParameters )
     tcpip_init(NULL, NULL);
 
     netif_add(&netif, &ipaddr, &netmask, &gw, NULL, ethernetif_init, tcpip_input);
+
+    init_static_buffer();
 
     netif_set_default(&netif);
     netif_set_up(&netif);
