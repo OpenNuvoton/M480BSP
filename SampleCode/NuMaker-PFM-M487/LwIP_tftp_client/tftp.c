@@ -435,8 +435,6 @@ static void dma_monitor_thread(void *arg)
     {
         if(check_dma_buf_overflow(my_mac_addr))
             printf("\nDEBUG : DMA overflow !!!\nEMAC has been reset\n\n");
-        else
-            printf(".");
         vTaskDelay(1000); // Check identifier per sec
     }
 }

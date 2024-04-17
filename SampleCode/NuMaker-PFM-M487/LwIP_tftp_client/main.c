@@ -286,11 +286,11 @@ void init_static_buffer(void)
 {
     u16_t i;
 
-    memset((void *)0x20020000UL, 0, (size_t)0x8000);
+    memset((void *)BUFP_STATIC_BASE, 0, (size_t)((BUFP_STATIC_NUM + 1) * BUFP_STATIC_SIZE));
 
     for(i = 0; i < BUFP_STATIC_NUM; i++)
     {
-        bufp_static_table[i] = 0x20020000UL + BUFP_STATIC_SIZE * i;
+        bufp_static_table[i] = BUFP_STATIC_BASE + BUFP_STATIC_SIZE * i;
         rx_bufp[i] = (u8_t *)bufp_static_table[i];
         rx_desc[i].buf = rx_bufp[i]; // overwrite
     }
