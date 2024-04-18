@@ -437,7 +437,7 @@ static int spim_wait_write_done(uint32_t u32NBit)
     uint32_t   count;
     int        ret = -1;
 
-    for (count = 0UL; count < SystemCoreClock/1000UL; count++)
+    for (count = 0UL; count < SystemCoreClock / 10UL; count++)
     {
         if (spim_is_write_done(u32NBit))
         {
