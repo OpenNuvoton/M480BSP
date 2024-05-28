@@ -44,33 +44,33 @@ void lwip_tls_init()
 
 tls_configuration_t * lwip_tls_new_conf(_E_TLS_AUTHENTICATION_TYPE auth, _E_TLS_ENDNODE_TYPE endnode)
 {
-	//TRACE("mbedtls_ssl_config:%d, mbedtls_entropy_context:%d, mbedtls_ctr_drbg_context:%d, mbedtls_x509_crt:%d", 
-	//				sizeof(mbedtls_ssl_config), sizeof(mbedtls_entropy_context), sizeof(mbedtls_ctr_drbg_context), 
+	//TRACE("mbedtls_ssl_config:%d, mbedtls_entropy_context:%d, mbedtls_ctr_drbg_context:%d, mbedtls_x509_crt:%d",
+	//				sizeof(mbedtls_ssl_config), sizeof(mbedtls_entropy_context), sizeof(mbedtls_ctr_drbg_context),
 	//				sizeof(mbedtls_x509_crt));
 	mbedtls_ssl_config * ssl_conf = platform_alt_calloc(1, sizeof(mbedtls_ssl_config));
-	
+
 	mbedtls_entropy_context * entropy = platform_alt_calloc(1, sizeof(mbedtls_entropy_context));
 	mbedtls_ctr_drbg_context * ctr_drbg = platform_alt_calloc(1, sizeof(mbedtls_ctr_drbg_context));
 	mbedtls_x509_crt * cert = platform_alt_calloc(1, sizeof(mbedtls_x509_crt));
-#if LWIP_ENABLE_CLIENT_CA == 1	
+#if LWIP_ENABLE_CLIENT_CA == 1
 	mbedtls_x509_crt *owncert = platform_alt_calloc(1, sizeof(mbedtls_x509_crt));
 	mbedtls_pk_context *ownkey = platform_alt_calloc(1, sizeof(mbedtls_pk_context));
-	
+
 	if(owncert == 0 || ownkey == 0)
-	{		
+	{
 		vPortFree(owncert);
 		vPortFree(ownkey);
-	}	
+	}
 	mbedtls_pk_init( ownkey );
 	mbedtls_ssl_conf_own_cert(ssl_conf, owncert, ownkey);
-		
+
 #endif
 
-	
-	TRACE("mbedtls_ssl_config:%d, mbedtls_entropy_context:%d, mbedtls_ctr_drbg_context:%d, mbedtls_x509_crt:%d", 
-					sizeof(mbedtls_ssl_config), sizeof(mbedtls_entropy_context), sizeof(mbedtls_ctr_drbg_context), 
+
+	TRACE("mbedtls_ssl_config:%d, mbedtls_entropy_context:%d, mbedtls_ctr_drbg_context:%d, mbedtls_x509_crt:%d",
+					sizeof(mbedtls_ssl_config), sizeof(mbedtls_entropy_context), sizeof(mbedtls_ctr_drbg_context),
 					sizeof(mbedtls_x509_crt));
-	
+
 	if(ssl_conf == 0 || entropy == 0 || ctr_drbg == 0 || cert == 0)
 	{
 		vPortFree(ssl_conf);
@@ -84,11 +84,11 @@ tls_configuration_t * lwip_tls_new_conf(_E_TLS_AUTHENTICATION_TYPE auth, _E_TLS_
 		mbedtls_entropy_init(entropy);
 		mbedtls_ctr_drbg_init(ctr_drbg);
 		mbedtls_ctr_drbg_seed(ctr_drbg, mbedtls_entropy_func, entropy, 0, 0);
-		mbedtls_ssl_config_defaults(ssl_conf, endnode, MBEDTLS_SSL_TRANSPORT_STREAM, 
+		mbedtls_ssl_config_defaults(ssl_conf, endnode, MBEDTLS_SSL_TRANSPORT_STREAM,
 																			MBEDTLS_SSL_PRESET_DEFAULT);
 		mbedtls_ssl_conf_authmode(ssl_conf, auth);
 		mbedtls_ssl_conf_rng(ssl_conf, mbedtls_ctr_drbg_random, ctr_drbg);
-		mbedtls_ssl_conf_ca_chain(ssl_conf, cert, 0);		
+		mbedtls_ssl_conf_ca_chain(ssl_conf, cert, 0);
 	}
 	return (tls_configuration_t *)ssl_conf;	//hiding the mbedtls structure from the application layer
 }
@@ -96,16 +96,16 @@ tls_configuration_t * lwip_tls_new_conf(_E_TLS_AUTHENTICATION_TYPE auth, _E_TLS_
 int32_t lwip_tls_add_certificate(tls_configuration_t * conf, const uint8_t * cert_buffer, uint32_t cert_len)
 {
 	mbedtls_x509_crt * cert = ((mbedtls_ssl_config *)conf)->ca_chain;
-	
+
 	return mbedtls_x509_crt_parse(cert, cert_buffer, cert_len);
 }
 
 int32_t lwip_tls_add_clientcertificate(tls_configuration_t * conf, const uint8_t * cert_buffer, uint32_t cert_len)
 {
-	
+
 	mbedtls_ssl_key_cert * ownkeycertpair = ((mbedtls_ssl_config *)conf)->key_cert;
 	mbedtls_x509_crt *owncert = ownkeycertpair->cert;
-	
+
 	return mbedtls_x509_crt_parse(owncert, cert_buffer, cert_len);
 }
 
@@ -117,19 +117,19 @@ g_conf = conf;
 	if(type == NETCONN_TCP)
 	{
 		ssl = platform_alt_calloc(1, sizeof(mbedtls_ssl_context));
-		
+
 		if(ssl)
 		{
 			int32_t ret = 0;
 			_S_SSL_LWIP_INFO * l = platform_alt_calloc(1, sizeof(_S_SSL_LWIP_INFO));
-			
+
 			if(l)
 			{
 				l->conn = netconn_new(type);
-				
+
 				if(l->conn)
 				{
-					printf("new conn=%x\n",l->conn);
+					printf("new conn=%x\n",(uint32_t)l->conn);
 					ret = 1;
 					ret = mbedtls_ssl_setup(ssl, (mbedtls_ssl_config *)conf);
 					mbedtls_ssl_set_bio(ssl, l, _lwip_write, _lwip_recv, _lwip_recv_timeout);
@@ -171,39 +171,39 @@ int32_t lwip_tls_connect(tls_context_t * ssl, const char * server_name, uint32_t
 	uint32_t retry = 3;
 	ip_addr_t server_ip = {0};
 	int32_t ret = ERR_ARG;//ERR_DNS_RESOLVE;//clyu
-	
+
 	TRACE("resolving hostname:%s", server_name);
 
 	do {
 		err_t err = netconn_gethostbyname(server_name, &server_ip);
-		
+
 		if(err == ERR_OK)
 		{
 			ipaddr_to_trace("hostname resolved to ", &server_ip);
 			break;
 		}
 	} while(--retry);
-	
+
 	//int32_t ret = ERR_DNS_RESOLVE;//clyu
-	
+
 	if(retry)
 	{
 		err_t err;//clyu
 		struct netconn * conn;//clyu
-		
+
 		if(((mbedtls_ssl_context *)ssl)->hostname)
 		{
 			vPortFree(((mbedtls_ssl_context *)ssl)->hostname);
 		}
 		mbedtls_ssl_set_hostname((mbedtls_ssl_context *)ssl, server_name);
-		
+
 		//struct netconn * conn = ((_S_SSL_LWIP_INFO *)((mbedtls_ssl_context *)ssl)->p_bio)->conn;
 		conn = ((_S_SSL_LWIP_INFO *)((mbedtls_ssl_context *)ssl)->p_bio)->conn;
-		
+
 		//err_t err = netconn_connect(conn, &server_ip, port);
 		err = netconn_connect(conn, &server_ip, port);
-		
-		TRACE("connect:%d,port:%x,conn:%x", err, port,conn);
+
+		TRACE("connect:%d,port:%x,conn:%x", err, port,(uint32_t)conn);
 
 		if(err == ERR_OK)
 		{
@@ -220,7 +220,7 @@ int32_t lwip_tls_connect(tls_context_t * ssl, const char * server_name, uint32_t
 				ipaddr_to_trace("hostname resolved to ", &server_ip);
 				if(err != ERR_OK)
 					while(1);
-				
+
 			}
 			#endif
 			while((ret = mbedtls_ssl_handshake((mbedtls_ssl_context *)ssl)) != 0)
@@ -231,13 +231,13 @@ int32_t lwip_tls_connect(tls_context_t * ssl, const char * server_name, uint32_t
 					break;
 				}
 			}
-			
+
 			TRACE("ssl handshake complete:%x", ret);
-			
+
 			//int32_t temp = mbedtls_ssl_get_verify_result((mbedtls_ssl_context *)ssl);//clyu
 			temp = mbedtls_ssl_get_verify_result((mbedtls_ssl_context *)ssl);//clyu
 			TRACE("verify result:%d", temp);
-			
+
 			if(temp > 0)
 			{
 				char * vrfy_buf = pvPortMalloc(512);
@@ -258,7 +258,7 @@ int32_t lwip_tls_connect(tls_context_t * ssl, const char * server_name, uint32_t
 int32_t lwip_tls_bind(tls_context_t * ssl, const ip_addr_t * addr, uint32_t port)
 {
 	struct netconn * conn = ((_S_SSL_LWIP_INFO *)((mbedtls_ssl_context *)ssl)->p_bio)->conn;
-	
+
 	netconn_bind(conn, addr, port);
 	return 0;
 }
@@ -267,7 +267,7 @@ int32_t lwip_tls_write(tls_context_t * ssl, const void * data, uint32_t len, uin
 {
 #if LWIP_SO_SNDTIMEO
 	struct netconn * conn = ((_S_SSL_LWIP_INFO *)((mbedtls_ssl_context *)ssl)->p_bio)->conn;
-	
+
 	conn->send_timeout = _divide_tick(timeout, tick_divider);
 #endif
 
@@ -280,27 +280,27 @@ int32_t lwip_tls_read(tls_context_t * ssl, struct netbuf ** _buf, uint32_t timeo
 	static const uint32_t max_data_len = 1500;
 	int32_t ret = -1;
 	void * data;
-	
+
 	timeout_ms = _divide_tick(timeout_ms, tick_divider);
-	
+
 	//static const uint32_t max_data_len = 1500;//clyu
 	//int32_t ret = -1;
-	
+
 	*_buf = 0;
-	
+
 	//void * data = pvPortMalloc(max_data_len);
 	data = pvPortMalloc(max_data_len);
-	
+
 	if(data)
 	{
 		struct netconn * conn = ((_S_SSL_LWIP_INFO *)((mbedtls_ssl_context *)ssl)->p_bio)->conn;
 		mbedtls_ssl_config * conf;//clyu
-		
+
 		conn->recv_timeout = timeout_ms;
-		
+
 		//mbedtls_ssl_config * conf = (mbedtls_ssl_config * )((mbedtls_ssl_context *)ssl)->conf;
 		conf = (mbedtls_ssl_config * )((mbedtls_ssl_context *)ssl)->conf;
-		
+
 		mbedtls_ssl_conf_read_timeout(conf, timeout_ms);
 
 		ret = mbedtls_ssl_read((mbedtls_ssl_context *)ssl, data, max_data_len);
@@ -312,12 +312,12 @@ int32_t lwip_tls_read(tls_context_t * ssl, struct netbuf ** _buf, uint32_t timeo
 		{
 			uint32_t data_len = ret;
 			struct netbuf * buf = netbuf_new();
-			
+
 			ret = ERR_MEM;
 			if(buf)
 			{
 				void * buf_data = netbuf_alloc(buf, data_len);
-				
+
 				if(buf_data)
 				{
 					memcpy(buf_data, data, data_len);
@@ -340,30 +340,30 @@ int32_t lwip_tls_read(tls_context_t * ssl, struct netbuf ** _buf, uint32_t timeo
 	static const uint32_t max_data_len = 1500;
 	int32_t ret = -1;
 	void * data;
-	
+
 	timeout_ms = _divide_tick(timeout_ms, tick_divider);
-	
+
 	//static const uint32_t max_data_len = 1500;//clyu
 	//int32_t ret = -1;
-	
+
 	*_buf = 0;
-	
+
 	//void * data = pvPortMalloc(max_data_len);
 	data = pvPortMalloc(max_data_len);
-	
+
 	if(data)
 	{
 		struct netconn * conn = ((_S_SSL_LWIP_INFO *)((mbedtls_ssl_context *)ssl)->p_bio)->conn;
 		mbedtls_ssl_config * conf;//clyu
 		uint32_t xRead = 0;//clyu
-		
+
 		conn->recv_timeout = timeout_ms;
-		
+
 		//mbedtls_ssl_config * conf = (mbedtls_ssl_config * )((mbedtls_ssl_context *)ssl)->conf;
 		conf = (mbedtls_ssl_config * )((mbedtls_ssl_context *)ssl)->conf;
-		
+
 		mbedtls_ssl_conf_read_timeout(conf, timeout_ms);
-		
+
 		while( xRead < max_data_len )
         {
 			ret = mbedtls_ssl_read((mbedtls_ssl_context *)ssl, (unsigned char*)((uint32_t)data + xRead), max_data_len - xRead);
@@ -379,20 +379,20 @@ int32_t lwip_tls_read(tls_context_t * ssl, struct netbuf ** _buf, uint32_t timeo
                 {
                     /* No data and no error or call read again, if indicated, otherwise return error. */
                     break;
-                }            				
+                }
             }
 		}
-		
+
 		if(xRead)
 		{
 			uint32_t data_len = xRead;
 			struct netbuf * buf = netbuf_new();
-			
+
 			ret = ERR_MEM;
 			if(buf)
 			{
 				void * buf_data = netbuf_alloc(buf, data_len);
-				
+
 				if(buf_data)
 				{
 					memcpy(buf_data, data, data_len);
@@ -416,7 +416,7 @@ int32_t lwip_tls_close(tls_context_t * ssl, uint32_t close_recv, uint32_t close_
 	int32_t ret = mbedtls_ssl_close_notify((mbedtls_ssl_context *)ssl);
 	struct netconn * conn;//clyu
 	err_t err;//clyu
-	
+
 	if(ret < 0)
 	{
 		TRACE("mbedtls_ssl_close_notify:%x", -ret);
@@ -424,12 +424,12 @@ int32_t lwip_tls_close(tls_context_t * ssl, uint32_t close_recv, uint32_t close_
 
 	//struct netconn * conn = ((_S_SSL_LWIP_INFO *)((mbedtls_ssl_context *)ssl)->p_bio)->conn;//clyu
 	conn = ((_S_SSL_LWIP_INFO *)((mbedtls_ssl_context *)ssl)->p_bio)->conn;
-	
+
 	//err_t err = netconn_shutdown(conn, close_recv, close_transmit);
 	//err = netconn_shutdown(conn, close_recv, close_transmit);//clyu
 	err = netconn_close(conn);
-	
-	TRACE("netconn_close:%d,%x", err, conn);
+
+	TRACE("netconn_close:%d,%x", err, (uint32_t)conn);
 
 	return ret;
 }
@@ -442,24 +442,24 @@ int32_t lwip_tls_reset(tls_context_t * ssl)
 int32_t lwip_tls_delete(tls_context_t * ssl)
 {
 	int32_t ret = lwip_tls_close(ssl, 1, 1);
-	
+
 	struct netconn * conn = ((_S_SSL_LWIP_INFO *)((mbedtls_ssl_context *)ssl)->p_bio)->conn;
 	_S_SSL_LWIP_INFO * info;//clyu
-	
+
 	netconn_delete(conn);
-	printf("lwip_tls_delete %x\n", conn);
+	printf("lwip_tls_delete %x\n", (uint32_t)conn);
 	//_S_SSL_LWIP_INFO * info = ((mbedtls_ssl_context *)ssl)->p_bio;
 	info = ((mbedtls_ssl_context *)ssl)->p_bio;
-	
+
 	if(info->last_buf)
 	{
 		netbuf_delete(info->last_buf);
 	}
-	
+
 	vPortFree(info);
 
 	mbedtls_ssl_free((mbedtls_ssl_context *)ssl);
-	
+
 	vPortFree(ssl);
 
 	return ret;
@@ -470,27 +470,27 @@ int32_t lwip_tls_delete_conf(tls_configuration_t * conf)
 	mbedtls_x509_crt * cert = ((mbedtls_ssl_config *)conf)->ca_chain;
 	mbedtls_ctr_drbg_context * ctr_drbg;//clyu
 	mbedtls_ssl_key_cert *key_cert = ((mbedtls_ssl_config *)conf)->key_cert;//clyu
-	
-	mbedtls_x509_crt_free(cert);	
-	vPortFree(cert);	
-	
+
+	mbedtls_x509_crt_free(cert);
+	vPortFree(cert);
+
 	//mbedtls_ctr_drbg_context * ctr_drbg = ((mbedtls_ssl_config *)conf)->p_rng;//clyu
 	ctr_drbg = ((mbedtls_ssl_config *)conf)->p_rng;
-	
+
 	mbedtls_entropy_free(ctr_drbg->p_entropy);
 	vPortFree(ctr_drbg->p_entropy);
-	
+
 	mbedtls_ctr_drbg_free(ctr_drbg);
 	vPortFree(ctr_drbg);
-	
+
 	mbedtls_ssl_config_free((mbedtls_ssl_config *)conf);
 	vPortFree(conf);
 	//if(key_cert)//clyu
 	//{
 	//	mbedtls_x509_crt_free(key_cert->cert);
-	//	mbedtls_pk_free( key_cert->key );		
+	//	mbedtls_pk_free( key_cert->key );
 	//}
-	
+
 	return 0;
 }
 
@@ -498,12 +498,12 @@ static int32_t _lwip_write(void * _lwip_info, const uint8_t * buf, uint32_t len)
 {
 	int32_t ret = -1;
 	_S_SSL_LWIP_INFO * info = _lwip_info;
-	
+
 	if(info->conn)
 	{
 		uint32_t written = 0;
 		err_t err = netconn_write_partly(info->conn, buf, len, NETCONN_COPY, &written);
-		
+
 		TRACE("netconn_write:%d", err);
 		if(err == ERR_OK)
 		{
@@ -518,14 +518,14 @@ static int32_t _lwip_recv(void * _lwip_info, uint8_t * recv_ptr, uint32_t recv_l
 	_S_SSL_LWIP_INFO * info = _lwip_info;
 	struct netconn * conn = info->conn;
 	int32_t ret = -1;
-	
+
 	if(conn)
 	{
 		struct netbuf * buf;
 		uint32_t offset = info->last_offset;
-		
+
 		info->last_offset = 0;
-		
+
 		if(info->last_buf)
 		{
 			buf = info->last_buf;
@@ -535,13 +535,13 @@ static int32_t _lwip_recv(void * _lwip_info, uint8_t * recv_ptr, uint32_t recv_l
 		else
 		{
 			err_t err;//clyu
-			
+
 			buf = 0;
-			
+
 			//err_t err = netconn_recv(conn, &buf);//clyu
 			err = netconn_recv(conn, &buf);//clyu
-			
-			
+
+
 			TRACE("netconn recv:%d", err);
 			if((err != ERR_OK) || buf == 0)
 			{
@@ -553,11 +553,11 @@ static int32_t _lwip_recv(void * _lwip_info, uint8_t * recv_ptr, uint32_t recv_l
 				}
 			}
 		}
-		
+
 		if(buf)
 		{
 			uint32_t copied = pbuf_copy_partial(buf->ptr, recv_ptr, recv_len, offset);
-			
+
 			if(copied)
 			{
 				ret = copied;
@@ -581,7 +581,7 @@ static int32_t _lwip_recv_timeout(void * _lwip_info, uint8_t * recv_ptr, uint32_
 {
 	_S_SSL_LWIP_INFO * info = _lwip_info;
 	struct netconn * conn = info->conn;
-	
+
 	conn->recv_timeout = timeout;
 	return _lwip_recv(_lwip_info, recv_ptr, recv_len);
 }
@@ -602,18 +602,18 @@ static uint32_t _divide_tick(uint32_t original_value, uint32_t divider)
 	return original_value;
 }
 
-int lwip_tls_add_private_key(tls_configuration_t * conf, 								
+int lwip_tls_add_private_key(tls_configuration_t * conf,
 								const char * pcPrivateKey,
                                	const uint32_t ulPrivateKeyLength)
 {
 	int ret;
 	mbedtls_ssl_key_cert *ownkeycertpair = ((mbedtls_ssl_config *)conf)->key_cert;
-	mbedtls_x509_crt * owncert;	
-	mbedtls_pk_context *ownkey;	    
-    
+	mbedtls_x509_crt * owncert;
+	mbedtls_pk_context *ownkey;
+
     owncert = ownkeycertpair->cert;
     ownkey = ownkeycertpair->key;
-        
+
     ret = mbedtls_pk_parse_key(
                 ownkey,
                 ( const unsigned char * ) pcPrivateKey,
@@ -621,9 +621,9 @@ int lwip_tls_add_private_key(tls_configuration_t * conf,
                 NULL,
                 0 );
     //if(ret !=0 )
-//        return ret;                    
-    
+//        return ret;
+
     return ret;
-    
+
 }
 #endif

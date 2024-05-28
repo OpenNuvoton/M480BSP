@@ -65,9 +65,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/GCC/gcc_arm.ld</locationURI>
 		</link>
 		<link>
-			<name>CMSIS/CMSIS/startup_M480.S</name>
+			<name>User/startup_M480_iap.S</name>
 			<type>1</type>
-			<locationURI>PARENT-5-PROJECT_LOC/Library/Device/Nuvoton/M480/Source/GCC/startup_M480.S</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/startup_M480_iap.S</locationURI>
 		</link>
 		<link>
 			<name>CMSIS/CMSIS/system_M480.c</name>

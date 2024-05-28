@@ -15,6 +15,7 @@
 
 #define SPIM_CIPHER_ON              0
 
+typedef void (FUNC_PTR)(void);
 
 void SYS_Init(void)
 {
@@ -82,7 +83,7 @@ void UART0_Init(void)
 
 uint32_t __spi_start__ = 0x8000000;
 
-# if defined ( __GNUC__ ) && !(__CC_ARM) && !(__ICCARM__)
+# if defined ( __GNUC__ ) && !(__CC_ARM) && !(__ICCARM__) && !defined(__ARMCC_VERSION)
 void start_app(uint32_t pc, uint32_t sp)
 {
     asm("MSR MSP, r1                  \n" /*; load r1 into MSP */
@@ -97,16 +98,18 @@ void start_app(uint32_t pc, uint32_t sp)
        );
 }
 #else
-__asm void start_app(uint32_t pc, uint32_t sp)
+void start_app(uint32_t pc, uint32_t sp)
 {
-    MSR MSP, r1 /* load r1 into MSP */
-    BX r0       /* branch to the address at r0 */
+    FUNC_PTR    *func;
+    func = (FUNC_PTR *) pc;
+    __set_MSP(sp);
+    func();
 }
 #endif
 
 int main()
 {
-    uint8_t     idBuf[3];
+    uint8_t idBuf[3];
     uint32_t *app_code = (uint32_t *)__spi_start__;
     uint32_t app_sp;
     uint32_t app_start;

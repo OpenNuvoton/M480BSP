@@ -83,10 +83,10 @@ void dump_key_status()
     if (FMC->KPKEYSTS & FMC_KPKEYSTS_SPFLAG_Msk)
         printf("[SPROM LOCK] \n");                    /* SPFLAG(FMC_KEYSTS[6]) */
 
-    printf("KPCNT: 0x%x, KPMAX: 0x%x\n", (FMC->KPCNT & FMC_KPCNT_KPCNT_Msk) >> FMC_KPCNT_KPCNT_Pos,    /* KPCNT(FMC_KPCNT[3:0])  */
-           (FMC->KPCNT & FMC_KPCNT_KPMAX_Msk) >> FMC_KPCNT_KPMAX_Pos);   /* KPMAX(FMC_KPCNT[11:8]) */
-    printf("KPKEYCNT: 0x%x, KEMAX: 0x%x\n", (FMC->KPKEYCNT & FMC_KPKEYCNT_KPKECNT_Msk) >> FMC_KPKEYCNT_KPKECNT_Pos,    /* KPKEYCNT(FMC_KPKEYCNT[5:0])  */
-           (FMC->KPKEYCNT & FMC_KPKEYCNT_KPKEMAX_Msk) >> FMC_KPKEYCNT_KPKEMAX_Pos);   /* KEMAX(FMC_KECNT[13:8]) */
+    printf("KPCNT: 0x%x, KPMAX: 0x%x\n", (uint32_t)((FMC->KPCNT & FMC_KPCNT_KPCNT_Msk) >> FMC_KPCNT_KPCNT_Pos),    /* KPCNT(FMC_KPCNT[3:0])  */
+           (uint32_t)((FMC->KPCNT & FMC_KPCNT_KPMAX_Msk) >> FMC_KPCNT_KPMAX_Pos));   /* KPMAX(FMC_KPCNT[11:8]) */
+    printf("KPKEYCNT: 0x%x, KEMAX: 0x%x\n", (uint32_t)((FMC->KPKEYCNT & FMC_KPKEYCNT_KPKECNT_Msk) >> FMC_KPKEYCNT_KPKECNT_Pos),    /* KPKEYCNT(FMC_KPKEYCNT[5:0])  */
+           (uint32_t)((FMC->KPKEYCNT & FMC_KPKEYCNT_KPKEMAX_Msk) >> FMC_KPKEYCNT_KPKEMAX_Pos));   /* KEMAX(FMC_KECNT[13:8]) */
     printf("\n\nPress any key to continue...\n");     /* Wait user press any key on UART0 debug console */
     getchar();                                        /* block on getting any one character from UART0 */
 }

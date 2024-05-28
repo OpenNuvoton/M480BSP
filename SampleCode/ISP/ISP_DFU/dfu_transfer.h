@@ -126,7 +126,7 @@ typedef enum
     DFU_REQ_MAX
 } dfu_requests_enum;
 
-#pragma pack(1)
+//#pragma pack(1)
 
 #define DFU_DETACH                        0
 #define DFU_DNLOAD                        1

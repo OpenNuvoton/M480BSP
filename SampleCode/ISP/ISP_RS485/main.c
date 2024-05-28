@@ -138,3 +138,17 @@ _APROM:
     /* Trap the CPU */
     while (1);
 }
+
+/*---------------------------------------------------------------------------------------------------------*/
+/*  Empty functions for reduce code size to fit  into LDROM & solve the functions are not be defined.      */
+/*---------------------------------------------------------------------------------------------------------*/
+void ProcessHardFault()
+{}
+
+void SH_Return()
+{}
+
+void SendChar_ToUART(int ch)
+{
+    (void)ch;
+}

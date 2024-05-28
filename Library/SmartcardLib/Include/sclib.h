@@ -213,11 +213,11 @@ int32_t SCLIB_SetIFSD(uint32_t num, uint8_t size);
   *         Application can provide its own time extension function. For example, and CCID reader
   *         can use this function to report this status to PC. See CCID rev 1.1 Table 6.2-3
   */
-#if defined (__GNUC__)
+#if defined (__GNUC__) && !defined(__ARMCC_VERSION)
 void SCLIB_RequestTimeExtension () __attribute__ ((weak));
 void SCLIB_RequestTimeExtension(uint32_t u32Protocol);
 #else
-__weak void SCLIB_RequestTimeExtension(uint32_t u32Protocol);
+__WEAK void SCLIB_RequestTimeExtension(uint32_t u32Protocol);
 #endif
 /**
   * @brief Process card detect event in IRQ handler
@@ -270,7 +270,7 @@ uint32_t SCLIB_CheckErrorEvent(uint32_t num);
 int32_t SCLIB_ResetAnyway(uint32_t num);
 
 /**
-  * @brief Set a specific baud rate to catch ATR for a card which is not compatible with ISO-7816, 
+  * @brief Set a specific baud rate to catch ATR for a card which is not compatible with ISO-7816,
   *        this function should be called before \ref SCLIB_Activate or \ref SCLIB_ActivateDelay
   * @param[in] num Smartcard interface number. From 0 ~ ( \ref SC_INTERFACE_NUM - 1)
   * @param[in] br ATR default baud rate should be 9600 according to ISO-7816

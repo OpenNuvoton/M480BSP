@@ -45,6 +45,8 @@ Samplecode/*/packages/
 *.bak
 *.uvgui.*
 *.uvopt
+*.uvoptx
+*.ewt
 *.txt
 *.old
 *.bin
@@ -81,12 +83,14 @@ Samplecode/*/packages/
 !SampleCode/StdDriver/FMC_IAP/IAR/Release/Exe/fmc_ld_code.bin
 !SampleCode/StdDriver/FMC_IAP/IAR/fmc_ld_code.icf
 !SampleCode/StdDriver/FMC_IAP/KEIL/fmc_ld_code.bin
+!SampleCode/StdDriver/FMC_IAP/Keil_AC6/fmc_ld_code.bin
 !SampleCode/StdDriver/FMC_IAP/GCC/LDROM_iap.bin
 !SampleCode/StdDriver/FMC_MultiWordProgram/IAR/Release/
 !SampleCode/StdDriver/FMC_MultiWordProgram/IAR/Release/Exe/
 !SampleCode/StdDriver/FMC_MultiWordProgram/IAR/Release/Exe/multi_word_prog.bin
 !SampleCode/StdDriver/FMC_MultiWordProgram/IAR/multi_word_prog.icf
 !SampleCode/StdDriver/FMC_MultiWordProgram/KEIL/multi_word_prog.bin
+!SampleCode/StdDriver/FMC_MultiWordProgram/KEIL_AC6/multi_word_prog.bin
 !SampleCode/StdDriver/FMC_MultiWordProgram/GCC/multi_word_prog.bin
 !SampleCode/StdDriver/CRYPTO_HMAC/IAR/dummy.bin
 !SampleCode/StdDriver/CRYPTO_SHA/IAR/dummy.bin
@@ -94,7 +98,10 @@ Samplecode/*/packages/
 !SampleCode/StdDriver/CRYPTO_HMAC/HMAC_NIST.rsp
 !SampleCode/StdDriver/CRYPTO_HMAC/sha_test_vector
 !SampleCode/StdDriver/SPIM_RUN_CODE/spim_code.bin
-!SampleCode/SecureBoot/HSUSBD_IAP/GCC/fwupdate_ld_iap.bin
+!SampleCode/SecureBoot/HSUSBD_IAP/IAR/Release/
+!SampleCode/SecureBoot/HSUSBD_IAP/IAR/Release/Exe/
+!SampleCode/SecureBoot/HSUSBD_IAP/IAR/Release/Exe/fwupdate_ld_iap.bin
+!SampleCode/SecureBoot/HSUSBD_IAP/GCC/fwupdate_ld_iap.bin   
 !ThirdParty/lwip-2.0.0/doc/contrib.txt
 !ThirdParty/lwip-2.0.0/doc/mdns.txt
 !ThirdParty/lwip-2.0.0/doc/ppp.txt

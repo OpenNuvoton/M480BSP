@@ -6,9 +6,9 @@
     #pragma message "/*********************************/"
     #include "patch_init_master.txt"
 #else
-    #pragma message "/*********************************/"
-    #pragma message "/***** 1602_patching.txt *****/"
-    #pragma message "/*********************************/"
+    ////#pragma message "/*********************************/"
+    ////#pragma message "/***** 1602_patching.txt *****/"
+    ////#pragma message "/*********************************/"
     #include "1602_patching.txt"
 #endif
 

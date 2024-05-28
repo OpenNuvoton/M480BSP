@@ -83,7 +83,7 @@ void dump_ehci_asynclist(void)
     {
         USB_debug("[QH] - 0x%08x\n", (int)qh);
         USB_debug("    0x%08x (Queue Head Horizontal Link Pointer, Queue Head DWord 0)\n", qh->HLink);
-        USB_debug("    0x%08x (Endpoint Characteristics) DevAddr: %d, EP: 0x%x, PktSz: %d, Speed: %s\n", qh->Chrst, qh->Chrst&0x7F, (qh->Chrst>>8)&0xF, (qh->Chrst>>16)&0x7FF, ((qh->Chrst>>12)&0x3 == 0) ? "Full" : (((qh->Chrst>>12)&0x3 == 1) ? "Low" : "High"));
+        USB_debug("    0x%08x (Endpoint Characteristics) DevAddr: %d, EP: 0x%x, PktSz: %d, Speed: %s\n", qh->Chrst, qh->Chrst & 0x7F, (qh->Chrst >> 8) & 0xF, (qh->Chrst >> 16) & 0x7FF, (((qh->Chrst>>12) & 0x3) == 0) ? "Full" : ((((qh->Chrst >> 12) & 0x3) == 1) ? "Low" : "High"));
         USB_debug("    0x%08x (Endpoint Capabilities: Queue Head DWord 2)\n", qh->Cap);
         USB_debug("    0x%08x (Current qtd Pointer)\n", qh->Curr_qTD);
         USB_debug("    --- Overlay Area ---\n");

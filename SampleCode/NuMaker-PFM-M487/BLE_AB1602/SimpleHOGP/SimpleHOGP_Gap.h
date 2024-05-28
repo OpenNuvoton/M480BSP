@@ -1,6 +1,9 @@
 #ifndef __SIMPLE_HOGP_GAP_HH
 #define __SIMPLE_HOGP_GAP_HH
 #include <stdint.h>
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)//hhwu
+#include "arm_compat.h"
+#endif
 #include "bt.h"
 #include <stdio.h>
 /******************************************************************************/
@@ -32,23 +35,23 @@ extern SimpleHOGP_Gap_Status gap_status;
 /******************************************************************************/
 /*Public function                                                             */
 /******************************************************************************/
-static inline uint8_t SimpleHOGP_Gap_Bonded()
+static __inline uint8_t SimpleHOGP_Gap_Bonded()
 {
     return gap_status.is_bonded;
 }
 
 
-static inline uint8_t SimpleHOGP_Gap_LinkEncrypted()
+static __inline uint8_t SimpleHOGP_Gap_LinkEncrypted()
 {
     return gap_status.link_encrypted;
 }
 
-static inline SimpleHOGP_Gap_State SimpleHOGP_Gap_State_Get()
+static __inline SimpleHOGP_Gap_State SimpleHOGP_Gap_State_Get()
 {
     return (SimpleHOGP_Gap_State)gap_status.gap_state;
 }
 
-static inline void SimpleHOGP_Gap_State_Set(SimpleHOGP_Gap_State sta)
+static __inline void SimpleHOGP_Gap_State_Set(SimpleHOGP_Gap_State sta)
 {
 #if 1 //debug
     if(sta != gap_status.gap_state)

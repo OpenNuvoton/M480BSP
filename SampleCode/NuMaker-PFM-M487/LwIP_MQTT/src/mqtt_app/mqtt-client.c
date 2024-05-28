@@ -926,7 +926,7 @@ static void _mqtt_recv_process(void * pv)
         }
 
         TRACE("mqtt recv process, recv err:%d, %s, buf: %x, Heapsize %d", err, mqtt_tcp_error_to_string(err)
-              ,buf, xPortGetFreeHeapSize());
+              ,(uint32_t)buf, xPortGetFreeHeapSize());
         if(err)
         {
             if(buf)

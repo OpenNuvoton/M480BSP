@@ -12,7 +12,7 @@
 #define APROM_TEST_BASE             0x10000
 #define TEST_PATTERN                0x5A5A5A5A
 
-#if defined( __GNUC__ )            /* for GCC compiler */
+#if defined( __GNUC__ ) && !defined(__ARMCC_VERSION)            /* for GCC compiler */
 static __inline__ void * __get_PC(void)
 {
     void *pc;
@@ -23,7 +23,7 @@ static __inline__ void * __get_PC(void)
 #define __get_PC  __current_pc
 #endif
 
-#if defined( __GNUC__ )
+#if defined( __GNUC__ ) && !defined(__ARMCC_VERSION)
 __attribute__ ((used, long_call, section(".fastcode"))) int32_t FlashAccess_OnSRAM(void)
 #else
 int32_t FlashAccess_OnSRAM(void)

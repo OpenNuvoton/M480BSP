@@ -16,6 +16,15 @@
 #define PLL_CLOCK               192000000
 #define HCLK_DIV                        1
 
+void ProcessHardFault(void);
+void SH_Return(void);
+void SendChar_ToUART(void);
+void SYS_Init(void);
+
+void ProcessHardFault(void) {}
+void SH_Return(void) {}
+void SendChar_ToUART(void) {}
+
 uint32_t CLK_GetPLLClockFreq(void)
 {
     return PLL_CLOCK;

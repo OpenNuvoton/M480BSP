@@ -83,11 +83,11 @@ FRESULT MP3_id3v2_offload(void)
     f_lseek(&mp3FileObject, 0);
     res = f_read(&mp3FileObject, (char *)(&MadInputBuffer[0]), 10, &ReturnSize);
 
-    if(res == FR_OK)
+    if (res == FR_OK)
     {
         // Check header exist
-        if(ReturnSize >= 10 && !memcmp(MadInputBuffer, "ID3", 3) && !(MadInputBuffer[5] & 15) ||
-            (MadInputBuffer[6] & 0x80) || (MadInputBuffer[7] & 0x80) || (MadInputBuffer[8] & 0x80) || (MadInputBuffer[9] & 0x80))
+        if ((ReturnSize >= 10) && !memcmp(MadInputBuffer, "ID3", 3) && (!(MadInputBuffer[5] & 15) ||
+            (MadInputBuffer[6] & 0x80) || (MadInputBuffer[7] & 0x80) || (MadInputBuffer[8] & 0x80) || (MadInputBuffer[9] & 0x80)))
         {
             id3v2Size = (((MadInputBuffer[6] & 0x7f) << 21) | ((MadInputBuffer[7] & 0x7f) << 14) |
                             ((MadInputBuffer[8] & 0x7f) << 7) | (MadInputBuffer[9] & 0x7f)) + 10;
@@ -219,7 +219,7 @@ void MP3Player(void)
     memset((void *)aPCMBuffer_Full, 0, sizeof(aPCMBuffer_Full));
 
     /* Parse MP3 header */
-    MP3_ParseHeaderInfo(MP3_FILE);
+    MP3_ParseHeaderInfo((uint8_t *)MP3_FILE);
 
     /* First the structures used by libmad must be initialized. */
     mad_stream_init(&Stream);

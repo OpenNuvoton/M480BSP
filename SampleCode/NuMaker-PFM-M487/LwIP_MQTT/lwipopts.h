@@ -52,7 +52,7 @@
 
 #define LWIP_RAND                       xTaskGetTickCount
 
-#ifdef __GNUC__
+#if defined (__GNUC__) && !defined(__ARMCC_VERSION)
 #define LWIP_TIMEVAL_PRIVATE            0
 #endif
 

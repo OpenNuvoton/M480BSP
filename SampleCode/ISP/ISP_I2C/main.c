@@ -15,6 +15,15 @@
 uint32_t Pclk0;
 uint32_t Pclk1;
 
+void ProcessHardFault(void);
+void SH_Return(void);
+void SendChar_ToUART(void);
+void SYS_Init(void);
+
+void ProcessHardFault(void) {}
+void SH_Return(void) {}
+void SendChar_ToUART(void) {}
+
 #ifdef __ICCARM__
 #pragma weak CLK_GetPLLClockFreq
 uint32_t CLK_GetPLLClockFreq(void)

@@ -4,7 +4,7 @@
  * @brief    CMSIS Cortex-M4 Core Device Startup File for M480
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2017-2020 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
 
@@ -350,6 +350,32 @@ Reset_Handler:
 	.pool
 	.size	Reset_Handler, . - Reset_Handler
 
+  .align	1
+	.thumb_func
+    .weak   HardFault_Handler
+    .type   HardFault_Handler, % function
+
+ HardFault_Handler:
+
+    MOV     R0, LR
+    MRS     R1, MSP
+    MRS     R2, PSP
+    LDR     R3, =ProcessHardFault
+    BLX     R3
+    BX      R0
+
+    .size   HardFault_Handler, . - HardFault_Handler
+
+    .align  1
+    .thumb_func
+    .weak   ProcessHardFaultx
+    .type   ProcessHardFaultx, % function
+
+ ProcessHardFaultx:
+    B       .
+
+    .size   ProcessHardFaultx, . - ProcessHardFaultx
+
 	.align	1
 	.thumb_func
 	.weak	Default_Handler
@@ -367,7 +393,7 @@ Default_Handler:
 	.endm
 
 	def_irq_handler	NMI_Handler
-	def_irq_handler	HardFault_Handler
+	//def_irq_handler	HardFault_Handler
 	def_irq_handler	MemManage_Handler
 	def_irq_handler	BusFault_Handler
 	def_irq_handler	UsageFault_Handler

@@ -11,8 +11,8 @@
 #include "string.h"
 #include "isp_user.h"
 
-__align(4) uint8_t response_buff[64];
-__align(4) static uint8_t aprom_buf[FMC_FLASH_PAGE_SIZE];
+__ALIGNED(4) uint8_t response_buff[64];
+__ALIGNED(4) static uint8_t aprom_buf[FMC_FLASH_PAGE_SIZE];
 uint32_t bUpdateApromCmd;
 uint32_t g_apromSize, g_dataFlashAddr, g_dataFlashSize;
 
@@ -69,7 +69,7 @@ int ParseCmd(unsigned char *buffer, uint8_t len)
     ReadData(Config0, Config0 + 16, (uint32_t *)(response + 8)); //read config
     regcnf0 = *(uint32_t *)(response + 8);
     security = regcnf0 & 0x2;
-	
+
     if (lcmd == CMD_SYNC_PACKNO)
     {
         g_packno = inpw(pSrc);

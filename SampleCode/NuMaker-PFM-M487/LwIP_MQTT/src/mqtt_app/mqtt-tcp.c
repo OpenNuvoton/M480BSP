@@ -406,7 +406,7 @@ static struct netconn * __connect(const char * hostname, uint32_t port_no, _E_MQ
     {
         while((err = netconn_gethostbyname(hostname, &ip)) != ERR_OK)
         {
-            TRACE("Could not resolve hostname:%s to ip, retry:%d, err:%d, ip:%x", hostname, retry, err, ip.addr);
+            TRACE("Could not resolve hostname:%s to ip, retry:%d, err:%d, ip:%x", hostname, retry, err, (uint32_t)ip.addr);
             if(--retry == 0)
             {
                 *mqtt_err = MQTT_TCP_ERROR_DNS;

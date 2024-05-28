@@ -17,7 +17,7 @@ uint8_t volatile g_u8EPAReady = 0;
 uint32_t g_u32EpAMaxPacketSize;
 uint32_t g_u32EpBMaxPacketSize;
 
-__align(4) uint8_t usb_rcvbuf[64];
+__ALIGNED(4) uint8_t usb_rcvbuf[64];
 uint8_t bUsbDataReady;
 
 void USBD20_IRQHandler(void)
@@ -173,7 +173,7 @@ void USBD20_IRQHandler(void)
     }
 }
 
-extern __align(4) uint8_t response_buff[64];
+extern __ALIGNED(4) uint8_t response_buff[64];
 void EPA_Handler(void)  /* Interrupt IN handler */
 {
     uint32_t i;

@@ -1,7 +1,7 @@
 /******************************************************************************
 Copyright (c) Airoha 2016 - All rights reserved
 
-FILE NAME 
+FILE NAME
     m0_evn.h
 DESCRIPTION
 NOTES
@@ -14,7 +14,9 @@ NOTES
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)//hhwu
+#include "arm_compat.h"
+#endif
 
 void OS_delay_us(uint32_t);
 
@@ -42,14 +44,14 @@ typedef struct
 
 extern volatile uint32_t CRITICAL_DEPTH;
 
-static inline void ndis_enter_critical()
-{    
+static __inline void ndis_enter_critical()
+{
   __disable_irq();
 	CRITICAL_DEPTH++;
 }
 
 
-static inline void ndis_exit_critical()
+static __inline void ndis_exit_critical()
 {
     if (!(--CRITICAL_DEPTH))
     {

@@ -43,7 +43,7 @@
 
 #include <string.h>
 
-#if defined ( __GNUC__ ) && !(__CC_ARM) && !(__ICCARM__)
+#if defined ( __GNUC__ ) && !(__CC_ARM) && !(__ICCARM__) && !(__ARMCC_VERSION)
 #include <sys/select.h> // for struct timeval
 #endif
 //#include <sys/types.h>

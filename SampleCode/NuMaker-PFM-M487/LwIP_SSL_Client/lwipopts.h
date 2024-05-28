@@ -53,7 +53,7 @@
 //#define LWIP_DHCP                       1
 #define LWIP_POSIX_SOCKETS_IO_NAMES     1
 #define SO_REUSE                        1
-#if defined ( __GNUC__ ) && !(__CC_ARM) && !(__ICCARM__)
+#if defined ( __GNUC__ ) && !(__CC_ARM) && !(__ICCARM__) && !(__ARMCC_VERSION)
 #define LWIP_TIMEVAL_PRIVATE            0
 #endif
 

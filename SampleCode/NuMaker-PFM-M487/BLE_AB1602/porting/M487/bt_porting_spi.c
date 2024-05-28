@@ -133,7 +133,7 @@ void GPA_IRQHandler(void)
 void SPITransactionStart(spi_tran_entry *entry)
 {
     if(((uint32_t)entry->txbuf & 0x3) || ((uint32_t)entry->rxbuf & 0x3))
-        printf("spi (%d, %d) = (%x, %x)\n", entry->txlen, entry->rxlen, entry->txbuf, entry->rxbuf);
+        printf("spi (%d, %d) = (%x, %x)\n", entry->txlen, entry->rxlen, (uint32_t)entry->txbuf, (uint32_t)entry->rxbuf);
 
     spi_busy = true;
     /* Disable SPI DMA function */
@@ -142,7 +142,7 @@ void SPITransactionStart(spi_tran_entry *entry)
     if(entry->rxlen)
     {
         SPI0->PDMACTL |= SPI_PDMACTL_PDMARST_Msk;
-        while(SPI0->STATUS & (SPI_STATUS_RXEMPTY_Msk | SPI_STATUS_RXFULL_Msk) != SPI_STATUS_RXEMPTY_Msk)
+        while((SPI0->STATUS & (SPI_STATUS_RXEMPTY_Msk | SPI_STATUS_RXFULL_Msk)) != SPI_STATUS_RXEMPTY_Msk)
             SPI0->FIFOCTL |= SPI_FIFOCTL_RXFBCLR_Msk;
 
         /* Set source/destination address and attributes */
@@ -157,7 +157,7 @@ void SPITransactionStart(spi_tran_entry *entry)
     }
     else //tx only
     {
-        while(SPI0->STATUS & (SPI_STATUS_RXEMPTY_Msk | SPI_STATUS_RXFULL_Msk) != SPI_STATUS_RXEMPTY_Msk)
+        while((SPI0->STATUS & (SPI_STATUS_RXEMPTY_Msk | SPI_STATUS_RXFULL_Msk)) != SPI_STATUS_RXEMPTY_Msk)
             SPI0->FIFOCTL |= SPI_FIFOCTL_RXFBCLR_Msk;
 
         PDMA_SetTransferAddr(PDMA, DMA_Master_RX, (uint32_t)&SPI0->RX, PDMA_SAR_FIX,

@@ -61,7 +61,7 @@
 void
 memb_init(struct memb_blocks *m)
 {
-    memset(m->mem, (m->size + 1) * m->num, 0);
+    memset(m->mem, 0, (m->size + 1) * m->num);
 }
 /*------------------------------------------------------------------------------*/
 /**

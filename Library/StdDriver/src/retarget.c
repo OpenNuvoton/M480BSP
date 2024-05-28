@@ -4,12 +4,24 @@
  * @brief    M480 Series Debug Port and Semihost Setting Source File
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 
 #include <stdio.h>
 #include "NuMicro.h"
+
+#ifndef   __WEAK
+  #define __WEAK                                 __attribute__((weak))
+#endif
+
+#if(defined(__ICCARM__) && (__VER__ >= 9020000))
+#include <LowLevelIOInterface.h>
+#endif
+
+#if defined (__ICCARM__)
+#pragma diag_suppress=Pm150
+#endif
 
 #if defined ( __CC_ARM   )
 #if (__ARMCC_VERSION < 400000)
@@ -18,6 +30,7 @@
 #pragma import _printf_widthprec
 #endif
 #endif
+
 /* Uncomment this line to disable all printf and getchar. getchar() will always return 0x00*/
 /* #define DISABLE_UART */
 
@@ -27,396 +40,385 @@
     #endif
 #endif
 
+
 #define DEBUG_PORT   UART0
+
 /*---------------------------------------------------------------------------------------------------------*/
 /* Global variables                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
 #if (defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 6040000)) || (defined(__ICCARM__) && (__VER__ >= 8000000))
 struct __FILE { int handle; /* Add whatever you need here */ };
 #endif
+
 FILE __stdout;
 FILE __stdin;
 
+int kbhit(void);
+int IsDebugFifoEmpty(void);
+void _ttywrch(int ch);
 
-enum { r0, r1, r2, r3, r12, lr, pc, psr};
+char GetChar(void);
+void SendChar_ToUART(int ch);
+void SendChar(int ch);
 
-/**
- * @brief       Helper function to dump register while hard fault occurred
- * @param[in]   stack pointer points to the dumped registers in SRAM
- * @return      None
- * @details     This function is implement to print r0, r1, r2, r3, r12, lr, pc, psr
- */
-static void stackDump(uint32_t stack[])
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+# ifdef __MICROLIB
+
+__WEAK __NO_RETURN
+void __aeabi_assert(const char* expr, const char* file, int line)
 {
-    printf("r0  = 0x%x\n", stack[r0]);
-    printf("r1  = 0x%x\n", stack[r1]);
-    printf("r2  = 0x%x\n", stack[r2]);
-    printf("r3  = 0x%x\n", stack[r3]);
-    printf("r12 = 0x%x\n", stack[r12]);
-    printf("lr  = 0x%x\n", stack[lr]);
-    printf("pc  = 0x%x\n", stack[pc]);
-    printf("psr = 0x%x\n", stack[psr]);
+    char str[12], * p;
+
+    fputs("*** assertion failed: ", stderr);
+    fputs(expr, stderr);
+    fputs(", file ", stderr);
+    fputs(file, stderr);
+    fputs(", line ", stderr);
+
+    p = str + sizeof(str);
+    *--p = '\0';
+    *--p = '\n';
+    while(line > 0)
+    {
+        *--p = '0' + (line % 10);
+        line /= 10;
+    }
+    fputs(p, stderr);
+
+    for(;;);
 }
 
-/**
- * @brief       Hard fault handler
- * @param[in]   stack pointer points to the dumped registers in SRAM
- * @return      None
- * @details     Replace while(1) at the end of this function with chip reset if WDT is not enabled for end product
- */
-void Hard_Fault_Handler(uint32_t stack[])
-{
-    printf("In Hard Fault Handler\n");
 
-    stackDump(stack);
-    /* Replace while(1) with chip reset if WDT is not enabled for end product */
+__WEAK
+void abort(void)
+{
+    for(;;);
+}
+
+# else
+__asm("  .global __ARM_use_no_argv\n");
+__asm("  .global __use_no_semihosting\n");
+
+
+FILE __stdout;
+FILE __stdin;
+FILE __stderr;
+
+void _sys_exit(int return_code)__attribute__((noreturn));
+void _sys_exit(int return_code)
+{
+    (void) return_code;
     while(1);
-    /* SYS->IPRST0 = SYS_IPRST0_CHIPRST_Msk; */
 }
 
-
+# endif
+#endif // defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
 
 /*---------------------------------------------------------------------------------------------------------*/
 /* Routine to write a char                                                                                 */
 /*---------------------------------------------------------------------------------------------------------*/
+#if defined(__ICCARM__)
+#ifndef DEBUG_ENABLE_SEMIHOST
+size_t __write(int handle, const unsigned char *buf, size_t bufSize)
+{
+    size_t nChars = 0;
+
+    /* Check for the command to flush all handles */
+    if (handle == -1)
+    {
+        return 0;
+    }
+
+    /* Check for stdout and stderr      (only necessary if FILE descriptors are enabled.) */
+
+    if (handle != 1 && handle != 2)
+    {
+        return -1;
+    }
+
+    for (/* Empty */; bufSize > 0; --bufSize)
+    {
+        SendChar(*buf);
+        ++buf;
+        ++nChars;
+    }
+
+    return nChars;
+}
+
+size_t __read(int handle, unsigned char* buf, size_t bufSize)
+{
+    size_t nChars = 0;
+    /* Check for stdin      (only necessary if FILE descriptors are enabled) */
+    if(handle != 0)
+    {
+        return -1;
+    }
+
+    for( ; bufSize > 0; --bufSize)
+    {
+        unsigned char c;
+        c = GetChar();
+        if(c == 0)
+            break;
+        *buf++ = c;
+        ++nChars;
+    }
+    return nChars;
+}
+#endif  /* ndef DEBUG_ENABLE_SEMIHOST */
+#endif  /* defined(__ICCARM__) */
+
+#if (defined(__ARMCC_VERSION) || defined(__ICCARM__))
+int fgetc(FILE* stream);
+int fputc(int ch, FILE* stream);
+int ferror(FILE* stream);
+__WEAK
+uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp);
+#endif
 
 #if defined(DEBUG_ENABLE_SEMIHOST)
 /* The static buffer is used to speed up the semihost    */
 static char g_buf[16];
 static char g_buf_len = 0;
+static volatile int32_t g_ICE_Conneced = 1;
 
-/* Make sure won't goes here only because --gnu is defined , so
-   add !__CC_ARM and !__ICCARM__ checking */
-# if defined ( __GNUC__ ) && !(__CC_ARM) && !(__ICCARM__)
+void _sys_exit(int return_code)__attribute__((noreturn));
 
-# elif defined(__ICCARM__)      // IAR
-
-void SH_End(void)
+uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
 {
-    asm("MOVS   R0,#1 \n"        /*; Set return value to 1 */
-        "BX     lr    \n"        /*; Return */
-       );
+    uint32_t *sp = NULL;
+    uint32_t inst;
+
+    /* Check the used stack */
+    if(lr & 0x40)
+    {
+        /* Secure stack used */
+        if(lr & 4)
+            sp = (uint32_t *)psp;
+        else
+            sp = (uint32_t *)msp;
+
+    }
+#if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3U)
+    else
+    {
+        /* Non-secure stack used */
+        if(lr & 4)
+            sp = (uint32_t *)__TZ_get_PSP_NS();
+        else
+            sp = (uint32_t *)__TZ_get_MSP_NS();
+
+    }
+#endif
+
+    /* Get the instruction caused the hardfault */
+    if( sp != NULL )
+        inst = M16(sp[6]);
+
+
+    if(inst == 0xBEAB)
+    {
+        /*
+            If the instruction is 0xBEAB, it means it is caused by BKPT without ICE connected.
+            We still return for output/input message to UART.
+        */
+        g_ICE_Conneced = 0; // Set a flag for ICE offline
+        sp[6] += 2; // return to next instruction
+        return lr;  // Keep lr in R0
+    }
+
+    /* It is casued by hardfault (Not semihost). Just process the hard fault here. */
+    /* TODO: Implement your hardfault handle code here */
+
+    /*
+    printf("  HardFault!\n\n");
+    printf("r0  = 0x%x\n", sp[0]);
+    printf("r1  = 0x%x\n", sp[1]);
+    printf("r2  = 0x%x\n", sp[2]);
+    printf("r3  = 0x%x\n", sp[3]);
+    printf("r12 = 0x%x\n", sp[4]);
+    printf("lr  = 0x%x\n", sp[5]);
+    printf("pc  = 0x%x\n", sp[6]);
+    printf("psr = 0x%x\n", sp[7]);
+    */
+
+    while(1) {}
+
 }
 
-void SH_ICE(void)
+static int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1)
 {
-  asm("CMP   R2,#0   \n"
-      "BEQ   SH_End  \n"
-      "STR   R0,[R2] \n"       /*; Save the return value to *pn32Out_R0 */
-     );
+    __BKPT(0xAB);  /*; Wait ICE or HardFault */
+
+    return n32In_R0;
 }
 
-/**
- *
- * @brief      The function to process semihosted command
- * @param[in]  n32In_R0  : semihost register 0
- * @param[in]  n32In_R1  : semihost register 1
- * @param[out] pn32Out_R0: semihost register 0
- * @retval     0: No ICE debug
- * @retval     1: ICE debug
- *
- */
-int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
+static int32_t SH_ReadC()
 {
-    asm("BKPT   0xAB   \n"       /*; This instruction will cause ICE trap or system HardFault */
-        "B      SH_ICE \n"
-        "SH_HardFault: \n"       /*; Captured by HardFault */
-        "MOVS   R0,#0  \n"       /*; Set return value to 0 */
-        "BX     lr     \n"       /*; Return */
-        );
-
-    return 1;                    /*; Return 1 when it is trap by ICE */
+    return SH_DoCommand(0x07, NULL);
 }
 
-/**
- * @brief       Get LR value and branch to Hard_Fault_Handler function
- * @param       None
- * @return      None
- * @details     This function is use to get LR value and branch to Hard_Fault_Handler function.
- */
-void Get_LR_and_Branch(void)
+static int32_t SH_Write0(char *str)
 {
-    asm("MOV     R1, LR               \n" /*; LR current value */
-        "B       Hard_Fault_Handler   \n"
-       );
+    return SH_DoCommand(0x04, (int32_t)str);
 }
 
-/**
- * @brief       Get MSP value and branch to Get_LR_and_Branch function
- * @param       None
- * @return      None
- * @details     This function is use to get stack pointer value and branch to Get_LR_and_Branch function.
- */
-void Stack_Use_MSP(void)
+static int32_t SH_ReportException()
 {
-    asm("MRS     R0, MSP           \n" /*; read MSP */
-        "B       Get_LR_and_Branch \n"
-       );
+    return SH_DoCommand(0x18, 0x20026);
 }
 
-/**
- * @brief       Get stack pointer value and branch to Get_LR_and_Branch function
- * @param       None
- * @return      None
- * @details     This function is use to get stack pointer value and branch to Get_LR_and_Branch function.
- */
-void HardFault_Handler_Ret(void)
+#ifdef __ARMCC_VERSION
+static int32_t SH_kbhit()
 {
-    asm("MOVS    r0, #4                        \n"
-        "MOV     r1, LR                        \n"
-        "TST     r0, r1                        \n" /*; check LR bit 2 */
-        "BEQ     Stack_Use_MSP                 \n" /*; stack use MSP */
-        "MRS     R0, PSP                       \n" /*; stack use PSP, read PSP */
-        "B       Get_LR_and_Branch             \n"
-       );
-}
-
-/**
- * @brief    This function is implemented to support semihost
- * @param    None
- * @returns  None
- * @details  This function is implement to support semihost message print.
- *
- */
-void SP_Read_Ready(void)
-{
-    asm("LDR     R1, [R0, #24] \n"        /*; Get previous PC */
-        "LDRH    R3, [R1]      \n"        /*; Get instruction */
-        "LDR     R2, [pc, #8]  \n"        /*; The special BKPT instruction */
-        "CMP     R3, R2        \n"        /*; Test if the instruction at previous PC is BKPT */
-        "BNE     HardFault_Handler_Ret \n" /*; Not BKPT */
-        "ADDS    R1, #4        \n"        /*; Skip BKPT and next line */
-        "STR     R1, [R0, #24] \n"        /*; Save previous PC */
-        "BX      lr            \n"        /*; Return */
-        "DCD     0xBEAB        \n"        /*; BKPT instruction code */
-        "B       HardFault_Handler_Ret \n"
-       );
-}
-
-/**
- * @brief       Get stack pointer value and branch to Get_LR_and_Branch function
- * @param       None
- * @return      None
- * @details     This function is use to get stack pointer value and branch to Get_LR_and_Branch function.
- */
-void SP_is_PSP(void)
-{
-    asm(
-        "MRS     R0, PSP       \n"      /*; stack use PSP, read PSP */
-        "B       Get_LR_and_Branch    \n"
-
-       );
-}
-
-/**
- * @brief    This HardFault handler is implemented to support semihost
- *
- * @param    None
- *
- * @returns  None
- *
- * @details  This function is implement to support semihost message print.
- *
- */
-void HardFault_Handler (void)
-{
-    asm("MOV     R0, lr        \n"
-        "LSLS    R0, #29       \n"        /*; Check bit 2 */
-        "BMI     SP_is_PSP     \n"        /*; previous stack is PSP */
-        "MRS     R0, MSP       \n"        /*; previous stack is MSP, read MSP */
-        "B       SP_Read_Ready \n"
-       );
-
-    while(1);
-}
-
-# else
-
-/**
- * @brief    This HardFault handler is implemented to support semihost
- * @param    None
- * @returns  None
- * @details  This function is implement to support semihost message print.
- *
- */
-__asm int32_t HardFault_Handler(void)
-{
-    MOV     R0, LR
-    LSLS    R0, #29               /*; Check bit 2 */
-    BMI     SP_is_PSP             /*; previous stack is PSP */
-    MRS     R0, MSP               /*; previous stack is MSP, read MSP */
-    B       SP_Read_Ready
-SP_is_PSP
-    MRS     R0, PSP               /*; Read PSP */
-
-SP_Read_Ready
-    LDR     R1, [R0, #24]         /*; Get previous PC */
-    LDRH    R3, [R1]              /*; Get instruction */
-    LDR     R2, =0xBEAB           /*; The special BKPT instruction */
-    CMP     R3, R2                /*; Test if the instruction at previous PC is BKPT */
-    BNE     HardFault_Handler_Ret /*; Not BKPT */
-
-    ADDS    R1, #4                /*; Skip BKPT and next line */
-    STR     R1, [R0, #24]         /*; Save previous PC */
-
-    BX      LR                    /*; Return */
-HardFault_Handler_Ret
-
-    /* TODO: Implement your own hard fault handler here. */
-    MOVS    r0, #4
-    MOV     r1, LR
-    TST     r0, r1                          /*; check LR bit 2 */
-    BEQ     Stack_Use_MSP                   /*; stack use MSP */
-    MRS     R0, PSP ;stack use PSP          /*; stack use PSP, read PSP */
-    B       Get_LR_and_Branch
-Stack_Use_MSP
-    MRS     R0, MSP ; stack use MSP         /*; read MSP */
-Get_LR_and_Branch
-    MOV     R1, LR ; LR current value       /*; LR current value */
-    LDR     R2,=__cpp(Hard_Fault_Handler)   /*; branch to Hard_Fault_Handler */
-    BX      R2
-
-    B       .
-
-    ALIGN
-}
-
-/**
- *
- * @brief      The function to process semihosted command
- * @param[in]  n32In_R0  : semihost register 0
- * @param[in]  n32In_R1  : semihost register 1
- * @param[out] pn32Out_R0: semihost register 0
- * @retval     0: No ICE debug
- * @retval     1: ICE debug
- *
- */
-__asm int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
-{
-    BKPT   0xAB          /*; Wait ICE or HardFault */
-    /*; ICE will step over BKPT directly
-      ; HardFault will step BKPT and the next line */
-    B      SH_ICE
-
-SH_HardFault             /*; Captured by HardFault */
-    MOVS   R0, #0        /*; Set return value to 0 */
-    BX     lr            /*; Return */
-
-SH_ICE                   /*; Captured by ICE */
-    /*; Save return value */
-    CMP    R2, #0
-    BEQ    SH_End
-    STR    R0, [R2]      /*; Save the return value to *pn32Out_R0 */
-
-SH_End
-    MOVS   R0, #1        /*; Set return value to 1 */
-    BX     lr            /*; Return */
+    return SH_DoCommand(0x101, NULL);
 }
 #endif
 
-#else   // ndef DEBUG_ENABLE_SEMIHOST
-
-/* Make sure won't goes here only because --gnu is defined , so
-   add !__CC_ARM and !__ICCARM__ checking */
-# if defined ( __GNUC__ ) && !(__CC_ARM) && !(__ICCARM__) 
+#else   /* ndef (DEBUG_ENABLE_SEMIHOST) */
 
 /**
- * @brief    This HardFault handler is implemented to show r0, r1, r2, r3, r12, lr, pc, psr
+ * @brief    This function is called by Hardfault handler.
  *
  * @param    None
  *
  * @returns  None
  *
- * @details  This function is implement to print r0, r1, r2, r3, r12, lr, pc, psr.
+ * @details  This function is called by Hardfault handler and check if it is caused by __BKPT or not.
  *
  */
-void HardFault_Handler(void)
+
+__WEAK uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
 {
-    asm("MOVS    r0, #4                        \n"
-        "MOV     r1, LR                        \n"
-        "TST     r0, r1                        \n" /*; check LR bit 2 */
-        "BEQ     1f                            \n" /*; stack use MSP */
-        "MRS     R0, PSP                       \n" /*; stack use PSP, read PSP */
-        "MOV     R1, LR                        \n" /*; LR current value */
-        "B       Hard_Fault_Handler            \n"
-        "1:                                    \n"
-        "MRS     R0, MSP                       \n" /*; LR current value */
-        "B       Hard_Fault_Handler            \n"    
-        ::[Hard_Fault_Handler] "r" (Hard_Fault_Handler) // input
-    );
-    while(1);
-}
+		uint32_t *sp = NULL;
+		uint32_t inst, addr, taddr, tdata;
+		int32_t secure;
+		uint32_t rm, rn, rt, imm5, imm8;
 
-# elif defined(__ICCARM__)
+		/* It is casued by hardfault. Just process the hard fault */
+		/* TODO: Implement your hardfault handle code here */
 
-void Get_LR_and_Branch(void)
-{
-    asm("MOV     R1, LR                  \n" /*; LR current value */
-        "B       Hard_Fault_Handler      \n"
-       );
-}
 
-void Stack_Use_MSP(void)
-{
-    asm("MRS     R0, MSP           \n" /*; read MSP */
-        "B       Get_LR_and_Branch \n"
-       );
-}
+		/* Check the used stack */
+		secure = (lr & 0x40ul) ? 1 : 0;
+		if(secure)
+		{
+				/* Secure stack used */
+				if(lr & 4UL)
+				{
+						sp = (uint32_t *)psp;
+				}
+				else
+				{
+						sp = (uint32_t *)msp;
+				}
 
-/**
- * @brief    This HardFault handler is implemented to show r0, r1, r2, r3, r12, lr, pc, psr
- *
- * @param    None
- *
- * @returns  None
- *
- * @details  This function is implement to print r0, r1, r2, r3, r12, lr, pc, psr.
- *
- */
-void HardFault_Handler(void)
-{
-    asm("MOVS    r0, #4                        \n"
-        "MOV     r1, LR                        \n"
-        "TST     r0, r1                        \n" /*; check LR bit 2 */
-        "BEQ     Stack_Use_MSP                 \n" /*; stack use MSP */
-        "MRS     R0, PSP                       \n" /*; stack use PSP, read PSP */
-        "B       Get_LR_and_Branch             \n"
-       );
+		}
+#if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3)
+		else
+		{
+				/* Non-secure stack used */
+				if(lr & 4)
+						sp = (uint32_t *)(__TZ_get_PSP_NS());
+				else
+						sp = (uint32_t *)(__TZ_get_MSP_NS());
 
-    while(1);
-}
-
-# else
-
-/**
- * @brief    This HardFault handler is implemented to show r0, r1, r2, r3, r12, lr, pc, psr
- *
- * @param    None
- *
- * @return   None
- *
- * @details  The function extracts the location of stack frame and passes it to Hard_Fault_Handler function as a pointer
- *
- */
-__asm int32_t HardFault_Handler(void)
-{
-    MOVS    r0, #4
-    MOV     r1, LR
-    TST     r0, r1          /*; check LR bit 2 */
-    BEQ     Stack_Use_MSP   /*; stack use MSP */
-    MRS     R0, PSP         /*; stack use PSP, read PSP */
-    B       Get_LR_and_Branch
-Stack_Use_MSP
-    MRS     R0, MSP         /*; read MSP */
-Get_LR_and_Branch
-    MOV     R1, LR          /*; LR current value */
-    LDR     R2,=__cpp(Hard_Fault_Handler) /*; branch to Hard_Fault_Handler */
-    BX      R2
-}
-
+		}
 #endif
 
-#endif
+		/*
+				r0  = sp[0]
+				r1  = sp[1]
+				r2  = sp[2]
+				r3  = sp[3]
+				r12 = sp[4]
+				lr  = sp[5]
+				pc  = sp[6]
+				psr = sp[7]
+		*/
+
+		printf("HardFault @ 0x%08x\n", sp[6]);
+		/* Get the instruction caused the hardfault */
+		if( sp != NULL )
+		{
+				addr = sp[6];
+				inst = M16(addr);
+		}
+
+		printf("HardFault Analysis:\n");
+
+		printf("Instruction code = %x\n", inst);
+
+		if(inst == 0xBEAB)
+		{
+				printf("Execute BKPT without ICE connected\n");
+		}
+		else if((inst >> 12) == 5)
+		{
+				/* 0101xx Load/store (register offset) on page C2-327 of armv8m ref */
+				rm = (inst >> 6) & 0x7;
+				rn = (inst >> 3) & 0x7;
+				rt = inst & 0x7;
+
+				printf("LDR/STR rt=%x rm=%x rn=%x\n", rt, rm, rn);
+				taddr = sp[rn] + sp[rm];
+				tdata = sp[rt];
+				printf("[0x%08x] 0x%04x %s 0x%x [0x%x]\n", addr, inst,
+							 (inst & BIT11) ? "LDR" : "STR", tdata, taddr);
+
+		}
+		else if((inst >> 13) == 3)
+		{
+				/* 011xxx    Load/store word/byte (immediate offset) on page C2-327 of armv8m ref */
+				imm5 = (inst >> 6) & 0x1f;
+				rn = (inst >> 3) & 0x7;
+				rt = inst & 0x7;
+
+				printf("LDR/STR rt=%x rn=%x imm5=%x\n", rt, rn, imm5);
+				taddr = sp[rn] + imm5;
+				tdata = sp[rt];
+				printf("[0x%08x] 0x%04x %s 0x%x [0x%x]\n", addr, inst,
+							 (inst & BIT11) ? "LDR" : "STR", tdata, taddr);
+		}
+		else if((inst >> 12) == 8)
+		{
+				/* 1000xx    Load/store halfword (immediate offset) on page C2-328 */
+				imm5 = (inst >> 6) & 0x1f;
+				rn = (inst >> 3) & 0x7;
+				rt = inst & 0x7;
+
+				printf("LDRH/STRH rt=%x rn=%x imm5=%x\n", rt, rn, imm5);
+				taddr = sp[rn] + imm5;
+				tdata = sp[rt];
+				printf("[0x%08x] 0x%04x %s 0x%x [0x%x]\n", addr, inst,
+							 (inst & BIT11) ? "LDR" : "STR", tdata, taddr);
+
+		}
+		else if((inst >> 12) == 9)
+		{
+				/* 1001xx    Load/store (SP-relative) on page C2-328 */
+				imm8 = inst & 0xff;
+				rt = (inst >> 8) & 0x7;
+
+				printf("LDRH/STRH rt=%x imm8=%x\n", rt, imm8);
+				taddr = sp[6] + imm8;
+				tdata = sp[rt];
+				printf("[0x%08x] 0x%04x %s 0x%x [0x%x]\n", addr, inst,
+							 (inst & BIT11) ? "LDR" : "STR", tdata, taddr);
+		}
+		else
+		{
+				printf("Unexpected instruction\n");
+		}
+
+		/* Or *sp to remove compiler warning */
+		while(1U | *sp) {}
+
+		return lr;
+}
+#endif  /* defined(DEBUG_ENABLE_SEMIHOST) */
+
 
 #ifndef DISABLE_UART
 /**
@@ -429,7 +431,7 @@ Get_LR_and_Branch
  * @details     Send a target char to UART debug port .
  */
 #ifndef NONBLOCK_PRINTF
-static void SendChar_ToUART(int ch)
+void SendChar_ToUART(int ch)
 {
     while(DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
 
@@ -440,7 +442,6 @@ static void SendChar_ToUART(int ch)
     }
     DEBUG_PORT->DAT = ch;
 }
-
 #else
 /* Non-block implement of send char */
 #define BUF_SIZE    2048
@@ -496,7 +497,6 @@ static void SendChar_ToUART(int ch)
     }while(i32Tail != i32Head);
 }
 #endif   /* else for NONBLOCK_PRINTF */
-
 #endif   /* if not def DISABLE_UART */
 
 /**
@@ -508,7 +508,7 @@ static void SendChar_ToUART(int ch)
  *
  * @details     Send a target char to UART debug port or semihost.
  */
-static void SendChar(int ch)
+void SendChar(int ch)
 {
 #if defined(DEBUG_ENABLE_SEMIHOST)
     g_buf[g_buf_len++] = ch;
@@ -516,26 +516,30 @@ static void SendChar(int ch)
     if(g_buf_len + 1 >= sizeof(g_buf) || ch == '\n' || ch == '\0')
     {
         /* Send the char */
-        if(SH_DoCommand(0x04, (int)g_buf, NULL) != 0)
+        if(g_ICE_Conneced)
         {
-            g_buf_len = 0;
-            return;
+            if(SH_Write0(g_buf) != 0)
+            {
+                g_buf_len = 0;
+                return;
+            }
         }
         else
         {
-#ifndef DISABLE_UART
+# if (DEBUG_ENABLE_SEMIHOST == 2) // Re-direct to UART Debug Port only when DEBUG_ENABLE_SEMIHOST=2
             int i;
-
             for(i = 0; i < g_buf_len; i++)
                 SendChar_ToUART(g_buf[i]);
-#endif
             g_buf_len = 0;
+# endif
         }
     }
 #else
+
 #ifndef DISABLE_UART
     SendChar_ToUART(ch);
 #endif
+
 #endif
 }
 
@@ -548,29 +552,43 @@ static void SendChar(int ch)
  *
  * @details  Wait UART debug port or semihost to input a char.
  */
-static char GetChar(void)
+char GetChar(void)
 {
 #ifdef DEBUG_ENABLE_SEMIHOST
-# if defined (__CC_ARM)
+
     int nRet;
-    while(SH_DoCommand(0x101, 0, &nRet) != 0)
+
+# if defined (__ICCARM__)
+    if(g_ICE_Conneced)
     {
+        nRet = SH_ReadC();
         if(nRet != 0)
         {
-            SH_DoCommand(0x07, 0, &nRet);
-            return (char)nRet;
+            return nRet;
         }
     }
 # else
-    int nRet;
-    while(SH_DoCommand(0x7, 0, &nRet) != 0)
+    while(SH_kbhit())
     {
-        if(nRet != 0)
-            return (char)nRet;
+        if((nRet = SH_ReadC()) != 0)
+            return nRet;
     }
 # endif
+
+# if (DEBUG_ENABLE_SEMIHOST == 2) // Re-direct to UART Debug Port only when DEBUG_ENABLE_SEMIHOST=2
+    /* Use debug port when ICE is not connected at semihost mode */
+    while(!g_ICE_Conneced)
+    {
+        if((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) == 0)
+        {
+            return (DEBUG_PORT->DAT);
+        }
+    }
+# endif
+
     return (0);
 #else
+
 #ifndef DISABLE_UART
     while(1)
     {
@@ -582,6 +600,7 @@ static char GetChar(void)
 #else
     return 0;
 #endif
+
 #endif
 }
 
@@ -661,33 +680,32 @@ void _ttywrch(int ch)
 
 int fputc(int ch, FILE *stream)
 {
+    (void)stream;
     SendChar(ch);
     return ch;
 }
 
-#if defined (__GNUC__) && !defined(__ARMCC_VERSION)
 
-int _write (int fd, char *ptr, int len)
+#if defined (__GNUC__) && !defined(__ARMCC_VERSION)
+#if !defined(OS_USE_SEMIHOSTING)
+int _write(int fd, char *ptr, int len)
 {
     int i = len;
-
     while(i--)
     {
-        while(DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
-
         if(*ptr == '\n')
         {
-            DEBUG_PORT->DAT = '\r';
             while(DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
+            DEBUG_PORT->DAT = '\r';
         }
 
+        while(DEBUG_PORT->FIFOSTS & UART_FIFOSTS_TXFULL_Msk);
         DEBUG_PORT->DAT = *ptr++;
-
     }
     return len;
 }
 
-int _read (int fd, char *ptr, int len)
+int _read(int fd, char *ptr, int len)
 {
 
     while((DEBUG_PORT->FIFOSTS & UART_FIFOSTS_RXEMPTY_Msk) != 0);
@@ -696,8 +714,10 @@ int _read (int fd, char *ptr, int len)
 
 
 }
+#endif
 
 #else
+
 /**
  * @brief      Get character from UART debug port or semihosting input
  *
@@ -711,7 +731,8 @@ int _read (int fd, char *ptr, int len)
 
 int fgetc(FILE *stream)
 {
-    return (GetChar());
+    (void)stream;
+    return ((int)GetChar());
 }
 
 /**
@@ -731,16 +752,20 @@ int fgetc(FILE *stream)
 
 int ferror(FILE *stream)
 {
+    (void)stream;
     return EOF;
 }
+
 #endif
+
+
 #ifdef DEBUG_ENABLE_SEMIHOST
+
 # ifdef __ICCARM__
 void __exit(int return_code)
 {
-
     /* Check if link with ICE */
-    if(SH_DoCommand(0x18, 0x20026, NULL) == 0)
+    if(SH_ReportException() == 0)
     {
         /* Make sure all message is print out */
         while(IsDebugFifoEmpty() == 0);
@@ -751,9 +776,9 @@ label:
 # else
 void _sys_exit(int return_code)
 {
-
+    (void)return_code;
     /* Check if link with ICE */
-    if(SH_DoCommand(0x18, 0x20026, NULL) == 0)
+    if(SH_ReportException() == 0)
     {
         /* Make sure all message is print out */
         while(IsDebugFifoEmpty() == 0);
@@ -761,5 +786,6 @@ void _sys_exit(int return_code)
 label:
     goto label;  /* endless loop */
 }
-# endif
-#endif
+# endif  // ifdef __ICCARM__
+
+#endif  /* ifdef DEBUG_ENABLE_SEMIHOST */

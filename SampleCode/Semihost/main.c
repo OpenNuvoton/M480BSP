@@ -76,9 +76,6 @@ int32_t main()
 }
 
 
-
-
-
 /*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
 
 

@@ -11,7 +11,7 @@
             <name>C-SPY</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>30</version>
+                <version>31</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -44,7 +44,7 @@
                 </option>
                 <option>
                     <name>MemFile</name>
-                    <state>$TOOLKIT_DIR$\CONFIG\debugger\Nuvoton\iom460.ddf</state>
+                    <state>$TOOLKIT_DIR$\CONFIG\debugger\Nuvoton\iom480ae.ddf</state>
                 </option>
                 <option>
                     <name>RunToEnable</name>
@@ -88,7 +88,7 @@
                 </option>
                 <option>
                     <name>OCLastSavedByProductVersion</name>
-                    <state>8.32.1.18618</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>UseFlashLoader</name>
@@ -112,7 +112,7 @@
                 </option>
                 <option>
                     <name>FlashLoadersV3</name>
-                    <state>$TOOLKIT_DIR$\config\flashloader\Nuvoton\M460_APROM_1M.board</state>
+                    <state>$TOOLKIT_DIR$\config\flashloader\Nuvoton\M481_APROM.board</state>
                 </option>
                 <option>
                     <name>OCImagesSuppressCheck1</name>
@@ -140,7 +140,7 @@
                 </option>
                 <option>
                     <name>OverrideDefFlashBoard</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>OCImagesOffset1</name>
@@ -183,14 +183,6 @@
                     <state>1</state>
                 </option>
                 <option>
-                    <name>OCMulticoreMaster</name>
-                    <state>0</state>
-                </option>
-                <option>
-                    <name>OCMulticorePort</name>
-                    <state>53461</state>
-                </option>
-                <option>
                     <name>OCMulticoreWorkspace</name>
                     <state></state>
                 </option>
@@ -217,6 +209,14 @@
                 <option>
                     <name>OCMulticoreNrOfCoresSlave</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>OCMulticoreAMPConfigType</name>
+                    <state>0</state>
+                </option>
+                <option>
+                    <name>OCMulticoreSessionFile</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -1433,6 +1433,10 @@
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
+                <file>$TOOLKIT_DIR$\plugins\rtos\RemedyRtosViewer\RemedyRtosViewer.ewplugin</file>
+                <loadFlag>0</loadFlag>
+            </plugin>
+            <plugin>
                 <file>$TOOLKIT_DIR$\plugins\rtos\SafeRTOS\SafeRTOSPlugin.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
@@ -1463,10 +1467,6 @@
             <plugin>
                 <file>$TOOLKIT_DIR$\plugins\rtos\uCOS-III\uCOS-III-KA-CSpy.ewplugin</file>
                 <loadFlag>0</loadFlag>
-            </plugin>
-            <plugin>
-                <file>$EW_DIR$\common\plugins\CodeCoverage\CodeCoverage.ENU.ewplugin</file>
-                <loadFlag>1</loadFlag>
             </plugin>
             <plugin>
                 <file>$EW_DIR$\common\plugins\Orti\Orti.ENU.ewplugin</file>

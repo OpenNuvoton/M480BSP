@@ -66,7 +66,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.42.1.23678</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -78,7 +78,7 @@
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state>M481AE series	Nuvoton M480AE series (M481AE,M482AE,M483AE,M484AE,M485AE,M487AE)</state>
+                    <state>M481AE series	Nuvoton M481AE series (M481AE,M482AE,M483AE,M485AE,M487AE)</state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
@@ -116,7 +116,7 @@
                 </option>
                 <option>
                     <name>GBECoreSlave</name>
-                    <version>28</version>
+                    <version>27</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -133,12 +133,12 @@
                 </option>
                 <option>
                     <name>CoreVariant</name>
-                    <version>28</version>
+                    <version>27</version>
                     <state>39</state>
                 </option>
                 <option>
                     <name>GFPUDeviceSlave</name>
-                    <state>M481AE series	Nuvoton M480AE series (M481AE,M482AE,M483AE,M484AE,M485AE,M487AE)</state>
+                    <state>M481AE series	Nuvoton M481AE series (M481AE,M482AE,M483AE,M485AE,M487AE)</state>
                 </option>
                 <option>
                     <name>FPU2</name>
@@ -156,7 +156,7 @@
                 </option>
                 <option>
                     <name>GFPUCoreSlave2</name>
-                    <version>28</version>
+                    <version>27</version>
                     <state>39</state>
                 </option>
                 <option>
@@ -215,7 +215,7 @@
             <name>ICCARM</name>
             <archiveVersion>2</archiveVersion>
             <data>
-                <version>36</version>
+                <version>35</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -468,10 +468,6 @@
                 <option>
                     <name>OICompilerExtraOption</name>
                     <state>1</state>
-                </option>
-                <option>
-                    <name>CCStackProtection</name>
-                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -774,7 +770,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$TOOLKIT_DIR$\config\linker\Nuvoton\M46xxJHAE.icf</state>
+                    <state>$TOOLKIT_DIR$\CONFIG\generic_cortex.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>

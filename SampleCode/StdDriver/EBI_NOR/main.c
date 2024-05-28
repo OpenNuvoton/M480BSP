@@ -216,14 +216,14 @@ int main(void)
         u16WData = (0x7657 + u32Addr / 2) & 0xFFFF;
         if(NOR_MX29LV320T_WRITE(EBI_BANK1, u32Addr, u16WData) < 0)
         {
-            printf("Program [0x%08X]: [0x%08X] FAIL !!!\n\n", (uint32_t)EBI_BANK0_BASE_ADDR + (0x100000 * EBI_BANK1) + u32Addr, u16WData);
+            printf("Program [0x%08X]: [0x%08X] FAIL !!!\n\n", (uint32_t)(EBI_BANK0_BASE_ADDR + (0x100000 * EBI_BANK1)) + u32Addr, u16WData);
             while(1);
         }
         else
         {
             /* Show UART message ...... */
             if((u32Addr % 256) == 0)
-                printf("Program [0x%08X]:[0x%08X] !!!       \r", (uint32_t)EBI_BANK0_BASE_ADDR + (0x100000 * EBI_BANK1) + u32Addr, u16WData);
+                printf("Program [0x%08X]:[0x%08X] !!!       \r", (uint32_t)(EBI_BANK0_BASE_ADDR + (0x100000 * EBI_BANK1)) + u32Addr, u16WData);
         }
     }
 
@@ -233,14 +233,14 @@ int main(void)
         u16RData = NOR_MX29LV320T_READ(EBI_BANK1, u32Addr);
         if(u16WData != u16RData)
         {
-            printf("Compare [0x%08X] FAIL !!! (W:0x%08X, R:0x%08X)\n\n", (uint32_t)EBI_BANK0_BASE_ADDR + (0x100000 * EBI_BANK1) + u32Addr, u16WData, u16RData);
+            printf("Compare [0x%08X] FAIL !!! (W:0x%08X, R:0x%08X)\n\n", (uint32_t)(EBI_BANK0_BASE_ADDR + (0x100000 * EBI_BANK1)) + u32Addr, u16WData, u16RData);
             while(1);
         }
         else
         {
             /* Show UART message ...... */
             if((u32Addr % 256) == 0)
-                printf("Read [0x%08X]: [0x%08X] !!!         \r", (uint32_t)EBI_BANK0_BASE_ADDR + (0x100000 * EBI_BANK1) + u32Addr, u16RData);
+                printf("Read [0x%08X]: [0x%08X] !!!         \r", (uint32_t)(EBI_BANK0_BASE_ADDR + (0x100000 * EBI_BANK1)) + u32Addr, u16RData);
         }
     }
     printf(">> Program flash OK !!!                             \n\n");

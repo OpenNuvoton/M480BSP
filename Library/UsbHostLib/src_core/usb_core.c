@@ -1304,7 +1304,7 @@ void usbh_dump_iface(IFACE_T *iface)
 {
 	USB_debug("\n  [IFACE info] (0x%x)\n", (int)iface);
 	USB_debug("  ----------------------------------------------\n");
-	USB_debug("  udev       = 0x%x\n", iface->udev);
+	USB_debug("  udev       = 0x%x\n", (int)iface->udev);
 	USB_debug("  if_num     = %d\n", iface->if_num);
 	USB_debug("  driver     = 0x%x\n", (int)iface->driver);
 	USB_debug("  next       = 0x%x\n", (int)iface->next);

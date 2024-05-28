@@ -107,7 +107,7 @@ void UART0_Init()
   * @details    This function is an example to show how to implement user's hard fault handler
   *
   */
-void ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
+uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
 {
     uint32_t exception_num;
     uint32_t r0, r1, r2, r3, r12, pc, psr;
