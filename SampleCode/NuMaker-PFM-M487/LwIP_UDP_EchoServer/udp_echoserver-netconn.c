@@ -73,6 +73,16 @@ static void udp_echoserver_netconn_thread(void *arg)
     }
 }
 
+static void dma_monitor_thread(void *arg)
+{
+    while(1)
+    {
+        if(check_dma_buf_overflow())
+            printf("\nDEBUG : DMA overflow !!!\nEMAC has been reset\n\n");
+        vTaskDelay(1000); // Check identifier per sec
+    }
+}
+
 /**
   * @brief  Initialize the UDP echo server (start its thread)
   * @param  none
@@ -81,5 +91,6 @@ static void udp_echoserver_netconn_thread(void *arg)
 void udp_echoserver_netconn_init()
 {
     sys_thread_new("UDPECHO", udp_echoserver_netconn_thread, NULL, UDPECHOSERVER_THREAD_STACKSIZE, UDPECHOSERVER_THREAD_PRIO);
+    sys_thread_new("DMA Monitor", dma_monitor_thread, NULL, UDPECHOSERVER_THREAD_STACKSIZE, UDPECHOSERVER_THREAD_PRIO);
 }
 

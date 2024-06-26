@@ -10,7 +10,7 @@
 #include "lwip/api.h"
 #include "string.h"
 #include "tftp.h"
-
+#include "netif/m480_eth.h"
 
 #define TFTP_THREAD_PRIO    ( tskIDLE_PRIORITY + 2UL )
 #define TFTP_THREAD_STACKSIZE  200
@@ -325,29 +325,11 @@ static void tftp_thread(void *arg)
     }
 }
 
-extern void init_static_buffer(void);
-extern void ETH_init(u8_t *mac_addr);
-s16_t check_dma_buf_overflow(u8_t *mac_addr)
-{
-    if(*(u32_t *)BUFP_IDENTIFITER_ADDR != BUFP_IDENTIFITER)
-    {
-        // do EMAC reset and wait for PHY ready
-        ETH_init(mac_addr);
-
-        init_static_buffer();
-
-        return -1;
-    }
-
-    return 0;
-}
-
-extern unsigned char my_mac_addr[];
 static void dma_monitor_thread(void *arg)
 {
     while(1)
     {
-        if(check_dma_buf_overflow(my_mac_addr))
+        if(check_dma_buf_overflow())
             printf("\nDEBUG : DMA overflow !!!\nEMAC has been reset\n\n");
         vTaskDelay(1000); // Check identifier per sec
     }

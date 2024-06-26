@@ -130,6 +130,16 @@ static void http_server_netconn_thread(void *arg)
     }
 }
 
+static void dma_monitor_thread(void *arg)
+{
+    while(1)
+    {
+        if(check_dma_buf_overflow())
+            printf("\nDEBUG : DMA overflow !!!\nEMAC has been reset\n\n");
+        vTaskDelay(1000); // Check identifier per sec
+    }
+}
+
 /**
   * @brief  Initialize the HTTP server (start its thread)
   * @param  none
@@ -138,5 +148,6 @@ static void http_server_netconn_thread(void *arg)
 void http_server_netconn_init()
 {
     sys_thread_new("HTTP", http_server_netconn_thread, NULL, WEBSERVER_THREAD_STACKSIZE, WEBSERVER_THREAD_PRIO);
+    sys_thread_new("DMA Monitor", dma_monitor_thread, NULL, WEBSERVER_THREAD_STACKSIZE, WEBSERVER_THREAD_PRIO);
 }
 

@@ -292,6 +292,8 @@ static void vUdpTask( void *pvParameters )
 
     netif_add(&netif, &ipaddr, &netmask, &gw, NULL, ethernetif_init, tcpip_input);
 
+    init_static_buffer();
+
     netif_set_default(&netif);
     netif_set_up(&netif);
 

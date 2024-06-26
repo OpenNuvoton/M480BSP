@@ -22,6 +22,7 @@
 #include "lwip/opt.h"
 #include "lwip/arch.h"
 #include "lwip/api.h"
+#include "netif/m480_eth.h"
 
 #if !defined(MBEDTLS_CONFIG_FILE)
 #include "mbedtls/config.h"
@@ -402,8 +403,18 @@ exit:
     return;
 }
 
+static void dma_monitor_thread(void *arg)
+{
+    while(1)
+    {
+        if(check_dma_buf_overflow())
+            printf("\nDEBUG : DMA overflow !!!\nEMAC has been reset\n\n");
+        vTaskDelay(1000); // Check identifier per sec
+    }
+}
 
 void ssl_server_socket_init(void)
 {
     sys_thread_new("SSL", ssl_main, NULL, SSLSERVER_THREAD_STACKSIZE, SSLSERVER_THREAD_PRIO);
+    sys_thread_new("DMA Monitor", dma_monitor_thread, NULL, SSLSERVER_THREAD_STACKSIZE, SSLSERVER_THREAD_PRIO);
 }

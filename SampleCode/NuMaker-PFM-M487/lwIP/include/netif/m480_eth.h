@@ -96,6 +96,19 @@
 #define TXFD_TXCP    0x00080000  // Transmission Completion
 #define TXFD_TTSAS   0x08000000  // TX Time Stamp Available
 
+// Desc
+#define BUFP_STATIC_NUM         RX_DESCRIPTOR_NUM
+#define BUFP_STATIC_SIZE        0x800UL
+#define BUFP_STATIC_BASE        (0x20028000UL - (BUFP_STATIC_NUM + 1) * BUFP_STATIC_SIZE)
+#if (BUFP_STATIC_NUM > 15)
+  #error "BUFP_STATIC_NUM over range!"
+#endif
+#if (PACKET_BUFFER_SIZE > BUFP_STATIC_SIZE)
+  #error "PACKET_BUFFER_SIZE over range!"
+#endif
+#define BUFP_IDENTIFITER_ADDR   (0x20028000UL - 4)
+#define BUFP_IDENTIFITER        0x5A5A3C3CUL
+
 // Tx/Rx buffer descriptor structure
 struct eth_descriptor;
 struct eth_descriptor
@@ -127,5 +140,7 @@ void ETH_setinc(void);
 extern void ETH_init(u8_t *mac_addr);
 extern u8_t *ETH_get_tx_buf(void);
 extern void ETH_trigger_tx(u16_t length, struct pbuf *p);
+extern void init_static_buffer(void);
+extern s16_t check_dma_buf_overflow(void);
 
 #endif  /* _M480_ETH_ */

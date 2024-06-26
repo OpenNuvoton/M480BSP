@@ -119,6 +119,7 @@ volatile int  g_Crypto_Int_done = 0;
 unsigned char my_mac_addr[6] = {0x00, 0x00, 0x00, 0x55, 0x66, 0x77};
 struct netif netif;
 static void vSslTask( void *pvParameters );
+extern void init_static_buffer(void);
 
 int main(void)
 {
@@ -289,6 +290,8 @@ static void vSslTask( void *pvParameters )
     tcpip_init(NULL, NULL);
 
     netif_add(&netif, &ipaddr, &netmask, &gw, NULL, ethernetif_init, tcpip_input);
+
+    init_static_buffer();
 
     netif_set_default(&netif);
     netif_set_up(&netif);

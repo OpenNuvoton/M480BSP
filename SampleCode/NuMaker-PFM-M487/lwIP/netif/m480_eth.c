@@ -4,6 +4,7 @@
  */
 #include "netif/m480_eth.h"
 #include "arch/sys_arch.h"
+#include <string.h>
 
 #define ETH_TRIGGER_RX()    do{EMAC->RXST = 0;}while(0)
 #define ETH_TRIGGER_TX()    do{EMAC->TXST = 0;}while(0)
@@ -352,6 +353,40 @@ void ETH_trigger_tx(u16_t length, struct pbuf *p)
 
 }
 
+u32_t bufp_static_table[BUFP_STATIC_NUM] = {0};
+u8_t *rx_bufp[RX_DESCRIPTOR_NUM];
+void init_static_buffer(void)
+{
+    u16_t i;
+
+    memset((void *)BUFP_STATIC_BASE, 0, (size_t)((BUFP_STATIC_NUM + 1) * BUFP_STATIC_SIZE));
+
+    for(i = 0; i < BUFP_STATIC_NUM; i++)
+    {
+        bufp_static_table[i] = BUFP_STATIC_BASE + BUFP_STATIC_SIZE * i;
+        rx_bufp[i] = (u8_t *)bufp_static_table[i];
+        rx_desc[i].buf = rx_bufp[i]; // overwrite
+    }
+
+    // hard coding identifier at the end of SRAM
+    *(u32_t *)BUFP_IDENTIFITER_ADDR = BUFP_IDENTIFITER;
+}
+
+extern unsigned char my_mac_addr[];
+s16_t check_dma_buf_overflow(void)
+{
+    if(*(u32_t *)BUFP_IDENTIFITER_ADDR != BUFP_IDENTIFITER)
+    {
+        // do EMAC reset and wait for PHY ready
+        ETH_init(my_mac_addr);
+
+        init_static_buffer();
+
+        return -1;
+    }
+
+    return 0;
+}
 
 #ifdef TIME_STAMPING
 
