@@ -119,9 +119,11 @@ struct CSW
 
 extern uint32_t MassBlock[];
 extern uint32_t Storage_Block[];
+extern uint32_t Storage[];
 
 #define MassCMD_BUF        ((uint32_t)&MassBlock[0])
 #define STORAGE_DATA_BUF   ((uint32_t)&Storage_Block[0])
+#define STORAGE_BASE       ((uint32_t)&Storage[0])
 
 /*-------------------------------------------------------------*/
 
