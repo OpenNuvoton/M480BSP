@@ -363,7 +363,7 @@ uint32_t SDH_SDCmdAndRspDataIn(SDH_T *sdh, uint32_t ucCmd, uint32_t uArg)
 void SDH_Set_clock(SDH_T *sdh, uint32_t sd_clock_khz)
 {
     uint32_t rate, div1;
-    static uint32_t u32SD_ClkSrc = 0ul, u32SD_PwrCtl = 0ul;
+    static uint32_t u32SD_ClkSrc = 0ul;
 
     uint32_t u32RegLockLevel = SYS_IsRegLocked();
     if (u32RegLockLevel)
@@ -374,8 +374,7 @@ void SDH_Set_clock(SDH_T *sdh, uint32_t sd_clock_khz)
     /* initial state, clock source use HIRC */
     if (sd_clock_khz <= 400ul)
     {
-        u32SD_PwrCtl = CLK->PWRCTL;
-        if ((u32SD_PwrCtl & CLK_PWRCTL_HIRCEN_Msk) != 0x4ul)
+        if ((CLK->PWRCTL & CLK_PWRCTL_HIRCEN_Msk) != 0x4ul)
         {
             CLK->PWRCTL |= CLK_PWRCTL_HIRCEN_Msk;
         }
@@ -396,7 +395,6 @@ void SDH_Set_clock(SDH_T *sdh, uint32_t sd_clock_khz)
     /* transfer state, clock source use sys_init() */
     else
     {
-        CLK->PWRCTL = u32SD_PwrCtl;
         if (sdh == SDH0)
         {
             CLK->CLKSEL0 = (CLK->CLKSEL0 & ~CLK_CLKSEL0_SDH0SEL_Msk) | u32SD_ClkSrc;
