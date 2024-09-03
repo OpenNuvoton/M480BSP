@@ -181,6 +181,11 @@ term_mem_destination (j_compress_ptr cinfo)
 {
   my_mem_dest_ptr dest = (my_mem_dest_ptr) cinfo->dest;
 
+  if (dest->newbuffer != NULL) {
+    free(dest->newbuffer);
+    dest->newbuffer = NULL;
+  }
+
   *dest->outbuffer = dest->buffer;
   *dest->outsize = dest->bufsize - dest->pub.free_in_buffer;
 }
