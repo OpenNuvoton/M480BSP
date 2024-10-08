@@ -248,6 +248,9 @@ void spiFlash_EnableQEBit(void)
     uint8_t u8Status1 = SpiFlash_ReadStatusReg();
     uint8_t u8Status2 = SpiFlash_ReadStatusReg2();
 
+    if (u8Status2 & 0x2)
+        return;
+
     u8Status2 |= 0x2;
     SpiFlash_WriteStatusReg(u8Status1, u8Status2);
     SpiFlash_WaitReady();
@@ -258,6 +261,9 @@ void spiFlash_DisableQEBit(void)
     uint8_t u8Status1 = SpiFlash_ReadStatusReg();
     uint8_t u8Status2 = SpiFlash_ReadStatusReg2();
 
+    if ((u8Status2 & 0x2) == 0)
+        return;
+
     u8Status2 &= ~0x2;
     SpiFlash_WriteStatusReg(u8Status1, u8Status2);
     SpiFlash_WaitReady();
@@ -266,9 +272,6 @@ void spiFlash_DisableQEBit(void)
 void SpiFlash_QuadFastRead(uint32_t StartAddress, uint8_t *u8DataBuffer)
 {
     uint32_t i;
-
-    // enable quad mode
-    spiFlash_EnableQEBit();
 
     // /CS: active
     QSPI_SET_SS_LOW(QSPI_FLASH_PORT);
@@ -313,9 +316,6 @@ void SpiFlash_QuadFastRead(uint32_t StartAddress, uint8_t *u8DataBuffer)
 
     QSPI_DISABLE_QUAD_MODE(QSPI_FLASH_PORT);
     D2D3_SwitchToNormalMode();
-
-    // disable quad mode
-    spiFlash_DisableQEBit();
 }
 
 void SYS_Init(void)
@@ -450,6 +450,9 @@ int main(void)
 
     printf("Read & Compare ...");
 
+    /* Enable quad mode */
+    spiFlash_EnableQEBit();
+
     /* Read SPI flash */
     u32FlashAddress = 0;
     for(u32PageNumber=0; u32PageNumber<TEST_NUMBER; u32PageNumber++)
@@ -464,6 +467,9 @@ int main(void)
                 nError ++;
         }
     }
+
+    /* Disable quad mode */
+    spiFlash_DisableQEBit();
 
     if(nError == 0)
         printf("[OK]\n");

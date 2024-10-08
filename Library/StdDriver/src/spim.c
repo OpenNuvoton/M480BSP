@@ -664,11 +664,17 @@ void SPIM_SetQuadEnable(int isEn, uint32_t u32NBit)
         SPIM_DBGMSG("Status Register: 0x%x - 0x%x\n", dataBuf[0], dataBuf[1]);
         if (isEn)
         {
-            dataBuf[1] |= SR2_QE;
+            if (dataBuf[1] & SR2_QE)
+                return;
+            else
+                dataBuf[1] |= SR2_QE;
         }
         else
         {
-            dataBuf[1] &= ~SR2_QE;
+            if ((dataBuf[1] & SR2_QE) == 0)
+                return;
+            else
+                dataBuf[1] &= ~SR2_QE;
         }
 
         spim_set_write_enable(1, u32NBit);   /* Write Enable.    */
