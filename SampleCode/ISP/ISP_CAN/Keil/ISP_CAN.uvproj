@@ -227,7 +227,7 @@
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -411,7 +411,7 @@
             <ScatterFile></ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc>--map --first='startup_M480.o(RESET)' --datacompressor=off --info=inline --entry Reset_Handler</Misc>
+            <Misc>--map --first='startup_M480_user.o(RESET)' --datacompressor=off --info=inline --entry Reset_Handler</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -425,11 +425,6 @@
               <FileName>system_M480.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\Library\Device\Nuvoton\M480\Source\system_M480.c</FilePath>
-            </File>
-            <File>
-              <FileName>startup_M480.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\..\..\Library\Device\Nuvoton\M480\Source\ARM\startup_M480.s</FilePath>
             </File>
           </Files>
         </Group>
@@ -460,6 +455,11 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>startup_M480_user.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\startup_M480_user.s</FilePath>
             </File>
           </Files>
         </Group>
