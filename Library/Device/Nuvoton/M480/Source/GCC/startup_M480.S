@@ -356,7 +356,7 @@ Reset_Handler:
     .type   HardFault_Handler, % function
 
  HardFault_Handler:
-
+    .extern ProcessHardFault
     MOV     R0, LR
     MRS     R1, MSP
     MRS     R2, PSP

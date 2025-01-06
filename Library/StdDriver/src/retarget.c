@@ -1,10 +1,10 @@
 /**************************************************************************//**
  * @file     retarget.c
- * @version  V3.00
+ * @version  V3.10
  * @brief    M480 Series Debug Port and Semihost Setting Source File
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 
@@ -170,6 +170,8 @@ size_t __read(int handle, unsigned char* buf, size_t bufSize)
 #endif  /* defined(__ICCARM__) */
 
 #if (defined(__ARMCC_VERSION) || defined(__ICCARM__))
+extern int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0);
+
 int fgetc(FILE* stream);
 int fputc(int ch, FILE* stream);
 int ferror(FILE* stream);
@@ -247,36 +249,32 @@ uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
 
 }
 
-static int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1)
-{
-    __BKPT(0xAB);  /*; Wait ICE or HardFault */
+/**
+ *
+ * @brief      The function to process semihosted command
+ * @param[in]  n32In_R0  : semihost register 0
+ * @param[in]  n32In_R1  : semihost register 1
+ * @param[out] pn32Out_R0: semihost register 0
+ * @retval     0: No ICE debug
+ * @retval     1: ICE debug
+ *
+ */
 
-    return n32In_R0;
-}
-
-static int32_t SH_ReadC()
+int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
 {
-    return SH_DoCommand(0x07, NULL);
-}
+    if(g_ICE_Conneced)
+    {
+        if(pn32Out_R0)
+            *pn32Out_R0 = n32In_R0;
 
-static int32_t SH_Write0(char *str)
-{
-    return SH_DoCommand(0x04, (int32_t)str);
+        return 1;
+    }
+    return 0;
 }
-
-static int32_t SH_ReportException()
-{
-    return SH_DoCommand(0x18, 0x20026);
-}
-
-#ifdef __ARMCC_VERSION
-static int32_t SH_kbhit()
-{
-    return SH_DoCommand(0x101, NULL);
-}
-#endif
 
 #else   /* ndef (DEBUG_ENABLE_SEMIHOST) */
+
+int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0);
 
 /**
  * @brief    This function is called by Hardfault handler.
@@ -417,6 +415,12 @@ __WEAK uint32_t ProcessHardFault(uint32_t lr, uint32_t msp, uint32_t psp)
 
 		return lr;
 }
+
+int32_t SH_Return(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
+{
+    return 0;
+}
+
 #endif  /* defined(DEBUG_ENABLE_SEMIHOST) */
 
 
@@ -518,7 +522,7 @@ void SendChar(int ch)
         /* Send the char */
         if(g_ICE_Conneced)
         {
-            if(SH_Write0(g_buf) != 0)
+            if(SH_DoCommand(0x04, (int)g_buf, NULL) != 0)
             {
                 g_buf_len = 0;
                 return;
@@ -559,19 +563,19 @@ char GetChar(void)
     int nRet;
 
 # if defined (__ICCARM__)
-    if(g_ICE_Conneced)
+    while(SH_DoCommand(0x7, 0, &nRet) != 0)
     {
-        nRet = SH_ReadC();
         if(nRet != 0)
-        {
-            return nRet;
-        }
+            return (char)nRet;
     }
 # else
-    while(SH_kbhit())
+    while(SH_DoCommand(0x101, 0, &nRet) != 0)
     {
-        if((nRet = SH_ReadC()) != 0)
-            return nRet;
+        if(nRet != 0)
+        {
+            SH_DoCommand(0x07, 0, &nRet);
+            return (char)nRet;
+        }
     }
 # endif
 
@@ -765,7 +769,7 @@ int ferror(FILE *stream)
 void __exit(int return_code)
 {
     /* Check if link with ICE */
-    if(SH_ReportException() == 0)
+    if(SH_DoCommand(0x18, 0x20026, NULL) == 0)
     {
         /* Make sure all message is print out */
         while(IsDebugFifoEmpty() == 0);
@@ -778,7 +782,7 @@ void _sys_exit(int return_code)
 {
     (void)return_code;
     /* Check if link with ICE */
-    if(SH_ReportException() == 0)
+    if(SH_DoCommand(0x18, 0x20026, NULL) == 0)
     {
         /* Make sure all message is print out */
         while(IsDebugFifoEmpty() == 0);

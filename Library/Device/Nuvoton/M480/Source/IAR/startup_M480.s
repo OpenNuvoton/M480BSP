@@ -1,10 +1,10 @@
 ;/******************************************************************************
 ; * @file     startup_M480.s
-; * @version  V1.00
+; * @version  V1.10
 ; * @brief    CMSIS Cortex-M4 Core Device Startup File for M480
 ; *
 ; * SPDX-License-Identifier: Apache-2.0
-; * @copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
+; * @copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
 ;*****************************************************************************/
 
         MODULE  ?cstartup
@@ -460,7 +460,18 @@ Default_Handler
         B Default_Handler
 
 
+;int32_t SH_DoCommand(int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)
+    PUBWEAK SH_DoCommand
+    SECTION .text:CODE:REORDER:ROOT(2)
+SH_DoCommand
+    IMPORT      SH_Return
 
+    BKPT    0xAB                ; Wait ICE or HardFault
+    LDR     R3, =SH_Return
+	PUSH    {R3 ,lr}
+    BLX     R3                  ; Call SH_Return. The return value is in R0
+	POP     {R3 ,PC}            ; Return value = R0
 
         END
-;/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
+
+;/*** (C) COPYRIGHT 2024 Nuvoton Technology Corp. ***/

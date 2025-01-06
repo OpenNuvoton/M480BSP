@@ -210,6 +210,42 @@
 			</matcher>
 		</filter>
 		<filter>
+			<id>1736142732949</id>
+			<name>CMSIS/CMSIS/GCC</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-_syscalls.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1736142732960</id>
+			<name>CMSIS/CMSIS/GCC</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-semihosting.h</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1736142732969</id>
+			<name>CMSIS/CMSIS/GCC</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-startup_M480.S</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1736142732981</id>
+			<name>CMSIS/CMSIS/GCC</name>
+			<type>5</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-gcc_arm_160k.ld</arguments>
+			</matcher>
+		</filter>
+		<filter>
 			<id>1519978710886</id>
 			<name>FreeRTOS/FreeRTOS/Source</name>
 			<type>5</type>
