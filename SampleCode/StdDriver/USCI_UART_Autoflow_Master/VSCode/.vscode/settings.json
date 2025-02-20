@@ -1,0 +1,15 @@
+{
+    "cmsis-csolution.actions": [
+        {
+            "path": "USCI_UART_AutoBaudRate.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        }
+    ],
+    "clangd.arguments": [
+        "--compile-commands-dir=e:\\workbench_diskC\\m480\\bsp_20241219_test\\bsp\\SampleCode\\StdDriver\\USCI_UART_Autoflow_Master\\VSCode\\out\\USCI_UART_AutoMaster\\GNUC\\release"
+    ]
+}

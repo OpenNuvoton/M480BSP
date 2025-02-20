@@ -6,9 +6,9 @@ FILE NAME
 DESCRIPTION
 NOTES
 ********************************************************************************/
-#include "TRSPX.h"
+#include "trspx.h"
 #include "stdarg.h"
-#include "TRSPX_gatt.h"
+#include "trspx_gatt.h"
 #include <string.h>
 
 uint16_t ble_conn_handle;

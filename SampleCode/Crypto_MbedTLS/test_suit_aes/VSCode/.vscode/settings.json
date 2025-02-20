@@ -1,0 +1,29 @@
+{
+    "cmsis-csolution.actions": [
+        {
+            "path": "AES.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug"
+            }
+        },
+        {
+            "path": "Crypto_MbedTLS_AES.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device"
+            }
+        },
+        {
+            "path": "Crypto_MbedTLS_AES.csolution.yml",
+            "target": "GNUC",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device"
+            }
+        }
+    ],
+    "clangd.arguments": [
+        "--compile-commands-dir=e:\\workbench_diskC\\m480\\bsp_20250207\\bsp\\SampleCode\\Crypto_MbedTLS\\test_suit_aes\\VSCode\\out\\Crypto_MbedTLS_AES\\GNUC\\release"
+    ]
+}

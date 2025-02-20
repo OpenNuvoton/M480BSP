@@ -1,6 +1,6 @@
 #include "SimpleHOGP_Gatt.h"
 #include "SimpleHOGP_Gap.h"
-#include "SimpleHOGP_Gap_ADV.h"
+#include "SimpleHOGP_Gap_Adv.h"
 #include "cfg_sector_m0.h"
 #include <string.h>
 void SimpleHOGP_Init()

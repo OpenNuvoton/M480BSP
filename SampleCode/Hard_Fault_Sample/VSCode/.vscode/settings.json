@@ -1,0 +1,37 @@
+{
+    "cmsis-csolution.actions": [
+        {
+            "path": "Template.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug"
+            }
+        },
+        {
+            "path": "Template.csolution.yml",
+            "target": "GNUC",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug"
+            }
+        },
+        {
+            "path": "Hard_Fault.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device"
+            }
+        },
+        {
+            "path": "Hard_Fault.csolution.yml",
+            "target": "GNUC",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device"
+            }
+        }
+    ],
+    "clangd.arguments": [
+        "--compile-commands-dir=e:\\workbench_diskC\\m480\\bsp_20250207\\bsp\\SampleCode\\Hard_Fault_Sample\\VSCode\\out\\Hard_Fault\\GNUC\\release"
+    ]
+}

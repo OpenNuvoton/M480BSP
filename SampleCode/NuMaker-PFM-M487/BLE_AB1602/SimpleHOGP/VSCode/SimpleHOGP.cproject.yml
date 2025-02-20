@@ -1,0 +1,71 @@
+project:
+  packs:
+    - pack: Nuvoton::NuMicro_DFP
+  misc:
+    - for-compiler: AC6
+      C: [-std=c99, -fno-rtti, -funsigned-char, -fshort-enums, -fshort-wchar, -ffunction-sections, -fdata-sections, -D__MICROLIB, -o0, -gdwarf-4]
+      ASM: [-D__MICROLIB]
+      Link: [--library_type=microlib, --map, --load_addr_map_info, --symbols, --info sizes, --info totals, --entry Reset_Handler, --summary_stderr, --info summarysizes, --diag_suppress=6314]
+    - for-compiler: GCC
+      C: [-std=gnu11, --specs=nano.specs, -Wno-return-type, -Wno-unused-but-set-variable, -fdata-sections, -ffunction-sections, -fno-builtin, -fshort-enums, -funsigned-char, -mthumb, -Wno-main, -gdwarf-4]
+      Link:
+        - -Xlinker
+        - --gc-sections
+        - --specs=nano.specs
+        - -Wl,-Map,"$OutDir()$/$Project$.map"
+  define:
+    - Heap_Size: "0x3000"
+  setups:
+    - output:
+        type: ["elf", "bin"]
+  linker:
+    - for-compiler: AC6
+      script: M487_AC6.sct
+  add-path:
+    - ../../../../../Library/Device/Nuvoton/M480/Include
+    - ../../../../../Library/StdDriver/inc
+    - ../../../../../Library/CMSIS/Include
+    - ../../../../../ThirdParty/BLE_AB1602/Library/include
+  groups:
+    - group: CMSIS
+      files:
+        - file: ../../../../../Library/Device/Nuvoton/M480/Source/ARM/startup_M480_vsac6.S
+          for-compiler: AC6
+        - file: ../../../../../Library/Device/Nuvoton/M480/Source/GCC/startup_M480.S
+          for-compiler: GCC
+        - file: ../../../../../Library/Device/Nuvoton/M480/Source/system_M480.c
+    - group: Library
+      files:
+        - file: ../../../../../Library/StdDriver/src/clk.c
+        - file: ../../../../../Library/StdDriver/src/sys.c
+        - file: ../../../../../Library/StdDriver/src/uart.c
+        - file: ../../../../../Library/StdDriver/src/retarget.c
+        - file: ../../../../../Library/StdDriver/src/fmc.c
+        - file: ../../../../../Library/StdDriver/src/gpio.c
+        - file: ../../../../../Library/StdDriver/src/pdma.c
+        - file: ../../../../../Library/StdDriver/src/spi.c
+        - file: ../../../../../Library/StdDriver/src/timer.c
+    - group: BleHal
+      files:
+        - file: ../../porting/M487/bt_porting_flash.c
+        - file: ../../porting/M487/bt_porting_misc.c
+        - file: ../../porting/M487/bt_porting_mmi_timer.c
+        - file: ../../porting/M487/bt_porting_spi.c
+    - group: BleStack
+      files:
+        - file: ../../../../../ThirdParty/BLE_AB1602/Library/source/blestack/1602_patching.c
+        - file: ../../../../../ThirdParty/BLE_AB1602/Library/source/blestack/BtCoreM4.lib
+    - group: GattServices
+      files:
+        - file: ../../../../../ThirdParty/BLE_AB1602/Library/source/services/service_human_interface_device.c
+        - file: ../../../../../ThirdParty/BLE_AB1602/Library/source/services/service_battery.c
+        - file: ../../../../../ThirdParty/BLE_AB1602/Library/source/services/service_device_information.c
+        - file: ../../../../../ThirdParty/BLE_AB1602/Library/source/services/service_generic_access.c
+        - file: ../../../../../ThirdParty/BLE_AB1602/Library/source/services/service_generic_attribute.c
+    - group: User
+      files:
+        - file: ../main.c
+        - file: ../SimpleHOGP.c
+        - file: ../SimpleHOGP_Gap.c
+        - file: ../SimpleHOGP_Gap_Adv.c
+        - file: ../SimpleHOGP_Gatt.c

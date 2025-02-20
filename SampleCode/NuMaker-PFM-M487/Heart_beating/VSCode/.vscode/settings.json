@@ -1,0 +1,15 @@
+{
+    "cmsis-csolution.actions": [
+        {
+            "path": "BitBand.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        }
+    ],
+    "clangd.arguments": [
+        "--compile-commands-dir=e:\\workbench_diskC\\m480\\bsp_20241219_test\\bsp\\SampleCode\\NuMaker-PFM-M487\\Heart_beating\\VSCode\\out\\Heart_beating\\GNUC\\release"
+    ]
+}

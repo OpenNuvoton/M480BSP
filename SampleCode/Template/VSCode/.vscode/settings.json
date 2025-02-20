@@ -1,0 +1,23 @@
+{
+    "cmsis-csolution.actions": [
+        {
+            "path": "Template.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug"
+            }
+        },
+        {
+            "path": "Template.csolution.yml",
+            "target": "GNUC",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug"
+            }
+        }
+    ],
+    "clangd.arguments": [
+        "--compile-commands-dir=e:\\workbench_diskC\\m480\\bsp_20250207\\bsp\\SampleCode\\Template\\VSCode\\out\\Template\\GNUC\\release"
+    ]
+}

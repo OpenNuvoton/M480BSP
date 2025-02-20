@@ -1,0 +1,15 @@
+{
+    "cmsis-csolution.actions": [
+        {
+            "path": "SYS_PowerDown_MinCurrent.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        }
+    ],
+    "clangd.arguments": [
+        "--compile-commands-dir=e:\\workbench_diskC\\m480\\bsp_20250207\\bsp\\SampleCode\\PowerManagement\\SYS_PowerDown_MinCurrent\\VSCode\\out\\SYS_PD_MinCurrent\\GNUC\\release"
+    ]
+}

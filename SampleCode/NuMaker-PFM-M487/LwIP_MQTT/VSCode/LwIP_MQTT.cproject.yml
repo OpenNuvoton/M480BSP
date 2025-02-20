@@ -1,0 +1,186 @@
+project:
+  packs:
+    - pack: Nuvoton::NuMicro_DFP
+  misc:
+    - for-compiler: AC6
+      C: [-std=c99, -fno-rtti, -funsigned-char, -fshort-enums, -fshort-wchar, -ffunction-sections, -fdata-sections, -o0, -gdwarf-4]
+      ASM: [-masm=auto]
+      Link: [--map, --load_addr_map_info, --symbols, --info sizes, --info totals, --entry Reset_Handler, --summary_stderr, --info summarysizes, --diag_suppress=6314]
+    - for-compiler: GCC
+      C: [-std=gnu11, --specs=nano.specs, -Wno-return-type, -Wno-unused-but-set-variable, -fdata-sections, -ffunction-sections, -fno-builtin, -fshort-enums, -funsigned-char, -mthumb, -Wno-main, -gdwarf-4, -Wno-incompatible-pointer-types]
+      Link:
+        - -Xlinker
+        - --gc-sections
+        - --specs=nano.specs
+        - -Wl,-Map,$OutDir()$/$Project$.map
+  setups:
+    - output:
+        type: ["elf", "bin"]
+    - define:
+        - LWIP_ENABLE_CLIENT_CA: 1
+        - FREERTOS
+        - MBEDTLS_ALLOW_PRIVATE_ACCESS
+        - MBEDTLS_CONFIG_FILE: \"mbedtls_config.h\"
+        - Stack_Size: "0x1800"
+  linker:
+    - for-compiler: GCC
+      script: ../../../../Library/Device/Nuvoton/M480/Source/GCC/gcc_arm_160k.ld
+  add-path:
+        - ../../../../Library/CMSIS/Include
+        - ../../../../Library/Device/Nuvoton/M480/Include
+        - ../../../../Library/StdDriver/inc
+        - ../../lwIP/include
+        - ../../../../ThirdParty/mbedtls-2.13.0/include
+        - ../../../../ThirdParty/FreeRTOS/Source/portable/GCC/ARM_CM4F
+        - ../../../../ThirdParty/FreeRTOS/Demo/Common/include
+        - ../../../../ThirdParty/FreeRTOS/Source/include
+        - ../../../../ThirdParty/lwIP/src/include
+        - ..
+        - ../src/config
+        - ../src/mbedtls_app
+        - ../src/mqtt_app
+        - ../../../../ThirdParty/paho.mqtt.embedded-c/MQTTPacket/src
+  groups:
+    - group: CMSIS
+      files:
+        - file: ../../../../Library/Device/Nuvoton/M480/Source/ARM/startup_M480_vsac6.S
+          for-compiler: AC6
+        - file: ../../../../Library/Device/Nuvoton/M480/Source/GCC/startup_M480.S
+          for-compiler: GCC
+        - file: ../../../../Library/Device/Nuvoton/M480/Source/system_M480.c
+    - group: User
+      files:
+        - file: ../main.c
+    - group: FreeRTOS
+      files:
+        - file: ../../../../ThirdParty/FreeRTOS/Source/list.c
+        - file: ../../../../ThirdParty/FreeRTOS/Source/tasks.c
+        - file: ../../../../ThirdParty/FreeRTOS/Source/timers.c
+        - file: ../../../../ThirdParty/FreeRTOS/Source/queue.c
+        - file: ../../../../ThirdParty/FreeRTOS/Demo/Common/Minimal/GenQTest.c
+        - file: ../../../../ThirdParty/FreeRTOS/Demo/Common/Minimal/PollQ.c
+        - file: ../../../../ThirdParty/FreeRTOS/Demo/Common/Minimal/semtest.c
+        - file: ../../../../ThirdParty/FreeRTOS/Demo/Common/Minimal/QueueSet.c
+        - file: ../../../../ThirdParty/FreeRTOS/Source/portable/MemMang/heap_4.c
+        - file: ../../../../ThirdParty/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c
+    - group: Library
+      files:
+        - file: ../../../../Library/StdDriver/src/clk.c
+        - file: ../../../../Library/StdDriver/src/retarget.c
+        - file: ../../../../Library/StdDriver/src/sys.c
+        - file: ../../../../Library/StdDriver/src/uart.c
+        - file: ../../../../Library/StdDriver/src/crypto.c
+    - group: MQTT_App
+      files:
+        - file: ../src/app/lan.c
+        - file: ../src/mbedtls_app/lwip_tls.c
+        - file: ../src/mbedtls_app/platform_alt.c
+        - file: ../src/mbedtls_app/threading_alt.c
+        - file: ../src/mqtt_app/mqtt-client.c
+        - file: ../src/mqtt_app/mqtt-tcp.c
+    - group: MQTT
+      files:
+        - file: ../../../../ThirdParty/paho.mqtt.embedded-c/MQTTPacket/src/MQTTConnectClient.c
+        - file: ../../../../ThirdParty/paho.mqtt.embedded-c/MQTTPacket/src/MQTTConnectServer.c
+        - file: ../../../../ThirdParty/paho.mqtt.embedded-c/MQTTPacket/src/MQTTDeserializePublish.c
+        - file: ../../../../ThirdParty/paho.mqtt.embedded-c/MQTTPacket/src/MQTTFormat.c
+        - file: ../../../../ThirdParty/paho.mqtt.embedded-c/MQTTPacket/src/MQTTPacket.c
+        - file: ../../../../ThirdParty/paho.mqtt.embedded-c/MQTTPacket/src/MQTTSerializePublish.c
+        - file: ../../../../ThirdParty/paho.mqtt.embedded-c/MQTTPacket/src/MQTTSubscribeClient.c
+        - file: ../../../../ThirdParty/paho.mqtt.embedded-c/MQTTPacket/src/MQTTSubscribeServer.c
+        - file: ../../../../ThirdParty/paho.mqtt.embedded-c/MQTTPacket/src/MQTTUnsubscribeClient.c
+        - file: ../../../../ThirdParty/paho.mqtt.embedded-c/MQTTPacket/src/MQTTUnsubscribeServer.c
+    - group: LwIP
+      files:
+        - file: ../../lwIP/sys_arch.c
+        - file: ../../lwIP/time_stamp.c
+        - file: ../../lwIP/netif/ethernetif.c
+        - file: ../../lwIP/netif/m480_eth.c
+        - file: ../../../../ThirdParty/lwIP/src/core/def.c
+        - file: ../../../../ThirdParty/lwIP/src/core/dns.c
+        - file: ../../../../ThirdParty/lwIP/src/core/inet_chksum.c
+        - file: ../../../../ThirdParty/lwIP/src/core/init.c
+        - file: ../../../../ThirdParty/lwIP/src/core/ip.c
+        - file: ../../../../ThirdParty/lwIP/src/core/mem.c
+        - file: ../../../../ThirdParty/lwIP/src/core/memp.c
+        - file: ../../../../ThirdParty/lwIP/src/core/netif.c
+        - file: ../../../../ThirdParty/lwIP/src/core/pbuf.c
+        - file: ../../../../ThirdParty/lwIP/src/core/raw.c
+        - file: ../../../../ThirdParty/lwIP/src/core/stats.c
+        - file: ../../../../ThirdParty/lwIP/src/core/sys_lwip.c
+        - file: ../../../../ThirdParty/lwIP/src/core/tcp.c
+        - file: ../../../../ThirdParty/lwIP/src/core/tcp_in.c
+        - file: ../../../../ThirdParty/lwIP/src/core/tcp_out.c
+        - file: ../../../../ThirdParty/lwIP/src/core/timeouts.c
+        - file: ../../../../ThirdParty/lwIP/src/core/udp.c
+        - file: ../../../../ThirdParty/lwIP/src/core/ipv4/autoip.c
+        - file: ../../../../ThirdParty/lwIP/src/core/ipv4/dhcp.c
+        - file: ../../../../ThirdParty/lwIP/src/core/ipv4/etharp.c
+        - file: ../../../../ThirdParty/lwIP/src/core/ipv4/icmp.c
+        - file: ../../../../ThirdParty/lwIP/src/core/ipv4/igmp.c
+        - file: ../../../../ThirdParty/lwIP/src/core/ipv4/ip4.c
+        - file: ../../../../ThirdParty/lwIP/src/core/ipv4/ip4_addr.c
+        - file: ../../../../ThirdParty/lwIP/src/core/ipv4/ip4_frag.c
+        - file: ../../../../ThirdParty/lwIP/src/api/api_lib.c
+        - file: ../../../../ThirdParty/lwIP/src/api/api_msg.c
+        - file: ../../../../ThirdParty/lwIP/src/api/err.c
+        - file: ../../../../ThirdParty/lwIP/src/api/netbuf.c
+        - file: ../../../../ThirdParty/lwIP/src/api/netdb.c
+        - file: ../../../../ThirdParty/lwIP/src/api/netifapi.c
+        - file: ../../../../ThirdParty/lwIP/src/api/sockets.c
+        - file: ../../../../ThirdParty/lwIP/src/api/tcpip.c
+        - file: ../../../../ThirdParty/lwIP/src/netif/ethernet.c
+    - group: mbedtls
+      files:
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/aes.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/threading.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/des.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/bignum.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/ecdh.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/ecp.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/ecp_curves.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/asn1parse.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/asn1write.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/ecdsa.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/hmac_drbg.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/md.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/md_wrap.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/md5.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/ripemd160.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/sha1.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/sha256.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/sha512.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/entropy.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/entropy_poll.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/ssl_tls.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/ctr_drbg.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/x509_crt.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/x509.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/debug.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/dhm.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/ssl_ciphersuites.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/pem.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/pk.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/cipher.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/cipher_wrap.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/ssl_cli.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/oid.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/pkparse.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/base64.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/gcm.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/pkcs12.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/pk_wrap.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/arc4.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/rsa.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/ssl_srv.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/certs.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/ccm.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/blowfish.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/camellia.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/timing.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/pkcs5.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/platform_util.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/chacha20.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/chachapoly.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/rsa_internal.c
+        - file: ../../../../ThirdParty/mbedtls-2.13.0/library/poly1305.c

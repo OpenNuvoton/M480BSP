@@ -1,0 +1,22 @@
+{
+    "cmsis-csolution.actions": [
+        {
+            "path": "crypto_sha.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug"
+            }
+        },
+        {
+            "path": "crypto_sha.csolution.yml",
+            "target": "GNUC",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device"
+            }
+        }
+    ],
+    "clangd.arguments": [
+        "--compile-commands-dir=e:\\workbench_diskC\\m480\\bsp_20250207\\bsp\\SampleCode\\StdDriver\\CRYPTO_SHA\\VSCode\\out\\crypto_sha\\GNUC\\debug"
+    ]
+}

@@ -1,0 +1,19 @@
+LOAD_ROM  0x0
+{
+	FLASH  +0
+	{
+		startup_M480_vsac6.o (RESET, +FIRST)
+		*.o (+RO)
+	}
+	
+	SRAM  0x20000000 0x10000
+	{
+		* (+RW, +ZI)
+	}
+
+	exeinsram.bin 0x20010000 0x4000
+	{
+		exeinsram.o (+RO)
+	}
+}
+

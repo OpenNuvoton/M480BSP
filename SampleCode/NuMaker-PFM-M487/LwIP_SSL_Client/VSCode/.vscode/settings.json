@@ -1,0 +1,15 @@
+{
+    "cmsis-csolution.actions": [
+        {
+            "path": "LwIP_SSL_Client.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        }
+    ],
+    "clangd.arguments": [
+        "--compile-commands-dir=e:\\workbench_diskC\\m480\\bsp_20241219_test\\bsp\\SampleCode\\NuMaker-PFM-M487\\LwIP_SSL_Client\\VSCode\\out\\LwIP_SSL_Client\\GNUC\\release"
+    ]
+}

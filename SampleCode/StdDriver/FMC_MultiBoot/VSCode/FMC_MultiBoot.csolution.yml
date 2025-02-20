@@ -1,0 +1,28 @@
+solution:
+  created-by: uv2csolution@1.5.0
+  created-for: CMSIS-Toolbox@2.4.0
+  select-compiler:
+    - compiler: AC6@>=5.19.0
+    - compiler: GCC@>=10.3.1
+  build-types:
+    - type: Base            # build-type name, used in context with: .Base
+      optimize: balanced    # balanced optimization
+      debug: on             # generate debug info. for the release build (Set off to disable)
+    - type: Boot0           # build-type name, used in context with: .Boot0
+      optimize: balanced    # balanced optimization
+      debug: on             # generate debug info. for the release build (Set off to disable)
+    - type: Boot1           # build-type name, used in context with: .Boot1
+      optimize: balanced    # balanced optimization
+      debug: on             # generate debug info. for the release build (Set off to disable)
+    - type: Boot2           # build-type name, used in context with: .Boot2
+      optimize: balanced    # balanced optimization
+      debug: on             # generate debug info. for the release build (Set off to disable)
+    - type: Boot3           # build-type name, used in context with: .Boot3
+      optimize: balanced    # balanced optimization
+      debug: on             # generate debug info. for the release build (Set off to disable)
+  target-types:
+    - type: ARMCLANG
+      compiler: AC6
+      device: Nuvoton::M487JIDAE
+  projects:
+    - project: FMC_MultiBoot.cproject.yml

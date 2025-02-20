@@ -1,0 +1,31 @@
+{
+    "cmsis-csolution.actions": [
+        {
+            "path": "FMC_IAP.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug"
+            }
+        },
+        {
+            "path": "fmc_ld_code.cproject.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug"
+            }
+        },
+        {
+            "path": "HSUSBD_IAP.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device"
+            }
+        }
+    ],
+    "clangd.arguments": [
+        "--compile-commands-dir=e:\\workbench_diskC\\m480\\bsp_20250207\\bsp\\SampleCode\\SecureBoot\\HSUSBD_IAP\\VSCode\\out\\fwupdate_ld_iap\\ARMCLANG\\release",
+        "--compile-commands-dir=e:\\workbench_diskC\\m480\\bsp_20250207\\bsp\\SampleCode\\SecureBoot\\HSUSBD_IAP\\VSCode\\out\\HSUSBD_IAP\\ARMCLANG\\release"
+    ]
+}

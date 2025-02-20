@@ -1,0 +1,126 @@
+project:
+  packs:
+    - pack: Nuvoton::NuMicro_DFP
+  setups:
+    - output:
+        # bin, elf, hex, lib
+        type: bin
+      add-path:
+        - ../../../../Library/Device/Nuvoton/M480/Include
+        - ../../../../Library/CMSIS/Include
+        - ../../../../Library/StdDriver/inc
+      misc:
+        - for-compiler: AC6
+          C:
+            - -std=c99 -fno-rtti -funsigned-char -fshort-enums -fshort-wchar -ffunction-sections -fdata-sections -w
+            - -D__MICROLIB
+          ASM:
+            - -masm=auto
+          Link:
+            - --library_type=microlib --map --load_addr_map_info --symbols
+            - --info sizes --info totals --strict --summary_stderr --info summarysizes
+        - for-compiler: GCC
+          C:
+            - -std=gnu11 -mthumb -masm-syntax-unified -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections
+          Link:
+            - -mthumb -fmessage-length=0 -fsigned-char --specs=nano.specs --specs=nosys.specs
+            - -Wl,--gc-sections,-Map="$elf()$.map"
+    - setup: Options for FMC_MultiBoot_Base
+      output :
+        base-name: FMC_MultiBoot_Base
+      for-context: .Base
+      define:
+        - __BASE__
+      linker:
+        - script: ./FMC_MultiBoot.sct
+          for-compiler: AC6
+        - script: ./FMC_MultiBoot.ld
+          for-compiler: GCC
+          define:
+          - FLASH_BASE: 0x0
+    - setup: Options for FMC_MultiBoot_Boot0
+      output :
+        base-name: FMC_MultiBoot_Boot0
+      for-context: .Boot0
+      define:
+        - __BOOT0__
+      misc:
+        - for-compiler: AC6
+          Link:
+            - --pd="-DFLASH_BASE=0x4000"
+      linker:
+        - script: ./FMC_MultiBoot.sct
+          for-compiler: AC6
+        - script: ./FMC_MultiBoot.ld
+          for-compiler: GCC
+          define:
+          - FLASH_BASE: 0x4000
+    - setup: Options for FMC_MultiBoot_Boot1
+      output :
+        base-name: FMC_MultiBoot_Boot1
+      for-context: .Boot1
+      define:
+        - __BOOT1__
+      misc:
+        - for-compiler: AC6
+          Link:
+            - --pd="-DFLASH_BASE=0x8000"
+      linker:
+        - script: ./FMC_MultiBoot.sct
+          for-compiler: AC6
+        - script: ./FMC_MultiBoot.ld
+          for-compiler: GCC
+          define:
+          - FLASH_BASE: 0x8000
+    - setup: Options for FMC_MultiBoot_Boot2
+      output :
+        base-name: FMC_MultiBoot_Boot2
+      for-context: .Boot2
+      define:
+        - __BOOT2__
+      misc:
+        - for-compiler: AC6
+          Link:
+            - --pd="-DFLASH_BASE=0xC000"
+      linker:
+        - script: ./FMC_MultiBoot.sct
+          for-compiler: AC6
+        - script: ./FMC_MultiBoot.ld
+          for-compiler: GCC
+          define:
+          - FLASH_BASE: 0xC000
+    - setup: Options for FMC_MultiBoot_Boot3
+      output :
+        base-name: FMC_MultiBoot_Boot3
+      for-context: .Boot3
+      define:
+        - __BOOT3__
+      misc:
+        - for-compiler: AC6
+          Link:
+            - --pd="-DFLASH_BASE=0x10000"
+      linker:
+        - script: ./FMC_MultiBoot.sct
+          for-compiler: AC6
+        - script: ./FMC_MultiBoot.ld
+          for-compiler: GCC
+          define:
+          - FLASH_BASE: 0x10000
+  groups:
+    - group: CMSIS
+      files:
+        - file: ../../../../Library/Device/Nuvoton/M480/Source/ARM/startup_M480_vsac6.S
+          for-compiler: AC6
+        - file: ../../../../Library/Device/Nuvoton/M480/Source/GCC/startup_M480.S
+          for-compiler: GCC
+        - file: ../../../../Library/Device/Nuvoton/M480/Source/system_M480.c
+    - group: Library
+      files:
+        - file: ../../../../Library/StdDriver/src/retarget.c
+        - file: ../../../../Library/StdDriver/src/uart.c
+        - file: ../../../../Library/StdDriver/src/sys.c
+        - file: ../../../../Library/StdDriver/src/clk.c
+        - file: ../../../../Library/StdDriver/src/fmc.c
+    - group: User
+      files:
+        - file: ../main.c

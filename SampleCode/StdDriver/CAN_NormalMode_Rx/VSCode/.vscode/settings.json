@@ -1,0 +1,15 @@
+{
+    "cmsis-csolution.actions": [
+        {
+            "path": "ACMP_Wakeup.csolution.yml",
+            "target": "ARMCLANG",
+            "config": {
+                "run": "arm-debugger.flash: Flash Device",
+                "debug": "Embedded Debug",
+            }
+        }
+    ],
+    "clangd.arguments": [
+        "--compile-commands-dir=e:\\workbench_diskC\\m480\\bsp_20241219_test\\bsp\\SampleCode\\StdDriver\\CAN_NormalMode_Rx\\VSCode\\out\\CAN_NormalMode_Rx\\GNUC\\release"
+    ]
+}

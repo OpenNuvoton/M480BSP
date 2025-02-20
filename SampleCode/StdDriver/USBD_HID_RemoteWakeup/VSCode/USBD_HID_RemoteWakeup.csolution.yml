@@ -1,0 +1,20 @@
+solution:
+  created-by: uv2csolution@1.5.0
+  created-for: CMSIS-Toolbox@2.4.0
+  select-compiler:
+    - compiler: AC6@>=5.19.0
+    - compiler: GCC@>=10.3.1
+  build-types:
+    - type: debug
+      optimize: debug
+    - type: release
+      optimize: balanced
+  target-types:
+    - type: ARMCLANG
+      compiler: AC6
+      device: Nuvoton::M487JIDAE
+    - type: GNUC
+      compiler: GCC
+      device: Nuvoton::M487JIDAE
+  projects:
+    - project: USBD_HID_RemoteWakeup.cproject.yml

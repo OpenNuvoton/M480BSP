@@ -6,8 +6,8 @@ FILE NAME
 DESCRIPTION
 NOTES
 ********************************************************************************/
-#include "TRSPX_gatt.h"
-#include "TRSPX.h"
+#include "trspx_gatt.h"
+#include "trspx.h"
 
 void UART1_TX_Send(uint32_t len, uint8_t *ptr);
 

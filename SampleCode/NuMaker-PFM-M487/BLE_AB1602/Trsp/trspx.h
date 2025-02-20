@@ -11,8 +11,8 @@ NOTES
 
 #include "bt.h"
 #include "ble_gap_sm.h"
-#include "TRSPX_gatt.h"
-#include "TRSPX_typedef.h"
+#include "trspx_gatt.h"
+#include "trspx_typedef.h"
 
 /******************************************************************************/
 /* connection parameter                                                       */
