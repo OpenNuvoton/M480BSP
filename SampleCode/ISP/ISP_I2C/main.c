@@ -100,9 +100,11 @@ _ISP:
     {
         if (bI2cDataReady == 1)
         {
+            NVIC_DisableIRQ(I2C1_IRQn);
             memcpy(cmd_buff, i2c_rcvbuf, 64);
             bI2cDataReady = 0;
             ParseCmd((unsigned char *)cmd_buff, 64);
+            NVIC_EnableIRQ(I2C1_IRQn);
         }
     }
 
