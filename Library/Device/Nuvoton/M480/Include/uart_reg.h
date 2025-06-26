@@ -899,6 +899,9 @@ typedef struct
 #define UART_INTEN_RXPDMAEN_Pos          (15)                                              /*!< UART_T::INTEN: RXPDMAEN Position       */
 #define UART_INTEN_RXPDMAEN_Msk          (0x1ul << UART_INTEN_RXPDMAEN_Pos)                /*!< UART_T::INTEN: RXPDMAEN Mask           */
 
+#define UART_INTEN_SWBEIEN_Pos           (16)                                              /*!< UART_T::INTEN: SWBEIEN Position        */
+#define UART_INTEN_SWBEIEN_Msk           (0x1ul << UART_INTEN_SWBEIEN_Pos)                 /*!< UART_T::INTEN: SWBEIEN Mask            */
+
 #define UART_INTEN_ABRIEN_Pos            (18)                                              /*!< UART_T::INTEN: ABRIEN Position         */
 #define UART_INTEN_ABRIEN_Msk            (0x1ul << UART_INTEN_ABRIEN_Pos)                  /*!< UART_T::INTEN: ABRIEN Mask             */
 
