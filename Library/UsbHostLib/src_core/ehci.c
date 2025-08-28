@@ -1155,6 +1155,12 @@ void iaad_remove_qh()
         while (qh->done_list)               /* we can free the qTDs now                   */
         {
             qtd = qh->done_list;
+            if (qtd == qtd->next)
+            {
+                free_ehci_qTD(qtd);
+                qh->done_list = NULL;
+                break;
+            }
             qh->done_list = qtd->next;
             free_ehci_qTD(qtd);
         }
@@ -1162,7 +1168,30 @@ void iaad_remove_qh()
     }
 }
 
-//static irqreturn_t ehci_irq (struct usb_hcd *hcd)
+void sync_remove_qtd_done()
+{
+    QH_T    *qh;
+    qTD_T   *qtd;
+
+    qh =  _Iqh[NUM_IQH - 1];
+    while(qh != NULL)
+    {
+        while(qh->done_list)                /* we can free the qTDs now                   */
+        {
+            qtd = qh->done_list;
+            if (qtd == qtd->next)
+            {
+                free_ehci_qTD(qtd);
+                qh->done_list = NULL;
+                break;
+            }
+            qh->done_list = qtd->next;
+            free_ehci_qTD(qtd);
+        }
+        qh = QH_PTR(qh->HLink);                  /* advance to the next QH                */
+    }
+}
+
 void EHCI_IRQHandler(void)
 {
     uint32_t  intsts;
@@ -1182,6 +1211,8 @@ void EHCI_IRQHandler(void)
         /* some transfers completed, travel asynchronous */
         /* and periodic lists to find and reclaim them.  */
         scan_asynchronous_list();
+
+        sync_remove_qtd_done();
 
         scan_periodic_frame_list();
     }
