@@ -1,0 +1,15 @@
+build-idx:
+  generated-by: csolution version 2.9.0
+  csolution: BitBand.csolution.yml
+  tmpdir: tmp
+  cprojects:
+    - cproject: BitBand.cproject.yml
+  cbuilds:
+    - cbuild: BitBand.release+ARMCLANG.cbuild.yml
+      project: BitBand
+      configuration: .release+ARMCLANG
+      messages:
+        info:
+          - BitBand.cbuild-pack.yml - file is already up-to-date
+          - BitBand+ARMCLANG.cbuild-run.yml - file is already up-to-date
+          - BitBand.release+ARMCLANG.cbuild.yml - file is already up-to-date

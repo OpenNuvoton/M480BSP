@@ -1,0 +1,178 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:200 (message)"
+      - "CMakeLists.txt:23 (project)"
+    message: |
+      The target system is: Generic -  - 
+      The host system is: Windows - 10.0.26100 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:1250 (message)"
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeDetermineASMCompiler.cmake:135 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "CMakeLists.txt:23 (project)"
+    message: |
+      Checking whether the ASM compiler is GNU using "--version" did not match "(GNU assembler)|(GCC)|(Free Software Foundation)":
+      Product: Hardware Success Kit (Early Access)
+      Component: Arm Compiler for Embedded 6.24
+      Tool: armclang [5f371800]
+      
+      Target: unspecified-arm-none-none
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:1250 (message)"
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeDetermineASMCompiler.cmake:135 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "CMakeLists.txt:23 (project)"
+    message: |
+      Checking whether the ASM compiler is AppleClang using "--version" did not match "(Apple (clang|LLVM) version)":
+      Product: Hardware Success Kit (Early Access)
+      Component: Arm Compiler for Embedded 6.24
+      Tool: armclang [5f371800]
+      
+      Target: unspecified-arm-none-none
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:1250 (message)"
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeDetermineASMCompiler.cmake:135 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "CMakeLists.txt:23 (project)"
+    message: |
+      Checking whether the ASM compiler is Clang using "--version" did not match "(clang version)":
+      Product: Hardware Success Kit (Early Access)
+      Component: Arm Compiler for Embedded 6.24
+      Tool: armclang [5f371800]
+      
+      Target: unspecified-arm-none-none
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:1237 (message)"
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeDetermineASMCompiler.cmake:135 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "CMakeLists.txt:23 (project)"
+    message: |
+      Checking whether the ASM compiler is ARMClang using "--version" matched "armclang":
+      Product: Hardware Success Kit (Early Access)
+      Component: Arm Compiler for Embedded 6.24
+      Tool: armclang [5f371800]
+      
+      Target: unspecified-arm-none-none
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:23 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: c:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/compilers.arm.armclang/6.24.0/bin/armclang.exe 
+      Build flags: --target=arm-arm-none-eabi;-mcpu=Cortex-M4;-mfpu=fpv4-sp-d16;-mfloat-abi=hard
+      Id flags: -c;--target=arm-arm-none-eabi 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
+      
+      The C compiler identification is ARMClang, found in:
+        D:/Projects/M4/M480/Git/BSP/bsp/SampleCode/CortexM4/BitBand/VSCode/tmp/1/CMakeFiles/3.31.5/CompilerIdC/CMakeCCompilerId.o
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:23 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "D:/Projects/M4/M480/Git/BSP/bsp/SampleCode/CortexM4/BitBand/VSCode/tmp/1/CMakeFiles/CMakeScratch/TryCompile-punk84"
+      binary: "D:/Projects/M4/M480/Git/BSP/bsp/SampleCode/CortexM4/BitBand/VSCode/tmp/1/CMakeFiles/CMakeScratch/TryCompile-punk84"
+    cmakeVariables:
+      CMAKE_CXX_COMPILER_TARGET: "arm-arm-none-eabi"
+      CMAKE_C_COMPILER_TARGET: "arm-arm-none-eabi"
+      CMAKE_C_FLAGS: "--target=arm-arm-none-eabi -mcpu=Cortex-M4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.open.cmsis.pack.cmsis.toolbox/2.9.0/etc/CMakeASM"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/Projects/M4/M480/Git/BSP/bsp/SampleCode/CortexM4/BitBand/VSCode/tmp/1/CMakeFiles/CMakeScratch/TryCompile-punk84'
+        
+        Run Build Command(s): C:/Users/LOCALA~1/VCPKG~1/ARTIFA~1/2139c4c6/TOOLSN~1.NIN/112~1.0/ninja.exe -v cmTC_c21e6
+        [1/2] c:\\Users\\LOCALA~1\\VCPKG~1\\ARTIFA~1\\2139c4c6\\COMPIL~1.ARM\\624~1.0\\bin\\armclang.exe --target=arm-arm-none-eabi   --target=arm-arm-none-eabi -mcpu=Cortex-M4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard    -v -MD -MT CMakeFiles/cmTC_c21e6.dir/CMakeCCompilerABI.o -MF CMakeFiles\\cmTC_c21e6.dir\\CMakeCCompilerABI.o.d -o CMakeFiles/cmTC_c21e6.dir/CMakeCCompilerABI.o -c "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeCCompilerABI.c"
+        Product: Hardware Success Kit (Early Access)
+        Component: Arm Compiler for Embedded 6.24
+        Tool: armclang [5f371800]
+        
+        Target: arm-arm-none-eabi
+         (in-process)
+         "C:\\\\Users\\\\Local Admin\\\\.vcpkg\\\\artifacts\\\\2139c4c6\\\\compilers.arm.armclang\\\\6.24.0\\\\bin\\\\armclang.exe" -cc1 -triple thumbv7em-arm-none-eabihf -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model static -mframe-pointer=none -menable-no-infs -menable-no-nans -fmath-errno -fno-signed-zeros -fdenormal-fp-math=preserve-sign,preserve-sign -ffp-contract=on -fno-rounding-math -ffinite-math-only -mconstructor-aliases -target-cpu cortex-m4 -target-feature -vfp2 -target-feature +vfp2sp -target-feature -vfp3 -target-feature -vfp3d16 -target-feature +vfp3d16sp -target-feature -vfp3sp -target-feature +fp16 -target-feature -vfp4 -target-feature -vfp4d16 -target-feature +vfp4d16sp -target-feature -vfp4sp -target-feature -fp-armv8 -target-feature -fp-armv8d16 -target-feature -fp-armv8d16sp -target-feature -fp-armv8sp -target-feature -fullfp16 -target-feature -fp64 -target-feature -d32 -target-feature -neon -target-feature -sha2 -target-feature -aes -target-feature -fp16fml -target-abi aapcs -mfloat-abi hard -debugger-tuning=gdb -fforce-dwarf-frame "-fdebug-compilation-dir=D:\\\\Projects\\\\M4\\\\M480\\\\Git\\\\BSP\\\\bsp\\\\SampleCode\\\\CortexM4\\\\BitBand\\\\VSCode\\\\tmp\\\\1\\\\CMakeFiles\\\\CMakeScratch\\\\TryCompile-punk84" -v -ffunction-sections -fdata-sections "-fcoverage-compilation-dir=D:\\\\Projects\\\\M4\\\\M480\\\\Git\\\\BSP\\\\bsp\\\\SampleCode\\\\CortexM4\\\\BitBand\\\\VSCode\\\\tmp\\\\1\\\\CMakeFiles\\\\CMakeScratch\\\\TryCompile-punk84" -resource-dir "C:\\\\Users\\\\Local Admin\\\\.vcpkg\\\\artifacts\\\\2139c4c6\\\\compilers.arm.armclang\\\\6.24.0\\\\lib\\\\clang\\\\20" -dependency-file "CMakeFiles\\\\cmTC_c21e6.dir\\\\CMakeCCompilerABI.o.d" -MT CMakeFiles/cmTC_c21e6.dir/CMakeCCompilerABI.o -sys-header-deps -internal-isystem "C:\\\\Users\\\\Local Admin\\\\.vcpkg\\\\artifacts\\\\2139c4c6\\\\compilers.arm.armclang\\\\6.24.0\\\\bin\\\\..\\\\include" -nobuiltininc -ferror-limit 19 -fvisibility=hidden -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fsuppress-licensing -aggressive-jump-threading -o CMakeFiles/cmTC_c21e6.dir/CMakeCCompilerABI.o -x c "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeCCompilerABI.c"
+        Arm Compiler for Embedded 6.24 -cc1 default target aarch64-arm-none-eabi
+        #include "..." search starts here:
+        #include <...> search starts here:
+         C:\\Users\\Local Admin\\.vcpkg\\artifacts\\2139c4c6\\compilers.arm.armclang\\6.24.0\\bin\\..\\include\x0d
+        End of search list.\x0d
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && c:\\Users\\LOCALA~1\\VCPKG~1\\ARTIFA~1\\2139c4c6\\COMPIL~1.ARM\\624~1.0\\bin\\armar.exe --create -cr libcmTC_c21e6.a  CMakeFiles/cmTC_c21e6.dir/CMakeCCompilerABI.o && cd ."
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:23 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/compilers.arm.armclang/6.24.0/bin/../include]
+        end of search list found
+        collapse include dir [C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/compilers.arm.armclang/6.24.0/bin/../include] ==> [C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/compilers.arm.armclang/6.24.0/include]
+        implicit include dirs: [C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/compilers.arm.armclang/6.24.0/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:23 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(armlink\\.exe|;ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(armlink\\.exe|;ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: 'D:/Projects/M4/M480/Git/BSP/bsp/SampleCode/CortexM4/BitBand/VSCode/tmp/1/CMakeFiles/CMakeScratch/TryCompile-punk84']
+        ignore line: []
+        ignore line: [Run Build Command(s): C:/Users/LOCALA~1/VCPKG~1/ARTIFA~1/2139c4c6/TOOLSN~1.NIN/112~1.0/ninja.exe -v cmTC_c21e6]
+        ignore line: [[1/2] c:\\Users\\LOCALA~1\\VCPKG~1\\ARTIFA~1\\2139c4c6\\COMPIL~1.ARM\\624~1.0\\bin\\armclang.exe --target=arm-arm-none-eabi   --target=arm-arm-none-eabi -mcpu=Cortex-M4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard    -v -MD -MT CMakeFiles/cmTC_c21e6.dir/CMakeCCompilerABI.o -MF CMakeFiles\\cmTC_c21e6.dir\\CMakeCCompilerABI.o.d -o CMakeFiles/cmTC_c21e6.dir/CMakeCCompilerABI.o -c "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeCCompilerABI.c"]
+        ignore line: [Product: Hardware Success Kit (Early Access)]
+        ignore line: [Component: Arm Compiler for Embedded 6.24]
+        ignore line: [Tool: armclang [5f371800]]
+        ignore line: []
+        ignore line: [Target: arm-arm-none-eabi]
+        ignore line: [ (in-process)]
+        ignore line: [ "C:\\\\Users\\\\Local Admin\\\\.vcpkg\\\\artifacts\\\\2139c4c6\\\\compilers.arm.armclang\\\\6.24.0\\\\bin\\\\armclang.exe" -cc1 -triple thumbv7em-arm-none-eabihf -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model static -mframe-pointer=none -menable-no-infs -menable-no-nans -fmath-errno -fno-signed-zeros -fdenormal-fp-math=preserve-sign preserve-sign -ffp-contract=on -fno-rounding-math -ffinite-math-only -mconstructor-aliases -target-cpu cortex-m4 -target-feature -vfp2 -target-feature +vfp2sp -target-feature -vfp3 -target-feature -vfp3d16 -target-feature +vfp3d16sp -target-feature -vfp3sp -target-feature +fp16 -target-feature -vfp4 -target-feature -vfp4d16 -target-feature +vfp4d16sp -target-feature -vfp4sp -target-feature -fp-armv8 -target-feature -fp-armv8d16 -target-feature -fp-armv8d16sp -target-feature -fp-armv8sp -target-feature -fullfp16 -target-feature -fp64 -target-feature -d32 -target-feature -neon -target-feature -sha2 -target-feature -aes -target-feature -fp16fml -target-abi aapcs -mfloat-abi hard -debugger-tuning=gdb -fforce-dwarf-frame "-fdebug-compilation-dir=D:\\\\Projects\\\\M4\\\\M480\\\\Git\\\\BSP\\\\bsp\\\\SampleCode\\\\CortexM4\\\\BitBand\\\\VSCode\\\\tmp\\\\1\\\\CMakeFiles\\\\CMakeScratch\\\\TryCompile-punk84" -v -ffunction-sections -fdata-sections "-fcoverage-compilation-dir=D:\\\\Projects\\\\M4\\\\M480\\\\Git\\\\BSP\\\\bsp\\\\SampleCode\\\\CortexM4\\\\BitBand\\\\VSCode\\\\tmp\\\\1\\\\CMakeFiles\\\\CMakeScratch\\\\TryCompile-punk84" -resource-dir "C:\\\\Users\\\\Local Admin\\\\.vcpkg\\\\artifacts\\\\2139c4c6\\\\compilers.arm.armclang\\\\6.24.0\\\\lib\\\\clang\\\\20" -dependency-file "CMakeFiles\\\\cmTC_c21e6.dir\\\\CMakeCCompilerABI.o.d" -MT CMakeFiles/cmTC_c21e6.dir/CMakeCCompilerABI.o -sys-header-deps -internal-isystem "C:\\\\Users\\\\Local Admin\\\\.vcpkg\\\\artifacts\\\\2139c4c6\\\\compilers.arm.armclang\\\\6.24.0\\\\bin\\\\..\\\\include" -nobuiltininc -ferror-limit 19 -fvisibility=hidden -fno-signed-char -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fsuppress-licensing -aggressive-jump-threading -o CMakeFiles/cmTC_c21e6.dir/CMakeCCompilerABI.o -x c "C:/Users/Local Admin/.vcpkg/artifacts/2139c4c6/tools.kitware.cmake/3.31.5/share/cmake-3.31/Modules/CMakeCCompilerABI.c"]
+        ignore line: [Arm Compiler for Embedded 6.24 -cc1 default target aarch64-arm-none-eabi]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ C:\\Users\\Local Admin\\.vcpkg\\artifacts\\2139c4c6\\compilers.arm.armclang\\6.24.0\\bin\\..\\include\x0d]
+        ignore line: [End of search list.\x0d]
+        ignore line: [[2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && c:\\Users\\LOCALA~1\\VCPKG~1\\ARTIFA~1\\2139c4c6\\COMPIL~1.ARM\\624~1.0\\bin\\armar.exe --create -cr libcmTC_c21e6.a  CMakeFiles/cmTC_c21e6.dir/CMakeCCompilerABI.o && cd ."]
+        ignore line: []
+        ignore line: []
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+...
