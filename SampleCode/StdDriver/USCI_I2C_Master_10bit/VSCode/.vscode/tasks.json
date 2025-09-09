@@ -1,15 +1,57 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "arm-debugger.flash",
-			"serialNumber": "${command:device-manager.getSerialNumber}",
-			"program": "${command:arm-debugger.getApplicationFile}",
-			"cmsisPack": "${command:cmsis-csolution.getTargetPack}",
-			"deviceName": "${command:cmsis-csolution.getDeviceName}",
-			"processorName": "${command:cmsis-csolution.getProcessorName}",
-			"problemMatcher": [],
-			"label": "arm-debugger.flash: Flash Device"
-		}
-	]
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "CMSIS Erase",
+            "type": "shell",
+            "command": "pyocd",
+            "args": [
+                "erase",
+                "--probe",
+                "cmsisdap:",
+                "--chip",
+                "--cbuild-run",
+                "${command:cmsis-csolution.getCbuildRunFile}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "CMSIS Load",
+            "type": "shell",
+            "command": "pyocd",
+            "args": [
+                "load",
+                "--probe",
+                "cmsisdap:",
+                "--cbuild-run",
+                "${command:cmsis-csolution.getCbuildRunFile}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "CMSIS Run",
+            "type": "shell",
+            "command": "pyocd",
+            "args": [
+                "gdbserver",
+                "--probe",
+                "cmsisdap:",
+                "--connect",
+                "attach",
+                "--persist",
+                "--reset-run",
+                "--cbuild-run",
+                "${command:cmsis-csolution.getCbuildRunFile}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "CMSIS Load+Run",
+            "dependsOn": [
+                "CMSIS Load"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": []
+        }
+    ]
 }

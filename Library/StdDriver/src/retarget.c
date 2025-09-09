@@ -1,6 +1,6 @@
 /**************************************************************************//**
  * @file     retarget.c
- * @version  V3.10
+ * @version  V3.20
  * @brief    M480 Series Debug Port and Semihost Setting Source File
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -717,6 +717,38 @@ int _read(int fd, char *ptr, int len)
     return 1;
 
 
+}
+/* Add implementations to fix linker warnings from the newlib-nano C library in VSCode-GCC14.3.1 */
+#include <sys/stat.h>
+int _close(int file)
+{
+    return -1;
+}
+
+int _lseek(int file, int ptr, int dir)
+{
+    return 0;
+}
+
+int _fstat(int file, struct stat *st)
+{
+    st->st_mode = S_IFCHR;
+    return 0;
+}
+
+int _isatty(int file)
+{
+    return 1;
+}
+
+int _kill(int pid, int sig)
+{
+    return -1;
+}
+
+int _getpid(void)
+{
+    return 1;
 }
 #endif
 
