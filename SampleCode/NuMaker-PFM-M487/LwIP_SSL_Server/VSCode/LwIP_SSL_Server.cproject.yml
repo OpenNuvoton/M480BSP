@@ -7,7 +7,7 @@ project:
       ASM: [-masm=auto]
       Link: [--library_type=microlib, --map, --load_addr_map_info, --symbols, --info sizes, --info totals, --entry Reset_Handler, --summary_stderr, --info summarysizes, --diag_suppress=6314]
     - for-compiler: GCC
-      C: [-std=gnu11, --specs=nano.specs, -Wno-return-type, -Wno-unused-but-set-variable, -fdata-sections, -ffunction-sections, -fno-builtin, -fshort-enums, -funsigned-char, -mthumb, -Wno-main, -gdwarf-4]
+      C: [-std=gnu11, --specs=nano.specs, -Wno-return-type, -Wno-unused-but-set-variable, -fdata-sections, -ffunction-sections, -fno-builtin, -fshort-enums, -funsigned-char, -mthumb, -Wno-main, -gdwarf-4, -Wno-stringop-overflow]
       Link:
         - -Xlinker
         - --gc-sections

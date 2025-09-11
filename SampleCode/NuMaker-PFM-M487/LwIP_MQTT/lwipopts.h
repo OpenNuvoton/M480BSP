@@ -54,6 +54,14 @@
 
 #if defined (__GNUC__) && !defined(__ARMCC_VERSION)
 #define LWIP_TIMEVAL_PRIVATE            0
+
+    #if (__GNUC__ >= 14)
+    struct timeval {
+    long    tv_sec;         /* seconds */
+    long    tv_usec;        /* and microseconds */
+    };
+    #endif
+
 #endif
 
 #define TCPIP_THREAD_STACKSIZE          350
