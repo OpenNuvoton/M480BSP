@@ -4,7 +4,7 @@
  * @brief    M480 Series Debug Port and Semihost Setting Source File
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2024 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2025 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 
 
@@ -724,32 +724,37 @@ int _close(int file)
 {
     return -1;
 }
-
 int _lseek(int file, int ptr, int dir)
 {
     return 0;
 }
-
 int _fstat(int file, struct stat *st)
 {
     st->st_mode = S_IFCHR;
     return 0;
 }
-
 int _isatty(int file)
 {
     return 1;
 }
-
 int _kill(int pid, int sig)
 {
     return -1;
 }
-
 int _getpid(void)
 {
     return 1;
 }
+
+int _open(int file)
+{
+    return -1;
+}
+int _unlink(const char *path)
+{
+    return -1;
+}
+
 #endif
 
 #else

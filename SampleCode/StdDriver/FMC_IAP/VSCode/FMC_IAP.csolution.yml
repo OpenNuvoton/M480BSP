@@ -12,4 +12,5 @@ solution:
       compiler: AC6
       device: Nuvoton::M487JIDAE
   projects:
-    - project: FMC_IAP.cproject.yml
+    - project: ./FMC_IAP_APROM/FMC_IAP_APROM.cproject.yml
+    - project: ./FMC_IAP_LDROM/FMC_IAP_LDROM.cproject.yml

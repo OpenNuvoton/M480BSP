@@ -5,8 +5,6 @@ solution:
     - compiler: AC6@>=5.19.0
     - compiler: GCC@>=10.3.1
   build-types:
-    - type: debug
-      optimize: debug
     - type: release
       optimize: balanced
   target-types:
@@ -17,4 +15,5 @@ solution:
       compiler: GCC
       device: Nuvoton::M487JIDAE
   projects:
-    - project: HSUSBH_USBH_Firmware_Update.cproject.yml
+    - project: ./FMC_XOM_User/FMC_XOM_User.cproject.yml
+    - project: ./FMC_XOM_Lib/FMC_XOM_Lib.cproject.yml

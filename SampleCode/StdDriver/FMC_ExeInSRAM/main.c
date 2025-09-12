@@ -1,13 +1,16 @@
 /****************************************************************************//**
  * @file     main.c
- * @version  V0.10
+ * @version  V1.00
  * @brief    Implement a code and execute in SRAM to program embedded Flash.
  *
- * @copyright (C) 2019 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2025 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
 #include "NuMicro.h"
+
+#define TOTAL_VECTORS   (125)                               /* Total vector numbers */
+__ALIGNED(256) uint32_t g_au32Vector[TOTAL_VECTORS] = {0};  /* Vector space in SRAM */
 
 extern int32_t FlashAccess_OnSRAM(void);
 
@@ -53,11 +56,21 @@ void SYS_Init(void)
 
 int32_t main(void)
 {
+    int32_t i;
+    uint32_t *au32Vectors = (uint32_t *)0x0;
+
     /* Unlock protected registers */
     SYS_UnlockReg();
 
     /* Init System, IP clock and multi-function I/O. */
     SYS_Init();
+
+	/* Init Vector Table to SRAM */
+    for(i = 0; i < TOTAL_VECTORS; i++)
+    {
+        g_au32Vector[i] = au32Vectors[i];
+    }
+    SCB->VTOR = (uint32_t)&g_au32Vector[0];
 
     /* Configure UART5: 115200, 8-bit word, no parity bit, 1 stop bit. */
     UART_Open(UART0, 115200);

@@ -88,7 +88,7 @@ Samplecode/*/packages/
 !SampleCode/StdDriver/FMC_IAP/VSCode/
 !SampleCode/StdDriver/FMC_IAP/VSCode/bin/
 !SampleCode/StdDriver/FMC_IAP/VSCode/bin/ARMCLANG/
-!SampleCode/StdDriver/FMC_IAP/VSCode/bin/ARMCLANG/fmc_ld_code.bin
+!SampleCode/StdDriver/FMC_IAP/VSCode/bin/ARMCLANG/FMC_IAP_LDROM.bin
 !SampleCode/StdDriver/FMC_MultiWordProgram/IAR/Release/
 !SampleCode/StdDriver/FMC_MultiWordProgram/IAR/Release/Exe/
 !SampleCode/StdDriver/FMC_MultiWordProgram/IAR/Release/Exe/multi_word_prog.bin
@@ -99,9 +99,9 @@ Samplecode/*/packages/
 !SampleCode/StdDriver/FMC_MultiWordProgram/VSCode/
 !SampleCode/StdDriver/FMC_MultiWordProgram/VSCode/bin/
 !SampleCode/StdDriver/FMC_MultiWordProgram/VSCode/bin/ARMCLANG/
-!SampleCode/StdDriver/FMC_MultiWordProgram/VSCode/bin/ARMCLANG/multi_word_prog.bin
+!SampleCode/StdDriver/FMC_MultiWordProgram/VSCode/bin/ARMCLANG/FMC_WP_Program.bin
 !SampleCode/StdDriver/FMC_MultiWordProgram/VSCode/bin/GNUC/
-!SampleCode/StdDriver/FMC_MultiWordProgram/VSCode/bin/GNUC/multi_word_prog.bin
+!SampleCode/StdDriver/FMC_MultiWordProgram/VSCode/bin/GNUC/FMC_WP_Program.bin
 !SampleCode/StdDriver/CRYPTO_HMAC/IAR/dummy.bin
 !SampleCode/StdDriver/CRYPTO_SHA/IAR/dummy.bin
 !SampleCode/StdDriver/CRYPTO_HMAC/HMAC_fips198a.rsp
@@ -115,7 +115,7 @@ Samplecode/*/packages/
 !SampleCode/SecureBoot/HSUSBD_IAP/VSCode/
 !SampleCode/SecureBoot/HSUSBD_IAP/VSCode/bin/
 !SampleCode/SecureBoot/HSUSBD_IAP/VSCode/bin/ARMCLANG/
-!SampleCode/SecureBoot/HSUSBD_IAP/VSCode/bin/ARMCLANG/fwupdate_ld_iap.bin
+!SampleCode/SecureBoot/HSUSBD_IAP/VSCode/bin/ARMCLANG/HSUSBD_IAP_LDROM.bin
 !ThirdParty/lwip-2.0.0/doc/contrib.txt
 !ThirdParty/lwip-2.0.0/doc/mdns.txt
 !ThirdParty/lwip-2.0.0/doc/ppp.txt

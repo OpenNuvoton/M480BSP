@@ -15,4 +15,5 @@ solution:
       compiler: GCC
       device: Nuvoton::M487JIDAE
   projects:
-    - project: FMC_MultiWordProgram.cproject.yml
+    - project: ./FMC_WP_User/FMC_WP_User.cproject.yml
+    - project: ./FMC_WP_Program/FMC_WP_Program.cproject.yml

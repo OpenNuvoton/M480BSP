@@ -12,4 +12,5 @@ solution:
       compiler: AC6
       device: Nuvoton::M487JIDAE
   projects:
-    - project: HSUSBD_IAP.cproject.yml
+    - project: ./HSUSBD_IAP_APROM/HSUSBD_IAP_APROM.cproject.yml
+    - project: ./HSUSBD_IAP_LDROM/HSUSBD_IAP_LDROM.cproject.yml

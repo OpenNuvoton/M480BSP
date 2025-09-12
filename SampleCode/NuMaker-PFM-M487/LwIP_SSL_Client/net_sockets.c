@@ -44,9 +44,7 @@
 #include <string.h>
 
 #if defined ( __GNUC__ ) && !(__CC_ARM) && !(__ICCARM__) && !(__ARMCC_VERSION)
-    #if (__GNUC__ < 14)
-    #include <sys/select.h> // for struct timeval
-    #endif
+#include <sys/select.h> // for struct timeval
 #endif
 //#include <sys/types.h>
 //#include <sys/socket.h>
