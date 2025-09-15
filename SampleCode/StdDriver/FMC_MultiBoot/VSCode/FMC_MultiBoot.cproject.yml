@@ -1,6 +1,6 @@
 project:
   packs:
-    - pack: Nuvoton::NuMicro_DFP
+    - pack: Nuvoton::NuMicroM4_DFP
   setups:
     - output:
         # bin, elf, hex, lib

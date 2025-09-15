@@ -1,6 +1,6 @@
 project:
   packs:
-    - pack: Nuvoton::NuMicro_DFP
+    - pack: Nuvoton::NuMicroM4_DFP
   misc:
     - for-compiler: AC6
       C: [-std=c99, -flto, -fno-rtti, -funsigned-char, -fshort-enums, -fshort-wchar, -ffunction-sections, -fdata-sections, -D__MICROLIB, -gdwarf-4]

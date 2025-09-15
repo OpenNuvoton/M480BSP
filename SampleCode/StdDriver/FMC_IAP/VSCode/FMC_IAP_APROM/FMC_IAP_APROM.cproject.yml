@@ -1,21 +1,64 @@
 project:
   packs:
-    - pack: Nuvoton::NuMicro_DFP
+    - pack: Nuvoton::NuMicroM4_DFP
   misc:
     - for-compiler: AC6
-      C: [-std=c99, -fno-rtti, -funsigned-char, -fshort-enums, -fshort-wchar, -ffunction-sections, -fdata-sections, -D__MICROLIB, -gdwarf-4, -fno-inline]
-      ASM: [-D__MICROLIB]
-      Link: [--library_type=microlib, --map, --load_addr_map_info, --symbols, --info sizes, --info totals, --entry Reset_Handler, --summary_stderr, --info summarysizes, --diag_suppress=6314]
+      C:
+        [
+          -std=c99,
+          -fno-rtti,
+          -funsigned-char,
+          -fshort-enums,
+          -fshort-wchar,
+          -ffunction-sections,
+          -fdata-sections,
+          -D__MICROLIB,
+          -gdwarf-4,
+          -fno-inline,
+        ]
+      ASM:
+        [
+          -D__MICROLIB,
+          -DBINFILE='"$SolutionDir()$/bin/ARMCLANG/FMC_IAP_LDROM.bin"',
+        ]
+      Link:
+        [
+          --library_type=microlib,
+          --map,
+          --load_addr_map_info,
+          --symbols,
+          --info sizes,
+          --info totals,
+          --entry Reset_Handler,
+          --summary_stderr,
+          --info summarysizes,
+          --diag_suppress=6314,
+        ]
     - for-compiler: GCC
-      C: [-std=gnu11, --specs=nano.specs, -Wall -Wno-format, -Wno-return-type, -Wno-unused-but-set-variable, -fdata-sections, -ffunction-sections, -fno-builtin,
-          -fshort-enums, -funsigned-char, -mthumb, -Wno-main, -gdwarf-4]
+      C:
+        [
+          -std=gnu11,
+          --specs=nano.specs,
+          -Wall -Wno-format,
+          -Wno-return-type,
+          -Wno-unused-but-set-variable,
+          -fdata-sections,
+          -ffunction-sections,
+          -fno-builtin,
+          -fshort-enums,
+          -funsigned-char,
+          -mthumb,
+          -Wno-main,
+          -gdwarf-4,
+        ]
+      ASM: [-DBINFILE='"$SolutionDir()$/bin/GNUC/FMC_IAP_LDROM.bin"']
       Link:
         - -Xlinker
         - --gc-sections
         - -Wl,--gc-sections,-Map="$elf()$.map"
   linker:
-      - for-compiler: GCC
-        script: ../../../../../Library/Device/Nuvoton/M480/Source/GCC/gcc_arm.ld
+    - for-compiler: GCC
+      script: ../../../../../Library/Device/Nuvoton/M480/Source/GCC/gcc_arm.ld
   setups:
     - output:
         type: ["elf", "bin"]
@@ -23,8 +66,6 @@ project:
     - ../../../../../Library/Device/Nuvoton/M480/Include
     - ../../../../../Library/StdDriver/inc
     - ../../../../../Library/CMSIS/Include
-  add-path-asm:
-    - ../bin/$TargetType$
   groups:
     - group: CMSIS
       files:
@@ -43,4 +84,4 @@ project:
     - group: User
       files:
         - file: ../../APROM_main.c
-        - file: ./ap_image.S
+        - file: ap_image.S

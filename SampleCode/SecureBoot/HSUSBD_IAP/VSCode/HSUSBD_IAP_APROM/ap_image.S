@@ -10,5 +10,5 @@
     .align 4
 	
 loaderImage1Base:
-    .incbin     "HSUSBD_IAP_LDROM.bin"
+    .incbin     BINFILE
 loaderImage1Limit:

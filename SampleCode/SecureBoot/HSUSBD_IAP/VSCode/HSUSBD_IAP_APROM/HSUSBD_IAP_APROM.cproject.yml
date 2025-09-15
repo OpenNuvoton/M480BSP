@@ -1,15 +1,15 @@
 project:
   packs:
-    - pack: Nuvoton::NuMicro_DFP
+    - pack: Nuvoton::NuMicroM4_DFP
   misc:
     - for-compiler: AC6
       C: [-std=c99, -fno-rtti, -funsigned-char, -fshort-enums, -fshort-wchar, -ffunction-sections, -fdata-sections, -D__MICROLIB, -gdwarf-4]
-      ASM: [-D__MICROLIB, -DBINFILE='"$SolutionDir()$/bin/ARMCLANG/fwupdate_ld_iap.bin"']
+      ASM: [-D__MICROLIB, -DBINFILE='"$SolutionDir()$/bin/ARMCLANG/HSUSBD_IAP_LDROM.bin"']
       Link: [--library_type=microlib, --map, --load_addr_map_info, --symbols, --info sizes, --info totals, --entry Reset_Handler, --summary_stderr, --info summarysizes, --diag_suppress=6314]
     - for-compiler: GCC
       C: [-std=gnu11, --specs=nano.specs, -Wall -Wno-format, -Wno-return-type, -Wno-unused-but-set-variable, -fdata-sections, -ffunction-sections, -fno-builtin,
           -fshort-enums, -funsigned-char, -mthumb, -Wno-main, -gdwarf-4]
-      ASM: [-DBINFILE='"$SolutionDir()$/bin/GNUC/fwupdate_ld_iap.bin"']
+      ASM: [-DBINFILE='"$SolutionDir()$/bin/GNUC/HSUSBD_IAP_LDROM.bin"']
       Link:
         - -Xlinker
         - --gc-sections
