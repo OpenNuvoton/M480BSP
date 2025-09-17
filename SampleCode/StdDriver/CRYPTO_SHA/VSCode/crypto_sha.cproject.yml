@@ -4,7 +4,7 @@ project:
   misc:
     - for-compiler: AC6
       C: [-std=c99, -fno-rtti, -funsigned-char, -fshort-enums, -fshort-wchar, -ffunction-sections, -fdata-sections, -D__MICROLIB, -o0, -gdwarf-4]
-      ASM: [-D__MICROLIB, -I../]
+      ASM: [-D__MICROLIB, -I"$SolutionDir()$/../"]
       Link: [--library_type=microlib, --map, --load_addr_map_info, --symbols, --info sizes, --info totals, --entry Reset_Handler, --summary_stderr, --info summarysizes, --diag_suppress=6314]
     - for-compiler: GCC
       C: [-std=gnu11, --specs=nano.specs, -Wno-return-type, -Wno-unused-but-set-variable, -fdata-sections, -ffunction-sections, -fno-builtin, -fshort-enums, -funsigned-char, -mthumb, -Wno-main, -gdwarf-4]
