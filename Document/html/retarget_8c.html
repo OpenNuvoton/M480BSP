@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>M480 BSP: C:/Project/M4/M480/temp/bsp/Library/StdDriver/src/retarget.c File Reference</title>
+<title>M480 BSP: Library/StdDriver/src/retarget.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -19,7 +19,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign">
-   <div id="projectname">M480 BSP<span id="projectnumber">&#160;V3.06.000</span>
+   <div id="projectname">M480 BSP<span id="projectnumber">&#160;V3.0.7000</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -41,7 +41,7 @@ $(function() {
 <div id="main-nav"></div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_ffd1f789ec7bd0a45fc6ad92579c5070.html">Project</a></li><li class="navelem"><a class="el" href="dir_3a932c27cfbef9aaf35ad4d9136fab03.html">M4</a></li><li class="navelem"><a class="el" href="dir_10f8fed7517c581dde03c29a3d17d8f9.html">M480</a></li><li class="navelem"><a class="el" href="dir_ca7d3463f5185e90ec4e75377090fe1d.html">temp</a></li><li class="navelem"><a class="el" href="dir_d0a461ecafbc2bf0ce9c3bf8c16f7191.html">bsp</a></li><li class="navelem"><a class="el" href="dir_eea0180e2bbf6aabfffbd53ec5d902ee.html">Library</a></li><li class="navelem"><a class="el" href="dir_ce629995b707a95b4e91a35f6f77628d.html">StdDriver</a></li><li class="navelem"><a class="el" href="dir_450e5c8c9f9cc90a6158f740b0a14523.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_5ad7f572bbca03234e8e621e192fc099.html">Library</a></li><li class="navelem"><a class="el" href="dir_74dfc25ee547d64eecbf2f7c3d18ea69.html">StdDriver</a></li><li class="navelem"><a class="el" href="dir_6cf68af00265fbb2e70b4225d79d1ff9.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -87,6 +87,8 @@ Functions</h2></td></tr>
 <tr class="memitem:abdd7dfc5d63ba5a36e6ca72a39bfa9e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="retarget_8c.html#abdd7dfc5d63ba5a36e6ca72a39bfa9e5">SendChar</a> (int ch)</td></tr>
 <tr class="memdesc:abdd7dfc5d63ba5a36e6ca72a39bfa9e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to send a char.  <a href="retarget_8c.html#abdd7dfc5d63ba5a36e6ca72a39bfa9e5">More...</a><br /></td></tr>
 <tr class="separator:abdd7dfc5d63ba5a36e6ca72a39bfa9e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a9d8f093940fa3017cf1d9337ce5f25"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="retarget_8c.html#a0a9d8f093940fa3017cf1d9337ce5f25">SH_Return</a> (int32_t n32In_R0, int32_t n32In_R1, int32_t *pn32Out_R0)</td></tr>
+<tr class="separator:a0a9d8f093940fa3017cf1d9337ce5f25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a69017a2c8cbfc3ecffc133bcc60e6217"><td class="memItemLeft" align="right" valign="top"><a class="el" href="retarget_8c.html#ac607bf387b29162be6a9b77fc7999539">__WEAK</a> uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="retarget_8c.html#a69017a2c8cbfc3ecffc133bcc60e6217">ProcessHardFault</a> (uint32_t <a class="el" href="retarget__iap_8c.html#adc29c2ff13d900c2f185ee95427fb06ca29995ab8070d8bcd4b81920f486d8719">lr</a>, uint32_t msp, uint32_t psp)</td></tr>
 <tr class="memdesc:a69017a2c8cbfc3ecffc133bcc60e6217"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called by Hardfault handler.  <a href="retarget_8c.html#a69017a2c8cbfc3ecffc133bcc60e6217">More...</a><br /></td></tr>
 <tr class="separator:a69017a2c8cbfc3ecffc133bcc60e6217"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -109,8 +111,8 @@ Variables</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >M480 Series Debug Port and Semihost Setting Source File. </p>
-<dl class="section version"><dt>Version</dt><dd>V3.00</dd></dl>
-<p>SPDX-License-Identifier: Apache-2.0 </p><dl class="section copyright"><dt>Copyright</dt><dd>(C) 2023 Nuvoton Technology Corp. All rights reserved.</dd></dl>
+<dl class="section version"><dt>Version</dt><dd>V3.20</dd></dl>
+<p>SPDX-License-Identifier: Apache-2.0 </p><dl class="section copyright"><dt>Copyright</dt><dd>(C) 2025 Nuvoton Technology Corp. All rights reserved.</dd></dl>
 <dl class="section version"><dt>Version</dt><dd>V3.00</dd></dl>
 <p>SPDX-License-Identifier: Apache-2.0 </p><dl class="section copyright"><dt>Copyright</dt><dd>(C) 2016-2020 Nuvoton Technology Corp. All rights reserved. </dd></dl>
 
@@ -175,7 +177,7 @@ Variables</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>Check if message finished (FIFO empty of debug port) </p>
 
-<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00656">656</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00660">660</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
 
 </div>
 </div>
@@ -206,7 +208,7 @@ Variables</h2></td></tr>
 <p>Checks if the error indicator associated with stream is set, returning a value different from zero if it is. This indicator is generally set by a previous operation on the stream that failed.</p>
 <dl class="section note"><dt>Note</dt><dd>The above descriptions are copied from <a href="http://www.cplusplus.com/reference/clibrary/cstdio/ferror/">http://www.cplusplus.com/reference/clibrary/cstdio/ferror/</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00753">753</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00794">794</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
 
 </div>
 </div>
@@ -236,7 +238,7 @@ Variables</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The character read from UART debug port or semihosting</dd></dl>
 <p>For get message from debug port or semihosting. </p>
 
-<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00732">732</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00773">773</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
 
 </div>
 </div>
@@ -280,7 +282,7 @@ Variables</h2></td></tr>
  by the internal position indicator, which is then advanced one character.</p>
 <dl class="section note"><dt>Note</dt><dd>The above descriptions are copied from <a href="http://www.cplusplus.com/reference/clibrary/cstdio/fputc/">http://www.cplusplus.com/reference/clibrary/cstdio/fputc/</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00681">681</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00685">685</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
 
 </div>
 </div>
@@ -310,7 +312,7 @@ Variables</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Get value from UART debug port or semihost</dd></dl>
 <p>Wait UART debug port or semihost to input a char. </p>
 
-<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00555">555</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00559">559</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
 
 </div>
 </div>
@@ -346,7 +348,7 @@ Variables</h2></td></tr>
 </dl>
 <p>Check if message finished (FIFO empty of debug port) </p>
 
-<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00637">637</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00641">641</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
 
 </div>
 </div>
@@ -382,7 +384,7 @@ Variables</h2></td></tr>
 </dl>
 <p>Check UART RSR RX EMPTY or not to determine if any char input from UART </p>
 
-<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00618">618</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00622">622</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
 
 </div>
 </div>
@@ -428,7 +430,7 @@ Variables</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>None</dd></dl>
 <p>This function is called by Hardfault handler and check if it is caused by __BKPT or not. </p>
 
-<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00292">292</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00290">290</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
 
 </div>
 </div>
@@ -458,7 +460,7 @@ Variables</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Send value from UART debug port or semihost</dd></dl>
 <p>Send a target char to UART debug port or semihost. </p>
 
-<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00511">511</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00515">515</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
 
 </div>
 </div>
@@ -488,7 +490,43 @@ Variables</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Send value from UART debug port</dd></dl>
 <p>Send a target char to UART debug port . </p>
 
-<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00434">434</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00438">438</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
+
+</div>
+</div>
+<a id="a0a9d8f093940fa3017cf1d9337ce5f25" name="a0a9d8f093940fa3017cf1d9337ce5f25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a9d8f093940fa3017cf1d9337ce5f25">&#9670;&nbsp;</a></span>SH_Return()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t SH_Return </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>n32In_R0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>n32In_R1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t *&#160;</td>
+          <td class="paramname"><em>pn32Out_R0</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="retarget_8c_source.html#l00419">419</a> of file <a class="el" href="retarget_8c_source.html">retarget.c</a>.</p>
 
 </div>
 </div>
@@ -528,7 +566,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 14 2024 12:22:05 for M480 BSP by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Thu Sep 18 2025 10:07:22 for M480 BSP by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>

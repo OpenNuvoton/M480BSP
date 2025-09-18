@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>M480 BSP: C:/Project/M4/M480/temp/bsp/Library/StdDriver/src/pdma.c Source File</title>
+<title>M480 BSP: Library/StdDriver/src/pdma.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -19,7 +19,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="m4.jpg"/></td>
   <td id="projectalign">
-   <div id="projectname">M480 BSP<span id="projectnumber">&#160;V3.06.000</span>
+   <div id="projectname">M480 BSP<span id="projectnumber">&#160;V3.0.7000</span>
    </div>
    <div id="projectbrief">The Board Support Package for M480 Series</div>
   </td>
@@ -41,7 +41,7 @@ $(function() {
 <div id="main-nav"></div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_ffd1f789ec7bd0a45fc6ad92579c5070.html">Project</a></li><li class="navelem"><a class="el" href="dir_3a932c27cfbef9aaf35ad4d9136fab03.html">M4</a></li><li class="navelem"><a class="el" href="dir_10f8fed7517c581dde03c29a3d17d8f9.html">M480</a></li><li class="navelem"><a class="el" href="dir_ca7d3463f5185e90ec4e75377090fe1d.html">temp</a></li><li class="navelem"><a class="el" href="dir_d0a461ecafbc2bf0ce9c3bf8c16f7191.html">bsp</a></li><li class="navelem"><a class="el" href="dir_eea0180e2bbf6aabfffbd53ec5d902ee.html">Library</a></li><li class="navelem"><a class="el" href="dir_ce629995b707a95b4e91a35f6f77628d.html">StdDriver</a></li><li class="navelem"><a class="el" href="dir_450e5c8c9f9cc90a6158f740b0a14523.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_5ad7f572bbca03234e8e621e192fc099.html">Library</a></li><li class="navelem"><a class="el" href="dir_74dfc25ee547d64eecbf2f7c3d18ea69.html">StdDriver</a></li><li class="navelem"><a class="el" href="dir_6cf68af00265fbb2e70b4225d79d1ff9.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -162,8 +162,8 @@ $(function() {
 <div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span> </div>
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    <span class="keywordflow">if</span>(u32ScatterEn)</div>
 <div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    {</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        pdma-&gt;<a class="code hl_variable" href="struct_p_d_m_a___t.html#a27c01a067eafa21a18cda3569e11582d">DSCT</a>[u32Ch].<a class="code hl_variable" href="struct_d_s_c_t___t.html#adf428766a864680806bc82111dfeb37f">CTL</a> = (pdma-&gt;<a class="code hl_variable" href="struct_p_d_m_a___t.html#a27c01a067eafa21a18cda3569e11582d">DSCT</a>[u32Ch].<a class="code hl_variable" href="struct_d_s_c_t___t.html#adf428766a864680806bc82111dfeb37f">CTL</a> &amp; ~PDMA_DSCT_CTL_OPMODE_Msk) | <a class="code hl_define" href="group___p_d_m_a___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga68e4d278f78fd1f03a518ec5e85be54f">PDMA_OP_SCATTER</a>;</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        pdma-&gt;<a class="code hl_variable" href="struct_p_d_m_a___t.html#a27c01a067eafa21a18cda3569e11582d">DSCT</a>[u32Ch].<a class="code hl_variable" href="struct_d_s_c_t___t.html#a8931451b8a98f814b5c6917ccfbc0934">NEXT</a> = u32DescAddr - (<a class="code hl_define" href="group___p_e_r_i_p_h_e_r_a_l___d_e_c_l_a_r_a_t_i_o_n.html#ga831dc633b2f4d92d1099d3526733dc31">PDMA</a>-&gt;SCATBA);</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        pdma-&gt;<a class="code hl_variable" href="struct_p_d_m_a___t.html#a27c01a067eafa21a18cda3569e11582d">DSCT</a>[u32Ch].<a class="code hl_variable" href="struct_d_s_c_t___t.html#a8931451b8a98f814b5c6917ccfbc0934">NEXT</a> = u32DescAddr - (<a class="code hl_define" href="group___p_e_r_i_p_h_e_r_a_l___d_e_c_l_a_r_a_t_i_o_n.html#ga831dc633b2f4d92d1099d3526733dc31">PDMA</a>-&gt;SCATBA);</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        pdma-&gt;<a class="code hl_variable" href="struct_p_d_m_a___t.html#a27c01a067eafa21a18cda3569e11582d">DSCT</a>[u32Ch].<a class="code hl_variable" href="struct_d_s_c_t___t.html#adf428766a864680806bc82111dfeb37f">CTL</a> = (pdma-&gt;<a class="code hl_variable" href="struct_p_d_m_a___t.html#a27c01a067eafa21a18cda3569e11582d">DSCT</a>[u32Ch].<a class="code hl_variable" href="struct_d_s_c_t___t.html#adf428766a864680806bc82111dfeb37f">CTL</a> &amp; ~PDMA_DSCT_CTL_OPMODE_Msk) | <a class="code hl_define" href="group___p_d_m_a___e_x_p_o_r_t_e_d___c_o_n_s_t_a_n_t_s.html#ga68e4d278f78fd1f03a518ec5e85be54f">PDMA_OP_SCATTER</a>;</div>
 <div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    }</div>
 <div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>    <span class="keywordflow">else</span></div>
 <div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>    {</div>
@@ -329,7 +329,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 14 2024 12:22:03 for M480 BSP by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+Generated on Thu Sep 18 2025 10:07:19 for M480 BSP by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
 </small></address>
 </body>
 </html>
