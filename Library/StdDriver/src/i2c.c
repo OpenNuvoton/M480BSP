@@ -17,10 +17,31 @@
 */
 
 int32_t g_I2C_i32ErrCode = 0;       /*!< I2C global error code */
+int32_t g_I2C_au32HalfBaudRateDelayCount[3] = {0x80U, 0x80U, 0x80U}; /*!< I2C half baud rate delay count, default value is set for I2C baud rate @100K */
 
 /** @addtogroup I2C_EXPORTED_FUNCTIONS I2C Exported Functions
   @{
 */
+/**
+ * @brief      Delay half baud rate time
+ *
+ * @param[in]  i2c         Specify I2C port
+ *
+ * @return     None
+ *
+ * @details    This function delays half baud rate time by using __NOP().
+ */
+static void I2C_DelayHalfBaudRate(I2C_T *i2c)
+{
+    uint32_t u32Index = (uint32_t)i2c == I2C0_BASE ? 0U : ((uint32_t)i2c == I2C1_BASE ? 1U :  2U );
+    volatile int32_t u32DelayCount = g_I2C_au32HalfBaudRateDelayCount[u32Index];
+
+    /* Delay half baud rate time */
+    while (u32DelayCount-- > 0)
+    {
+        __NOP();
+    }
+}
 
 /**
   * @brief      Enable specify I2C Controller and set Clock Divider
@@ -39,7 +60,8 @@ uint32_t I2C_Open(I2C_T *i2c, uint32_t u32BusClock)
 {
     uint32_t u32Div;
     uint32_t u32Pclk;
-
+	uint32_t u32Index = (uint32_t)i2c == I2C0_BASE ? 0U : ((uint32_t)i2c == I2C1_BASE ? 1U :  2U );
+    
     if(i2c == I2C1)
     {
         u32Pclk = CLK_GetPCLK1Freq();
@@ -48,6 +70,7 @@ uint32_t I2C_Open(I2C_T *i2c, uint32_t u32BusClock)
     {
         u32Pclk = CLK_GetPCLK0Freq();
     }
+    g_I2C_au32HalfBaudRateDelayCount[u32Index] = (((u32Pclk / (u32BusClock << 2U)) + 1U) / 2) + 3; /* Calculate half baud rate delay count */
 
     u32Div = (uint32_t)(((u32Pclk * 10U) / (u32BusClock * 4U) + 5U) / 10U - 1U); /* Compute proper divider for I2C clock */
     i2c->CLKDIV = u32Div;
@@ -1392,6 +1415,7 @@ uint32_t I2C_ReadMultiBytesOneReg(I2C_T *i2c, uint8_t u8SlaveAddr, uint8_t u8Dat
             break;
         case 0x28u:
             u8Ctrl = I2C_CTL_STA_SI;                         /* Send repeat START */
+			I2C_DelayHalfBaudRate(i2c);                                 /* Delay half baud rate time to ensure the slave SDA is high */
             break;
         case 0x10u:
             I2C_SET_DATA(i2c, (uint8_t)((u8SlaveAddr << 1u) | 0x01u));    /* Write SLA+R to Register I2CDAT */
@@ -1581,7 +1605,8 @@ uint32_t I2C_ReadMultiBytesTwoRegs(I2C_T *i2c, uint8_t u8SlaveAddr, uint16_t u16
             else
             {
                 u8Ctrl = I2C_CTL_STA_SI;                              /* Clear SI and send repeat START */
-            }
+				I2C_DelayHalfBaudRate(i2c);                                 /* Delay half baud rate time to ensure the slave SDA is high */
+			}
             break;
         case 0x10u:
             I2C_SET_DATA(i2c, (uint8_t)((u8SlaveAddr << 1u) | 0x01u));             /* Write SLA+R to Register I2CDAT */
