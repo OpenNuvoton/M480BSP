@@ -10,7 +10,7 @@
 #include "NuMicro.h"
 
 #define TOTAL_VECTORS   (125)                               /* Total vector numbers */
-__ALIGNED(256) uint32_t g_au32Vector[TOTAL_VECTORS] = {0};  /* Vector space in SRAM */
+__ALIGNED(256) volatile uint32_t g_au32Vector[TOTAL_VECTORS] = {0};  /* Vector space in SRAM */
 
 extern int32_t FlashAccess_OnSRAM(void);
 
@@ -57,7 +57,7 @@ void SYS_Init(void)
 int32_t main(void)
 {
     int32_t i;
-    uint32_t *au32Vectors = (uint32_t *)0x0;
+    volatile uint32_t *au32Vectors = 0x0;
 
     /* Unlock protected registers */
     SYS_UnlockReg();
@@ -65,7 +65,7 @@ int32_t main(void)
     /* Init System, IP clock and multi-function I/O. */
     SYS_Init();
 
-	/* Init Vector Table to SRAM */
+    /* Init Vector Table to SRAM */
     for(i = 0; i < TOTAL_VECTORS; i++)
     {
         g_au32Vector[i] = au32Vectors[i];

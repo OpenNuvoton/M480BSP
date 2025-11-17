@@ -55,9 +55,9 @@
 			<locationURI>PARENT-4-PROJECT_LOC/Library/StdDriver/src</locationURI>
 		</link>
 		<link>
-			<name>User/Sensor_NT99141.c</name>
+			<name>User/Sensor_nt99141.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Sensor_NT99141.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Sensor_nt99141.c</locationURI>
 		</link>
 		<link>
 			<name>User/i2c_gpio.c</name>

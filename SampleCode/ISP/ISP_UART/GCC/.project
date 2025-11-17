@@ -137,7 +137,7 @@
 			<type>5</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-gcc_arm_128k.ld</arguments>
+				<arguments>1.0-name-matches-false-false-gcc_arm.ld</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>

@@ -303,7 +303,7 @@ void MSC_Init(void)
 
     g_sCSW.dCSWSignature = CSW_SIGNATURE;
     g_TotalSectors = DATA_FLASH_STORAGE_SIZE / UDC_SECTOR_SIZE;
-    memset((void *)STORAGE_DATA_BUF, 0, 1024);
+    memset((void *)&Storage_Block[0], 0, sizeof(Storage_Block));
 
     /*
        Generate Mass-Storage Device serial number

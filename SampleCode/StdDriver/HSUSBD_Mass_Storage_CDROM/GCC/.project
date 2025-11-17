@@ -47,7 +47,7 @@
 		<link>
 			<name>CMSIS/CMSIS</name>
 			<type>2</type>
-			<locationURI>PARENT-4-PROJECT_LOC/Library/Device/Nuvoton/m480/Source</locationURI>
+			<locationURI>PARENT-4-PROJECT_LOC/Library/Device/Nuvoton/M480/Source</locationURI>
 		</link>
 		<link>
 			<name>DiskImage/diskimage.c</name>
