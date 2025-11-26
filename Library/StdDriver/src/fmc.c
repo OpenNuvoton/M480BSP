@@ -606,7 +606,7 @@ int32_t FMC_Write8Bytes(uint32_t u32addr, uint32_t u32data0, uint32_t u32data1)
 /**
   * @brief   Program Multi-Word data into specified address of flash.
   * @param[in]  u32Addr    Start flash address in APROM where the data chunk to be programmed into.
-  *                        This address must be 8-bytes aligned to flash address.
+  *                        This address must be 16-bytes aligned to flash address.
   * @param[in]  pu32Buf    Buffer that carry the data chunk.
   * @param[in]  u32Len     Length of the data chunk in bytes.
   * @retval   >=0  Number of data bytes were programmed.
@@ -619,95 +619,139 @@ int32_t FMC_Write8Bytes(uint32_t u32addr, uint32_t u32data0, uint32_t u32data1)
   */
 int32_t FMC_WriteMultiple(uint32_t u32Addr, uint32_t pu32Buf[], uint32_t u32Len)
 {
-    int   i, idx, retval = 0;
-    int32_t  tout;
-
+    uint32_t i, idx, u32OnProg;
+    int32_t err, retval = 0, i32TimeOutCnt;
+    uint32_t u32MPStatus = 0;
     g_FMC_i32ErrCode = 0;
 
-    if ((u32Addr >= FMC_APROM_END) || ((u32Addr % 8) != 0))
+    if((u32Addr >= FMC_APROM_END) || ((u32Addr % 16) != 0))
     {
         g_FMC_i32ErrCode = -2;
         return -2;
     }
 
-    u32Len = u32Len - (u32Len % 8);         /* u32Len must be multiple of 8. */
+    idx = 0u;
+    FMC->ISPCMD = FMC_ISPCMD_PROGRAM_MUL;
+    FMC->ISPADDR = u32Addr;
 
-    idx = 0;
-
-    while (u32Len >= 8)
+    do
     {
-        FMC->ISPADDR = u32Addr;
+        err = 0;
+        if(idx < (u32Len / 4u))
+        {
+            u32OnProg = 1u;
+        }
+        else
+        {
+            u32OnProg = 0u;
+            break;
+        }
         FMC->MPDAT0  = pu32Buf[idx++];
         FMC->MPDAT1  = pu32Buf[idx++];
         FMC->MPDAT2  = pu32Buf[idx++];
         FMC->MPDAT3  = pu32Buf[idx++];
-        FMC->ISPCMD  = FMC_ISPCMD_PROGRAM_MUL;
-        FMC->ISPTRG  = FMC_ISPTRG_ISPGO_Msk;
-        u32Len -= 16;
         retval += 16;
+        FMC->ISPTRG = FMC_ISPTRG_ISPGO_Msk;
 
-        for (i = 16; i < FMC_MULTI_WORD_PROG_LEN; i += 16)
+        for(i = idx; i < (u32Len / 4u); i += 4u) /* Max data length is 512 bytes (512/4 words) */
         {
-            tout = FMC_TIMEOUT_WRITE;
-            while ((tout-- > 0) && (FMC->MPSTS & (FMC_MPSTS_D0_Msk | FMC_MPSTS_D1_Msk))) {}
-            if (tout <= 0)
+            i32TimeOutCnt = FMC_TIMEOUT_WRITE;
+
+            do
             {
-                g_FMC_i32ErrCode = -1;
-                return -1;
+                if((FMC->MPSTS & FMC_MPSTS_MPBUSY_Msk) == 0u)
+                {
+                    FMC->ISPADDR = (FMC->MPADDR + 8) & (~0xful);
+                    idx = (FMC->ISPADDR - u32Addr) / 4u;
+                    retval = FMC->ISPADDR - u32Addr;
+                    err = -1;
+                }
+                if( i32TimeOutCnt-- <= 0)
+                {
+                    g_FMC_i32ErrCode = -1;
+                    err = -1;
+                }
             }
-            if (!(FMC->MPSTS & FMC_MPSTS_MPBUSY_Msk))
+            while((FMC->MPSTS & (3u << FMC_MPSTS_D0_Pos)) && (err == 0));
+
+            if(err == 0)
             {
-                /* printf("    [WARNING] busy cleared after D0D1 cleared!\n"); */
+                retval += 8;
+
+                /* Update new data for D0 */
+                FMC->MPDAT0 = pu32Buf[i];
+                FMC->MPDAT1 = pu32Buf[i + 1u];
+                i32TimeOutCnt = FMC_TIMEOUT_WRITE;
+                do
+                {
+                    if((FMC->MPSTS & FMC_MPSTS_MPBUSY_Msk) == 0u)
+                    {
+                        FMC->ISPADDR = (FMC->MPADDR + 8) & (~0xful);
+                        idx = (FMC->ISPADDR - u32Addr) / 4u;
+                        retval = FMC->ISPADDR - u32Addr;
+                        err = -1;
+                    }
+                    if( i32TimeOutCnt-- <= 0)
+                    {
+                        g_FMC_i32ErrCode = -1;
+                        err = -1;
+                    }
+                }
+                while((FMC->MPSTS & (3u << FMC_MPSTS_D2_Pos)) && (err == 0));
+
+                if(err == 0)
+                {
+                    retval += 8;
+
+                    /* Update new data for D2 */
+                    FMC->MPDAT2 = pu32Buf[i + 2u];
+                    FMC->MPDAT3 = pu32Buf[i + 3u];
+                }
+
+                if(i + 4u >= (u32Len / 4u))
+                {
+                    i32TimeOutCnt = FMC_TIMEOUT_WRITE;
+                    do
+                    {
+                        u32MPStatus = FMC->MPSTS;
+                        if(((u32MPStatus & FMC_MPSTS_MPBUSY_Msk) == 0u) && (u32MPStatus & (0xF << FMC_MPSTS_D0_Pos)))
+                        {
+                            FMC->ISPADDR = (FMC->MPADDR + 8) & (~0xful);
+                            idx = (FMC->ISPADDR - u32Addr) / 4u;
+                            retval = FMC->ISPADDR - u32Addr;
+                            err = -1;
+                        }
+                        if( i32TimeOutCnt-- <= 0)
+                        {
+                            g_FMC_i32ErrCode = -1;
+                            err = -1;
+                        }
+                    }
+                    while((u32MPStatus & (0xF << FMC_MPSTS_D0_Pos)) && (err == 0));
+                }
+            }
+
+            if(err < 0)
+            {
                 break;
             }
-
-            if (u32Len < 8)
-                break;
-
-            FMC->MPDAT0 = pu32Buf[idx++];
-            FMC->MPDAT1 = pu32Buf[idx++];
-            retval += 8;
-            u32Len -= 8;
-
-            tout = FMC_TIMEOUT_WRITE;
-            while ((tout-- > 0) && (FMC->MPSTS & (FMC_MPSTS_D2_Msk | FMC_MPSTS_D3_Msk))) {}
-            if (tout <= 0)
-            {
-                g_FMC_i32ErrCode = -1;
-                return -1;
-            }
-            if (!(FMC->MPSTS & FMC_MPSTS_MPBUSY_Msk))
-            {
-                /* printf("    [WARNING] busy cleared after D2D3 cleared!\n"); */
-                i += 8;
-                break;
-            }
-
-            if (u32Len < 8)
-                break;
-
-            FMC->MPDAT2 = pu32Buf[idx++];
-            FMC->MPDAT3 = pu32Buf[idx++];
-            retval += 8;
-            u32Len -= 8;
         }
-
-        if (i != FMC_MULTI_WORD_PROG_LEN)
+        if(err == 0)
         {
-            /* printf("    [WARNING] Multi-word program interrupted at 0x%x !!\n", i); */
-            return retval;
+            u32OnProg = 0u;
+            i32TimeOutCnt = FMC_TIMEOUT_WRITE;
+            while(FMC->ISPSTS & FMC_ISPSTS_ISPBUSY_Msk)
+            {
+                if( i32TimeOutCnt-- <= 0)
+                {
+                    g_FMC_i32ErrCode = -1;
+                    break;
+                }
+            }
         }
-
-        tout = FMC_TIMEOUT_WRITE;
-        while ((tout-- > 0) && (FMC->MPSTS & FMC_MPSTS_MPBUSY_Msk)) {}
-        if (tout <= 0)
-        {
-            g_FMC_i32ErrCode = -1;
-            return -1;
-        }
-
-        u32Addr += FMC_MULTI_WORD_PROG_LEN;
     }
+    while(u32OnProg);
+
     return retval;
 }
 
