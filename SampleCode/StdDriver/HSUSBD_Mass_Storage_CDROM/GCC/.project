@@ -70,9 +70,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/main.c</locationURI>
 		</link>
 		<link>
-			<name>User/Massstorage.c</name>
+			<name>User/MassStorage.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Massstorage.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/MassStorage.c</locationURI>
 		</link>
 	</linkedResources>
 	<filteredResources>

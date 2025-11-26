@@ -1067,7 +1067,7 @@
     <group>
         <name>Library</name>
         <file>
-            <name>$PROJ_DIR$\..\..\..\..\Library\FWUpdate\BootIspLib_IAR.a</name>
+            <name>$PROJ_DIR$\..\..\..\..\Library\FWUpdate\BootIspLib_IAR8.a</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\..\..\Library\StdDriver\src\clk.c</name>
