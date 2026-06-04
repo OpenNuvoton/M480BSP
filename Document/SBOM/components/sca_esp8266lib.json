@@ -1,0 +1,121 @@
+{
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/esp8266lib@2.3.0?source=vendored&path=SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib",
+      "name": "Esp8266Lib",
+      "version": "2.3.0",
+      "scope": "required",
+      "author": "Tilen Majerle; Adam Dunkels / Swedish Institute of Computer Science (bundled Protothreads)",
+      "purl": "pkg:generic/esp8266lib@2.3.0",
+      "description": "Esp8266Lib is a vendored embedded C ESP8266 AT command parser and support library, including Tilen Majerle ESP8266/buffer sources and bundled Protothreads headers.",
+      "licenses": [
+        {
+          "expression": "MIT AND BSD-3-Clause"
+        }
+      ],
+      "properties": [
+        {
+          "name": "bsp:file-path",
+          "value": "SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib"
+        },
+        {
+          "name": "src_path",
+          "value": "SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib"
+        },
+        {
+          "name": "integration",
+          "value": "vendored_source"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:component-source",
+          "value": "Tilen Majerle ESP8266 AT commands parser; bundled Protothreads by Adam Dunkels / SICS"
+        },
+        {
+          "name": "bsp:evidence-file",
+          "value": "Document/SBOM/components/sca_esp8266lib.json"
+        },
+        {
+          "name": "bsp:evidence-path",
+          "value": "SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib"
+        },
+        {
+          "name": "bsp:version-evidence",
+          "value": "SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib/esp8266.h (\\version v2.3.0)"
+        },
+        {
+          "name": "esp8266lib_header_version",
+          "value": "230"
+        },
+        {
+          "name": "buffer_header_version",
+          "value": "110"
+        },
+        {
+          "name": "bundled_component",
+          "value": "Protothreads"
+        },
+        {
+          "name": "bundled_component_license",
+          "value": "BSD-3-Clause"
+        },
+        {
+          "name": "bsp:license-note",
+          "value": "esp8266_ll_template.h contains conflicting Doxygen license metadata: \\license GNU GPL v3, while the embedded full license text is MIT."
+        },
+        {
+          "name": "bsp:sha256:SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib/buffer.c",
+          "value": "6e133d48a468162400888d9bde7e09d9e1f7a53ce340d4af066298955c8acef5"
+        },
+        {
+          "name": "bsp:sha256:SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib/buffer.h",
+          "value": "f5bcbaabd4274d316f9cf9e8dd543f7aba619dad62501bba898ebf7644ae0a28"
+        },
+        {
+          "name": "bsp:sha256:SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib/esp8266.c",
+          "value": "11dba0985ed6ac678adb1bdba15ee86ddea268a2d74a556643dab0351e6b5702"
+        },
+        {
+          "name": "bsp:sha256:SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib/esp8266.h",
+          "value": "ca3d07da6104476cccec0385808de2d706698c75eb00ccafd63ca7af65d38f8e"
+        },
+        {
+          "name": "bsp:sha256:SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib/esp8266_config_template.h",
+          "value": "85357e4bdc9398104dfc5d8e379bb4438cf777a2a39c4526b98de67fdda870ec"
+        },
+        {
+          "name": "bsp:sha256:SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib/esp8266_ll_template.c",
+          "value": "55e6b9c66b4c15e7e603ca01a5f15025ecec6ba8a06926e7f5155a34c49fdd39"
+        },
+        {
+          "name": "bsp:sha256:SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib/esp8266_ll_template.h",
+          "value": "1f172faf0c59310d73091eed631c73be325b3509a9903dd6a978074630c47e83"
+        },
+        {
+          "name": "bsp:sha256:SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib/pt/lc-addrlabels.h",
+          "value": "46b511e142bedcf935d3a43b1d79e73a822cb1da46df0eb94217dcd1ddf57d4a"
+        },
+        {
+          "name": "bsp:sha256:SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib/pt/lc-switch.h",
+          "value": "9e52f82a7e6c0137d787ea8caad20a6aa49e7329f83042b4b3b800d208649d64"
+        },
+        {
+          "name": "bsp:sha256:SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib/pt/lc.h",
+          "value": "2c6d0a32c14721fb6b357717f81658267842cf0be94c5c4853840cd55103a0ee"
+        },
+        {
+          "name": "bsp:sha256:SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib/pt/pt-sem.h",
+          "value": "e8b3148cf45c2da0b938ae0ce783ee02ee04724a5202f0fd0da32327b631cb6b"
+        },
+        {
+          "name": "bsp:sha256:SampleCode/SecureApplication/SecureOTADemo/Esp8266Lib/pt/pt.h",
+          "value": "0645bfeca462492f139611fabe83f47bcee3337ee56db4f43886ad8e2665d2d4"
+        }
+      ]
+    }
+  ]
+}

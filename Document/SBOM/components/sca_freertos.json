@@ -1,0 +1,59 @@
+{
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/freertos-kernel@10.0.0?source=vendored&path=ThirdParty/FreeRTOS",
+      "name": "FreeRTOS-Kernel",
+      "version": "10.0.0",
+      "scope": "required",
+      "author": "Amazon.com, Inc. (FreeRTOS project)",
+      "purl": "pkg:generic/freertos-kernel@10.0.0",
+      "description": "FreeRTOS Kernel vendored in ThirdParty/FreeRTOS, including kernel source, public headers, ARM_CM4F and ARM_CM4_MPU GCC/IAR/RVDS portable layers, memory managers, and demo/common example files.",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "src_path",
+          "value": "ThirdParty/FreeRTOS"
+        },
+        {
+          "name": "integration",
+          "value": "vendored_source"
+        },
+        {
+          "name": "freertos_kernel_version",
+          "value": "10.0.0"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:component-source",
+          "value": "FreeRTOS Kernel (Amazon FreeRTOS project)"
+        },
+        {
+          "name": "bsp:evidence-file",
+          "value": "Document/SBOM/components/sca_freertos.json"
+        },
+        {
+          "name": "bsp:evidence-path",
+          "value": "ThirdParty/FreeRTOS"
+        },
+        {
+          "name": "bsp:version-evidence",
+          "value": "ThirdParty/FreeRTOS/Source/include/FreeRTOS.h; ThirdParty/FreeRTOS/Source/tasks.c; ThirdParty/FreeRTOS/Source/queue.c; ThirdParty/FreeRTOS/Source/list.c; ThirdParty/FreeRTOS/Source/timers.c; ThirdParty/FreeRTOS/Source/include/task.h"
+        },
+        {
+          "name": "bsp:license-evidence",
+          "value": "MIT license text in vendored FreeRTOS source headers"
+        }
+      ]
+    }
+  ]
+}

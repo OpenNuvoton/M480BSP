@@ -1,0 +1,55 @@
+{
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/fatfs@R0.13a?source=vendored&path=ThirdParty/FatFs",
+      "name": "FatFs",
+      "version": "R0.13a",
+      "scope": "required",
+      "author": "ChaN",
+      "purl": "pkg:generic/fatfs@R0.13a",
+      "description": "FatFs - Generic FAT file system module for embedded systems (ANSI C/C89), integrated as vendored source code.",
+      "licenses": [
+        {
+          "license": {
+            "name": "FatFs license (BSD-like, as declared by ChaN in source header)"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "src_path",
+          "value": "ThirdParty/FatFs"
+        },
+        {
+          "name": "fatfs_revision_id",
+          "value": "89352"
+        },
+        {
+          "name": "integration",
+          "value": "vendored_source"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:component-source",
+          "value": "FatFs (ChaN) - Generic FAT file system module"
+        },
+        {
+          "name": "bsp:evidence-file",
+          "value": "Document/SBOM/components/sca_fatfs.json"
+        },
+        {
+          "name": "bsp:evidence-path",
+          "value": "ThirdParty/FatFs"
+        },
+        {
+          "name": "bsp:version-evidence",
+          "value": "ThirdParty/FatFs/source/ff.h; ThirdParty/FatFs/source/ff.c; ThirdParty/FatFs/source/ffconf.h; ThirdParty/FatFs/source/ffunicode.c"
+        }
+      ]
+    }
+  ]
+}

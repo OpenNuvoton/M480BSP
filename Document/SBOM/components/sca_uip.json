@@ -1,0 +1,59 @@
+{
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/uip@0.9?source=vendored&path=ThirdParty/uip-0.9",
+      "name": "uIP",
+      "version": "0.9",
+      "scope": "required",
+      "author": "Adam Dunkels",
+      "purl": "pkg:generic/uip@0.9",
+      "description": "uIP small TCP/IP stack vendored in ThirdParty/uip-0.9, including uIP core, ARP, SLIP, example applications, documentation, and Unix example code.",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "src_path",
+          "value": "ThirdParty/uip-0.9"
+        },
+        {
+          "name": "integration",
+          "value": "vendored_source"
+        },
+        {
+          "name": "uip_version",
+          "value": "0.9"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:component-source",
+          "value": "uIP TCP/IP stack"
+        },
+        {
+          "name": "bsp:evidence-file",
+          "value": "Document/SBOM/components/sca_uip.json"
+        },
+        {
+          "name": "bsp:evidence-path",
+          "value": "ThirdParty/uip-0.9"
+        },
+        {
+          "name": "bsp:version-evidence",
+          "value": "ThirdParty/uip-0.9 directory name; ThirdParty/uip-0.9/apps/httpd/makefsdata"
+        },
+        {
+          "name": "bsp:license-evidence",
+          "value": "ThirdParty/uip-0.9/uip/uip.h; ThirdParty/uip-0.9/uip/uip.c"
+        }
+      ]
+    }
+  ]
+}

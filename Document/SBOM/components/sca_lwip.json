@@ -1,0 +1,59 @@
+{
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/lwip@2.0.3?source=vendored&path=ThirdParty/lwIP",
+      "name": "lwIP",
+      "version": "2.0.3",
+      "scope": "required",
+      "author": "Swedish Institute of Computer Science / lwIP project",
+      "purl": "pkg:generic/lwip@2.0.3",
+      "description": "lwIP TCP/IP stack vendored in ThirdParty/lwIP, including core stack, APIs, netif code, apps, documentation, and tests.",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "src_path",
+          "value": "ThirdParty/lwIP"
+        },
+        {
+          "name": "integration",
+          "value": "vendored_source"
+        },
+        {
+          "name": "lwip_version",
+          "value": "2.0.3"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:component-source",
+          "value": "lwIP TCP/IP stack"
+        },
+        {
+          "name": "bsp:evidence-file",
+          "value": "Document/SBOM/components/sca_lwip.json"
+        },
+        {
+          "name": "bsp:evidence-path",
+          "value": "ThirdParty/lwIP"
+        },
+        {
+          "name": "bsp:version-evidence",
+          "value": "ThirdParty/lwIP/src/include/lwip/init.h"
+        },
+        {
+          "name": "bsp:license-evidence",
+          "value": "ThirdParty/lwIP/COPYING; ThirdParty/lwIP/README; ThirdParty/lwIP/src/include/lwip/init.h"
+        }
+      ]
+    }
+  ]
+}

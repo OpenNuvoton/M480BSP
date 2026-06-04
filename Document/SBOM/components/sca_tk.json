@@ -1,0 +1,51 @@
+{
+  "components": [
+    {
+      "type": "application",
+      "bom-ref": "TouchView.exe-38d449b6",
+      "name": "TouchView",
+      "version": "1.0.0.1",
+      "scope": "required",
+      "author": "Nuvoton Technology Corporation",
+      "purl": "pkg:generic/touchview@1.0.0.1",
+      "description": "TouchView is a GUI tool for developing and tuning touch key functions on supported NuMicro MCUs. The tool is included in the corresponding BSP as a pre-built executable.",
+      "licenses": [
+        {
+          "license": {
+            "name": "Nuvoton Proprietary"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "bsp:file-path",
+          "value": "Tool/TK/TouchView.exe"
+        },
+        {
+          "name": "integration",
+          "value": "vendored_binary"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:component-source",
+          "value": "Nuvoton Technology Corporation"
+        },
+        {
+          "name": "bsp:evidence-file",
+          "value": "Document/SBOM/components/sca_tk.json"
+        },
+        {
+          "name": "bsp:evidence-path",
+          "value": "Tool/TK"
+        },
+        {
+          "name": "bsp:version-evidence",
+          "value": "Tool/TK/TouchView.exe (PE version resource: FileVersion 1.0.0.1)"
+        }
+      ]
+    }
+  ]
+}

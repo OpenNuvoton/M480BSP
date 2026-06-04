@@ -1,0 +1,227 @@
+{
+  "components": [
+    {
+      "type": "application",
+      "bom-ref": "pkg:generic/otaserverdemo-android@2.1.2?source=vendored&path=Utilities/androidApp",
+      "name": "OTAServerDemo Android App",
+      "version": "2.1.2",
+      "scope": "required",
+      "author": "Nuvoton Technology Corporation",
+      "purl": "pkg:generic/otaserverdemo-android@2.1.2",
+      "description": "Nuvoton OTAServerDemo Android application and related pre-built APK/AAR artifacts under Utilities/androidApp.",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "src_path",
+          "value": "Utilities/androidApp"
+        },
+        {
+          "name": "bsp:file-path",
+          "value": "Utilities/androidApp"
+        },
+        {
+          "name": "integration",
+          "value": "vendored_source_and_binary"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:component-source",
+          "value": "Nuvoton Technology Corporation"
+        },
+        {
+          "name": "bsp:evidence-file",
+          "value": "Document/SBOM/components/sca_androidapp.json"
+        },
+        {
+          "name": "bsp:evidence-path",
+          "value": "Utilities/androidApp"
+        },
+        {
+          "name": "bsp:license-file",
+          "value": "Utilities/androidApp/LICENSE.md"
+        },
+        {
+          "name": "bsp:application-id",
+          "value": "com.nuvoton.otaserverdemo"
+        },
+        {
+          "name": "bsp:version-code",
+          "value": "1"
+        },
+        {
+          "name": "bsp:version-evidence",
+          "value": "Utilities/androidApp/OTAServerDemo/OTAServerDemo/app/build.gradle (versionName 2.1.2)"
+        },
+        {
+          "name": "bsp:compile-sdk-version",
+          "value": "28"
+        },
+        {
+          "name": "bsp:min-sdk-version",
+          "value": "21"
+        },
+        {
+          "name": "bsp:target-sdk-version",
+          "value": "28"
+        },
+        {
+          "name": "bsp:gradle-distribution",
+          "value": "gradle-6.5-all"
+        },
+        {
+          "name": "bsp:build-tool",
+          "value": "Android Gradle Plugin 4.1.1"
+        },
+        {
+          "name": "bsp:kotlin-version",
+          "value": "1.3.61"
+        },
+        {
+          "name": "bsp:binary-file",
+          "value": "Utilities/androidApp/OTA_Update_App.apk"
+        },
+        {
+          "name": "bsp:binary-file",
+          "value": "Utilities/androidApp/OTAServerDemo/OTAServerDemo/app/debug/app-debug.apk"
+        },
+        {
+          "name": "bsp:binary-file",
+          "value": "Utilities/androidApp/OTAServerDemo/OTAServerDemo/app/libs/otaserver-debug.aar"
+        },
+        {
+          "name": "bsp:binary-file",
+          "value": "Utilities/androidApp/OTAServerDemo/OTAServerDemo/app/libs/otaserver-release.aar"
+        },
+        {
+          "name": "bsp:binary-file",
+          "value": "Utilities/androidApp/OTAServerDemo/OTAServerDemo/otaserver-debug/otaserver-debug2.aar"
+        },
+        {
+          "name": "bsp:binary-file",
+          "value": "Utilities/androidApp/OTAServerDemo/OTAServerDemo/app/otaserver-libs.zip"
+        },
+        {
+          "name": "bsp:bundled-third-party-component",
+          "value": "Gradle Wrapper"
+        },
+        {
+          "name": "bsp:third-party-dependency",
+          "value": "Android Gradle Plugin 4.1.1"
+        },
+        {
+          "name": "bsp:third-party-dependency",
+          "value": "Kotlin 1.3.61"
+        },
+        {
+          "name": "bsp:third-party-dependency",
+          "value": "AndroidX AppCompat 1.1.0"
+        },
+        {
+          "name": "bsp:third-party-dependency",
+          "value": "AndroidX Core KTX 1.2.0"
+        },
+        {
+          "name": "bsp:third-party-dependency",
+          "value": "AndroidX ConstraintLayout 1.1.3"
+        },
+        {
+          "name": "bsp:third-party-dependency",
+          "value": "Material Dialogs 2.8.1"
+        },
+        {
+          "name": "bsp:third-party-dependency",
+          "value": "ACRA 4.9.2"
+        },
+        {
+          "name": "bsp:third-party-dependency",
+          "value": "OkHttp MockWebServer 3.9.0"
+        },
+        {
+          "name": "bsp:third-party-dependency",
+          "value": "com.snatik:storage:2.1.0"
+        },
+        {
+          "name": "bsp:third-party-dependency",
+          "value": "com.orhanobut:logger:2.1.1"
+        },
+        {
+          "name": "bsp:third-party-dependency",
+          "value": "com.nabinbhandari.android:permissions:3.8"
+        },
+        {
+          "name": "bsp:third-party-dependency",
+          "value": "Spongy Castle core/prov 1.58.0.0"
+        },
+        {
+          "name": "bsp:version-note",
+          "value": "app/debug/output.json records versionName 1.0, while app/build.gradle records versionName 2.1.2."
+        },
+        {
+          "name": "bsp:sha256:Utilities/androidApp/LICENSE.md",
+          "value": "782b920914870fa3f01b09b842f4c847b3bdb3c9bf08773dc51bdc6cfd8d0d11"
+        },
+        {
+          "name": "bsp:sha256:Utilities/androidApp/OTA_Update_App.apk",
+          "value": "eb76dee752cc6441a5426b9b51f32588cfc6e3a57a7a11a57cf66c2d4af89d97"
+        },
+        {
+          "name": "bsp:sha1:Utilities/androidApp/OTA_Update_App.apk",
+          "value": "1cb6d32f34c82f2d576b0d6df48cb1f770b15631"
+        },
+        {
+          "name": "bsp:sha256:Utilities/androidApp/OTAServerDemo/OTAServerDemo/app/debug/app-debug.apk",
+          "value": "94ff0fe849a47b96ee44d42a3c787e62e60d68515b15d25adefc503f12dbffc2"
+        },
+        {
+          "name": "bsp:sha1:Utilities/androidApp/OTAServerDemo/OTAServerDemo/app/debug/app-debug.apk",
+          "value": "0afe8d96fee093394f9cd291ebfbbdbaac1defa8"
+        },
+        {
+          "name": "bsp:sha256:Utilities/androidApp/OTAServerDemo/OTAServerDemo/app/libs/otaserver-debug.aar",
+          "value": "12a5eca514e692241eaab2ed65704f1a5b114246ef4644a6e14b5a9dbb3a187c"
+        },
+        {
+          "name": "bsp:sha256:Utilities/androidApp/OTAServerDemo/OTAServerDemo/app/libs/otaserver-release.aar",
+          "value": "b445989fa1dd14212bedc95e0b0c3218bf0abd6ed30c8221a0d134eef778ff12"
+        },
+        {
+          "name": "bsp:sha256:Utilities/androidApp/OTAServerDemo/OTAServerDemo/otaserver-debug/otaserver-debug2.aar",
+          "value": "cfb909222c8d6d9376e1a9da591d3e16a5382b2992006c4994bac3bbcfc70654"
+        },
+        {
+          "name": "bsp:sha256:Utilities/androidApp/OTAServerDemo/OTAServerDemo/app/otaserver-libs.zip",
+          "value": "e22076e81bbad680d6b7197bc9ad9009cb48f891fb0fb3c84820f19f5b965153"
+        },
+        {
+          "name": "bsp:sha256:Utilities/androidApp/OTAServerDemo/OTAServerDemo/gradle/wrapper/gradle-wrapper.jar",
+          "value": "381dff8aa434499aa93bc25572b049c8c586a67faff2c02f375e4f23e17e49de"
+        },
+        {
+          "name": "bsp:sha1:Utilities/androidApp/OTAServerDemo/OTAServerDemo/gradle/wrapper/gradle-wrapper.jar",
+          "value": "636cf935a0fd1451657a4112974b3500cce3ab84"
+        },
+        {
+          "name": "bsp:sha256:Utilities/androidApp/OTAServerDemo/OTAServerDemo/app/src/main/java/com/nuvoton/otaserverdemo/MainActivityWifi.kt",
+          "value": "652d181f7871d05036fe992289ae477960d1c56ce4cc7f4e23b186e62cebd8b9"
+        },
+        {
+          "name": "bsp:sha256:Utilities/androidApp/OTAServerDemo/OTAServerDemo/app/build.gradle",
+          "value": "83d17a226cba467deaaca5581776ff04627bb419e66588da62698145bc6c0719"
+        },
+        {
+          "name": "bsp:sha256:Utilities/androidApp/OTAServerDemo/OTAServerDemo/app/src/main/AndroidManifest.xml",
+          "value": "4623cd26157174b04ddcafb436f7f16f2b25a4912781b71e575bcd316a6e4ea0"
+        }
+      ]
+    }
+  ]
+}

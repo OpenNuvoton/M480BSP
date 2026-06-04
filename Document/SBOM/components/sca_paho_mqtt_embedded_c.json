@@ -1,0 +1,57 @@
+{
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/paho-mqtt-embedded-c@1.0?source=vendored&path=ThirdParty/paho.mqtt.embedded-c",
+      "name": "paho.mqtt.embedded-c",
+      "version": "1.0",
+      "scope": "required",
+      "author": "Eclipse Paho / IBM Corp.",
+      "purl": "pkg:generic/paho-mqtt-embedded-c@1.0",
+      "description": "Eclipse Paho MQTT C/C++ client library for embedded platforms vendored in ThirdParty/paho.mqtt.embedded-c, including MQTTPacket, MQTTClient, and MQTTClient-C subprojects.",
+      "licenses": [
+        {
+          "expression": "EPL-1.0 OR EDL-1.0"
+        }
+      ],
+      "properties": [
+        {
+          "name": "src_path",
+          "value": "ThirdParty/paho.mqtt.embedded-c"
+        },
+        {
+          "name": "integration",
+          "value": "vendored_source"
+        },
+        {
+          "name": "paho_mqtt_embedded_c_version",
+          "value": "1.0"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:component-source",
+          "value": "Eclipse Paho MQTT embedded C"
+        },
+        {
+          "name": "bsp:evidence-file",
+          "value": "Document/SBOM/components/sca_paho_mqtt_embedded_c.json"
+        },
+        {
+          "name": "bsp:evidence-path",
+          "value": "ThirdParty/paho.mqtt.embedded-c"
+        },
+        {
+          "name": "bsp:version-evidence",
+          "value": "ThirdParty/paho.mqtt.embedded-c/Makefile"
+        },
+        {
+          "name": "bsp:license-evidence",
+          "value": "ThirdParty/paho.mqtt.embedded-c/README.md; ThirdParty/paho.mqtt.embedded-c/about.html; ThirdParty/paho.mqtt.embedded-c/MQTTPacket/src/MQTTPacket.h"
+        }
+      ]
+    }
+  ]
+}

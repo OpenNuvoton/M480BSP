@@ -1,0 +1,59 @@
+{
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/mbedtls@2.13.0?source=vendored&path=ThirdParty/mbedtls-2.13.0",
+      "name": "mbed TLS",
+      "version": "2.13.0",
+      "scope": "required",
+      "author": "ARM Limited",
+      "purl": "pkg:generic/mbedtls@2.13.0",
+      "description": "mbed TLS cryptographic and TLS library vendored in ThirdParty/mbedtls-2.13.0, including public headers and library source files.",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "src_path",
+          "value": "ThirdParty/mbedtls-2.13.0"
+        },
+        {
+          "name": "integration",
+          "value": "vendored_source"
+        },
+        {
+          "name": "mbedtls_version",
+          "value": "2.13.0"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:component-source",
+          "value": "mbed TLS"
+        },
+        {
+          "name": "bsp:evidence-file",
+          "value": "Document/SBOM/components/sca_mbedtls.json"
+        },
+        {
+          "name": "bsp:evidence-path",
+          "value": "ThirdParty/mbedtls-2.13.0"
+        },
+        {
+          "name": "bsp:version-evidence",
+          "value": "ThirdParty/mbedtls-2.13.0/include/mbedtls/version.h"
+        },
+        {
+          "name": "bsp:license-evidence",
+          "value": "ThirdParty/mbedtls-2.13.0/include/mbedtls/version.h; ThirdParty/mbedtls-2.13.0/library/aes.c"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/libjpeg@9b?source=vendored&path=ThirdParty/libjpeg",
+      "name": "libjpeg",
+      "version": "9b",
+      "scope": "required",
+      "author": "Independent JPEG Group",
+      "purl": "pkg:generic/libjpeg@9b",
+      "description": "Independent JPEG Group JPEG software vendored in ThirdParty/libjpeg for JPEG encoding, decoding, and transcoding.",
+      "licenses": [
+        {
+          "license": {
+            "id": "IJG"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "src_path",
+          "value": "ThirdParty/libjpeg"
+        },
+        {
+          "name": "integration",
+          "value": "vendored_source"
+        },
+        {
+          "name": "libjpeg_version",
+          "value": "9b"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:component-source",
+          "value": "Independent JPEG Group JPEG software"
+        },
+        {
+          "name": "bsp:evidence-file",
+          "value": "Document/SBOM/components/sca_libjpeg.json"
+        },
+        {
+          "name": "bsp:evidence-path",
+          "value": "ThirdParty/libjpeg"
+        },
+        {
+          "name": "bsp:version-evidence",
+          "value": "ThirdParty/libjpeg/README; ThirdParty/libjpeg/jversion.h"
+        },
+        {
+          "name": "bsp:license-evidence",
+          "value": "ThirdParty/libjpeg/README LEGAL ISSUES section; ThirdParty/libjpeg/jversion.h"
+        }
+      ]
+    }
+  ]
+}
