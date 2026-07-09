@@ -1,0 +1,437 @@
+{
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:da226f60-4d46-4987-9d2d-96479428c11c",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-06-15T17:30:41+08:00",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "author": "anchore",
+          "name": "syft",
+          "version": "1.43.0"
+        }
+      ]
+    },
+    "component": {
+      "bom-ref": "04ed2dbaee1fb902",
+      "type": "library",
+      "name": "MCU Driver",
+      "version": "V3.07.000-12-ge3706f9d",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "bsp:sbom-category",
+          "value": "product"
+        },
+        {
+          "name": "bsp:scope",
+          "value": "Components included in, linked with, deployed to, or reasonably expected to be integrated into final product firmware/software."
+        },
+        {
+          "name": "bsp:scope-policy-file",
+          "value": "product-scope.yaml"
+        },
+        {
+          "name": "bsp:runtime-scope",
+          "value": "true"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "true"
+        },
+        {
+          "name": "bsp:third-party-components",
+          "value": "none identified in product scope based on the defined Product SBOM scope policy"
+        },
+        {
+          "name": "bsp:product-scope-include-path",
+          "value": "Library/CMSIS"
+        },
+        {
+          "name": "bsp:product-scope-include-path",
+          "value": "Library/Device"
+        },
+        {
+          "name": "bsp:product-scope-include-path",
+          "value": "Library/FWUpdate"
+        },
+        {
+          "name": "bsp:product-scope-include-path",
+          "value": "Library/SmartcardLib"
+        },
+        {
+          "name": "bsp:product-scope-include-path",
+          "value": "Library/StdDriver"
+        },
+        {
+          "name": "bsp:product-scope-include-path",
+          "value": "Library/UsbHostLib"
+        },
+        {
+          "name": "bsp:product-scope-exclude-path",
+          "value": "Document/"
+        },
+        {
+          "name": "bsp:product-scope-exclude-path",
+          "value": "SampleCode/"
+        },
+        {
+          "name": "bsp:product-scope-exclude-path",
+          "value": "ThirdParty/"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "m480bsp:product-component:library-device",
+      "name": "m480 Device",
+      "version": "V3.07.000-12-ge3706f9d",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "scope": "required",
+      "description": "Directory-level first-party BSP product component included from product scope path Library/Device",
+      "properties": [
+        {
+          "name": "bsp:sbom-category",
+          "value": "product"
+        },
+        {
+          "name": "bsp:path",
+          "value": "Library/Device"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:component-granularity",
+          "value": "directory"
+        },
+        {
+          "name": "bsp:scope-policy-file",
+          "value": "product-scope.yaml"
+        },
+        {
+          "name": "bsp:runtime-scope",
+          "value": "true"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "m480bsp:product-component:library-fwupdate",
+      "name": "m480 FWUpdate",
+      "version": "V3.07.000-12-ge3706f9d",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "scope": "required",
+      "description": "Directory-level first-party BSP product component included from product scope path Library/FWUpdate",
+      "properties": [
+        {
+          "name": "bsp:sbom-category",
+          "value": "product"
+        },
+        {
+          "name": "bsp:path",
+          "value": "Library/FWUpdate"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:component-granularity",
+          "value": "directory"
+        },
+        {
+          "name": "bsp:scope-policy-file",
+          "value": "product-scope.yaml"
+        },
+        {
+          "name": "bsp:runtime-scope",
+          "value": "true"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "m480bsp:product-component:library-smartcardlib",
+      "name": "m480 SmartcardLib",
+      "version": "V3.07.000-12-ge3706f9d",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "scope": "required",
+      "description": "Directory-level first-party BSP product component included from product scope path Library/SmartcardLib",
+      "properties": [
+        {
+          "name": "bsp:sbom-category",
+          "value": "product"
+        },
+        {
+          "name": "bsp:path",
+          "value": "Library/SmartcardLib"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:component-granularity",
+          "value": "directory"
+        },
+        {
+          "name": "bsp:scope-policy-file",
+          "value": "product-scope.yaml"
+        },
+        {
+          "name": "bsp:runtime-scope",
+          "value": "true"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "m480bsp:product-component:library-stddriver",
+      "name": "m480 StdDriver",
+      "version": "V3.07.000-12-ge3706f9d",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "scope": "required",
+      "description": "Directory-level first-party BSP product component included from product scope path Library/StdDriver",
+      "properties": [
+        {
+          "name": "bsp:sbom-category",
+          "value": "product"
+        },
+        {
+          "name": "bsp:path",
+          "value": "Library/StdDriver"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:component-granularity",
+          "value": "directory"
+        },
+        {
+          "name": "bsp:scope-policy-file",
+          "value": "product-scope.yaml"
+        },
+        {
+          "name": "bsp:runtime-scope",
+          "value": "true"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "m480bsp:product-component:library-usbhostlib",
+      "name": "m480 UsbHostLib",
+      "version": "V3.07.000-12-ge3706f9d",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "scope": "required",
+      "description": "Directory-level first-party BSP product component included from product scope path Library/UsbHostLib",
+      "properties": [
+        {
+          "name": "bsp:sbom-category",
+          "value": "product"
+        },
+        {
+          "name": "bsp:path",
+          "value": "Library/UsbHostLib"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "first-party"
+        },
+        {
+          "name": "bsp:component-granularity",
+          "value": "directory"
+        },
+        {
+          "name": "bsp:scope-policy-file",
+          "value": "product-scope.yaml"
+        },
+        {
+          "name": "bsp:runtime-scope",
+          "value": "true"
+        },
+        {
+          "name": "bsp:included-in-product-firmware",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/cmsis@5.0.2?source=vendored&path=Library/CMSIS",
+      "name": "CMSIS",
+      "version": "5.0.2",
+      "scope": "required",
+      "author": "Arm Limited",
+      "purl": "pkg:generic/cmsis@5.0.2",
+      "description": "Arm CMSIS vendored in Library/CMSIS, including CMSIS-Core(M), CMSIS-Core(A), CMSIS-DSP Library, CMSIS-Driver, CMSIS-RTOS and CMSIS-RTOS2, CMSIS-DAP firmware, SVD examples, Pack examples, Utilities, prebuilt libraries, templates, and documentation.",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "src_path",
+          "value": "Library/CMSIS"
+        },
+        {
+          "name": "integration",
+          "value": "vendored_source_binary_and_documentation"
+        },
+        {
+          "name": "cmsis_core_m_version",
+          "value": "5.0.2"
+        },
+        {
+          "name": "cmsis_core_m_version_macro",
+          "value": "5.0"
+        },
+        {
+          "name": "cmsis_core_a_version",
+          "value": "1.0"
+        },
+        {
+          "name": "cmsis_dsp_library_version",
+          "value": "1.5.1"
+        },
+        {
+          "name": "cmsis_rtos_api_version",
+          "value": "1.02"
+        },
+        {
+          "name": "cmsis_rtos2_api_version",
+          "value": "2.1.1"
+        },
+        {
+          "name": "cmsis_driver_common_api_version",
+          "value": "2.0"
+        },
+        {
+          "name": "cmsis_driver_documentation_version",
+          "value": "2.05"
+        },
+        {
+          "name": "cmsis_dap_firmware_version",
+          "value": "1.10"
+        },
+        {
+          "name": "cmsis_dap_documentation_version",
+          "value": "1.2.0 (Proposal)"
+        },
+        {
+          "name": "cmsis_pack_documentation_version",
+          "value": "1.5.0"
+        },
+        {
+          "name": "cmsis_pack_schema_version",
+          "value": "1.4"
+        },
+        {
+          "name": "bsp:component-origin",
+          "value": "third-party"
+        },
+        {
+          "name": "bsp:component-source",
+          "value": "Arm CMSIS"
+        },
+        {
+          "name": "bsp:evidence-file",
+          "value": "Document/SBOM/cmsis/sca_cmsis.json"
+        },
+        {
+          "name": "bsp:evidence-path",
+          "value": "Library/CMSIS"
+        },
+        {
+          "name": "bsp:version-evidence",
+          "value": "Library/CMSIS/Include/cmsis_version.h; Library/CMSIS/Documentation/Core/html/index.html; Library/CMSIS/Core_A/Include/core_ca.h; Library/CMSIS/Include/arm_math.h; Library/CMSIS/RTOS/Template/cmsis_os.h; Library/CMSIS/RTOS2/Include/cmsis_os2.h; Library/CMSIS/Driver/Include/Driver_Common.h; Library/CMSIS/Documentation/Driver/html/index.html; Library/CMSIS/DAP/Firmware/Source/DAP.c; Library/CMSIS/Documentation/DAP/html/index.html; Library/CMSIS/Documentation/Pack/html/index.html; Library/CMSIS/Utilities/PACK.xsd"
+        },
+        {
+          "name": "bsp:license-evidence",
+          "value": "SPDX-License-Identifier: Apache-2.0 in CMSIS headers and source files, including Library/CMSIS/Include/cmsis_version.h, Library/CMSIS/Core_A/Include/core_ca.h, Library/CMSIS/Include/arm_math.h, Library/CMSIS/Driver/Include/Driver_Common.h, and Library/CMSIS/DAP/Firmware/Source/DAP.c"
+        },
+        {
+          "name": "bsp:prebuilt-library-count",
+          "value": "82"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "04ed2dbaee1fb902",
+      "dependsOn": [
+        "m480bsp:product-component:library-device",
+        "m480bsp:product-component:library-fwupdate",
+        "m480bsp:product-component:library-smartcardlib",
+        "m480bsp:product-component:library-stddriver",
+        "m480bsp:product-component:library-usbhostlib"
+      ]
+    }
+  ]
+}

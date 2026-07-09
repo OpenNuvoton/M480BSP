@@ -1,0 +1,214 @@
+{
+  "manifestFormat": "MCU-BSP-SBOM-Manifest",
+  "manifestVersion": "1.0",
+  "serialNumber": "urn:uuid:970009ae-0900-4461-8b4b-aba934fe55b4",
+  "createdAt": "2026-06-15T09:30:45.363114Z",
+  "bsp": {
+    "name": "m480bsp",
+    "version": "V3.07.000-12-ge3706f9d",
+    "releaseIdentifierSource": "SBOM file name",
+    "gitDescribe": "V3.07.000-12-ge3706f9d"
+  },
+  "sbomPackage": {
+    "name": "MCU BSP SBOM Package",
+    "format": "CycloneDX",
+    "formatVersion": "1.6",
+    "contains": [
+      "Product SBOM",
+      "Test Sample SBOM"
+    ]
+  },
+  "sboms": [
+    {
+      "fileName": "m480bsp_Product_SBOM_V3.07.000-12-ge3706f9d_cdx.json",
+      "sbomType": "Product SBOM",
+      "bomFormat": "CycloneDX",
+      "specVersion": "1.6",
+      "serialNumber": "urn:uuid:da226f60-4d46-4987-9d2d-96479428c11c",
+      "sbomVersion": 1,
+      "generatedTimestamp": "2026-06-15T17:30:41+08:00",
+      "metadataComponent": {
+        "bomRef": "04ed2dbaee1fb902",
+        "type": "library",
+        "name": "MCU Driver",
+        "version": "V3.07.000-12-ge3706f9d",
+        "properties": [
+          {
+            "name": "bsp:sbom-category",
+            "value": "product"
+          },
+          {
+            "name": "bsp:scope",
+            "value": "Components included in, linked with, deployed to, or reasonably expected to be integrated into final product firmware/software."
+          },
+          {
+            "name": "bsp:scope-policy-file",
+            "value": "product-scope.yaml"
+          },
+          {
+            "name": "bsp:runtime-scope",
+            "value": "true"
+          },
+          {
+            "name": "bsp:included-in-product-firmware",
+            "value": "true"
+          },
+          {
+            "name": "bsp:third-party-components",
+            "value": "none identified in product scope based on the defined Product SBOM scope policy"
+          },
+          {
+            "name": "bsp:product-scope-include-path",
+            "value": "Library/CMSIS"
+          },
+          {
+            "name": "bsp:product-scope-include-path",
+            "value": "Library/Device"
+          },
+          {
+            "name": "bsp:product-scope-include-path",
+            "value": "Library/FWUpdate"
+          },
+          {
+            "name": "bsp:product-scope-include-path",
+            "value": "Library/SmartcardLib"
+          },
+          {
+            "name": "bsp:product-scope-include-path",
+            "value": "Library/StdDriver"
+          },
+          {
+            "name": "bsp:product-scope-include-path",
+            "value": "Library/UsbHostLib"
+          },
+          {
+            "name": "bsp:product-scope-exclude-path",
+            "value": "Document/"
+          },
+          {
+            "name": "bsp:product-scope-exclude-path",
+            "value": "SampleCode/"
+          },
+          {
+            "name": "bsp:product-scope-exclude-path",
+            "value": "ThirdParty/"
+          }
+        ]
+      },
+      "scope": "Components included in, linked with, deployed to, or reasonably expected to be integrated into final product firmware/software.",
+      "isProductRuntimeScope": true,
+      "componentSummary": {
+        "componentCount": 6,
+        "componentCountByType": {
+          "library": 6
+        },
+        "applicationNames": [],
+        "fileComponentCount": 0,
+        "fileComponentWithHashCount": 0
+      },
+      "hash": {
+        "algorithm": "SHA-256",
+        "value": "e72312149b0bf64fbb213621a1a5b2839d9c87b5f062cfd23e9d2b21cb0dc989"
+      }
+    },
+    {
+      "fileName": "m480bsp_TestSample_SBOM_V3.07.000-12-ge3706f9d_cdx.json",
+      "sbomType": "Test Sample SBOM",
+      "bomFormat": "CycloneDX",
+      "specVersion": "1.6",
+      "serialNumber": "urn:uuid:2d4d836b-ba7b-483f-992c-9161d176ab6a",
+      "sbomVersion": 1,
+      "generatedTimestamp": "2026-06-15T17:30:44+08:00",
+      "metadataComponent": {
+        "bomRef": "85fd158bf2db4a01",
+        "type": "application",
+        "name": "MCU Test Sample",
+        "version": "V3.07.000-12-ge3706f9d",
+        "properties": [
+          {
+            "name": "bsp:sbom-category",
+            "value": "test-sample"
+          },
+          {
+            "name": "bsp:scope",
+            "value": "Components used only for examples, demonstrations, validation, host-side utilities, or testing; not included in product runtime unless explicitly integrated by the user."
+          },
+          {
+            "name": "bsp:scope-policy-file",
+            "value": "test-sample-scope.yaml"
+          },
+          {
+            "name": "bsp:runtime-scope",
+            "value": "false"
+          },
+          {
+            "name": "bsp:included-in-product-firmware",
+            "value": "false"
+          },
+          {
+            "name": "bsp:test-sample-scope-include-path",
+            "value": "SampleCode/"
+          },
+          {
+            "name": "bsp:test-sample-scope-include-path",
+            "value": "ThirdParty/"
+          },
+          {
+            "name": "bsp:test-sample-scope-exclude-path",
+            "value": "Document/"
+          },
+          {
+            "name": "bsp:test-sample-scope-exclude-path",
+            "value": "Library/"
+          }
+        ]
+      },
+      "scope": "Components used only for examples, demonstrations, validation, host-side utilities, or testing; not included in product runtime unless explicitly integrated by the user.",
+      "isProductRuntimeScope": false,
+      "componentSummary": {
+        "componentCount": 44,
+        "componentCountByType": {
+          "application": 15,
+          "device-driver": 3,
+          "library": 26
+        },
+        "applicationNames": [
+          "NUVPOS58",
+          "NuvPos58 Driver",
+          "OTAServerDemo Android App",
+          "SecureBootMaker",
+          "TouchView",
+          "TouchView_MP",
+          "WDF Coinstaller",
+          "Windows Driver Foundation - User-mode Platform Device Update Co-Installer",
+          "m480 SampleCode",
+          "m480 ThirdParty"
+        ],
+        "fileComponentCount": 0,
+        "fileComponentWithHashCount": 0
+      },
+      "hash": {
+        "algorithm": "SHA-256",
+        "value": "b49b1cd8901212124bfa88fb65044aa166dddbc307fccbe06a6b158ddf94cba2"
+      },
+      "relationshipToProductSbom": {
+        "usesProductComponents": true,
+        "productSbomFile": "m480bsp_Product_SBOM_V3.07.000-12-ge3706f9d_cdx.json",
+        "description": "Test sample firmware may be built using MCU Driver components described in the Product SBOM. These product components are not duplicated in the Test Sample SBOM."
+      }
+    }
+  ],
+  "scopeRule": {
+    "productSbom": "Use as the primary SBOM for product vulnerability assessment and CRA product component transparency.",
+    "testSampleSbom": "Use only when sample, demo, validation, or test-only components are reused, executed, distributed, or integrated by the customer.",
+    "separationRationale": "Product and Test Sample SBOMs are kept separate to avoid treating test/sample utilities as product runtime dependencies."
+  },
+  "customerGuidance": [
+    "Use the Product SBOM as the primary input for product vulnerability assessment.",
+    "Review the Test Sample SBOM only when the corresponding sample/demo/test components are used or redistributed.",
+    "Components in the Test Sample SBOM are not considered product firmware/runtime dependencies unless explicitly integrated by the user."
+  ],
+  "notes": [
+    "This manifest is an index for the SBOM package; it is not a merged CycloneDX BOM."
+  ]
+}
