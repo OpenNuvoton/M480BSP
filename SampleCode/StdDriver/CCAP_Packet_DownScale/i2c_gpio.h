@@ -57,8 +57,6 @@ typedef enum
     eDRVGPIO_GPIOF = 0x140,
     eDRVGPIO_GPIOG = 0x180,
     eDRVGPIO_GPIOH = 0x1C0,
-    eDRVGPIO_GPIOI = 0x200,
-    eDRVGPIO_GPIOJ = 0x240,
 } E_DRVGPIO_PORT;
 typedef enum
 {
