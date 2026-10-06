@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     main.c
- * @version  V1.00
+ * @version  V1.10
  * @brief    Demonstrate the RTC spare_register read/write function and displays test result to the
  *           UART console
  *
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2026 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/
 #include <stdio.h>
@@ -64,12 +64,6 @@ void UART0_Init()
     UART_Open(UART0, 115200);
 }
 
-void RTC_AccessEnable()
-{
-    RTC->RWEN = RTC_WRITE_KEY;
-    while(!(RTC->RWEN & RTC_RWEN_RWENF_Msk));
-}
-
 int32_t main(void)
 {
     S_RTC_TIME_DATA_T sInitTime;
@@ -97,12 +91,8 @@ int32_t main(void)
         while(1);
     }
 
-    printf("\n RTC Spare Register Read/Write Test: \n\n");
-
-    if(!(SYS->CSERVER & 0x1))
-        Spare_Counter = 20;
-    else
-        Spare_Counter = 5;
+    Spare_Counter = RTC_GetSpareRegisterCount();
+    printf("\n RTC Spare Register (%d) Read/Write Test: \n\n", Spare_Counter);
 
     // Enable spare register
     RTC_EnableSpareAccess();
@@ -110,15 +100,13 @@ int32_t main(void)
     // Write spare register
     for(i = 0; i < Spare_Counter; i++)
     {
-        RTC_AccessEnable();
-        RTC_WRITE_SPARE_REGISTER(i, i);
+        RTC_WriteSpareRegister(i, i);
     }
 
     // Check spare register data
     for(i = 0; i < Spare_Counter; i++)
     {
-        RTC_AccessEnable();
-        Spare_Data = RTC_READ_SPARE_REGISTER(i);
+        Spare_Data = RTC_ReadSpareRegister(i);
         if(Spare_Data != i)
         {
             printf(" SPARE_REGISTER[%d] = 0x%x \n", i, Spare_Data);
@@ -140,7 +128,7 @@ int32_t main(void)
 
 
 
-/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2026 Nuvoton Technology Corp. ***/
 
 
 

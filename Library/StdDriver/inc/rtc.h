@@ -1,10 +1,10 @@
 /**************************************************************************//**
  * @file     rtc.h
- * @version  V3.00
+ * @version  V4.00
  * @brief    M480 series RTC driver header file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2026 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __RTC_H__
 #define __RTC_H__
@@ -273,7 +273,22 @@ typedef struct
 #define RTC_WRITE_SPARE_REGISTER(u32RegNum, u32RegValue)    (RTC->SPR[(u32RegNum)] = (u32RegValue))
 
 /* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */
+__STATIC_INLINE uint32_t RTC_IsM480LD(void);
 __STATIC_INLINE void RTC_WaitAccessEnable(void);
+
+/**
+  * @brief      Check Chip Series Version
+  *
+  * @param      None
+  *
+  * @return     0 (M480) or 1 (M480LD)
+  *
+  * @details    This function is used to distinguish the chip series version.
+  */
+__STATIC_INLINE uint32_t RTC_IsM480LD(void)
+{
+  return ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == (0x1UL << SYS_CSERVER_VERSION_Pos)) ? 1UL : 0UL;
+}
 
 /**
   * @brief      Wait RTC Access Enable
@@ -295,7 +310,7 @@ __STATIC_INLINE void RTC_WaitAccessEnable(void)
         if(i > u32TimeOutCount) break;
     }
 
-    if(!(SYS->CSERVER & 0x1))
+    if(RTC_IsM480LD() == 0ul)
     {
         /* To wait RWENF bit is cleared and enable RWENF bit (Access Enable bit) again */
         RTC->RWEN = RTC_WRITE_KEY;
@@ -314,6 +329,7 @@ void RTC_Close(void);
 void RTC_32KCalibration(int32_t i32FrequencyX10000);
 void RTC_GetDateAndTime(S_RTC_TIME_DATA_T *sPt);
 void RTC_GetAlarmDateAndTime(S_RTC_TIME_DATA_T *sPt);
+void RTC_GetTamperDateAndTime(S_RTC_TIME_DATA_T *sPt);
 void RTC_SetDateAndTime(S_RTC_TIME_DATA_T *sPt);
 void RTC_SetAlarmDateAndTime(S_RTC_TIME_DATA_T *sPt);
 void RTC_SetDate(uint32_t u32Year, uint32_t u32Month, uint32_t u32Day, uint32_t u32DayOfWeek);
@@ -328,11 +344,14 @@ void RTC_EnableInt(uint32_t u32IntFlagMask);
 void RTC_DisableInt(uint32_t u32IntFlagMask);
 void RTC_EnableSpareAccess(void);
 void RTC_DisableSpareRegister(void);
+uint32_t RTC_GetSpareRegisterCount(void);
+int32_t RTC_ReadSpareRegister(uint32_t u32RegNum);
+int32_t RTC_WriteSpareRegister(uint32_t u32RegNum, uint32_t u32RegValue);
 void RTC_StaticTamperEnable(uint32_t u32TamperSelect, uint32_t u32DetecLevel, uint32_t u32DebounceEn);
 void RTC_StaticTamperDisable(uint32_t u32TamperSelect);
 void RTC_DynamicTamperEnable(uint32_t u32PairSel, uint32_t u32DebounceEn, uint32_t u32Pair1Source, uint32_t u32Pair2Source);
 void RTC_DynamicTamperDisable(uint32_t u32PairSel);
-void RTC_DynamicTamperConfig(uint32_t u32ChangeRate, uint32_t u32SeedReload, uint32_t u32RefPattern, uint32_t u32Seed);
+int32_t RTC_DynamicTamperConfig(uint32_t u32ChangeRate, uint32_t u32SeedReload, uint32_t u32RefPattern, uint32_t u32Seed);
 
 /*@}*/ /* end of group RTC_EXPORTED_FUNCTIONS */
 
@@ -346,4 +365,4 @@ void RTC_DynamicTamperConfig(uint32_t u32ChangeRate, uint32_t u32SeedReload, uin
 
 #endif /* __RTC_H__ */
 
-/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2026 Nuvoton Technology Corp. ***/

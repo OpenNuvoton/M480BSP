@@ -1,10 +1,10 @@
 /**************************************************************************//**
  * @file     main.c
- * @version  V1.00
+ * @version  V1.10
  * @brief    Demonstrate the RTC static tamper function.
  *
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2026 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/
 #include <stdio.h>
@@ -24,10 +24,11 @@ volatile int32_t   g_bTamper  = FALSE;
   */
 void TAMPER_IRQHandler(void)
 {
+    S_RTC_TIME_DATA_T sTamperTime;
     uint32_t u32TmpStatus;
     uint32_t i;
 
-    u32TmpStatus = RTC->INTSTS & (0x3F << RTC_INTEN_TAMP0IEN_Pos);
+    u32TmpStatus = RTC_GET_TAMPER_INT_STATUS();
 
     if ( u32TmpStatus )        /* tamper interrupt occurred */
     {
@@ -38,21 +39,13 @@ void TAMPER_IRQHandler(void)
                 printf(" Tamper %d Detected!!\n", i);
         }
 
-        printf(" Tamper detected date: 20%d%d / %d%d / %d%d \n",
-               (uint32_t)((RTC->TAMPCAL & RTC_TAMPCAL_TENYEAR_Msk) >> RTC_TAMPCAL_TENYEAR_Pos),
-               (uint32_t)((RTC->TAMPCAL & RTC_TAMPCAL_YEAR_Msk) >> RTC_TAMPCAL_YEAR_Pos),
-               (uint32_t)((RTC->TAMPCAL & RTC_TAMPCAL_TENMON_Msk) >> RTC_TAMPCAL_TENMON_Pos),
-               (uint32_t)((RTC->TAMPCAL & RTC_TAMPCAL_MON_Msk) >> RTC_TAMPCAL_MON_Pos),
-               (uint32_t)((RTC->TAMPCAL & RTC_TAMPCAL_TENDAY_Msk) >> RTC_TAMPCAL_TENDAY_Pos),
-               (uint32_t)((RTC->TAMPCAL & RTC_TAMPCAL_DAY_Msk) >> RTC_TAMPCAL_DAY_Pos));
-        printf(" Tamper detected Time: %d%d: %d%d: %d%d \n",
-               (uint32_t)((RTC->TAMPTIME & RTC_TAMPTIME_TENHR_Msk) >> RTC_TAMPTIME_TENHR_Pos),
-               (uint32_t)((RTC->TAMPTIME & RTC_TAMPTIME_HR_Msk) >> RTC_TAMPTIME_HR_Pos),
-               (uint32_t)((RTC->TAMPTIME & RTC_TAMPTIME_TENMIN_Msk) >> RTC_TAMPTIME_TENMIN_Pos),
-               (uint32_t)((RTC->TAMPTIME & RTC_TAMPTIME_MIN_Msk) >> RTC_TAMPTIME_MIN_Pos),
-               (uint32_t)((RTC->TAMPTIME & RTC_TAMPTIME_TENSEC_Msk) >> RTC_TAMPTIME_TENSEC_Pos),
-               (uint32_t)((RTC->TAMPTIME & RTC_TAMPTIME_SEC_Msk) >> RTC_TAMPTIME_SEC_Pos));
-        RTC->INTSTS = u32TmpStatus;
+        RTC_GetTamperDateAndTime(&sTamperTime);
+        printf(" Tamper detected date: %d / %02d / %02d \n",
+               sTamperTime.u32Year, sTamperTime.u32Month, sTamperTime.u32Day);
+        printf(" Tamper detected Time: %02d: %02d: %02d \n",
+               sTamperTime.u32Hour, sTamperTime.u32Minute, sTamperTime.u32Second);
+        RTC_CLEAR_TAMPER_INT_FLAG(u32TmpStatus);
+
         g_bTamper = TRUE;
     }
 }
@@ -127,7 +120,7 @@ int32_t main(void)
     UART0_Init();
 
     printf("\n RTC Tamper Test Start:");
-    printf("\n Please connect tamper pin to High ");
+    printf("\n Please connect tamper pin (tamper0, tamper1, tamper2) to High ");
     printf("\n Press any key to start test.");
 
     getchar();
@@ -178,7 +171,7 @@ int32_t main(void)
 
 
 
-/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2026 Nuvoton Technology Corp. ***/
 
 
 

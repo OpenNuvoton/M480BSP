@@ -1,10 +1,10 @@
 /**************************************************************************//**
  * @file     rtc.c
- * @version  V3.00
+ * @version  V4.00
  * @brief    M480 series RTC driver source file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2026 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include "NuMicro.h"
 
@@ -118,7 +118,7 @@ void RTC_32KCalibration(int32_t i32FrequencyX10000)
     uint64_t u64Compensate;
     int32_t i32RegInt,i32RegFra ;
 
-    if(!(SYS->CSERVER & 0x1))
+    if(RTC_IsM480LD() == 0)
     {
         u64Compensate = (uint64_t)(0x2710000000000);
         u64Compensate = (uint64_t)(u64Compensate / (uint64_t)i32FrequencyX10000);
@@ -346,6 +346,44 @@ void RTC_GetAlarmDateAndTime(S_RTC_TIME_DATA_T *sPt)
         u32Tmp += g_u32loSec;
         sPt->u32Second = u32Tmp;
     }
+}
+
+/**
+  * @brief      Get RTC Tamper Date and Time
+  *
+  * @param[out] sPt     The returned pointer is specified the RTC tamper value. It includes: \n
+  *                     u32Year: Year value                                                  \n
+  *                     u32Month: Month value                                                \n
+  *                     u32Day: Day value                                                    \n
+  *                     u32Hour: Hour value                                                  \n
+  *                     u32Minute: Minute value                                              \n
+  *                     u32Second: Second value                                              \n
+  *
+  * @return     None
+  *
+  * @details    This API is used to get the RTC tamper date and time setting.
+  */
+void RTC_GetTamperDateAndTime(S_RTC_TIME_DATA_T *sPt)
+{
+    uint32_t u32TamperTime = RTC->TAMPTIME;
+    uint32_t u32TamperCal = RTC->TAMPCAL;
+
+    sPt->u32Year = RTC_YEAR2000 +
+                   (((u32TamperCal & RTC_TAMPCAL_TENYEAR_Msk) >> RTC_TAMPCAL_TENYEAR_Pos) * 10ul) +
+                   ((u32TamperCal & RTC_TAMPCAL_YEAR_Msk) >> RTC_TAMPCAL_YEAR_Pos);
+    sPt->u32Month = (((u32TamperCal & RTC_TAMPCAL_TENMON_Msk) >> RTC_TAMPCAL_TENMON_Pos) * 10ul) +
+                    ((u32TamperCal & RTC_TAMPCAL_MON_Msk) >> RTC_TAMPCAL_MON_Pos);
+    sPt->u32Day = (((u32TamperCal & RTC_TAMPCAL_TENDAY_Msk) >> RTC_TAMPCAL_TENDAY_Pos) * 10ul) +
+                  ((u32TamperCal & RTC_TAMPCAL_DAY_Msk) >> RTC_TAMPCAL_DAY_Pos);
+    sPt->u32Hour = (((u32TamperTime & RTC_TAMPTIME_TENHR_Msk) >> RTC_TAMPTIME_TENHR_Pos) * 10ul) +
+                   ((u32TamperTime & RTC_TAMPTIME_HR_Msk) >> RTC_TAMPTIME_HR_Pos);
+    sPt->u32Minute = (((u32TamperTime & RTC_TAMPTIME_TENMIN_Msk) >> RTC_TAMPTIME_TENMIN_Pos) * 10ul) +
+                     ((u32TamperTime & RTC_TAMPTIME_MIN_Msk) >> RTC_TAMPTIME_MIN_Pos);
+    sPt->u32Second = (((u32TamperTime & RTC_TAMPTIME_TENSEC_Msk) >> RTC_TAMPTIME_TENSEC_Pos) * 10ul) +
+                     ((u32TamperTime & RTC_TAMPTIME_SEC_Msk) >> RTC_TAMPTIME_SEC_Pos);
+    sPt->u32TimeScale = RTC_CLOCK_24;
+    sPt->u32DayOfWeek = 0ul;
+    sPt->u32AmPm = 0ul;
 }
 
 /**
@@ -836,7 +874,65 @@ void RTC_DisableSpareRegister(void)
 }
 
 /**
-  * @brief      Static Tamper Detect
+  * @brief      Get Spare Register Count
+  *
+  * @param      None
+  *
+  * @retval     Spare register count, 5 or 20.
+  *
+  * @details    This API is used to get the spare register count.
+  */
+uint32_t RTC_GetSpareRegisterCount(void)
+{
+    return (RTC_IsM480LD() != 0ul) ? 5ul : 20ul;
+}
+
+/**
+  * @brief      Read Spare Register
+  *
+  * @param[in]  u32RegNum   The spare register number.
+  *
+  * @return     Spare register content.
+  * @retval     -1 Invalid spare register number.
+  *
+  * @details    This API is used to read the specified spare register content.
+  */
+int32_t RTC_ReadSpareRegister(uint32_t u32RegNum)
+{
+    if(u32RegNum >= RTC_GetSpareRegisterCount())
+    {
+        return -1;
+    }
+
+    RTC_WaitAccessEnable();
+    return RTC->SPR[u32RegNum];
+}
+
+/**
+  * @brief      Write Spare Register
+  *
+  * @param[in]  u32RegNum    The spare register number.
+  * @param[in]  u32RegValue  The value to be written to the spare register.
+  *
+  * @retval     0   Success.
+  * @retval     -1  Invalid spare register number.
+  *
+  * @details    This API is used to write data to the specified spare register.
+  */
+int32_t RTC_WriteSpareRegister(uint32_t u32RegNum, uint32_t u32RegValue)
+{
+    if(u32RegNum >= RTC_GetSpareRegisterCount())
+    {
+        return -1;
+    }
+
+    RTC_WaitAccessEnable();
+    RTC->SPR[u32RegNum] = u32RegValue;
+    return 0;
+}
+
+/**
+  * @brief      Static Tamper Detect (M480 / M480LD)
   *
   * @param[in]  u32TamperSelect     Tamper pin select. Possible options are
   *                                 - \ref RTC_TAMPER5_SELECT
@@ -1048,7 +1144,7 @@ void RTC_DynamicTamperDisable(uint32_t u32PairSel)
 }
 
 /**
-  * @brief      Config dynamic tamper
+  * @brief      Config dynamic tamper (M480 only)
   *
   * @param[in]  u32ChangeRate       The dynamic tamper output change rate
   *                                 - \ref RTC_2POW10_CLK
@@ -1071,25 +1167,34 @@ void RTC_DynamicTamperDisable(uint32_t u32PairSel)
   *
   * @param[in]  u32Seed             Seed Value (0x0 ~ 0xFFFFFFFF)
   *
-  * @return     None
+  * @retval     0: SUCCESS
+  * @retval     -1: Initialize RTC module fail
   *
   * @details    This API is used to config dynamic tamper setting.
   */
-void RTC_DynamicTamperConfig(uint32_t u32ChangeRate, uint32_t u32SeedReload, uint32_t u32RefPattern, uint32_t u32Seed)
+int32_t RTC_DynamicTamperConfig(uint32_t u32ChangeRate, uint32_t u32SeedReload, uint32_t u32RefPattern, uint32_t u32Seed)
 {
     uint32_t u32Reg;
+
+    if(RTC_IsM480LD())
+    {
+        return -1;
+    }
+
     RTC_WaitAccessEnable();
     u32Reg = RTC->TAMPCTL;
 
     u32Reg &= ~(RTC_TAMPCTL_DYNSRC_Msk | RTC_TAMPCTL_SEEDRLD_Msk | RTC_TAMPCTL_DYNRATE_Msk);
-
     u32Reg |= (u32ChangeRate) | ((u32SeedReload & 0x1ul) << RTC_TAMPCTL_SEEDRLD_Pos) |
               ((u32RefPattern & 0x3ul) << RTC_TAMPCTL_DYNSRC_Pos);
 
     RTC_WaitAccessEnable();
     RTC->TAMPSEED = u32Seed; /* need set seed value before re-load seed */
+
     RTC_WaitAccessEnable();
     RTC->TAMPCTL = u32Reg;
+
+    return 0;
 }
 
 /*@}*/ /* end of group RTC_EXPORTED_FUNCTIONS */
@@ -1098,4 +1203,4 @@ void RTC_DynamicTamperConfig(uint32_t u32ChangeRate, uint32_t u32SeedReload, uin
 
 /*@}*/ /* end of group Standard_Driver */
 
-/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2026 Nuvoton Technology Corp. ***/

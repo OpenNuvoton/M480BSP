@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     main.c
- * @version  V1.00
+ * @version  V1.10
  * @brief    Demonstrate the RTC function and displays current time to the
  *           UART console
  *
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2026 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/
 #include <stdio.h>
@@ -40,10 +40,9 @@ void RTC_TickHandle(void)
 void RTC_IRQHandler(void)
 {
 
-    if ( (RTC->INTEN & RTC_INTEN_TICKIEN_Msk) && (RTC->INTSTS & RTC_INTSTS_TICKIF_Msk) )        /* tick interrupt occurred */
+    if (RTC_GET_TICK_INT_FLAG())        /* tick interrupt occurred */
     {
-        RTC->INTSTS = 0x2;
-
+        RTC_CLEAR_TICK_INT_FLAG();
         RTC_TickHandle();
     }
 
@@ -159,7 +158,7 @@ int32_t main(void)
 
 
 
-/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2026 Nuvoton Technology Corp. ***/
 
 
 

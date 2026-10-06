@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     main.c
- * @version  V1.00
+ * @version  V1.10
  * @brief    Demonstrate the RTC alarm function. It sets an alarm 10 seconds
  *           after execution
  *
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2026 Nuvoton Technology Corp. All rights reserved.
  *
  ******************************************************************************/
 #include <stdio.h>
@@ -34,10 +34,9 @@ void RTC_AlarmHandle(void)
   */
 void RTC_IRQHandler(void)
 {
-    if ( (RTC->INTEN & RTC_INTEN_ALMIEN_Msk) && (RTC->INTSTS & RTC_INTSTS_ALMIF_Msk) )        /* alarm interrupt occurred */
+    if(RTC_GET_ALARM_INT_FLAG() == 1)        /* alarm interrupt occurred */
     {
-        RTC->INTSTS = 0x1;
-
+        RTC_CLEAR_ALARM_INT_FLAG();
         RTC_AlarmHandle();
     }
 }
@@ -137,7 +136,7 @@ int32_t main(void)
     RTC_SetAlarmDateAndTime(&sCurTime);
 
     /* Clear interrupt status */
-    RTC->INTSTS = RTC_INTSTS_ALMIF_Msk;
+    RTC_CLEAR_ALARM_INT_FLAG();
 
     /* Enable RTC Alarm Interrupt */
     RTC_EnableInt(RTC_INTEN_ALMIEN_Msk);
@@ -163,7 +162,7 @@ int32_t main(void)
 
 
 
-/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2026 Nuvoton Technology Corp. ***/
 
 
 
