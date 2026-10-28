@@ -1,10 +1,10 @@
 /**************************************************************************//**
  * @file     clk.c
- * @version  V3.00
+ * @version  V3.10
  * @brief    M480 series CLK driver source file
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2026 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 
 #include "NuMicro.h"
@@ -148,6 +148,27 @@ uint32_t CLK_GetLXTFreq(void)
     if((CLK->PWRCTL & CLK_PWRCTL_LXTEN_Msk) == CLK_PWRCTL_LXTEN_Msk)
     {
         u32Freq = __LXT;
+    }
+    else
+    {
+        u32Freq = 0UL;
+    }
+
+    return u32Freq;
+}
+
+/**
+  * @brief      Get internal low speed crystal clock frequency
+  * @param      None
+  * @return     Internal low speed crystal clock frequency
+  * @details    This function get internal low frequency crystal frequency. The frequency unit is Hz.
+  */
+uint32_t CLK_GetLIRCFreq(void)
+{
+    uint32_t u32Freq;
+    if((CLK->PWRCTL & CLK_PWRCTL_LIRCEN_Msk) == CLK_PWRCTL_LIRCEN_Msk)
+    {
+        u32Freq = __LIRC;
     }
     else
     {
@@ -1363,4 +1384,4 @@ uint32_t CLK_GetModuleClockDivider(uint32_t u32ModuleIdx)
 
 /*@}*/ /* end of group Standard_Driver */
 
-/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2026 Nuvoton Technology Corp. ***/

@@ -1,0 +1,59 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+	{
+		"name": "CMSIS_DAP@pyOCD (launch)",
+		"type": "gdbtarget",
+		"request": "attach",
+		"cwd": "${workspaceFolder}/",
+		"program": "${command:embedded-debug.getApplicationFile}",
+		"gdb": "arm-none-eabi-gdb",
+		"preLaunchTask": "LaunchpyOCDServer",
+		"initCommands": [
+			"monitor reset halt",
+			"set breakpoint pending on",
+			"tbreak main"
+		],
+		"customResetCommands": [
+			"monitor reset halt",
+			"tbreak main"
+		],
+		"target": {
+			"port": "3333"
+		},
+		"pyocdOptions": {
+			"probe_uid": "",
+			"frequency": 1000000
+		},
+		"cmsis": {
+			"cbuildRunFile": "${command:cmsis-csolution.getCbuildRunFile}",
+			"updateConfiguration": "auto"
+		}
+	},
+	{
+		"name": "CMSIS_DAP@pyOCD (attach)",
+		"type": "gdbtarget",
+		"request": "attach",
+		"cwd": "${workspaceFolder}/",
+		"program": "${command:embedded-debug.getApplicationFile}",
+		"gdb": "arm-none-eabi-gdb",
+		"preLaunchTask": "LaunchpyOCDServer",
+		"initCommands": [
+			""
+		],
+		"customResetCommands": [
+			"monitor reset halt"
+		],
+		"target": {
+			"port": "3333"
+		},
+		"pyocdOptions": {
+			"probe_uid": "",
+			"frequency": 1000000
+		},
+		"cmsis": {
+			"updateConfiguration": "auto"
+		}
+	}
+]
+}

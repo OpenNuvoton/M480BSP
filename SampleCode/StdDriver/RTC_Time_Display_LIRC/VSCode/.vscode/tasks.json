@@ -1,0 +1,259 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Probe-rs Load",
+      "type": "shell",
+      "command": "${command:nuvoton-debug.getProbeRsPath}",
+      "args": [
+        "download",
+        "--chip",
+        "${command:cmsis-csolution.getDeviceName}",
+        "--chip-description-path",
+        "${command:nuvoton-debug.getChipDescriptionPath}",
+        "${command:embedded-debug.getApplicationFile}"
+      ],
+      "group": "build",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false,
+        "close": false
+      }
+    },
+    {
+      "label": "LaunchpyOCDServer",
+      "type": "shell",
+      "command": "${command:nuvoton-debug.getPyOCDServerPath}",
+      "args": [
+        "${command:cmsis-csolution.getDeviceName}",
+        "${command:cmsis-csolution.getCbuildRunFile}",
+        "${command:nuvoton-debug.getPyOCDServerOptions}"
+      ],
+      "isBackground": true,
+      "presentation": {
+        "echo": false
+      },
+      "problemMatcher": {
+        "owner": "pyocd",
+        "pattern": [
+          {
+            "regexp": ".*",
+            "kind": "location",
+            "file": 1,
+            "line": 1,
+            "column": 1,
+            "message": 1
+          }
+        ],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Starting pyOCD",
+          "endsPattern": "GDB server started"
+        }
+      }
+    },
+    {
+      "label": "CMSIS Erase",
+      "type": "shell",
+      "command": "pyocd",
+      "options": {
+        "cwd": "${workspaceFolder}/"
+      },
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "cmd.exe",
+            "args": [
+              "/d",
+              "/c"
+            ]
+          }
+        }
+      },
+      "linux": {
+        "options": {
+          "shell": {
+            "executable": "/bin/bash",
+            "args": [
+              "-c"
+            ]
+          }
+        }
+      },
+      "osx": {
+        "options": {
+          "shell": {
+            "executable": "/bin/bash",
+            "args": [
+              "-c"
+            ]
+          }
+        }
+      },
+      "args": [
+        "erase",
+        "--probe",
+        "cmsisdap:",
+        "--chip",
+        "--cbuild-run",
+        "${command:cmsis-csolution.getCbuildRunFile}"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "CMSIS Load",
+      "type": "shell",
+      "command": "pyocd",
+      "options": {
+        "cwd": "${workspaceFolder}/"
+      },
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "cmd.exe",
+            "args": [
+              "/d",
+              "/c"
+            ]
+          }
+        }
+      },
+      "linux": {
+        "options": {
+          "shell": {
+            "executable": "/bin/bash",
+            "args": [
+              "-c"
+            ]
+          }
+        }
+      },
+      "osx": {
+        "options": {
+          "shell": {
+            "executable": "/bin/bash",
+            "args": [
+              "-c"
+            ]
+          }
+        }
+      },
+      "args": [
+        "load",
+        "--probe",
+        "cmsisdap:",
+        "--cbuild-run",
+        "${command:cmsis-csolution.getCbuildRunFile}"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "CMSIS Run",
+      "type": "shell",
+      "command": "pyocd",
+      "options": {
+        "cwd": "${workspaceFolder}/"
+      },
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "cmd.exe",
+            "args": [
+              "/d",
+              "/c"
+            ]
+          }
+        }
+      },
+      "linux": {
+        "options": {
+          "shell": {
+            "executable": "/bin/bash",
+            "args": [
+              "-c"
+            ]
+          }
+        }
+      },
+      "osx": {
+        "options": {
+          "shell": {
+            "executable": "/bin/bash",
+            "args": [
+              "-c"
+            ]
+          }
+        }
+      },
+      "args": [
+        "gdbserver",
+        "--port",
+        "3333",
+        "--probe",
+        "cmsisdap:",
+        "--connect",
+        "attach",
+        "--persist",
+        "--reset-run",
+        "--cbuild-run",
+        "${command:cmsis-csolution.getCbuildRunFile}"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "CMSIS Load+Run",
+      "dependsOn": [
+        "Probe-rs Load"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    },
+    {
+      "label": "CMSIS TargetInfo",
+      "type": "shell",
+      "command": "pyocd",
+      "options": {
+        "cwd": "${workspaceFolder}/"
+      },
+      "windows": {
+        "options": {
+          "shell": {
+            "executable": "cmd.exe",
+            "args": [
+              "/d",
+              "/c"
+            ]
+          }
+        }
+      },
+      "linux": {
+        "options": {
+          "shell": {
+            "executable": "/bin/bash",
+            "args": [
+              "-c"
+            ]
+          }
+        }
+      },
+      "osx": {
+        "options": {
+          "shell": {
+            "executable": "/bin/bash",
+            "args": [
+              "-c"
+            ]
+          }
+        }
+      },
+      "args": [
+        "list",
+        "--cbuild-run",
+        "${command:cmsis-csolution.getCbuildRunFile}"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

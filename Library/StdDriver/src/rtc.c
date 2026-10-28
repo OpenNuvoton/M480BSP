@@ -1,6 +1,6 @@
 /**************************************************************************//**
  * @file     rtc.c
- * @version  V4.00
+ * @version  V4.10
  * @brief    M480 series RTC driver source file
  *
  * SPDX-License-Identifier: Apache-2.0
@@ -384,6 +384,38 @@ void RTC_GetTamperDateAndTime(S_RTC_TIME_DATA_T *sPt)
     sPt->u32TimeScale = RTC_CLOCK_24;
     sPt->u32DayOfWeek = 0ul;
     sPt->u32AmPm = 0ul;
+}
+
+
+/**
+  * @brief      Get the actual RTC clock input frequency
+  *
+  * @param      None
+  *
+  * @return     RTC clock input frequency in Hz. Returns 0 if the selected clock source is disabled.
+  *
+  * @details    This function returns the frequency received by the RTC.
+  *             For M48xID/M487KMCAN, the LIRC clock path multiplies the 10 kHz LIRC by 4.
+  */
+uint32_t RTC_GetClockInputFreq(void)
+{
+    uint32_t u32Freq;
+
+    if ((CLK->CLKSEL3 & CLK_CLKSEL3_RTCSEL_Msk) == CLK_CLKSEL3_RTCSEL_LIRC)
+    {
+        u32Freq = CLK_GetLIRCFreq();
+
+        if (RTC_IsM480LD() == 0ul)
+        {
+            u32Freq *= 4ul;  // M48xID/M487KMCAN
+        }
+
+        return u32Freq;
+    }
+    else
+    {
+        return CLK_GetLXTFreq();
+    }
 }
 
 /**

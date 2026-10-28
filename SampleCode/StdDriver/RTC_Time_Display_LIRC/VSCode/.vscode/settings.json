@@ -1,0 +1,7 @@
+{
+	"clangd.arguments": [
+		"--compile-commands-dir=c:\\[Company]\\workbench\\m480\\bsp_20261001\\bsp\\SampleCode\\StdDriver\\RTC_Time_Display_LIRC\\VSCode\\out\\RTC_Time_Display_LIRC\\ARMCLANG\\debug"
+	],
+	"cmake.sourceDirectory": "C:/[Company]/workbench/m480/bsp_20261001/bsp/SampleCode/StdDriver/RTC_Time_Display_LIRC/VSCode/tmp",
+	"debug.hideSlowPreLaunchWarning": true
+}

@@ -1,10 +1,10 @@
 /**************************************************************************//**
  * @file     CLK.h
- * @version  V1.0
+ * @version  V1.10
  * @brief    M480 Series CLK Driver Header File
  *
  * SPDX-License-Identifier: Apache-2.0
- * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2026 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __CLK_H__
 #define __CLK_H__
@@ -298,7 +298,7 @@ extern "C"
 #define CLK_PCLKDIV_PCLK1DIV4            (0x2UL << CLK_PCLKDIV_APB1DIV_Pos)  /*!< PCLKDIV Setting for PCLK1 = 1/4 HCLK \hideinitializer */
 #define CLK_PCLKDIV_PCLK1DIV8            (0x3UL << CLK_PCLKDIV_APB1DIV_Pos)  /*!< PCLKDIV Setting for PCLK1 = 1/8 HCLK \hideinitializer */
 #define CLK_PCLKDIV_PCLK1DIV16           (0x4UL << CLK_PCLKDIV_APB1DIV_Pos)  /*!< PCLKDIV Setting for PCLK1 = 1/16 HCLK \hideinitializer */
-// 
+//
 #define CLK_PCLKDIV_APB0DIV_DIV1         (0x0UL << CLK_PCLKDIV_APB0DIV_Pos)  /*!< PCLKDIV Setting for PCLK0 = HCLK \hideinitializer */
 #define CLK_PCLKDIV_APB0DIV_DIV2         (0x1UL << CLK_PCLKDIV_APB0DIV_Pos)  /*!< PCLKDIV Setting for PCLK0 = 1/2 HCLK \hideinitializer */
 #define CLK_PCLKDIV_APB0DIV_DIV4         (0x2UL << CLK_PCLKDIV_APB0DIV_Pos)  /*!< PCLKDIV Setting for PCLK0 = 1/4 HCLK \hideinitializer */
@@ -678,6 +678,7 @@ void CLK_PowerDown(void);
 void CLK_Idle(void);
 uint32_t CLK_GetHXTFreq(void);
 uint32_t CLK_GetLXTFreq(void);
+uint32_t CLK_GetLIRCFreq(void);
 uint32_t CLK_GetHCLKFreq(void);
 uint32_t CLK_GetPCLK0Freq(void);
 uint32_t CLK_GetPCLK1Freq(void);
@@ -715,4 +716,4 @@ uint32_t CLK_GetModuleClockDivider(uint32_t u32ModuleIdx);
 
 #endif  /* __CLK_H__ */
 
-/*** (C) COPYRIGHT 2016 Nuvoton Technology Corp. ***/
+/*** (C) COPYRIGHT 2026 Nuvoton Technology Corp. ***/
